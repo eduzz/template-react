@@ -3806,6 +3806,9 @@ input[type=range]:focus::-ms-fill-upper {
 body {
   padding: 60px 0 0 0; }
 
+.waves-effect.waves-dark .waves-ripple {
+  background-color: #1a1a1a; }
+
 .main-header {
   background-color: #1B1B1B;
   position: fixed;
@@ -3885,6 +3888,13 @@ nav {
   -webkit-transform: initial;
           transform: initial;
   overflow: initial; }
+  .side-nav ::-webkit-scrollbar-track {
+    background-color: #232323; }
+  .side-nav ::-webkit-scrollbar {
+    width: 6px;
+    background: #F4F4F4; }
+  .side-nav ::-webkit-scrollbar-thumb {
+    background: #1a1a1a; }
   .side-nav .block {
     display: block;
     width: 100%; }
@@ -3897,10 +3907,13 @@ nav {
           -ms-flex-align: center;
               align-items: center;
       background: #282828; }
-    .side-nav .block.side-menu ul {
-      list-style: none;
-      padding: 0;
-      margin: 0; }
+    .side-nav .block.side-menu {
+      height: calc(100vh - 250px);
+      overflow-y: auto; }
+      .side-nav .block.side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0; }
   .side-nav .user-photo {
     display: block;
     width: 60px;
@@ -3922,7 +3935,8 @@ nav {
     .side-nav .user-data .name {
       color: #fff;
       font-size: 0.9375rem;
-      letter-spacing: 1px; }
+      letter-spacing: 1px;
+      margin: 2px; }
   .side-nav .inside-nav {
     position: absolute;
     bottom: 0;
@@ -3970,9 +3984,11 @@ nav {
   font-size: 0.875rem;
   -webkit-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
-  font-weight: 400; }
+  font-weight: 400;
+  border-bottom: #232323;
+  background-color: #2f2f2f; }
   .side-menu .nav-button:hover {
-    background-color: #212121; }
+    background-color: #232323; }
   .side-menu .nav-button.child {
     padding: 20px 20px 20px 40px;
     background-color: #1a1a1a; }
@@ -3982,7 +3998,11 @@ nav {
 .page-content.my-courses {
   padding-left: 250px; }
   .page-content.my-courses > .container {
-    padding: 20px; }
+    padding: 20px;
+    min-height: calc(100vh - 60px); }
+
+.cards-wrapper {
+  padding: 10px 0; }
 
 .card {
   background: #cecece;
@@ -3995,7 +4015,8 @@ nav {
   background-position: center;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
-  border: 0; }
+  border: 0;
+  margin-right: 20px; }
   .card .card-status {
     color: #fff;
     position: absolute;
@@ -4040,12 +4061,13 @@ nav {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start; }
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between; }
   .search-bar .input-field {
     width: 100%;
     margin: 0;
+    max-width: 600px;
     margin-right: 40px; }
     .search-bar .input-field input {
       margin: 0;
@@ -4058,25 +4080,29 @@ nav {
   .search-bar .button:last-child {
     margin: 0; }
 
-.page-header .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 0; }
-.page-header .page-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin: 0;
-  margin-bottom: 5px; }
-.page-header .page-subtitle {
-  font-size: 1rem;
-  letter-spacing: 0.5px;
-  font-weight: 400; }
+.page-header {
+  padding: 45px 20px;
+  margin: -20px -20px 0 -20px;
+  background-color: #fafafa; }
+  .page-header .container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    padding: 0; }
+  .page-header .page-title {
+    font-size: 2.25rem;
+    font-weight: 400;
+    margin: 0;
+    margin-bottom: 5px; }
+  .page-header .page-subtitle {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    font-weight: 400; }
 
 /*# sourceMappingURL=css.css.map */
