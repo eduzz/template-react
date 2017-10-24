@@ -7,6 +7,9 @@
 body{
   padding:60px 0 0 0;
 }
+.waves-effect.waves-dark .waves-ripple {
+  background-color: $darkest-color;
+}
 .main-header{
   background-color:#1B1B1B;
   position: fixed;
@@ -89,6 +92,18 @@ nav{
   box-sizing:border-box;
   transform: initial;
   overflow: initial;
+  ::-webkit-scrollbar-track {
+    background-color: $dark-color;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #F4F4F4;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $darkest-color;
+  }
   .block{
     display:block;
     width: 100%;
@@ -99,6 +114,8 @@ nav{
       background: #282828;
     }
     &.side-menu{
+      height: calc(100vh - 250px);
+      overflow-y: auto;
       ul{
         list-style:none;
         padding:0;
@@ -130,6 +147,7 @@ nav{
       color:#fff;
       @include fontsize(15);
       letter-spacing:1px;
+      margin:2px;
     }
   }
   .inside-nav{
@@ -176,12 +194,14 @@ nav{
     @include fontsize(14);
     @include transition;
     font-weight: $regular;
+    border-bottom:$dark-color;
+    background-color:$background-color;
     &:hover{
-      background-color:#212121;
+      background-color:$dark-color;
     }
     &.child{
       padding:20px 20px 20px 40px;
-      background-color:#1a1a1a;
+      background-color:$darkest-color;
       &:hover{
         background-color:#0c0c0c;
       }
@@ -193,10 +213,12 @@ nav{
     padding-left:250px;
     >.container{
       padding:20px;
+      min-height: calc(100vh - 60px);
     }
   }
 }
 .cards-wrapper{
+  padding:10px 0;
 }
 
 .card{
@@ -210,6 +232,7 @@ nav{
   background-position:center;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
   border:0;
+  margin-right:20px;
   .card-status{
     color:#fff;
     position: absolute;
@@ -258,11 +281,11 @@ nav{
   padding:20px 0;
   display: flex;
   align-items:center;
-  justify-content: flex-start;
+  justify-content: space-between;
   .input-field{
-    width:100%;
-      margin:0;
-    
+    width: 100%;
+    margin: 0;
+    max-width: 600px;
     margin-right: 40px;
     input{
       margin:0;
@@ -279,9 +302,10 @@ nav{
   }
 }
 .page-header{
-  // padding:40px 0;
-  // background:#f2f2f2;
-  // margin:20px;
+  padding:45px 20px;
+  margin:-20px -20px 0 -20px;
+  // border-bottom:1px solid #cecece;
+  background-color: #fafafa;
   .container{
     display: flex;
     align-items:center;
@@ -289,8 +313,8 @@ nav{
     padding:0;
   }
   .page-title{
-    @include fontsize(24);
-    font-weight: $medium;
+    @include fontsize(36);
+    font-weight: $regular;
     margin:0;
     margin-bottom: 5px;
   }
