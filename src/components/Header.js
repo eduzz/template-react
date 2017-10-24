@@ -7,7 +7,6 @@ const Header = () => (
                 <img />
             </a>
             <div className="header-content">
-            test
             </div>
         </div>
     </header>
