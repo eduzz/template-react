@@ -199,13 +199,7 @@ nav{
     &:hover{
       background-color:$dark-color;
     }
-    &.child{
-      padding:20px 20px 20px 40px;
-      background-color:$darkest-color;
-      &:hover{
-        background-color:#0c0c0c;
-      }
-    }
+   
   }
 }
 .page-content{
