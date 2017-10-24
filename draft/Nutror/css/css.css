@@ -3989,11 +3989,6 @@ nav {
   background-color: #2f2f2f; }
   .side-menu .nav-button:hover {
     background-color: #232323; }
-  .side-menu .nav-button.child {
-    padding: 20px 20px 20px 40px;
-    background-color: #1a1a1a; }
-    .side-menu .nav-button.child:hover {
-      background-color: #0c0c0c; }
 
 .page-content.my-courses {
   padding-left: 250px; }
