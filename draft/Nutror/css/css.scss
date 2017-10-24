@@ -1,0 +1,302 @@
+@import "variables";
+@import "fonts";
+@import "mixins";
+@import "reset";
+@import "materialize";
+
+body{
+  padding:60px 0 0 0;
+}
+.main-header{
+  background-color:#1B1B1B;
+  position: fixed;
+  width:100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  .container{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    height: 60px;
+    padding:0 20px;
+  }
+}
+.container{
+  width: 100%;
+  max-width: 100%;
+}
+.button{
+  padding:12px 30px;
+  border:0;
+  border-radius:50px;
+  background-color:#d8d8d8;
+  display: inline-block; 
+  color:$primary-color;
+  span{ 
+    letter-spacing:0.5px;
+    font-weight:$medium;
+    // text-transform:uppercase;
+    font-size:16px;
+    color:#3A3A3A; 
+  }
+  .icon{
+      fill:#3a3a3a;
+      margin-right:5px;
+      height: 15px;
+      // width: 15px;
+  }
+  &.affirmative{
+    background-color:#27921A;
+    span{
+      color:#fff;
+    }
+    .icon{
+      fill:#fff;
+    }
+  }
+  &.small{
+    padding:10px 20px;
+    span{
+      font-size:12px;
+    }
+    .icon{
+      height:10px;
+      margin-right:5px;
+    }
+  }
+}
+
+.header-logo{
+  height: 40px;
+  display: block;
+  img{max-height:100%;}
+}
+nav{
+  color:inherit;
+  background-color:inherit;
+  height: auto;
+  line-height: initial;
+}
+.side-nav{
+  background-color: #2F2F2F;
+  position: fixed;
+  width: 250px;
+  display: block;
+  height:calc(100vh - 60px);
+  top:60px;
+  left:0;
+  box-sizing:border-box;
+  transform: initial;
+  overflow: initial;
+  .block{
+    display:block;
+    width: 100%;
+    &.welcome{
+      padding:20px;
+      display: flex;
+      align-items:center;
+      background: #282828;
+    }
+    &.side-menu{
+      ul{
+        list-style:none;
+        padding:0;
+        margin:0;
+      }
+    }
+  }
+  .user-photo{
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius:50%;
+    overflow:hidden;
+    img{
+      width: 60px;
+      height: 60px;
+      object-fit:cover;
+    }
+  }//end user photo
+  .user-data{
+    color:#fff;
+    padding-left:10px;
+    .message{
+      @include fontsize(10);
+      letter-spacing:0.7px;
+      text-transform:uppercase;
+    }
+    .name{
+      color:#fff;
+      @include fontsize(15);
+      letter-spacing:1px;
+    }
+  }
+  .inside-nav{
+    position:absolute;
+    bottom:0;
+    left: 0;
+    right: 0;
+    padding:20px;
+    ul{  
+      list-style:none;
+      margin:0;
+      padding:0;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-around;
+      text-align:center;
+    }
+    .icon{
+      fill:#fff;
+      height: 30px;
+      width:30px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    a{
+      color:#fff;
+      @include fontsize(12);
+    }
+  }
+}
+.side-menu{
+  .icon{
+    fill:#fff;
+    width: 14px;
+    height: 15px;
+    margin-right:10px;
+  }
+  .nav-button{
+    color:#fff;
+    letter-spacing:1px;
+    padding:20px;
+    display: flex;
+    align-items:center; 
+    @include fontsize(14);
+    @include transition;
+    font-weight: $regular;
+    &:hover{
+      background-color:#212121;
+    }
+    &.child{
+      padding:20px 20px 20px 40px;
+      background-color:#1a1a1a;
+      &:hover{
+        background-color:#0c0c0c;
+      }
+    }
+  }
+}
+.page-content{
+  &.my-courses{
+    padding-left:250px;
+    >.container{
+      padding:20px;
+    }
+  }
+}
+.cards-wrapper{
+}
+
+.card{
+  background:#cecece;
+  width: 170px;
+  height: 220px;
+  position: relative;
+  display: inline-block;
+  background-image:url(https://udemy-images.udemy.com/course/750x422/959700_8bd2_9.jpg);
+  background-size:cover;
+  background-position:center;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
+  border:0;
+  .card-status{
+    color:#fff;
+    position: absolute;
+    display: block;
+    margin:8px;
+    padding:4px;
+    top:0;
+    left:0;
+    right:0;
+    text-align:center;
+    text-transform:uppercase;
+    font-weight:$medium;
+    letter-spacing:0.5px;
+    @include fontsize(14);
+    &.comming-soon{
+      background-color:#ff0000;
+    }
+    &.free-course{
+      background-color:#27921A;
+    }
+    &.blocked{}
+  }
+  .card-description{
+    position: absolute;
+    bottom:0;
+    display: block;
+    margin:auto;
+    text-align:center;
+    width: 100%;
+    background:rgba(0,0,0,0.8);
+    padding:10px 5px;
+  }
+  .card-title{
+    color:#fff;
+    @include fontsize(14);
+    font-weight:$medium;
+    letter-spacing:0.5px;
+  }
+  .card-category{
+    font-size:10px;
+    color:#fff;
+  }
+}
+
+.search-bar{
+  padding:20px 0;
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+  .input-field{
+    width:100%;
+      margin:0;
+    
+    margin-right: 40px;
+    input{
+      margin:0;
+      box-sizing:border-box;
+    }
+  }
+  .button{
+    min-width: 120px;
+    text-align: center;
+    margin:0 5px;
+  }
+  .button:last-child{
+    margin:0;
+  }
+}
+.page-header{
+  // padding:40px 0;
+  // background:#f2f2f2;
+  // margin:20px;
+  .container{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:0;
+  }
+  .page-title{
+    @include fontsize(24);
+    font-weight: $medium;
+    margin:0;
+    margin-bottom: 5px;
+  }
+  .page-subtitle{
+     @include fontsize(16);
+     letter-spacing: 0.5px;
+     font-weight: $regular;
+  }
+}

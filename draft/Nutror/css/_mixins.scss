@@ -1,0 +1,7 @@
+@mixin fontsize($size){
+  $size: $size/16;
+  font-size:#{$size}rem;
+}
+@mixin transition($time:0.3s) {
+  transition: all $time ease-in-out;
+}
