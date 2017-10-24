@@ -2,6 +2,8 @@
 @import "fonts";
 @import "mixins";
 @import "reset";
+@import "materialize";
+
 body{
   padding:60px 0 0 0;
 }
@@ -20,13 +22,17 @@ body{
     padding:0 20px;
   }
 }
-
+.container{
+  width: 100%;
+  max-width: 100%;
+}
 .button{
   padding:12px 30px;
   border:0;
   border-radius:50px;
   background-color:#d8d8d8;
   display: inline-block; 
+  color:$primary-color;
   span{ 
     letter-spacing:0.5px;
     font-weight:$medium;
@@ -66,6 +72,12 @@ body{
   display: block;
   img{max-height:100%;}
 }
+nav{
+  color:inherit;
+  background-color:inherit;
+  height: auto;
+  line-height: initial;
+}
 .side-nav{
   background-color: #2F2F2F;
   position: fixed;
@@ -75,6 +87,8 @@ body{
   top:60px;
   left:0;
   box-sizing:border-box;
+  transform: initial;
+  overflow: initial;
   .block{
     display:block;
     width: 100%;
@@ -177,31 +191,14 @@ body{
 .page-content{
   &.my-courses{
     padding-left:250px;
+    >.container{
+      padding:20px;
+    }
   }
 }
-.search-bar{
-  display: block;
+.cards-wrapper{
 }
-.page-header{
-  padding:40px 20px;
-  background:#f2f2f2;
-  margin:20px;
-  .container{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-  }
-  .page-title{
-    @include fontsize(24);
-    font-weight: $medium;
-    margin-bottom: 5px;
-  }
-  .page-subtitle{
-     @include fontsize(16);
-     letter-spacing: 0.5px;
-     font-weight: $regular;
-  }
-}
+
 .card{
   background:#cecece;
   width: 170px;
@@ -256,6 +253,50 @@ body{
     color:#fff;
   }
 }
-.cards-wrapper{
-  padding:0 20px;
+
+.search-bar{
+  padding:20px 0;
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+  .input-field{
+    width:100%;
+      margin:0;
+    
+    margin-right: 40px;
+    input{
+      margin:0;
+      box-sizing:border-box;
+    }
+  }
+  .button{
+    min-width: 120px;
+    text-align: center;
+    margin:0 5px;
+  }
+  .button:last-child{
+    margin:0;
+  }
+}
+.page-header{
+  // padding:40px 0;
+  // background:#f2f2f2;
+  // margin:20px;
+  .container{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:0;
+  }
+  .page-title{
+    @include fontsize(24);
+    font-weight: $medium;
+    margin:0;
+    margin-bottom: 5px;
+  }
+  .page-subtitle{
+     @include fontsize(16);
+     letter-spacing: 0.5px;
+     font-weight: $regular;
+  }
 }
