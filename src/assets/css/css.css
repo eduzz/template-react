@@ -1,0 +1,104 @@
+img {
+  max-width: 100%; }
+
+.main-header {
+  background-color: #1B1B1B;
+  position: fixed;
+  width: 100%; }
+  .main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px; }
+
+.header-logo {
+  height: 40px;
+  display: block; }
+  .header-logo img {
+    max-height: 100%; }
+
+.side-nav {
+  background-color: #2F2F2F;
+  position: fixed;
+  width: 250px;
+  display: block;
+  height: calc(100vh - 60px);
+  top: 60px;
+  left: 0;
+  box-sizing: border-box; }
+  .side-nav .block {
+    display: block;
+    width: 100%; }
+    .side-nav .block.welcome {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      background: #282828; }
+    .side-nav .block.side-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0; }
+  .side-nav .user-photo {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden; }
+    .side-nav .user-photo img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover; }
+  .side-nav .user-data {
+    color: #fff;
+    padding-left: 10px; }
+    .side-nav .user-data .message {
+      font-size: 10px;
+      letter-spacing: 0.7px;
+      text-transform: uppercase; }
+    .side-nav .user-data .name {
+      color: #fff;
+      font-size: 15px;
+      letter-spacing: 1px; }
+  .side-nav .inside-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px; }
+    .side-nav .inside-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      text-align: center; }
+    .side-nav .inside-nav .icon {
+      fill: #fff;
+      height: 40px;
+      width: 40px; }
+    .side-nav .inside-nav a {
+      color: #fff;
+      font-size: 12px; }
+
+.side-menu .icon {
+  fill: #fff;
+  width: 14px;
+  height: 15px;
+  margin-right: 10px; }
+
+.side-menu .nav-button {
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 14px; }
+  .side-menu .nav-button:hover {
+    background-color: #212121; }
+  .side-menu .nav-button.child {
+    padding: 20px 20px 20px 40px;
+    background-color: #1a1a1a; }
+    .side-menu .nav-button.child:hover {
+      background-color: #0c0c0c; }
