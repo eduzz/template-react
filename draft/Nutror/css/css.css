@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+html,
+body {
+  padding: 60px 0 0 0;
+  font-size: 16px; }
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-decoration: none;
+  font-family: "Montserrat", sans-serif; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+img {
+  max-width: 100%; }
+
+a {
+  color: #1b1b1b; }
+
+body {
+  padding: 60px 0 0 0; }
+
+.main-header {
+  background-color: #1B1B1B;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0; }
+  .main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px; }
+
+.button {
+  padding: 12px 30px;
+  border: 0;
+  border-radius: 50px;
+  background-color: #d8d8d8; }
+  .button span {
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #3A3A3A; }
+  .button .icon {
+    fill: #3a3a3a;
+    margin-right: 5px;
+    height: 15px; }
+  .button.affirmative {
+    background-color: #27921A; }
+    .button.affirmative span {
+      color: #fff; }
+    .button.affirmative .icon {
+      fill: #fff; }
+  .button.small {
+    padding: 10px 20px; }
+    .button.small span {
+      font-size: 12px; }
+    .button.small .icon {
+      height: 10px;
+      margin-right: 5px; }
+
+.header-logo {
+  height: 40px;
+  display: block; }
+  .header-logo img {
+    max-height: 100%; }
+
+.side-nav {
+  background-color: #2F2F2F;
+  position: fixed;
+  width: 250px;
+  display: block;
+  height: calc(100vh - 60px);
+  top: 60px;
+  left: 0;
+  box-sizing: border-box; }
+  .side-nav .block {
+    display: block;
+    width: 100%; }
+    .side-nav .block.welcome {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      background: #282828; }
+    .side-nav .block.side-menu ul {
+      list-style: none;
+      padding: 0;
+      margin: 0; }
+  .side-nav .user-photo {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden; }
+    .side-nav .user-photo img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover; }
+  .side-nav .user-data {
+    color: #fff;
+    padding-left: 10px; }
+    .side-nav .user-data .message {
+      font-size: 0.625rem;
+      letter-spacing: 0.7px;
+      text-transform: uppercase; }
+    .side-nav .user-data .name {
+      color: #fff;
+      font-size: 0.9375rem;
+      letter-spacing: 1px; }
+  .side-nav .inside-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px; }
+    .side-nav .inside-nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      text-align: center; }
+    .side-nav .inside-nav .icon {
+      fill: #fff;
+      height: 30px;
+      width: 30px;
+      margin-bottom: 10px;
+      display: block; }
+    .side-nav .inside-nav a {
+      color: #fff;
+      font-size: 0.75rem; }
+
+.side-menu .icon {
+  fill: #fff;
+  width: 14px;
+  height: 15px;
+  margin-right: 10px; }
+.side-menu .nav-button {
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  transition: all 0.3s ease-in-out;
+  font-weight: 400; }
+  .side-menu .nav-button:hover {
+    background-color: #212121; }
+  .side-menu .nav-button.child {
+    padding: 20px 20px 20px 40px;
+    background-color: #1a1a1a; }
+    .side-menu .nav-button.child:hover {
+      background-color: #0c0c0c; }
+
+.page-content.my-courses {
+  padding-left: 250px; }
+
+.page-header {
+  padding: 40px 20px;
+  background: #f2f2f2;
+  margin: 20px; }
+  .page-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; }
+  .page-header .page-title {
+    font-size: 1.5rem;
+    font-weight: 500; }
+  .page-header .page-subtitle {
+    font-size: 1rem;
+    font-weight: 500; }
+
+.card {
+  background: #cecece;
+  width: 170px;
+  height: 220px;
+  position: relative;
+  display: inline-block;
+  background-image: url(https://udemy-images.udemy.com/course/750x422/959700_8bd2_9.jpg);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
+  border: 0; }
+  .card .card-status {
+    color: #fff;
+    position: absolute;
+    display: block;
+    margin: 8px;
+    padding: 4px;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem; }
+    .card .card-status.comming-soon {
+      background-color: #ff0000; }
+    .card .card-status.free-course {
+      background-color: #27921A; }
+  .card .card-description {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 5px; }
+  .card .card-title {
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.5px; }
+  .card .card-category {
+    font-size: 10px;
+    color: #fff; }
+
+.cards-wrapper {
+  padding: 0 20px; }
+
+/*# sourceMappingURL=css.css.map */
