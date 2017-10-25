@@ -17,6 +17,7 @@ body{
   top: 0;
   left: 0;
   right: 0;
+  z-index: 50;
   .container{
     display: flex;
     justify-content: space-between;
@@ -29,6 +30,8 @@ body{
   width: 100%;
   max-width: 100%;
 }
+
+
 .button{
   padding:12px 30px;
   border:0;
@@ -67,6 +70,10 @@ body{
       height:10px;
       margin-right:5px;
     }
+  }
+  &.soft{
+    background-color:#cecece;
+    border:1px solid #202020;
   }
 }
 
@@ -211,9 +218,12 @@ nav{
 .page-content{
   padding-left:250px;
   >.container{
-    padding:20px;
+    padding:20px 20px 40px 20px;
     min-height: calc(100vh - 60px);
     position:relative;
+  }
+  &+.page-footer{
+    margin-left:250px;
   }
 }
 .cards-wrapper{
@@ -225,9 +235,6 @@ nav{
   justify-content: flex-start;
   align-items:flex-start;
   .tab-button{
-    display: flex;
-    justify-content: center;
-    align-items:center;
     padding:15px 30px;
     background-color:$medium-gray;
     color:$dark-color;
@@ -317,7 +324,6 @@ nav{
   .input-field{
     width: 100%;
     margin: 0;
-    // max-width: 600px;
     margin-right: 40px;
     input{
       margin:0;
@@ -356,16 +362,79 @@ nav{
      font-weight: $regular;
   }
 }
+.input-img{
+  padding:20px 0;
+  .container{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
+    display: block;
+    background-color:#f1f1f1;
+    position:relative;
+    padding:20px;
+    font-weight: $medium;
+    .button{
+      text-transform: uppercase;
+    }
+    .top-left{
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      margin:auto;
+    }
+    .top-right{
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      margin:auto;
+    }
+    .center{
+      justify-content: center;
+      align-items:center;
+    }
+  }
+  &.large-banner .container{
+    height: 250px;
+    width: 100%;
+  }
+  &.course-logo{
+    height: 170px;
+    width: 170px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-flow: column;
+    background-color: #f1f1f1;
+    border: 1px solid #202020;
+    span{
+      color:$dark-color;
+      text-transform: uppercase;
+      font-weight: $medium;
+    }
+    .icon{
+      width: 60px;
+      margin:10px;
+      fill:$dark-color;
+    }
+  }
+}
+.page-course{
+}
+.form-block{
+}
+.form-section-title{
+  @include fontsize(24);
+  font-weight: $medium;
+  padding:0 0 20px 0;
+  margin:30px 0 0 0;
+}
 .page-footer{
-    position:absolute;
+    // position:absolute;
     padding:5px 0; 
-    bottom: 0px;
-    right: 0;
-    left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
+    margin-top: -40px;
     background-color:#fff;
     span{
       color:$dark-color;

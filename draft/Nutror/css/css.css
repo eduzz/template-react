@@ -6,6 +6,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+html,
+body {
+  padding: 60px 0 0 0;
+  font-size: 16px; }
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -27,11 +32,6 @@ time, mark, audio, video {
   vertical-align: baseline;
   text-decoration: none;
   font-family: "Montserrat", sans-serif; }
-
-html,
-body {
-  padding: 60px 0 0 0;
-  font-size: 16px; }
 
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -3605,7 +3605,7 @@ input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea.materialize-textarea {
-  background-color: transparent;
+  background-color: #f1f1f1;
   border: none;
   border-bottom: 1px solid #9e9e9e;
   border-radius: 0;
@@ -3620,7 +3620,10 @@ textarea.materialize-textarea {
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
   -webkit-transition: all 0.3s;
-  transition: all 0.3s; }
+  transition: all 0.3s;
+  padding: 0 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
   input:not([type]):disabled, input:not([type])[readonly="readonly"],
   input[type=text]:not(.browser-default):disabled,
   input[type=text]:not(.browser-default)[readonly="readonly"],
@@ -3913,6 +3916,9 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
   opacity: 0;
   -webkit-transition: .2s opacity ease-out, .2s color ease-out;
   transition: .2s opacity ease-out, .2s color ease-out; }
+
+.input-field label {
+  padding-left: 10px; }
 
 .input-field {
   position: relative;
@@ -4441,7 +4447,7 @@ select {
   .select-wrapper input.select-dropdown {
     position: relative;
     cursor: pointer;
-    background-color: transparent;
+    background-color: #f1f1f1;
     border: none;
     border-bottom: 1px solid #9e9e9e;
     outline: none;
@@ -4450,22 +4456,25 @@ select {
     width: 100%;
     font-size: 1rem;
     margin: 0 0 20px 0;
-    padding: 0;
+    padding: 0 10px;
     display: block;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
-            user-select: none; }
+            user-select: none;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
   .select-wrapper span.caret {
     color: initial;
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 0;
     bottom: 0;
     height: 10px;
     margin: auto 0;
     font-size: 10px;
-    line-height: 10px; }
+    line-height: 10px;
+    z-index: 2; }
   .select-wrapper + label {
     position: absolute;
     top: -26px;
@@ -5494,6 +5503,13 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   stroke-linecap: round;
   /*shape-rendering: crispEdges;*/ }
 
+.input-field {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .input-field.bigger input {
+    font-size: 1.5rem;
+    height: 4rem; }
+
 body {
   padding: 60px 0 0 0; }
 
@@ -5506,7 +5522,8 @@ body {
   width: 100%;
   top: 0;
   left: 0;
-  right: 0; }
+  right: 0;
+  z-index: 50; }
   .main-header .container {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -5553,6 +5570,9 @@ body {
     .button.small .icon {
       height: 10px;
       margin-right: 5px; }
+  .button.soft {
+    background-color: #cecece;
+    border: 1px solid #202020; }
 
 .header-logo {
   height: 40px;
@@ -5689,9 +5709,11 @@ nav {
 .page-content {
   padding-left: 250px; }
   .page-content > .container {
-    padding: 20px;
+    padding: 20px 20px 40px 20px;
     min-height: calc(100vh - 60px);
     position: relative; }
+  .page-content + .page-footer {
+    margin-left: 250px; }
 
 .cards-wrapper {
   padding: 10px 0; }
@@ -5708,15 +5730,6 @@ nav {
       -ms-flex-align: start;
           align-items: flex-start; }
   .tabs .tab-button {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     padding: 15px 30px;
     background-color: #d8d8d8;
     color: #232323;
@@ -5838,12 +5851,74 @@ nav {
     letter-spacing: 0.5px;
     font-weight: 400; }
 
+.input-img {
+  padding: 20px 0; }
+  .input-img .container {
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
+    display: block;
+    background-color: #f1f1f1;
+    position: relative;
+    padding: 20px;
+    font-weight: 500; }
+    .input-img .container .button {
+      text-transform: uppercase; }
+    .input-img .container .top-left {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      margin: auto; }
+    .input-img .container .top-right {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      margin: auto; }
+    .input-img .container .center {
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center; }
+  .input-img.large-banner .container {
+    height: 250px;
+    width: 100%; }
+  .input-img.course-logo {
+    height: 170px;
+    width: 170px;
+    margin: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column;
+    background-color: #f1f1f1;
+    border: 1px solid #202020; }
+    .input-img.course-logo span {
+      color: #232323;
+      text-transform: uppercase;
+      font-weight: 500; }
+    .input-img.course-logo .icon {
+      width: 60px;
+      margin: 10px;
+      fill: #232323; }
+
+.form-section-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 0 0 20px 0;
+  margin: 30px 0 0 0; }
+
 .page-footer {
-  position: absolute;
   padding: 5px 0;
-  bottom: 0px;
-  right: 0;
-  left: 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5854,6 +5929,7 @@ nav {
       -ms-flex-pack: center;
           justify-content: center;
   height: 40px;
+  margin-top: -40px;
   background-color: #fff; }
   .page-footer span {
     color: #232323;

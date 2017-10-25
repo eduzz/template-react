@@ -37,3 +37,12 @@
 @import "components/date_picker/default";
 @import "components/date_picker/default.date";
 @import "components/date_picker/default.time";
+
+
+.input-field{
+	box-sizing:border-box;
+  &.bigger input{
+    font-size: 1.5rem;
+    height: 4rem;
+  }
+}

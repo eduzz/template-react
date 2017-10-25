@@ -3541,7 +3541,7 @@ input[type=tel]:not(.browser-default),
 input[type=number]:not(.browser-default),
 input[type=search]:not(.browser-default),
 textarea.materialize-textarea {
-  background-color: transparent;
+  background-color: #f1f1f1;
   border: none;
   border-bottom: 1px solid #9e9e9e;
   border-radius: 0;
@@ -3556,7 +3556,10 @@ textarea.materialize-textarea {
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
   -webkit-transition: all 0.3s;
-  transition: all 0.3s; }
+  transition: all 0.3s;
+  padding: 0 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
   input:not([type]):disabled, input:not([type])[readonly="readonly"],
   input[type=text]:not(.browser-default):disabled,
   input[type=text]:not(.browser-default)[readonly="readonly"],
@@ -3849,6 +3852,9 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
   opacity: 0;
   -webkit-transition: .2s opacity ease-out, .2s color ease-out;
   transition: .2s opacity ease-out, .2s color ease-out; }
+
+.input-field label {
+  padding-left: 10px; }
 
 .input-field {
   position: relative;
@@ -4377,7 +4383,7 @@ select {
   .select-wrapper input.select-dropdown {
     position: relative;
     cursor: pointer;
-    background-color: transparent;
+    background-color: #f1f1f1;
     border: none;
     border-bottom: 1px solid #9e9e9e;
     outline: none;
@@ -4386,22 +4392,25 @@ select {
     width: 100%;
     font-size: 1rem;
     margin: 0 0 20px 0;
-    padding: 0;
+    padding: 0 10px;
     display: block;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
-            user-select: none; }
+            user-select: none;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box; }
   .select-wrapper span.caret {
     color: initial;
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 0;
     bottom: 0;
     height: 10px;
     margin: auto 0;
     font-size: 10px;
-    line-height: 10px; }
+    line-height: 10px;
+    z-index: 2; }
   .select-wrapper + label {
     position: absolute;
     top: -26px;
@@ -5429,5 +5438,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   stroke-width: 4;
   stroke-linecap: round;
   /*shape-rendering: crispEdges;*/ }
+
+.input-field {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+  .input-field.bigger input {
+    font-size: 1.5rem;
+    height: 4rem; }
 
 /*# sourceMappingURL=materialize.css.map */
