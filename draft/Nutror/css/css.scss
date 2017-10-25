@@ -214,6 +214,7 @@ nav{
     >.container{
       padding:20px;
       min-height: calc(100vh - 60px);
+      position:relative;
     }
   }
 }
@@ -323,4 +324,21 @@ nav{
      letter-spacing: 0.5px;
      font-weight: $regular;
   }
+}
+.page-footer{
+    position:absolute;
+    padding:5px 0; 
+    bottom: 0px;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    .logo-footer{
+      height: 20px;
+    }
+    .avatar{
+      height: 30px;
+    }
 }

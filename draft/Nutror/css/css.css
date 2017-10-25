@@ -3999,7 +3999,8 @@ nav {
   padding-left: 250px; }
   .page-content.my-courses > .container {
     padding: 20px;
-    min-height: calc(100vh - 60px); }
+    min-height: calc(100vh - 60px);
+    position: relative; }
 
 .cards-wrapper {
   padding: 10px 0; }
@@ -4104,5 +4105,26 @@ nav {
     font-size: 1rem;
     letter-spacing: 0.5px;
     font-weight: 400; }
+
+.page-footer {
+  position: absolute;
+  padding: 5px 0;
+  bottom: 0px;
+  right: 0;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 40px; }
+  .page-footer .logo-footer {
+    height: 20px; }
+  .page-footer .avatar {
+    height: 30px; }
 
 /*# sourceMappingURL=css.css.map */
