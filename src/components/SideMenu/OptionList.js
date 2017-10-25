@@ -8,13 +8,13 @@ const OptionList = () => (
                 <Option
                     data={{
                         title: 'Biblioteca',
-                        icon: 'paper',
+                        icon: 'package',
                     }}
                 />
                 <Option
                     data={{
                         title: 'Minha Vitrine',
-                        icon: 'paper',
+                        icon: 'package',
                     }}
                 >
                     <Option
@@ -26,7 +26,7 @@ const OptionList = () => (
                     <Option
                         data={{
                             title: 'Cursos',
-                            icon: 'paper',
+                            icon: 'package',
                         }}
                     />
                 </Option>

@@ -2,8 +2,13 @@
 @import "fonts";
 @import "mixins";
 @import "reset";
+@import "materialize";
+
 body{
   padding:60px 0 0 0;
+}
+.waves-effect.waves-dark .waves-ripple {
+  background-color: $darkest-color;
 }
 .main-header{
   background-color:#1B1B1B;
@@ -20,18 +25,23 @@ body{
     padding:0 20px;
   }
 }
-
+.container{
+  width: 100%;
+  max-width: 100%;
+}
 .button{
   padding:12px 30px;
   border:0;
   border-radius:50px;
   background-color:#d8d8d8;
-  span{ 
+  display: inline-block;
+  color:$primary-color;
+  span{
     letter-spacing:0.5px;
     font-weight:$medium;
     // text-transform:uppercase;
     font-size:16px;
-    color:#3A3A3A; 
+    color:#3A3A3A;
   }
   .icon{
       fill:#3a3a3a;
@@ -65,6 +75,12 @@ body{
   display: block;
   img{max-height:100%;}
 }
+nav{
+  color:inherit;
+  background-color:inherit;
+  height: auto;
+  line-height: initial;
+}
 .side-nav{
   background-color: #2F2F2F;
   position: fixed;
@@ -74,6 +90,20 @@ body{
   top:60px;
   left:0;
   box-sizing:border-box;
+  transform: initial;
+  overflow: initial;
+  ::-webkit-scrollbar-track {
+    background-color: $dark-color;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #F4F4F4;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $darkest-color;
+  }
   .block{
     display:block;
     width: 100%;
@@ -84,6 +114,8 @@ body{
       background: #282828;
     }
     &.side-menu{
+      height: calc(100vh - 250px);
+      overflow-y: auto;
       ul{
         list-style:none;
         padding:0;
@@ -115,6 +147,7 @@ body{
       color:#fff;
       @include fontsize(15);
       letter-spacing:1px;
+      margin:2px;
     }
   }
   .inside-nav{
@@ -123,7 +156,7 @@ body{
     left: 0;
     right: 0;
     padding:20px;
-    ul{  
+    ul{
       list-style:none;
       margin:0;
       padding:0;
@@ -157,45 +190,38 @@ body{
     letter-spacing:1px;
     padding:20px;
     display: flex;
-    align-items:center; 
+    align-items:center;
     @include fontsize(14);
     @include transition;
     font-weight: $regular;
+    border-bottom:$dark-color;
+    background-color:$background-color;
     &:hover{
-      background-color:#212121;
+      background-color:$dark-color;
     }
-    &.child{
+  }
+  .submenu .nav-button{
       padding:20px 20px 20px 40px;
-      background-color:#1a1a1a;
+      background-color:$darkest-color;
       &:hover{
         background-color:#0c0c0c;
       }
     }
-  }
 }
 .page-content{
   &.my-courses{
     padding-left:250px;
+    >.container{
+      padding:20px;
+      min-height: calc(100vh - 60px);
+      position:relative;
+    }
   }
 }
-.page-header{
-  padding:40px 20px;
-  background:#f2f2f2;
-  margin:20px;
-  .container{
-    display: flex;
-    align-items:center;
-    justify-content: space-between;
-  }
-  .page-title{
-    @include fontsize(24);
-    font-weight: $medium;
-  }
-  .page-subtitle{
-     @include fontsize(16);
-    font-weight: $medium;
-  }
+.cards-wrapper{
+  padding:10px 0;
 }
+
 .card{
   background:#cecece;
   width: 170px;
@@ -207,6 +233,7 @@ body{
   background-position:center;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
   border:0;
+  margin-right:20px;
   .card-status{
     color:#fff;
     position: absolute;
@@ -250,6 +277,92 @@ body{
     color:#fff;
   }
 }
-.cards-wrapper{
-  padding:0 20px;
+
+.search-bar{
+  padding:20px 0;
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  .input-field{
+    width: 100%;
+    margin: 0;
+    max-width: 600px;
+    margin-right: 40px;
+    input{
+      margin:0;
+      box-sizing:border-box;
+    }
+  }
+  .button{
+    min-width: 120px;
+    text-align: center;
+    margin:0 5px;
+  }
+  .button:last-child{
+    margin:0;
+  }
+}
+.page-header{
+  padding:45px 20px;
+  margin:-20px -20px 0 -20px;
+  // border-bottom:1px solid #cecece;
+  background-color: #fafafa;
+  .container{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    padding:0;
+  }
+  .page-title{
+    @include fontsize(36);
+    font-weight: $regular;
+    margin:0;
+    margin-bottom: 5px;
+  }
+  .page-subtitle{
+     @include fontsize(16);
+     letter-spacing: 0.5px;
+     font-weight: $regular;
+  }
+}
+.page-footer{
+    position:absolute;
+    padding:5px 0;
+    bottom: 0px;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background-color:#fff;
+    span{
+      color:$dark-color;
+      @include fontsize(12);
+      letter-spacing: 0.5px;
+    }
+    .logo-footer{
+      height: 20px;
+      padding:0 0 0 10px;
+      filter: grayscale(100%);
+      @include transition;
+
+    }
+    .avatar{
+      height: 30px;
+      @include transition;
+      transform: scale(0) translateX(-20px) rotate(45deg);
+      transform-origin: 0 100%;
+      margin-top: -20px;
+
+    }
+    &:hover{
+      .avatar{
+        transform: scale(1) translateX(0) rotate(0);
+      }
+      .logo-footer{
+        filter: grayscale(0);
+      }
+    }
+
 }
