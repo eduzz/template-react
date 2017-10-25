@@ -7,7 +7,7 @@ const Option = ({ data, children }) => (
             <Icon name={data.icon} />
             {data.title}
         </a>
-        <ul class="submenu">
+        <ul className="submenu">
             {children}
         </ul>
     </li>

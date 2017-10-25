@@ -4,6 +4,8 @@ import Header from './components/Header';
 import SideMenu from './components/SideMenu';
 import MyCourses from './components/MyCourses';
 
+import 'materialize-css';
+import './assets/css/materialize.css';
 import './assets/css/css.css';
 
 ReactDOM.render(

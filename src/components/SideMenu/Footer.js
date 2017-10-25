@@ -6,19 +6,19 @@ const Footer = () => (
         <ul>
             <li>
                 <a href="">
-                    <Icon name='exit' />
+                    <Icon name='package' />
                     Sair
                 </a>
             </li>
             <li>
                 <a href="">
-                    <Icon name='config' />
+                    <Icon name='package' />
                     Config
                 </a>
             </li>
             <li>
                 <a href="">
-                    <Icon name='help' />
+                    <Icon name='package' />
                     Ajuda
                 </a>
             </li>
