@@ -209,13 +209,11 @@ nav{
     }
 }
 .page-content{
-  &.my-courses{
-    padding-left:250px;
-    >.container{
-      padding:20px;
-      min-height: calc(100vh - 60px);
-      position:relative;
-    }
+  padding-left:250px;
+  >.container{
+    padding:20px;
+    min-height: calc(100vh - 60px);
+    position:relative;
   }
 }
 .cards-wrapper{
