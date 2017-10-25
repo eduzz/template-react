@@ -214,6 +214,7 @@ nav{
     >.container{
       padding:20px;
       min-height: calc(100vh - 60px);
+      position:relative;
     }
   }
 }
@@ -323,4 +324,45 @@ nav{
      letter-spacing: 0.5px;
      font-weight: $regular;
   }
+}
+.page-footer{
+    position:absolute;
+    padding:5px 0; 
+    bottom: 0px;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background-color:#fff;
+    span{
+      color:$dark-color;
+      @include fontsize(12);
+      letter-spacing: 0.5px;
+    }
+    .logo-footer{
+      height: 20px;
+      padding:0 0 0 10px;
+      filter: grayscale(100%);
+      @include transition;
+
+    }
+    .avatar{
+      height: 30px;
+      @include transition;
+      transform: scale(0) translateX(-20px) rotate(45deg);
+      transform-origin: 0 100%;
+      margin-top: -20px;
+
+    }
+    &:hover{
+      .avatar{
+        transform: scale(1) translateX(0) rotate(0);
+      }
+      .logo-footer{
+        filter: grayscale(0);
+      }
+    }
+
 }
