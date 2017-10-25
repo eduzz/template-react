@@ -219,7 +219,40 @@ nav{
 .cards-wrapper{
   padding:10px 0;
 }
-
+.tabs{
+  padding:20px 0; 
+  display: flex;
+  justify-content: flex-start;
+  align-items:flex-start;
+  .tab-button{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding:15px 30px;
+    background-color:$medium-gray;
+    color:$dark-color;
+    margin-right:2px;
+    @include transition;
+    .icon{
+      height: 15px;
+      min-height: 15px;
+      margin-right:10px;
+      fill:$dark-color;
+      @include transition;
+    }
+    &:hover,
+    &.active{
+      color:#fff;
+      background-color:$dark-color;
+      .icon{
+        fill:#fff;
+      }
+    }
+  }
+  .tab-button:last-child{
+    margin-right:0;
+  }
+}
 .card{
   background:#cecece;
   width: 170px;
@@ -284,7 +317,7 @@ nav{
   .input-field{
     width: 100%;
     margin: 0;
-    max-width: 600px;
+    // max-width: 600px;
     margin-right: 40px;
     input{
       margin:0;
@@ -292,7 +325,7 @@ nav{
     }
   }
   .button{
-    min-width: 120px;
+    min-width: 140px;
     text-align: center;
     margin:0 5px;
   }
