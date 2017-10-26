@@ -53,7 +53,7 @@ body{
       // width: 15px;
   }
   &.affirmative{
-    background-color:#27921A;
+    background-color:$affirmative-color;
     span{
       color:#fff;
     }
@@ -72,7 +72,7 @@ body{
     }
   }
   &.soft{
-    background-color:#cecece;
+    background-color:#e6e6e6;
     border:1px solid #202020;
   }
 }
@@ -339,6 +339,8 @@ nav{
     margin:0;
   }
 }
+
+
 .page-header{
   padding:45px 20px;
   margin:-20px -20px 0 -20px;
@@ -464,5 +466,129 @@ nav{
         filter: grayscale(0);
       }
     }
+}
+
+.card-lessons{
+  // padding:20px;
+  margin:20px 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 100%;
+  background-color:#fff;
+  position:relative;
+  border-radius:4px;
+  .card-lessons-title{
+    @include fontsize(18);
+    font-weight: $medium;
+    margin:0;
+  }
+  .card-lessons-resume{
+    color:$affirmative-color;
+    font-weight: $medium;
+    padding:5px 0 10px 0;
+    .icon{
+      fill:$affirmative-color;
+    }
+  }
+  .card-lessons-wrapper{
+    padding:20px;
+  }
+  .card-lessons-header{
+    padding:20px;
+    position:relative;
+      &:before{
+        transition: all .2s ease-in-out;
+        content: '';
+        display: inline-block;
+        background: $medium-gray;
+        width: 2px;
+        height: 16px;
+        border-radius: 16px;
+        transform: translateX(5px) rotate(40deg);
+        position: absolute;
+        top: 0 ;
+        right: 40px; 
+        bottom: 0 ;
+        margin: auto;
+        
+      }
+
+  &:after{
+    transition: all .2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: $medium-gray;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    transform: translateX(-5px) rotate(-40deg);
+    position: absolute;
+    top: 0 ;
+    right: 40px ;
+    bottom: 0 ; 
+    margin: auto;
+  }
+  
+  &:hover{
+    &:before{
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      transform: translateX(-5px) rotate(40deg);
+
+    }
+
+    &:after{
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      position: absolute;
+      transform: translateX(5px) rotate(-40deg);
+    }
+  }
+  }
+  .card-lesson-block{
+    padding:20px 120px 20px 20px;
+    background-color:$light-gray;
+    margin: 10px 0 0 0;
+    display: flex;
+    align-items:flex-start;
+    justify-content: flex-start;
+    position:relative;
+    .button{
+      text-transform: uppercase;
+      font-weight: $medium;
+      letter-spacing: 0.5px;
+      position:absolute;
+      top: 0;
+      bottom:0;
+      right: 20px;
+      display: block;
+      height: 35px;
+      margin:auto;
+    }
+  }
+  .card-lesson-thumb{
+    width: 160px;
+    height: 120px;
+    display: block;
+    background-color:#fff;
+  }
+  .card-lesson-description{
+    line-height: 1.2rem;
+  }
+  .card-lesson-content{
+    padding:0 20px;
+    .lesson-title{
+      @include fontsize(16);
+      font-weight: $medium;
+      margin:0 0 10px 0;
+    }
+  }
+
 
 }

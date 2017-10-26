@@ -41,8 +41,11 @@
 
 .input-field{
 	box-sizing:border-box;
-  &.bigger input{
-    font-size: 1.5rem;
-    height: 4rem;
-  }
+	  &.bigger input{
+	    font-size: 1.5rem;
+	    height: 4rem;
+	  }
+}
+textarea.materialize-textarea{
+	min-height:9rem;
 }

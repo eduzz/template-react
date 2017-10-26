@@ -1673,7 +1673,6 @@ html {
           box-sizing: inherit; }
 
 ul:not(.browser-default) {
-  padding-left: 0;
   list-style-type: none; }
   ul:not(.browser-default) > li {
     list-style-type: none; }
@@ -5510,6 +5509,9 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     font-size: 1.5rem;
     height: 4rem; }
 
+textarea.materialize-textarea {
+  min-height: 9rem; }
+
 body {
   padding: 60px 0 0 0; }
 
@@ -5571,7 +5573,7 @@ body {
       height: 10px;
       margin-right: 5px; }
   .button.soft {
-    background-color: #cecece;
+    background-color: #e6e6e6;
     border: 1px solid #202020; }
 
 .header-logo {
@@ -5957,5 +5959,117 @@ nav {
   .page-footer:hover .logo-footer {
     -webkit-filter: grayscale(0);
             filter: grayscale(0); }
+
+.card-lessons {
+  margin: 20px 0;
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+          box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  border-radius: 4px; }
+  .card-lessons .card-lessons-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 0; }
+  .card-lessons .card-lessons-resume {
+    color: #27921A;
+    font-weight: 500;
+    padding: 5px 0 10px 0; }
+    .card-lessons .card-lessons-resume .icon {
+      fill: #27921A; }
+  .card-lessons .card-lessons-wrapper {
+    padding: 20px; }
+  .card-lessons .card-lessons-header {
+    padding: 20px;
+    position: relative; }
+    .card-lessons .card-lessons-header:before {
+      -webkit-transition: all .2s ease-in-out;
+      transition: all .2s ease-in-out;
+      content: '';
+      display: inline-block;
+      background: #d8d8d8;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      -webkit-transform: translateX(5px) rotate(40deg);
+              transform: translateX(5px) rotate(40deg);
+      position: absolute;
+      top: 0;
+      right: 40px;
+      bottom: 0;
+      margin: auto; }
+    .card-lessons .card-lessons-header:after {
+      -webkit-transition: all .2s ease-in-out;
+      transition: all .2s ease-in-out;
+      content: '';
+      display: inline-block;
+      background: #d8d8d8;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      -webkit-transform: translateX(-5px) rotate(-40deg);
+              transform: translateX(-5px) rotate(-40deg);
+      position: absolute;
+      top: 0;
+      right: 40px;
+      bottom: 0;
+      margin: auto; }
+    .card-lessons .card-lessons-header:hover:before {
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      -webkit-transform: translateX(-5px) rotate(40deg);
+              transform: translateX(-5px) rotate(40deg); }
+    .card-lessons .card-lessons-header:hover:after {
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      position: absolute;
+      -webkit-transform: translateX(5px) rotate(-40deg);
+              transform: translateX(5px) rotate(-40deg); }
+  .card-lessons .card-lesson-block {
+    padding: 20px 120px 20px 20px;
+    background-color: #EEEEEE;
+    margin: 10px 0 0 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+    -webkit-box-pack: start;
+        -ms-flex-pack: start;
+            justify-content: flex-start;
+    position: relative; }
+    .card-lessons .card-lesson-block .button {
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 20px;
+      display: block;
+      height: 35px;
+      margin: auto; }
+  .card-lessons .card-lesson-thumb {
+    width: 160px;
+    height: 120px;
+    display: block;
+    background-color: #fff; }
+  .card-lessons .card-lesson-description {
+    line-height: 1.2rem; }
+  .card-lessons .card-lesson-content {
+    padding: 0 20px; }
+    .card-lessons .card-lesson-content .lesson-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0 0 10px 0; }
 
 /*# sourceMappingURL=css.css.map */
