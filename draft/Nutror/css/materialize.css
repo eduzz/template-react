@@ -3548,7 +3548,7 @@ textarea.materialize-textarea {
   height: 3rem;
   width: 100%;
   font-size: 1rem;
-  margin: 0 0 20px 0;
+  margin: 0 0 30px 0;
   padding: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -3889,8 +3889,8 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
             transform: translateY(12px);
     pointer-events: none; }
     .input-field label:not(.label-icon).active {
-      -webkit-transform: translateY(0) scale(0.8);
-              transform: translateY(0) scale(0.8);
+      -webkit-transform: translateY(-15px) translateX(-8px) scale(0.8);
+              transform: translateY(-15px) translateX(-8px) scale(0.8);
       -webkit-transform-origin: 0 0;
               transform-origin: 0 0; }
   .input-field .prefix {
@@ -3959,7 +3959,7 @@ textarea {
   textarea.materialize-textarea {
     overflow-y: hidden;
     /* prevents scroll bar flash */
-    padding: .8rem 0 1.6rem 0;
+    padding: .8rem 0 1.6rem 10px;
     /* prevents text jump on Enter keypress */
     resize: none;
     min-height: 3rem; }
@@ -3984,8 +3984,8 @@ textarea {
 
 /* Autocomplete */
 .autocomplete-content {
-  margin-top: -20px;
-  margin-bottom: 20px;
+  margin-top: -30px;
+  margin-bottom: 30px;
   display: block;
   opacity: 1;
   position: static; }
@@ -4390,7 +4390,7 @@ select {
     line-height: 3rem;
     width: 100%;
     font-size: 1rem;
-    margin: 0 0 20px 0;
+    margin: 0 0 30px 0;
     padding: 0 10px;
     display: block;
     -webkit-user-select: none;
@@ -4413,7 +4413,8 @@ select {
   .select-wrapper + label {
     position: absolute;
     top: -26px;
-    font-size: 0.8rem; }
+    font-size: 0.8rem;
+    padding-left: 0; }
 
 select:disabled {
   color: rgba(0, 0, 0, 0.42); }
@@ -5447,5 +5448,4 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 textarea.materialize-textarea {
   min-height: 9rem; }
-
 /*# sourceMappingURL=materialize.css.map */

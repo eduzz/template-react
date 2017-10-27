@@ -405,16 +405,16 @@ nav{
     justify-content: center;
     align-items:center;
     flex-flow: column;
-    background-color: #f1f1f1;
-    border: 1px solid #202020;
+    background-color: $medium-gray;
+    // border: 1px solid #202020;
     span{
       color:$dark-color;
       text-transform: uppercase;
       font-weight: $medium;
     }
     .icon{
-      width: 60px;
-      margin:10px;
+      width: 50px;
+      margin:20px;
       fill:$dark-color;
     }
   }
@@ -469,7 +469,6 @@ nav{
 }
 
 .card-lessons{
-  // padding:20px;
   margin:20px 0;
   box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
   display: block;
@@ -477,6 +476,10 @@ nav{
   background-color:#fff;
   position:relative;
   border-radius:4px;
+  transition: all 0.3s ease-in-out;
+  &:hover{
+    box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+  }
   .card-lessons-title{
     @include fontsize(18);
     font-weight: $medium;
@@ -485,17 +488,19 @@ nav{
   .card-lessons-resume{
     color:$affirmative-color;
     font-weight: $medium;
-    padding:5px 0 10px 0;
+    padding:5px 0 0 0;
     .icon{
       fill:$affirmative-color;
     }
   }
   .card-lessons-wrapper{
     padding:20px;
+    padding-top: 0!important;
   }
   .card-lessons-header{
     padding:20px;
     position:relative;
+    cursor:pointer;
       &:before{
         transition: all .2s ease-in-out;
         content: '';
@@ -528,8 +533,12 @@ nav{
     bottom: 0 ; 
     margin: auto;
   }
-  
   &:hover{
+    &:before,&:after{
+      background:$affirmative-color;
+    }
+  }
+  &.active{
     &:before{
       content: '';
       display: inline-block;
