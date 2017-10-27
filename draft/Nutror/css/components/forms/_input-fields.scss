@@ -191,7 +191,7 @@ textarea.materialize-textarea {
     pointer-events: none;
 
     &:not(.label-icon).active {
-      transform: translateY(0) scale(.8);
+      transform: translateY(-15px) translateX(-8px) scale(.8);
       // transform: translateY(-14px) scale(.8);
       transform-origin: 0 0;
     }
@@ -300,7 +300,7 @@ textarea {
     }
 
     overflow-y: hidden; /* prevents scroll bar flash */
-    padding: .8rem 0 1.6rem 0; /* prevents text jump on Enter keypress */
+    padding: .8rem 0 1.6rem 10px; /* prevents text jump on Enter keypress */
     resize: none;
     min-height: $input-height;
   }
