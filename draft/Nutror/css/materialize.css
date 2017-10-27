@@ -5071,7 +5071,6 @@ input[type=range]:focus::-ms-fill-upper {
 }*/
 .picker__date-display {
   text-align: left;
-  background-color: #26a69a;
   color: #fff;
   padding: 18px;
   font-weight: 300; }
@@ -5152,7 +5151,7 @@ input[type=range]:focus::-ms-fill-upper {
   border-radius: 50%;
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
-  background-color: #26a69a;
+  background-color: #ee6e73;
   color: #ffffff; }
   .picker__day--selected.picker__day--outfocus,
   .picker__day--selected:hover.picker__day--outfocus,

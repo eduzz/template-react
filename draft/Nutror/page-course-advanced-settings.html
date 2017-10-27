@@ -208,14 +208,14 @@
         </div>
         
         <section class="form-section">
-          <h3 class="form-section-title">Tipos de Acesso</h3>
+          <h3 class="form-block-title">Tipos de Acesso</h3>
           <div class="row">
             <div class="col m12 l4">
               <span class="form-block">
                 <input type="radio" class="with-gap" id="restrito" name="acess-type">
                 <label for="restrito">
-                  <span class="radio-title">Gratuito</span>
-                  <p class="radio-description">Esse acesso tem integração com a Eduzz e os usuários precisam adquirir o curso.</p>
+                  <span class="radio-title">Pago</span>
+                  <p class="radio-description">Esse acesso tem <strong>integração com a Eduzz </strong>e os usuários precisam adquirir o curso.</p>
                 </label>
               </span>
             </div>
@@ -224,7 +224,7 @@
                 <input type="radio" class="with-gap" id="gatuito-restrito" name="acess-type">
                 <label for="gatuito-restrito">
                   <span class="radio-title">Gratuito Restrito</span>
-                  <p class="radio-description">Esse acesso tem integração com a Eduzz e os usuários precisam adquirir o curso.</p>
+                  <p class="radio-description">Com o acesso restrito qualquer pessoa pode acessar o curso e <strong>é necessário o cadastro</strong></p>
                 </label>
               </span>
             </div>
@@ -232,9 +232,28 @@
               <span class="form-block">
                 <input type="radio" class="with-gap" id="pago" name="acess-type">
                 <label for="pago">
-                  <span class="radio-title">Pago</span>
-                  <p class="radio-description">Esse acesso tem integração com a Eduzz e os usuários precisam adquirir o curso.</p>
+                  <span class="radio-title">Público</span>
+                  <p class="radio-description">Com o acesso público qualquer pessoa pode acessar o curso sem a necessidade de um cadastro.</p>
                 </label>
+              </span>
+            </div>
+          </div>
+        </section>
+
+        <section class="form-section">
+          <div class="row">
+            <div class="col m12 l4">
+              <span class="form-block">
+                <h3 class="form-block-title">Data de Liberação</h3>
+                <p class="date-description">Esse acesso tem integração com a Eduzz e os usuários precisam adquirir o curso.</p>
+                <input type="text" class="datepicker">
+            </div>
+            <div class="col m12 l4">
+              <span class="form-block">
+                <h3 class="form-block-title">Data de Liberação</h3>
+                  <p class="date-description">Esse acesso tem integração com a Eduzz e os usuários precisam adquirir o curso.</p>
+                  <input type="text" class="datepicker">
+
               </span>
             </div>
           </div>
@@ -248,9 +267,32 @@
     </footer>
     <script>
        $(document).ready(function() {
-          $('select').material_select();
-          $('.collapsible').collapsible();
-      });
+            $('select').material_select();
+            $('.collapsible').collapsible();
+        });
+       $('.datepicker').pickadate({
+        labelMonthNext: 'Próximo mês',
+        labelMonthPrev: 'Mês Anterior',
+        labelMonthSelect: 'Selecione um mês',
+        labelYearSelect: 'Selecione um ano',
+        monthsFull: [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+        monthsShort: [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+        weekdaysFull: [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' ],
+        weekdaysLetter: [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+          selectMonths: true, // Creates a dropdown to control month
+          selectYears: 15, // Creates a dropdown of 15 years to control year,
+          today: 'Hoje',
+          clear: 'Limpar',
+          close: 'Ok',
+          closeOnSelect: false, // Close upon selecting a date,
+          format: 'dd/mm/yyyy'
+        });
+       var $input = $('.datepicker').pickadate()
+
+        // Use the picker object directly.
+        var picker = $input.pickadate('picker')
+
     </script>
   </body>
 </html>

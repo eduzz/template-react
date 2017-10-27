@@ -5135,7 +5135,7 @@ input[type=range]:focus::-ms-fill-upper {
 }*/
 .picker__date-display {
   text-align: left;
-  background-color: #26a69a;
+  background-color: #2f2f2f;
   color: #fff;
   padding: 18px;
   font-weight: 300; }
@@ -5216,7 +5216,7 @@ input[type=range]:focus::-ms-fill-upper {
   border-radius: 50%;
   -webkit-transform: scale(0.9);
           transform: scale(0.9);
-  background-color: #26a69a;
+  background-color: #1b1b1b;
   color: #ffffff; }
   .picker__day--selected.picker__day--outfocus,
   .picker__day--selected:hover.picker__day--outfocus,
@@ -5914,11 +5914,19 @@ nav {
       fill: #232323; }
 
 .form-section {
-  padding-bottom: 20px;
+  padding: 20px 0;
   border-bottom: 1px solid #EEEEEE; }
   .form-section .form-block {
-    padding: 0 0 30px 0;
+    padding: 20px 0;
     display: inline-block; }
+    .form-section .form-block p {
+      line-height: 1.2rem; }
+    .form-section .form-block input.datepicker {
+      margin-bottom: 0; }
+  .form-section .form-block-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 0 0 10px 0; }
 
 .form-section-title {
   font-size: 1.5rem;
@@ -6087,5 +6095,8 @@ nav {
       font-size: 1rem;
       font-weight: 500;
       margin: 0 0 10px 0; }
+
+.date-description {
+  margin-bottom: 10px; }
 
 /*# sourceMappingURL=css.css.map */

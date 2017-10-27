@@ -2,7 +2,7 @@
 @import "fonts";
 @import "mixins";
 @import "reset";
-@import "materialize";
+@import "materialize";  
 
 body{
   padding:60px 0 0 0;
@@ -17,7 +17,7 @@ body{
   top: 0;
   left: 0;
   right: 0;
-  z-index: 50;
+  z-index: 50; 
   .container{
     display: flex;
     justify-content: space-between;
@@ -386,7 +386,7 @@ nav{
       position: absolute;
       top: 20px;
       right: 20px;
-      margin:auto;
+      margin:auto; 
     }
     .center{
       justify-content: center;
@@ -422,13 +422,23 @@ nav{
 .page-course{
 }
 .form-section{
-  padding-bottom: 20px;
+  padding: 20px 0;
   border-bottom:1px solid $light-gray;
   .form-block{
-    padding: 0 0 30px 0;
+    padding: 20px 0;
     display: inline-block;
+    p{
+      line-height: 1.2rem;
+    }
+   input.datepicker{
+    margin-bottom:0;
+    }
   }
-  
+  .form-block-title{
+    @include fontsize(18);
+    font-weight: $medium;
+    margin:0 0 10px 0;
+  }
 }
 .form-section-title{
   @include fontsize(24);
@@ -481,7 +491,7 @@ nav{
   display: block;
   width: 100%;
   background-color:#fff;
-  position:relative;
+  position:relative; 
   border-radius:4px;
   transition: all 0.3s ease-in-out;
   &:hover{
@@ -606,5 +616,8 @@ nav{
     }
   }
 
+} 
 
+.date-description{
+  margin-bottom:10px;
 }
