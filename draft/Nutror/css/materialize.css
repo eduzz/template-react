@@ -4057,11 +4057,11 @@ textarea {
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:before,
 [type="radio"].with-gap:checked + label:after {
-  border: 2px solid #26a69a; }
+  border: 2px solid #ee6e73; }
 
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:after {
-  background-color: #26a69a; }
+  background-color: #ee6e73; }
 
 [type="radio"]:checked + label:after {
   -webkit-transform: scale(1.02);
@@ -4168,8 +4168,8 @@ form p:last-child {
   height: 22px;
   border-top: 2px solid transparent;
   border-left: 2px solid transparent;
-  border-right: 2px solid #26a69a;
-  border-bottom: 2px solid #26a69a;
+  border-right: 2px solid #ee6e73;
+  border-bottom: 2px solid #ee6e73;
   -webkit-transform: rotate(40deg);
           transform: rotate(40deg);
   -webkit-backface-visibility: hidden;
@@ -4188,7 +4188,7 @@ form p:last-child {
   height: 22px;
   border-top: none;
   border-left: none;
-  border-right: 2px solid #26a69a;
+  border-right: 2px solid #ee6e73;
   border-bottom: none;
   -webkit-transform: rotate(90deg);
           transform: rotate(90deg);
@@ -5448,4 +5448,5 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 textarea.materialize-textarea {
   min-height: 9rem; }
+
 /*# sourceMappingURL=materialize.css.map */

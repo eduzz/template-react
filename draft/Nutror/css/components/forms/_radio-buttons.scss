@@ -67,7 +67,8 @@
 
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:after {
-  background-color: $radio-fill-color;
+  // background-color: $radio-fill-color;
+  background-color: $primary-color;
 }
 
 [type="radio"]:checked + label:after {
