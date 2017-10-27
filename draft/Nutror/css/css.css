@@ -5903,15 +5903,14 @@ nav {
     -webkit-box-direction: normal;
         -ms-flex-flow: column;
             flex-flow: column;
-    background-color: #f1f1f1;
-    border: 1px solid #202020; }
+    background-color: #d8d8d8; }
     .input-img.course-logo span {
       color: #232323;
       text-transform: uppercase;
       font-weight: 500; }
     .input-img.course-logo .icon {
-      width: 60px;
-      margin: 10px;
+      width: 50px;
+      margin: 20px;
       fill: #232323; }
 
 .form-section-title {
@@ -5969,7 +5968,12 @@ nav {
   width: 100%;
   background-color: #fff;
   position: relative;
-  border-radius: 4px; }
+  border-radius: 4px;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out; }
+  .card-lessons:hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 2px 20px 0 rgba(0, 0, 0, 0.1); }
   .card-lessons .card-lessons-title {
     font-size: 1.125rem;
     font-weight: 500;
@@ -5977,14 +5981,16 @@ nav {
   .card-lessons .card-lessons-resume {
     color: #27921A;
     font-weight: 500;
-    padding: 5px 0 10px 0; }
+    padding: 5px 0 0 0; }
     .card-lessons .card-lessons-resume .icon {
       fill: #27921A; }
   .card-lessons .card-lessons-wrapper {
-    padding: 20px; }
+    padding: 20px;
+    padding-top: 0 !important; }
   .card-lessons .card-lessons-header {
     padding: 20px;
-    position: relative; }
+    position: relative;
+    cursor: pointer; }
     .card-lessons .card-lessons-header:before {
       -webkit-transition: all .2s ease-in-out;
       transition: all .2s ease-in-out;
@@ -6017,7 +6023,9 @@ nav {
       right: 40px;
       bottom: 0;
       margin: auto; }
-    .card-lessons .card-lessons-header:hover:before {
+    .card-lessons .card-lessons-header:hover:before, .card-lessons .card-lessons-header:hover:after {
+      background: #27921A; }
+    .card-lessons .card-lessons-header.active:before {
       content: '';
       display: inline-block;
       width: 2px;
@@ -6025,7 +6033,7 @@ nav {
       border-radius: 16px;
       -webkit-transform: translateX(-5px) rotate(40deg);
               transform: translateX(-5px) rotate(40deg); }
-    .card-lessons .card-lessons-header:hover:after {
+    .card-lessons .card-lessons-header.active:after {
       content: '';
       display: inline-block;
       width: 2px;
@@ -6072,4 +6080,5 @@ nav {
       font-size: 1rem;
       font-weight: 500;
       margin: 0 0 10px 0; }
+
 /*# sourceMappingURL=css.css.map */
