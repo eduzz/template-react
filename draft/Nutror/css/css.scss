@@ -588,13 +588,13 @@ nav{
     display: flex;
     align-items:flex-start;
     justify-content: flex-start;
-    position:relative;
-    .button{
+    position:relative; 
+    .button{ 
       text-transform: uppercase;
       font-weight: $medium;
       letter-spacing: 0.5px;
       position:absolute;
-      top: 0;
+      top: 0; 
       bottom:0;
       right: 20px;
       display: block;

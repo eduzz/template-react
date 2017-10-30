@@ -62,13 +62,13 @@
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:before,
 [type="radio"].with-gap:checked + label:after {
-  border: $radio-border;
+  border: 2px solid $affirmative-color;
 }
 
 [type="radio"]:checked + label:after,
 [type="radio"].with-gap:checked + label:after {
   // background-color: $radio-fill-color;
-  background-color: $primary-color;
+  background-color: $affirmative-color;
 }
 
 [type="radio"]:checked + label:after {

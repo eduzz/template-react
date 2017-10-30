@@ -1,39 +1,20 @@
 /*
 Error: Undefined variable: "$affirmative-color".
-        on line 20 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_switches.scss
-        from line 21 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss
+        on line 65 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_radio-buttons.scss
+        from line 19 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss
         from line 29 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss
 
-15: // @import "components/roboto";
-16: @import "components/typography";
-17: @import "components/transitions";
-18: // @import "components/cards";
-19: @import "components/toast";
-20: // @import "components/tabs";
-21: @import "components/tooltip";
-22: @import "components/buttons";
-23: @import "components/dropdown";
-24: @import "components/waves";
-25: @import "components/modal";
-
 Backtrace:
-/Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_switches.scss:20
-/Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss:21
+/Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_radio-buttons.scss:65
+/Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss:19
 /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss:29
 /Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/script/tree/variable.rb:49:in `_perform'
 /Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/script/tree/node.rb:58:in `perform'
+/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/script/tree/list_literal.rb:63:in `block in _perform'
+/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/script/tree/list_literal.rb:63:in `map'
+/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/script/tree/list_literal.rb:63:in `_perform'
+/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/script/tree/node.rb:58:in `perform'
 /Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:397:in `visit_prop'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/stack.rb:79:in `block in with_base'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/stack.rb:115:in `with_frame'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/stack.rb:79:in `with_base'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `visit'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:433:in `block (2 levels) in visit_rule'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:433:in `map'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:433:in `block in visit_rule'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:181:in `with_environment'
-/Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:431:in `visit_rule'
 /Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/base.rb:36:in `visit'
 /Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/tree/visitors/perform.rb:160:in `block in visit'
 /Applications/Koala.app/Contents/Resources/app.nw/rubygems/gems/sass-3.4.23/lib/sass/stack.rb:79:in `block in with_base'
@@ -103,4 +84,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$affirmative-color\".\A         on line 20 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_switches.scss\A         from line 21 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss\A         from line 29 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss\A \A 15: // @import \"components/roboto\";\A 16: @import \"components/typography\";\A 17: @import \"components/transitions\";\A 18: // @import \"components/cards\";\A 19: @import \"components/toast\";\A 20: // @import \"components/tabs\";\A 21: @import \"components/tooltip\";\A 22: @import \"components/buttons\";\A 23: @import \"components/dropdown\";\A 24: @import \"components/waves\";\A 25: @import \"components/modal\";"; }
+  content: "Error: Undefined variable: \"$affirmative-color\".\A         on line 65 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_radio-buttons.scss\A         from line 19 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss\A         from line 29 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss"; }
