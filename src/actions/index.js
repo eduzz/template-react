@@ -1,11 +1,6 @@
-export const searchFilter = text => ({
-    type: 'SEARCH',
+export const searchCourses = text => ({
+    type: 'SEARCH_COURSES',
     text,
-});
-
-export const cleanSearchFilter = text => ({
-    type: 'SEARCH',
-    text: '',
 });
 
 export const getCourses = () => ({
