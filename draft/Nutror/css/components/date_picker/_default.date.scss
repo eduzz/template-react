@@ -312,9 +312,9 @@
 
 .picker__date-display {
   text-align: left;
-  background-color: $datepicker-date-bg;
+  background-color: $background-color;
   color: #fff;
-  padding: 18px;
+  padding: 18px; 
   font-weight: 300;
 }
 
@@ -334,7 +334,7 @@
 .picker__nav--next:hover {
   cursor: pointer;
   color: #000000;
-  background: $datepicker-selected-outfocus;
+  background: transparentize($affirmative-color, 0.2);
 }
 
 .picker__weekday-display {
@@ -393,7 +393,7 @@
 
 //Today style
 .picker__day.picker__day--today {
-  color: $datepicker-selected;
+  color: $affirmative-color;
 }
 
 .picker__day.picker__day--today.picker__day--selected {
@@ -412,7 +412,7 @@
   // Circle background
   border-radius: 50%;
   transform: scale(.9);
-  background-color: $datepicker-selected;
+  background-color: $primary-color;
   &.picker__day--outfocus {
     background-color: $datepicker-selected-outfocus;
   }
@@ -428,7 +428,7 @@
 .picker__close, .picker__today, .picker__clear {
   font-size: 1.1rem;
   padding: 0 1rem;
-  color: $datepicker-selected;
+  color: $affirmative-color;
 }
 .picker__clear {
 	color:#f44336;
@@ -452,5 +452,5 @@
   border-left: 0.75em solid #676767;
 }
 button.picker__today:focus, button.picker__clear:focus, button.picker__close:focus {
-  background-color: $datepicker-selected-outfocus;
+  background-color: transparentize($affirmative-color, 0.2);
 }
