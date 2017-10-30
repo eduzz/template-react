@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutror</title>
     <link rel="stylesheet" href="css/css.css">
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified JavaScript -->
   </head>
   <body>
@@ -293,6 +293,21 @@
           </div>
         </section>
 
+        <section class="form-section">
+          <div class="row">
+            <div class="col m12 l12">
+              <span class="form-block">
+                    <h3 class="form-block-title">Tags</h3>
+                    <p class="tag-description">As tags são utilizadas para que os usuários consigam achar o seu curso mais fácilmente</p>
+                     <div class="chips chips-autocomplete chips-placeholder">
+                       <input type="text">
+                     </div>
+              </span>
+            </div>
+          </div>
+        </section>
+
+
        </div>
     </section>
     <footer class="page-footer">
@@ -305,6 +320,12 @@
             $('select').material_select();
             $('.collapsible').collapsible();
         });
+         $('.chips').material_chip();
+         $('.chips-placeholder').material_chip({
+            placeholder: 'Digite uma tag e aperte enter',
+            secondaryPlaceholder: 'Digite outra tag',
+          });
+
        $('.datepicker').pickadate({
           labelMonthNext: 'Próximo mês',
           labelMonthPrev: 'Mês Anterior',

@@ -427,6 +427,7 @@ nav{
   .form-block{
     padding: 20px 0;
     display: inline-block;
+    width: 100%;
     p{
       line-height: 1.2rem;
     }
@@ -573,10 +574,10 @@ nav{
       content: '';
       display: inline-block;
       width: 2px;
-      height: 16px;
+      height: 16px; 
       border-radius: 16px;
       position: absolute;
-      transform: translateX(5px) rotate(-40deg);
+      transform: translateX(5px) rotate(-40deg); 
     }
   }
   }
@@ -629,4 +630,11 @@ nav{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+}
+.chips{
+  width:100%;
+  min-height: 9rem;
+  background: #f1f1f1;
+  margin: 10px 0;
+  padding: 5px;
 }
