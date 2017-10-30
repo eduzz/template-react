@@ -247,6 +247,7 @@
                 <h3 class="form-block-title">Data de Liberação</h3>
                 <p class="date-description">Esse acesso tem integração com a Eduzz e os usuários precisam adquirir o curso.</p>
                 <input type="text" class="datepicker">
+              </span>
             </div>
             <div class="col m12 l4">
               <span class="form-block">
@@ -258,6 +259,40 @@
             </div>
           </div>
         </section>
+
+        <section class="form-section">
+          <div class="row">
+            <div class="col m12 l4">
+              <span class="form-block">
+                <div class="switch">
+                  <label>
+                    <input type="checkbox" id="check-destaque">
+                    <span class="lever"></span>
+                  </label>
+                  <label for="check-destaque">
+                    <h3 class="form-block-title">É Destaque</h3>
+                    <p class="check-description">O curso será oferecido nas áreas promocionais da plataforma.</p>
+                  </label>
+                </div>
+              </span>
+            </div>
+            <div class="col m12 l4">
+              <span class="form-block">
+                <div class="switch">
+                  <label>
+                    <input type="checkbox" id="check-comentario">
+                    <span class="lever"></span>
+                  </label>
+                  <label for="check-comentario">
+                    <h3 class="form-block-title">Comentários</h3>
+                    <p class="date-description">Alunos/usuários podem fazer comentários, nas aulas, que serão moderados pelo produtor.</p>
+                  </label>
+                </div>
+              </span>
+            </div>
+          </div>
+        </section>
+
        </div>
     </section>
     <footer class="page-footer">
@@ -271,15 +306,15 @@
             $('.collapsible').collapsible();
         });
        $('.datepicker').pickadate({
-        labelMonthNext: 'Próximo mês',
-        labelMonthPrev: 'Mês Anterior',
-        labelMonthSelect: 'Selecione um mês',
-        labelYearSelect: 'Selecione um ano',
-        monthsFull: [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
-        monthsShort: [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
-        weekdaysFull: [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado' ],
-        weekdaysShort: [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' ],
-        weekdaysLetter: [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
+          labelMonthNext: 'Próximo mês',
+          labelMonthPrev: 'Mês Anterior',
+          labelMonthSelect: 'Selecione um mês',
+          labelYearSelect: 'Selecione um ano',
+          monthsFull: [ 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro' ],
+          monthsShort: [ 'Jan', 'Fev', 'Mar', 'Abr', 'Maio', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez' ],
+          weekdaysFull: [ 'Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado' ],
+          weekdaysShort: [ 'Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab' ],
+          weekdaysLetter: [ 'D', 'S', 'T', 'Q', 'Q', 'S', 'S' ],
           selectMonths: true, // Creates a dropdown to control month
           selectYears: 15, // Creates a dropdown of 15 years to control year,
           today: 'Hoje',

@@ -13,9 +13,9 @@ body{
 .main-header{
   background-color:#1B1B1B;
   position: fixed;
-  width:100%;
+  width:100%;  
   top: 0;
-  left: 0;
+  left: 0; 
   right: 0;
   z-index: 50; 
   .container{
@@ -430,8 +430,12 @@ nav{
     p{
       line-height: 1.2rem;
     }
+    .radio-description{
+      max-width: 320px;
+    }
    input.datepicker{
     margin-bottom:0;
+    max-width: 200px; 
     }
   }
   .form-block-title{
@@ -439,7 +443,7 @@ nav{
     font-weight: $medium;
     margin:0 0 10px 0;
   }
-}
+} 
 .form-section-title{
   @include fontsize(24);
   font-weight: $medium;
@@ -447,7 +451,6 @@ nav{
   margin:30px 0 0 0;
 }
 .page-footer{
-    // position:absolute;
     padding:5px 0; 
     display: flex;
     align-items: center;
@@ -459,7 +462,7 @@ nav{
       color:$dark-color;
       @include fontsize(12);
       letter-spacing: 0.5px;
-    }
+    } 
     .logo-footer{
       height: 20px;
       padding:0 0 0 10px;
@@ -617,7 +620,13 @@ nav{
   }
 
 } 
-
+.check-description,
 .date-description{
   margin-bottom:10px;
+  @include fontsize(16);
+}
+.switch{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
