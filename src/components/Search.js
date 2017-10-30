@@ -1,10 +1,10 @@
 import React from 'react';
-import Icon from '../Icon';
+import Icon from './Icon';
 
-const Search = () => (
+const Search = ({ onSearch }) => (
     <div className="search-bar">
         <div className="input-field">
-            <input id="icon_search" type="text" />
+            <input id="icon_search" type="text" rel="search" onKeyUp={ input => onSearch(input.target.value) } />
             <label htmlFor="icon_search">Pesquisar</label>
         </div>
         <a className="button waves-light waves-effect">

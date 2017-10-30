@@ -1,7 +1,7 @@
 import React from 'react';
-import Icon from '../Icon';
+import Icon from './Icon';
 
-const Footer = () => (
+const SideMenuFooter = () => (
     <nav className="inside-nav">
         <ul>
             <li>
@@ -26,4 +26,4 @@ const Footer = () => (
     </nav>
 );
 
-export default Footer;
+export default SideMenuFooter;
