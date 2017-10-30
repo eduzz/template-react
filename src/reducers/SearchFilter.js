@@ -1,4 +1,4 @@
-const SearchFilter = (state = {}, action) {
+const searchFilter = (state = {}, action) => {
 	switch (action.type) {
         case 'SEARCH_COURSES':
             return {
@@ -10,4 +10,4 @@ const SearchFilter = (state = {}, action) {
     }
 };
 
-export default SearchFilter;
+export default searchFilter;
