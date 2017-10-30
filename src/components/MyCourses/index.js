@@ -1,7 +1,7 @@
 import React from 'react';
 import PageHeader from './PageHeader';
-import CardList from './CardList';
-import Search from './Search';
+import VisibleCardList from './VisibleCardList';
+import Search from '../Search';
 import Footer from '../Footer';
 
 const MyCourses = () => (
@@ -9,7 +9,7 @@ const MyCourses = () => (
         <div className="container">
             <PageHeader />
             <Search />
-            <CardList />
+            <VisibleCardList />
             <Footer />
         </div>
     </section>

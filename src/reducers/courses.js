@@ -10,3 +10,7 @@ const courses = (state = [], action) => {
 };
 
 export default courses;
+
+export const getVisibleCourses = (state, filter) => {
+	state.filter(course => course.title.includes(filter));
+};

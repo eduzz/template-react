@@ -1,10 +1,10 @@
 import React from 'react';
 import Card from './Card';
 
-const CardList = () => (
+const CardList = ({ courses }) => (
     <div className="container">
         <div className="cards-wrapper">
-            <Card/>
+            { courses.map(course => <Card key={ course.id } data={ course } />) }
         </div>
     </div>
 );
