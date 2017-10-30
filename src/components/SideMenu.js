@@ -1,6 +1,6 @@
 import React from 'react';
 import Welcome from './Welcome';
-import Footer from './Footer';
+import SideMenuFooter from './SideMenuFooter';
 import OptionList from './OptionList';
 
 const SideMenu = () => (
@@ -8,7 +8,7 @@ const SideMenu = () => (
         <div className="container">
             <Welcome />
             <OptionList />
-            <Footer />
+            <SideMenuFooter />
         </div>
     </aside>
 );
