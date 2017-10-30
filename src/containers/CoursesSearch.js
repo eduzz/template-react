@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Search from '../Search';
-import { searchCourses } from '../../actions'
+import Search from '../components/Search';
+import { searchCourses } from '../actions'
 
 const CoursesSearch = ({ dispatch }) => (
 	<Search onSearch={text =>

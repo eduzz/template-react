@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import CourseList from '../CourseList';
+import CourseList from '../components/CourseList';
 import { connect } from 'react-redux';
-import { getCourses } from '../../actions';
-import { getVisibleCourses } from '../../reducers';
+import { getCourses } from '../actions';
+import { getVisibleCourses } from '../reducers';
 
 class VisibleCourseList extends Component {
 	componentDidMount() {

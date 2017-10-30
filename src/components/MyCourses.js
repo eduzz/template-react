@@ -1,8 +1,8 @@
 import React from 'react';
 import PageHeader from './PageHeader';
-import VisibleCourseList from './VisibleCourseList';
-import CoursesSearch from './CoursesSearch';
-import Footer from '../Footer';
+import VisibleCourseList from '../containers/VisibleCourseList';
+import CoursesSearch from '../containers/CoursesSearch';
+import Footer from './Footer';
 
 const MyCourses = () => (
     <section className="page-content my-courses">
