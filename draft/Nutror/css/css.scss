@@ -819,7 +819,12 @@ nav{
 .chips{
   width:100%;
   min-height: 9rem;
-  background: #f1f1f1;
+  background: #fff;
+  border: 1px solid #828282;
   margin: 10px 0;
   padding: 5px;
+  &.focus{
+    border-bottom: 1px solid $dark-color;
+    box-shadow: 0 1px 0 0 $dark-color;
+  }
 }
