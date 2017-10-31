@@ -5851,14 +5851,41 @@ nav {
   .filters .container {
     height: calc(100vh - 130px);
     overflow-y: auto;
-    padding-top: 50px; }
+    padding-top: 60px; }
   .filters .filter-header {
     padding: 10px 20px;
     background-color: #fff;
     z-index: 9999; }
   .filters .block {
-    padding: 10px 20px;
     border-bottom: 1px solid #eaeaea; }
+  .filters .block-header {
+    padding: 10px 20px;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; }
+    .filters .block-header label {
+      font-weight: 500;
+      cursor: pointer;
+      color: #2f2f2f; }
+    .filters .block-header:after, .filters .block-header:before {
+      height: 12px; }
+    .filters .block-header:after {
+      right: 35px; }
+    .filters .block-header:before {
+      right: 38px; }
+    .filters .block-header.active:after, .filters .block-header.active:before {
+      height: 12px; }
+    .filters .block-header.active:after {
+      -webkit-transform: translateX(2px) rotate(-40deg);
+              transform: translateX(2px) rotate(-40deg); }
+    .filters .block-header.active:before {
+      -webkit-transform: translateX(-2px) rotate(40deg);
+              transform: translateX(-2px) rotate(40deg); }
+    .filters .block-header:hover {
+      background-color: rgba(238, 238, 238, 0.5); }
+      .filters .block-header:hover label {
+        color: #232323; }
+  .filters .block-content {
+    padding: 0 20px; }
   .filters .filter-header {
     position: absolute;
     top: 0;
@@ -5870,8 +5897,8 @@ nav {
     height: 30px;
     display: block;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     padding: 7px;
     background-color: #EEEEEE;
     border-radius: 50%;
@@ -5903,8 +5930,19 @@ nav {
     left: 0;
     right: 0;
     background-color: #fff; }
+  .filters .switch label input[type=checkbox]:checked + .lever:before, .filters .switch label input[type=checkbox]:checked + .lever:after {
+    left: 16px; }
+  .filters .switch {
+    padding: 5px 0; }
+    .filters .switch label .lever {
+      width: 30px;
+      height: 16px; }
+      .filters .switch label .lever:before, .filters .switch label .lever:after {
+        width: 12px;
+        height: 12px;
+        left: 2px; }
   .filters .input-field {
-    margin-top: 15px; }
+    margin-top: 5px; }
     .filters .input-field input {
       height: 40px;
       font-size: 0.8125rem; }
@@ -5914,7 +5952,8 @@ nav {
     font-size: 0.875rem; }
   .filters .filter-header-title {
     font-size: 1.375rem;
-    margin: 10px 0; }
+    margin: 10px 0;
+    font-weight: 500; }
 
 .side-menu .icon {
   fill: #fff;
@@ -6217,6 +6256,69 @@ nav {
     -webkit-filter: grayscale(0);
             filter: grayscale(0); }
 
+.block-header,
+.card-lessons-header {
+  padding: 20px;
+  position: relative;
+  cursor: pointer; }
+  .block-header:before,
+  .card-lessons-header:before {
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: #d8d8d8;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    -webkit-transform: translateX(5px) rotate(40deg);
+            transform: translateX(5px) rotate(40deg);
+    position: absolute;
+    top: 0;
+    right: 40px;
+    bottom: 0;
+    margin: auto; }
+  .block-header:after,
+  .card-lessons-header:after {
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: #d8d8d8;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    -webkit-transform: translateX(-5px) rotate(-40deg);
+            transform: translateX(-5px) rotate(-40deg);
+    position: absolute;
+    top: 0;
+    right: 40px;
+    bottom: 0;
+    margin: auto; }
+  .block-header:hover:before, .block-header:hover:after,
+  .card-lessons-header:hover:before,
+  .card-lessons-header:hover:after {
+    background: #27921A; }
+  .block-header.active:before,
+  .card-lessons-header.active:before {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    -webkit-transform: translateX(-5px) rotate(40deg);
+            transform: translateX(-5px) rotate(40deg); }
+  .block-header.active:after,
+  .card-lessons-header.active:after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    position: absolute;
+    -webkit-transform: translateX(5px) rotate(-40deg);
+            transform: translateX(5px) rotate(-40deg); }
+
 .card-lessons {
   margin: 20px 0;
   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
@@ -6244,61 +6346,6 @@ nav {
   .card-lessons .card-lessons-wrapper {
     padding: 20px;
     padding-top: 0 !important; }
-  .card-lessons .card-lessons-header {
-    padding: 20px;
-    position: relative;
-    cursor: pointer; }
-    .card-lessons .card-lessons-header:before {
-      -webkit-transition: all .2s ease-in-out;
-      transition: all .2s ease-in-out;
-      content: '';
-      display: inline-block;
-      background: #d8d8d8;
-      width: 2px;
-      height: 16px;
-      border-radius: 16px;
-      -webkit-transform: translateX(5px) rotate(40deg);
-              transform: translateX(5px) rotate(40deg);
-      position: absolute;
-      top: 0;
-      right: 40px;
-      bottom: 0;
-      margin: auto; }
-    .card-lessons .card-lessons-header:after {
-      -webkit-transition: all .2s ease-in-out;
-      transition: all .2s ease-in-out;
-      content: '';
-      display: inline-block;
-      background: #d8d8d8;
-      width: 2px;
-      height: 16px;
-      border-radius: 16px;
-      -webkit-transform: translateX(-5px) rotate(-40deg);
-              transform: translateX(-5px) rotate(-40deg);
-      position: absolute;
-      top: 0;
-      right: 40px;
-      bottom: 0;
-      margin: auto; }
-    .card-lessons .card-lessons-header:hover:before, .card-lessons .card-lessons-header:hover:after {
-      background: #27921A; }
-    .card-lessons .card-lessons-header.active:before {
-      content: '';
-      display: inline-block;
-      width: 2px;
-      height: 16px;
-      border-radius: 16px;
-      -webkit-transform: translateX(-5px) rotate(40deg);
-              transform: translateX(-5px) rotate(40deg); }
-    .card-lessons .card-lessons-header.active:after {
-      content: '';
-      display: inline-block;
-      width: 2px;
-      height: 16px;
-      border-radius: 16px;
-      position: absolute;
-      -webkit-transform: translateX(5px) rotate(-40deg);
-              transform: translateX(5px) rotate(-40deg); }
   .card-lessons .card-lesson-block {
     padding: 20px 120px 20px 20px;
     background-color: #EEEEEE;
