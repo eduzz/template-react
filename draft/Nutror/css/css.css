@@ -5803,6 +5803,22 @@ nav {
       color: #fff;
       font-size: 0.75rem; }
 
+.filters-backdrop {
+  background-color: transparent;
+  pointer-events: none;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  display: none; }
+  .filters-backdrop.active {
+    display: block;
+    opacity: 0.8;
+    pointer-events: all; }
+
 .filters {
   position: fixed;
   left: auto;
