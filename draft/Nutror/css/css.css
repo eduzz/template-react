@@ -5853,11 +5853,11 @@ nav {
     overflow-y: auto;
     padding-top: 50px; }
   .filters .filter-header {
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #fff;
     z-index: 9999; }
   .filters .block {
-    padding: 10px;
+    padding: 10px 20px;
     border-bottom: 1px solid #eaeaea; }
   .filters .filter-header {
     position: absolute;
@@ -5958,7 +5958,7 @@ nav {
   padding: 10px 0; }
 
 .tabs {
-  padding: 20px 0;
+  padding: 20px 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5967,7 +5967,9 @@ nav {
           justify-content: flex-start;
   -webkit-box-align: start;
       -ms-flex-align: start;
-          align-items: flex-start; }
+          align-items: flex-start;
+  border-bottom: 1px solid #232323;
+  margin-bottom: 20px; }
   .tabs .tab-button {
     padding: 15px 30px;
     background-color: #d8d8d8;
