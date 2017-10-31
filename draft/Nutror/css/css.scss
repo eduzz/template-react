@@ -185,6 +185,112 @@ nav{
     }
   }
 }
+.filters{
+  position:fixed;
+  left: auto;
+  right: -274px;
+  position: fixed;
+  margin: 0;
+  width: 274px;
+  top: 60px;
+  bottom: 0;
+  border-radius: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+  text-align: left;
+  background: #FFF;
+  z-index: 1002;
+  transition: all 0.3s cubic-bezier(.42,0,.66,1);
+  box-shadow: none;
+  &.active{
+    box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+    right:0;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: $light-gray;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #F4F4F4;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $background-color;
+  }
+  .container{
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+    padding-top:50px;
+  }
+  .filter-header{
+    padding:10px;
+    background-color:#fff;
+    z-index: 9999;
+  }
+  .block{
+    padding:10px;
+    border-bottom:1px solid #eaeaea;
+  }
+  .filter-header{
+    position:absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    margin:auto;
+  }
+  .filter-close{
+    width: 30px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding:7px;
+    background-color:$light-gray;
+    border-radius:50%;
+    @include transition;
+
+    svg{
+      fill:$dark-color;
+      @include transition;
+    }
+    &:hover{
+      background-color:$dark-color;
+      transform: rotate(180deg);
+      svg{
+        fill:$light-gray;
+      }
+    }
+  }
+  .action-button{
+    padding:20px 0;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    position:absolute;
+    bottom:0;
+    left: 0;
+    right: 0;
+    background-color:#fff;
+  }
+  .input-field{
+    margin-top:15px;
+    input{
+      height: 40px;
+      @include fontsize(13);
+    }
+    label{
+      color:#232323;
+    }
+  }
+  .dropdown-content li > span{
+    @include fontsize(14);
+  }
+  .filter-header-title{
+    @include fontsize(22);
+    margin: 10px 0;
+  }
+}
 .side-menu{
   .icon{
     fill:#fff;
