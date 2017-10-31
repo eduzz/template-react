@@ -4514,16 +4514,17 @@ select {
   position: absolute; }
 
 .select-wrapper {
-  position: relative; }
+  position: relative;
+  margin-bottom: 20px; }
   .select-wrapper.valid + label, .select-wrapper.invalid + label {
     width: 100%;
     pointer-events: none; }
   .select-wrapper input.select-dropdown {
     position: relative;
     cursor: pointer;
-    background-color: #f1f1f1;
+    background-color: #fff;
     border: none;
-    border-bottom: 1px solid #9e9e9e;
+    border: 1px solid #828282;
     outline: none;
     height: 3rem;
     line-height: 3rem;

@@ -32,6 +32,8 @@ select {
 }
 
 .select-wrapper {
+  position: relative;
+  margin-bottom: 20px; 
   &.valid {
     & > input.select-dropdown {
       @extend %valid-input-style;
@@ -62,14 +64,14 @@ select {
     @extend %input-after-style;
   }
 
-  position: relative;
+  
 
   input.select-dropdown {
     position: relative;
     cursor: pointer;
-    background-color: #f1f1f1;
+    background-color:#fff;
     border: none;
-    border-bottom: $input-border;
+    border: 1px solid #828282;
     outline: none;
     height: $input-height;
     line-height: $input-height;
