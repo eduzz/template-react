@@ -6419,5 +6419,8 @@ nav {
     border-bottom: 1px solid #232323;
     -webkit-box-shadow: 0 1px 0 0 #232323;
             box-shadow: 0 1px 0 0 #232323; }
+  .chips .chip.selected {
+    background-color: #232323;
+    color: #fff; }
 
 /*# sourceMappingURL=css.css.map */

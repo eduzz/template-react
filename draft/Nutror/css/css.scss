@@ -827,4 +827,8 @@ nav{
     border-bottom: 1px solid $dark-color;
     box-shadow: 0 1px 0 0 $dark-color;
   }
+  .chip.selected {
+    background-color: $dark-color;
+    color: #fff;
+  }
 }
