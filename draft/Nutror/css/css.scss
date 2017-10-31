@@ -237,7 +237,7 @@ nav{
   .container{
     height: calc(100vh - 130px);
     overflow-y: auto;
-    padding-top:50px;
+    padding-top:60px;
   }
   .filter-header{
     padding:10px 20px;
@@ -245,8 +245,50 @@ nav{
     z-index: 9999;
   }
   .block{
-    padding:10px 20px;
     border-bottom:1px solid #eaeaea;
+  }
+  .block-header{
+    padding:10px 20px;
+    @include transition;
+    label{
+      font-weight: $medium;
+      cursor:pointer;
+      color:$background-color;
+    }
+    &:after,
+    &:before{
+      height: 12px;
+    }
+    &:after{
+      right: 35px;
+    }
+    &:before{
+      right: 38px;
+    }
+    &.active{
+      &:after,
+      &:before{
+        height: 12px;
+      }
+      &:after{
+        transform: translateX(2px) rotate(-40deg);
+      }
+      &:before{
+        transform: translateX(-2px) rotate(40deg);
+      }
+    }
+    // &.active label{
+    //   color:$affirmative-color;
+    // }
+    &:hover{
+      background-color:transparentize($light-gray, 0.5);
+      label{
+        color:$dark-color;
+      }
+    }
+  }
+  .block-content{
+    padding:0 20px;
   }
   .filter-header{
     position:absolute;
@@ -260,8 +302,8 @@ nav{
     height: 30px;
     display: block;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     padding:7px;
     background-color:$light-gray;
     border-radius:50%;
@@ -290,8 +332,24 @@ nav{
     right: 0;
     background-color:#fff;
   }
+  .switch label input[type=checkbox]:checked + .lever:before, .switch label input[type=checkbox]:checked + .lever:after{
+    left:16px;
+  }
+  .switch{
+    padding:5px 0;
+    label .lever{
+      width:30px;
+      height: 16px;
+      &:before,
+      &:after{
+        width: 12px;
+        height: 12px;
+        left:2px
+      }
+    }
+  }
   .input-field{
-    margin-top:15px;
+    margin-top:5px;
     input{
       height: 40px;
       @include fontsize(13);
@@ -306,6 +364,7 @@ nav{
   .filter-header-title{
     @include fontsize(22);
     margin: 10px 0;
+    font-weight: $medium;
   }
 }
 .side-menu{
@@ -613,7 +672,70 @@ nav{
       }
     }
 }
+.block-header,
+.card-lessons-header{
+    padding:20px;
+    position:relative;
+    cursor:pointer;
+      &:before{
+        transition: all .2s ease-in-out;
+        content: '';
+        display: inline-block;
+        background: $medium-gray;
+        width: 2px;
+        height: 16px;
+        border-radius: 16px;
+        transform: translateX(5px) rotate(40deg);
+        position: absolute;
+        top: 0 ;
+        right: 40px; 
+        bottom: 0 ;
+        margin: auto;
+        
+      }
 
+    &:after{
+      transition: all .2s ease-in-out;
+      content: '';
+      display: inline-block;
+      background: $medium-gray;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      transform: translateX(-5px) rotate(-40deg);
+      position: absolute;
+      top: 0 ;
+      right: 40px ;
+      bottom: 0 ; 
+      margin: auto;
+    }
+    &:hover{
+      &:before,&:after{
+        background:$affirmative-color;
+      }
+    }
+    &.active{
+      &:before{
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 16px;
+        border-radius: 16px;
+        transform: translateX(-5px) rotate(40deg);
+
+      }
+
+      &:after{
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 16px; 
+        border-radius: 16px;
+        position: absolute;
+        transform: translateX(5px) rotate(-40deg); 
+      }
+    }
+  }
 .card-lessons{
   margin:20px 0;
   box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
@@ -643,69 +765,7 @@ nav{
     padding:20px;
     padding-top: 0!important;
   }
-  .card-lessons-header{
-    padding:20px;
-    position:relative;
-    cursor:pointer;
-      &:before{
-        transition: all .2s ease-in-out;
-        content: '';
-        display: inline-block;
-        background: $medium-gray;
-        width: 2px;
-        height: 16px;
-        border-radius: 16px;
-        transform: translateX(5px) rotate(40deg);
-        position: absolute;
-        top: 0 ;
-        right: 40px; 
-        bottom: 0 ;
-        margin: auto;
-        
-      }
-
-  &:after{
-    transition: all .2s ease-in-out;
-    content: '';
-    display: inline-block;
-    background: $medium-gray;
-    width: 2px;
-    height: 16px;
-    border-radius: 16px;
-    transform: translateX(-5px) rotate(-40deg);
-    position: absolute;
-    top: 0 ;
-    right: 40px ;
-    bottom: 0 ; 
-    margin: auto;
-  }
-  &:hover{
-    &:before,&:after{
-      background:$affirmative-color;
-    }
-  }
-  &.active{
-    &:before{
-      content: '';
-      display: inline-block;
-      width: 2px;
-      height: 16px;
-      border-radius: 16px;
-      transform: translateX(-5px) rotate(40deg);
-
-    }
-
-    &:after{
-      content: '';
-      display: inline-block;
-      width: 2px;
-      height: 16px; 
-      border-radius: 16px;
-      position: absolute;
-      transform: translateX(5px) rotate(-40deg); 
-    }
-  }
-  }
+  
   .card-lesson-block{
     padding:20px 120px 20px 20px;
     background-color:$light-gray;
