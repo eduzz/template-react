@@ -41,9 +41,18 @@
 
 .input-field{
 	box-sizing:border-box;
-	  &.bigger input{
-	    font-size: 1.5rem;
-	    height: 4rem;
+	  &.bigger{
+		  input{
+		    font-size: 1.5rem;
+		    height: 4rem;
+		  }
+	  	  label{
+	  	  	font-size: 1.5rem;
+	  	  	transform: translateY(20px);
+	  	  }
+	  	  label.active{
+	  	  	font-size: 1rem;
+	  	  }
 	  }
 }
 textarea.materialize-textarea{
