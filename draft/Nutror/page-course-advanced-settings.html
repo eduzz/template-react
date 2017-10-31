@@ -22,6 +22,7 @@
       </div>
 
     </header>
+    <div class="filters-backdrop active"></div>
     <div class="filters active">
       <div class="container">
         <div class="filter-header">
@@ -410,6 +411,10 @@
           <img src="img/eduzinho.png" alt="Eduzz" class="avatar">
     </footer>
     <script>
+      $(".filters-backdrop").click(function(){
+        $(this).removeClass('active');
+        $(".filters").removeClass('active');
+      });
        $(document).ready(function() {
             $('select').material_select();
             $('.collapsible').collapsible();
