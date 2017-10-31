@@ -240,12 +240,12 @@ nav{
     padding-top:50px;
   }
   .filter-header{
-    padding:10px;
+    padding:10px 20px;
     background-color:#fff;
     z-index: 9999;
   }
   .block{
-    padding:10px;
+    padding:10px 20px;
     border-bottom:1px solid #eaeaea;
   }
   .filter-header{
@@ -353,10 +353,12 @@ nav{
   padding:10px 0;
 }
 .tabs{
-  padding:20px 0; 
+  padding:20px 0 0 0; 
   display: flex;
   justify-content: flex-start;
   align-items:flex-start;
+  border-bottom: 1px solid $dark-color;
+  margin-bottom: 20px;
   .tab-button{
     padding:15px 30px;
     background-color:$medium-gray;
