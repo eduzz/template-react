@@ -67,7 +67,7 @@ select {
   input.select-dropdown {
     position: relative;
     cursor: pointer;
-    background-color: transparent;
+    background-color: #f1f1f1;
     border: none;
     border-bottom: $input-border;
     outline: none;
@@ -76,27 +76,30 @@ select {
     width: 100%;
     font-size: $input-font-size;
     margin: $input-margin;
-    padding: 0;
+    padding: 0 10px;
     display: block;
     user-select:none;
+    box-sizing: border-box;
   }
 
   span.caret {
     color: initial;
     position: absolute;
-    right: 0;
+    right: 10px;
     top: 0;
     bottom: 0;
     height: 10px;
     margin: auto 0;
     font-size: 10px;
     line-height: 10px;
+    z-index: 2;
   }
 
   & + label {
     position: absolute;
     top: -26px;
     font-size: $label-font-size;
+    padding-left:0;
   }
 }
 

@@ -4,7 +4,6 @@ import configureStore from './configureStore';
 import Root from './components/Root';
 
 import 'materialize-css';
-import './assets/css/materialize.css';
 import './assets/css/css.css';
 
 const store = configureStore();

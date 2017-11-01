@@ -2,7 +2,7 @@
 @import "fonts";
 @import "mixins";
 @import "reset";
-@import "materialize";
+@import "materialize";  
 
 body{
   padding:60px 0 0 0;
@@ -13,10 +13,11 @@ body{
 .main-header{
   background-color:#1B1B1B;
   position: fixed;
-  width:100%;
+  width:100%;  
   top: 0;
-  left: 0;
+  left: 0; 
   right: 0;
+  z-index: 50; 
   .container{
     display: flex;
     justify-content: space-between;
@@ -29,6 +30,8 @@ body{
   width: 100%;
   max-width: 100%;
 }
+
+
 .button{
   padding:12px 30px;
   border:0;
@@ -50,7 +53,7 @@ body{
       // width: 15px;
   }
   &.affirmative{
-    background-color:#27921A;
+    background-color:$affirmative-color;
     span{
       color:#fff;
     }
@@ -67,6 +70,10 @@ body{
       height:10px;
       margin-right:5px;
     }
+  }
+  &.soft{
+    background-color:#e6e6e6;
+    border:1px solid #202020;
   }
 }
 
@@ -178,6 +185,129 @@ nav{
     }
   }
 }
+.filters-backdrop{
+    background-color: transparent;
+    pointer-events: none;
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    display: none;
+    &.active{
+      display: block;
+      opacity: 0.8;
+      pointer-events: all;
+    }
+}
+.filters{
+  position:fixed;
+  left: auto;
+  right: -274px;
+  position: fixed;
+  margin: 0;
+  width: 274px;
+  top: 60px;
+  bottom: 0;
+  border-radius: 0;
+  border-left: 1px solid rgba(0, 0, 0, 0.125);
+  text-align: left;
+  background: #FFF;
+  z-index: 1002;
+  transition: all 0.3s cubic-bezier(.42,0,.66,1);
+  box-shadow: none;
+  &.active{
+    box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
+    right:0;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: $light-gray;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #F4F4F4;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: $background-color;
+  }
+  .container{
+    height: calc(100vh - 130px);
+    overflow-y: auto;
+    padding-top:50px;
+  }
+  .filter-header{
+    padding:10px 20px;
+    background-color:#fff;
+    z-index: 9999;
+  }
+  .block{
+    padding:10px 20px;
+    border-bottom:1px solid #eaeaea;
+  }
+  .filter-header{
+    position:absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    margin:auto;
+  }
+  .filter-close{
+    width: 30px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding:7px;
+    background-color:$light-gray;
+    border-radius:50%;
+    @include transition;
+
+    svg{
+      fill:$dark-color;
+      @include transition;
+    }
+    &:hover{
+      background-color:$dark-color;
+      transform: rotate(180deg);
+      svg{
+        fill:$light-gray;
+      }
+    }
+  }
+  .action-button{
+    padding:20px 0;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    position:absolute;
+    bottom:0;
+    left: 0;
+    right: 0;
+    background-color:#fff;
+  }
+  .input-field{
+    margin-top:15px;
+    input{
+      height: 40px;
+      @include fontsize(13);
+    }
+    label{
+      color:#232323;
+    }
+  }
+  .dropdown-content li > span{
+    @include fontsize(14);
+  }
+  .filter-header-title{
+    @include fontsize(22);
+    margin: 10px 0;
+  }
+}
 .side-menu{
   .icon{
     fill:#fff;
@@ -209,19 +339,52 @@ nav{
     }
 }
 .page-content{
-  &.my-courses{
-    padding-left:250px;
-    >.container{
-      padding:20px;
-      min-height: calc(100vh - 60px);
-      position:relative;
-    }
+  padding-left:250px;
+  >.container{
+    padding:20px 20px 40px 20px;
+    min-height: calc(100vh - 60px);
+    position:relative;
+  }
+  &+.page-footer{
+    margin-left:250px;
   }
 }
 .cards-wrapper{
   padding:10px 0;
 }
-
+.tabs{
+  padding:20px 0 0 0; 
+  display: flex;
+  justify-content: flex-start;
+  align-items:flex-start;
+  border-bottom: 1px solid $dark-color;
+  margin-bottom: 20px;
+  .tab-button{
+    padding:15px 30px;
+    background-color:$medium-gray;
+    color:$dark-color;
+    margin-right:2px;
+    @include transition;
+    .icon{
+      height: 15px;
+      min-height: 15px;
+      margin-right:10px;
+      fill:$dark-color;
+      @include transition;
+    }
+    &:hover,
+    &.active{
+      color:#fff;
+      background-color:$dark-color;
+      .icon{
+        fill:#fff;
+      }
+    }
+  }
+  .tab-button:last-child{
+    margin-right:0;
+  }
+}
 .card{
   background:#cecece;
   width: 170px;
@@ -286,7 +449,6 @@ nav{
   .input-field{
     width: 100%;
     margin: 0;
-    max-width: 600px;
     margin-right: 40px;
     input{
       margin:0;
@@ -294,7 +456,7 @@ nav{
     }
   }
   .button{
-    min-width: 120px;
+    min-width: 140px;
     text-align: center;
     margin:0 5px;
   }
@@ -302,6 +464,8 @@ nav{
     margin:0;
   }
 }
+
+
 .page-header{
   padding:45px 20px;
   margin:-20px -20px 0 -20px;
@@ -325,22 +489,106 @@ nav{
      font-weight: $regular;
   }
 }
+.input-img{
+  padding:20px 0;
+  .container{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
+    display: block;
+    background-color:#f1f1f1;
+    position:relative;
+    padding:20px;
+    font-weight: $medium;
+    .button{
+      text-transform: uppercase;
+    }
+    .top-left{
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      margin:auto;
+    }
+    .top-right{
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      margin:auto; 
+    }
+    .center{
+      justify-content: center;
+      align-items:center;
+    }
+  }
+  &.large-banner .container{
+    height: 250px;
+    width: 100%;
+  }
+  &.course-logo{
+    height: 170px;
+    width: 170px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-flow: column;
+    background-color: $medium-gray;
+    // border: 1px solid #202020;
+    span{
+      color:$dark-color;
+      text-transform: uppercase;
+      font-weight: $medium;
+    }
+    .icon{
+      width: 50px;
+      margin:20px;
+      fill:$dark-color;
+    }
+  }
+}
+.page-course{
+}
+.form-section{
+  padding: 20px 0;
+  border-bottom:1px solid $light-gray;
+  .form-block{
+    padding: 20px 0;
+    display: inline-block;
+    width: 100%;
+    p{
+      line-height: 1.2rem;
+    }
+    .radio-description{
+      max-width: 320px;
+    }
+   input.datepicker{
+    margin-bottom:0;
+    max-width: 200px; 
+    }
+  }
+  .form-block-title{
+    @include fontsize(18);
+    font-weight: $medium;
+    margin:0 0 10px 0;
+  }
+} 
+.form-section-title{
+  @include fontsize(24);
+  font-weight: $medium;
+  padding:0 0 20px 0;
+  margin:30px 0 0 0;
+}
 .page-footer{
-    position:absolute;
-    padding:5px 0;
-    bottom: 0px;
-    right: 0;
-    left: 0;
+    padding:5px 0; 
     display: flex;
     align-items: center;
     justify-content: center;
     height: 40px;
+    margin-top: -40px;
     background-color:#fff;
     span{
       color:$dark-color;
       @include fontsize(12);
       letter-spacing: 0.5px;
-    }
+    } 
     .logo-footer{
       height: 20px;
       padding:0 0 0 10px;
@@ -364,5 +612,154 @@ nav{
         filter: grayscale(0);
       }
     }
+}
 
+.card-lessons{
+  margin:20px 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
+  display: block;
+  width: 100%;
+  background-color:#fff;
+  position:relative; 
+  border-radius:4px;
+  transition: all 0.3s ease-in-out;
+  &:hover{
+    box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 2px 20px 0 rgba(0, 0, 0, 0.1);
+  }
+  .card-lessons-title{
+    @include fontsize(18);
+    font-weight: $medium;
+    margin:0;
+  }
+  .card-lessons-resume{
+    color:$affirmative-color;
+    font-weight: $medium;
+    padding:5px 0 0 0;
+    .icon{
+      fill:$affirmative-color;
+    }
+  }
+  .card-lessons-wrapper{
+    padding:20px;
+    padding-top: 0!important;
+  }
+  .card-lessons-header{
+    padding:20px;
+    position:relative;
+    cursor:pointer;
+      &:before{
+        transition: all .2s ease-in-out;
+        content: '';
+        display: inline-block;
+        background: $medium-gray;
+        width: 2px;
+        height: 16px;
+        border-radius: 16px;
+        transform: translateX(5px) rotate(40deg);
+        position: absolute;
+        top: 0 ;
+        right: 40px; 
+        bottom: 0 ;
+        margin: auto;
+        
+      }
+
+  &:after{
+    transition: all .2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: $medium-gray;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    transform: translateX(-5px) rotate(-40deg);
+    position: absolute;
+    top: 0 ;
+    right: 40px ;
+    bottom: 0 ; 
+    margin: auto;
+  }
+  &:hover{
+    &:before,&:after{
+      background:$affirmative-color;
+    }
+  }
+  &.active{
+    &:before{
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
+      transform: translateX(-5px) rotate(40deg);
+
+    }
+
+    &:after{
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px; 
+      border-radius: 16px;
+      position: absolute;
+      transform: translateX(5px) rotate(-40deg); 
+    }
+  }
+  }
+  .card-lesson-block{
+    padding:20px 120px 20px 20px;
+    background-color:$light-gray;
+    margin: 10px 0 0 0;
+    display: flex;
+    align-items:flex-start;
+    justify-content: flex-start;
+    position:relative; 
+    .button{ 
+      text-transform: uppercase;
+      font-weight: $medium;
+      letter-spacing: 0.5px;
+      position:absolute;
+      top: 0; 
+      bottom:0;
+      right: 20px;
+      display: block;
+      height: 35px;
+      margin:auto;
+    }
+  }
+  .card-lesson-thumb{
+    width: 160px;
+    height: 120px;
+    display: block;
+    background-color:#fff;
+  }
+  .card-lesson-description{
+    line-height: 1.2rem;
+  }
+  .card-lesson-content{
+    padding:0 20px;
+    .lesson-title{
+      @include fontsize(16);
+      font-weight: $medium;
+      margin:0 0 10px 0;
+    }
+  }
+
+} 
+.check-description,
+.date-description{
+  margin-bottom:10px;
+  @include fontsize(16);
+}
+.switch{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.chips{
+  width:100%;
+  min-height: 9rem;
+  background: #f1f1f1;
+  margin: 10px 0;
+  padding: 5px;
 }

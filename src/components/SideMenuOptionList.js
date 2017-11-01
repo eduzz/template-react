@@ -1,38 +1,38 @@
 import React from 'react';
-import Option from './Option';
+import SideMenuOption from './SideMenuOption';
 
-const OptionList = () => (
+const SideMenuOptionList = () => (
     <div className="block side-menu">
         <nav>
             <ul>
-                <Option
+                <SideMenuOption
                     data={{
                         title: 'Biblioteca',
-                        icon: 'package',
+                        icon: 'paper',
                     }}
                 />
-                <Option
+                <SideMenuOption
                     data={{
                         title: 'Minha Vitrine',
-                        icon: 'package',
+                        icon: 'paper',
                     }}
                 >
-                    <Option
+                    <SideMenuOption
                         data={{
                             title: 'Pacotes/Tracks',
-                            icon: 'package',
+                            icon: 'paper',
                         }}
                     />
-                    <Option
+                    <SideMenuOption
                         data={{
                             title: 'Cursos',
-                            icon: 'package',
+                            icon: 'paper',
                         }}
                     />
-                </Option>
+                </SideMenuOption>
             </ul>
         </nav>
     </div>
 );
 
-export default OptionList;
+export default SideMenuOptionList;

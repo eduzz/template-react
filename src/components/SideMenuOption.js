@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from './Icon';
 
-const Option = ({ data, children }) => (
+const SideMenuOption = ({ data, children }) => (
     <li>
         <a href="" className="nav-button">
             <Icon name={data.icon} />
@@ -13,4 +13,4 @@ const Option = ({ data, children }) => (
     </li>
 );
 
-export default Option;
+export default SideMenuOption;

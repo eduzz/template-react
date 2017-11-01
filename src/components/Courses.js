@@ -1,18 +1,16 @@
 import React from 'react';
 import PageHeader from './PageHeader';
-import VisibleCourseList from '../containers/VisibleCourseList';
+import VisibleCourseCardGrid from '../containers/VisibleCourseCardGrid';
 import CoursesSearch from '../containers/CoursesSearch';
-import Footer from './Footer';
 
-const MyCourses = () => (
+const Courses = () => (
     <section className="page-content my-courses">
         <div className="container">
             <PageHeader />
             <CoursesSearch />
-            <VisibleCourseList />
-            <Footer />
+            <VisibleCourseCardGrid />
         </div>
     </section>
 );
 
-export default MyCourses;
+export default Courses;

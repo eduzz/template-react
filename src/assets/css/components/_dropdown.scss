@@ -28,15 +28,14 @@
     &.active.selected {
       background-color: darken($dropdown-hover-bg-color, 5%);
     }
-
     &.divider {
       min-height: 0;
       height: 1px;
     }
 
     & > a, & > span {
-      font-size: 16px;
-      color: $dropdown-color;
+      font-size: 15px;
+      color: $primary-color;
       display: block;
       line-height: 22px;
       padding: (($dropdown-item-height - 22) / 2) 16px;

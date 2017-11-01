@@ -6,19 +6,19 @@ const SideMenuFooter = () => (
         <ul>
             <li>
                 <a href="">
-                    <Icon name='package' />
+                    <Icon name='paper' />
                     Sair
                 </a>
             </li>
             <li>
                 <a href="">
-                    <Icon name='package' />
+                    <Icon name='paper' />
                     Config
                 </a>
             </li>
             <li>
                 <a href="">
-                    <Icon name='package' />
+                    <Icon name='paper' />
                     Ajuda
                 </a>
             </li>
