@@ -5872,7 +5872,8 @@ nav {
     .filters .block-header label {
       font-weight: 500;
       cursor: pointer;
-      color: #2f2f2f; }
+      color: #2f2f2f;
+      letter-spacing: 0.5px; }
     .filters .block-header:after, .filters .block-header:before {
       height: 12px; }
     .filters .block-header:after {
