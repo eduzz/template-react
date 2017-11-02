@@ -4,6 +4,8 @@ Error: Undefined variable: "$affirmative-color".
         from line 19 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss
         from line 29 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss
 
+60: }
+
 Backtrace:
 /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_radio-buttons.scss:65
 /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss:19
@@ -84,4 +86,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Undefined variable: \"$affirmative-color\".\A         on line 65 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_radio-buttons.scss\A         from line 19 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss\A         from line 29 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss"; }
+  content: "Error: Undefined variable: \"$affirmative-color\".\A         on line 65 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_radio-buttons.scss\A         from line 19 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/components/forms/_forms.scss\A         from line 29 of /Users/willdolmayan/Documents/Eduzz/Nutror v3/draft/Nutror/css/materialize.scss\A \A 60: }"; }
