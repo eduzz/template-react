@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Course = ({ data }) => (
+const CourseCard = ({ data }) => (
     <div className="card course">
         <div className={`card-status ${data.status}`}>{ (data.status === 'free-course' ? 'GRATUITO' : 'EM BREVE') }</div>
 
@@ -11,4 +11,4 @@ const Course = ({ data }) => (
     </div>
 );
 
-export default Course;
+export default CourseCard;

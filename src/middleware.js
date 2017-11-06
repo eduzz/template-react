@@ -7,7 +7,7 @@ const middleware = store => next => action => {
 
     switch (action.type) {
         case 'GET_COURSES':
-            getMock('courses').then(
+            getMock('courses', action.id).then(
                 res => {
                     next(actions.receiveCourses(res.data));
                 },
@@ -16,6 +16,15 @@ const middleware = store => next => action => {
                 },
             );
             break;
+        case 'GET_COURSE':
+            getMock('course', action.id).then(
+                res => {
+                    next(actions.receiveCourse(res.data));
+                },
+                err => {
+                    next(actions.receiveCourseError(err));
+                },
+            );
         default:
             break;
     }

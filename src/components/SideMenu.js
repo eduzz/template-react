@@ -1,13 +1,13 @@
 import React from 'react';
 import Welcome from './Welcome';
 import SideMenuFooter from './SideMenuFooter';
-import OptionList from './OptionList';
+import SideMenuOptionList from './SideMenuOptionList';
 
 const SideMenu = () => (
     <aside className="side-nav">
         <div className="container">
             <Welcome />
-            <OptionList />
+            <SideMenuOptionList />
             <SideMenuFooter />
         </div>
     </aside>

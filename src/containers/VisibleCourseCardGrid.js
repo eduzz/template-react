@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import CourseList from '../components/CourseList';
+import CourseCardGrid from '../components/CourseCardGrid';
 import { connect } from 'react-redux';
 import { getCourses } from '../actions';
 import { getVisibleCourses } from '../reducers';
 
-class VisibleCourseList extends Component {
+class VisibleCourseCardGrid extends Component {
 	componentDidMount() {
         this.props.dispatch(getCourses());
     }
 
 	render() {
-		return <CourseList courses={ this.props.courses } />;
+		return <CourseCardGrid courses={ this.props.courses } />;
 	}
 }
 
@@ -22,4 +22,4 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(VisibleCourseList);
+export default connect(mapStateToProps)(VisibleCourseCardGrid);
