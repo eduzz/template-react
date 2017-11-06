@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import { getMock } from './agent';
+import { get } from './agent';
 
 const middleware = store => next => action => {
 
@@ -7,7 +7,7 @@ const middleware = store => next => action => {
 
     switch (action.type) {
         case 'GET_COURSES':
-            getMock('courses', action.id).then(
+            get('5a00b9323000000113fabd5b', action.id).then(
                 res => {
                     next(actions.receiveCourses(res.data));
                 },
@@ -17,7 +17,7 @@ const middleware = store => next => action => {
             );
             break;
         case 'GET_COURSE':
-            getMock('course', action.id).then(
+            get('5a00ba673000002a13fabd5e', action.id).then(
                 res => {
                     next(actions.receiveCourse(res.data));
                 },
