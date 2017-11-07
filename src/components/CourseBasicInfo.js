@@ -1,7 +1,8 @@
 import React from 'react';
-import CourseBanner from '../components/CourseBanner';
-import CourseCategorySelect from '../components/CourseCategorySelect';
-import CourseModuleList from '../components/CourseModuleList';
+import { Modal, Content, Footer, Button } from './Modal';
+import CourseBanner from './CourseBanner';
+import CourseCategorySelect from './CourseCategorySelect';
+import CourseModuleList from './CourseModuleList';
 
 const CourseBasicInfo = () => (
     <div>
@@ -21,9 +22,18 @@ const CourseBasicInfo = () => (
             <div className='col xl5'>
                 <div className='form-block'>
                     <h3 className='form-section-title'>Autores</h3>
-                    <a className='button affirmative waves-effect waves-light'>
+                    <Modal id='modal-authors' fixedFooter>
+                        <Content>
+                            <h1> Modal Autores </h1>
+                        </Content>
+                        <Footer>
+                            <a className="modal-action modal-close waves-effect waves-green btn-flat">Salvar</a>
+                            <a className="modal-action modal-`close waves-effect waves-red btn-flat">Cancelar</a>
+                        </Footer>
+                    </Modal>
+                    <Button className='button affirmative waves-effect waves-light' target='modal-authors'>
                         <span>Adicionar Autor</span>
-                    </a>
+                    </Button>
                 </div>
             </div>
         </div>

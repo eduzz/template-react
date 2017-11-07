@@ -1,13 +1,10 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCourse } from '../actions';
 import { Tabs, Pane } from '../components/Tabs';
-import { Modal, Content, Footer, Button } from '../components/Modal';
 import CourseBasicInfo from '../components/CourseBasicInfo';
 import CourseAdvanced from '../components/CourseAdvanced';
 import CoursePersonalization from '../components/CoursePersonalization';
-import VisibleCourseCardGrid from './VisibleCourseCardGrid';
 
 class CourseEdit extends Component {
     componentDidMount() {

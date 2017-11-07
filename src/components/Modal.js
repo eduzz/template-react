@@ -46,7 +46,7 @@ export const Footer = ({ children }) => (
 );
 
 export const Button = ({ className, children, target }) => (
-    <a className={ className } href={`#${target}`} onClick={e => e.preventDefault()}>
+    <a className={ className } onClick={() => jquery(`#${target}`).modal('open')}>
         { children }
     </a>
 );
