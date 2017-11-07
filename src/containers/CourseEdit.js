@@ -2,8 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCourse } from '../actions';
-import Icon from '../components/Icon';
-import Tabs, { Pane } from '../components/Tabs';
+import { Tabs, Pane } from '../components/Tabs';
 import CourseBasicInfo from '../components/CourseBasicInfo';
 
 class CourseEdit extends Component {
@@ -24,14 +23,20 @@ class CourseEdit extends Component {
         				</div>
 
         				<Tabs>
-                            <Pane id='pana1' title="Test 7" icon='paper'>
-                                <h1>TEST DO K7</h1>
-                            </Pane>
-                            <Pane id='pana2' title="Test 8" icon='paper'>
+                            <Pane title='Informações Básicas' icon='paper'>
                                 <CourseBasicInfo />
                             </Pane>
-                            <Pane id='pana3' title="Test 9" icon='paper'>
-                                <h1>TEST DO K8</h1>
+                            <Pane title='Configurações Avançadas' icon='paper'>
+                                <h1> Configurações Avançadas </h1>
+                            </Pane>
+                            <Pane title="Personalizações" icon='paper'>
+                                <h1> Personalizações </h1>
+                            </Pane>
+                            <Pane title="Upsells" icon='paper'>
+                                <h1> Upsells </h1>
+                            </Pane>
+                            <Pane title="Avaliações" icon='paper'>
+                                <h1> Avaliações </h1>
                             </Pane>
         				</Tabs>
         			</div>

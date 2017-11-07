@@ -25,6 +25,7 @@ const middleware = store => next => action => {
                     next(actions.receiveCourseError(err));
                 },
             );
+            break;
         default:
             break;
     }
