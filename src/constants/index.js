@@ -1,1 +1,1 @@
-export const api = 'http://localhost:3000/static/mock/';
+export const api = 'http://www.mocky.io/v2/';

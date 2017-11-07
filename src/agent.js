@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { api } from './constants';
 
-import * as mock from './mock';
-
 export const get = url => axios(
 	{
 		method: 'get',
@@ -23,7 +21,3 @@ export const post = (url, data) => axios(
 		data,
 	}
 );
-
-export const getMock = url => new Promise((res, rej) => res({data: mock[url]}));
-
-export const postMock = url => new Promise((res, rej) => res({data: mock[url]}));
