@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getCourse } from '../actions';
 import { Tabs, Pane } from '../components/Tabs';
 import CourseBasicInfo from '../components/CourseBasicInfo';
+import CourseAdvanced from '../components/CourseAdvanced';
 import CoursePersonalization from '../components/CoursePersonalization';
 
 class CourseEdit extends Component {
@@ -28,7 +29,7 @@ class CourseEdit extends Component {
                                 <CourseBasicInfo />
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='paper'>
-                                <h1> Configurações Avançadas </h1>
+                                <CourseAdvanced />
                             </Pane>
                             <Pane title="Personalizações" icon='paper'>
                                 <CoursePersonalization />
