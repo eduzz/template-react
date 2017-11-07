@@ -6,6 +6,7 @@ import Footer from './Footer';
 import SideMenu from './SideMenu';
 import Courses from './Courses';
 import CourseEdit from './CourseEdit';
+import CoursePersonalization from './CoursePersonalization';
 
 const Root = ({ store }) => (
     <Provider store={store}>
@@ -17,7 +18,9 @@ const Root = ({ store }) => (
 		        <Switch>
 		        	<Redirect exact from='/' to='/courses' />
 		        	<Route exact path='/courses' component={ Courses } />
-		        	<Route exact path='/courses/edit/:courseID' component={ CourseEdit } />
+		        	<Route exact path='/courses/edit/:courseID' component={ CourseEdit } /> 
+		        	<Route exact path='/courses/personalization' component={ CoursePersonalization } /> 
+
 		        	<Courses />
 		        </Switch>
 

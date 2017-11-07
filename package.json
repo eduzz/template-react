@@ -8,6 +8,7 @@
     "materialize-css": "^0.100.2",
     "node-sass-chokidar": "0.0.3",
     "react": "^16.0.0",
+    "react-color": "^2.13.8",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
