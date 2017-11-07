@@ -8,7 +8,7 @@ export class Tabs extends Component {
     }
 
     render() {
-        const panes = this.props.children.length ? [...this.props.children] : [this.props.children];
+        const panes = this.props.children.length ? [...this.props.children] : [{...this.props.children}];
         const TabsID = this.props.id || 'tab';
 
         return (
@@ -24,7 +24,7 @@ export class Tabs extends Component {
                     )}
                 </ul>
                 {panes.map((pane, key) =>
-                    <div id={`${TabsID}-${key}`}>
+                    <div key={ key } id={`${TabsID}-${key}`}>
                         { pane }
                     </div>
                 )}
