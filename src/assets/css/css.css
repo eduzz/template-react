@@ -5928,17 +5928,17 @@ nav {
   .input-img.large-banner .container {
     height: 250px;
     width: 100%; }
-  .input-img.header-logo, .input-img.card-img, .input-img.course-logo {
+  .input-img.login-logo, .input-img.header-logo, .input-img.card-img, .input-img.course-logo {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: column;
     background-color: #d8d8d8; }
-    .input-img.header-logo span, .input-img.card-img span, .input-img.course-logo span {
+    .input-img.login-logo span, .input-img.header-logo span, .input-img.card-img span, .input-img.course-logo span {
       color: #232323;
       text-transform: uppercase;
       font-weight: 500; }
-    .input-img.header-logo .icon, .input-img.card-img .icon, .input-img.course-logo .icon {
+    .input-img.login-logo .icon, .input-img.header-logo .icon, .input-img.card-img .icon, .input-img.course-logo .icon {
       width: 50px;
       margin: 20px;
       fill: #232323; }
@@ -5949,6 +5949,9 @@ nav {
   .input-img.card-img {
     width: 170px;
     height: 220px; }
+  .input-img.login-logo {
+    width: 170px;
+    height: 170px; }
   .input-img.header-logo {
     width: 220px;
     height: 60px;
@@ -5976,7 +5979,7 @@ nav {
   .form-section .form-block-title {
     font-size: 1.125rem;
     font-weight: 500;
-    margin: 0 0 10px 0; }
+    margin: 0 0 5px 0; }
 
 .form-section-title {
   font-size: 1.5rem;
@@ -6130,6 +6133,9 @@ nav {
 .date-description {
   margin-bottom: 10px;
   font-size: 1rem; }
+
+.input-description {
+  margin-bottom: 20px; }
 
 .switch {
   display: flex;

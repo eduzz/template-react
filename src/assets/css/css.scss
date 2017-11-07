@@ -598,6 +598,7 @@ nav{
     height: 250px;
     width: 100%;
   }
+  &.login-logo,
   &.header-logo,
   &.card-img,
   &.course-logo{
@@ -625,6 +626,10 @@ nav{
   &.card-img{
     width: 170px;
     height: 220px;
+  } 
+  &.login-logo{
+    width: 170px;
+    height: 170px;
   }
   &.header-logo{
     width: 220px;
@@ -663,7 +668,7 @@ nav{
   .form-block-title{
     @include fontsize(18);
     font-weight: $medium;
-    margin:0 0 10px 0;
+    margin:0 0 5px 0;
   }
 } 
 .form-section-title{
@@ -847,6 +852,9 @@ nav{
 .date-description{
   margin-bottom:10px;
   @include fontsize(16);
+}
+.input-description{
+  margin-bottom: 20px;
 }
 .switch{
     display: flex;
