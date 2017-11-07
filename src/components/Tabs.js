@@ -34,7 +34,7 @@ export class Tabs extends Component {
 };
 
 export const Pane = ({ children, title, icon }) => (
-    <div class='col s12'>
+    <div className='col s12'>
         { children }
     </div>
 );
