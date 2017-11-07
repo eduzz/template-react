@@ -28,11 +28,12 @@ class CourseEdit extends Component {
                                 <h1>TEST DO K7</h1>
                             </Pane>
                             <Pane id='pana2' title="Test 8" icon='paper'>
+                                <CourseBasicInfo />
+                            </Pane>
+                            <Pane id='pana3' title="Test 9" icon='paper'>
                                 <h1>TEST DO K8</h1>
                             </Pane>
         				</Tabs>
-
-                        <CourseBasicInfo />
         			</div>
         		</section>
         	</form>
