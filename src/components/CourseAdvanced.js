@@ -125,10 +125,10 @@ const CourseAdvanced = ({ data }) => (
               <span className="form-block">
                 <div className="switch">
                   <label>
-                    <input type="checkbox" id="check-destaque"/>
+                    <input type="checkbox" id="check-module"/>
                     <span className="lever"></span>
                   </label>
-                  <label for="check-destaque">
+                  <label for="check-module">
                     <h3 className="form-block-title">Atualizações sobre Módulos</h3>
                     <p className="check-description">Ativando esta opção os alunos serão notificados via e-mail sobre cada novidade de <strong>Módulos do Curso</strong></p>
                   </label>
@@ -139,10 +139,10 @@ const CourseAdvanced = ({ data }) => (
               <span className="form-block">
                 <div className="switch">
                   <label>
-                    <input type="checkbox" id="check-comentario"/>
+                    <input type="checkbox" id="check-lesson"/>
                     <span className="lever"></span>
                   </label>
-                  <label for="check-comentario">
+                  <label for="check-lesson">
                     <h3 className="form-block-title">Atualizações sobre Aulas</h3>
                     <p className="check-description">Ativando esta opção os alunos serão notificados via e-mail sobre cada novidade de <strong>Aulas do Curso</strong></p>
                     
