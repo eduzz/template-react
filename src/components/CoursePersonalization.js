@@ -72,95 +72,93 @@ class ButtonExample extends React.Component {
 }
 
 const CoursePersonalization = ({ data }) => (
-	<section className="page-content">
-	    <div className="container">
-			<div className="row form-section">
-				<div className="s12 m4 col">
-					<div className="form-block">
-						  
-			                <h3 className="form-block-title">Card do Curso</h3>
-			                  <p className="input-description">Essa foto será utilizada na miniatura do curso que aparecerá nas telas principais de acesso</p>
-			                  <label className="input-label">Tamanho sugerido: 170x220</label>
-			                  <a className="input-img card-img">
-								<Icon name='paper' />
-								<span>Alterar Logo</span>
-							  </a>
-			           
-					</div>
+    <div className="container">
+		<div className="row form-section">
+			<div className="s12 m4 col">
+				<div className="form-block">
+
+		                <h3 className="form-block-title">Card do Curso</h3>
+		                  <p className="input-description">Essa foto será utilizada na miniatura do curso que aparecerá nas telas principais de acesso</p>
+		                  <label className="input-label">Tamanho sugerido: 170x220</label>
+		                  <a className="input-img card-img">
+							<Icon name='paper' />
+							<span>Alterar Logo</span>
+						  </a>
+
 				</div>
-				<div className="s12 m4 col">
-					<div className="form-block">
-						
-	                  <h3 className="form-block-title">Logo do Cabeçalho</h3>
-	                  <p className="input-description">Esse logo aparecerá no cabeçalho do curso:</p>
-	                  <label className="input-label">Tamanho sugerido: 220x60</label>
-					  <a className="input-img header-logo horizontal">
-						<Icon name='paper' />
-						<span>Alterar Logo</span>
-					  </a>
-			         
-					</div>
+			</div>
+			<div className="s12 m4 col">
+				<div className="form-block">
+
+                  <h3 className="form-block-title">Logo do Cabeçalho</h3>
+                  <p className="input-description">Esse logo aparecerá no cabeçalho do curso:</p>
+                  <label className="input-label">Tamanho sugerido: 220x60</label>
+				  <a className="input-img header-logo horizontal">
+					<Icon name='paper' />
+					<span>Alterar Logo</span>
+				  </a>
+
+				</div>
+			</div>
+
+			<div className="s12 m4 col">
+				<div className="form-block">
+		                <h3 className="form-block-title">Cor Primária</h3>
+		                <p className="input-description">Essa cor será utilizada em grande parte do elementos visuais do curso</p>
+		                <ButtonExample/>
 				</div>
 
-				<div className="s12 m4 col">
-					<div className="form-block">
-			                <h3 className="form-block-title">Cor Primária</h3>
-			                <p className="input-description">Essa cor será utilizada em grande parte do elementos visuais do curso</p>
-			                <ButtonExample/>
-					</div>
+				<div className="form-block">
+		              <h3 className="form-block-title">Cor Destaque</h3>
+	                  <p className="input-description">Personalize a cor de ação, ela será utilizada em botões e links, elementos que chamam atenção do aluno</p>
+	                  <ButtonExample/>
+				</div>
+			</div>
+		</div>
 
-					<div className="form-block">
-			              <h3 className="form-block-title">Cor Destaque</h3>
-		                  <p className="input-description">Personalize a cor de ação, ela será utilizada em botões e links, elementos que chamam atenção do aluno</p>
+		<div className="row form-section">
+			<div className="s12 m12 col">
+				<h3 class="form-section-title">Personalizações de Login</h3>
+			</div>
+			<div className="s12 m4 col">
+				<div className="form-block">
+
+		                <h3 className="form-block-title">Logo do Formulário</h3>
+		                  <p className="input-description">Essa imagem será utilizada no topo do formulario</p>
+		                  <label className="input-label">Tamanho sugerido: 170x170</label>
+		                  <a className="input-img login-logo">
+							<Icon name='paper' />
+							<span>Alterar Logo</span>
+						  </a>
+
+				</div>
+			</div>
+
+			<div className="s12 m4 col">
+				<div className="form-block">
+		                <h3 className="form-block-title">Cor do Plano de Fundo</h3>
+		                  <p className="input-description">Essa cor será utilizada no fundo da tela de login. Caso utilize uma imagem, a imagem irá sobrepor a cor</p>
 		                  <ButtonExample/>
-					</div>
+
 				</div>
 			</div>
 
-			<div className="row form-section">
-				<div className="s12 m12 col">
-					<h3 class="form-section-title">Personalizações de Login</h3>
-				</div>
-				<div className="s12 m4 col">
-					<div className="form-block">
-						 
-			                <h3 className="form-block-title">Logo do Formulário</h3>
-			                  <p className="input-description">Essa imagem será utilizada no topo do formulario</p>
-			                  <label className="input-label">Tamanho sugerido: 170x170</label>
-			                  <a className="input-img login-logo">
-								<Icon name='paper' />
-								<span>Alterar Logo</span>
-							  </a>
-			
-					</div>
-				</div>
-				
-				<div className="s12 m4 col">
-					<div className="form-block">
-			                <h3 className="form-block-title">Cor do Plano de Fundo</h3>
-			                  <p className="input-description">Essa cor será utilizada no fundo da tela de login. Caso utilize uma imagem, a imagem irá sobrepor a cor</p>
-			                  <ButtonExample/>
-			                  
-					</div>
-				</div>
+			<div className="s12 m4 col">
+				<div className="form-block">
 
-				<div className="s12 m4 col">
-					<div className="form-block">
-						
-			                <h3 className="form-block-title">Imagem de Fundo</h3>
-			                  <p className="input-description">Personalize o plano de fundo da tela de login, procure utilzar fotos de boa qualidade</p>
-			                  <label className="input-label">Tamanho sugerido: 1920x1080</label>
-							  <a className="input-img header-logo ">
-								<Icon name='paper' />
-								<span>Alterar Logo</span>
-							  </a>
-			          
-					</div>
-				</div>
+		                <h3 className="form-block-title">Imagem de Fundo</h3>
+		                  <p className="input-description">Personalize o plano de fundo da tela de login, procure utilzar fotos de boa qualidade</p>
+		                  <label className="input-label">Tamanho sugerido: 1920x1080</label>
+						  <a className="input-img header-logo ">
+							<Icon name='paper' />
+							<span>Alterar Logo</span>
+						  </a>
 
+				</div>
 			</div>
-	    </div>
-	</section>
+
+		</div>
+    </div>
 );
 
 export default CoursePersonalization;
