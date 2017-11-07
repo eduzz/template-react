@@ -3,7 +3,6 @@ import { Modal, Content, Footer, Button } from './Modal';
 import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
 import CourseModuleList from './CourseModuleList';
-import VisibleCourseCardGrid from '../containers/VisibleCourseCardGrid';
 
 const CourseBasicInfo = () => (
     <div>
@@ -29,7 +28,7 @@ const CourseBasicInfo = () => (
                         </Content>
                         <Footer>
                             <a className="modal-action modal-close waves-effect waves-green btn-flat">Salvar</a>
-                            <a className="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+                            <a className="modal-action modal-`close waves-effect waves-red btn-flat">Cancelar</a>
                         </Footer>
                     </Modal>
                     <Button className='button affirmative waves-effect waves-light' target='modal-authors'>
