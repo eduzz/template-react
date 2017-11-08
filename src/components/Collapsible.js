@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import jquery from 'jquery';
-import { getLessons } from '../actions';
-import LessonCard from './LessonCard';
 
 export class Collapsible extends Component {
 	componentDidMount() {
