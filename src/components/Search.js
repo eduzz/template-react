@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from './Icon';
 
 const Search = ({ onSearch }) => (
     <div className="input-field">
