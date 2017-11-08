@@ -9,16 +9,16 @@ export class Modal extends Component {
     }
 
     componentDidMount() {
-        jquery('.modal').modal({
+        jquery('#' + this.props.id).modal({
             ready: () => {
                 this.setState({
                     content: this.props.children.length ? [...this.props.children] : [{...this.props.children}]
-                })
+                });
             },
             complete: () => {
                 this.setState({
                     content: undefined
-                })
+                });
             },
             ...this.props.options,
         });

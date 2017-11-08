@@ -17,8 +17,9 @@ export const receiveCoursesError = err => ({
 	err,
 });
 
-export const getCourse = () => ({
+export const getCourse = id => ({
 	type: 'GET_COURSE',
+	id
 });
 
 export const receiveCourse = modules => ({
@@ -28,5 +29,20 @@ export const receiveCourse = modules => ({
 
 export const receiveCourseError = err => ({
 	type: 'RECEIVE_COURSE_ERROR',
+	err,
+});
+
+export const getLessons = moduleID => ({
+	type: 'GET_LESSONS',
+	moduleID
+});
+
+export const receiveLessons = lessons => ({
+	type: 'RECEIVE_LESSONS',
+	lessons,
+});
+
+export const receiveLessonsError = err => ({
+	type: 'RECEIVE_LESSONS_ERROR',
 	err,
 });
