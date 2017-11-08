@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Icon from '../Icon';
 
-class Filters extends Component {
+class FiltersMenu extends Component {
     constructor() {
         super();
 
@@ -36,4 +35,4 @@ class Filters extends Component {
     }
 }
 
-export default Filters;
+export default FiltersMenu;

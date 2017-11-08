@@ -1,4 +1,4 @@
-import Filters from './Filters';
+import FiltersMenu from './FiltersMenu';
 import ProducerFilter from './ProducerFilter';
 import PeriodFilter from './PeriodFilter';
 import StatusFilter from './StatusFilter';
@@ -6,7 +6,7 @@ import CategoryFilter from './CategoryFilter';
 import TagsFilter from './TagsFilter';
 
 export {
-    Filters,
+    FiltersMenu,
     ProducerFilter,
     PeriodFilter,
     StatusFilter,
