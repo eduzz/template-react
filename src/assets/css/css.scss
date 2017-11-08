@@ -3,6 +3,8 @@
 @import "mixins";
 @import "reset";
 @import "materialize";
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 
 body{
   padding:60px 0 0 0;
@@ -903,6 +905,81 @@ nav{
       transform: scale(1.1) translateY(-5px);
     }
   }
+  .featured-carousel{
+    $carousel-item-height: 250px;
+    // position:relative;
+    // &:before{
+    //   content:"";
+    //   height: 80px;
+    //   width: 100%;
+    //   display: block;
+    //   margin:auto;
+    //   left: 0;
+    //   right: 0;
+    //   bottom:0;
+    //   position:absolute;
+    //   z-index: 4;
+    //   background: rgba(242,242,242,0);
+    //   background: -moz-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
+    //   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(242,242,242,0)), color-stop(100%, rgba(47,47,47,1)));
+    //   background: -webkit-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
+    //   background: -o-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
+    //   background: -ms-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
+    //   background: linear-gradient(to bottom, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
+    //   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#2f2f2f', GradientType=0 ); 
+    // }
+    .featured-item{
+      height: $carousel-item-height;
+      @include transition;
+      position:relative;
+      .content{
+        position:absolute;
+        bottom:0;
+        background-color: transparentize($dark-color, 0.3);
+        color:#fff;
+        left: 0;
+        right: 0;
+        margin:auto;
+        padding:20px;
+        height: auto;
+        transform: translateY(50px);
+        @include transition;
+
+      }
+      .item-title{
+        margin:0;
+        @include fontsize(20);
+        margin-bottom: 10px;
+      }
+      .item-content{
+        @include fontsize(14);
+        line-height: 14px;
+        margin-bottom: 10px;
+      }
+      .button{
+        opacity: 0;
+        @include transition;
+        visibility: hidden;
+      }
+      img{
+        @include transition;
+        height: $carousel-item-height;
+        width: 100%;
+        object-fit: cover;
+      }
+      &:hover{
+        transform: scale(1.1);
+        z-index: 3;
+        .content{
+          transform: translateY(0);
+        }
+        .button{
+          opacity: 1;
+          visibility: visible;
+        }
+      }//end hover
+    }//end featured item
+  }//end feature carousel
 }
 
 .template-black{
