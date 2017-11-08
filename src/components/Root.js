@@ -1,26 +1,18 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Redirect, HashRouter, Switch } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
-import SideMenu from './SideMenu';
-import Courses from './Courses';
-import CourseEdit from '../containers/CourseEdit';
+import Producer from './Producer';
+import Student from './Student';
 
 const Root = ({ store }) => (
     <Provider store={store}>
     	<HashRouter>
 	    	<div>
-		    	<Header />
-		        <SideMenu />
-
 		        <Switch>
-		        	<Redirect exact from='/' to='/courses' />
-		        	<Route exact path='/courses' component={ Courses } />
-		        	<Route exact path='/courses/edit/:courseID' component={ CourseEdit } />
+		        	<Redirect exact from='/' to='/producer' />
+		        	<Route path='/producer' component={ Producer } />
+		        	<Route path='/student' component={ Student } />
 		        </Switch>
-
-		        <Footer />
 		    </div>
 		</HashRouter>
   	</Provider>
