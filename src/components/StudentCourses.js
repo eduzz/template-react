@@ -1,9 +1,16 @@
 import React from 'react';
+import VisibleCourseCardGrid from '../containers/VisibleCourseCardGrid';
+import CoursesSearch from '../containers/CoursesSearch';
+import CoursesFilters from './CoursesFilters';
 
 const StudentCourses = () => (
-    <section className="page-content">
+    <section className="student-content">
         <div className="container">
-            <h1> Cursos do Aluno </h1>
+        	<div className="search-bar">
+	            <CoursesSearch />
+	            <CoursesFilters />
+        	</div>
+            <VisibleCourseCardGrid />
         </div>
     </section>
 );

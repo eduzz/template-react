@@ -362,6 +362,7 @@ nav{
     input{
       height: 40px;
       @include fontsize(13);
+      margin-bottom:5px;
     }
     label{
       color:#232323;
@@ -465,6 +466,7 @@ nav{
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
   border:0;
   margin-right:20px;
+  margin-bottom:20px;
   .card-status{
     color:#fff;
     position: absolute;
@@ -502,6 +504,7 @@ nav{
     @include fontsize(14);
     font-weight:$medium;
     letter-spacing:0.5px;
+    margin-bottom: 4px;
   }
   .card-category{
     font-size:10px;
@@ -514,7 +517,8 @@ nav{
   display: flex;
   align-items:center;
   justify-content: space-between;
-  .input-field{
+
+  >.input-field{
     width: 100%;
     margin: 0;
     margin-right: 40px;
@@ -699,7 +703,12 @@ nav{
       padding:0 0 0 10px;
       filter: grayscale(100%);
       @include transition;
-
+      .blue{
+        fill:#1F3255;
+      }
+      .yellow{
+        fill:#FFCD2B;
+      }
     }
     .avatar{
       height: 30px;
@@ -881,3 +890,96 @@ nav{
     color: #fff;
   }
 }
+.student-content{
+  >.container{
+    padding: 20px 20px 40px 20px;
+    min-height: calc(100vh - 60px);
+    position: relative;
+  }
+  .card.course{
+    @include transition;
+    cursor:pointer;
+    &:hover{
+      transform: scale(1.1) translateY(-5px);
+    }
+  }
+}
+
+.template-black{
+  .student-content{
+    background-color: $background-color;
+  }
+  input:not([type]):focus:not([readonly]) + label, input[type=text]:not(.browser-default):focus:not([readonly]) + label, input[type=password]:not(.browser-default):focus:not([readonly]) + label, input[type=email]:not(.browser-default):focus:not([readonly]) + label, input[type=url]:not(.browser-default):focus:not([readonly]) + label, input[type=time]:not(.browser-default):focus:not([readonly]) + label, input[type=date]:not(.browser-default):focus:not([readonly]) + label, input[type=datetime]:not(.browser-default):focus:not([readonly]) + label, input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label, input[type=tel]:not(.browser-default):focus:not([readonly]) + label, input[type=number]:not(.browser-default):focus:not([readonly]) + label, input[type=search]:not(.browser-default):focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label{
+      color:#fff;
+  }
+  .filters{
+    background:rgba(33, 33, 33, 0.95);
+    label{
+      color:#fff;
+    }
+    .input-field input{
+      background-color: $background-color;
+    }
+    .action-button,
+    .filter-header{
+      background:rgba(33, 33, 33, 0.95);
+      color:#fff;
+    }
+    .block-header:before,
+    .block-header:after{
+      background-color:#fff;
+    }
+    .block-header:hover{
+      &:before,&:after{
+        background-color: $dark-color;
+      }
+    }
+  }//end filters
+
+  .page-footer{
+    background-color:$background-color;
+    span{
+      color:#fff;
+    }
+    .logo-footer{
+      .yellow{
+        fill:#cecece;
+        @include transition;
+      }
+      .blue{
+        fill:#fff;
+        @include transition;
+      }
+      .blue-logo{
+        fill: $background-color;
+      }
+    }
+    &:hover .logo-footer{
+
+      .yellow{
+        fill:#FFCD2B;
+      }
+    }
+  }
+  .search-bar{
+    > .input-field input{
+      background-color: $dark-color;
+      border:0;
+      color:#fff;
+      border-radius:50px;
+    }
+    > label{
+      color:#fff;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+

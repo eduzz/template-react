@@ -3875,7 +3875,7 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
     transition: transform .2s ease-in-out;
     transform-origin: 0% 100%;
     text-align: initial;
-    transform: translateY(12px);
+    transform: translateY(14px);
     pointer-events: none; }
     .input-field label:not(.label-icon).active {
       transform: translateY(-15px) translateX(-8px) scale(0.8);
@@ -5736,7 +5736,8 @@ nav {
     margin-top: 5px; }
     .filters .input-field input {
       height: 40px;
-      font-size: 0.8125rem; }
+      font-size: 0.8125rem;
+      margin-bottom: 5px; }
     .filters .input-field label {
       color: #232323; }
   .filters .dropdown-content li > span {
@@ -5819,7 +5820,8 @@ nav {
   background-position: center;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
   border: 0;
-  margin-right: 20px; }
+  margin-right: 20px;
+  margin-bottom: 20px; }
   .card .card-status {
     color: #fff;
     position: absolute;
@@ -5851,7 +5853,8 @@ nav {
     color: #fff;
     font-size: 0.875rem;
     font-weight: 500;
-    letter-spacing: 0.5px; }
+    letter-spacing: 0.5px;
+    margin-bottom: 4px; }
   .card .card-category {
     font-size: 10px;
     color: #fff; }
@@ -5861,11 +5864,11 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between; }
-  .search-bar .input-field {
+  .search-bar > .input-field {
     width: 100%;
     margin: 0;
     margin-right: 40px; }
-    .search-bar .input-field input {
+    .search-bar > .input-field input {
       margin: 0;
       box-sizing: border-box; }
   .search-bar .button {
@@ -6006,6 +6009,10 @@ nav {
     padding: 0 0 0 10px;
     filter: grayscale(100%);
     transition: all 0.3s ease-in-out; }
+    .page-footer .logo-footer .blue {
+      fill: #1F3255; }
+    .page-footer .logo-footer .yellow {
+      fill: #FFCD2B; }
   .page-footer .avatar {
     height: 30px;
     transition: all 0.3s ease-in-out;
@@ -6157,3 +6164,60 @@ nav {
   .chips .chip.selected {
     background-color: #232323;
     color: #fff; }
+
+.student-content > .container {
+  padding: 20px 20px 40px 20px;
+  min-height: calc(100vh - 60px);
+  position: relative; }
+
+.student-content .card.course {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer; }
+  .student-content .card.course:hover {
+    transform: scale(1.1) translateY(-5px); }
+
+.template-black .student-content {
+  background-color: #2f2f2f; }
+
+.template-black input:not([type]):focus:not([readonly]) + label, .template-black input[type=text]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=password]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=email]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=url]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=time]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=date]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=datetime]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=tel]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=number]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=search]:not(.browser-default):focus:not([readonly]) + label, .template-black textarea.materialize-textarea:focus:not([readonly]) + label {
+  color: #fff; }
+
+.template-black .filters {
+  background: rgba(33, 33, 33, 0.95); }
+  .template-black .filters label {
+    color: #fff; }
+  .template-black .filters .input-field input {
+    background-color: #2f2f2f; }
+  .template-black .filters .action-button,
+  .template-black .filters .filter-header {
+    background: rgba(33, 33, 33, 0.95);
+    color: #fff; }
+  .template-black .filters .block-header:before,
+  .template-black .filters .block-header:after {
+    background-color: #fff; }
+  .template-black .filters .block-header:hover:before, .template-black .filters .block-header:hover:after {
+    background-color: #232323; }
+
+.template-black .page-footer {
+  background-color: #2f2f2f; }
+  .template-black .page-footer span {
+    color: #fff; }
+  .template-black .page-footer .logo-footer .yellow {
+    fill: #cecece;
+    transition: all 0.3s ease-in-out; }
+  .template-black .page-footer .logo-footer .blue {
+    fill: #fff;
+    transition: all 0.3s ease-in-out; }
+  .template-black .page-footer .logo-footer .blue-logo {
+    fill: #2f2f2f; }
+  .template-black .page-footer:hover .logo-footer .yellow {
+    fill: #FFCD2B; }
+
+.template-black .search-bar > .input-field input {
+  background-color: #232323;
+  border: 0;
+  color: #fff;
+  border-radius: 50px; }
+
+.template-black .search-bar > label {
+  color: #fff; }
