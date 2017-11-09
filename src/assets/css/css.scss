@@ -907,27 +907,36 @@ nav{
   }
   .featured-carousel{
     $carousel-item-height: 250px;
-    // position:relative;
-    // &:before{
-    //   content:"";
-    //   height: 80px;
-    //   width: 100%;
-    //   display: block;
-    //   margin:auto;
-    //   left: 0;
-    //   right: 0;
-    //   bottom:0;
-    //   position:absolute;
-    //   z-index: 4;
-    //   background: rgba(242,242,242,0);
-    //   background: -moz-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
-    //   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(242,242,242,0)), color-stop(100%, rgba(47,47,47,1)));
-    //   background: -webkit-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
-    //   background: -o-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
-    //   background: -ms-linear-gradient(top, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
-    //   background: linear-gradient(to bottom, rgba(242,242,242,0) 0%, rgba(47,47,47,1) 100%);
-    //   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#2f2f2f', GradientType=0 ); 
-    // }
+    width: 100%;
+    // padding:0 40px;
+    .slick-prev, .slick-next{
+      z-index: 5;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color:transparentize($dark-color, 0.3);
+      padding:0px;
+      width: 40px;
+      height: 100%;
+      svg{
+        fill:none;
+        stroke:#FFFFFF;
+        stroke-width:3;
+        stroke-linecap:round;
+        stroke-miterlimit:10;
+        width: 20px;
+      }
+      &:before{
+        display: none;
+      }
+    }
+    .slick-prev{
+      left: 0;
+    }
+    .slick-next{
+      right: 0;
+    }
     .featured-item{
       height: $carousel-item-height;
       @include transition;
@@ -940,7 +949,7 @@ nav{
         left: 0;
         right: 0;
         margin:auto;
-        padding:20px;
+        padding:25px 50px;
         height: auto;
         transform: translateY(50px);
         @include transition;
@@ -948,8 +957,9 @@ nav{
       }
       .item-title{
         margin:0;
-        @include fontsize(20);
+        @include fontsize(28);
         margin-bottom: 10px;
+        font-weight: $medium;
       }
       .item-content{
         @include fontsize(14);
@@ -968,7 +978,7 @@ nav{
         object-fit: cover;
       }
       &:hover{
-        transform: scale(1.1);
+        // transform: scale(1.1);
         z-index: 3;
         .content{
           transform: translateY(0);
