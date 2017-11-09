@@ -5484,11 +5484,13 @@ body {
   border-radius: 50px;
   background-color: #d8d8d8;
   display: inline-block;
-  color: #1b1b1b; }
+  color: #1b1b1b;
+  transition: all 0.3s ease-in-out; }
   .button span {
     letter-spacing: 0.5px;
     font-weight: 500;
     font-size: 16px;
+    transition: all 0.3s ease-in-out;
     color: #3A3A3A; }
   .button .icon {
     fill: #3a3a3a;
@@ -5510,6 +5512,15 @@ body {
   .button.soft {
     background-color: #e6e6e6;
     border: 1px solid #202020; }
+  .button.outline {
+    background-color: transparent;
+    border: 1px solid #fff; }
+    .button.outline span {
+      color: #fff; }
+    .button.outline:hover {
+      background-color: rgba(255, 255, 255, 0.7); }
+      .button.outline:hover span {
+        color: #232323; }
 
 .header-logo {
   height: 40px;
@@ -6255,6 +6266,18 @@ nav {
   padding: 20px 20px 40px 20px;
   max-width: 1080px;
   width: 100%; }
+
+.student-course-content .action-button {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 4; }
+  .student-course-content .action-button .button {
+    text-transform: uppercase; }
+  .student-course-content .action-button .container {
+    padding: 20px; }
 
 .student-course-content .banner-course {
   height: 400px;
