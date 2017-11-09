@@ -25,7 +25,7 @@ class CourseEdit extends Component {
 
         				<Tabs>
                             <Pane title='Informações Básicas' icon='paper'>
-                                <CourseBasicInfo />
+                                <CourseBasicInfo course={ this.props.course }/>
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='paper'>
                                 <CourseAdvanced />

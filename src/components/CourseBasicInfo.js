@@ -6,7 +6,7 @@ import CourseModuleList from './CourseModuleList';
 import AuthorSelect from './Admin/AuthorSelect';
 import Author from './Admin/Author'; 
 
-const CourseBasicInfo = () => (
+const CourseBasicInfo = ({ course }) => (
     <div>
         <CourseBanner />
 
@@ -48,7 +48,7 @@ const CourseBasicInfo = () => (
             <span>Adicionar Módulo</span>
         </a>
 
-        <CourseModuleList />
+        <CourseModuleList modules={ course.modules || [] } />
     </div>
 );
 

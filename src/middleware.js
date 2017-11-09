@@ -17,7 +17,7 @@ const middleware = store => next => action => {
             );
             break;
         case 'GET_COURSE':
-            get('5a00ba673000002a13fabd5e', action.id).then(
+            get('5a03c6573100005d1f916af7', action.id).then(
                 res => {
                     next(actions.receiveCourse(res.data));
                 },

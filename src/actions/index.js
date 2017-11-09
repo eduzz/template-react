@@ -22,9 +22,9 @@ export const getCourse = id => ({
 	id
 });
 
-export const receiveCourse = modules => ({
+export const receiveCourse = course => ({
 	type: 'RECEIVE_COURSE',
-	modules,
+	course,
 });
 
 export const receiveCourseError = err => ({
