@@ -6028,7 +6028,7 @@ nav {
 
 .block-header,
 .card-lessons-header {
-  padding: 20px;
+  padding: 20px 55px 20px 20px;
   position: relative;
   cursor: pointer; }
   .block-header:before,
@@ -6107,6 +6107,8 @@ nav {
   .card-lessons .card-lessons-wrapper {
     padding: 20px;
     padding-top: 0 !important; }
+  .card-lessons .card-lessons-resume span {
+    margin-right: 10px; }
   .card-lessons .card-lesson-block {
     padding: 20px 120px 20px 20px;
     background-color: #EEEEEE;
@@ -6221,7 +6223,7 @@ nav {
       transition: all 0.3s ease-in-out; }
     .student-content .featured-carousel .featured-item .item-title {
       margin: 0;
-      font-size: 1.75rem;
+      font-size: 2rem;
       margin-bottom: 10px;
       font-weight: 500; }
     .student-content .featured-carousel .featured-item .item-content {
@@ -6245,8 +6247,113 @@ nav {
         opacity: 1;
         visibility: visible; }
 
+.student-course-content > .container {
+  min-height: calc(100vh - 450px);
+  position: relative; }
+
+.student-course-content .container {
+  padding: 20px 20px 40px 20px;
+  max-width: 1080px;
+  width: 100%; }
+
+.student-course-content .banner-course {
+  height: 400px;
+  width: 100%;
+  position: relative;
+  color: #fff;
+  text-shadow: 1px 1px #232323; }
+  .student-course-content .banner-course .banner-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 60px; }
+  .student-course-content .banner-course .course-name {
+    font-size: 2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 30px 0; }
+  .student-course-content .banner-course .course-description {
+    line-height: 1.075rem; }
+  .student-course-content .banner-course .course-number-lessons {
+    padding: 10px 0;
+    font-size: 0.875rem;
+    letter-spacing: 1px; }
+  .student-course-content .banner-course .course-author {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 0; }
+  .student-course-content .banner-course .course-author-img,
+  .student-course-content .banner-course .course-author-img img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden; }
+  .student-course-content .banner-course .course-author-img img {
+    object-fit: cover; }
+  .student-course-content .banner-course .course-author-data {
+    padding: 20px;
+    font-size: 1.125rem;
+    margin: 0; }
+  .student-course-content .banner-course .course-progress label {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px; }
+  .student-course-content .banner-course .progress-bar {
+    width: 250px;
+    height: 3px;
+    display: block;
+    margin: 8px 0;
+    background-color: #fff; }
+    .student-course-content .banner-course .progress-bar span {
+      background-color: #27921A;
+      display: block;
+      height: 3px; }
+
+.banner-img,
+.banner-img img {
+  width: 100%;
+  height: 400px; }
+
+.banner-img img {
+  object-fit: cover; }
+
+.banner-img {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  display: block;
+  margin: auto; }
+  .banner-img:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    display: block;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(26, 26, 26, 0);
+    background: -moz-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, #1a1a1a), color-stop(100%, #1a1a1a));
+    background: -webkit-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: -o-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: -ms-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 ); }
+
+.template-black .student-course-content {
+  background-color: #1a1a1a; }
+
 .template-black .student-content {
   background-color: #2f2f2f; }
+
+.template-black .student-course-content {
+  color: #fff; }
+
+.template-black .course-progress label {
+  color: #fff; }
 
 .template-black input:not([type]):focus:not([readonly]) + label, .template-black input[type=text]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=password]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=email]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=url]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=time]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=date]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=datetime]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=tel]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=number]:not(.browser-default):focus:not([readonly]) + label, .template-black input[type=search]:not(.browser-default):focus:not([readonly]) + label, .template-black textarea.materialize-textarea:focus:not([readonly]) + label {
   color: #fff; }
@@ -6290,3 +6397,9 @@ nav {
 
 .template-black .search-bar > label {
   color: #fff; }
+
+.template-black .card-lessons {
+  background-color: #1a1a1a; }
+
+.template-black .card-lesson-block {
+  background-color: #232323; }
