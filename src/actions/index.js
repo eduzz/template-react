@@ -37,9 +37,10 @@ export const getLessons = moduleID => ({
 	moduleID
 });
 
-export const receiveLessons = lessons => ({
+export const receiveLessons = (lessons, moduleID) => ({
 	type: 'RECEIVE_LESSONS',
 	lessons,
+	moduleID,
 });
 
 export const receiveLessonsError = err => ({

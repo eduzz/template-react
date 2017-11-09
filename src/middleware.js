@@ -26,6 +26,16 @@ const middleware = store => next => action => {
                 },
             );
             break;
+        case 'GET_LESSONS':
+            get('5a0467a13100004a3a916dca', action.moduleID).then(
+                res => {
+                    next(actions.receiveLessons(res.data, action.moduleID));
+                },
+                err => {
+                    next(actions.receiveLessonsError(err));
+                },
+            );
+            break;
         default:
             break;
     }

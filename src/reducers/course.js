@@ -20,7 +20,7 @@ const lessons = (state = [], action) => {
 			return state.map(module => {
     			return {
         			...module,
-        			lessons: module.id === action.id ? action.lessons : [],
+        			lessons: action.moduleID === module.id ? action.lessons : module.lessons,
         		};
         	});
         default:

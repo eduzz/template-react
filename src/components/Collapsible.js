@@ -10,7 +10,7 @@ export class Collapsible extends Component {
 
 	render() {
 		return (
-			<ul className={`collapsible ${this.props.className}`} data-collapsible='accordion'>
+			<ul id={ this.props.id } className={`collapsible ${this.props.className}`} data-collapsible='accordion'>
 				<li>
                     { this.props.children }
 				</li>
