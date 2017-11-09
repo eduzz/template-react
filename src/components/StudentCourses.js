@@ -11,7 +11,7 @@ import Slider  from 'react-slick';
 
 
 function SamplePrevArrow(props) {
-  const {className, style, onClick} = props
+  const {className, onClick} = props
   return (
     <div
       className={className}
@@ -24,7 +24,7 @@ function SamplePrevArrow(props) {
   );
 }
 function SampleNextArrow(props) {
-  const {className, style, onClick} = props
+  const {className, onClick} = props
   return (
     <div
       className={className}
@@ -54,62 +54,62 @@ class SimpleSlider extends React.Component {
         	<div className="content">
         		<h3 className="item-title">Curso de Photoshop</h3>
         		<p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-        		<a href="#" className="button outline"><span>Acessar</span></a>
+        		<a className="button outline"><span>Acessar</span></a>
         	</div>
-        	<img src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
+        	<img alt='' src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
         </div>
         <div className="featured-item">
 	        <div className="content">
 	        		<h3 className="item-title">Curso de Ilustracao</h3>
 	        		<p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-	        		<a href="#" className="button outline"><span>Acessar</span></a>
+	        		<a className="button outline"><span>Acessar</span></a>
 	        </div>
-	        <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg"/>
+	        <img alt='' src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg"/>
         </div>
 
         <div className="featured-item">
         	<div className="content">
         		<h3 className="item-title">Paisagens dahora paaaaakas</h3>
         		<p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-        		<a href="#" className="button outline"><span>Acessar</span></a>
+        		<a className="button outline"><span>Acessar</span></a>
         	</div>
-        	<img src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
+        	<img alt='' src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
         </div>
 
         <div className="featured-item">
           <div className="content">
               <h3 className="item-title">Curso de Ilustracao</h3>
               <p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-              <a href="#" className="button outline"><span>Acessar</span></a>
+              <a className="button outline"><span>Acessar</span></a>
           </div>
-          <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg"/>
+          <img alt='' src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg"/>
         </div>
 
         <div className="featured-item">
           <div className="content">
             <h3 className="item-title">Paisagens dahora paaaaakas</h3>
             <p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-            <a href="#" className="button outline"><span>Acessar</span></a>
+            <a className="button outline"><span>Acessar</span></a>
           </div>
-          <img src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
+          <img alt='' src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
         </div>
 
         <div className="featured-item">
           <div className="content">
               <h3 className="item-title">Curso de Ilustracao</h3>
               <p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-              <a href="#" className="button outline"><span>Acessar</span></a>
+              <a className="button outline"><span>Acessar</span></a>
           </div>
-          <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg"/>
+          <img alt='' src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg"/>
         </div>
 
         <div className="featured-item">
           <div className="content">
             <h3 className="item-title">Paisagens dahora paaaaakas</h3>
             <p className="item-content">Este Destaque é muito importante para testar o layout e ver se nao quebra nenhuma tag dentro dos items do carousel</p>
-            <a href="#" className="button outline"><span>Acessar</span></a>
+            <a className="button outline"><span>Acessar</span></a>
           </div>
-          <img src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
+          <img alt='' src="https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg"/>
         </div>
 
       </Slider>
