@@ -8,9 +8,9 @@ const StudentCourseDetails = () => (
       <div className="banner-img">
         <img src="https://cdn-images-1.medium.com/max/1920/1*EvKrLarpqvRp43YofdwgoA.jpeg" alt=""/>
       </div>
-      <div class="action-button">
-        <div class="container">
-          <a href="#" class="button outline small"><span>Voltar</span></a>
+      <div className="action-button">
+        <div className="container">
+          <a href="#" className="button outline small"><span>Voltar</span></a>
         </div>
       </div>
         <section className="banner-course">
