@@ -5,7 +5,7 @@ import Footer from './Footer';
 import StudentCourses from './StudentCourses';
 
 const Student = () => (
-	<div>
+	<div className="template-black">
 		<Header />
 
 		<Switch>

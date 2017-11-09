@@ -7,7 +7,7 @@ const middleware = store => next => action => {
 
     switch (action.type) {
         case 'GET_COURSES':
-            get('5a00b9323000000113fabd5b', action.id).then(
+            get('5a034556310000a20c9169f9', action.id).then(
                 res => {
                     next(actions.receiveCourses(res.data));
                 },
