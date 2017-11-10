@@ -4,7 +4,8 @@ import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
 import CourseModuleList from './CourseModuleList';
 import AuthorSelect from './Admin/AuthorSelect';
-import Author from './Admin/Author'; 
+import Author from './Admin/Author';
+import ProducerCourseModules from '../containers/ProducerCourseModules';
 
 const CourseBasicInfo = ({ course }) => (
     <div>
@@ -48,7 +49,7 @@ const CourseBasicInfo = ({ course }) => (
             <span>Adicionar Módulo</span>
         </a>
 
-        <CourseModuleList modules={ course.modules || [] } />
+        <ProducerCourseModules />
     </div>
 );
 

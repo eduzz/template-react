@@ -1,4 +1,4 @@
-import * as actions from './actions';
+import actions from './actions';
 import { get } from './agent';
 
 const middleware = store => next => action => {
@@ -13,11 +13,11 @@ const middleware = store => next => action => {
                 },
                 err => {
                     next(actions.receiveCoursesError(err));
-                },
+                }
             );
             break;
         case 'GET_COURSE':
-            get('5a03c6573100005d1f916af7', action.id).then(
+            get('5a03c6573100005d1f916af7').then(
                 res => {
                     next(actions.receiveCourse(res.data));
                 },
@@ -26,6 +26,15 @@ const middleware = store => next => action => {
                 },
             );
             break;
+        case 'GET_MODULES':
+            get('5a04f4953000004e13fe090e').then(
+                res => {
+                    next(actions.receiveModules(res.data));
+                },
+                err => {
+                    next(actions.receiveModulesError(err));
+                },
+            );
         case 'GET_LESSONS':
             get('5a0467a13100004a3a916dca', action.moduleID).then(
                 res => {
