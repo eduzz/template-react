@@ -1134,14 +1134,34 @@ nav{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 );
   }
 }
-
-
-
-
-
-
+.upsell-card{
+  margin:20px 0;
+  .upsell-name{
+    padding:10px 20px 10px 20px;
+    @include fontsize(18);
+    font-weight: $medium;
+    margin:0;
+  }
+  .upsell-description{
+    padding:0 20px;
+    margin-bottom: 20px;
+    @include fontsize(14);
+    line-height: 1rem;
+  }
+  .button{
+    display: block;
+    text-align: center;
+    margin:0 20px 20px 20px;
+  }
+  .upsell-img{
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+  }
+}
 
 .template-black{
+
   .student-course-content{
     background-color: $darkest-color;
   }
@@ -1218,10 +1238,14 @@ nav{
     }
   }
   .card-lessons{
-    background-color:$darkest-color;
+    background-color:$dark-color;
   }
   .card-lesson-block{
-    background-color:$dark-color;
+    background-color:$darkest-color;
+  }
+  .upsell-card{
+    background:$dark-color;
+    border:1px solid $background-color;
   }
 }//end template black
 

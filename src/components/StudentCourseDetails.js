@@ -6,7 +6,7 @@ import LessonCard from './LessonCard';
 const StudentCourseDetails = () => (
     <section className="student-course-content">
       <div className="banner-img">
-        <img src="https://app.nutror.com//file/Uploads/629/PRIMEIRA-VENDA_reformulação-da-marca/1100x180_identidade_curso_primei.jpg" alt=""/>
+        <img src="http://bonecoviajante.com.br/wp-content/uploads/2017/03/alpes-suicos-paisagens-lindas-da-natureza.jpg" alt=""/>
       </div>
       <div className="action-button">
         <div className="container">
@@ -41,7 +41,7 @@ const StudentCourseDetails = () => (
         </section>
         <div className="container">
           <div class="row">
-            <div class="s12 m8 col">
+            <div class="s12 m9 col">
               <Collapsible className='card-lessons' id='module1'>
                 <Header className='card-lessons-header active'>
                   <h3 className='card-lessons-title'>Entendendo a interface do Photoshop</h3>
@@ -111,8 +111,18 @@ const StudentCourseDetails = () => (
                 </Content>
               </Collapsible>
             </div>
-            <div class="s12 m4 col">
-              
+            <div class="s12 m3 col">
+              <div class="upsell-card">
+                <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg" alt="" class="upsell-img" />
+                <div class="content">
+                  <h3 class="upsell-name">
+                    Curso de Engenharia
+                  </h3>
+                  <p class="upsell-description">Este curso de engenharia contempla todas as matérias necessarias para se tornar um bom engenheiro</p>
+                  <a href="#" class="button affirmative">
+                    <span>Comprar</span></a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
