@@ -6140,7 +6140,7 @@ nav {
       height: 35px;
       margin: auto; }
   .card-lessons .card-lesson-thumb {
-    width: 160px;
+    min-width: 160px;
     height: 120px;
     display: block;
     background-color: #fff; }
@@ -6370,7 +6370,7 @@ nav {
   background-color: #1a1a1a; }
 
 .template-black .student-content {
-  background-color: #2f2f2f; }
+  background-color: #1a1a1a; }
 
 .template-black .student-course-content {
   color: #fff; }

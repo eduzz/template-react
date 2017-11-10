@@ -6,7 +6,7 @@ import LessonCard from './LessonCard';
 const StudentCourseDetails = () => (
     <section className="student-course-content">
       <div className="banner-img">
-        <img src="https://cdn-images-1.medium.com/max/1920/1*EvKrLarpqvRp43YofdwgoA.jpeg" alt=""/>
+        <img src="https://app.nutror.com//file/Uploads/629/PRIMEIRA-VENDA_reformulação-da-marca/1100x180_identidade_curso_primei.jpg" alt=""/>
       </div>
       <div className="action-button">
         <div className="container">
@@ -40,74 +40,81 @@ const StudentCourseDetails = () => (
           </div>
         </section>
         <div className="container">
-            <Collapsible className='card-lessons' id='module1'>
-              <Header className='card-lessons-header active'>
-                <h3 className='card-lessons-title'>Entendendo a interface do Photoshop</h3>
-                <div className='card-lessons-resume'>
-                  <span>Duração do curso: 4hrs</span>
-                  <span>Número de Aulas: 25</span>
-                </div>
-              </Header>
-
-              <Content className='card-lessons-wrapper'>
-                  <div className='card-lesson-block'>
-                    <div className='card-lesson-thumb'></div>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
-                      <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
-                    </div>
-                    <a className='button small waves-effect waves-light'><span>Assistir</span></a>
+          <div class="row">
+            <div class="s12 m8 col">
+              <Collapsible className='card-lessons' id='module1'>
+                <Header className='card-lessons-header active'>
+                  <h3 className='card-lessons-title'>Entendendo a interface do Photoshop</h3>
+                  <div className='card-lessons-resume'>
+                    <span>Duração do curso: 4hrs</span>
+                    <span>Número de Aulas: 25</span>
                   </div>
+                </Header>
 
-                  <div className='card-lesson-block'>
-                    <div className='card-lesson-thumb'></div>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
-                      <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                <Content className='card-lessons-wrapper'>
+                    <div className='card-lesson-block'>
+                      <div className='card-lesson-thumb'></div>
+                      <div className='card-lesson-content'>
+                        <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
+                        <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                      </div>
+                      <a className='button small waves-effect waves-light'><span>Assistir</span></a>
                     </div>
-                    <a className='button small waves-effect waves-light'><span>Assistir</span></a>
-                  </div>
 
-                  <div className='card-lesson-block'>
-                    <div className='card-lesson-thumb'></div>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
-                      <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                    <div className='card-lesson-block'>
+                      <div className='card-lesson-thumb'></div>
+                      <div className='card-lesson-content'>
+                        <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
+                        <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                      </div>
+                      <a className='button small waves-effect waves-light'><span>Assistir</span></a>
                     </div>
-                    <a className='button small waves-effect waves-light'><span>Assistir</span></a>
-                  </div>
 
-                  <div className='card-lesson-block'>
-                    <div className='card-lesson-thumb'></div>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
-                      <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                    <div className='card-lesson-block'>
+                      <div className='card-lesson-thumb'></div>
+                      <div className='card-lesson-content'>
+                        <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
+                        <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                      </div>
+                      <a className='button small waves-effect waves-light'><span>Assistir</span></a>
                     </div>
-                    <a className='button small waves-effect waves-light'><span>Assistir</span></a>
-                  </div>
-              </Content>
-            </Collapsible>
 
-                      <Collapsible className='card-lessons' id='module1'>
-              <Header className='card-lessons-header active'>
-                <h3 className='card-lessons-title'>Entendendo a interface do Photoshop</h3>
-                <div className='card-lessons-resume'>
-                  <span>Duração do curso: 4hrs</span>
-                  <span>Número de Aulas: 25</span>
-                </div>
-              </Header>
-
-              <Content className='card-lessons-wrapper'>
-                  <div className='card-lesson-block'>
-                    <div className='card-lesson-thumb'></div>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
-                      <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                    <div className='card-lesson-block'>
+                      <div className='card-lesson-thumb'></div>
+                      <div className='card-lesson-content'>
+                        <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
+                        <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                      </div>
+                      <a className='button small waves-effect waves-light'><span>Assistir</span></a>
                     </div>
-                    <a className='button small waves-effect waves-light'><span>Assistir</span></a>
+                </Content>
+              </Collapsible>
+
+              <Collapsible className='card-lessons' id='module1'>
+                <Header className='card-lessons-header'>
+                  <h3 className='card-lessons-title'>Entendendo a interface do Photoshop</h3>
+                  <div className='card-lessons-resume'>
+                    <span>Duração do curso: 4hrs</span>
+                    <span>Número de Aulas: 25</span>
                   </div>
-              </Content>
-            </Collapsible>
+                </Header>
+
+                <Content className='card-lessons-wrapper'>
+                    <div className='card-lesson-block'>
+                      <div className='card-lesson-thumb'></div>
+                      <div className='card-lesson-content'>
+                        <h3 className='lesson-title'>Deciphering Marketing Lingo For Small Business</h3>
+                        <p className='card-lesson-description'>Um dos atores do mercado online é o Produtor. Nesta aula, Eugênio Pachelle explica o que faz um produtor digital.</p>
+                      </div>
+                      <a className='button small waves-effect waves-light'><span>Assistir</span></a>
+                    </div>
+                </Content>
+              </Collapsible>
+            </div>
+            <div class="s12 m4 col">
+              
+            </div>
+          </div>
         </div>
     </section>
 );
