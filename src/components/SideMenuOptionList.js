@@ -29,6 +29,12 @@ const SideMenuOptionList = () => (
                             icon: 'paper',
                         }}
                     />
+                    <SideMenuOption
+                        data={{
+                            title: 'Comentários',
+                            icon: 'paper',
+                        }}
+                    />
                 </SideMenuOption>
             </ul>
         </nav>
