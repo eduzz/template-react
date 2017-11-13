@@ -1,6 +1,6 @@
 import React from 'react';
 import { Collapsible, Header, Content } from './Collapsible';
-import LessonCard from './LessonCard';
+// import LessonCard from './LessonCard';
 
 
 const StudentCourseDetails = () => (
@@ -10,7 +10,7 @@ const StudentCourseDetails = () => (
       </div>
       <div className="action-button">
         <div className="container">
-          <a href="#" className="button outline small"><span>Voltar</span></a>
+          <a className="button outline small"><span>Voltar</span></a>
         </div>
       </div>
         <section className="banner-course">
