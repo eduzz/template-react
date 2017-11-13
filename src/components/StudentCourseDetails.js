@@ -29,8 +29,8 @@ const StudentCourseDetails = () => (
 
                 </div>
               </div>
-              <div class="row">
-                <div class="col s12 m6 l3">
+              <div className="row">
+                <div className="col s12 m6 l3">
                     <div className="course-progress">
                       <label>Progresso: 20%</label>
                       <div className="progress-bar">
@@ -38,16 +38,16 @@ const StudentCourseDetails = () => (
                       </div>
                     </div>
                 </div>
-                <div class="col s12 m6 l3">
-                    <a href="#" class="course-news">Novidades <span>4</span></a>
+                <div className="col s12 m6 l3">
+                    <a href="#" className="course-news">Novidades <span>4</span></a>
                 </div>
               </div>
             </div>
           </div>
         </section>
         <div className="container">
-          <div class="row">
-            <div class="s12 m9 col">
+          <div className="row">
+            <div className="s12 m9 col">
               <Collapsible className='card-lessons' id='module1'>
                 <Header className='card-lessons-header active'>
                   <h3 className='card-lessons-title'>Entendendo a interface do Photoshop</h3>
@@ -117,15 +117,15 @@ const StudentCourseDetails = () => (
                 </Content>
               </Collapsible>
             </div>
-            <div class="s12 m3 col">
-              <div class="upsell-card">
-                <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg" alt="" class="upsell-img" />
-                <div class="content">
-                  <h3 class="upsell-name">
+            <div className="s12 m3 col">
+              <div className="upsell-card">
+                <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg" alt="" className="upsell-img" />
+                <div className="content">
+                  <h3 className="upsell-name">
                     Curso de Engenharia
                   </h3>
-                  <p class="upsell-description">Este curso de engenharia contempla todas as matérias necessarias para se tornar um bom engenheiro</p>
-                  <a href="#" class="button affirmative">
+                  <p className="upsell-description">Este curso de engenharia contempla todas as matérias necessarias para se tornar um bom engenheiro</p>
+                  <a href="#" className="button affirmative">
                     <span>Comprar</span></a>
                 </div>
               </div>
