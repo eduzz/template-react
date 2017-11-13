@@ -5518,7 +5518,7 @@ body {
     .button.outline span {
       color: #fff; }
     .button.outline:hover {
-      background-color: rgba(255, 255, 255, 0.7); }
+      background-color: #fff; }
       .button.outline:hover span {
         color: #232323; }
 
@@ -6333,6 +6333,30 @@ nav {
       display: block;
       height: 3px; }
 
+.student-course-content .course-news {
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; }
+  .student-course-content .course-news span {
+    display: flex;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 5px;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+    text-shadow: none;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #232323;
+    transition: all 0.3s ease-in-out; }
+  .student-course-content .course-news:hover span {
+    background-color: #27921A;
+    color: #fff; }
+
 .banner-img,
 .banner-img img {
   width: 100%;
@@ -6356,15 +6380,17 @@ nav {
     display: block;
     bottom: 0;
     left: 0;
+    right: 0; }
+  .banner-img:after {
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
     right: 0;
-    background: rgba(26, 26, 26, 0);
-    background: -moz-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, #1a1a1a), color-stop(100%, #1a1a1a));
-    background: -webkit-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-    background: -o-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-    background: -ms-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-    background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 ); }
+    content: "";
+    margin: auto;
+    background-color: #000;
+    opacity: 0.3; }
 
 .upsell-card {
   margin: 20px 0; }
@@ -6388,13 +6414,17 @@ nav {
     object-fit: cover; }
 
 .template-black .student-course-content {
-  background-color: #1a1a1a; }
+  background-color: #1a1a1a;
+  color: #fff; }
+  .template-black .student-course-content .action-button .button {
+    background-color: rgba(255, 255, 255, 0.3); }
+    .template-black .student-course-content .action-button .button:hover {
+      background-color: #fff; }
+  .template-black .student-course-content .course-news {
+    color: #fff; }
 
 .template-black .student-content {
   background-color: #1a1a1a; }
-
-.template-black .student-course-content {
-  color: #fff; }
 
 .template-black .course-progress label {
   color: #fff; }
@@ -6447,6 +6477,16 @@ nav {
 
 .template-black .card-lesson-block {
   background-color: #1a1a1a; }
+
+.template-black .banner-img:before {
+  background: rgba(26, 26, 26, 0);
+  background: -moz-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, #1a1a1a), color-stop(100%, #1a1a1a));
+  background: -webkit-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+  background: -o-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+  background: -ms-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+  background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 ); }
 
 .template-black .upsell-card {
   background: #232323;

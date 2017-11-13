@@ -6,7 +6,7 @@ import LessonCard from './LessonCard';
 const StudentCourseDetails = () => (
     <section className="student-course-content">
       <div className="banner-img">
-        <img src="http://bonecoviajante.com.br/wp-content/uploads/2017/03/alpes-suicos-paisagens-lindas-da-natureza.jpg" alt=""/>
+        <img src="https://i.ytimg.com/vi/hU4EBXu4wto/maxresdefault.jpg" alt=""/>
       </div>
       <div className="action-button">
         <div className="container">
@@ -29,11 +29,17 @@ const StudentCourseDetails = () => (
 
                 </div>
               </div>
-
-              <div className="course-progress">
-                <label>Progresso: 20%</label>
-                <div className="progress-bar">
-                  <span style={{'width':'40%'}}></span>
+              <div class="row">
+                <div class="col s12 m6 l3">
+                    <div className="course-progress">
+                      <label>Progresso: 20%</label>
+                      <div className="progress-bar">
+                        <span style={{'width':'40%'}}></span>
+                      </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l3">
+                    <a href="#" class="course-news">Novidades <span>4</span></a>
                 </div>
               </div>
             </div>

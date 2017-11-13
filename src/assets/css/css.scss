@@ -86,7 +86,7 @@ body{
 
     }
     &:hover{
-      background-color:transparentize(#fff, 0.3);
+      background-color:#fff;
       span{
         color:$dark-color;
       }
@@ -926,7 +926,6 @@ nav{
   .featured-carousel{
     $carousel-item-height: 250px;
     width: 100%;
-    // padding:0 40px;
     .slick-prev, .slick-next{
       z-index: 5;
       color: #fff;
@@ -996,7 +995,6 @@ nav{
         object-fit: cover;
       }
       &:hover{
-        // transform: scale(1.1);
         z-index: 3;
         .content{
           transform: translateY(0);
@@ -1098,6 +1096,34 @@ nav{
 
       }
     }
+  }//end banner course
+  .course-news{
+    text-transform: uppercase;
+    @include fontsize(14);
+    display: flex;
+    align-items:center;
+    justify-content: flex-start;
+    span{
+      display: flex;
+      width: 20px;
+      height: 20px;
+      border-radius:50%;
+      margin:5px;
+      background-color:#fff;
+      align-items:center;
+      justify-content: center;
+      text-shadow: none;
+      @include fontsize(12);
+      font-weight: $bold;
+      color:$dark-color;
+      @include transition;
+    }
+    &:hover{
+      span{
+        background-color:$affirmative-color;
+        color:#fff;
+      }
+    }
   }
 }
 .banner-img,
@@ -1124,14 +1150,17 @@ nav{
     bottom:0;
     left: 0;
     right: 0;
-    background: rgba(26,26,26,0);
-    background: -moz-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26,26,26,0)), color-stop(53%, rgba(26,26,26,0)), color-stop(95%, rgba(26,26,26,1)), color-stop(100%, rgba(26,26,26,1)));
-    background: -webkit-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-    background: -o-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-    background: -ms-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-    background: linear-gradient(to bottom, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 );
+  }
+  &:after{
+    display: block;
+    top:0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    content:"";
+    margin:auto;
+    background-color:#000;
+    opacity: 0.3;
   }
 }
 .upsell-card{
@@ -1161,15 +1190,21 @@ nav{
 }
 
 .template-black{
-
   .student-course-content{
     background-color: $darkest-color;
+    color:#fff;
+    .action-button .button{
+      background-color:transparentize(#fff, 0.7);
+      &:hover{
+        background-color:#fff;
+      }
+    }
+    .course-news{
+      color:#fff;
+    }
   }
   .student-content{
     background-color: $darkest-color;
-  }
-  .student-course-content{
-    color:#fff;
   }
   .course-progress label{
     color:#fff;
@@ -1220,7 +1255,6 @@ nav{
       }
     }
     &:hover .logo-footer{
-
       .yellow{
         fill:#FFCD2B;
       }
@@ -1242,6 +1276,18 @@ nav{
   }
   .card-lesson-block{
     background-color:$darkest-color;
+  }
+  .banner-img{
+    &:before{
+        background: rgba(26,26,26,0);
+        background: -moz-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
+        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26,26,26,0)), color-stop(53%, rgba(26,26,26,0)), color-stop(95%, rgba(26,26,26,1)), color-stop(100%, rgba(26,26,26,1)));
+        background: -webkit-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
+        background: -o-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
+        background: -ms-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
+        background: linear-gradient(to bottom, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 );
+    }
   }
   .upsell-card{
     background:$dark-color;
