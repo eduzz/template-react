@@ -5,10 +5,13 @@ import StatusFilter from './StatusFilter';
 import CategoryFilter from './CategoryFilter';
 import TagsFilter from './TagsFilter';
 import CourseFilter from './CourseFilter';
+import TrackFilter from './TrackFilter';
 import StudentFilter from './StudentFilter';
+import StudentLastAcessFilter from './StudentLastAcessFilter';
 import CommentStatusFilter from './CommentStatusFilter';
 import CommentContentFilter from './CommentContentFilter';
 import CommentFavoriteFilter from './CommentFavoriteFilter';
+import StudentStatusFilter from './StudentStatusFilter';
 
 export {
     FiltersMenu,
@@ -17,9 +20,12 @@ export {
     StatusFilter,
     CategoryFilter,
     TagsFilter,
+    TrackFilter,
     CourseFilter,
     StudentFilter,
+    StudentLastAcessFilter,
     CommentStatusFilter,
     CommentContentFilter,
-    CommentFavoriteFilter
+    CommentFavoriteFilter,
+    StudentStatusFilter
 };

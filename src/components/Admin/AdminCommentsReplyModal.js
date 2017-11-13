@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Content, Footer } from '../Modal';
 
-export default class AdminCommentsModalReply extends Component {
+export default class AdminCommentsReplyModal extends Component {
 	render(){
 		return (
 			<Modal id='modal-answer' fixedFooter>

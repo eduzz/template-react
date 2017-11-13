@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import AdminCommentsTable from './AdminCommentsTable';
+import AdminCommentsFilter from './AdminCommentsFilter';
+import AdminCommentsReplyModal from './AdminCommentsReplyModal';
 
 export default class AdminComments extends Component
 {
@@ -17,6 +19,8 @@ export default class AdminComments extends Component
                         </div>
                     </section>
                     <div className="container">
+                        <AdminCommentsReplyModal />
+                        <AdminCommentsFilter />
                         <AdminCommentsTable />
                     </div>
                 </div>
