@@ -33,11 +33,11 @@ class CourseEdit extends Component {
                             <Pane title="Personalizações" icon='paper'>
                                 <CoursePersonalization />
                             </Pane>
-                            <Pane title="Upsells" icon='paper'>
-                                <h1> Upsells </h1>
+                            <Pane title="Marketing" icon='paper'>
+                                <h1> Marketing </h1>
                             </Pane>
-                            <Pane title="Avaliações" icon='paper'>
-                                <h1> Avaliações </h1>
+                            <Pane title="Certificados" icon='paper'>
+                                <h1> Certificados </h1>
                             </Pane>
         				</Tabs>
         			</div>

@@ -447,7 +447,7 @@ nav{
   border-bottom: 1px solid $dark-color;
   margin-bottom: 20px;
   .tab-button{
-    padding:15px 30px;
+    padding:15px 20px;
     background-color:$medium-gray;
     color:$dark-color;
     margin-right:2px;
@@ -467,9 +467,6 @@ nav{
         fill:#fff;
       }
     }
-  }
-  .tab-button:last-child{
-    margin-right:0;
   }
 }
 .card{
