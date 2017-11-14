@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Button } from '../Modal';
-import AdminCommentsFilter from './AdminCommentsFilter';
-import AdminCommentsModalReply from './AdminCommentsModalReply';
 
 export default class AdminCommentsTable extends Component {
   constructor(){
@@ -18,15 +16,7 @@ export default class AdminCommentsTable extends Component {
   {
     return(
         <div className="row">
-
-            <AdminCommentsModalReply />
-
             <div className="col m12 s12">
-            	<AdminCommentsFilter />
-            </div>
-
-            <div className="col m12 s12">
-
                 <div className="form-block">
                     <table className="striped">
                         <thead>

@@ -39,7 +39,7 @@ const StudentCourseDetails = () => (
                     </div>
                 </div>
                 <div className="col s12 m6 l3">
-                    <a href="#" className="course-news">Novidades <span>4</span></a>
+                    <a className="course-news">Novidades <span>4</span></a>
                 </div>
               </div>
             </div>
@@ -125,7 +125,7 @@ const StudentCourseDetails = () => (
                     Curso de Engenharia
                   </h3>
                   <p className="upsell-description">Este curso de engenharia contempla todas as matérias necessarias para se tornar um bom engenheiro</p>
-                  <a href="#" className="button affirmative">
+                  <a className="button affirmative">
                     <span>Comprar</span></a>
                 </div>
               </div>
