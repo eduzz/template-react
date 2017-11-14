@@ -5,7 +5,6 @@ import CourseCategorySelect from './CourseCategorySelect';
 import CourseModuleList from './CourseModuleList';
 import AuthorSelect from './Admin/AuthorSelect';
 import Author from './Admin/Author';
-import ProducerCourseModules from '../containers/ProducerCourseModules';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
