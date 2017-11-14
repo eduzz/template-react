@@ -1,8 +1,9 @@
 import React from 'react';
-import { Collapsible, Header, Content } from './Collapsible';
-import LessonCardList from './LessonCardList';
+import { Collapsible, Header, Content } from '../Collapsible';
+import LessonCardList from '../LessonCardList';
+import { Button } from '../Modal';
 
-const CourseModuleList = ({ modules, onOpen }) => (
+const AdminModuleList = ({ modules, onOpen }) => (
     <div>
         {modules.map((module, key) =>
             <Collapsible key={ key } className='card-lessons' id={`module-${module.id}`} options={{onOpen: () => onOpen(module.id)}}>
@@ -15,6 +16,11 @@ const CourseModuleList = ({ modules, onOpen }) => (
         		</Header>
 
         		<Content className='card-lessons-wrapper'>
+                    <Button className='button affirmative waves-effect waves-light' target='modal-module'>
+                        <span>Editar Módulo</span>
+                    </Button>
+
+
         			<a className='button affirmative waves-effect waves-light'><span>Nova Aula</span></a>
                     <LessonCardList lessons={ module.lessons || [] }/>
         		</Content>
@@ -23,4 +29,4 @@ const CourseModuleList = ({ modules, onOpen }) => (
     </div>
 );
 
-export default CourseModuleList;
+export default AdminModuleList;

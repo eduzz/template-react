@@ -2,9 +2,11 @@ import React from 'react';
 import { Modal, Content, Footer, Button } from './Modal';
 import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
-import CourseModuleList from './CourseModuleList';
+import AdminModuleList from './Admin/AdminModuleList';
 import AuthorSelect from './Admin/AuthorSelect';
 import Author from './Admin/Author';
+import AdminModuleEditModal from './Admin/AdminModuleEditModal';
+import AdminModuleImportModal from './Admin/AdminModuleImportModal';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
@@ -49,11 +51,19 @@ const CourseBasicInfo = ({ course, getLessons }) => (
         </div>
 
         <h3 className='form-section-title'>Módulos e Aulas</h3>
-        <a className='button affirmative waves-effect waves-light'>
-            <span>Adicionar Módulo</span>
-        </a>
 
-        <CourseModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
+        <AdminModuleEditModal />
+        <AdminModuleImportModal />
+
+        <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
+            <span>Adicionar Módulo</span>
+        </Button>
+
+        <Button className='button darkest-color waves-effect waves-light' target='modal-importmodules'>
+            <span>Importar Módulos</span>
+        </Button>
+
+        <AdminModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
     </div>
 );
 
