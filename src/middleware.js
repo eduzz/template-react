@@ -16,32 +16,23 @@ const middleware = store => next => action => {
                 }
             );
             break;
-        case 'GET_COURSE':
+        case 'GET_COURSE_BASIC_INFO':
             get('5a03c6573100005d1f916af7').then(
                 res => {
-                    next(actions.receiveCourse(res.data));
+                    next(actions.receiveCourseBasicInfo(res.data));
                 },
                 err => {
-                    next(actions.receiveCourseError(err));
+                    next(actions.receiveCourseBasicInfoError(err));
                 },
             );
             break;
-        case 'GET_MODULES':
-            get('5a04f4953000004e13fe090e').then(
+        case 'GET_MODULE_LESSONS':
+            get('5a0467a13100004a3a916dca', action.moduleId).then(
                 res => {
-                    next(actions.receiveModules(res.data));
+                    next(actions.receiveModuleLessons(res.data, action.moduleId));
                 },
                 err => {
-                    next(actions.receiveModulesError(err));
-                },
-            );
-        case 'GET_LESSONS':
-            get('5a0467a13100004a3a916dca', action.moduleID).then(
-                res => {
-                    next(actions.receiveLessons(res.data, action.moduleID));
-                },
-                err => {
-                    next(actions.receiveLessonsError(err));
+                    next(actions.receiveModuleLessonsError(err));
                 },
             );
             break;

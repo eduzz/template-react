@@ -5,7 +5,7 @@ import SideMenu from './SideMenu';
 import Footer from './Footer';
 import Courses from './Courses';
 import AdminComments from './Admin/AdminComments';
-import CourseEdit from '../containers/CourseEdit';
+import CourseEdit from './CourseEdit';
 import AdminStudents from './Admin/AdminStudents';
 
 const Producer = () => (

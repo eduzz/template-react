@@ -3,7 +3,7 @@ import LessonCard from './LessonCard';
 
 const LessonCardList = ({ lessons }) => (
     <div>
-        {lessons.map((lesson, key) => 
+        {lessons.map((lesson, key) =>
             <LessonCard key={ key } lesson={ lesson } />
         )}
     </div>

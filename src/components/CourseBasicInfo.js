@@ -7,8 +7,13 @@ import AuthorSelect from './Admin/AuthorSelect';
 import Author from './Admin/Author';
 import ProducerCourseModules from '../containers/ProducerCourseModules';
 
-const CourseBasicInfo = ({ course }) => (
+const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
+        <div className='input-field bigger'>
+            <input id='course-name' type='text' />
+            <label htmlFor='course-name'>Nome do Curso/Programa</label>
+        </div>
+
         <CourseBanner />
 
         <div className='row'>
@@ -49,7 +54,7 @@ const CourseBasicInfo = ({ course }) => (
             <span>Adicionar Módulo</span>
         </a>
 
-        <ProducerCourseModules />
+        <CourseModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
     </div>
 );
 

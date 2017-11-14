@@ -1,14 +1,14 @@
-export const getCourse = id => ({
-	type: 'GET_COURSE',
-	id
+export const getCourseBasicInfo = courseId => ({
+	type: 'GET_COURSE_BASIC_INFO',
+    courseId,
 });
 
-export const receiveCourse = course => ({
-	type: 'RECEIVE_COURSE',
+export const receiveCourseBasicInfo = course => ({
+	type: 'RECEIVE_COURSE_BASIC_INFO',
 	course,
 });
 
-export const receiveCourseError = err => ({
-	type: 'RECEIVE_COURSE_ERROR',
+export const receiveCourseBasicInfoError = err => ({
+	type: 'RECEIVE_COURSE_BASIC_INFO_ERROR',
 	err,
 });
