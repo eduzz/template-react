@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Icon from '../components/Icon';
 import Upsell from '../components/Upsell';
 import UpsellTable from '../components/UpsellTable';
