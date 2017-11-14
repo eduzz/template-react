@@ -3,6 +3,8 @@ import { Modal, Content, Footer, Button } from './Modal';
 import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
 import CourseModuleList from './CourseModuleList';
+import AuthorSelect from './Admin/AuthorSelect';
+import Author from './Admin/Author'; 
 
 const CourseBasicInfo = () => (
     <div>
@@ -21,18 +23,21 @@ const CourseBasicInfo = () => (
             </div>
             <div className='col xl5'>
                 <div className='form-block'>
-                    <h3 className='form-section-title'>Autores</h3>
+                    <h3 className='form-section-title'>Autor do Curso</h3>
                     <Modal id='modal-authors' fixedFooter>
                         <Content>
-                            <h1> Modal Autores </h1>
+                            <Author />
                         </Content>
                         <Footer>
                             <a className="modal-action modal-close waves-effect waves-green btn-flat">Salvar</a>
                             <a className="modal-action modal-`close waves-effect waves-red btn-flat">Cancelar</a>
                         </Footer>
                     </Modal>
+
+                    <AuthorSelect />
+
                     <Button className='button affirmative waves-effect waves-light' target='modal-authors'>
-                        <span>Adicionar Autor</span>
+                        <span>Editar Autor</span>
                     </Button>
                 </div>
             </div>
