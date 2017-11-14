@@ -5806,7 +5806,7 @@ nav {
   border-bottom: 1px solid #232323;
   margin-bottom: 20px; }
   .tabs .tab-button {
-    padding: 15px 30px;
+    padding: 15px 20px;
     background-color: #d8d8d8;
     color: #232323;
     margin-right: 2px;
@@ -5819,8 +5819,6 @@ nav {
       transition: all 0.3s ease-in-out; }
     .tabs .tab-button:hover .icon, .tabs .tab-button.active .icon {
       fill: #fff; }
-  .tabs .tab-button:last-child {
-    margin-right: 0; }
 
 .card {
   background: #cecece;
