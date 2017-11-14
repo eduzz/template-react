@@ -3,6 +3,7 @@ import { Tabs, Pane } from './Tabs';
 import CourseBasicInfoContainer from '../containers/CourseBasicInfoContainer';
 import CourseAdvanced from './CourseAdvanced';
 import CoursePersonalization from './CoursePersonalization';
+import Marketing from '../components/Marketing';
 
 const CourseEdit = () => (
 	<form>
@@ -18,8 +19,8 @@ const CourseEdit = () => (
                     <Pane title="Personalizações" icon='paper'>
                         <CoursePersonalization />
                     </Pane>
-                    <Pane title="Upsells" icon='paper'>
-                        <h1> Upsells </h1>
+                    <Pane title="Marketing" icon='paper'>
+                        <Marketing />
                     </Pane>
                     <Pane title="Avaliações" icon='paper'>
                         <h1> Avaliações </h1>
