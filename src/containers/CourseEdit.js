@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCourse } from '../actions';
+import actions from '../actions';
 import { Tabs, Pane } from '../components/Tabs';
 import CourseBasicInfo from '../components/CourseBasicInfo';
 import CourseAdvanced from '../components/CourseAdvanced';
@@ -10,7 +10,7 @@ class CourseEdit extends Component {
     componentDidMount() {
         const courseID = 1; // mock
 
-        this.props.dispatch(getCourse(courseID));
+        this.props.dispatch(actions.getCourse(courseID));
     }
 
     render() {
@@ -25,7 +25,7 @@ class CourseEdit extends Component {
 
         				<Tabs>
                             <Pane title='Informações Básicas' icon='paper'>
-                                <CourseBasicInfo />
+                                <CourseBasicInfo course={ this.props.course }/>
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='paper'>
                                 <CourseAdvanced />

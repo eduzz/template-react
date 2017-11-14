@@ -18,7 +18,7 @@ const StudentCourseDetails = () => (
             <div className="container">
               <h1 className="course-name">Curso preparatório de como domar o dragão from Hell</h1>
               <p className="course-description">Este curso é a porta de entrada para o mundo dos negócios digitais. Aqui você vai aprender a dar os primeiros passos e fazer o seu primeiro resultado.</p>
-              
+
               <div className="course-author">
                 <div className="course-author-img">
                   <img src="https://app.nutror.com//file/Uploads/629/simbolo_eduzz.png" alt="" />

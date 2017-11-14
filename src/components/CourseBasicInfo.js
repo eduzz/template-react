@@ -4,10 +4,15 @@ import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
 import CourseModuleList from './CourseModuleList';
 import AuthorSelect from './Admin/AuthorSelect';
-import Author from './Admin/Author'; 
+import Author from './Admin/Author';
 
-const CourseBasicInfo = () => (
+const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
+        <div className='input-field bigger'>
+            <input id='course-name' type='text' />
+            <label htmlFor='course-name'>Nome do Curso/Programa</label>
+        </div>
+
         <CourseBanner />
 
         <div className='row'>
@@ -48,7 +53,7 @@ const CourseBasicInfo = () => (
             <span>Adicionar Módulo</span>
         </a>
 
-        <CourseModuleList />
+        <CourseModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
     </div>
 );
 
