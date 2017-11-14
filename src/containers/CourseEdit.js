@@ -5,6 +5,7 @@ import { Tabs, Pane } from '../components/Tabs';
 import CourseBasicInfo from '../components/CourseBasicInfo';
 import CourseAdvanced from '../components/CourseAdvanced';
 import CoursePersonalization from '../components/CoursePersonalization';
+import Marketing from '../components/Marketing';
 
 class CourseEdit extends Component {
     componentDidMount() {
@@ -34,7 +35,7 @@ class CourseEdit extends Component {
                                 <CoursePersonalization />
                             </Pane>
                             <Pane title="Marketing" icon='paper'>
-                                <h1> Marketing </h1>
+                                <Marketing />
                             </Pane>
                             <Pane title="Certificados" icon='paper'>
                                 <h1> Certificados </h1>
