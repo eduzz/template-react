@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from './Modal';
 
 const LessonCard = ({ lesson }) => (
 	<div className='card-lesson-block'>
@@ -7,7 +8,9 @@ const LessonCard = ({ lesson }) => (
 			<h3 className='lesson-title'>{ lesson.title }</h3>
 			<p className='card-lesson-description'>{ lesson.description }</p>
 		</div>
-		<a className='button small waves-effect waves-light'>Editar</a>
+		<Button className='button small waves-effect waves-light' target='modal-lesson-edit'>
+            <span>Editar</span>
+        </Button>
 	</div>
 );
 

@@ -7,6 +7,8 @@ import AuthorSelect from './Admin/AuthorSelect';
 import Author from './Admin/Author';
 import AdminModuleEditModal from './Admin/AdminModuleEditModal';
 import AdminModuleImportModal from './Admin/AdminModuleImportModal';
+import AdminLessonImportModal from './Admin/AdminLessonImportModal';
+import AdminLessonEditModal from './Admin/AdminLessonEditModal';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
@@ -62,6 +64,9 @@ const CourseBasicInfo = ({ course, getLessons }) => (
         <Button className='button darkest-color waves-effect waves-light' target='modal-importmodules'>
             <span>Importar Módulos</span>
         </Button>
+
+        <AdminLessonEditModal />
+        <AdminLessonImportModal />
 
         <AdminModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
     </div>
