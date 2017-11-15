@@ -90,6 +90,32 @@ const CourseAdvanced = ({ data }) => (
 
         <section className="form-section">
           <div className="row">
+            <div className="col m4 l4">
+              <div className="form-block">
+                <div className="switch">
+                  <label>
+                    <input type="checkbox" id="check-hastermos"/>
+                    <span className="lever"></span>
+                  </label>
+                  <label htmlFor="check-termos">
+                    <h3 className="form-block-title">Termos e Condições</h3>
+                    <p className="check-description">Habilite para Exibir os Termos e Condições para o Aluno ingressar no curso</p>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className='col m6 l6'>
+                <div className='form-block'>
+                  <h3 className='form-block-title'>Conteúdo dos Termos e Condições</h3>
+                  <textarea id='Termos' className='materialize-textarea'></textarea>
+                </div>
+            </div> 
+          </div>
+        </section>
+
+        <section className="form-section">
+          <div className="row">
           	  <div className="col m12">
 	          <div className="form-block">
 		          <h3 className="form-block-title">E-mail do Curso</h3>
