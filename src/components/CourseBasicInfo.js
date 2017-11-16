@@ -43,7 +43,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
                         </Footer>
                     </Modal>
 
-                    <AuthorSelect />
+                    <AuthorSelect id="CourseEditAuthor" />
 
                     <Button className='button affirmative waves-effect waves-light' target='modal-authors'>
                         <span>Editar Autor</span>

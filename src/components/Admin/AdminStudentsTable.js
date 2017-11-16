@@ -57,7 +57,7 @@ export default class AdminStudentsTable extends Component {
                                     </th>
                                     <th>Aluno</th>
                                     <th>Último Acesso</th>
-                                    <th>Curso</th>
+                                    <th>Conteúdo</th>
                                     <th>Matrículado em</th>
                                     <th>Situação da Matrícula</th>
                                     <th></th>

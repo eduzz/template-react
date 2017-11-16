@@ -1,47 +1,44 @@
 import React, { Component } from 'react';
-import jquery from 'jquery';
-
 export default class AdminLessonEditMedia extends Component{
-	componentDidMount(){
-		jquery('#AdminLessonEditMedia').material_select();  
+	constructor(){
+		super();
+		this.state = {activeMediaType:'media-type-1'};
+		this.handlerChange = this.handlerChange.bind(this);
 	}
+	
+	handlerChange(e){
+		this.setState({activeMediaType: e.target.id})
+	}
+  	
   	render(){
     	return (
-	        <div className="row">
-	            <div className="col m12 l12">
-	                <div className="form-block">
-	                    <h3 className="form-block-title">Tipo de Mídia</h3>
-	                      <select id="AdminLessonEditMedia">
-	                            <option value="1" key="1">Youtube/Vimeo</option>
-	                            <option value="2" key="2">Embed</option>
-	                            <option value="3" key="3">Texto</option>
-	                            <option value="4" key="4">Áudio</option>
-	                      </select> 
-	                </div>
-	            </div>                              
-	            <div className="col m12 s12">
-	                <div className="form-block" id="lessonMediaType1">
-	                    <h3 className="form-block-title">Video Aula</h3>
-	                    <p className="date-description">Url do vídeo, ex: youtube.com/37e7e7 ou vimeo.com/87373</p>
-	                    <input type="text" className="validate"/>
-	                </div>
-	                <div className="form-block" id="lessonMediaType2">
-	                    <h3 className="form-block-title">Embed</h3>
-	                    <p className="date-description">Copie e Cole aqui o código EMBED do vídeo</p>
-	                   <textarea className="materialize-textarea validate" />
-	                </div>
-	                <div className="form-block" id="lessonMediaType3">
-	                    <h3 className="form-block-title">Texto</h3>
-	                   <textarea className="materialize-textarea validate" />
-	                </div>
-	                <div className="form-block" id="lessonMediaType4">
-	                    <h3 className="form-block-title">Áudio</h3>
-	                     <a className='button small darkest-color waves-effect waves-light'>
-	                      <span>Enviar Arquivo</span>
-	                    </a>
-	                </div>
-	            </div>
-	        </div>   
+			<section className="form-section">
+				<h3 className="form-block-title">Mídia</h3>
+			  	<div className="row">
+			    	<div className="col m2 l2">
+				        <input type="radio" checked={this.state.activeMediaType ===  'media-type-1' ? true : false} className="with-gap" id="media-type-1" name="media-type" onChange={(event)=>{ this.handlerChange(event) }} />
+				        <label htmlFor="media-type-1"> <span className="radio-title">Vídeo</span></label>
+			  		</div>
+			    	<div className="col m2 l2">
+				        <input type="radio" checked={this.state.activeMediaType ===  'media-type-2' ? true : false} className="with-gap" id="media-type-2" name="media-type" onChange={(event)=>{ this.handlerChange(event) }} />
+				        <label htmlFor="media-type-2"> <span className="radio-title">Texto</span></label>
+			  		</div>
+			    	<div className="col m2 l2">
+				        <input type="radio" checked={this.state.activeMediaType ===  'media-type-3' ? true : false} className="with-gap" id="media-type-3" name="media-type" onChange={(event)=>{ this.handlerChange(event) }} />
+				        <label htmlFor="media-type-3"> <span className="radio-title">Áudio</span></label>
+			  		</div>					  							  		
+			  	</div>
+
+			  	<div className="row">
+			  		<div className="col m12 l12">
+                		<div className="form-block">
+		  					{ this.state.activeMediaType !==  'media-type-1' ? null : <input type="text" className="validate" placeholder="Cole uma URL ou EMBED aqui" /> }
+							{ this.state.activeMediaType !==  'media-type-2' ? null : <textarea className="materialize-textarea validate" /> }
+				          	{ this.state.activeMediaType !==  'media-type-3' ? null : <a className='button small darkest-color waves-effect waves-light'><span>Enviar Arquivo</span></a> }
+						</div>
+			  		</div>
+			  	</div>
+			</section>
 		)
 	}
 }
