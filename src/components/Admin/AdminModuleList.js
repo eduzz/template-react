@@ -16,12 +16,18 @@ const AdminModuleList = ({ modules, onOpen }) => (
         		</Header>
 
         		<Content className='card-lessons-wrapper'>
-                    <Button className='button affirmative waves-effect waves-light' target='modal-module'>
+                    <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
                         <span>Editar Módulo</span>
                     </Button>
 
+                    <Button className='button affirmative waves-effect waves-light' target='modal-lesson-edit'>
+                        <span>Nova Aula</span>
+                    </Button>
 
-        			<a className='button affirmative waves-effect waves-light'><span>Nova Aula</span></a>
+                    <Button className='button affirmative waves-effect waves-light' target='modal-lesson-import'>
+                        <span>Importar Aulas</span>
+                    </Button>
+        			
                     <LessonCardList lessons={ module.lessons || [] }/>
         		</Content>
         	</Collapsible>
