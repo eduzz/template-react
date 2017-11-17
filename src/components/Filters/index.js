@@ -13,6 +13,9 @@ import CommentContentFilter from './CommentContentFilter';
 import CommentFavoriteFilter from './CommentFavoriteFilter';
 import StudentStatusFilter from './StudentStatusFilter';
 
+import EmailFilter from './EmailFilter';
+import NameFilter from './NameFilter';
+
 export {
     FiltersMenu,
     ProducerFilter,
@@ -27,5 +30,7 @@ export {
     CommentStatusFilter,
     CommentContentFilter,
     CommentFavoriteFilter,
-    StudentStatusFilter
+    StudentStatusFilter,
+    EmailFilter, 
+    NameFilter
 };
