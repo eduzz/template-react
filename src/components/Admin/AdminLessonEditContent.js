@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TextEditor from '../TextEditor';
 export default class AdminLessonEditContent extends Component{
 	constructor(){
 		super();
@@ -30,7 +31,7 @@ export default class AdminLessonEditContent extends Component{
 	  					{ 
 	  						this.state.activeContentType !==  'content-type-1' ? null : 
             				<div className="form-block">
-	  							<textarea className="materialize-textarea validate" /> 
+	  							<TextEditor />
 	  						</div>
 	  					}
 						{ 

@@ -34,7 +34,7 @@ export default class AuthorsTable extends Component {
                                   <tr key={i}>
                                       <td>{ item.Name /* #dev Alterar pro nome amigavel */ }</td>
                                       <td>{ item.Description /* #dev Alterar pro nome amigavel */ }</td>
-                                      <td><a className='button small affirmative waves-effect waves-light'  onClick={()=>{this.props.onClick(item)}}><span>Editar</span></a></td>
+                                      <td><a className='button small affirmative waves-effect waves-light'><span>Editar</span></a></td>
                                   </tr>
                                 )
                               })
