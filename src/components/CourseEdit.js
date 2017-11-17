@@ -9,7 +9,7 @@ const CourseEdit = () => (
 	<form>
 		<section className='page-content page-course'>
 			<div className='container'>
-				<Tabs>
+				<Tabs id="courseEditTab">
                     <Pane title='Informações Básicas' icon='paper'>
                         <CourseBasicInfoContainer />
                     </Pane>

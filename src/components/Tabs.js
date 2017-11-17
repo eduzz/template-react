@@ -4,7 +4,7 @@ import Icon from './Icon';
 
 export class Tabs extends Component {
     componentDidMount() {
-        jquery('ul.tabs').tabs();
+        jquery('#'+this.props.id).tabs();
     }
 
     render() {
@@ -13,7 +13,7 @@ export class Tabs extends Component {
 
         return (
             <div>
-                <ul className='tabs'>
+                <ul className='tabs' id={this.props.id}>
                     {panes.map((pane, key) =>
                         <li key={ key } className='tab'>
                             <a className='tab-button waves-effect waves-light' href={`#${TabsID}-${key}`} onClick={e => e.preventDefault()} >

@@ -11,14 +11,16 @@ export default class AuthorSelect extends Component {
     // #dev Obter de http://nutror.devzz.ninja/authors 
         var list = {data: [ { Id: 2093, Name: "Prof. Robson Freitas", Description:"Professor de Engenharia de Software" }, { Id: 492, Name: "Heloise Silva",Description:"Professora de Biologia" } ]};
         this.setState({listAuthors:list.data});   
+      
   }
   render()
   {
-    jquery('#AuthorSelect').material_select();  
+    
+    jquery('#'+ this.props.id).material_select();  
     
     return (
         <div className="form-block">
-          <select id="AuthorSelect">
+          <select id={this.props.id}>
               {
                 this.state.listAuthors.map((item, i) => {
                   return (

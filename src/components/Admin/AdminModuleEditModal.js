@@ -85,7 +85,7 @@ const AdminModuleEditModal = () => (
 		                    <div className="form-block">
 		                        <h3 className="form-block-title">Autor Padrão do Módulo</h3>
 		                        <p className="date-description">Caso não informado o Autor na Aula, este será o Autor</p>
-		                       	<AuthorSelect />
+		                       	<AuthorSelect id="ModuleEditAuthor" />
 		                    </div>
 		                </div>
 		            </div>
