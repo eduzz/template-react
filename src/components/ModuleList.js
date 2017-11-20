@@ -3,7 +3,7 @@ import { Collapsible, Header, Content } from '../Collapsible';
 import LessonCardList from '../LessonCardList';
 import { Button } from '../Modal';
 
-const AdminModuleList = ({ modules, onOpen }) => (
+const ModuleList = ({ modules, onOpen }) => (
     <div>
         {modules.map((module, key) =>
             <Collapsible key={ key } className='card-lessons' id={`module-${module.id}`} options={{onOpen: () => onOpen(module.id)}}>
@@ -27,7 +27,7 @@ const AdminModuleList = ({ modules, onOpen }) => (
                     <Button className='button affirmative waves-effect waves-light' target='modal-lesson-import'>
                         <span>Importar Aulas</span>
                     </Button>
-        			
+
                     <LessonCardList lessons={ module.lessons || [] }/>
         		</Content>
         	</Collapsible>
@@ -35,4 +35,4 @@ const AdminModuleList = ({ modules, onOpen }) => (
     </div>
 );
 
-export default AdminModuleList;
+export default ModuleList;

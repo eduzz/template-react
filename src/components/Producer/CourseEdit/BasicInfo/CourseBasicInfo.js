@@ -63,7 +63,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
         <AdminLessonEditModal />
         <AdminLessonImportModal />
 
-        <AdminModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
+        <ModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
     </div>
 );
 
