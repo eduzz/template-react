@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Icon from '../Icon';
 import {Button } from '../Modal';
+import TextEditor from '../TextEditor';
 
 export default class AuthorEdit extends Component {
   submitForm()
@@ -10,9 +11,8 @@ export default class AuthorEdit extends Component {
             "Name": this.props.Name, "Description": this.props.Description, "ImgAvatar": "", "UserCod": "151",
         }
     };
-    console.log('Salvando Alterações no Autor ...');
     console.log(dataSend);
-    
+
     // #dev Enviar o Post para http://nutror.devzz.ninja/authors
 
   }
@@ -36,14 +36,14 @@ export default class AuthorEdit extends Component {
                       <div className="form-block">
                           <h3 className="form-block-title">Nome</h3>
                           <p className="date-description">Nome ou Apelido do Autor </p>
-                          <input id="Name" type="text" className="validate" value={this.props.Name}/>
+                          <input id="Name" type="text" className="validate"/>
                       </div>
                   </div>
                   <div className="col m12 s12">
                       <div className="form-block">
                           <h3 className="form-block-title">Resumo do Autor</h3>
                           <p className="date-description">Informe um Resumo ou Biografia do Autor </p>
-                          <textarea id="Description" className="materialize-textarea validate" value={this.props.Description} />
+                          <TextEditor />
                       </div>
                   </div>
                 </div>

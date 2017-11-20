@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TextEditor from '../TextEditor';
 export default class AdminLessonEditMedia extends Component{
 	constructor(){
 		super();
@@ -33,7 +34,7 @@ export default class AdminLessonEditMedia extends Component{
 			  		<div className="col m12 l12">
                 		<div className="form-block">
 		  					{ this.state.activeMediaType !==  'media-type-1' ? null : <input type="text" className="validate" placeholder="Cole uma URL ou EMBED aqui" /> }
-							{ this.state.activeMediaType !==  'media-type-2' ? null : <textarea className="materialize-textarea validate" /> }
+							{ this.state.activeMediaType !==  'media-type-2' ? null : <TextEditor /> }
 				          	{ this.state.activeMediaType !==  'media-type-3' ? null : <a className='button small darkest-color waves-effect waves-light'><span>Enviar Arquivo</span></a> }
 						</div>
 			  		</div>
