@@ -6,10 +6,6 @@ import CoursesFilters from './CoursesFilters';
 
 import Slider  from 'react-slick';
 
-
-
-
-
 function SamplePrevArrow(props) {
   const {className, onClick} = props
   return (

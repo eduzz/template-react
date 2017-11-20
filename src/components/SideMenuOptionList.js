@@ -19,7 +19,7 @@ const SideMenuOptionList = () => (
                 >
                     <SideMenuOption
                         data={{
-                            title: 'Pacotes/Tracks',
+                            title: 'Pacotes/Assinaturas',
                             icon: 'paper',
                         }}
                     />
@@ -29,15 +29,35 @@ const SideMenuOptionList = () => (
                             icon: 'paper',
                         }}
                     />
+               
+                </SideMenuOption>
+                <SideMenuOption
+                    data={{
+                        title: 'Comentários',
+                        icon: 'paper',
+                    }}
+                />
+                <SideMenuOption
+                    data={{
+                        title: 'Alunos',
+                        icon: 'paper',
+                    }}
+                />
+                <SideMenuOption
+                    data={{
+                        title: 'Comunicação',
+                        icon: 'paper',
+                    }}
+                >
                     <SideMenuOption
                         data={{
-                            title: 'Comentários',
+                            title: 'Convites',
                             icon: 'paper',
                         }}
                     />
                     <SideMenuOption
                         data={{
-                            title: 'Alunos',
+                            title: 'Novidades',
                             icon: 'paper',
                         }}
                     />
