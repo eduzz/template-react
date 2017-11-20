@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Collapsible, Header, Content } from './Collapsible';
-import LessonCardList from './LessonCardList';
 import Icon from './Icon';
 
 
@@ -23,7 +22,7 @@ class StudentLesson extends Component {
 							})}>
 							<a className="toggle-nav" onClick={ () => this.setState({
 								isHidden: !this.state.isHidden,
-							})}> 
+							})}>
 								<div>
 									<span></span>
 									<span></span>
@@ -39,11 +38,11 @@ class StudentLesson extends Component {
 		                    </div>
 						</div>
 						<div className="course-block course-actions">
-							<a href="" className="button">
+							<a className="button">
 										<Icon name='home' />
 								<span>Inicio</span>
 							</a>
-							<a href="" className="button">
+							<a className="button">
 										<Icon name='video' />
 								<span>Tela do Curso</span>
 							</a>
@@ -53,13 +52,13 @@ class StudentLesson extends Component {
 							<Collapsible className='card-lessons'>
 				        		<Header className='card-lessons-header'>
 				        			<h3 className='card-lessons-title'>Modulo 01</h3>
-				        			
+
 				        		</Header>
 
 				        		<Content className='card-lessons-wrapper'>
 				                    <a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
@@ -68,31 +67,31 @@ class StudentLesson extends Component {
 			        		<Collapsible className='card-lessons'>
 				        		<Header className='card-lessons-header'>
 				        			<h3 className='card-lessons-title'>Modulo 02</h3>
-				        			
+
 				        		</Header>
 
 				        		<Content className='card-lessons-wrapper'>
 				                    <a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo de como domar um dragao from hell</h3> 
+											<h3 className="lesson-title">Aula interna do modulo de como domar um dragao from hell</h3>
 											<Icon name='replay' />
 										</div>
 									</a>
 									<a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
 									<a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
 									<a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
@@ -101,31 +100,31 @@ class StudentLesson extends Component {
 							<Collapsible className='card-lessons'>
 				        		<Header className='card-lessons-header'>
 				        			<h3 className='card-lessons-title'>Modulo 02</h3>
-				        			
+
 				        		</Header>
 
 				        		<Content className='card-lessons-wrapper'>
 				                    <a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo de como domar um dragao from hell</h3> 
+											<h3 className="lesson-title">Aula interna do modulo de como domar um dragao from hell</h3>
 											<Icon name='replay' />
 										</div>
 									</a>
 									<a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
 									<a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
 									<a className='card-lesson-block'>
 										<div className='card-lesson-content'>
-											<h3 className="lesson-title">Aula interna do modulo</h3> 
+											<h3 className="lesson-title">Aula interna do modulo</h3>
 											<Icon name='play' />
 										</div>
 									</a>
@@ -135,44 +134,44 @@ class StudentLesson extends Component {
 					</div>
 				</aside>
 				<article className={`lesson-container ${this.state.isHidden ? 'hidden' : ''}`}>
-					<header class="lesson-header">
-						<a href="" class="button">
+					<header className="lesson-header">
+						<a className="button">
 							<Icon name='home' />
 							<span>Anterior</span>
 						</a>
-						<h1 class="lesson-title">Como ordenhar filhotes de ornitorrinco</h1>
-						<a href="" class="button">
+						<h1 className="lesson-title">Como ordenhar filhotes de ornitorrinco</h1>
+						<a className="button">
 							<Icon name='home' />
 							<span>Próxima</span>
 						</a>
 					</header>
-					<div class="lesson-content">
-						<iframe src="https://www.youtube.com/embed/DDGhKS6bSAE" frameborder="0" allowfullscreen></iframe>
+					<div className="lesson-content">
+						<iframe title="lesson" src="https://www.youtube.com/embed/DDGhKS6bSAE" frameborder="0" allowfullscreen></iframe>
 					</div>
-					<div class="lesson-actions">
-						<div class="share-bar">
+					<div className="lesson-actions">
+						<div className="share-bar">
 							<label>Compartilhe</label>
-							<div class="social-buttons">
-								<a class="button facebook">
+							<div className="social-buttons">
+								<a className="button facebook">
 									<Icon name='facebook' />
 								</a>
-								<a class="button linkedin">
+								<a className="button linkedin">
 									<Icon name='linkedin' />
 								</a>
-								<a class="button twitter">
+								<a className="button twitter">
 									<Icon name='twitter' />
 								</a>
-								
+
 							</div>
 						</div>
-						<div class="rating">
+						<div className="rating">
 							<label>Avalie essa aula</label>
 						</div>
 					</div>
-					<div class="lesson-description">
-						<div class="container">
-							<div class="row">
-								<div class="col s12 m8 l9">
+					<div className="lesson-description">
+						<div className="container">
+							<div className="row">
+								<div className="col s12 m8 l9">
 									<p>
 										Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl
 									</p>
@@ -192,7 +191,7 @@ class StudentLesson extends Component {
 										Copo furadis é disculpa de bebadis, arcu quam euismod magna. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis. In elementis mé pra quem é amistosis quis leo. Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.
 									</p>
 								</div>
-								<div class="col s12 m4 l3">
+								<div className="col s12 m4 l3">
 								  <div className="upsell-card">
 					                <img src="https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg" alt="" className="upsell-img" />
 					                <div className="content">
@@ -208,187 +207,187 @@ class StudentLesson extends Component {
 							</div>
 						</div>
 					</div>
-					<div class="comments form-section">
-						<div class="container">
-							<div class="row">
-								<div class="col s12">
-									<div class="form-block">
-										<h3 class="form-block-title">Deixe seu comentário</h3>
-										<div class="comment-form">
-											<div class="container">
-												<div class="current-user-photo">
+					<div className="comments form-section">
+						<div className="container">
+							<div className="row">
+								<div className="col s12">
+									<div className="form-block">
+										<h3 className="form-block-title">Deixe seu comentário</h3>
+										<div className="comment-form">
+											<div className="container">
+												<div className="current-user-photo">
 													<img src="https://pbs.twimg.com/profile_images/751591861127491584/l1swjFY4.jpg" alt=""/>
 												</div>
-												<div class="input-field">
+												<div className="input-field">
 													<textarea></textarea>
 												</div>
-												
+
 											</div>
-											<a href="#" class="button comment-button"><span>Comentar</span></a>
+											<a className="button comment-button"><span>Comentar</span></a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="container">
-							<div class="comment">
-								<div class="container">
-									<div class="user-photo">
+						<div className="container">
+							<div className="comment">
+								<div className="container">
+									<div className="user-photo">
 										<img src="https://pbs.twimg.com/profile_images/751591861127491584/l1swjFY4.jpg" alt=""/>
 									</div>
-									<div class="content">
-										<h4 class="user-name">Charlie Sheen</h4> <span class="comment-published-time">8 Horas atrás</span>
-										<p class="comment-text">
+									<div className="content">
+										<h4 className="user-name">Charlie Sheen</h4> <span className="comment-published-time">8 Horas atrás</span>
+										<p className="comment-text">
 											Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 										</p>
-										<div class="comment-user-actions">
-											<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
-											<div class="comment-form">
-												<div class="container">
-													<div class="current-user-photo">
+										<div className="comment-user-actions">
+											<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
+											<div className="comment-form">
+												<div className="container">
+													<div className="current-user-photo">
 														<img src="https://pbs.twimg.com/profile_images/751591861127491584/l1swjFY4.jpg" alt=""/>
 													</div>
-													<div class="input-field">
+													<div className="input-field">
 														<textarea></textarea>
 													</div>
-													
+
 												</div>
-												<a href="#" class="button comment-button"><span>Comentar</span></a>
+												<a className="button comment-button"><span>Comentar</span></a>
 											</div>
 										</div>
-										
+
 									</div>
-									<div class="comment-admin-action">x</div>
+									<div className="comment-admin-action">x</div>
 
-								</div> 
+								</div>
 
-								<div class="answers">
-									<div class="comment">
-										<div class="container">
-											<div class="user-photo">
+								<div className="answers">
+									<div className="comment">
+										<div className="container">
+											<div className="user-photo">
 												<img src="https://www.thewrap.com/wp-content/uploads/2017/06/CameronDiaz.jpg" alt=""/>
 											</div>
-											<div class="content">
-												<h4 class="user-name">Cameron Diaz</h4> <span class="comment-published-time">8 Horas atrás</span>
-												<p class="comment-text">
+											<div className="content">
+												<h4 className="user-name">Cameron Diaz</h4> <span className="comment-published-time">8 Horas atrás</span>
+												<p className="comment-text">
 													Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 												</p>
-												<div class="comment-user-actions">
-													<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+												<div className="comment-user-actions">
+													<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 												</div>
-												
+
 											</div>
-											<div class="comment-admin-action">x</div>
+											<div className="comment-admin-action">x</div>
 										</div>
 									</div>
-									<div class="comment">
-										<div class="container">
-											<div class="user-photo">
+									<div className="comment">
+										<div className="container">
+											<div className="user-photo">
 												<img src="https://static.cineclick.com.br/sites/adm/uploads/banco_imagens/76/940x0_1509114727.jpg" alt=""/>
 											</div>
-											<div class="content">
-												<h4 class="user-name">Megan Fox</h4> <span class="comment-published-time">8 Horas atrás</span>
-												<p class="comment-text">
+											<div className="content">
+												<h4 className="user-name">Megan Fox</h4> <span className="comment-published-time">8 Horas atrás</span>
+												<p className="comment-text">
 													Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 												</p>
-												<div class="comment-user-actions">
-													<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+												<div className="comment-user-actions">
+													<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 												</div>
-												
+
 											</div>
-											<div class="comment-admin-action">x</div>
+											<div className="comment-admin-action">x</div>
 										</div>
 									</div>
-									<div class="comment">
-										<div class="container">
-											<div class="user-photo">
+									<div className="comment">
+										<div className="container">
+											<div className="user-photo">
 												<img src="https://pbs.twimg.com/profile_images/751591861127491584/l1swjFY4.jpg" alt=""/>
 											</div>
-											<div class="content">
-												<h4 class="user-name">Charlie Sheen</h4> <span class="comment-published-time">8 Horas atrás</span>
-												<p class="comment-text">
+											<div className="content">
+												<h4 className="user-name">Charlie Sheen</h4> <span className="comment-published-time">8 Horas atrás</span>
+												<p className="comment-text">
 													Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 												</p>
-												<div class="comment-user-actions">
-													<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+												<div className="comment-user-actions">
+													<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 												</div>
-												
+
 											</div>
-											<div class="comment-admin-action">x</div>
+											<div className="comment-admin-action">x</div>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="comment">
-								<div class="container">
-									<div class="user-photo">
+							<div className="comment">
+								<div className="container">
+									<div className="user-photo">
 										<img src="https://pbs.twimg.com/profile_images/751591861127491584/l1swjFY4.jpg" alt=""/>
 									</div>
-									<div class="content">
-										<h4 class="user-name">Charlie Sheen</h4> <span class="comment-published-time">8 Horas atrás</span>
-										<p class="comment-text">
+									<div className="content">
+										<h4 className="user-name">Charlie Sheen</h4> <span className="comment-published-time">8 Horas atrás</span>
+										<p className="comment-text">
 											Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 										</p>
-										<div class="comment-user-actions">
-											<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+										<div className="comment-user-actions">
+											<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 										</div>
-										
+
 									</div>
-									<div class="comment-admin-actions">x</div>
-								</div> 
-								<div class="answers">
-									<div class="comment">
-										<div class="container">
-											<div class="user-photo">
+									<div className="comment-admin-actions">x</div>
+								</div>
+								<div className="answers">
+									<div className="comment">
+										<div className="container">
+											<div className="user-photo">
 												<img src="https://www.thewrap.com/wp-content/uploads/2017/06/CameronDiaz.jpg" alt=""/>
 											</div>
-											<div class="content">
-												<h4 class="user-name">Cameron Diaz</h4> <span class="comment-published-time">8 Horas atrás</span>
-												<p class="comment-text">
+											<div className="content">
+												<h4 className="user-name">Cameron Diaz</h4> <span className="comment-published-time">8 Horas atrás</span>
+												<p className="comment-text">
 													Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 												</p>
-												<div class="comment-user-actions">
-													<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+												<div className="comment-user-actions">
+													<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 												</div>
-												
+
 											</div>
-											<div class="comment-admin-actions">x</div>
+											<div className="comment-admin-actions">x</div>
 										</div>
 									</div>
-									<div class="comment">
-										<div class="container">
-											<div class="user-photo">
+									<div className="comment">
+										<div className="container">
+											<div className="user-photo">
 												<img src="https://static.cineclick.com.br/sites/adm/uploads/banco_imagens/76/940x0_1509114727.jpg" alt=""/>
 											</div>
-											<div class="content">
-												<h4 class="user-name">Megan Fox</h4> <span class="comment-published-time">8 Horas atrás</span>
-												<p class="comment-text">
+											<div className="content">
+												<h4 className="user-name">Megan Fox</h4> <span className="comment-published-time">8 Horas atrás</span>
+												<p className="comment-text">
 													Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 												</p>
-												<div class="comment-user-actions">
-													<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+												<div className="comment-user-actions">
+													<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 												</div>
-												
+
 											</div>
-											<div class="comment-admin-actions">x</div>
+											<div className="comment-admin-actions">x</div>
 										</div>
 									</div>
-									<div class="comment">
-										<div class="container">
-											<div class="user-photo">
+									<div className="comment">
+										<div className="container">
+											<div className="user-photo">
 												<img src="https://pbs.twimg.com/profile_images/751591861127491584/l1swjFY4.jpg" alt=""/>
 											</div>
-											<div class="content">
-												<h4 class="user-name">Charlie Sheen</h4> <span class="comment-published-time">8 Horas atrás</span>
-												<p class="comment-text">
+											<div className="content">
+												<h4 className="user-name">Charlie Sheen</h4> <span className="comment-published-time">8 Horas atrás</span>
+												<p className="comment-text">
 													Mussum Ipsum, cacilds vidis litro abertis. Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl. Em pé sem cair, deitado sem dormir, sentado sem cochilar e fazendo pose. Cevadis im ampola pa arma uma pindureta. Si num tem leite então bota uma pinga aí cumpadi!
 												</p>
-												<div class="comment-user-actions">
-													<a href="" class="action-link">Responder</a> <a href="" class="action-link">Curtir</a>
+												<div className="comment-user-actions">
+													<a className="action-link">Responder</a> <a className="action-link">Curtir</a>
 												</div>
-												
+
 											</div>
-											<div class="comment-admin-actions">x</div>
+											<div className="comment-admin-actions">x</div>
 										</div>
 									</div>
 								</div>
