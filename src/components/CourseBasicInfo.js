@@ -32,6 +32,15 @@ const CourseBasicInfo = ({ course, getLessons }) => (
             <div className='col xl5'>
                 <div className='form-block'>
                     <h3 className='form-section-title'>Autor do Curso</h3>
+                    <Modal id='modal-authors' fixedFooter>
+                        <Content>
+                            <Author />
+                        </Content>
+                        <Footer>
+                            <a className="modal-action modal-close waves-effect waves-green btn-flat">Salvar</a>
+                            <a className="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+                        </Footer>
+                    </Modal>
                     <AuthorSelect id="CourseEditAuthor" />
                 </div>
             </div>
