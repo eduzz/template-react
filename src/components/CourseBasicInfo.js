@@ -7,7 +7,8 @@ import AdminModuleEditModal from './Admin/AdminModuleEditModal';
 import AdminModuleImportModal from './Admin/AdminModuleImportModal';
 import AdminLessonImportModal from './Admin/AdminLessonImportModal';
 import AdminLessonEditModal from './Admin/AdminLessonEditModal';
-import { Button } from './Modal';
+import { Button, Content, Modal, Footer } from './Modal';
+import Author from './Admin/Author';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
