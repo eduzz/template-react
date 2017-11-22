@@ -1,12 +1,10 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Header from './Header';
-import SideMenu from './SideMenu';
-import Footer from './Footer';
+import Header from 'components/Header';
+import SideMenu from 'components/SideMenu';
+import Footer from 'components/Footer';
 import Courses from './Courses';
-import AdminComments from './Admin/AdminComments';
 import CourseEdit from './CourseEdit';
-import AdminStudents from './Admin/AdminStudents';
 
 const Producer = () => (
 	<div>
@@ -16,8 +14,6 @@ const Producer = () => (
 		<Switch>
 			<Redirect exact from='/producer' to='/producer/courses' />
 	    	<Route exact path='/producer/courses' component={ Courses } />
-	    	<Route exact path='/producer/comments' component={ AdminComments } />
-	    	<Route exact path='/producer/students' component={ AdminStudents } />
 	    	<Route exact path='/producer/courses/edit/:courseID' component={ CourseEdit } />
 	    </Switch>
 

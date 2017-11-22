@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Collapsible, Header, Content } from './Collapsible';
-import Icon from './Icon';
+import { Collapsible, Header, Content } from 'components/Collapsible';
+import Icon from 'components/Icon';
 
 
 class StudentLesson extends Component {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import jquery from 'jquery';
-import Icon from './Icon';
+import Icon from 'components/Icon';
 
 export class Tabs extends Component {
     componentDidMount() {

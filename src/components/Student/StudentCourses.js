@@ -1,8 +1,6 @@
 import React from 'react';
-import VisibleCourseCardGrid from '../containers/VisibleCourseCardGrid';
-import CoursesSearch from '../containers/CoursesSearch';
-import CoursesFilters from './CoursesFilters';
-
+import VisibleCourseCardGrid from 'components/Producer/Courses/VisibleCourseCardGrid';
+import CoursesSearch from 'components/CoursesSearch';
 
 import Slider  from 'react-slick';
 
@@ -12,7 +10,7 @@ function SamplePrevArrow(props) {
     <div
       className={className}
       onClick={onClick}
-    > 
+    >
       <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.6 66.1">
         <path d="M34.2 3.2L3.5 33.4l30.7 30.7"/>
       </svg>
@@ -25,7 +23,7 @@ function SampleNextArrow(props) {
     <div
       className={className}
       onClick={onClick}
-    > 
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37.6 66.1">
         <path d="M3.5 3.2l30.7 30.2L3.5 64.1"/>
       </svg>
@@ -119,7 +117,6 @@ const StudentCourses = () => (
         <div className="container">
         	<div className="search-bar">
 	            <CoursesSearch />
-	            <CoursesFilters />
         	</div>
             <VisibleCourseCardGrid />
         </div>

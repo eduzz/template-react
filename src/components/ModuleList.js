@@ -1,7 +1,7 @@
 import React from 'react';
-import { Collapsible, Header, Content } from '../Collapsible';
-import LessonCardList from '../LessonCardList';
-import { Button } from '../Modal';
+import { Collapsible, Header, Content } from 'components/Collapsible';
+import LessonCardList from 'components/LessonCardList';
+import { Button } from 'components/Modal';
 
 const ModuleList = ({ modules, onOpen }) => (
     <div>

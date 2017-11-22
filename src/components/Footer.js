@@ -1,5 +1,5 @@
 import React from 'react';
-import eduzinho from '../assets/img/eduzinho.png';
+import eduzinho from 'assets/img/eduzinho.png';
 
 const Footer = () => (
 	<footer className="page-footer">

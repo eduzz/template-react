@@ -1,10 +1,9 @@
 import React from 'react';
-import { Tabs, Pane } from './Tabs';
-import CourseBasicInfoContainer from '../containers/CourseBasicInfoContainer';
-import CourseAdvanced from './CourseAdvanced';
-import CoursePersonalization from './CoursePersonalization';
-import Marketing from '../components/Marketing';
-import AdminCertificates from './Admin/AdminCertificates';
+import { Tabs, Pane } from 'components/Tabs';
+import CourseBasicInfoContainer from './BasicInfo';
+import CourseAdvanced from './Advanced';
+import CoursePersonalization from './Personalization';
+import Marketing from './Marketing';
 
 const CourseEdit = () => (
 	<form>
@@ -24,7 +23,7 @@ const CourseEdit = () => (
                         <Marketing />
                     </Pane>
                     <Pane title="Certificados" icon='paper'>
-                        <AdminCertificates />
+                        <h1> Certificados </h1>
                     </Pane>
 				</Tabs>
 			</div>

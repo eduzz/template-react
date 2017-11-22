@@ -1,14 +1,7 @@
 import React from 'react';
 import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
-import AdminModuleList from './Admin/AdminModuleList';
-import AuthorSelect from './Admin/AuthorSelect';
-import AdminModuleEditModal from './Admin/AdminModuleEditModal';
-import AdminModuleImportModal from './Admin/AdminModuleImportModal';
-import AdminLessonImportModal from './Admin/AdminLessonImportModal';
-import AdminLessonEditModal from './Admin/AdminLessonEditModal';
-import { Button, Content, Modal, Footer } from './Modal';
-import Author from './Admin/Author';
+import ModuleList from 'components/ModuleList';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
@@ -33,35 +26,22 @@ const CourseBasicInfo = ({ course, getLessons }) => (
             <div className='col xl5'>
                 <div className='form-block'>
                     <h3 className='form-section-title'>Autor do Curso</h3>
-                    <Modal id='modal-authors' fixedFooter>
-                        <Content>
-                            <Author />
-                        </Content>
-                        <Footer>
-                            <a className="modal-action modal-close waves-effect waves-green btn-flat">Salvar</a>
-                            <a className="modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-                        </Footer>
-                    </Modal>
-                    <AuthorSelect id="CourseEditAuthor" />
+                    <a className='button affirmative waves-effect waves-light'>
+                        <span>Editar Autor</span>
+                    </a>
                 </div>
             </div>
         </div>
 
         <h3 className='form-section-title'>Módulos e Aulas</h3>
 
-        <AdminModuleEditModal />
-        <AdminModuleImportModal />
-
-        <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
+        <a className='button affirmative waves-effect waves-light'>
             <span>Adicionar Módulo</span>
-        </Button>
+        </a>
 
-        <Button className='button darkest-color waves-effect waves-light' target='modal-importmodules'>
+        <a className='button darkest-color waves-effect waves-light'>
             <span>Importar Módulos</span>
-        </Button>
-
-        <AdminLessonEditModal />
-        <AdminLessonImportModal />
+        </a>
 
         <ModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
     </div>

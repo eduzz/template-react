@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Icon from './Icon';
-import { FiltersMenu, ProducerFilter, PeriodFilter, StatusFilter, CategoryFilter, TagsFilter } from './Filters';
+import Icon from 'components/Icon';
+import { FiltersMenu, ProducerFilter, PeriodFilter, StatusFilter, CategoryFilter, TagsFilter } from 'components/Filters';
 
 class CoursesFilters extends Component {
 	constructor() {
@@ -14,11 +14,11 @@ class CoursesFilters extends Component {
 	render() {
 		return (
 			<div>
-				<FiltersMenu active={ this.state.isActive } 
-					closeMenu={ () => 
+				<FiltersMenu active={ this.state.isActive }
+					closeMenu={ () =>
 					this.setState({
 						isActive: false,
-					}) 
+					})
 				}>
 				    <ProducerFilter active />
 				    <PeriodFilter />

@@ -1,7 +1,7 @@
 import React from 'react';
 import PageHeader from './PageHeader';
-import VisibleCourseCardGrid from '../containers/VisibleCourseCardGrid';
-import CoursesSearch from '../containers/CoursesSearch';
+import VisibleCourseCardGrid from './VisibleCourseCardGrid';
+import CoursesSearch from 'components/CoursesSearch';
 import CoursesFilters from './CoursesFilters';
 
 const Courses = () => (

@@ -1,7 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss'
 import { ChromePicker } from 'react-color';
-import Icon from './Icon';
+import Icon from 'components/Icon';
 
 class ButtonExample extends React.Component {
   state = {

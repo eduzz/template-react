@@ -1,5 +1,5 @@
 import React from 'react';
-import LessonCard from './LessonCard';
+import LessonCard from 'components/LessonCard';
 
 const LessonCardList = ({ lessons }) => (
     <div>

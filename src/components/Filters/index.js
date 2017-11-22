@@ -31,6 +31,6 @@ export {
     CommentContentFilter,
     CommentFavoriteFilter,
     StudentStatusFilter,
-    EmailFilter, 
+    EmailFilter,
     NameFilter
 };

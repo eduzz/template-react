@@ -1,9 +1,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Redirect, HashRouter, Switch } from 'react-router-dom';
-import Producer from './Producer';
-import Student from './Student';
-import Backend from './Backend/Backend';
+import Producer from 'components/Producer';
+import Student from 'components/Student';
 
 const Root = ({ store }) => (
     <Provider store={store}>
@@ -13,7 +12,6 @@ const Root = ({ store }) => (
 		        	<Redirect exact from='/' to='/producer' />
 		        	<Route path='/producer' component={ Producer } />
 		        	<Route path='/student' component={ Student } />
-		        	<Route path='/backend' component={ Backend } />
 		        </Switch>
 		    </div>
 		</HashRouter>

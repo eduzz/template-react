@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import CourseCardGrid from '../components/CourseCardGrid';
+import CourseCardGrid from 'components/CourseCardGrid';
 import { connect } from 'react-redux';
-import actions from '../actions';
-import { getVisibleCourses } from '../reducers';
+import actions from 'actions';
+import { getVisibleCourses } from 'reducers';
 
 class VisibleCourseCardGrid extends Component {
 	componentDidMount() {
