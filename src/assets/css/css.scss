@@ -839,7 +839,6 @@ nav{
     @include fontsize(14);
     @include transition;
     font-weight: $medium;
-    border-bottom:$dark-gray;
     background-color:$background-color;
     &:hover{
       background-color:$dark-color;
