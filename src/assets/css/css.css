@@ -6081,8 +6081,8 @@ nav {
 
 .side-menu .icon {
   fill: #fff;
-  width: 14px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   margin-right: 10px; }
 
 .side-menu .nav-button {
@@ -6100,7 +6100,6 @@ nav {
     background-color: #1c1f27; }
 
 .side-menu .submenu .nav-button {
-  padding: 15px 20px 15px 40px;
   background-color: #1a1a1a; }
   .side-menu .submenu .nav-button:hover {
     background-color: #0c0c0c; }

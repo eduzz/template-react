@@ -8,7 +8,7 @@ const SideMenuOptionList = () => (
                 <SideMenuOption
                     data={{
                         title: 'Biblioteca',
-                        icon: 'facebook',
+                        icon: 'library',
                     }}
                 />
                 <SideMenuOption
@@ -58,7 +58,7 @@ const SideMenuOptionList = () => (
                     <SideMenuOption
                         data={{
                             title: 'Novidades',
-                            icon: 'paper',
+                            icon: 'letter',
                         }}
                     />
                 </SideMenuOption>

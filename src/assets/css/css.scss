@@ -826,8 +826,8 @@ nav{
 .side-menu{
   .icon{
     fill:#fff;
-    width: 14px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     margin-right:10px;
   }
   .nav-button{
@@ -846,7 +846,7 @@ nav{
     }
   }
   .submenu .nav-button{
-      padding:15px 20px 15px 40px;
+      // padding:15px 20px 15px 40px;
       background-color:$darkest-color;
       &:hover{
         background-color:#0c0c0c;
