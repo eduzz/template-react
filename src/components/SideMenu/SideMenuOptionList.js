@@ -8,25 +8,25 @@ const SideMenuOptionList = () => (
                 <SideMenuOption
                     data={{
                         title: 'Biblioteca',
-                        icon: 'paper',
+                        icon: 'facebook',
                     }}
                 />
                 <SideMenuOption
                     data={{
                         title: 'Minha Vitrine',
-                        icon: 'paper',
+                        icon: 'showcase',
                     }}
                 >
                     <SideMenuOption
                         data={{
                             title: 'Pacotes/Assinaturas',
-                            icon: 'paper',
+                            icon: 'package',
                         }}
                     />
                     <SideMenuOption
                         data={{
                             title: 'Cursos',
-                            icon: 'paper',
+                            icon: 'play-rounded',
                         }}
                     />
                
@@ -34,25 +34,25 @@ const SideMenuOptionList = () => (
                 <SideMenuOption
                     data={{
                         title: 'Comentários',
-                        icon: 'paper',
+                        icon: 'chat-rounded',
                     }}
                 />
                 <SideMenuOption
                     data={{
                         title: 'Alunos',
-                        icon: 'paper',
+                        icon: 'students',
                     }}
                 />
                 <SideMenuOption
                     data={{
                         title: 'Comunicação',
-                        icon: 'paper',
+                        icon: 'mailbox',
                     }}
                 >
                     <SideMenuOption
                         data={{
                             title: 'Convites',
-                            icon: 'paper',
+                            icon: 'airplane',
                         }}
                     />
                     <SideMenuOption
