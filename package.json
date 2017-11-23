@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.17.0",
     "jquery": "^3.2.1",
+    "material-ui": "^0.19.4",
     "materialize-css": "^0.100.2",
     "node-sass-chokidar": "0.0.3",
     "node-uuid": "^1.4.8",
