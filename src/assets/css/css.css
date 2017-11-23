@@ -5068,7 +5068,7 @@ input[type=range]:focus::-ms-fill-upper {
 }*/
 .picker__date-display {
   text-align: left;
-  background-color: #2f2f2f;
+  background-color: #22262d;
   color: #fff;
   padding: 18px;
   font-weight: 300; }
@@ -5460,7 +5460,7 @@ body {
   background-color: #1a1a1a; }
 
 .main-header {
-  background-color: #1B1B1B;
+  background-color: #1a1a1a;
   position: fixed;
   width: 100%;
   top: 0;
@@ -5520,7 +5520,7 @@ body {
     .button.outline:hover {
       background-color: #fff; }
       .button.outline:hover span {
-        color: #232323; }
+        color: #1c1f27; }
 
 .header-logo {
   height: 40px;
@@ -5536,14 +5536,14 @@ nav {
 
 .input-label {
   display: block;
-  color: #232323;
+  color: #1c1f27;
   text-transform: uppercase;
   margin-bottom: 5px;
   letter-spacing: 1px;
   font-weight: 500; }
 
 .side-nav {
-  background-color: #2F2F2F;
+  background-color: #22262d;
   position: fixed;
   width: 250px;
   display: block;
@@ -5554,7 +5554,7 @@ nav {
   transform: initial;
   overflow: initial; }
   .side-nav ::-webkit-scrollbar-track {
-    background-color: #232323; }
+    background-color: #1c1f27; }
   .side-nav ::-webkit-scrollbar {
     width: 6px;
     background: #F4F4F4; }
@@ -5567,7 +5567,7 @@ nav {
       padding: 20px;
       display: flex;
       align-items: center;
-      background: #282828; }
+      background: #1c1f27; }
     .side-nav .block.side-menu {
       height: calc(100vh - 250px);
       overflow-y: auto; }
@@ -5639,7 +5639,7 @@ nav {
     margin: auto;
     height: 100%;
     width: 40px;
-    background-color: #232323;
+    background-color: #1c1f27;
     border-radius: 0;
     display: flex;
     align-items: center;
@@ -5672,7 +5672,7 @@ nav {
   .course-nav .course-data {
     position: relative;
     padding-right: 40px;
-    background-color: #232323;
+    background-color: #1c1f27;
     transition: all 0.3s ease-in-out;
     cursor: pointer; }
   .course-nav .course-actions {
@@ -5680,7 +5680,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: #232323; }
+    background-color: #1c1f27; }
     .course-nav .course-actions .button {
       border-radius: 0;
       background-color: transparent;
@@ -5766,10 +5766,10 @@ nav {
       top: 0;
       min-width: 350px;
       transform: translateX(30px);
-      background-color: rgba(35, 35, 35, 0.8); }
+      background-color: rgba(28, 31, 39, 0.8); }
       .course-nav.hidden .course-data:hover {
         transform: translateX(350px);
-        background-color: #232323; }
+        background-color: #1c1f27; }
     .course-nav.hidden .course-progress {
       height: 0;
       overflow: hidden; }
@@ -5781,7 +5781,7 @@ nav {
     .course-nav.hidden .toggle-nav {
       background-color: transparent; }
       .course-nav.hidden .toggle-nav:hover {
-        background-color: rgba(35, 35, 35, 0.8); }
+        background-color: rgba(28, 31, 39, 0.8); }
       .course-nav.hidden .toggle-nav span:first-child {
         transform: rotate(-35deg); }
       .course-nav.hidden .toggle-nav span:last-child {
@@ -5981,7 +5981,7 @@ nav {
     width: 6px;
     background: #F4F4F4; }
   .filters ::-webkit-scrollbar-thumb {
-    background: #2f2f2f; }
+    background: #22262d; }
   .filters .container {
     height: calc(100vh - 130px);
     overflow-y: auto;
@@ -5998,7 +5998,7 @@ nav {
     .filters .block-header label {
       font-weight: 500;
       cursor: pointer;
-      color: #2f2f2f;
+      color: #22262d;
       letter-spacing: 0.5px; }
     .filters .block-header:after, .filters .block-header:before {
       height: 12px; }
@@ -6015,7 +6015,7 @@ nav {
     .filters .block-header:hover {
       background-color: rgba(238, 238, 238, 0.5); }
       .filters .block-header:hover label {
-        color: #232323; }
+        color: #1c1f27; }
   .filters .block-content {
     padding: 0 20px; }
   .filters .filter-header {
@@ -6036,10 +6036,10 @@ nav {
     border-radius: 50%;
     transition: all 0.3s ease-in-out; }
     .filters .filter-close svg {
-      fill: #232323;
+      fill: #1c1f27;
       transition: all 0.3s ease-in-out; }
     .filters .filter-close:hover {
-      background-color: #232323;
+      background-color: #1c1f27;
       transform: rotate(180deg); }
       .filters .filter-close:hover svg {
         fill: #EEEEEE; }
@@ -6081,26 +6081,24 @@ nav {
 
 .side-menu .icon {
   fill: #fff;
-  width: 14px;
-  height: 15px;
+  width: 16px;
+  height: 16px;
   margin-right: 10px; }
 
 .side-menu .nav-button {
-  color: #fff;
-  letter-spacing: 1px;
-  padding: 20px;
+  color: #f5f5f5;
+  padding: 15px 20px;
   display: flex;
+  letter-spacing: 0.5px;
   align-items: center;
   font-size: 0.875rem;
   transition: all 0.3s ease-in-out;
-  font-weight: 400;
-  border-bottom: #232323;
-  background-color: #2f2f2f; }
+  font-weight: 500;
+  background-color: #22262d; }
   .side-menu .nav-button:hover {
-    background-color: #232323; }
+    background-color: #1c1f27; }
 
 .side-menu .submenu .nav-button {
-  padding: 20px 20px 20px 40px;
   background-color: #1a1a1a; }
   .side-menu .submenu .nav-button:hover {
     background-color: #0c0c0c; }
@@ -6122,19 +6120,19 @@ nav {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  border-bottom: 1px solid #232323;
+  border-bottom: 1px solid #1c1f27;
   margin-bottom: 20px; }
   .tabs .tab-button {
     padding: 15px 20px;
     background-color: #d8d8d8;
-    color: #232323;
+    color: #1c1f27;
     margin-right: 2px;
     transition: all 0.3s ease-in-out; }
     .tabs .tab-button .icon {
       height: 15px;
       min-height: 15px;
       margin-right: 10px;
-      fill: #232323;
+      fill: #1c1f27;
       transition: all 0.3s ease-in-out; }
     .tabs .tab-button:hover .icon, .tabs .tab-button.active .icon {
       fill: #fff; }
@@ -6268,13 +6266,13 @@ nav {
     flex-flow: column;
     background-color: #d8d8d8; }
     .input-img.login-logo span, .input-img.header-logo span, .input-img.card-img span, .input-img.course-logo span {
-      color: #232323;
+      color: #1c1f27;
       text-transform: uppercase;
       font-weight: 500; }
     .input-img.login-logo .icon, .input-img.header-logo .icon, .input-img.card-img .icon, .input-img.course-logo .icon {
       width: 50px;
       margin: 20px;
-      fill: #232323; }
+      fill: #1c1f27; }
   .input-img.course-logo {
     height: 170px;
     width: 170px;
@@ -6331,7 +6329,7 @@ nav {
   margin-top: -40px;
   background-color: #fff; }
   .page-footer span {
-    color: #232323;
+    color: #1c1f27;
     font-size: 0.75rem;
     letter-spacing: 0.5px; }
   .page-footer .logo-footer {
@@ -6491,10 +6489,10 @@ nav {
   margin: 10px 0;
   padding: 5px; }
   .chips.focus {
-    border-bottom: 1px solid #232323;
-    box-shadow: 0 1px 0 0 #232323; }
+    border-bottom: 1px solid #1c1f27;
+    box-shadow: 0 1px 0 0 #1c1f27; }
   .chips .chip.selected {
-    background-color: #232323;
+    background-color: #1c1f27;
     color: #fff; }
 
 .student-content > .container {
@@ -6516,7 +6514,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(35, 35, 35, 0.7);
+    background-color: rgba(28, 31, 39, 0.7);
     padding: 0px;
     width: 40px;
     height: 100%; }
@@ -6540,7 +6538,7 @@ nav {
     .student-content .featured-carousel .featured-item .content {
       position: absolute;
       bottom: 0;
-      background-color: rgba(35, 35, 35, 0.7);
+      background-color: rgba(28, 31, 39, 0.7);
       color: #fff;
       left: 0;
       right: 0;
@@ -6604,7 +6602,7 @@ nav {
   width: 100%;
   position: relative;
   color: #fff;
-  text-shadow: 1px 1px #232323; }
+  text-shadow: 1px 1px #1c1f27; }
   .student-course-content .banner-course .banner-content {
     position: relative;
     z-index: 2;
@@ -6671,7 +6669,7 @@ nav {
     text-shadow: none;
     font-size: 0.75rem;
     font-weight: 700;
-    color: #232323;
+    color: #1c1f27;
     transition: all 0.3s ease-in-out; }
   .student-course-content .course-news:hover span {
     background-color: #27921A;
@@ -6759,7 +6757,7 @@ nav {
   .template-black .filters label {
     color: #fff; }
   .template-black .filters .input-field input {
-    background-color: #2f2f2f; }
+    background-color: #22262d; }
   .template-black .filters .action-button,
   .template-black .filters .filter-header {
     background: rgba(33, 33, 33, 0.95);
@@ -6768,10 +6766,10 @@ nav {
   .template-black .filters .block-header:after {
     background-color: #fff; }
   .template-black .filters .block-header:hover:before, .template-black .filters .block-header:hover:after {
-    background-color: #232323; }
+    background-color: #1c1f27; }
 
 .template-black .page-footer {
-  background-color: #2f2f2f; }
+  background-color: #22262d; }
   .template-black .page-footer span {
     color: #fff; }
   .template-black .page-footer .logo-footer .yellow {
@@ -6781,12 +6779,12 @@ nav {
     fill: #fff;
     transition: all 0.3s ease-in-out; }
   .template-black .page-footer .logo-footer .blue-logo {
-    fill: #2f2f2f; }
+    fill: #22262d; }
   .template-black .page-footer:hover .logo-footer .yellow {
     fill: #FFCD2B; }
 
 .template-black .search-bar > .input-field input {
-  background-color: #232323;
+  background-color: #1c1f27;
   border: 0;
   color: #fff;
   border-radius: 50px; }
@@ -6795,7 +6793,7 @@ nav {
   color: #fff; }
 
 .template-black .card-lessons {
-  background-color: #232323; }
+  background-color: #1c1f27; }
 
 .template-black .card-lesson-block {
   background-color: #1a1a1a; }
@@ -6811,8 +6809,8 @@ nav {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 ); }
 
 .template-black .upsell-card {
-  background: #232323;
-  border: 1px solid #2f2f2f;
+  background: #1c1f27;
+  border: 1px solid #22262d;
   color: #fff; }
 
 .template-black .course-nav {
@@ -6821,8 +6819,8 @@ nav {
     color: #fff; }
   .template-black .course-nav .card-lessons .card-lesson-block {
     color: #fff;
-    border-bottom: 1px solid #2f2f2f; }
+    border-bottom: 1px solid #22262d; }
     .template-black .course-nav .card-lessons .card-lesson-block:hover {
-      background-color: #242424; }
+      background-color: #1c1f28; }
   .template-black .course-nav .card-lessons .icon {
     fill: #fff; }
