@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from './Modal';
+import { Button } from 'components/Modal';
 
 const LessonCard = ({ lesson }) => (
 	<div className='card-lesson-block'>
