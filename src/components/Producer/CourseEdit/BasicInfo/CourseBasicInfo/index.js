@@ -2,6 +2,7 @@ import React from 'react';
 import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
 import ModuleList from 'components/ModuleList';
+import SelectAuthor from './SelectAuthor';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
     <div>
@@ -28,6 +29,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
                     <h3 className='form-section-title'>Autor do Curso</h3>
                     <a className='button affirmative waves-effect waves-light'>
                         <span>Editar Autor</span>
+                        <SelectAuthor />
                     </a>
                 </div>
             </div>

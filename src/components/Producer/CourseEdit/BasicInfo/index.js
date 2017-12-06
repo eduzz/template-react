@@ -5,9 +5,7 @@ import CourseBasicInfo from './CourseBasicInfo';
 
 class CourseBasicInfoContainer extends Component {
     componentDidMount() {
-        const courseId = 1; // mock
-
-        this.props.getCourseBasicInfo(courseId);
+        this.props.getCourseBasicInfo();
     }
 
     render() {

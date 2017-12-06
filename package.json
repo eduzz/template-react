@@ -9,6 +9,7 @@
     "materialize-css": "^0.100.2",
     "node-sass-chokidar": "0.0.3",
     "node-uuid": "^1.4.8",
+    "npm-run-all": "^4.1.2",
     "react": "^16.0.0",
     "react-color": "^2.13.8",
     "react-dom": "^16.0.0",
@@ -22,8 +23,10 @@
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
-    "start": "NODE_PATH=src/ react-scripts start",
-    "build": "NODE_PATH=src/ react-scripts build",
+    "start-js": "NODE_PATH=src/ react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "NODE_PATH=src/ react-scripts build",
+    "build": "npm-run-all build-css build-js",
     "test": "NODE_PATH=src/ react-scripts test --env=jsdom",
     "eject": "NODE_PATH=src/ react-scripts eject"
   }
