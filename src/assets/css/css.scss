@@ -13,87 +13,87 @@ body{
   background-color: $darkest-color;
 }
 .main-header{
-  background-color:$darkest-color;
-  position: fixed;
-  width:100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50;
-  .container{
-    display: flex;
-    justify-content: space-between;
-    align-items:center;
-    height: 60px;
-    padding:0 20px;
-  }
+  // background-color:$darkest-color;
+  // position: fixed;
+  // width:100%;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // z-index: 50;
+  // .container{
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items:center;
+  //   height: 60px;
+  //   padding:0 20px;
+  // }
 }
-.container{
-  width: 100%;
-  max-width: 100%;
-}
+// .container{
+//   width: 100%;
+//   max-width: 100%;
+// }
 
 
-.button{
-  padding:12px 30px;
-  border:0;
-  border-radius:50px;
-  background-color:#d8d8d8;
-  display: inline-block;
-  color:$primary-color;
-  @include transition;
-  span{
-    letter-spacing:0.5px;
-    font-weight:$medium;
-    font-size:16px;
-    @include transition;
-    color:#3A3A3A;
-  }
-  .icon{
-      fill:#3a3a3a;
-      margin-right:5px;
-      height: 15px;
-      // width: 15px;
-  }
-  &.affirmative{
-    background-color:$affirmative-color;
-    span{
-      color:#fff;
-    }
-    .icon{
-      fill:#fff;
-    }
-  }
-  &.small{
-    padding:10px 20px;
-    span{
-      font-size:12px;
-    }
-    .icon{
-      height:10px;
-      margin-right:5px;
-    }
-  }
-  &.soft{
-    background-color:#e6e6e6;
-    border:1px solid #202020;
-  }
-  &.outline{
-    background-color: transparent;
-    border:1px solid #fff;
-    span{
-      color:#fff;
+// .button{
+//   padding:12px 30px;
+//   border:0;
+//   border-radius:50px;
+//   background-color:#d8d8d8;
+//   display: inline-block;
+//   color:$primary-color;
+//   @include transition;
+//   span{
+//     letter-spacing:0.5px;
+//     font-weight:$medium;
+//     font-size:16px;
+//     @include transition;
+//     color:#3A3A3A;
+//   }
+//   .icon{
+//       fill:#3a3a3a;
+//       margin-right:5px;
+//       height: 15px;
+//       // width: 15px;
+//   }
+//   &.affirmative{
+//     background-color:$affirmative-color;
+//     span{
+//       color:#fff;
+//     }
+//     .icon{
+//       fill:#fff;
+//     }
+//   }
+//   &.small{
+//     padding:10px 20px;
+//     span{
+//       font-size:12px;
+//     }
+//     .icon{
+//       height:10px;
+//       margin-right:5px;
+//     }
+//   }
+//   &.soft{
+//     background-color:#e6e6e6;
+//     border:1px solid #202020;
+//   }
+//   &.outline{
+//     background-color: transparent;
+//     border:1px solid #fff;
+//     span{
+//       color:#fff;
 
-    }
-    &:hover{
-      background-color:#fff;
-      span{
-        color:$dark-color;
-      }
+//     }
+//     &:hover{
+//       background-color:#fff;
+//       span{
+//         color:$dark-color;
+//       }
 
-    }
-  }
-}
+//     }
+//   }
+// }
 
 .header-logo{
   height: 40px;
