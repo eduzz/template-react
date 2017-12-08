@@ -1,7 +1,8 @@
 import React from 'react';
+import styles from './styles.css';
 
 const CourseAdvanced = ({ data }) => (
-    <div className="container">
+    <div className={styles.component}>
 		<section className="form-section">
           <h3 className="form-section-title">Configs do Curso</h3>
           <h3 className="form-block-title">Tipos de Acesso</h3>

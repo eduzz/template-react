@@ -9,6 +9,7 @@
 		letter-spacing: 0.5px;
 		align-items:center;
 		@include fontsize(14);
+		line-height: 1rem;
 		@include transition;
 		font-weight: $medium;
 		background-color:$background-color;
