@@ -3,9 +3,10 @@ import PageHeader from './PageHeader';
 import VisibleCourseCardGrid from './VisibleCourseCardGrid';
 import CoursesSearch from 'components/CoursesSearch';
 import CoursesFilters from './CoursesFilters';
+import styles from './styles.css';
 
 const Courses = () => (
-    <section className="page-content my-courses">
+    <section className={styles.component}>
         <div className="container">
             <PageHeader />
             <div className="search-bar">

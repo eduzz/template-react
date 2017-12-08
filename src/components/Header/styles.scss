@@ -1,0 +1,25 @@
+@import 'src/assets/css/_variables.scss';
+
+:local(.component){
+  background-color:$darkest-color;
+  position: fixed;
+  width:100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  .container{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    height: 60px;
+    padding:0 20px;
+  }
+  .header-logo{
+    height: 40px;
+    display: block;
+    img{max-height:100%;}
+  }
+}

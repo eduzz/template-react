@@ -1,1 +1,1 @@
-export const api = 'http://www.mocky.io/v2/';
+export const api = 'http://nutror-mock-server.herokuapp.com';

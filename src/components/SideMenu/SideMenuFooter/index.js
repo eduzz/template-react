@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from 'components/Icon';
+import styles from './styles.css';
 
 const SideMenuFooter = () => (
-    <nav className="inside-nav">
+    <nav className={styles.component}>
         <ul>
             <li>
                 <a href="">

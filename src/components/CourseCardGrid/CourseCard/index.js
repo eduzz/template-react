@@ -1,7 +1,8 @@
 import React from 'react';
+import styles from './styles.css';
 
 const CourseCard = ({ data }) => (
-    <div className="card course">
+    <div className={styles.component}>
         <div className={`card-status ${data.status}`}>{ (data.status === 'free-course' ? 'GRATUITO' : 'EM BREVE') }</div>
 
         <div className="card-description">

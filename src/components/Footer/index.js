@@ -1,8 +1,9 @@
 import React from 'react';
 import eduzinho from 'assets/img/eduzinho.png';
+import styles from './styles.css';
 
 const Footer = () => (
-	<footer className="page-footer">
+	<footer className={styles.component}>
 		<span>Tecnologia desenvolvida pela</span>
 		<svg xmlns="http://www.w3.org/2000/svg" className="logo-footer" viewBox="0 0 260 82">
 		  <g fill="none" fillRule="evenodd">

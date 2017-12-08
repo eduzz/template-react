@@ -1,8 +1,9 @@
 import React from 'react';
 import SideMenuOption from './SideMenuOption';
+import styles from './styles.css';
 
 const SideMenuOptionList = () => (
-    <div className="block side-menu">
+    <div className={styles.component}>
         <nav>
             <ul>
                 <SideMenuOption

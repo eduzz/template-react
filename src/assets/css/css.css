@@ -3543,7 +3543,7 @@ input[type=search]:not(.browser-default),
 textarea.materialize-textarea {
   background-color: #fff;
   border: none;
-  border: 1px solid #828282;
+  border: 1px solid #d8d8d8;
   border-radius: 0;
   outline: none;
   height: 3rem;
@@ -5459,168 +5459,6 @@ body {
 .waves-effect.waves-dark .waves-ripple {
   background-color: #1a1a1a; }
 
-.main-header {
-  background-color: #1a1a1a;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 50; }
-  .main-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    padding: 0 20px; }
-
-.container {
-  width: 100%;
-  max-width: 100%; }
-
-.button {
-  padding: 12px 30px;
-  border: 0;
-  border-radius: 50px;
-  background-color: #d8d8d8;
-  display: inline-block;
-  color: #1b1b1b;
-  transition: all 0.3s ease-in-out; }
-  .button span {
-    letter-spacing: 0.5px;
-    font-weight: 500;
-    font-size: 16px;
-    transition: all 0.3s ease-in-out;
-    color: #3A3A3A; }
-  .button .icon {
-    fill: #3a3a3a;
-    margin-right: 5px;
-    height: 15px; }
-  .button.affirmative {
-    background-color: #27921A; }
-    .button.affirmative span {
-      color: #fff; }
-    .button.affirmative .icon {
-      fill: #fff; }
-  .button.small {
-    padding: 10px 20px; }
-    .button.small span {
-      font-size: 12px; }
-    .button.small .icon {
-      height: 10px;
-      margin-right: 5px; }
-  .button.soft {
-    background-color: #e6e6e6;
-    border: 1px solid #202020; }
-  .button.outline {
-    background-color: transparent;
-    border: 1px solid #fff; }
-    .button.outline span {
-      color: #fff; }
-    .button.outline:hover {
-      background-color: #fff; }
-      .button.outline:hover span {
-        color: #1c1f27; }
-
-.header-logo {
-  height: 40px;
-  display: block; }
-  .header-logo img {
-    max-height: 100%; }
-
-nav {
-  color: inherit;
-  background-color: inherit;
-  height: auto;
-  line-height: initial; }
-
-.input-label {
-  display: block;
-  color: #1c1f27;
-  text-transform: uppercase;
-  margin-bottom: 5px;
-  letter-spacing: 1px;
-  font-weight: 500; }
-
-.side-nav {
-  background-color: #22262d;
-  position: fixed;
-  width: 250px;
-  display: block;
-  height: calc(100vh - 60px);
-  top: 60px;
-  left: 0;
-  box-sizing: border-box;
-  transform: initial;
-  overflow: initial; }
-  .side-nav ::-webkit-scrollbar-track {
-    background-color: #1c1f27; }
-  .side-nav ::-webkit-scrollbar {
-    width: 6px;
-    background: #F4F4F4; }
-  .side-nav ::-webkit-scrollbar-thumb {
-    background: #1a1a1a; }
-  .side-nav .block {
-    display: block;
-    width: 100%; }
-    .side-nav .block.welcome {
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      background: #1c1f27; }
-    .side-nav .block.side-menu {
-      height: calc(100vh - 250px);
-      overflow-y: auto; }
-      .side-nav .block.side-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 0; }
-  .side-nav .user-photo {
-    display: block;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    overflow: hidden; }
-    .side-nav .user-photo img {
-      width: 60px;
-      height: 60px;
-      object-fit: cover; }
-  .side-nav .user-data {
-    color: #fff;
-    padding-left: 10px; }
-    .side-nav .user-data .message {
-      font-size: 0.625rem;
-      letter-spacing: 0.7px;
-      text-transform: uppercase; }
-    .side-nav .user-data .name {
-      color: #fff;
-      font-size: 0.9375rem;
-      letter-spacing: 1px;
-      margin: 2px; }
-  .side-nav .inside-nav {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px; }
-    .side-nav .inside-nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-around;
-      text-align: center; }
-    .side-nav .inside-nav .icon {
-      fill: #fff;
-      height: 30px;
-      width: 30px;
-      margin-bottom: 10px;
-      display: block; }
-    .side-nav .inside-nav a {
-      color: #fff;
-      font-size: 0.75rem; }
-
 .course-nav {
   width: 350px;
   transition: all 0.3s ease-in-out; }
@@ -6079,42 +5917,6 @@ nav {
     margin: 10px 0;
     font-weight: 500; }
 
-.side-menu .icon {
-  fill: #fff;
-  width: 16px;
-  height: 16px;
-  margin-right: 10px; }
-
-.side-menu .nav-button {
-  color: #f5f5f5;
-  padding: 15px 20px;
-  display: flex;
-  letter-spacing: 0.5px;
-  align-items: center;
-  font-size: 0.875rem;
-  transition: all 0.3s ease-in-out;
-  font-weight: 500;
-  background-color: #22262d; }
-  .side-menu .nav-button:hover {
-    background-color: #1c1f27; }
-
-.side-menu .submenu .nav-button {
-  background-color: #1a1a1a; }
-  .side-menu .submenu .nav-button:hover {
-    background-color: #0c0c0c; }
-
-.page-content {
-  padding-left: 250px; }
-  .page-content > .container {
-    padding: 20px 20px 40px 20px;
-    min-height: calc(100vh - 60px);
-    position: relative; }
-  .page-content + .page-footer {
-    margin-left: 250px; }
-
-.cards-wrapper {
-  padding: 10px 0; }
-
 .tabs {
   padding: 20px 0 0 0;
   display: flex;
@@ -6136,94 +5938,6 @@ nav {
       transition: all 0.3s ease-in-out; }
     .tabs .tab-button:hover .icon, .tabs .tab-button.active .icon {
       fill: #fff; }
-
-.card {
-  background: #cecece;
-  width: 170px;
-  height: 220px;
-  position: relative;
-  display: inline-block;
-  background-image: url(https://udemy-images.udemy.com/course/750x422/959700_8bd2_9.jpg);
-  background-size: cover;
-  background-position: center;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5), 0 5px 12px 0 rgba(0, 0, 0, 0.29);
-  border: 0;
-  margin-right: 20px;
-  margin-bottom: 20px; }
-  .card .card-status {
-    color: #fff;
-    position: absolute;
-    display: block;
-    margin: 8px;
-    padding: 4px;
-    top: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    font-size: 0.875rem; }
-    .card .card-status.comming-soon {
-      background-color: #ff0000; }
-    .card .card-status.free-course {
-      background-color: #27921A; }
-  .card .card-description {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    margin: auto;
-    text-align: center;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 10px 5px; }
-  .card .card-title {
-    color: #fff;
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px; }
-  .card .card-category {
-    font-size: 10px;
-    color: #fff; }
-
-.search-bar {
-  padding: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between; }
-  .search-bar > .input-field {
-    width: 100%;
-    margin: 0;
-    margin-right: 40px; }
-    .search-bar > .input-field input {
-      margin: 0;
-      box-sizing: border-box; }
-  .search-bar .button {
-    min-width: 140px;
-    text-align: center;
-    margin: 0 5px; }
-  .search-bar .button:last-child {
-    margin: 0; }
-
-.page-header {
-  padding: 45px 20px;
-  margin: -20px -20px 0 -20px;
-  background-color: #fafafa; }
-  .page-header .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0; }
-  .page-header .page-title {
-    font-size: 2.25rem;
-    font-weight: 400;
-    margin: 0;
-    margin-bottom: 5px; }
-  .page-header .page-subtitle {
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    font-weight: 400; }
 
 .input-color {
   height: 40px;
@@ -6319,38 +6033,6 @@ nav {
   font-weight: 500;
   padding: 0 0 20px 0;
   margin: 0; }
-
-.page-footer {
-  padding: 5px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 40px;
-  margin-top: -40px;
-  background-color: #fff; }
-  .page-footer span {
-    color: #1c1f27;
-    font-size: 0.75rem;
-    letter-spacing: 0.5px; }
-  .page-footer .logo-footer {
-    height: 20px;
-    padding: 0 0 0 10px;
-    filter: grayscale(100%);
-    transition: all 0.3s ease-in-out; }
-    .page-footer .logo-footer .blue {
-      fill: #1F3255; }
-    .page-footer .logo-footer .yellow {
-      fill: #FFCD2B; }
-  .page-footer .avatar {
-    height: 30px;
-    transition: all 0.3s ease-in-out;
-    transform: scale(0) translateX(-20px) rotate(45deg);
-    transform-origin: 0 100%;
-    margin-top: -20px; }
-  .page-footer:hover .avatar {
-    transform: scale(1) translateX(0) rotate(0); }
-  .page-footer:hover .logo-footer {
-    filter: grayscale(0); }
 
 .block-header,
 .card-lessons-header {

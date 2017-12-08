@@ -1,0 +1,21 @@
+:local(.component) {
+  background-color: #1a1a1a;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50; }
+  :local(.component) .container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px; }
+  :local(.component) .header-logo {
+    height: 40px;
+    display: block; }
+    :local(.component) .header-logo img {
+      max-height: 100%; }

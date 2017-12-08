@@ -1,12 +1,18 @@
 import React from 'react';
 import Icon from 'components/Icon';
+import styles from './styles.css';
 
 const PageHeader = () => (
-    <section className="page-header">
+    <section className={styles.component}>
         <div className="container">
             <div className="page-header-content">
-                <h2 className="page-title">Meus Cursos</h2>
-                <p className="page-subtitle">Gerencie os cursos que você criou</p>
+                <div class="page-title-icon">
+                    <Icon name='play-outline' />
+                </div>
+                <div>
+                    <h2 className="page-title">Meus Cursos</h2>
+                    <p className="page-subtitle">Gerencie os cursos que você criou</p>
+                </div>
             </div>
             <div className="page-header-action">
                 <a className="button affirmative waves-light waves-effect">
