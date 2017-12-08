@@ -1,0 +1,29 @@
+:local(.component) {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  background: #1c1f27; }
+  :local(.component) .user-photo {
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden; }
+    :local(.component) .user-photo img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover; }
+  :local(.component) .user-data {
+    color: #fff;
+    padding-left: 10px; }
+    :local(.component) .user-data .message {
+      font-size: 0.625rem;
+      letter-spacing: 0.7px;
+      text-transform: uppercase; }
+    :local(.component) .user-data .name {
+      color: #fff;
+      font-size: 0.9375rem;
+      letter-spacing: 1px;
+      margin: 2px; }

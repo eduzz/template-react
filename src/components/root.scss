@@ -6,7 +6,9 @@
   width: 100%;
   max-width: 100%;
 }
-
+body{
+  padding:60px 0 0 0;
+}
 .button{
   padding:12px 30px;
   border:0;
@@ -50,12 +52,11 @@
     background-color:#e6e6e6;
     border:1px solid #202020;
   }
-  &.outline{
+  &.outline-light{
     background-color: transparent;
     border:1px solid #fff;
     span{
       color:#fff;
-
     }
     &:hover{
       background-color:#fff;
@@ -65,4 +66,39 @@
 
     }
   }
+  &.outline-dark{
+    background-color: transparent;
+    border:1px solid $dark-color;
+    span{
+      color:$dark-color;
+    }
+    .icon{
+      fill:$dark-color;
+      @include transition;
+    }
+    &:hover{
+      background-color:$dark-color;
+      span{
+        color:#fff;
+      }
+      .icon{
+        fill:#fff;
+      }
+
+    }
+  }
+}
+.input-label{
+  display: block;
+  color:$dark-color;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+  font-weight: $medium;
+}
+nav{
+  color:inherit;
+  background-color:inherit;
+  height: auto;
+  line-height: initial;
 }

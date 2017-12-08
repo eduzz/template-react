@@ -1,0 +1,47 @@
+:local(.component) {
+  background: #cecece;
+  min-width: 185px;
+  height: 240px;
+  position: relative;
+  display: inline-block;
+  background-size: cover;
+  background-position: center;
+  border: 0;
+  margin-right: 5px;
+  margin-bottom: 5px; }
+  :local(.component) .card-status {
+    color: #fff;
+    position: absolute;
+    display: block;
+    margin: 8px;
+    padding: 4px;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 0.875rem; }
+    :local(.component) .card-status.comming-soon {
+      background-color: #ff0000; }
+    :local(.component) .card-status.free-course {
+      background-color: #27921A; }
+  :local(.component) .card-description {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 5px; }
+  :local(.component) .card-title {
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px; }
+  :local(.component) .card-category {
+    font-size: 10px;
+    color: #fff; }

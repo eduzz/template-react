@@ -27,12 +27,12 @@ class CoursesFilters extends Component {
 				    <TagsFilter />
 				</FiltersMenu>
 
-				<a className="button waves-light waves-effect" onClick={ () =>
+				<a className="button outline-dark waves-light waves-effect" onClick={ () =>
 					this.setState({
 						isActive: true,
 					})
 				}>
-		            <Icon name='package' />
+		            <Icon name='filter' />
 		            <span>Filtros</span>
 		        </a>
 			</div>

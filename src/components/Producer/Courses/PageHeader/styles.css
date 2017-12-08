@@ -1,0 +1,30 @@
+:local(.component) {
+  padding: 30px 20px;
+  margin: -20px -20px 0 -20px;
+  background-color: rgba(238, 238, 238, 0.3); }
+  :local(.component) .page-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; }
+  :local(.component) .container {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0; }
+  :local(.component) .page-title-icon .icon {
+    width: 45px;
+    height: 45px;
+    fill: #1c1f27;
+    margin-right: 10px; }
+  :local(.component) .page-title {
+    font-size: 1.75rem;
+    font-weight: 400;
+    margin: 0;
+    margin-bottom: 5px;
+    color: #1c1f27; }
+  :local(.component) .page-subtitle {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    font-weight: 400; }
