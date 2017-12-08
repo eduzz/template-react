@@ -1,15 +1,18 @@
 import React from 'react';
 import Icon from 'components/Icon';
+import { Link } from 'react-router-dom';
 import styles from './styles.css';
 
 const SideMenuFooter = () => (
     <nav className={styles.component}>
         <ul>
             <li>
-                <a href="">
+                <Link to='/login' onClick={() => {
+                    window.localStorage.removeItem('authToken');
+                }}>
                     <Icon name='exit' />
                     Sair
-                </a>
+                </Link>
             </li>
             <li>
                 <a href="">

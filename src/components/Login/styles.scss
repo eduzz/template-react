@@ -1,0 +1,23 @@
+:local(.component) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .card-panel {
+        width: 300px;
+        height: 300px;
+        padding: 10px;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+
+        input {
+            width: 100%;
+        }
+
+        a {
+            width: 100%;
+            align-self: flex-end;
+        }
+    }
+}
