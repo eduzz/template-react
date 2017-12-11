@@ -1,15 +1,36 @@
 import actions from './actions';
-import { get } from './agent';
+import { get, post } from './agent';
 
 const middleware = store => next => action => {
 
     next(action);
 
     switch (action.type) {
-        case 'GET_COURSES':
-            get('/courses', action.id).then(
+        case 'SUBMIT_LOGIN':
+            const data = {
+                username: action.email,
+                password: action.password,
+            };
+
+            post('/oauth/token', data).then(
                 res => {
-                    next(actions.receiveCourses(res.data));
+                    window.localStorage.setItem('authToken', res.data.data.token);
+                    window.location.href = '/';
+                },
+                err => {
+                    console.log(err);
+                }
+            );
+            break;
+        case 'GET_COURSES':
+            const headers = {
+                Authorization: 'Bearer ' + window.localStorage.getItem('authToken'),
+            };
+
+            get('/courses', headers).then(
+                res => {
+                    console.log(res);
+                    next(actions.receiveCourses(res.data.data));
                 },
                 err => {
                     next(actions.receiveCoursesError(err));
