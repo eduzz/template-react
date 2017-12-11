@@ -1,8 +1,7 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
 :local(.component){
-
-@extend %page-content;
+	@extend %page-content;
 	.course-header{
 		display: flex;
 		justify-content: flex-start;
@@ -28,6 +27,7 @@
 	    width: 100%;
 	    p{
 	      line-height: 1.2rem;
+	      max-width: 350px;
 	    }
 	    .radio-description{
 	      max-width: 320px;

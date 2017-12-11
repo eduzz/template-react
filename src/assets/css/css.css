@@ -5917,35 +5917,6 @@ body {
     margin: 10px 0;
     font-weight: 500; }
 
-.tabs {
-  padding: 20px 0 0 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  border-bottom: 1px solid #3066d0;
-  margin-bottom: 20px; }
-  .tabs .tab-button {
-    padding: 15px 20px;
-    background-color: #d8d8d8;
-    color: #1c1f27;
-    margin-right: 2px;
-    display: flex;
-    transition: all 0.3s ease-in-out;
-    border-radius: 4px 4px 0 0;
-    font-size: 0.875rem;
-    line-height: 1rem; }
-    .tabs .tab-button .icon {
-      height: 15px;
-      min-height: 15px;
-      margin-right: 10px;
-      fill: #1c1f27;
-      transition: all 0.3s ease-in-out; }
-    .tabs .tab-button:hover, .tabs .tab-button.active {
-      color: #fff;
-      background-color: #203153; }
-      .tabs .tab-button:hover .icon, .tabs .tab-button.active .icon {
-        fill: #fff; }
-
 .input-color {
   height: 40px;
   width: 80px; }
@@ -5981,7 +5952,8 @@ body {
       align-items: center; }
   .input-img.large-banner .container {
     height: 250px;
-    width: 100%; }
+    width: 100%;
+    margin: 0; }
   .input-img.login-logo, .input-img.header-logo, .input-img.card-img, .input-img.course-logo {
     display: flex;
     justify-content: center;

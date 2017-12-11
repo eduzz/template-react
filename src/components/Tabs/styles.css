@@ -1,0 +1,28 @@
+:local(.component) {
+  padding: 20px 0 0 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-bottom: 1px solid #3066d0;
+  margin-bottom: 20px; }
+  :local(.component) .tab-button {
+    padding: 15px 20px;
+    background-color: #d8d8d8;
+    color: #1c1f27;
+    margin-right: 2px;
+    display: flex;
+    transition: all 0.3s ease-in-out;
+    border-radius: 4px 4px 0 0;
+    font-size: 0.875rem;
+    line-height: 1rem; }
+    :local(.component) .tab-button .icon {
+      height: 15px;
+      min-height: 15px;
+      margin-right: 10px;
+      fill: #1c1f27;
+      transition: all 0.3s ease-in-out; }
+    :local(.component) .tab-button:hover, :local(.component) .tab-button.active {
+      color: #fff;
+      background-color: #203153; }
+      :local(.component) .tab-button:hover .icon, :local(.component) .tab-button.active .icon {
+        fill: #fff; }
