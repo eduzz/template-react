@@ -8,26 +8,30 @@ const SideMenuOptionList = () => (
             <ul>
                 <SideMenuOption
                     data={{
-                        title: 'Biblioteca',
+                        title: 'Área de Ensino',
                         icon: 'library',
+                        to : '/student/courses'
                     }}
                 />
                 <SideMenuOption
                     data={{
                         title: 'Minha Vitrine',
                         icon: 'showcase',
+                        to : '/'
                     }}
                 >
                     <SideMenuOption
                         data={{
                             title: 'Pacotes/Assinaturas',
                             icon: 'package',
+                            to : '/producer/packages'
                         }}
                     />
                     <SideMenuOption
                         data={{
                             title: 'Cursos',
                             icon: 'play-rounded',
+                            to : '/producer/courses'
                         }}
                     />
                
@@ -36,30 +40,35 @@ const SideMenuOptionList = () => (
                     data={{
                         title: 'Comentários',
                         icon: 'chat-rounded',
+                        to : '/producer/comments'
                     }}
                 />
                 <SideMenuOption
                     data={{
                         title: 'Alunos',
                         icon: 'students',
+                        to : '/producer/students'
                     }}
                 />
                 <SideMenuOption
                     data={{
                         title: 'Comunicação',
                         icon: 'mailbox',
+                        to : '/'
                     }}
                 >
                     <SideMenuOption
                         data={{
                             title: 'Convites',
                             icon: 'airplane',
+                            to : '/producer/invites'
                         }}
                     />
                     <SideMenuOption
                         data={{
                             title: 'Novidades',
                             icon: 'letter',
+                            to : '/producer/news'
                         }}
                     />
                 </SideMenuOption>
