@@ -4,6 +4,7 @@ import styles from './styles.css';
 
 const PageHeader = () => (
     <section className={styles.component}>
+
         <div className="container">
             <div className="page-header-content">
                 <div class="page-title-icon">

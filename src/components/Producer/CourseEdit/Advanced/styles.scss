@@ -1,0 +1,5 @@
+@import 'src/assets/css/_variables.scss';
+@import 'src/assets/css/_mixins.scss';
+:local(.component){
+	@extend %container;
+}

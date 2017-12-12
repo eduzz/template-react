@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import jquery from 'jquery';
 import Icon from 'components/Icon';
+import styles from './styles.css';
 
 export class Tabs extends Component {
     componentDidMount() {
@@ -13,7 +14,7 @@ export class Tabs extends Component {
 
         return (
             <div>
-                <ul className='tabs' id={this.props.id}>
+                <ul className={styles.component} id={this.props.id}>
                     {panes.map((pane, key) =>
                         <li key={ key } className='tab'>
                             <a className='tab-button waves-effect waves-light' href={`#${TabsID}-${key}`} onClick={e => e.preventDefault()} >

@@ -2,17 +2,8 @@
 @import 'src/assets/css/_mixins.scss';
 :local(.component){
 
-  padding-left:250px;
-  >.container{
-    padding:20px 20px 40px 20px;
-    min-height: calc(100vh - 60px);
-    position:relative;
-    width: 100%;
-  	max-width: 100%;
-  }
-  &+.page-footer{
-    margin-left:250px;
-  }
+@extend %page-content;
+
   .search-bar{
 	  padding:20px 0;
 	  display: flex;

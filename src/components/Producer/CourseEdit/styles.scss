@@ -1,0 +1,52 @@
+@import 'src/assets/css/_variables.scss';
+@import 'src/assets/css/_mixins.scss';
+:local(.component){
+	@extend %page-content;
+	.course-header{
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		.input-field{
+			width: 100%;
+			margin-right: 5px;
+		}	
+		.button{
+			height: 40px;
+			width: 250px;
+		}
+	}
+	.form-section{
+	  padding: 20px 0;
+	  border-bottom:1px solid $light-gray;
+	  .row{
+	    margin-bottom: 0;
+	  }
+	  .form-block{
+	    padding: 10px 0;
+	    display: inline-block;
+	    width: 100%;
+	    p{
+	      line-height: 1.2rem;
+	      max-width: 350px;
+	    }
+	    .radio-description{
+	      max-width: 320px;
+	    }
+	   input.datepicker{
+	    margin-bottom:0;
+	    max-width: 200px;
+	    }
+	  }
+	  .form-block-title{
+	    @include fontsize(18);
+	    font-weight: $medium;
+	    margin:0 0 5px 0;
+	  }
+	}
+	.form-section-title{
+	  @include fontsize(24);
+	  font-weight: $medium;
+	  padding:0 0 15px 0;
+	  margin:0;
+	}
+}

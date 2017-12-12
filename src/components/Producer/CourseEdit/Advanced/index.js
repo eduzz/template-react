@@ -1,9 +1,10 @@
 import React from 'react';
+import styles from './styles.css';
 
 const CourseAdvanced = ({ data }) => (
-    <div className="container">
+    <div className={styles.component}>
 		<section className="form-section">
-          <h3 className="form-section-title">Configs do Curso</h3>
+          <h3 className="form-section-title">Configurações Avançadas</h3>
           <h3 className="form-block-title">Tipos de Acesso</h3>
           <div className="row">
             <div className="col m12 l4">
@@ -90,11 +91,11 @@ const CourseAdvanced = ({ data }) => (
 
         <section className="form-section">
           <div className="row">
-            <div className="col m4 l4">
+            <div className="col l12">
               <div className="form-block">
                 <div className="switch">
                   <label>
-                    <input type="checkbox" id="check-hastermos"/>
+                    <input type="checkbox" id="check-termos"/>
                     <span className="lever"></span>
                   </label>
                   <label htmlFor="check-termos">
@@ -105,10 +106,9 @@ const CourseAdvanced = ({ data }) => (
               </div>
             </div>
 
-            <div className='col m6 l6'>
+            <div className='col l12'>
                 <div className='form-block'>
-                  <h3 className='form-block-title'>Conteúdo dos Termos e Condições</h3>
-                  <textarea id='Termos' className='materialize-textarea'></textarea>
+                  <textarea id='termos' className='materialize-textarea'></textarea>
                 </div>
             </div> 
           </div>
@@ -116,10 +116,10 @@ const CourseAdvanced = ({ data }) => (
 
         <section className="form-section">
           <div className="row">
-          	  <div className="col m12">
+          	  <div className="col m12 l4">
 	          <div className="form-block">
 		          <h3 className="form-block-title">E-mail do Curso</h3>
-			      <p className="input-description">O email cadastrado receberá as respostas que forem enviadas pelos alunos</p>
+			          <p className="input-description">O email cadastrado receberá as respostas que forem enviadas pelos alunos</p>
 	          	  <div className="input-field">
 			          <input id="course-name" type="text"/>
 			      </div>
