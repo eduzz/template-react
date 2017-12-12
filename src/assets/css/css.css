@@ -5952,6 +5952,7 @@ body {
       align-items: center; }
   .input-img.large-banner .container {
     height: 250px;
+    max-width: 100%;
     width: 100%;
     margin: 0; }
   .input-img.login-logo, .input-img.header-logo, .input-img.card-img, .input-img.course-logo {
