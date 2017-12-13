@@ -1,0 +1,39 @@
+@keyframes offset {
+  50% {
+    stroke-dasharray: 0 90 90 90 55; }
+  100% {
+    stroke-dasharray: 0 0 90 90 55; } }
+
+:local(.component) .loading-wrapper {
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 50px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  text-align: center; }
+
+:local(.component) .loading-icon {
+  width: 50px;
+  fill: none;
+  stroke: #1a1a1a;
+  stroke-miterlimit: 10;
+  stroke-width: 2px;
+  transform-origin: 50% 50%; }
+
+:local(.component) .a1 {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 0;
+  animation: offset 2.5s reverse cubic-bezier(0.2, 0.01, 0.83, 1) infinite; }
+
+:local(.component) .a2 {
+  stroke-dasharray: 125;
+  stroke-dashoffset: 0;
+  animation: offset 2.5s cubic-bezier(0.2, 0.01, 0.83, 1) infinite; }
