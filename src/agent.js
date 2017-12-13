@@ -10,7 +10,7 @@ axios.interceptors.response.use(
         return config;
     },
     error => {
-        if(error.status === 401)
+        if(error.response.status === 401)
             getStore().dispatch(actions.logout());
 
         return Promise.reject(error);
