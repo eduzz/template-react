@@ -6,6 +6,8 @@ import CoursePersonalization from './Personalization';
 import Certificates from './Certificates';
 import Marketing from './Marketing';
 import styles from './styles.css';
+import FloatButton from 'components/FloatButton';
+
 
 const CourseEdit = () => (
 	<form>
@@ -40,6 +42,8 @@ const CourseEdit = () => (
                         <Certificates />
                     </Pane>
 				</Tabs>
+                <FloatButton/>
+
 			</div>
 		</section>
 	</form>
