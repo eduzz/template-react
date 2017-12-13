@@ -3,13 +3,26 @@ import { api } from './constants';
 import { getStore } from './store';
 import actions from 'actions';
 
-axios.interceptors.response.use(
-    config => {
-        config.headers.Authorization = `Bearer ${localStorage.getItem('authToken')}`;
-
-        return config;
+axios.interceptors.request.use(
+    function (config) {
+        return {
+            ...config,
+            headers: {
+                ...config.headers,
+                Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+            },
+        };
     },
-    error => {
+    function (error) {
+        return Promise.reject(error);
+    }
+);
+
+axios.interceptors.response.use(
+    function (response) {
+        return response;
+    },
+    function (error) {
         if(error.response.status === 401)
             getStore().dispatch(actions.logout());
 
