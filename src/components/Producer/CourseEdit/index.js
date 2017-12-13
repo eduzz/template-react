@@ -3,6 +3,7 @@ import { Tabs, Pane } from 'components/Tabs';
 import CourseBasicInfoContainer from './BasicInfo';
 import CourseAdvanced from './Advanced';
 import CoursePersonalization from './Personalization';
+import Certificates from './Certificates';
 import Marketing from './Marketing';
 import styles from './styles.css';
 
@@ -36,7 +37,7 @@ const CourseEdit = () => (
                         <Marketing />
                     </Pane>
                     <Pane title="Certificados" icon='paper'>
-                        <h1> Certificados </h1>
+                        <Certificates />
                     </Pane>
 				</Tabs>
 			</div>
