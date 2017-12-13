@@ -7,7 +7,7 @@ const PageHeader = () => (
 
         <div className="container">
             <div className="page-header-content">
-                <div class="page-title-icon">
+                <div className="page-title-icon">
                     <Icon name='play-outline' />
                 </div>
                 <div>

@@ -10,7 +10,7 @@ const CourseEdit = () => (
 	<form>
 		<section className={styles.component}>
 			<div className='container'>
-                <div class="course-header">
+                <div className="course-header">
                     <div className='input-field bigger'>
                         <input id='course-name' type='text' />
                         <label htmlFor='course-name'>Nome do Curso/Programa</label>

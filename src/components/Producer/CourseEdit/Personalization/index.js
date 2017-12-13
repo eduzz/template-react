@@ -2,6 +2,7 @@ import React from 'react';
 import reactCSS from 'reactcss'
 import { ChromePicker } from 'react-color';
 import Icon from 'components/Icon';
+import styles from './styles.css';
 
 class ButtonExample extends React.Component {
   state = {
@@ -72,8 +73,9 @@ class ButtonExample extends React.Component {
 }
 
 const CoursePersonalization = ({ data }) => (
-    <div className="container">
+    <div className={styles.component}>
 		<div className="form-section">
+            <h3 className='form-section-title'>Personalizações</h3>
 			<div className="row">
 				<div className="s12 m4 col">
 					<div className="form-block">
