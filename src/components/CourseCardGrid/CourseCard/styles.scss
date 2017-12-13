@@ -2,17 +2,18 @@
 @import 'src/assets/css/_mixins.scss';
 
 :local(.component){
- 	background:#cecece;
-  min-width: 185px;
+  width: 185px;
   height: 240px;
   position: relative;
   display: inline-block;
-  background-size:cover;
-  background-position:center;
-  // box-shadow: 0 2px 2px 0 rgba(0,0,0,0.50), 0 5px 12px 0 rgba(0,0,0,0.29);
   border:0;
   margin-right:5px;
   margin-bottom:5px;
+  border:1px solid $light-gray;
+  .card-image{
+    width: 100%;
+    object-fit: cover;
+  }
   .card-status{
     color:#fff;
     position: absolute;
@@ -28,10 +29,11 @@
     letter-spacing:0.5px;
     @include fontsize(14);
     &.comming-soon{
-      background-color:#ff0000;
+      background-color:transparentize(#ff0000, 0.5);
     }
     &.free-course{
-      background-color:#27921A;
+      background-color:transparentize(#27921A , 0.2);
+
     }
     &.blocked{}
   }
@@ -48,9 +50,12 @@
   .card-title{
     color:#fff;
     @include fontsize(14);
+    line-height: 1rem;
     font-weight:$medium;
     letter-spacing:0.5px;
     margin-bottom: 4px;
+    max-height: 30px;
+    overflow:hidden;
   }
   .card-category{
     font-size:10px;
