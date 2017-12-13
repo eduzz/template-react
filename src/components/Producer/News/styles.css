@@ -1,0 +1,10 @@
+:local(.component) {
+  padding-left: 250px; }
+  :local(.component) > .container {
+    padding: 20px 20px 40px 20px;
+    min-height: calc(100vh - 60px);
+    position: relative;
+    width: 100%;
+    max-width: 100%; }
+  :local(.component) + .page-footer {
+    margin-left: 250px; }
