@@ -8,13 +8,11 @@ class Login extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.dispatch(actions.submitLogin(this.state.email, this.state.password));
-    };
 
-    handleChange = (key, value) => {
-        this.setState({
-            [key]: value,
-        });
+        this.props.dispatch(actions.requestLogin({
+            username: this.refs.username.value,
+            password: this.refs.password.value,
+        }));
     };
 
     render() {
@@ -22,8 +20,8 @@ class Login extends Component {
             <form className={styles.component} onSubmit={this.handleSubmit}>
                 <div className='card-panel teal'>
                     <div className='input-box'>
-                        <input placeholder='Email' type='email' onChange={event => this.handleChange('email', event.target.value)} />
-                        <input placeholder='Senha' type='password' onChange={event => this.handleChange('password', event.target.value)} />
+                        <input placeholder='Email' type='email' ref='username'/>
+                        <input placeholder='Senha' type='password' ref='password'/>
                     </div>
 
                     <button className='waves-effect waves-light btn' type='submit'> Entrar </button>

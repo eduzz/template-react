@@ -1,39 +1,31 @@
 import axios from 'axios';
 import { api } from './constants';
+import { getStore } from './store';
+import actions from 'actions';
 
 axios.interceptors.response.use(
     config => {
+        config.headers.Authorization = `Bearer ${localStorage.getItem('authToken')}`;
+
         return config;
     },
     error => {
-        if(error.response.status === 401 || error.response.status === 500) {
-            window.localStorage.removeItem('authToken');
-            window.location.href = '/#/login';
-        }
+        if(error.status === 401)
+            getStore().dispatch(actions.logout());
 
         return Promise.reject(error);
     }
 );
 
-export const get = (url, headers) => axios(
-	{
-		method: 'get',
-		url: api + url,
-		headers: {
-			'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-            ...headers,
-		},
-	}
-);
+export const get = (url, headers) => axios({
+	method: 'get',
+	url: api + url,
+	headers,
+});
 
-export const post = (url, data, headers) => axios(
-	{
-		method: 'post',
-		url: api + url,
-		headers: {
-			'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8',
-            ...headers,
-		},
-		data,
-	}
-);
+export const post = (url, data, headers) => axios({
+	method: 'post',
+	url: api + url,
+	headers,
+	data,
+});
