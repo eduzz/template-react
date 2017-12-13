@@ -23,4 +23,54 @@
       	background-color:#0c0c0c;
       }
   }
+  .collapsible-header{
+  	position:relative;
+  	cursor:pointer;
+
+	&:before,
+	&:after{
+		transition: all .2s ease-in-out;
+		content: '';
+		display: inline-block;
+		background: $medium-gray;
+		width: 2px;
+		height: 10px;
+		border-radius: 16px;
+		position: absolute;
+		top: 0 ;
+		bottom: 0 ;
+		margin: auto;
+	}
+	&:before{
+        transform: translateX(2px) rotate(40deg);
+	  	right: 36px;
+
+	}
+    &:after{
+      transform: translateX(-2px) rotate(-40deg);
+	  right: 37.7px;
+
+    }
+    &:hover{
+      &:before,&:after{
+        background:$affirmative-color;
+      }
+    }
+    &.active{
+      &:before,
+      &:after{
+        content: '';
+        display: inline-block;
+        width: 2px;
+        border-radius: 16px;
+      }
+	  &:before{
+	    transform: translateX(-3.6px) rotate(40deg);
+	  }
+	  &:after{
+	    transform: translateX(3.6px) rotate(-40deg);
+	  }
+    }
+
+  }//end coll header
 }
