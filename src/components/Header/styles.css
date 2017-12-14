@@ -14,6 +14,13 @@
     align-items: center;
     height: 60px;
     padding: 0 20px; }
+  :local(.component) .header-actions {
+    display: flex;
+    align-items: center; }
+    :local(.component) .header-actions .button span {
+      font-size: 0.875rem; }
+    :local(.component) .header-actions .button {
+      padding: 10px 30px; }
   :local(.component) .header-logo {
     height: 40px;
     display: block; }

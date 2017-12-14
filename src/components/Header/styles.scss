@@ -1,4 +1,6 @@
 @import 'src/assets/css/_variables.scss';
+@import 'src/assets/css/_mixins.scss';
+
 
 :local(.component){
   background-color:$darkest-color;
@@ -16,6 +18,16 @@
     align-items:center;
     height: 60px;
     padding:0 20px;
+  }
+  .header-actions{
+    display: flex;
+    align-items:center;
+    .button span{
+      @include fontsize(14);
+    }
+    .button{
+      padding: 10px 30px;
+    }
   }
   .header-logo{
     height: 40px;
