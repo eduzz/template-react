@@ -86,6 +86,7 @@ body {
   .button .icon {
     fill: #3a3a3a;
     margin-right: 5px;
+    transition: all 0.3s ease-in-out;
     height: 15px; }
   .button.affirmative {
     background-color: #3066d0; }
@@ -108,10 +109,14 @@ body {
     border: 1px solid #fff; }
     .button.outline-light span {
       color: #fff; }
+    .button.outline-light .icon {
+      fill: #fff; }
     .button.outline-light:hover {
       background-color: #fff; }
       .button.outline-light:hover span {
         color: #1c1f27; }
+      .button.outline-light:hover .icon {
+        fill: #1c1f27; }
   .button.outline-dark {
     background-color: transparent;
     border: 1px solid #1c1f27; }

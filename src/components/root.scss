@@ -27,6 +27,7 @@ body{
   .icon{
       fill:#3a3a3a;
       margin-right:5px;
+      @include transition;
       height: 15px;
   }
   &.affirmative{
@@ -58,10 +59,17 @@ body{
     span{
       color:#fff;
     }
+    .icon{
+      fill:#fff;
+
+    }
     &:hover{
       background-color:#fff;
       span{
         color:$dark-color;
+      }
+      .icon{
+        fill:$dark-color;
       }
 
     }
