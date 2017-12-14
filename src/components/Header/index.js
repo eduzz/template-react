@@ -11,7 +11,7 @@ const Header = () => (
             </a>
             <div className="header-actions">
                 <Link to='/producer/courses'   className="button outline-light">
-                    <Icon name='students' />
+                    <Icon name='user' />
                     <span>Área do Produtor</span>
                 </Link>
                 <Link to='/student/courses'   className="button outline-light">
