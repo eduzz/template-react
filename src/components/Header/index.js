@@ -9,7 +9,7 @@ const Header = () => (
             <a className="header-logo">
                 <img src="https://app.nutror.com/assets/img/super.png" alt="" />
             </a>
-            <div class="header-actions">
+            <div className="header-actions">
                 <Link to='/producer/courses'   className="button outline-light">
                     <Icon name='students' />
                     <span>Área do Produtor</span>
