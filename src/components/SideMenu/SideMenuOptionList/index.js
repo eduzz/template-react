@@ -45,6 +45,13 @@ const SideMenuOptionList = () => (
                 />
                 <SideMenuOption
                     data={{
+                        title: 'Upsells',
+                        icon: 'price-tag',
+                        to : '/producer/upsells'
+                    }}
+                />
+                <SideMenuOption
+                    data={{
                         title: 'Alunos',
                         icon: 'students',
                         to : '/producer/students'

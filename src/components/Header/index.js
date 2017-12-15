@@ -11,11 +11,11 @@ const Header = () => (
                 <img src="https://app.nutror.com/assets/img/super.png" alt="" />
             </a>
             <div className="header-actions">
-                <Link to='/producer/courses'   className="button outline-light">
+                <Link to='/producer/courses'   className="header-button">
                     <Icon name='user' />
                     <span>Área do Produtor</span>
                 </Link>
-                <Link to='/student/courses'   className="button outline-light">
+                <Link to='/student/courses'   className="header-button">
                     <Icon name='library' />
                     <span>Área de Ensino</span>
                 </Link>
