@@ -1,0 +1,26 @@
+:local(.component) .user-menu {
+  position: relative;
+  padding: 10px 20px;
+  cursor: pointer; }
+  :local(.component) .user-menu:before {
+    content: '';
+    position: absolute;
+    border-top: 4px solid #fff;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    top: 30px;
+    right: 0;
+    margin: auto;
+    display: block; }
+
+:local(.component) .user-photo {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden; }
+  :local(.component) .user-photo img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover; }

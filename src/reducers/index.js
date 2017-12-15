@@ -2,11 +2,15 @@ import { combineReducers } from 'redux';
 import courses from './courses';
 import searchFilter from './searchFilter';
 import course from './course';
+import auth from './auth';
+import user from './user';
 
 const nutrorApp = combineReducers({
 	courses,
 	searchFilter,
 	course,
+    auth,
+    user,
 });
 
 export default nutrorApp;

@@ -6,30 +6,19 @@ const middleware = store => next => action => {
     next(action);
 
     switch (action.type) {
-        case 'SUBMIT_LOGIN':
-            const data = {
-                username: action.email,
-                password: action.password,
-            };
-
-            post('/oauth/token', data).then(
+        case 'REQUEST_LOGIN':
+            post('/oauth/token', action.creds).then(
                 res => {
-                    window.localStorage.setItem('authToken', res.data.data.token);
-                    window.location.href = '/';
+                    next(actions.receiveLogin(res.data.data));
                 },
                 err => {
-                    console.log(err);
+                    next(actions.receiveLoginError(err));
                 }
             );
             break;
         case 'GET_COURSES':
-            const headers = {
-                Authorization: 'Bearer ' + window.localStorage.getItem('authToken'),
-            };
-
-            get('/courses', headers).then(
+            get('/courses').then(
                 res => {
-                    console.log(res);
                     next(actions.receiveCourses(res.data.data));
                 },
                 err => {

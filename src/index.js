@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import configureStore from './configureStore';
+import { configureStore } from './store';
 import Root from './components/Root';
 
 import 'materialize-css';
@@ -13,4 +13,4 @@ store.subscribe( () => console.log(store.getState()));
 render(
 	<Root store={ store } />,
 	document.getElementById('root')
-);	
+);
