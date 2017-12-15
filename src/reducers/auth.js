@@ -13,6 +13,7 @@ const auth = (state = initialState, action) => {
             };
         case 'RECEIVE_LOGIN':
             localStorage.setItem('authToken', action.token);
+            window.location.href = '/producer';
 
             return {
                 ...state,
@@ -29,6 +30,7 @@ const auth = (state = initialState, action) => {
             };
         case 'LOGOUT':
             localStorage.removeItem('authToken');
+            window.location.href = '/login';
 
             return {
                 ...state,

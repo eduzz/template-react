@@ -1,4 +1,5 @@
 import React from 'react';
+import UserMenu from './UserMenu';
 import styles from './styles.css';
 import Icon from 'components/Icon';
 import { Link } from 'react-router-dom';
@@ -18,15 +19,7 @@ const Header = () => (
                     <Icon name='library' />
                     <span>Área de Ensino</span>
                 </Link>
-                 <nav className="user-menu" data-activates='dropdown1'>
-            		<div className="user-photo"><img src="http://static1.purepeople.com.br/articles/2/18/48/42/@/2157162-ashton-kutcher-criou-um-abaixo-assinado-237x237-2.jpg" alt=""/></div>
-                    <ul id='dropdown1' className='dropdown-content'>
-        			    <li><a href="#!">Meus Dados</a></li>
-        			    <li><a href="#!">Meus Certificados</a></li>
-        			    <li className="divider"></li>
-        			    <li><a href="#!">Sair</a></li>
-        			</ul>
-                </nav> 
+                <UserMenu />
             </div>
         </div>
     </header>
