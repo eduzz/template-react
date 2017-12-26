@@ -30,10 +30,10 @@ class UserMenu extends Component {
                 <nav id={this.id} className='user-menu' data-activates={this.id + '-menu'}>
             		<div className='user-photo'><img src='http://static1.purepeople.com.br/articles/2/18/48/42/@/2157162-ashton-kutcher-criou-um-abaixo-assinado-237x237-2.jpg' alt=''/></div>
                 </nav>
-                <ul id={this.id + '-menu'} class='dropdown-content'>
+                <ul id={this.id + '-menu'} className='dropdown-content'>
                     <li><a>Meus Dados</a></li>
                     <li><a>Meus Certificados</a></li>
-                    <li class='divider'></li>
+                    <li className='divider'></li>
                     <li><a onClick={() => this.props.dispatch(actions.logout())}>Sair</a></li>
                 </ul>
             </div>
