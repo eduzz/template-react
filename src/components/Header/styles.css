@@ -35,6 +35,11 @@
       background-color: #1a1a1a; }
   :local(.component) .header-logo {
     height: 40px;
-    display: block; }
+    display: block;
+    display: flex;
+    align-items: center; }
     :local(.component) .header-logo img {
       max-height: 100%; }
+    :local(.component) .header-logo svg {
+      height: 35px;
+      margin-right: 5px; }
