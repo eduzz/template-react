@@ -7,13 +7,13 @@
   background: #1c1f27; }
   :local(.component) .user-photo {
     display: block;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     overflow: hidden; }
     :local(.component) .user-photo img {
-      width: 60px;
-      height: 60px;
+      width: 40px;
+      height: 40px;
       object-fit: cover; }
   :local(.component) .user-data {
     color: #fff;
@@ -26,4 +26,4 @@
       color: #fff;
       font-size: 0.9375rem;
       letter-spacing: 1px;
-      margin: 2px; }
+      margin: 2px 0; }

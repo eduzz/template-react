@@ -8,12 +8,12 @@
   line-height: 1rem;
   transition: all 0.3s ease-in-out;
   font-weight: 500;
-  background-color: #22262d; }
+  background-color: #32353c; }
   :local(.component) .nav-button:hover {
     background-color: #1c1f27; }
 
 :local(.component) .submenu .nav-button {
-  background-color: #1a1a1a; }
+  background-color: #1c1f27; }
   :local(.component) .submenu .nav-button:hover {
     background-color: #0c0c0c; }
 

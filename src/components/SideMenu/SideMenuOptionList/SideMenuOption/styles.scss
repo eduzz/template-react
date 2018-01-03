@@ -18,7 +18,7 @@
 		}
 	}
 	.submenu .nav-button{
-      background-color:$darkest-color;
+      background-color:$dark-color;
       &:hover{
       	background-color:#0c0c0c;
       }
@@ -26,7 +26,6 @@
   .collapsible-header{
   	position:relative;
   	cursor:pointer;
-
 	&:before,
 	&:after{
 		transition: all .2s ease-in-out;

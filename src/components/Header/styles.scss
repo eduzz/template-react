@@ -3,7 +3,7 @@
 
 
 :local(.component){
-  background-color:$darkest-color;
+  background-color:$background-color;
   position: fixed;
   width:100%;
   top: 0;
@@ -29,9 +29,30 @@
       padding: 10px 30px;
     }
   }
+  .header-button{
+    color:#fff;
+    background-color:$dark-color;
+    padding:20px 30px;
+    @include transition;
+    .icon{
+      fill:#fff;
+      height: 12px;
+      width: 12px;
+      margin-right: 10px;
+    }
+    &:hover{
+      background-color:$darkest-color;
+    }
+  }
   .header-logo{
     height: 40px;
     display: block;
     img{max-height:100%;}
+    display: flex;
+    align-items:center;
+    svg{
+      height: 35px;
+      margin-right: 5px;
+    }
   }
 }

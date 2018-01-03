@@ -5068,7 +5068,7 @@ input[type=range]:focus::-ms-fill-upper {
 }*/
 .picker__date-display {
   text-align: left;
-  background-color: #22262d;
+  background-color: #32353c;
   color: #fff;
   padding: 18px;
   font-weight: 300; }
@@ -5819,7 +5819,7 @@ body {
     width: 6px;
     background: #F4F4F4; }
   .filters ::-webkit-scrollbar-thumb {
-    background: #22262d; }
+    background: #32353c; }
   .filters .container {
     height: calc(100vh - 130px);
     overflow-y: auto;
@@ -5836,7 +5836,7 @@ body {
     .filters .block-header label {
       font-weight: 500;
       cursor: pointer;
-      color: #22262d;
+      color: #32353c;
       letter-spacing: 0.5px; }
     .filters .block-header:after, .filters .block-header:before {
       height: 12px; }
@@ -6394,7 +6394,7 @@ body {
   .template-black .filters label {
     color: #fff; }
   .template-black .filters .input-field input {
-    background-color: #22262d; }
+    background-color: #32353c; }
   .template-black .filters .action-button,
   .template-black .filters .filter-header {
     background: rgba(33, 33, 33, 0.95);
@@ -6406,7 +6406,7 @@ body {
     background-color: #1c1f27; }
 
 .template-black .page-footer {
-  background-color: #22262d; }
+  background-color: #32353c; }
   .template-black .page-footer span {
     color: #fff; }
   .template-black .page-footer .logo-footer .yellow {
@@ -6416,7 +6416,7 @@ body {
     fill: #fff;
     transition: all 0.3s ease-in-out; }
   .template-black .page-footer .logo-footer .blue-logo {
-    fill: #22262d; }
+    fill: #32353c; }
   .template-black .page-footer:hover .logo-footer .yellow {
     fill: #FFCD2B; }
 
@@ -6447,7 +6447,7 @@ body {
 
 .template-black .upsell-card {
   background: #1c1f27;
-  border: 1px solid #22262d;
+  border: 1px solid #32353c;
   color: #fff; }
 
 .template-black .course-nav {
@@ -6456,7 +6456,7 @@ body {
     color: #fff; }
   .template-black .course-nav .card-lessons .card-lesson-block {
     color: #fff;
-    border-bottom: 1px solid #22262d; }
+    border-bottom: 1px solid #32353c; }
     .template-black .course-nav .card-lessons .card-lesson-block:hover {
       background-color: #1c1f28; }
   .template-black .course-nav .card-lessons .icon {
