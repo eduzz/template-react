@@ -1,29 +1,55 @@
+@import 'src/assets/css/_variables.scss';
+@import 'src/assets/css/_mixins.scss';
+
 :local(.component) {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     width: 100%;
+    background:#cecece;
+    margin-top: -60px;
     .default-logo{
         display: block;
         height: 60px;
-        width: 350px;
         margin:auto;
-        background: #cecece;
+        // text-align: center;
+        // padding:50px 0;
     }
-    .card-panel {
-        width: 300px;
-        height: 300px;
-        padding: 10px;
-        display: block;
-
-        input {
-            width: 100%;
-        }
-
+    .nutror-logo svg{
+        height: 40px;
+    
+    }
+    $form-size: 450px;
+    .login-form {
+        width: $form-size;
+        height: 100vh;
+        padding: 30px;
+        background:#fff;
+        position: relative;
+        display: flex;
+        // text-align: center;
+        align-items:center;
+        justify-content: space-between;
+        flex-flow: column;
         a {
-            width: 100%;
-            align-self: flex-end;
+            float: right;
+            @include fontsize(12);
+            color:$affirmative-color;
+        }
+    }
+    .card-panel{
+        width: 100%;
+    }
+    .panel-footer{
+        text-align: center;
+    }
+    .login-background{
+        width:calc(100% - $form-size);
+        img{
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
         }
     }
 }

@@ -3,20 +3,36 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  width: 100%; }
+  width: 100%;
+  background: #cecece;
+  margin-top: -60px; }
   :local(.component) .default-logo {
     display: block;
     height: 60px;
-    width: 350px;
-    margin: auto;
-    background: #cecece; }
+    margin: auto; }
+  :local(.component) .nutror-logo svg {
+    height: 40px; }
+  :local(.component) .login-form {
+    width: 450px;
+    height: 100vh;
+    padding: 30px;
+    background: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-flow: column; }
+    :local(.component) .login-form a {
+      float: right;
+      font-size: 0.75rem;
+      color: #3066d0; }
   :local(.component) .card-panel {
-    width: 300px;
-    height: 300px;
-    padding: 10px;
-    display: block; }
-    :local(.component) .card-panel input {
-      width: 100%; }
-    :local(.component) .card-panel a {
-      width: 100%;
-      align-self: flex-end; }
+    width: 100%; }
+  :local(.component) .panel-footer {
+    text-align: center; }
+  :local(.component) .login-background {
+    width: calc(100% - $form-size); }
+    :local(.component) .login-background img {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; }
