@@ -17,16 +17,27 @@ class Login extends Component {
 
     render() {
         return (
-            <form className={styles.component} onSubmit={this.handleSubmit}>
-                <div className='card-panel teal'>
+        <div className={styles.component}>
+            <form className="login-form" onSubmit={this.handleSubmit}>
+                <div class="default-logo">
+                    
+                </div>
+                <div className='card-panel'>
                     <div className='input-box'>
-                        <input placeholder='Email' type='email' ref='username'/>
-                        <input placeholder='Senha' type='password' ref='password'/>
+                        <div className='input-field'>
+                            <input placeholder='Email' type='email' ref='username'/>
+                            <label htmlFor='email'>E-mail do Usuário</label>
+                        </div>
+                        <div className='input-field'>
+                            <input placeholder='Senha' type='password' ref='password'/>
+                            <label htmlFor='email'>Senha</label>
+                        </div>
                     </div>
 
-                    <button className='waves-effect waves-light btn' type='submit'> Entrar </button>
+                    <button className='waves-effect waves-light button' type='submit'> <span>Entrar</span></button>
                 </div>
             </form>
+        </div>
         );
     }
 }
