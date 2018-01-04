@@ -13,14 +13,13 @@
         display: block;
         height: 60px;
         margin:auto;
-        // text-align: center;
-        // padding:50px 0;
+        margin-bottom:10px;
     }
     .nutror-logo svg{
         height: 40px;
     
     }
-    $form-size: 450px;
+    $form-size: 400px;
     .login-form {
         width: $form-size;
         height: 100vh;
@@ -32,24 +31,57 @@
         align-items:center;
         justify-content: space-between;
         flex-flow: column;
-        a {
+        a:not(.button) {
             float: right;
             @include fontsize(12);
             color:$affirmative-color;
         }
+
     }
     .card-panel{
         width: 100%;
+        padding:150px 0;
+         .button{
+            background-color:#203153;
+        }
+    }
+    .input-box{
+        margin-bottom: 10px;
+
     }
     .panel-footer{
         text-align: center;
+        // position:absolute;
+        bottom: 50px;
+        p{
+            font-weight: $light;
+        }
     }
     .login-background{
-        width:calc(100% - $form-size);
+        width:calc(100% - #{$form-size});
+        height: 100vh;
+        display:block;
+        position:relative;
+        overflow:hidden;
         img{
             width: 100vw;
             height: 100vh;
             object-fit: cover;
+            position:relative;
+            z-index: 1;
+        }
+        &:before{
+            content: "";
+            position:absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            display: block;
+            margin:auto;
+            background:#203153;
+            opacity: 0.4;
+            z-index: 2;
         }
     }
 }
