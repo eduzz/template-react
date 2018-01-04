@@ -22,8 +22,8 @@ class Login extends Component {
         <div className={styles.component}>
             <form className="login-form" onSubmit={this.handleSubmit}>
                 <div className='card-panel'>
-                    <div class="default-logo">
-                        <div class="nutror-logo">
+                    <div className="default-logo">
+                        <div className="nutror-logo">
                             <svg viewBox="0 0 376 376">
                               <path d="M186 5C86 5 5 86 5 186s81 181 181 181 181-81 181-181S286 5 186 5zm-46.9 174.3v67l-46.9 46.9V92.1l174.3 181-127.4-93.8zm147.5 100.6l-174.3-181 127.4 93.9v-67l46.9-46.9v201z" fill="#1f3154"/>
                             </svg>
@@ -46,9 +46,9 @@ class Login extends Component {
 
                     <button className='waves-effect waves-light button affirmative' type='submit'> <span>Entrar</span></button>
                 </div>
-                <div class="panel-footer">
+                <div className="panel-footer">
                     <p>Não tem uma conta ainda?</p>
-                    <a href="" class="button outline"><span>Comece Agora</span></a>
+                    <a href="" className="button outline"><span>Comece Agora</span></a>
                 </div>
                 <Footer/>
             </form>
