@@ -1,12 +1,12 @@
-export const getModuleLessons = moduleId => ({
+export const getModuleLessons = moduleID => ({
 	type: 'GET_MODULE_LESSONS',
-	moduleId
+	moduleID
 });
 
-export const receiveModuleLessons = (lessons, moduleId) => ({
+export const receiveModuleLessons = (lessons, moduleID) => ({
 	type: 'RECEIVE_MODULE_LESSONS',
 	lessons,
-	moduleId,
+	moduleID,
 });
 
 export const receiveModuleLessonsError = err => ({

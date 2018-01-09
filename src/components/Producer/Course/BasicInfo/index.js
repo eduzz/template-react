@@ -1,7 +1,7 @@
 import React from 'react';
 import CourseBanner from './CourseBanner';
 import CourseCategorySelect from './CourseCategorySelect';
-import ModuleList from 'components/ModuleList';
+// import ModuleList from 'components/ModuleList';
 import styles from './styles.css';
 
 const CourseBasicInfo = ({ course, getLessons }) => (
@@ -35,7 +35,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
                         </a>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
             <div className="form-section">
                 <div className='row'>
@@ -50,7 +50,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
                             <span>Importar Módulos</span>
                         </a>
 
-                        <ModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } />
+                        {/* <ModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } /> */}
                     </div>
                 </div>
             </div>

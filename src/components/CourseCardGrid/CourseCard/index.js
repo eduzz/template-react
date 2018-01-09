@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './styles.css';
 import { cdn } from '../../../constants';
+import { Link } from 'react-router-dom';
 
 const CourseCard = ({ data }) => (
     <div className={styles.component}>
@@ -9,10 +10,10 @@ const CourseCard = ({ data }) => (
             <img src={cdn+data.avatar} alt="..."/>
         </div>
 
-        <div className="card-description">
+        <Link to={`courses/${data.id}`} className="card-description">
             <div className="card-title">{ data.title }</div>
             <div className="card-category">{ data.category.name }</div>
-        </div>
+        </Link>
     </div>
 );
 
