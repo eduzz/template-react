@@ -10,6 +10,7 @@ import Comments from './Comments';
 import Students from './Students';
 import Invites from './Invites';
 import News from './News';
+import Upsells from './Upsells';
 
 const Producer = () => (
 	<div>
@@ -25,6 +26,7 @@ const Producer = () => (
 			<Route exact path='/producer/students' component={ Students } />
 			<Route exact path='/producer/invites' component={ Invites } />
 			<Route exact path='/producer/news' component={ News } />
+			<Route exact path='/producer/upsells' component={ Upsells } />
 	    </Switch>
 
 	    <Footer />

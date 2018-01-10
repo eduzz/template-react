@@ -8,7 +8,7 @@
   line-height: 1rem;
   transition: all 0.3s ease-in-out;
   font-weight: 500;
-  background-color: #32353c; }
+  background-color: #2f343e; }
   :local(.component) .nav-button:hover {
     background-color: #1c1f27; }
 
@@ -34,10 +34,10 @@
     margin: auto; }
   :local(.component) .collapsible-header:before {
     transform: translateX(2px) rotate(40deg);
-    right: 36px; }
+    right: 26px; }
   :local(.component) .collapsible-header:after {
     transform: translateX(-2px) rotate(-40deg);
-    right: 37.7px; }
+    right: 27.7px; }
   :local(.component) .collapsible-header:hover:before, :local(.component) .collapsible-header:hover:after {
     background: #3066d0; }
   :local(.component) .collapsible-header.active:before, :local(.component) .collapsible-header.active:after {
