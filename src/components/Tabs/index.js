@@ -17,7 +17,7 @@ export class Tabs extends Component {
 
     render() {
         const panes = this.props.children.length ? [...this.props.children] : [{...this.props.children}];
-        const TabsID = this.props.id || 'tab';
+        const TabsID = this.props.id || this.id;
 
         return (
             <div>

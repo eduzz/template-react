@@ -4,7 +4,7 @@ import CourseCategorySelect from './CourseCategorySelect';
 // import ModuleList from 'components/ModuleList';
 import styles from './styles.css';
 
-const CourseBasicInfo = ({ course, getLessons }) => (
+const CourseBasicInfo = ({ getLessons }) => (
     <div className={styles.component}>
         <div className="form-section">
             <div className='row'>
@@ -50,7 +50,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
                             <span>Importar Módulos</span>
                         </a>
 
-                        {/* <ModuleList modules={ course.modules || [] } onOpen={ moduleId => getLessons(moduleId) } /> */}
+                        {/* <ModuleList onOpen={ moduleId => getLessons(moduleId) } /> */}
                     </div>
                 </div>
             </div>
