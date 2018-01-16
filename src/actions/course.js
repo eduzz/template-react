@@ -9,6 +9,6 @@ export const receiveCourse = course => ({
 });
 
 export const receiveCourseError = err => ({
-	type: 'RECEIVE_COURSE',
+	type: 'RECEIVE_COURSE_ERROR',
 	err,
 });

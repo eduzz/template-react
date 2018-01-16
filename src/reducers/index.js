@@ -4,6 +4,8 @@ import searchFilter from './searchFilter';
 import course from './course';
 import auth from './auth';
 import user from './user';
+import categories from './categories';
+import authors from './authors';
 
 const nutrorApp = combineReducers({
 	courses,
@@ -11,6 +13,8 @@ const nutrorApp = combineReducers({
 	course,
     auth,
     user,
+    categories,
+    authors,
 });
 
 export default nutrorApp;

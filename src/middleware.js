@@ -36,6 +36,16 @@ const middleware = store => next => action => {
                 }
             );
             break;
+        case 'GET_AUTHORS':
+            get('/authors').then(
+                res => {
+                    next(actions.receiveAuthors(res.data.data));
+                },
+                err => {
+                    next(actions.receiveAuthorsError(err));
+                }
+            );
+            break;
         default:
             break;
     }

@@ -3,6 +3,8 @@ import * as course from './course';
 import * as lessons from './lessons';
 import * as search from './search';
 import * as auth from './auth';
+import * as categories from './categories';
+import * as authors from './authors';
 
 export default {
 	...courses,
@@ -10,4 +12,6 @@ export default {
 	...lessons,
 	...search,
     ...auth,
+    ...categories,
+    ...authors,
 };

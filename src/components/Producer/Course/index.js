@@ -41,7 +41,7 @@ class Course extends Component {
                         </div>
         				<Tabs>
                             <Pane title='Informações Básicas' icon='package'>
-                                <BasicInfo />
+                                <BasicInfo course={this.props.course} />
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='gears'>
                                 <Advanced />
