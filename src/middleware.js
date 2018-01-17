@@ -36,6 +36,16 @@ const middleware = store => next => action => {
                 }
             );
             break;
+        case 'GET_CATEGORIES':
+            get('/categories').then(
+                res => {
+                    next(actions.receiveCategories(res.data.data));
+                },
+                err => {
+                    next(actions.receiveCategoriesError(err));
+                }
+            );
+            break;
         case 'GET_AUTHORS':
             get('/authors').then(
                 res => {
@@ -43,6 +53,16 @@ const middleware = store => next => action => {
                 },
                 err => {
                     next(actions.receiveAuthorsError(err));
+                }
+            );
+            break;
+        case 'ADD_AUTHOR':
+            post('/authors', {...action}).then(
+                res => {
+                    next(actions.receiveAuthor(res.data.data));
+                },
+                err => {
+                    next(actions.receiveAuthorError(err));
                 }
             );
             break;

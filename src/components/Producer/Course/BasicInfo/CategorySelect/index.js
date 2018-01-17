@@ -5,7 +5,7 @@ import Select, { Option } from 'components/Select';
 
 class CategorySelect extends Component {
 
-	componentDidUpdate() {
+	componentDidMount() {
         this.props.getCategories();
 	}
 

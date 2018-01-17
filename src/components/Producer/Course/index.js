@@ -7,6 +7,7 @@ import Advanced from './Advanced';
 import Personalization from './Personalization';
 import Certificates from './Certificates';
 import Marketing from './Marketing';
+import ModulesLessons from './ModulesLessons';
 import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
@@ -24,33 +25,31 @@ class Course extends Component {
         		<section className={styles.component}>
         			<div className='container'>
                         <div className="course-header">
-                            <div className='input-field bigger'>
-                                <Input
-                                    floatlabel='Nome do Curso/Programa'
-                                    defaultValue={this.props.course.title}
-                                />
-                            </div>
+                            <Input
+                                className='bigger'
+                                floatlabel='Nome do Curso/Programa'
+                                defaultValue={this.props.course.title}
+                            />
                             <div>
-                                <div className='input-field bigger'>
-                                    <Input
-                                        floatlabel='Status do Curso'
-                                        defaultValue='Publicado'
-                                    />
-                                </div>
+                                <Input
+                                    className='bigger'
+                                    floatlabel='Status do Curso'
+                                    defaultValue='Publicado'
+                                />
                             </div>
                         </div>
         				<Tabs>
                             <Pane title='Informações Básicas' icon='package'>
                                 <BasicInfo course={this.props.course} />
                             </Pane>
+                            <Pane title='Modulos e Aulas' icon='paper'>
+                                <ModulesLessons />
+                            </Pane>
                             <Pane title='Configurações Avançadas' icon='gears'>
                                 <Advanced />
                             </Pane>
                             <Pane title="Personalizações" icon='color-pallete'>
                                 <Personalization />
-                            </Pane>
-                            <Pane title="Marketing" icon='chat-rounded'>
-                                <Marketing />
                             </Pane>
                             <Pane title="Certificados" icon='paper'>
                                 <Certificates />

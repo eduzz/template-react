@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapsible, Header, Content } from 'components/Collapsible';
+import Collapsible, { Header, Content } from 'components/Collapsible';
 // import LessonCard from './LessonCard';
 
 

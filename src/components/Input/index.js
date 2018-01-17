@@ -5,7 +5,7 @@ const Input = props => {
     const id = v4();
 
     return (
-        <div>
+        <div className={`input-field ${props.className}`}>
             <label htmlFor={props.id || id} className={props.defaultValue || props.value ? 'active' : ''}>
                 {props.floatlabel}
             </label>
