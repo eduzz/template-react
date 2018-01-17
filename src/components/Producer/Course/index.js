@@ -13,13 +13,19 @@ import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
 
 class Course extends Component {
-    componentDidMount() {
-        const courseID = this.props.match.params.courseID;
+    constructor() {
+        super();
 
-        this.props.getCourse(courseID);
+        this.courseID = null;
+    }
+
+    componentDidMount() {
+        this.props.getCourse(this.courseID);
     }
 
     render() {
+        this.courseID = this.props.match.params.courseID;
+
         return (
         	<form>
         		<section className={styles.component}>
@@ -43,7 +49,7 @@ class Course extends Component {
                                 <BasicInfo course={this.props.course} />
                             </Pane>
                             <Pane title='Modulos e Aulas' icon='paper'>
-                                <ModulesLessons />
+                                <ModulesLessons courseID={this.courseID} />
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='gears'>
                                 <Advanced />

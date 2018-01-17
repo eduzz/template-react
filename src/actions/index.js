@@ -5,6 +5,7 @@ import * as search from './search';
 import * as auth from './auth';
 import * as categories from './categories';
 import * as authors from './authors';
+import * as modules from './modules';
 
 export default {
 	...courses,
@@ -14,4 +15,5 @@ export default {
     ...auth,
     ...categories,
     ...authors,
+    ...modules,
 };

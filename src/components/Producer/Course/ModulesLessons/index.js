@@ -2,7 +2,7 @@ import React from 'react';
 import ModuleList from 'components/ModuleList';
 import styles from './styles.css';
 
-const ModulesLessons = () => (
+const ModulesLessons = ({ courseID }) => (
     <div className={styles.component}>
         <div className="form-section">
             <div className='row'>
@@ -17,7 +17,9 @@ const ModulesLessons = () => (
                         <span>Importar Módulos</span>
                     </a>
 
-                    {/* <ModuleList onOpen={ moduleId => getLessons(moduleId) } /> */}
+                    <ModuleList
+                        courseID={courseID}
+                    />
                 </div>
             </div>
         </div>

@@ -6,6 +6,7 @@ import auth from './auth';
 import user from './user';
 import categories from './categories';
 import authors from './authors';
+import modules from './modules';
 
 const nutrorApp = combineReducers({
 	courses,
@@ -15,6 +16,7 @@ const nutrorApp = combineReducers({
     user,
     categories,
     authors,
+    modules,
 });
 
 export default nutrorApp;

@@ -66,6 +66,26 @@ const middleware = store => next => action => {
                 }
             );
             break;
+        case 'GET_MODULES':
+            get(`/courses/${action.courseID}/modules`).then(
+                res => {
+                    next(actions.receiveModules(res.data.data));
+                },
+                err => {
+                    next(actions.receiveModulesError(err));
+                }
+            );
+            break;
+        case 'GET_MODULE_LESSONS':
+            get(`/modules/${action.moduleID}/lessons`).then(
+                res => {
+                    next(actions.receiveModules(res.data.data, action.moduleID));
+                },
+                err => {
+                    next(actions.receiveModulesError(err));
+                }
+            );
+            break;
         default:
             break;
     }
