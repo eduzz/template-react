@@ -21,8 +21,8 @@ class AuthorSelect extends Component {
 		return (
             <div className={styles.component}>
                 <Select floatlabel='Autores'>
-                    {this.props.authors.map(author =>
-                        <Option key={author.id} value={author.aut_cod}>
+                    {this.props.authors.map((author, key) =>
+                        <Option key={author.id} value={author.aut_cod} selected={key === this.props.authors.length - 1}>
                             {author.name}
                         </Option>
                     )}

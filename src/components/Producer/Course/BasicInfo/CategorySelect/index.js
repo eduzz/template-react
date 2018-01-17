@@ -14,7 +14,7 @@ class CategorySelect extends Component {
 			<div className='input-field'>
 				<Select floatlabel='Categoria'>
                     {this.props.categories.map(option =>
-                        <Option key={option.id} value={option.id}>
+                        <Option key={option.id} value={option.id} selected={this.props.selected.id == option.id}>
                             {option.name}
                         </Option>
                     )}

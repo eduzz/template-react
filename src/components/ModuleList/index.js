@@ -1,5 +1,5 @@
 import React from 'react';
-import { Collapsible, Header, Content } from 'components/Collapsible';
+import Collapsible, { Header, Content } from 'components/Collapsible';
 import LessonCardList from 'components/LessonCardList';
 import { Button } from 'components/Modal';
 

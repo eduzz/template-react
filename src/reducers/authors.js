@@ -6,8 +6,8 @@ const authors = (state = [], action) => {
             return [];
         case 'RECEIVE_AUTHOR':
             return [
-                action.author,
                 ...state,
+                action.author,
             ];
         case 'RECEIVE_AUTHOR':
             console.error('RECEIVE_AUTHOR');
