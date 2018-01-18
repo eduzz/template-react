@@ -26,24 +26,64 @@ const middleware = store => next => action => {
                 }
             );
             break;
-        case 'GET_COURSE_BASIC_INFO':
-            get('5a03c6573100005d1f916af7').then(
+        case 'GET_COURSE':
+            get('/courses/' + action.courseID).then(
                 res => {
-                    next(actions.receiveCourseBasicInfo(res.data));
+                    next(actions.receiveCourse(res.data.data));
                 },
                 err => {
-                    next(actions.receiveCourseBasicInfoError(err));
+                    next(actions.receiveCourseError(err));
+                }
+            );
+            break;
+        case 'GET_CATEGORIES':
+            get('/categories').then(
+                res => {
+                    next(actions.receiveCategories(res.data.data));
                 },
+                err => {
+                    next(actions.receiveCategoriesError(err));
+                }
+            );
+            break;
+        case 'GET_AUTHORS':
+            get('/authors').then(
+                res => {
+                    next(actions.receiveAuthors(res.data.data));
+                },
+                err => {
+                    next(actions.receiveAuthorsError(err));
+                }
+            );
+            break;
+        case 'ADD_AUTHOR':
+            post('/authors', {...action}).then(
+                res => {
+                    next(actions.receiveAuthor(res.data.data));
+                },
+                err => {
+                    next(actions.receiveAuthorError(err));
+                }
+            );
+            break;
+        case 'GET_MODULES':
+            get(`/courses/${action.courseID}/modules`).then(
+                res => {
+                    next(actions.receiveModules(res.data.data));
+                },
+                err => {
+                    next(actions.receiveModulesError(err));
+                }
             );
             break;
         case 'GET_MODULE_LESSONS':
-            get('5a0467a13100004a3a916dca', action.moduleId).then(
+            get(`/modules/${action.moduleID}/lessons`).then(
                 res => {
-                    next(actions.receiveModuleLessons(res.data, action.moduleId));
+                    next(actions.receiveModules(res.data.data, action.moduleID));
                 },
                 err => {
-                    next(actions.receiveModuleLessonsError(err));
-                },
+                    next(actions.receiveModulesError(err));
+                }
             );
             break;
         default:

@@ -1,17 +1,18 @@
 import React from 'react';
 import { v4 } from 'uuid';
 
-const Input = props => {
+const TextArea = props => {
     const id = v4();
 
     return (
-        <div className={`input-field ${props.className}`}>
+        <div>
             <label htmlFor={props.id || id} className={props.defaultValue || props.value ? 'active' : ''}>
                 {props.floatlabel}
             </label>
-            <input
+            <textarea
                 id={id}
                 type='text'
+                className='materialize-textarea'
                 key={props.defaultValue ? 'notLoadedYet' : 'loaded'}
                 {...props}
             />
@@ -19,4 +20,4 @@ const Input = props => {
     );
 };
 
-export default Input;
+export default TextArea;

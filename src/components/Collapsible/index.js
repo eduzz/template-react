@@ -1,16 +1,25 @@
 import React, { Component } from 'react';
 import jquery from 'jquery';
+import { v4 } from 'uuid';
 
-export class Collapsible extends Component {
+export default class Collapsible extends Component {
+    constructor() {
+        super();
+
+        this.id = v4();
+    }
+
 	componentDidMount() {
-		jquery('#' + this.props.id).collapsible({
+		jquery('#' + this.id).collapsible({
 			...this.props.options,
 		});
 	}
 
 	render() {
+        this.id = this.props.id || this.id;
+
 		return (
-			<ul id={ this.props.id } className={`collapsible ${this.props.className}`} data-collapsible='accordion'>
+			<ul id={ this.id } className={`collapsible ${this.props.className}`} data-collapsible='accordion'>
 				<li>
                     { this.props.children }
 				</li>

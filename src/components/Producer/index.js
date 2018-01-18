@@ -4,7 +4,7 @@ import Header from 'components/Header';
 import SideMenu from 'components/SideMenu';
 import Footer from 'components/Footer';
 import Courses from './Courses';
-import CourseEdit from './CourseEdit';
+import Course from './Course';
 import Packages from './Packages';
 import Comments from './Comments';
 import Students from './Students';
@@ -20,7 +20,7 @@ const Producer = () => (
 		<Switch>
 			<Redirect exact from='/producer' to='/producer/courses' />
 	    	<Route exact path='/producer/courses' component={ Courses } />
-	    	<Route exact path='/producer/courses/edit/:courseID' component={ CourseEdit } />
+	    	<Route exact path='/producer/courses/:courseID' component={ Course } />
 			<Route exact path='/producer/packages' component={ Packages } />
 			<Route exact path='/producer/comments' component={ Comments } />
 			<Route exact path='/producer/students' component={ Students } />

@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import jquery from 'jquery';
+import { v4 } from 'uuid';
 import Icon from 'components/Icon';
 import styles from './styles.css';
 
 export class Tabs extends Component {
+    constructor() {
+        super();
+
+        this.id = v4();
+    }
+
     componentDidMount() {
-        jquery('#'+this.props.id).tabs();
+        jquery('#' + this.id).tabs();
     }
 
     render() {
         const panes = this.props.children.length ? [...this.props.children] : [{...this.props.children}];
-        const TabsID = this.props.id || 'tab';
+        this.id = this.props.id || this.id;
 
         return (
             <div>
-                <ul className={styles.component} id={this.props.id}>
+                <ul className={styles.component} id={this.id}>
                     {panes.map((pane, key) =>
                         <li key={ key } className='tab'>
-                            <a className='tab-button waves-effect waves-light' href={`#${TabsID}-${key}`} onClick={e => e.preventDefault()} >
+                            <a className='tab-button waves-effect waves-light' href={`#${this.id}-${key}`} onClick={e => e.preventDefault()} >
                                 <Icon name={ pane.props.icon } />
                                 { pane.props.title }
                             </a>
@@ -25,7 +32,7 @@ export class Tabs extends Component {
                     )}
                 </ul>
                 {panes.map((pane, key) =>
-                    <div key={ key } id={`${TabsID}-${key}`}>
+                    <div key={ key } id={`${this.id}-${key}`}>
                         { pane }
                     </div>
                 )}

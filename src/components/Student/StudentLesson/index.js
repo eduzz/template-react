@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapsible, Header, Content } from 'components/Collapsible';
+import Collapsible, { Header, Content } from 'components/Collapsible';
 import Icon from 'components/Icon';
 
 

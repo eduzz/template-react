@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Toggle = (props) => (  
+const Toggle = (props) => (
             <div className="switch">
                 <label>
                 <input type="checkbox" id="check-destaque" onClick={props.onClick}/>
@@ -17,8 +17,6 @@ const Toggle = (props) => (
 Toggle.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func,
 }
-
-
 export default Toggle;
