@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
-import Collapsible, { Header, Content } from 'components/Collapsible';
+// import Collapsible, { Header, Content } from 'components/Collapsible';
 import LessonCardList from './LessonCardList';
 import { Button } from 'components/Modal';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 
 class ModuleList extends Component {
     componentDidMount() {
@@ -14,20 +15,16 @@ class ModuleList extends Component {
         return (
             <div>
                 {this.props.modules.map((module, key) =>
-                    <Collapsible
-                        key={ key }
-                        className='card-lessons'
-                        options={{onOpen: () => this.props.getModuleLessons(module.id, module.lessons || [])}}
+                    <Card
+                        key={module.id}
+                        onExpandChange={() => this.props.getModuleLessons(module.id, module.lessons || [])}
                     >
-                		<Header className='card-lessons-header'>
-                			<h3 className='card-lessons-title'>{ module.title }</h3>
-                			<div className='card-lessons-resume'>
-                				<span>Duração do curso</span>
-                				<span>Número de Aulas</span>
-                			</div>
-                		</Header>
-
-                		<Content className='card-lessons-wrapper'>
+                        <CardHeader
+                            title={module.title}
+                            actAsExpander={true}
+                            showExpandableButton={true}
+                        />
+                        <CardText expandable={true}>
                             {/* <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
                                 <span>Editar Módulo</span>
                             </Button>
@@ -41,8 +38,8 @@ class ModuleList extends Component {
                             </Button> */}
 
                             <LessonCardList lessons={ module.lessons || [] } />
-                		</Content>
-                	</Collapsible>
+                        </CardText>
+                    </Card>
                 )}
             </div>
         );

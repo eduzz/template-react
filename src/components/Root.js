@@ -5,6 +5,7 @@ import Producer from 'components/Producer';
 import Student from 'components/Student';
 import Login from 'components/Login';
 import NotFound from 'components/NotFound';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './root.css';
 
@@ -14,35 +15,37 @@ const Root = ({ store }) => {
     const isProducer = token ? JSON.parse(atob(localStorage.getItem('authToken').split('.')[1])).producer : false;
 
     return (
-        <Provider store={store}>
-        	<BrowserRouter>
-    	        <Switch>
-                    <Redirect exact from='/' to='/login'/>
-                    <Route path='/login' render={() => (
-                        isAuthenticated ? (
-                            isProducer ? <Redirect to='/producer' /> : <Redirect to='/student' />
-                        ) : (
-                            <Login />
-                        )
-                    )} />
-    	        	<Route path='/producer' render={() => (
-                        isAuthenticated ? (
-                            isProducer ? <Producer /> : <Redirect to='/student' />
-                        ) : (
-                            <Redirect to='/login' />
-                        )
-                    )} />
-    	        	<Route path='/student' render={() => (
-                        isAuthenticated ? (
-                            <Student />
-                        ) : (
-                            <Redirect to='/login' />
-                        )
-                    )} />
-                    <Route path='*' component={ NotFound } />
-    	        </Switch>
-    		</BrowserRouter>
-      	</Provider>
+        <MuiThemeProvider>
+            <Provider store={store}>
+            	<BrowserRouter>
+        	        <Switch>
+                        <Redirect exact from='/' to='/login'/>
+                        <Route path='/login' render={() => (
+                            isAuthenticated ? (
+                                isProducer ? <Redirect to='/producer' /> : <Redirect to='/student' />
+                            ) : (
+                                <Login />
+                            )
+                        )} />
+        	        	<Route path='/producer' render={() => (
+                            isAuthenticated ? (
+                                isProducer ? <Producer /> : <Redirect to='/student' />
+                            ) : (
+                                <Redirect to='/login' />
+                            )
+                        )} />
+        	        	<Route path='/student' render={() => (
+                            isAuthenticated ? (
+                                <Student />
+                            ) : (
+                                <Redirect to='/login' />
+                            )
+                        )} />
+                        <Route path='*' component={ NotFound } />
+        	        </Switch>
+        		</BrowserRouter>
+          	</Provider>
+        </MuiThemeProvider>
     );
 };
 
