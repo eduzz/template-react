@@ -15,7 +15,7 @@ const modules = (state = [], action) => {
 const lessons = (state = [], action) => {
     switch (action.type) {
         case 'RECEIVE_MODULE_LESSONS':
-            const newModules = state.modules.map(module => {
+            const modules = state.map(module => {
                 if(module.id === action.moduleID) {
                     return {
                         ...module,
@@ -26,8 +26,7 @@ const lessons = (state = [], action) => {
             });
 
             return [
-                ...state,
-                modules: newModules,
+                ...modules,
             ];
         case 'RECEIVE_MODULE_LESSONS_ERROR':
             return [...state];

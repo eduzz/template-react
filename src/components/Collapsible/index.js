@@ -9,10 +9,18 @@ export default class Collapsible extends Component {
         this.id = v4();
     }
 
-	componentDidMount() {
-		jquery('#' + this.id).collapsible({
+    renderComponent() {
+        jquery('#' + this.id).collapsible({
 			...this.props.options,
 		});
+    }
+
+	componentDidMount() {
+		this.renderComponent();
+	}
+
+    componentDidUpdate() {
+		this.renderComponent();
 	}
 
 	render() {

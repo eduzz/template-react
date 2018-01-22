@@ -6,6 +6,7 @@ import * as auth from './auth';
 import * as categories from './categories';
 import * as authors from './authors';
 import * as modules from './modules';
+import * as upload from './upload';
 
 export default {
 	...courses,
@@ -16,4 +17,5 @@ export default {
     ...categories,
     ...authors,
     ...modules,
+    ...upload,
 };

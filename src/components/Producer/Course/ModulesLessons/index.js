@@ -1,5 +1,5 @@
 import React from 'react';
-import ModuleList from 'components/ModuleList';
+import ModuleList from './ModuleList';
 import styles from './styles.css';
 
 const ModulesLessons = ({ courseID }) => (
@@ -16,7 +16,10 @@ const ModulesLessons = ({ courseID }) => (
                     <a className='button outline-dark waves-effect waves-light'>
                         <span>Importar Módulos</span>
                     </a>
-
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col s12'>
                     <ModuleList
                         courseID={courseID}
                     />

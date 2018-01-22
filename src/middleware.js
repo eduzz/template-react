@@ -86,6 +86,16 @@ const middleware = store => next => action => {
                 }
             );
             break;
+        case 'UPLOAD_IMAGE':
+            post('/courses/uploadimage', {data: action.image}).then(
+                res => {
+                    console.log(res);
+                },
+                err => {
+                    console.error(err);
+                }
+            );
+            break;
         default:
             break;
     }

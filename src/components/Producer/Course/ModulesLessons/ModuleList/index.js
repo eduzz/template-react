@@ -14,7 +14,11 @@ class ModuleList extends Component {
         return (
             <div>
                 {this.props.modules.map((module, key) =>
-                    <Collapsible key={ key } className='card-lessons' id={`module-${module.id}`} options={{onOpen: () => this.props.getModuleLessons(module.id)}}>
+                    <Collapsible
+                        key={ key }
+                        className='card-lessons'
+                        options={{onOpen: () => this.props.getModuleLessons(module.id, module.lessons || [])}}
+                    >
                 		<Header className='card-lessons-header'>
                 			<h3 className='card-lessons-title'>{ module.title }</h3>
                 			<div className='card-lessons-resume'>
@@ -24,7 +28,7 @@ class ModuleList extends Component {
                 		</Header>
 
                 		<Content className='card-lessons-wrapper'>
-                            <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
+                            {/* <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
                                 <span>Editar Módulo</span>
                             </Button>
 
@@ -34,7 +38,7 @@ class ModuleList extends Component {
 
                             <Button className='button affirmative waves-effect waves-light' target='modal-lesson-import'>
                                 <span>Importar Aulas</span>
-                            </Button>
+                            </Button> */}
 
                             <LessonCardList lessons={ module.lessons || [] } />
                 		</Content>
@@ -53,8 +57,10 @@ const mapDispatchToProps = dispatch => ({
     getModules(courseID) {
         dispatch(actions.getModules(courseID));
     },
-    getModuleLessons(moduleID) {
-        dispatch(actions.getModuleLessons(moduleID));
+    getModuleLessons(moduleID, lessons) {
+        if(!lessons.length) {
+            dispatch(actions.getModuleLessons(moduleID));
+        }
     },
 });
 

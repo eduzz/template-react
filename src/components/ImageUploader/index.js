@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
 import styles from './styles.css';
+import actions from 'actions';
 
 class ImageUploader extends Component {
     constructor() {
@@ -20,6 +22,8 @@ class ImageUploader extends Component {
 
         if(file) {
             reader.onloadend = () => {
+                this.props.dispatch(actions.uploadImage(reader.result));
+
                 this.setState({
                     imagePreviewUrl: reader.result,
                 });
@@ -56,4 +60,4 @@ class ImageUploader extends Component {
     }
 }
 
-export default ImageUploader;
+export default connect()(ImageUploader);
