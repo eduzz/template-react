@@ -6,7 +6,6 @@ import BasicInfo from './BasicInfo';
 import Advanced from './Advanced';
 import Personalization from './Personalization';
 import Certificates from './Certificates';
-import Marketing from './Marketing';
 import ModulesLessons from './ModulesLessons';
 import styles from './styles.css';
 import FloatButton from 'components/FloatButton';

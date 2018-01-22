@@ -79,10 +79,10 @@ const middleware = store => next => action => {
         case 'GET_MODULE_LESSONS':
             get(`/modules/${action.moduleID}/lessons`).then(
                 res => {
-                    next(actions.receiveModules(res.data.data, action.moduleID));
+                    next(actions.receiveModuleLessons(res.data.data, action.moduleID));
                 },
                 err => {
-                    next(actions.receiveModulesError(err));
+                    next(actions.receiveModuleLessonsError(err));
                 }
             );
             break;

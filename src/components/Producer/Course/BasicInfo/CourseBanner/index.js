@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'components/Icon';
 import ImageUploader from 'components/ImageUploader';
 import styles from './styles.css';
 

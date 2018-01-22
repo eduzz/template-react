@@ -36,7 +36,7 @@ class ImageUploader extends Component {
                     <div className='container'>
                         <img
                             className='img-preview'
-                            rel=''
+                            alt=''
                             src={this.state.imagePreviewUrl}
                         />
                         <input
