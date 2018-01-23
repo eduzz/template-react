@@ -1,0 +1,7 @@
+:local(.component) {
+    .card-lesson-thumb img {
+        max-width: 100%;
+        height: inherit;
+        object-fit: cover;
+    }
+}

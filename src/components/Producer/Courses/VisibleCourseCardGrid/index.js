@@ -3,6 +3,7 @@ import CourseCardGrid from 'components/CourseCardGrid';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import { getVisibleCourses } from 'reducers';
+import Loading from 'components/Loading';
 
 class VisibleCourseCardGrid extends Component {
 	componentDidMount() {
@@ -10,7 +11,12 @@ class VisibleCourseCardGrid extends Component {
     }
 
 	render() {
-		return <CourseCardGrid courses={ this.props.courses } />;
+		return (
+            <div>
+                <Loading data={this.props.courses} />
+                <CourseCardGrid courses={ this.props.courses } />
+            </div>
+        );
 	}
 }
 
