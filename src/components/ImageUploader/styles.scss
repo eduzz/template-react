@@ -11,6 +11,10 @@
             .input-file {
                 display: none;
             }
+
+            label {
+                z-index: 50;
+            }
         }
     }
 }

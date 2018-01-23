@@ -20,6 +20,10 @@
   z-index: 40;
   text-align: center; }
 
+:local(.component) .absolute {
+  position: absolute;
+  background-color: rgba(201, 201, 201, 0.5); }
+
 :local(.component) .loading-icon {
   width: 50px;
   fill: none;

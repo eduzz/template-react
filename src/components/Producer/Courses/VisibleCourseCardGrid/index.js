@@ -13,7 +13,7 @@ class VisibleCourseCardGrid extends Component {
 	render() {
 		return (
             <div>
-                <Loading data={this.props.courses} />
+                <Loading active={!this.props.courses.length} />
                 <CourseCardGrid courses={ this.props.courses } />
             </div>
         );

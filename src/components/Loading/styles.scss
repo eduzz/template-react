@@ -10,6 +10,7 @@
 
       }
     }
+
     .loading-wrapper{
       padding:5px;
       width: 100%;
@@ -26,6 +27,12 @@
       z-index:40;
       text-align: center;
     }
+
+    .absolute {
+        position: absolute;
+        background-color:rgba(201, 201, 201, 0.5);
+    }
+
     .loading-icon{
       width:50px;
       fill:none;

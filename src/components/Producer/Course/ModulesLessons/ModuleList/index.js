@@ -14,7 +14,7 @@ class ModuleList extends Component {
     render() {
         return (
             <div>
-                <Loading data={this.props.modules} />
+                <Loading active={!this.props.modules.length} />
 
                 {this.props.modules.map((module, key) =>
                     <Card

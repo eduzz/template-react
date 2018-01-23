@@ -89,10 +89,10 @@ const middleware = store => next => action => {
         case 'UPLOAD_IMAGE':
             post('/courses/uploadimage', {data: action.image}).then(
                 res => {
-                    console.log(res);
+                    next(actions.receiveImage(res.data.data, action.stateLabel));
                 },
                 err => {
-                    console.error(err);
+                    next(actions.receiveImageError(err));
                 }
             );
             break;

@@ -4,7 +4,7 @@ import Loading from 'components/Loading';
 
 const LessonCardList = ({ lessons }) => (
     <div>
-        <Loading data={lessons} />
+        <Loading active={!lessons.length} />
 
         {lessons.map((lesson, key) =>
             <LessonCard key={ key } lesson={ lesson } />
