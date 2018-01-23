@@ -10,7 +10,6 @@ import ModulesLessons from './ModulesLessons';
 import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
-import jquery from 'jquery';
 
 class Course extends Component {
     constructor() {

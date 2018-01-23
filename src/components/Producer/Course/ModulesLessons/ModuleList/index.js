@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import LessonCardList from './LessonCardList';
-import { Button } from 'components/Modal';
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Loading from 'components/Loading';
 
 class ModuleList extends Component {
