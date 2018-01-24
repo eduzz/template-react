@@ -16,3 +16,9 @@ export const receiveModulesError = err => ({
 export const addModule = () => ({
     type: 'ADD_MODULE',
 });
+
+export const postModule = (courseID, title) => ({
+    type: 'POST_MODULE',
+    courseID,
+    title,
+});

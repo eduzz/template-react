@@ -21,16 +21,18 @@ class ModuleList extends Component {
                         key={module.id}
                         onExpandChange={() => this.props.getModuleLessons(module.id, module.lessons || [])}
                         className='card-lessons'
+                        key={key}
                     >
                         <CardHeader
-                            title={module.title || <Input placeholder='Nome do modulo'/>}
+                            title={module.title || <Input floatlabel='Nome do módulo'/>}
                             subtitle={
                                 <div className='card-lessons-resume'>
                     				<span>Duração do curso</span>
                     				<span>Número de Aulas</span>
+                                    <span>{module.title ? '' : 'Salvar'}</span>
                     			</div>
                             }
-                            actAsExpander={true}
+                            actAsExpander={false}
                             showExpandableButton={true}
                         />
                         <CardText className='card-lessons-wrapper' expandable={true}>
