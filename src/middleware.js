@@ -87,12 +87,12 @@ const middleware = store => next => action => {
             );
             break;
         case 'POST_MODULE':
-            post('/modules', {course_id: action.courseID, title: action.title, description: 'description', days_locked: 1, is_draft: false, id_author: null, available_days: 1, release_date: '2018-07-07', image: 'base64', sequence: 1, is_free: true}).then(
+            post('/modules', {id_course: action.courseID, title: action.title, description: 'description', days_locked: 1, is_draft: false, id_author: null, available_days: 1, release_date: '2018-07-07', image: 'base64', sequence: action.sequence, is_free: true}).then(
                 res => {
-                    next(actions.receiveModuleLessons(res.data.data, action.moduleID));
+                    next(actions.receiveModule(res.data.data, action.sequence));
                 },
                 err => {
-                    next(actions.receiveModuleLessonsError(err));
+                    next(actions.receiveModuleError(err));
                 }
             );
             break;

@@ -17,8 +17,20 @@ export const addModule = () => ({
     type: 'ADD_MODULE',
 });
 
-export const postModule = (courseID, title) => ({
+export const postModule = (courseID, title, sequence) => ({
     type: 'POST_MODULE',
     courseID,
     title,
+    sequence,
+});
+
+export const receiveModule = (module, sequence) => ({
+    type: 'RECEIVE_MODULE',
+    module,
+    sequence,
+});
+
+export const receiveModuleError = err => ({
+    type: 'RECEIVE_MODULE',
+    err,
 });
