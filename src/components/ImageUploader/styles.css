@@ -6,3 +6,5 @@
   padding: 0px; }
   :local(.component) .input-img .container .input-file {
     display: none; }
+  :local(.component) .input-img .container label {
+    z-index: 50; }

@@ -12,3 +12,7 @@ export const receiveModulesError = err => ({
 	type: 'RECEIVE_MODULES_ERROR',
 	err,
 });
+
+export const addModule = () => ({
+    type: 'ADD_MODULE',
+});

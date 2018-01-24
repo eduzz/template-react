@@ -6,7 +6,6 @@ import BasicInfo from './BasicInfo';
 import Advanced from './Advanced';
 import Personalization from './Personalization';
 import Certificates from './Certificates';
-import Marketing from './Marketing';
 import ModulesLessons from './ModulesLessons';
 import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
@@ -48,7 +47,7 @@ class Course extends Component {
                             <Pane title='Informações Básicas' icon='package'>
                                 <BasicInfo course={this.props.course} />
                             </Pane>
-                            <Pane title='Modulos e Aulas' icon='paper'>
+                            <Pane title='Módulos e Aulas' icon='paper'>
                                 <ModulesLessons courseID={this.courseID} />
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='gears'>

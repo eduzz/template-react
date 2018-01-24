@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
 import styles from './styles.css';
+import actions from 'actions';
+import Loading from 'components/Loading';
 
 class ImageUploader extends Component {
     constructor() {
@@ -20,6 +23,8 @@ class ImageUploader extends Component {
 
         if(file) {
             reader.onloadend = () => {
+                this.props.uploadImage(reader.result, 'courseBanner');
+
                 this.setState({
                     imagePreviewUrl: reader.result,
                 });
@@ -34,9 +39,11 @@ class ImageUploader extends Component {
             <div className={styles.component}>
                 <div className='input-img large-banner'>
                     <div className='container'>
+                        <Loading active={!!this.state.imagePreviewUrl && !this.props.courseBanner.url} absolutePosition={true} />
+
                         <img
                             className='img-preview'
-                            rel=''
+                            alt=''
                             src={this.state.imagePreviewUrl}
                         />
                         <input
@@ -56,4 +63,14 @@ class ImageUploader extends Component {
     }
 }
 
-export default ImageUploader;
+const mapStateToProps = state => ({
+    courseBanner: state.upload.courseBanner || {},
+});
+
+const mapDispatchToProps = dispatch => ({
+    uploadImage(result, stateLabel) {
+        dispatch(actions.uploadImage(result, stateLabel));
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageUploader);

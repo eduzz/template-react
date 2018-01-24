@@ -13,8 +13,11 @@ class CategorySelect extends Component {
 		return (
 			<div className='input-field'>
 				<Select floatlabel='Categoria'>
+                    <Option key={this.props.selected.id} value={this.props.selected.id}>
+                        {this.props.selected.name || 'Selecione uma categoria...'}
+                    </Option>
                     {this.props.categories.map(option =>
-                        <Option key={option.id} value={option.id} selected={this.props.selected.id == option.id}>
+                        <Option key={option.id} value={option.id}>
                             {option.name}
                         </Option>
                     )}

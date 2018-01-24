@@ -2,11 +2,17 @@ const modules = (state = [], action) => {
     switch (action.type) {
         case 'RECEIVE_MODULES':
             return [...action.modules];
+        case 'GET_MODULES':
         case 'RECEIVE_MODULES_ERROR':
             return [];
         case 'RECEIVE_MODULE_LESSONS':
         case 'RECEIVE_MODULE_LESSONS_ERROR':
             return lessons(state, action);
+        case 'ADD_MODULE':
+            return [
+                ...state,
+                {},
+            ];
         default:
             return state;
     }
@@ -15,7 +21,7 @@ const modules = (state = [], action) => {
 const lessons = (state = [], action) => {
     switch (action.type) {
         case 'RECEIVE_MODULE_LESSONS':
-            const newModules = state.modules.map(module => {
+            const modules = state.map(module => {
                 if(module.id === action.moduleID) {
                     return {
                         ...module,
@@ -26,8 +32,7 @@ const lessons = (state = [], action) => {
             });
 
             return [
-                ...state,
-                modules: newModules,
+                ...modules,
             ];
         case 'RECEIVE_MODULE_LESSONS_ERROR':
             return [...state];

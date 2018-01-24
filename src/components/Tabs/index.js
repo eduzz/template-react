@@ -12,7 +12,9 @@ export class Tabs extends Component {
     }
 
     componentDidMount() {
-        jquery('#' + this.id).tabs();
+        jquery('#' + this.id).tabs({
+            ...this.props.options,
+        });
     }
 
     render() {

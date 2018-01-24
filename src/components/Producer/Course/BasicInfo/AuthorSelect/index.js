@@ -20,9 +20,12 @@ class AuthorSelect extends Component {
 	render() {
 		return (
             <div className={styles.component}>
-                <Select floatlabel='Autores'>
+                <Select floatlabel='Autores' value={this.props.selected.id}>
+                    <Option key='' value=''>
+                        Selecione um author...
+                    </Option>
                     {this.props.authors.map((author, key) =>
-                        <Option key={author.id} value={author.aut_cod} selected={key === this.props.authors.length - 1}>
+                        <Option key={author.id} value={author.id}>
                             {author.name}
                         </Option>
                     )}

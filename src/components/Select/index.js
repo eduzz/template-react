@@ -9,12 +9,16 @@ export default class Select extends Component {
         this.id = v4();
     }
 
-    componentDidMount() {
+    renderComponent() {
         jquery('#' + this.id).material_select();
     }
 
+    componentDidMount() {
+        this.renderComponent();
+    }
+
 	componentDidUpdate() {
-        jquery('#' + this.id).material_select();
+        this.renderComponent();
 	}
 
 	render() {
@@ -24,6 +28,7 @@ export default class Select extends Component {
 			<div className='input-field'>
 				<select
                     id={this.id}
+                    defaultValue={this.props.selected}
                 >
                     {this.props.children}
 				</select>
