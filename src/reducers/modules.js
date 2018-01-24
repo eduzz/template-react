@@ -8,6 +8,11 @@ const modules = (state = [], action) => {
         case 'RECEIVE_MODULE_LESSONS':
         case 'RECEIVE_MODULE_LESSONS_ERROR':
             return lessons(state, action);
+        case 'ADD_MODULE':
+            return [
+                ...state,
+                {},
+            ];
         default:
             return state;
     }

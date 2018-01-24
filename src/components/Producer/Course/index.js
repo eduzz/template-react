@@ -47,7 +47,7 @@ class Course extends Component {
                             <Pane title='Informações Básicas' icon='package'>
                                 <BasicInfo course={this.props.course} />
                             </Pane>
-                            <Pane title='Modulos e Aulas' icon='paper'>
+                            <Pane title='Módulos e Aulas' icon='paper'>
                                 <ModulesLessons courseID={this.courseID} />
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='gears'>

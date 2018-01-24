@@ -4,6 +4,7 @@ import actions from 'actions';
 import LessonCardList from './LessonCardList';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Loading from 'components/Loading';
+import Input from 'components/Input';
 
 class ModuleList extends Component {
     componentDidMount() {
@@ -22,7 +23,7 @@ class ModuleList extends Component {
                         className='card-lessons'
                     >
                         <CardHeader
-                            title={module.title}
+                            title={module.title || <Input placeholder='Nome do modulo'/>}
                             subtitle={
                                 <div className='card-lessons-resume'>
                     				<span>Duração do curso</span>
@@ -49,6 +50,17 @@ class ModuleList extends Component {
                         </CardText>
                     </Card>
                 )}
+
+                <div className='row'>
+                    <div className='col s12 center'>
+                        <a
+                            className='button affirmative waves-effect waves-light'
+                            onClick={() => this.props.addModule()}
+                        >
+                            <span>Adicionar Módulo</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -66,6 +78,9 @@ const mapDispatchToProps = dispatch => ({
         if(!lessons.length) {
             dispatch(actions.getModuleLessons(moduleID));
         }
+    },
+    addModule() {
+        dispatch(actions.addModule());
     },
 });
 

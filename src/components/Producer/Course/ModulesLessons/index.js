@@ -9,13 +9,13 @@ const ModulesLessons = ({ courseID }) => (
                 <div className='col xl7 s12'>
                     <h3 className='form-section-title'>Módulos e Aulas</h3>
 
-                    <a className='button affirmative waves-effect waves-light'>
+                    {/* <a className='button affirmative waves-effect waves-light'>
                         <span>Adicionar Módulo</span>
-                    </a>
+                    </a> */}
 
-                    <a className='button outline-dark waves-effect waves-light'>
+                    {/* <a className='button outline-dark waves-effect waves-light'>
                         <span>Importar Módulos</span>
-                    </a>
+                    </a> */}
                 </div>
             </div>
             <div className='row'>

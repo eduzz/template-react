@@ -35,7 +35,6 @@ class ImageUploader extends Component {
     }
 
     render() {
-        debugger;
         return (
             <div className={styles.component}>
                 <div className='input-img large-banner'>
