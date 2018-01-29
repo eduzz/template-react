@@ -1,5 +1,5 @@
 import actions from './actions';
-import { get, post } from './agent';
+import { get, post, del } from './agent';
 
 const middleware = store => next => action => {
 
@@ -93,6 +93,16 @@ const middleware = store => next => action => {
                 },
                 err => {
                     next(actions.receiveModuleError(err));
+                }
+            );
+            break;
+        case 'DELETE_MODULE_PERSIST':
+            del('/modules/' + action.moduleID).then(
+                res => {
+
+                },
+                err => {
+
                 }
             );
             break;

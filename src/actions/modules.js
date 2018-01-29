@@ -34,3 +34,19 @@ export const receiveModuleError = err => ({
     type: 'RECEIVE_MODULE',
     err,
 });
+
+export const deleteModule = moduleID => ({
+    type: 'DELETE_MODULE',
+    moduleID,
+});
+
+export const deleteModuleUndo = (module, index) => ({
+    type: 'DELETE_MODULE_UNDO',
+    module,
+    index,
+});
+
+export const deleteModulePersist = moduleID => ({
+    type: 'DELETE_MODULE_PERSIST',
+    moduleID
+});

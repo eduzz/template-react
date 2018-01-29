@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CourseCardGrid from 'components/CourseCardGrid';
+import CourseCardGrid from './CourseCardGrid';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import { getVisibleCourses } from 'reducers';

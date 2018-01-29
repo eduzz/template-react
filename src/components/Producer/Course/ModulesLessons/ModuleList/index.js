@@ -6,6 +6,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Loading from 'components/Loading';
 import Input from 'components/Input';
 import loadingGif from 'assets/img/loading.gif';
+import { Snackbar } from 'material-ui';
 
 class SaveButton extends Component {
     constructor() {
@@ -51,10 +52,16 @@ class SaveButton extends Component {
 }
 
 class ModuleList extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            isUndoOpen: false,
+        };
+    }
+
     componentDidMount() {
         this.props.getModules(this.props.courseID);
-
-        this.state = {};
     }
 
     render() {
@@ -64,10 +71,9 @@ class ModuleList extends Component {
 
                 {this.props.modules.map((module, key) =>
                     <Card
-                        key={module.id}
+                        key={key}
                         onExpandChange={() => this.props.getModuleLessons(module.id, module.lessons || [])}
                         className='card-lessons'
-                        key={key}
                     >
                         <CardHeader
                             title={module.title ||
@@ -88,7 +94,19 @@ class ModuleList extends Component {
                     				<span>Duração do curso</span>
                     				<span>Número de Aulas</span>
                                     <span>
-                                        {module.title ? '' : <SaveButton onClick={() => this.props.postModule(this.props.courseID, this.state[key], key)}/>}
+                                        {module.title ?
+                                            <a onClick={() => {
+                                                this.setState({
+                                                    isUndoOpen: true,
+                                                    module,
+                                                    index: key,
+                                                });
+                                                this.props.deleteModule(module.id);
+                                            }} style={{cursor: 'pointer'}}> Excluir </a> :
+                                                <SaveButton onClick={() =>
+                                                    this.props.postModule(this.props.courseID, this.state[key], key)}
+                                                />
+                                        }
                                     </span>
                     			</div>
                             }
@@ -123,6 +141,30 @@ class ModuleList extends Component {
                         </a>
                     </div>
                 </div>
+
+                <Snackbar
+                    open={this.state.isUndoOpen}
+                    message='Módulo Excluido'
+                    autoHideDuration={3000}
+                    action={
+                        <span
+                            onClick={() => {
+                                this.setState({
+                                    isUndoOpen: false,
+                                });
+                                this.props.deleteModuleUndo(this.state.module, this.state.index);
+                            }}
+                        >
+                            UNDO
+                        </span>
+                    }
+                    onRequestClose={() => {
+                        this.setState({
+                            isUndoOpen: false,
+                        });
+                        this.props.deleteModulePersist(this.state.module.id);
+                    }}
+                />
             </div>
         );
     }
@@ -147,6 +189,15 @@ const mapDispatchToProps = dispatch => ({
     postModule(courseID, title, sequence) {
         dispatch(actions.postModule(courseID, title, sequence));
     },
+    deleteModule(moduleID) {
+        dispatch(actions.deleteModule(moduleID));
+    },
+    deleteModulePersist(moduleID) {
+        dispatch(actions.deleteModulePersist(moduleID));
+    },
+    deleteModuleUndo(module, index) {
+        dispatch(actions.deleteModuleUndo(module, index));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModuleList);
