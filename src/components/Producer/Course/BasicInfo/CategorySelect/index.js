@@ -1,27 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
-import Select, { Option } from 'components/Select';
+import { SelectField, MenuItem } from 'material-ui';
 
 class CategorySelect extends Component {
+    constructor() {
+        super();
+
+        this.state = {};
+    }
 
 	componentDidMount() {
         this.props.getCategories();
 	}
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.selected.id) {
+            this.setState({
+                value: nextProps.selected.id,
+            });
+        }
+    }
+
+    handleChange = (event, index, value) => {
+        this.setState({
+            value,
+        });
+    }
+
 	render() {
 		return (
 			<div className='input-field'>
-				<Select floatlabel='Categoria'>
-                    <Option key={this.props.selected.id} value={this.props.selected.id}>
-                        {this.props.selected.name || 'Selecione uma categoria...'}
-                    </Option>
+                <SelectField
+                    floatingLabelText='Categoria'
+                    defaultValue={this.props.selected.id}
+                    value={this.state.value}
+                    onChange={this.handleChange}
+                >
                     {this.props.categories.map(option =>
-                        <Option key={option.id} value={option.id}>
-                            {option.name}
-                        </Option>
+                        <MenuItem
+                            key={option.id}
+                            value={option.id}
+                            primaryText={option.name}
+                        />
                     )}
-                </Select>
+                </SelectField>
 			</div>
 		);
 	}
