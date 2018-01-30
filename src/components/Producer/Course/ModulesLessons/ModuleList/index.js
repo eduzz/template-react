@@ -6,7 +6,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Loading from 'components/Loading';
 import Input from 'components/Input';
 import loadingGif from 'assets/img/loading.gif';
-import { Snackbar } from 'material-ui';
+import { Snackbar, Dialog, FlatButton } from 'material-ui';
 
 class SaveButton extends Component {
     constructor() {
@@ -57,6 +57,7 @@ class ModuleList extends Component {
 
         this.state = {
             isUndoOpen: false,
+            isDelConfirmOpen: false,
         };
     }
 
@@ -97,11 +98,10 @@ class ModuleList extends Component {
                                         {module.title ?
                                             <a onClick={() => {
                                                 this.setState({
-                                                    isUndoOpen: true,
+                                                    isDelConfirmOpen: true,
                                                     module,
                                                     index: key,
                                                 });
-                                                this.props.deleteModule(module.id);
                                             }} style={{cursor: 'pointer'}}> Excluir </a> :
                                                 <SaveButton onClick={() =>
                                                     this.props.postModule(this.props.courseID, this.state[key], key)}
@@ -141,6 +141,35 @@ class ModuleList extends Component {
                         </a>
                     </div>
                 </div>
+
+                <Dialog
+                    actions={[
+                        <FlatButton
+                            label="Cancelar"
+                            primary={true}
+                            onClick={() => {
+                                this.setState({
+                                    isDelConfirmOpen: false,
+                                });
+                            }}
+                        />,
+                        <FlatButton
+                            label="Excluir"
+                            primary={false}
+                            onClick={() => {
+                                this.setState({
+                                    isUndoOpen: true,
+                                    isDelConfirmOpen: false,
+                                });
+                                this.props.deleteModule(this.state.module.id);
+                            }}
+                        />,
+                    ]}
+                    modal={false}
+                    open={this.state.isDelConfirmOpen}
+                >
+                    Tem certeza que deseja excluir este Módulo?
+                </Dialog>
 
                 <Snackbar
                     open={this.state.isUndoOpen}
