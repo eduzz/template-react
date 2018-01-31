@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import Select, { Option } from 'components/Select';
-import Collapsible, { Header, Content } from 'components/Collapsible';
-import Input from 'components/Input';
+import Collapsible, { Header, Content } from 'components/Collapsible'; // FIXME
+import { SelectField, MenuItem, TextField } from 'material-ui';
 import styles from './styles.css';
 
 class AuthorSelect extends Component {
@@ -17,30 +17,53 @@ class AuthorSelect extends Component {
         this.props.getAuthors();
 	}
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.selected.id) {
+            this.setState({
+                value: nextProps.selected.id,
+            });
+        }
+    }
+
+    handleChange = (event, index, value) => {
+        this.setState({
+            value,
+        });
+    }
+
 	render() {
 		return (
             <div className={styles.component}>
-                <Select floatlabel='Autores' value={this.props.selected.id}>
-                    <Option key='' value=''>
-                        Selecione um author...
-                    </Option>
-                    {this.props.authors.map((author, key) =>
-                        <Option key={author.id} value={author.id}>
-                            {author.name}
-                        </Option>
-                    )}
-                </Select>
+                <div className='input-field'>
+                    <SelectField
+                        floatingLabelText='Autores'
+                        defaultValue={this.props.selected.id}
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                    >
+                        {this.props.authors.map(author =>
+                            <MenuItem
+                                key={author.id}
+                                value={author.id}
+                                primaryText={author.name}
+                            />
+                        )}
+                    </SelectField>
+                </div>
+
+                {/* FIXME */}
+
                 <Collapsible className='add-author card-lessons'>
                     <Header className='header card-lessons-header'>
                         <span>Adicionar Author</span>
                     </Header>
                     <Content className='card-lessons-wrapper'>
                         <div>
-                            <Input
+                            <TextField
                                 onChange={e =>
                                     this.setState({newAuthorName: e.target.value})
                                 }
-                                floatlabel='Nome do Author'
+                                floatingLabelText='Nome do Author'
                             />
                             <a
                                 onClick={() =>
