@@ -5,6 +5,7 @@ import Select, { Option } from 'components/Select';
 import Collapsible, { Header, Content } from 'components/Collapsible'; // FIXME
 import { SelectField, MenuItem, TextField } from 'material-ui';
 import styles from './styles.css';
+import Loading from 'components/Loading';
 
 class AuthorSelect extends Component {
     constructor() {
@@ -12,10 +13,6 @@ class AuthorSelect extends Component {
 
         this.state = {};
     }
-
-	componentDidMount() {
-        this.props.getAuthors();
-	}
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.selected.id) {
@@ -25,10 +22,18 @@ class AuthorSelect extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.props.cleanAuthors();
+    }
+
     handleChange = (event, index, value) => {
         this.setState({
             value,
         });
+    }
+
+    handleClick = () => {
+        this.props.getAuthors(this.props.authors);
     }
 
 	render() {
@@ -40,7 +45,17 @@ class AuthorSelect extends Component {
                         defaultValue={this.props.selected.id}
                         value={this.state.value}
                         onChange={this.handleChange}
+                        onClick={this.handleClick}
+                        style={{width: '100%'}}
                     >
+                        {this.props.selected.id ? <MenuItem
+                            key={this.props.selected.id}
+                            value={this.props.selected.id}
+                            primaryText={this.props.selected.name}
+                        /> : ''}
+
+                        <Loading active={!this.props.authors.length} />
+
                         {this.props.authors.map(author =>
                             <MenuItem
                                 key={author.id}
@@ -86,8 +101,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAuthors() {
-        dispatch(actions.getAuthors());
+    getAuthors(authors) {
+        if(!authors.length) {
+            dispatch(actions.getAuthors());
+        }
+    },
+    cleanAuthors() {
+        dispatch(actions.cleanAuthors());
     },
     addAuthor(name) {
         dispatch(actions.addAuthor(name));

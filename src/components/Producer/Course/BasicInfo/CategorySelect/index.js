@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import { SelectField, MenuItem } from 'material-ui';
+import Loading from 'components/Loading';
 
 class CategorySelect extends Component {
     constructor() {
@@ -9,10 +10,6 @@ class CategorySelect extends Component {
 
         this.state = {};
     }
-
-	componentDidMount() {
-        this.props.getCategories();
-	}
 
     componentWillReceiveProps(nextProps) {
         if(nextProps.selected.id) {
@@ -22,10 +19,18 @@ class CategorySelect extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.props.cleanCategories();
+    }
+
     handleChange = (event, index, value) => {
         this.setState({
             value,
         });
+    }
+
+    handleClick = () => {
+        this.props.getCategories(this.props.categories);
     }
 
 	render() {
@@ -36,7 +41,17 @@ class CategorySelect extends Component {
                     defaultValue={this.props.selected.id}
                     value={this.state.value}
                     onChange={this.handleChange}
+                    onClick={this.handleClick}
+                    style={{width: '100%'}}
                 >
+                    {this.props.selected.id ? <MenuItem
+                        key={this.props.selected.id}
+                        value={this.props.selected.id}
+                        primaryText={this.props.selected.name}
+                    /> : ''}
+
+                    <Loading active={!this.props.categories.length} />
+
                     {this.props.categories.map(option =>
                         <MenuItem
                             key={option.id}
@@ -55,8 +70,13 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getCategories() {
-        dispatch(actions.getCategories());
+    getCategories(categories) {
+        if(!categories.length) {
+            dispatch(actions.getCategories());
+        }
+    },
+    cleanCategories() {
+        dispatch(actions.cleanCategories());
     },
 });
 

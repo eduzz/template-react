@@ -2,6 +2,11 @@ export const getAuthors = () => ({
 	type: 'GET_AUTHORS',
 });
 
+export const cleanAuthors = () => ({
+	type: 'CLEAN_AUTHORS',
+});
+
+
 export const receiveAuthors = authors => ({
 	type: 'RECEIVE_AUTHORS',
 	authors,

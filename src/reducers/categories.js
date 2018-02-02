@@ -3,6 +3,7 @@ const categories = (state = [], action) => {
         case 'RECEIVE_CATEGORIES':
             return [...action.categories];
         case 'GET_CATEGORIES':
+        case 'CLEAN_CATEGORIES':
         case 'RECEIVE_CATEGORIES_ERROR':
             return [];
         default:

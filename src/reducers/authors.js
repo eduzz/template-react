@@ -3,6 +3,7 @@ const authors = (state = [], action) => {
         case 'RECEIVE_AUTHORS':
             return [...action.authors];
         case 'GET_AUTHORS':
+        case 'CLEAN_AUTHORS':
         case 'RECEIVE_AUTHORS_ERROR':
             return [];
         case 'RECEIVE_AUTHOR':
