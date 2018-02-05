@@ -43,6 +43,13 @@ export const post = (url, data, headers) => axios({
 	data,
 });
 
+export const put = (url, data, headers) => axios({
+	method: 'put',
+	url: api + url,
+	headers,
+	data,
+});
+
 export const del = (url, headers) => axios({
 	method: 'delete',
 	url: api + url,

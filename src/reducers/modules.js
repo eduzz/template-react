@@ -11,7 +11,9 @@ const modules = (state = [], action) => {
         case 'ADD_MODULE':
             return [
                 ...state,
-                {},
+                {
+                    newModule: true,
+                },
             ];
         case 'DELETE_MODULE':
             return state.filter(module => module.id !== action.moduleID);
@@ -19,6 +21,13 @@ const modules = (state = [], action) => {
             const modules = [...state];
 
             modules.splice(action.index, 0, action.module);
+
+            return modules;
+        }
+        case 'EDIT_MODULE': {
+            const modules = [...state];
+
+            modules[action.index].isEditing = true;
 
             return modules;
         }

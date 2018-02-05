@@ -1,5 +1,5 @@
 import actions from './actions';
-import { get, post, del } from './agent';
+import { get, post, put, del } from './agent';
 
 const middleware = store => next => action => {
 
@@ -103,6 +103,16 @@ const middleware = store => next => action => {
                 },
                 err => {
 
+                }
+            );
+            break;
+        case 'EDIT_MODULE_PERSIST':
+            put('/modules/' + action.module.id, action.module).then(
+                res => {
+                    next(actions.receiveModule(res.data.data, action.index));
+                },
+                err => {
+                    next(actions.receiveModuleError(err));
                 }
             );
             break;

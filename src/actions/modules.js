@@ -50,3 +50,14 @@ export const deleteModulePersist = moduleID => ({
     type: 'DELETE_MODULE_PERSIST',
     moduleID
 });
+
+export const editModule = index => ({
+    type: 'EDIT_MODULE',
+    index,
+});
+
+export const editModulePersist = (module, index) => ({
+    type: 'EDIT_MODULE_PERSIST',
+    module,
+    index,
+});
