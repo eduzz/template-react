@@ -55,6 +55,7 @@ class ModuleCard extends React.Component {
                                                     this.setState({
                                                         isEditing: false,
                                                     });
+                                                    this.props.onCancel();
                                                 }}
                                                 style={{cursor: 'pointer'}}
                                             >

@@ -11,10 +11,15 @@ const modules = (state = [], action) => {
         case 'ADD_MODULE':
             return [
                 ...state,
-                {
-                    newModule: true,
-                },
+                {},
             ];
+        case 'REMOVE_MODULE': {
+            const modules = [...state];
+
+            modules.splice(action.index, 1);
+
+            return modules;
+        }
         case 'DELETE_MODULE':
             return state.filter(module => module.id !== action.moduleID);
         case 'DELETE_MODULE_UNDO': {

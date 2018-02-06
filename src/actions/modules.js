@@ -17,6 +17,11 @@ export const addModule = () => ({
     type: 'ADD_MODULE',
 });
 
+export const removeModule = index => ({
+    type: 'REMOVE_MODULE',
+    index,
+});
+
 export const postModule = (courseID, title, sequence) => ({
     type: 'POST_MODULE',
     courseID,

@@ -4,6 +4,7 @@ import actions from 'actions';
 import ModuleCard from './ModuleCard';
 import Loading from 'components/Loading';
 import { Snackbar, Dialog, FlatButton } from 'material-ui';
+import { v4 } from 'uuid';
 
 class ModuleList extends Component {
     constructor() {
@@ -26,7 +27,7 @@ class ModuleList extends Component {
 
                 {this.props.modules.map((module, key) =>
                     <ModuleCard
-                        key={module.id}
+                        key={module.id || v4()}
                         title={module.title}
                         lessons={module.lessons}
                         newModule={module.id}
@@ -44,6 +45,11 @@ class ModuleList extends Component {
                                 module,
                                 index: key,
                             });
+                        }}
+                        onCancel={() => {
+                            if(!module.id) {
+                                this.props.removeModule(key);
+                            }
                         }}
                     />
                 )}
@@ -131,6 +137,9 @@ const mapDispatchToProps = dispatch => ({
     },
     addModule() {
         dispatch(actions.addModule());
+    },
+    removeModule(index) {
+        dispatch(actions.removeModule(index));
     },
     postModule(courseID, title, sequence) {
         dispatch(actions.postModule(courseID, title, sequence));
