@@ -13,6 +13,18 @@ const modules = (state = [], action) => {
                 ...state,
                 {},
             ];
+        case 'RECEIVE_MODULE':
+            const modules = [...state];
+
+            modules[action.sequence] = action.module;
+            
+            return [
+                ...modules,
+            ];
+        case 'RECEIVE_MODULE_ERROR':
+            return [
+                ...state,
+            ];
         default:
             return state;
     }

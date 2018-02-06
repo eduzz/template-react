@@ -5,10 +5,56 @@ import LessonCardList from './LessonCardList';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Loading from 'components/Loading';
 import Input from 'components/Input';
+import loadingGif from 'assets/img/loading.gif';
+
+class SaveButton extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            isLoading: false,
+        };
+    }
+
+    render() {
+        let element = (
+            <a
+                onClick={(e) => {
+                    e.preventDefault();
+
+                    this.props.onClick();
+
+                    this.setState({isLoading: true});
+                }}
+                style={{
+                    cursor: 'pointer',
+                }}
+            >
+                Salvar
+            </a>
+        );
+
+        if(this.state.isLoading) {
+            element = <img
+                src={loadingGif}
+                alt=''
+                style={{
+                    width: '30px',
+                    position: 'absolute',
+                    marginTop: '-10px',
+                }}
+            />;
+        }
+
+        return element;
+    }
+}
 
 class ModuleList extends Component {
     componentDidMount() {
         this.props.getModules(this.props.courseID);
+
+        this.state = {};
     }
 
     render() {
@@ -21,16 +67,32 @@ class ModuleList extends Component {
                         key={module.id}
                         onExpandChange={() => this.props.getModuleLessons(module.id, module.lessons || [])}
                         className='card-lessons'
+                        key={key}
                     >
                         <CardHeader
-                            title={module.title || <Input placeholder='Nome do modulo'/>}
+                            title={module.title ||
+                                <Input
+                                    floatlabel='Nome do módulo'
+                                    onChange={(e) => {
+                                        this.setState({
+                                            [key]: e.target.value,
+                                        });
+                                    }}
+                                    style={{
+                                        width: '300px',
+                                    }}
+                                />
+                            }
                             subtitle={
                                 <div className='card-lessons-resume'>
                     				<span>Duração do curso</span>
                     				<span>Número de Aulas</span>
+                                    <span>
+                                        {module.title ? '' : <SaveButton onClick={() => this.props.postModule(this.props.courseID, this.state[key], key)}/>}
+                                    </span>
                     			</div>
                             }
-                            actAsExpander={true}
+                            actAsExpander={false}
                             showExpandableButton={true}
                         />
                         <CardText className='card-lessons-wrapper' expandable={true}>
@@ -81,6 +143,9 @@ const mapDispatchToProps = dispatch => ({
     },
     addModule() {
         dispatch(actions.addModule());
+    },
+    postModule(courseID, title, sequence) {
+        dispatch(actions.postModule(courseID, title, sequence));
     },
 });
 
