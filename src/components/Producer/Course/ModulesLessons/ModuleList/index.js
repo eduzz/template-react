@@ -26,10 +26,10 @@ class ModuleList extends Component {
 
                 {this.props.modules.map((module, key) =>
                     <ModuleCard
-                        key={key}
+                        key={module.id}
                         title={module.title}
                         lessons={module.lessons}
-                        newModule={!!module.id}
+                        newModule={module.id}
                         onExpandChange={() => this.props.getModuleLessons(module.id, module.lessons || [])}
                         onSave={title => this.props.postModule(this.props.courseID, title, key)}
                         onEdit={title => {

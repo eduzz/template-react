@@ -24,13 +24,6 @@ const modules = (state = [], action) => {
 
             return modules;
         }
-        case 'EDIT_MODULE': {
-            const modules = [...state];
-
-            modules[action.index].isEditing = true;
-
-            return modules;
-        }
         case 'RECEIVE_MODULE': {
             const modules = [...state];
 

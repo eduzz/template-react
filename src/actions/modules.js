@@ -51,11 +51,6 @@ export const deleteModulePersist = moduleID => ({
     moduleID
 });
 
-export const editModule = index => ({
-    type: 'EDIT_MODULE',
-    index,
-});
-
 export const editModulePersist = (module, index) => ({
     type: 'EDIT_MODULE_PERSIST',
     module,
