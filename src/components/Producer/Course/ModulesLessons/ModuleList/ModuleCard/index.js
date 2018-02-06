@@ -39,11 +39,13 @@ class ModuleCard extends React.Component {
                                         <div className='col s6'>
                                             <Input
                                                 floatlabel='Nome do módulo'
+                                                autoFocus
                                                 onChange={(e) => {
                                                     this.setState({
                                                         title: e.target.value,
                                                     });
                                                 }}
+                                                defaultValue={this.state.title}
                                                 style={{
                                                     width: '100%',
                                                 }}
