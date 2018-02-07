@@ -1,22 +1,35 @@
 import React from 'react';
 import { v4 } from 'uuid';
 
-const Input = props => {
-    const id = v4();
+class Input extends React.Component {
+    constructor() {
+        super();
 
-    return (
-        <div className={`input-field ${props.className}`}>
-            <label htmlFor={props.id || id} className={props.defaultValue || props.value ? 'active' : ''}>
-                {props.floatlabel}
-            </label>
-            <input
-                id={id}
-                type='text'
-                key={props.defaultValue ? 'notLoadedYet' : 'loaded'}
-                {...props}
-            />
-        </div>
-    );
-};
+        this.id = v4();
+    }
+
+    handleFocus = e => {
+        const temp = e.target.value;
+        e.target.value = '';
+        e.target.value = temp;
+    }
+
+    render() {
+        return (
+            <div className={`input-field ${this.props.className}`}>
+                <label htmlFor={this.props.id || this.id} className={this.props.defaultValue || this.props.value ? 'active' : ''}>
+                    {this.props.floatlabel}
+                </label>
+                <input
+                    id={this.id}
+                    type='text'
+                    key={this.props.defaultValue ? 'notLoadedYet' : 'loaded'}
+                    onFocus={this.handleFocus}
+                    {...this.props}
+                />
+            </div>
+        );
+    }
+}
 
 export default Input;

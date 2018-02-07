@@ -17,6 +17,11 @@ export const addModule = () => ({
     type: 'ADD_MODULE',
 });
 
+export const removeModule = index => ({
+    type: 'REMOVE_MODULE',
+    index,
+});
+
 export const postModule = (courseID, title, sequence) => ({
     type: 'POST_MODULE',
     courseID,
@@ -33,4 +38,26 @@ export const receiveModule = (module, sequence) => ({
 export const receiveModuleError = err => ({
     type: 'RECEIVE_MODULE',
     err,
+});
+
+export const deleteModule = moduleID => ({
+    type: 'DELETE_MODULE',
+    moduleID,
+});
+
+export const deleteModuleUndo = (module, index) => ({
+    type: 'DELETE_MODULE_UNDO',
+    module,
+    index,
+});
+
+export const deleteModulePersist = moduleID => ({
+    type: 'DELETE_MODULE_PERSIST',
+    moduleID
+});
+
+export const editModulePersist = (module, index) => ({
+    type: 'EDIT_MODULE_PERSIST',
+    module,
+    index,
 });

@@ -13,14 +13,31 @@ const modules = (state = [], action) => {
                 ...state,
                 {},
             ];
-        case 'RECEIVE_MODULE':
+        case 'REMOVE_MODULE': {
+            const modules = [...state];
+
+            modules.splice(action.index, 1);
+
+            return modules;
+        }
+        case 'DELETE_MODULE':
+            return state.filter(module => module.id !== action.moduleID);
+        case 'DELETE_MODULE_UNDO': {
+            const modules = [...state];
+
+            modules.splice(action.index, 0, action.module);
+
+            return modules;
+        }
+        case 'RECEIVE_MODULE': {
             const modules = [...state];
 
             modules[action.sequence] = action.module;
-            
+
             return [
                 ...modules,
             ];
+        }
         case 'RECEIVE_MODULE_ERROR':
             return [
                 ...state,

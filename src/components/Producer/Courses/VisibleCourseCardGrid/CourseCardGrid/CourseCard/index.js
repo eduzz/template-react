@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css';
-import { cdn } from '../../../constants';
+import { cdn } from 'constants/index';
 import { Link } from 'react-router-dom';
 
 const CourseCard = ({ data }) => (
@@ -11,8 +11,8 @@ const CourseCard = ({ data }) => (
         </div>
 
         <Link to={`courses/${data.id}`} className="card-description">
-            <div className="card-title">{ data.title }</div>
-            <div className="card-category">{ data.category.name }</div>
+            <p className="card-title">{ data.title }</p>
+            <p className="card-category">{ data.category.name }</p>
         </Link>
     </div>
 );

@@ -1,60 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
-import LessonCardList from './LessonCardList';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import ModuleCard from './ModuleCard';
 import Loading from 'components/Loading';
-import Input from 'components/Input';
-import loadingGif from 'assets/img/loading.gif';
+import { Snackbar, Dialog, FlatButton } from 'material-ui';
+import { v4 } from 'uuid';
 
-class SaveButton extends Component {
+class ModuleList extends Component {
     constructor() {
         super();
 
         this.state = {
-            isLoading: false,
+            isUndoOpen: false,
+            isDelConfirmOpen: false,
         };
     }
 
-    render() {
-        let element = (
-            <a
-                onClick={(e) => {
-                    e.preventDefault();
-
-                    this.props.onClick();
-
-                    this.setState({isLoading: true});
-                }}
-                style={{
-                    cursor: 'pointer',
-                }}
-            >
-                Salvar
-            </a>
-        );
-
-        if(this.state.isLoading) {
-            element = <img
-                src={loadingGif}
-                alt=''
-                style={{
-                    width: '30px',
-                    position: 'absolute',
-                    marginTop: '-10px',
-                }}
-            />;
-        }
-
-        return element;
-    }
-}
-
-class ModuleList extends Component {
     componentDidMount() {
         this.props.getModules(this.props.courseID);
-
-        this.state = {};
     }
 
     render() {
@@ -63,54 +26,32 @@ class ModuleList extends Component {
                 <Loading active={!this.props.modules.length} />
 
                 {this.props.modules.map((module, key) =>
-                    <Card
-                        key={module.id}
+                    <ModuleCard
+                        key={module.id || v4()}
+                        title={module.title}
+                        lessons={module.lessons}
+                        newModule={module.id}
                         onExpandChange={() => this.props.getModuleLessons(module.id, module.lessons || [])}
-                        className='card-lessons'
-                        key={key}
-                    >
-                        <CardHeader
-                            title={module.title ||
-                                <Input
-                                    floatlabel='Nome do módulo'
-                                    onChange={(e) => {
-                                        this.setState({
-                                            [key]: e.target.value,
-                                        });
-                                    }}
-                                    style={{
-                                        width: '300px',
-                                    }}
-                                />
+                        onSave={title => this.props.postModule(this.props.courseID, title, key)}
+                        onEdit={title => {
+                            this.props.editModulePersist({
+                                ...module,
+                                title,
+                            }, key);
+                        }}
+                        onDelete={() => {
+                            this.setState({
+                                isDelConfirmOpen: true,
+                                module,
+                                index: key,
+                            });
+                        }}
+                        onCancel={() => {
+                            if(!module.id) {
+                                this.props.removeModule(key);
                             }
-                            subtitle={
-                                <div className='card-lessons-resume'>
-                    				<span>Duração do curso</span>
-                    				<span>Número de Aulas</span>
-                                    <span>
-                                        {module.title ? '' : <SaveButton onClick={() => this.props.postModule(this.props.courseID, this.state[key], key)}/>}
-                                    </span>
-                    			</div>
-                            }
-                            actAsExpander={false}
-                            showExpandableButton={true}
-                        />
-                        <CardText className='card-lessons-wrapper' expandable={true}>
-                            {/* <Button className='button affirmative waves-effect waves-light' target='modal-module-edit'>
-                                <span>Editar Módulo</span>
-                            </Button>
-
-                            <Button className='button affirmative waves-effect waves-light' target='modal-lesson-edit'>
-                                <span>Nova Aula</span>
-                            </Button>
-
-                            <Button className='button affirmative waves-effect waves-light' target='modal-lesson-import'>
-                                <span>Importar Aulas</span>
-                            </Button> */}
-
-                            <LessonCardList lessons={ module.lessons || [] } />
-                        </CardText>
-                    </Card>
+                        }}
+                    />
                 )}
 
                 <div className='row'>
@@ -123,6 +64,59 @@ class ModuleList extends Component {
                         </a>
                     </div>
                 </div>
+
+                <Dialog
+                    actions={[
+                        <FlatButton
+                            label="Cancelar"
+                            primary={true}
+                            onClick={() => {
+                                this.setState({
+                                    isDelConfirmOpen: false,
+                                });
+                            }}
+                        />,
+                        <FlatButton
+                            label="Excluir"
+                            primary={false}
+                            onClick={() => {
+                                this.setState({
+                                    isUndoOpen: true,
+                                    isDelConfirmOpen: false,
+                                });
+                                this.props.deleteModule(this.state.module.id);
+                            }}
+                        />,
+                    ]}
+                    modal={false}
+                    open={this.state.isDelConfirmOpen}
+                >
+                    Tem certeza que deseja excluir este Módulo?
+                </Dialog>
+
+                <Snackbar
+                    open={this.state.isUndoOpen}
+                    message='Módulo Excluido'
+                    autoHideDuration={3000}
+                    action={
+                        <span
+                            onClick={() => {
+                                this.setState({
+                                    isUndoOpen: false,
+                                });
+                                this.props.deleteModuleUndo(this.state.module, this.state.index);
+                            }}
+                        >
+                            UNDO
+                        </span>
+                    }
+                    onRequestClose={() => {
+                        this.setState({
+                            isUndoOpen: false,
+                        });
+                        this.props.deleteModulePersist(this.state.module.id);
+                    }}
+                />
             </div>
         );
     }
@@ -144,9 +138,27 @@ const mapDispatchToProps = dispatch => ({
     addModule() {
         dispatch(actions.addModule());
     },
+    removeModule(index) {
+        dispatch(actions.removeModule(index));
+    },
     postModule(courseID, title, sequence) {
         dispatch(actions.postModule(courseID, title, sequence));
     },
+    deleteModule(moduleID) {
+        dispatch(actions.deleteModule(moduleID));
+    },
+    deleteModulePersist(moduleID) {
+        dispatch(actions.deleteModulePersist(moduleID));
+    },
+    deleteModuleUndo(module, index) {
+        dispatch(actions.deleteModuleUndo(module, index));
+    },
+    editModule(index) {
+        dispatch(actions.editModule(index));
+    },
+    editModulePersist(module, index) {
+        dispatch(actions.editModulePersist(module, index));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModuleList);

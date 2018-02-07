@@ -1,5 +1,5 @@
 import actions from './actions';
-import { get, post } from './agent';
+import { get, post, put, del } from './agent';
 
 const middleware = store => next => action => {
 
@@ -90,6 +90,26 @@ const middleware = store => next => action => {
             post('/modules', {id_course: action.courseID, title: action.title, description: 'description', days_locked: 1, is_draft: false, id_author: null, available_days: 1, release_date: '2018-07-07', image: 'base64', sequence: action.sequence, is_free: true}).then(
                 res => {
                     next(actions.receiveModule(res.data.data, action.sequence));
+                },
+                err => {
+                    next(actions.receiveModuleError(err));
+                }
+            );
+            break;
+        case 'DELETE_MODULE_PERSIST':
+            del('/modules/' + action.moduleID).then(
+                res => {
+
+                },
+                err => {
+
+                }
+            );
+            break;
+        case 'EDIT_MODULE_PERSIST':
+            put('/modules/' + action.module.id, action.module).then(
+                res => {
+                    next(actions.receiveModule(res.data.data, action.index));
                 },
                 err => {
                     next(actions.receiveModuleError(err));
