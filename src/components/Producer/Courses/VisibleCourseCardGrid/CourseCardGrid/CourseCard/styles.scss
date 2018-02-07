@@ -46,6 +46,7 @@
     width: 100%;
     background:rgba(0,0,0,0.8);
     padding:10px 5px;
+    height: 55px;
   }
   .card-title{
     color:#fff;
@@ -56,6 +57,11 @@
     margin-bottom: 4px;
     max-height: 30px;
     overflow:hidden;
+
+    display:inline-block;
+    width:170px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .card-category{
     font-size:10px;

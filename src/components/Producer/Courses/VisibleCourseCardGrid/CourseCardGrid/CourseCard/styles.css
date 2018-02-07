@@ -36,7 +36,8 @@
     text-align: center;
     width: 100%;
     background: rgba(0, 0, 0, 0.8);
-    padding: 10px 5px; }
+    padding: 10px 5px;
+    height: 55px; }
   :local(.component) .card-title {
     color: #fff;
     font-size: 0.875rem;
@@ -45,7 +46,11 @@
     letter-spacing: 0.5px;
     margin-bottom: 4px;
     max-height: 30px;
-    overflow: hidden; }
+    overflow: hidden;
+    display: inline-block;
+    width: 170px;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
   :local(.component) .card-category {
     font-size: 10px;
     color: #fff; }
