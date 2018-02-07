@@ -12,7 +12,6 @@ const authors = (state = [], action) => {
                 action.author,
             ];
         case 'RECEIVE_AUTHOR_ERROR':
-            console.error('RECEIVE_AUTHOR_ERROR');
             return [...state];
         default:
             return state;

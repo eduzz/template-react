@@ -14,6 +14,11 @@ const course = (state = {}, action) => {
             };
         case 'DELETE_COURSE_ERROR':
             return state;
+        case 'RECEIVE_AUTHOR':
+            return {
+                ...state,
+                author: action.author,
+            };
         default:
             return state;
     }
