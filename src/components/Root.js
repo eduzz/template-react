@@ -1,6 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Redirect, BrowserRouter, Switch } from 'react-router-dom';
+import ScrollToTop from 'components/ScrollToTop';
 import Producer from 'components/Producer';
 import Student from 'components/Student';
 import Login from 'components/Login';
@@ -18,31 +19,33 @@ const Root = ({ store }) => {
         <MuiThemeProvider>
             <Provider store={store}>
             	<BrowserRouter>
-        	        <Switch>
-                        <Redirect exact from='/' to='/login'/>
-                        <Route path='/login' render={() => (
-                            isAuthenticated ? (
-                                isProducer ? <Redirect to='/producer' /> : <Redirect to='/student' />
-                            ) : (
-                                <Login />
-                            )
-                        )} />
-        	        	<Route path='/producer' render={() => (
-                            isAuthenticated ? (
-                                isProducer ? <Producer /> : <Redirect to='/student' />
-                            ) : (
-                                <Redirect to='/login' />
-                            )
-                        )} />
-        	        	<Route path='/student' render={() => (
-                            isAuthenticated ? (
-                                <Student />
-                            ) : (
-                                <Redirect to='/login' />
-                            )
-                        )} />
-                        <Route path='*' component={ NotFound } />
-        	        </Switch>
+                    <ScrollToTop>
+    	               <Switch>
+                            <Redirect exact from='/' to='/login'/>
+                            <Route path='/login' render={() => (
+                                isAuthenticated ? (
+                                    isProducer ? <Redirect to='/producer' /> : <Redirect to='/student' />
+                                ) : (
+                                    <Login />
+                                )
+                            )} />
+            	        	<Route path='/producer' render={() => (
+                                isAuthenticated ? (
+                                    isProducer ? <Producer /> : <Redirect to='/student' />
+                                ) : (
+                                    <Redirect to='/login' />
+                                )
+                            )} />
+            	        	<Route path='/student' render={() => (
+                                isAuthenticated ? (
+                                    <Student />
+                                ) : (
+                                    <Redirect to='/login' />
+                                )
+                            )} />
+                            <Route path='*' component={ NotFound } />
+                        </Switch>
+                    </ScrollToTop>
         		</BrowserRouter>
           	</Provider>
         </MuiThemeProvider>

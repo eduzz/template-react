@@ -10,6 +10,7 @@ import ModulesLessons from './ModulesLessons';
 import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
+import { Redirect } from 'react-router-dom';
 
 class Course extends Component {
     constructor() {
@@ -24,6 +25,11 @@ class Course extends Component {
 
     render() {
         this.courseID = this.props.match.params.courseID;
+
+        if(this.props.course.isDeleted) {
+            this.props.cleanCourse();
+            return <Redirect to='/producer' />;
+        }
 
         return (
         	<form>
@@ -51,7 +57,7 @@ class Course extends Component {
                                 <ModulesLessons courseID={this.courseID} />
                             </Pane>
                             <Pane title='Configurações Avançadas' icon='gears'>
-                                <Advanced />
+                                <Advanced course={this.props.course}/>
                             </Pane>
                             <Pane title="Personalizações" icon='color-pallete'>
                                 <Personalization />
@@ -74,7 +80,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getCourse: courseId => dispatch(actions.getCourse(courseId)),
+    getCourse(courseID) {
+        dispatch(actions.getCourse(courseID));
+    },
+    cleanCourse() {
+        dispatch(actions.cleanCourse());
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Course);

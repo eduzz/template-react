@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import Input from 'components/Input';
-import loadingGif from 'assets/img/loading.gif';
 import LessonCardList from './LessonCardList';
 import { IconMenu, IconButton, MenuItem } from 'material-ui';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
