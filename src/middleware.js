@@ -36,6 +36,16 @@ const middleware = store => next => action => {
                 }
             );
             break;
+        case 'DELETE_COURSE':
+            del('/courses/' + action.courseID).then(
+                res => {
+                    next(actions.deleteCourseSuccess(res));
+                },
+                err => {
+                    next(actions.deleteCourseError(err));
+                }
+            );
+            break;
         case 'GET_CATEGORIES':
             get('/categories').then(
                 res => {
