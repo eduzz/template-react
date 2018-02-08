@@ -46,6 +46,26 @@ const middleware = store => next => action => {
                 }
             );
             break;
+        case 'UPDATE_COURSE':
+            put('/courses/' + action.courseID, action.course).then(
+                res => {
+                    console.log('course -> ', res.data.data);
+                },
+                err => {
+                    
+                }
+            );
+            break;
+        case 'GET_COURSE_CUSTOMIZATION':
+            get('/courses/' + action.courseID + '/customization').then(
+                res => {
+                    next(actions.receiveCourseCustomization(res.data.data));
+                },
+                err => {
+                    next(actions.receiveCourseCustomizationError(err));
+                }
+            );
+            break;
         case 'GET_CATEGORIES':
             get('/categories').then(
                 res => {

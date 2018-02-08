@@ -43,7 +43,7 @@ class AuthorSelect extends Component {
                 <div className='input-field'>
                     <SelectField
                         floatingLabelText='Autores'
-                        defaultValue={this.props.selected.id}
+                        defaultValue={this.props.selected}
                         value={this.state.value}
                         onChange={this.handleChange}
                         onClick={this.handleClick}

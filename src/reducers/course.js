@@ -4,7 +4,10 @@ const course = (state = {}, action) => {
         case 'CLEAN_COURSE':
             return {};
         case 'RECEIVE_COURSE':
-            return {...action.course};
+            return {
+                ...state,
+                ...action.course
+            };
         case 'RECEIVE_COURSE_ERROR':
             return {};
         case 'DELETE_COURSE_SUCCESS':
@@ -18,6 +21,15 @@ const course = (state = {}, action) => {
             return {
                 ...state,
                 author: action.author,
+            };
+        case 'RECEIVE_COURSE_CUSTOMIZATION':
+            return {
+                ...state,
+                customization: action.customization,
+            };
+        case 'RECEIVE_COURSE_CUSTOMIZATION_ERROR':
+            return {
+                ...state,
             };
         default:
             return state;

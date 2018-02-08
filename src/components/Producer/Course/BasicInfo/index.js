@@ -10,7 +10,7 @@ const CourseBasicInfo = ({ course, getLessons }) => (
         <div className="form-section">
             <div className='row'>
                 <div className='col s12'>
-                    <CourseBanner />
+                    <CourseBanner customization={course.customization || {}} />
                 </div>
             </div>
         </div>

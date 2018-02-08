@@ -11,6 +11,7 @@ import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
 import { Redirect } from 'react-router-dom';
+import StateSelect from './StateSelect';
 
 class Course extends Component {
     constructor() {
@@ -21,6 +22,7 @@ class Course extends Component {
 
     componentDidMount() {
         this.props.getCourse(this.courseID);
+        this.props.getCourseCustomization(this.courseID);
     }
 
     render() {
@@ -35,17 +37,19 @@ class Course extends Component {
         	<form>
         		<section className={styles.component}>
         			<div className='container'>
-                        <div className="course-header">
-                            <Input
-                                className='bigger'
-                                floatlabel='Nome do Curso/Programa'
-                                defaultValue={this.props.course.title}
-                            />
-                            <div>
+                        <div className="course-header row">
+                            <div className='col s9'>
                                 <Input
+                                    floatlabel='Nome do Curso/Programa'
                                     className='bigger'
-                                    floatlabel='Status do Curso'
-                                    defaultValue='Publicado'
+                                    defaultValue={this.props.course.title}
+                                    style={{width: '100%'}}
+                                />
+                            </div>
+                            <div className='col s3'>
+                                <StateSelect
+                                    selected={this.props.course.published === undefined ? 0 : this.props.course.published ? 2 : 1}
+                                    floatingLabelText='Estado do Curso'
                                 />
                             </div>
                         </div>
@@ -83,8 +87,14 @@ const mapDispatchToProps = dispatch => ({
     getCourse(courseID) {
         dispatch(actions.getCourse(courseID));
     },
+    getCourseCustomization(courseID) {
+        dispatch(actions.getCourseCustomization(courseID));
+    },
     cleanCourse() {
         dispatch(actions.cleanCourse());
+    },
+    saveCourse() {
+        dispatch(actions.updateCourse());
     },
 });
 

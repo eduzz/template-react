@@ -29,3 +29,23 @@ export const deleteCourseSuccess = () => ({
 export const deleteCourseError = () => ({
     type: 'DELETE_COURSE_ERROR',
 });
+
+export const getCourseCustomization = courseID => ({
+    type: 'GET_COURSE_CUSTOMIZATION',
+    courseID,
+});
+
+export const receiveCourseCustomization = customization => ({
+    type: 'RECEIVE_COURSE_CUSTOMIZATION',
+    customization,
+});
+
+export const receiveCourseCustomizationError = err => ({
+    type: 'RECEIVE_COURSE_CUSTOMIZATION_ERROR',
+    err,
+});
+
+export const updateCourse = courseID => ({
+    type: 'UPDATE_COURSE',
+    courseID,
+});
