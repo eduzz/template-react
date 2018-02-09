@@ -15,12 +15,8 @@ class AuthorSelect extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(nextProps.selected.id) {
-            this.setState({
-                value: nextProps.selected.id,
-            });
-
-            this.handleChange(nextProps.selected.id);
+        if(nextProps.selected) {
+            this.handleChange(nextProps.selected);
         }
     }
 

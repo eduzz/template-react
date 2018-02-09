@@ -11,26 +11,8 @@ class CategorySelect extends Component {
         this.state = {};
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.selected.id) {
-            this.setState({
-                value: nextProps.selected.id,
-            });
-
-            this.handleChange(nextProps.selected.id);
-        }
-    }
-
     componentWillUnmount() {
         this.props.cleanCategories();
-    }
-
-    handleChange = value => {
-        this.setState({
-            value,
-        });
-
-        this.props.onChange(value);
     }
 
     handleClick = () => {
@@ -41,10 +23,9 @@ class CategorySelect extends Component {
 		return (
 			<div className='input-field'>
                 <SelectField
+                    {...this.props}
                     floatingLabelText='Categoria'
-                    defaultValue={this.props.selected.id}
-                    value={this.state.value}
-                    onChange={(event, index, value) => this.handleChange(value)}
+                    value={this.props.selected.id}
                     onClick={this.handleClick}
                     style={{width: '100%'}}
                 >

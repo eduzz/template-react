@@ -3,7 +3,7 @@ const initialState = {
     id_author: null,
     id_category: 130,
     image_cover: '',
-    published: 0,
+    published: 1,
 };
 
 const course = (state = initialState, action) => {

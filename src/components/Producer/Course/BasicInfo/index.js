@@ -42,10 +42,10 @@ class CourseBasicInfo extends React.Component {
                         <div className='col xl7 s12'>
                             <div className='form-block'>
                                 <h3 className='form-section-title'>Detalhes do Curso</h3>
-                                <CategorySelect
-                                    selected={this.props.course.category || {}}
+                                {/* <CategorySelect
+                                    selected={this.props.course.category}
                                     onChange={this.props.changeCourseCategory}
-                                />
+                                /> */}
 
                                 <TextArea
                                     floatlabel='Descrição do Curso'
@@ -57,10 +57,10 @@ class CourseBasicInfo extends React.Component {
                         <div className='col xl5 s12'>
                             <div className='form-block'>
                                 <h3 className='form-section-title'>Autor do Curso</h3>
-                                <AuthorSelect
-                                    selected={this.props.course.author || {}}
+                                {/* <AuthorSelect
+                                    selected={this.props.course.author && this.props.course.author.id || {}}
                                     onChange={this.props.changeCourseAuthor}
-                                />
+                                /> */}
                             </div>
                         </div>
                     </div>

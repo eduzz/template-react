@@ -11,8 +11,8 @@ import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
 import { Redirect } from 'react-router-dom';
-// import StateSelect from './StateSelect';
-import { SelectField, MenuItem } from 'material-ui';
+import StateSelect from './StateSelect';
+import { SelectField, MenuItem, Toggle } from 'material-ui';
 
 class Course extends Component {
     constructor() {
@@ -30,14 +30,6 @@ class Course extends Component {
     componentDidMount() {
         if(this.courseID && this.courseID !== 'new') {
             this.props.getCourse(this.courseID);
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.course && nextProps.course.published !== undefined) {
-            this.setState({
-                published: nextProps.course.published,
-            });
         }
     }
 
@@ -67,21 +59,27 @@ class Course extends Component {
                                     floatlabel='Nome do Curso/Programa'
                                     className='bigger'
                                     defaultValue={this.props.course.title}
+                                    async={this.courseID && this.courseID !== 'new'}
                                     onChange={this.props.changeCourseTitle}
                                     style={{width: '100%'}}
                                     required
                                 />
                             </div>
                             <div className='col s3'>
-                                <SelectField
-                                    value={this.state.published}
+                                {/* <SelectField
                                     floatingLabelText='Estado do Curso'
-                                    onChange={this.props.changeCourseState}
+                                    value={this.props.course.published}
                                     style={{width: '100%'}}
                                 >
-                                    <MenuItem value={'1'} primaryText="Publicado" />
-                                    <MenuItem value={'0'} primaryText="Não Publicado" />
-                                </SelectField>
+                                    <MenuItem value={'2'} primaryText="Publicado" />
+                                    <MenuItem value={'1'} primaryText="Não Publicado" />
+                                </SelectField> */}
+
+                                <Toggle
+                                    label='Publicado'
+                                    toggled={this.props.course.published === '1'}
+                                    onClick={() => this.props.changeCourseState(this.props.course.published === '1' ? '0' : '1')}
+                                />
                             </div>
                         </div>
         				<Tabs>
@@ -124,7 +122,7 @@ const mapDispatchToProps = dispatch => ({
     changeCourseTitle(e) {
         dispatch(actions.changeCourseTitle(e.target.value));
     },
-    changeCourseState(event, index, value) {
+    changeCourseState(value) {
         dispatch(actions.changeCourseState(value));
     },
     saveCourse(course) {
