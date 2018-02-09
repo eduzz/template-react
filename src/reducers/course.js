@@ -1,7 +1,8 @@
 const initialState = {
+    title: '',
     description: '',
     id_author: null,
-    id_category: 130,
+    id_category: '130',
     image_cover: '',
     published: 1,
 };
@@ -14,7 +15,9 @@ const course = (state = initialState, action) => {
         case 'RECEIVE_COURSE':
             return {
                 ...state,
-                ...action.course
+                ...action.course,
+                id_category: action.course.category.id,
+                id_author: action.course.author.id,
             };
         case 'RECEIVE_COURSE_ERROR':
             return {};
@@ -28,7 +31,7 @@ const course = (state = initialState, action) => {
         case 'RECEIVE_AUTHOR':
             return {
                 ...state,
-                author: action.author,
+                id_author: action.author.id,
             };
         case 'RECEIVE_COURSE_CUSTOMIZATION':
             return {
@@ -73,7 +76,7 @@ const course = (state = initialState, action) => {
             return {
                 ...state,
                 image_cover: action.image.url,
-            }
+            };
         case 'CREATE_COURSE':
             return {
                 ...state,

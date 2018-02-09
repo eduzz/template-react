@@ -42,25 +42,26 @@ class CourseBasicInfo extends React.Component {
                         <div className='col xl7 s12'>
                             <div className='form-block'>
                                 <h3 className='form-section-title'>Detalhes do Curso</h3>
-                                {/* <CategorySelect
-                                    selected={this.props.course.category}
-                                    onChange={this.props.changeCourseCategory}
-                                /> */}
+                                <CategorySelect
+                                    value={this.props.course.id_category}
+                                    onChange={(event, index, value) => this.props.changeCourseCategory(value)}
+                                />
 
                                 <TextArea
                                     floatlabel='Descrição do Curso'
+                                    async={this.props.courseID && this.props.courseID !== 'new'}
                                     defaultValue={this.props.course.description}
-                                    onChange={this.props.changeCourseDescription}
+                                    onChange={e => this.props.changeCourseDescription(e.target.value)}
                                 />
                             </div>
                         </div>
                         <div className='col xl5 s12'>
                             <div className='form-block'>
                                 <h3 className='form-section-title'>Autor do Curso</h3>
-                                {/* <AuthorSelect
-                                    selected={this.props.course.author && this.props.course.author.id || {}}
-                                    onChange={this.props.changeCourseAuthor}
-                                /> */}
+                                <AuthorSelect
+                                    value={this.props.course.id_author}
+                                    onChange={(event, index, value) => this.props.changeCourseAuthor(value)}
+                                />
                             </div>
                         </div>
                     </div>
@@ -81,8 +82,8 @@ const mapDispatchToProps = dispatch => ({
     changeCourseCover(cover) {
         dispatch(actions.changeCourseCover(cover));
     },
-    changeCourseDescription(e) {
-        dispatch(actions.changeCourseDescription(e.target.value));
+    changeCourseDescription(value) {
+        dispatch(actions.changeCourseDescription(value));
     },
     changeCourseCategory(categoryID) {
         dispatch(actions.changeCourseCategory(categoryID));

@@ -14,26 +14,12 @@ class AuthorSelect extends Component {
         this.state = {};
     }
 
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.selected) {
-            this.handleChange(nextProps.selected);
-        }
+    componentDidMount() {
+        this.props.getAuthors();
     }
 
     componentWillUnmount() {
         this.props.cleanAuthors();
-    }
-
-    handleChange = value => {
-        this.setState({
-            value,
-        });
-
-        this.props.onChange(value);
-    }
-
-    handleClick = () => {
-        this.props.getAuthors(this.props.authors);
     }
 
 	render() {
@@ -41,21 +27,10 @@ class AuthorSelect extends Component {
             <div className={styles.component}>
                 <div className='input-field'>
                     <SelectField
+                        {...this.props}
                         floatingLabelText='Autores'
-                        defaultValue={this.props.selected}
-                        value={this.state.value}
-                        onChange={(event, index, value) => this.handleChange(value)}
-                        onClick={this.handleClick}
                         style={{width: '100%'}}
                     >
-                        {this.props.selected.id ? <MenuItem
-                            key={this.props.selected.id}
-                            value={this.props.selected.id}
-                            primaryText={this.props.selected.name}
-                        /> : ''}
-
-                        <Loading active={!this.props.authors.length} />
-
                         {this.props.authors.map(author =>
                             <MenuItem
                                 key={author.id}
@@ -87,7 +62,6 @@ class AuthorSelect extends Component {
                         <a
                             onClick={() => {
                                 this.props.addAuthor(this.state.newAuthorName);
-
                             }}
                             className='button affirmative waves-effect waves-light'
                         >
@@ -105,10 +79,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAuthors(authors) {
-        // if(!authors.length) {
-            dispatch(actions.getAuthors());
-        // }
+    getAuthors() {
+        dispatch(actions.getAuthors());
     },
     cleanAuthors() {
         dispatch(actions.cleanAuthors());

@@ -23,7 +23,7 @@ class Course extends Component {
         this.courseID = null;
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
         this.props.cleanCourse();
     }
 
@@ -66,15 +66,6 @@ class Course extends Component {
                                 />
                             </div>
                             <div className='col s3'>
-                                {/* <SelectField
-                                    floatingLabelText='Estado do Curso'
-                                    value={this.props.course.published}
-                                    style={{width: '100%'}}
-                                >
-                                    <MenuItem value={'2'} primaryText="Publicado" />
-                                    <MenuItem value={'1'} primaryText="Não Publicado" />
-                                </SelectField> */}
-
                                 <Toggle
                                     label='Publicado'
                                     toggled={this.props.course.published === '1'}

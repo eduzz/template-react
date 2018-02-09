@@ -5,18 +5,12 @@ import { SelectField, MenuItem } from 'material-ui';
 import Loading from 'components/Loading';
 
 class CategorySelect extends Component {
-    constructor() {
-        super();
-
-        this.state = {};
+    componentDidMount() {
+        this.props.getCategories(this.props.categories);
     }
 
     componentWillUnmount() {
         this.props.cleanCategories();
-    }
-
-    handleClick = () => {
-        this.props.getCategories(this.props.categories);
     }
 
 	render() {
@@ -25,18 +19,8 @@ class CategorySelect extends Component {
                 <SelectField
                     {...this.props}
                     floatingLabelText='Categoria'
-                    value={this.props.selected.id}
-                    onClick={this.handleClick}
                     style={{width: '100%'}}
                 >
-                    {this.props.selected.id ? <MenuItem
-                        key={this.props.selected.id}
-                        value={this.props.selected.id}
-                        primaryText={this.props.selected.name}
-                    /> : ''}
-
-                    <Loading active={!this.props.categories.length} />
-
                     {this.props.categories.map(option =>
                         <MenuItem
                             key={option.id}
@@ -56,9 +40,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getCategories(categories) {
-        if(!categories.length) {
-            dispatch(actions.getCategories());
-        }
+        dispatch(actions.getCategories());
     },
     cleanCategories() {
         dispatch(actions.cleanCategories());
