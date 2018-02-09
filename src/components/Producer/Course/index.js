@@ -11,8 +11,8 @@ import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
 import { Redirect } from 'react-router-dom';
-import StateSelect from './StateSelect';
 import { SelectField, MenuItem, Toggle } from 'material-ui';
+import Loading from 'components/Loading';
 
 class Course extends Component {
     constructor() {
@@ -52,7 +52,10 @@ class Course extends Component {
         return (
         	<form onSubmit={this.handleSubmit}>
         		<section className={styles.component}>
-        			<div className='container'>
+                    <div className='container'>
+
+                        {this.courseID && this.courseID !== 'new' && <Loading active={!this.props.course.id} absolutePosition={true} />}
+
                         <div className="course-header row">
                             <div className='col s9'>
                                 <Input
