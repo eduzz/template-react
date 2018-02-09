@@ -45,7 +45,43 @@ export const receiveCourseCustomizationError = err => ({
     err,
 });
 
-export const updateCourse = courseID => ({
+export const createCourse = course => ({
+    type: 'CREATE_COURSE',
+    course,
+});
+
+export const updateCourse = course => ({
     type: 'UPDATE_COURSE',
-    courseID,
+    course,
+});
+
+export const changeCourseTitle = title => ({
+    type: 'CHANGE_COURSE_TITLE',
+    title,
+});
+
+export const changeCourseState = state => ({
+    type: 'CHANGE_COURSE_STATE',
+    state,
+});
+
+export const changeCourseCover = cover => ({
+    type: 'CHANGE_COURSE_COVER',
+    cover,
+});
+
+export const changeCourseDescription = description => ({
+    type: 'CHANGE_COURSE_DESCRIPTION',
+    description,
+});
+
+
+export const changeCourseCategory = categoryID => ({
+    type: 'CHANGE_COURSE_CATEGORY',
+    categoryID,
+});
+
+export const changeCourseAuthor = authorID => ({
+    type: 'CHANGE_COURSE_AUTHOR',
+    authorID,
 });

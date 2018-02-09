@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'components/Icon';
+import { Link } from 'react-router-dom';
 import styles from './styles.css';
 
 const PageHeader = () => (
@@ -16,10 +17,10 @@ const PageHeader = () => (
                 </div>
             </div>
             <div className="page-header-action">
-                <a className="button affirmative waves-light waves-effect">
+                <Link to='courses/new' className="button affirmative waves-light waves-effect">
                     <Icon name='package' />
                     <span>Novo Curso</span>
-                </a>
+                </Link>
             </div>
         </div>
     </section>

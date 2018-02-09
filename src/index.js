@@ -8,8 +8,6 @@ import './assets/css/css.css';
 
 const store = configureStore();
 
-store.subscribe( () => console.log(store.getState()));
-
 render(
 	<Root store={ store } />,
 	document.getElementById('root')

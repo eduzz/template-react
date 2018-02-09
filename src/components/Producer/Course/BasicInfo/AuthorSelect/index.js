@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
-// import Collapsible, { Header, Content } from 'components/Collapsible'; // FIXME
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { SelectField, MenuItem } from 'material-ui';
 import Input from 'components/Input';
@@ -20,6 +19,8 @@ class AuthorSelect extends Component {
             this.setState({
                 value: nextProps.selected.id,
             });
+
+            this.handleChange(nextProps.selected.id);
         }
     }
 
@@ -27,10 +28,12 @@ class AuthorSelect extends Component {
         this.props.cleanAuthors();
     }
 
-    handleChange = (event, index, value) => {
+    handleChange = value => {
         this.setState({
             value,
         });
+
+        this.props.onChange(value);
     }
 
     handleClick = () => {
@@ -45,7 +48,7 @@ class AuthorSelect extends Component {
                         floatingLabelText='Autores'
                         defaultValue={this.props.selected}
                         value={this.state.value}
-                        onChange={this.handleChange}
+                        onChange={(event, index, value) => this.handleChange(value)}
                         onClick={this.handleClick}
                         style={{width: '100%'}}
                     >
@@ -107,9 +110,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getAuthors(authors) {
-        if(!authors.length) {
+        // if(!authors.length) {
             dispatch(actions.getAuthors());
-        }
+        // }
     },
     cleanAuthors() {
         dispatch(actions.cleanAuthors());

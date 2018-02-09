@@ -17,7 +17,9 @@ class ModuleList extends Component {
     }
 
     componentDidMount() {
-        this.props.getModules(this.props.courseID);
+        if(this.props.courseID && this.props.courseID !== 'new') {
+            this.props.getModules(this.props.courseID);
+        }
     }
 
     render() {

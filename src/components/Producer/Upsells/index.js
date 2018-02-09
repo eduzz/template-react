@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PageHeader from 'components/PageHeader';
 import styles from './styles.css';
 import Icon from 'components/Icon';
 class Upsells extends Component {
@@ -17,7 +16,6 @@ class Upsells extends Component {
         return(
         	<section className={styles.component}>
 		        <div className="container">
-            		<PageHeader />
             		<section className="upsells-grid">
             			<div className="item">
             				<div className="image">
@@ -42,7 +40,7 @@ class Upsells extends Component {
                                 </button>
             					<button>
                                     <Icon name='delete' />
-                                    <span>Deletar</span>               
+                                    <span>Deletar</span>
                                 </button>
             				</div>
             			</div>
@@ -70,7 +68,7 @@ class Upsells extends Component {
                                 </button>
                                 <button>
                                     <Icon name='delete' />
-                                    <span>Deletar</span>               
+                                    <span>Deletar</span>
                                 </button>
                             </div>
                         </div>
@@ -97,7 +95,7 @@ class Upsells extends Component {
                                 </button>
                                 <button>
                                     <Icon name='delete' />
-                                    <span>Deletar</span>               
+                                    <span>Deletar</span>
                                 </button>
                             </div>
                         </div>
@@ -109,5 +107,3 @@ class Upsells extends Component {
 }
 
 export default Upsells;
-
-

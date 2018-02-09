@@ -16,6 +16,8 @@ class CategorySelect extends Component {
             this.setState({
                 value: nextProps.selected.id,
             });
+
+            this.handleChange(nextProps.selected.id);
         }
     }
 
@@ -23,10 +25,12 @@ class CategorySelect extends Component {
         this.props.cleanCategories();
     }
 
-    handleChange = (event, index, value) => {
+    handleChange = value => {
         this.setState({
             value,
         });
+
+        this.props.onChange(value);
     }
 
     handleClick = () => {
@@ -40,7 +44,7 @@ class CategorySelect extends Component {
                     floatingLabelText='Categoria'
                     defaultValue={this.props.selected.id}
                     value={this.state.value}
-                    onChange={this.handleChange}
+                    onChange={(event, index, value) => this.handleChange(value)}
                     onClick={this.handleClick}
                     style={{width: '100%'}}
                 >

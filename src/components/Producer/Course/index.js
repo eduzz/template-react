@@ -11,18 +11,42 @@ import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
 import { Redirect } from 'react-router-dom';
-import StateSelect from './StateSelect';
+// import StateSelect from './StateSelect';
+import { SelectField, MenuItem } from 'material-ui';
 
 class Course extends Component {
     constructor() {
         super();
 
+        this.state = {};
+
         this.courseID = null;
     }
 
+    componentWillMount() {
+        this.props.cleanCourse();
+    }
+
     componentDidMount() {
-        this.props.getCourse(this.courseID);
-        this.props.getCourseCustomization(this.courseID);
+        if(this.courseID && this.courseID !== 'new') {
+            this.props.getCourse(this.courseID);
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.course && nextProps.course.published !== undefined) {
+            this.setState({
+                published: nextProps.course.published,
+            });
+        }
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+
+        this.props.saveCourse({
+            ...this.props.course,
+        });
     }
 
     render() {
@@ -34,7 +58,7 @@ class Course extends Component {
         }
 
         return (
-        	<form>
+        	<form onSubmit={this.handleSubmit}>
         		<section className={styles.component}>
         			<div className='container'>
                         <div className="course-header row">
@@ -43,19 +67,26 @@ class Course extends Component {
                                     floatlabel='Nome do Curso/Programa'
                                     className='bigger'
                                     defaultValue={this.props.course.title}
+                                    onChange={this.props.changeCourseTitle}
                                     style={{width: '100%'}}
+                                    required
                                 />
                             </div>
                             <div className='col s3'>
-                                <StateSelect
-                                    selected={this.props.course.published === undefined ? 0 : this.props.course.published ? 2 : 1}
+                                <SelectField
+                                    value={this.state.published}
                                     floatingLabelText='Estado do Curso'
-                                />
+                                    onChange={this.props.changeCourseState}
+                                    style={{width: '100%'}}
+                                >
+                                    <MenuItem value={'1'} primaryText="Publicado" />
+                                    <MenuItem value={'0'} primaryText="Não Publicado" />
+                                </SelectField>
                             </div>
                         </div>
         				<Tabs>
                             <Pane title='Informações Básicas' icon='package'>
-                                <BasicInfo course={this.props.course} />
+                                <BasicInfo courseID={this.courseID} />
                             </Pane>
                             <Pane title='Módulos e Aulas' icon='paper'>
                                 <ModulesLessons courseID={this.courseID} />
@@ -70,8 +101,8 @@ class Course extends Component {
                                 <Certificates />
                             </Pane>
         				</Tabs>
-                        <FloatButton/>
 
+                        <FloatButton />
         			</div>
         		</section>
         	</form>
@@ -87,14 +118,21 @@ const mapDispatchToProps = dispatch => ({
     getCourse(courseID) {
         dispatch(actions.getCourse(courseID));
     },
-    getCourseCustomization(courseID) {
-        dispatch(actions.getCourseCustomization(courseID));
-    },
     cleanCourse() {
         dispatch(actions.cleanCourse());
     },
-    saveCourse() {
-        dispatch(actions.updateCourse());
+    changeCourseTitle(e) {
+        dispatch(actions.changeCourseTitle(e.target.value));
+    },
+    changeCourseState(event, index, value) {
+        dispatch(actions.changeCourseState(value));
+    },
+    saveCourse(course) {
+        if(course.id) {
+            dispatch(actions.updateCourse(course));
+        } else {
+            dispatch(actions.createCourse(course));
+        }
     },
 });
 
