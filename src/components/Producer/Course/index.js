@@ -11,7 +11,7 @@ import styles from './styles.css';
 import FloatButton from 'components/FloatButton';
 import Input from 'components/Input';
 import { Redirect } from 'react-router-dom';
-import { SelectField, MenuItem, Toggle } from 'material-ui';
+import { Toggle } from 'material-ui';
 import Loading from 'components/Loading';
 
 class Course extends Component {

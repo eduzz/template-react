@@ -5,7 +5,6 @@ import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { SelectField, MenuItem } from 'material-ui';
 import Input from 'components/Input';
 import styles from './styles.css';
-import Loading from 'components/Loading';
 
 class AuthorSelect extends Component {
     constructor() {

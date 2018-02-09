@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
 import { SelectField, MenuItem } from 'material-ui';
-import Loading from 'components/Loading';
 
 class CategorySelect extends Component {
     componentDidMount() {

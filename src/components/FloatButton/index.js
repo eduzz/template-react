@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.css';
-import Icon from 'components/Icon';
+// import Icon from 'components/Icon';
 
 const FloatButton = (props) => (
     <div>
