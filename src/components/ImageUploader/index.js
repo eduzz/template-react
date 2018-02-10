@@ -44,7 +44,7 @@ class ImageUploader extends Component {
                         <img
                             className='img-preview'
                             alt=''
-                            src={this.state.imagePreviewUrl}
+                            src={this.state.imagePreviewUrl || this.props.defaultImage}
                         />
                         <input
                             className='input-file'

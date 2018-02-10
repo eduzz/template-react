@@ -5,6 +5,8 @@ const searchFilter = (state = {}, action) => {
             	...state,
             	courses: action.text,
             };
+        case 'GET_COURSES':
+            return {};
         default:
             return state;
     }

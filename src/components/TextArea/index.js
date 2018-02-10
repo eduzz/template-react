@@ -13,7 +13,7 @@ const TextArea = props => {
                 id={id}
                 type='text'
                 className='materialize-textarea'
-                key={props.defaultValue ? 'notLoadedYet' : 'loaded'}
+                key={props.async && props.defaultValue ? 'notLoadedYet' : 'loaded'}
                 {...props}
             />
         </div>

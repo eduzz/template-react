@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
-import Select, { Option } from 'components/Select';
-import Collapsible, { Header, Content } from 'components/Collapsible';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { SelectField, MenuItem } from 'material-ui';
 import Input from 'components/Input';
 import styles from './styles.css';
 
@@ -13,46 +13,61 @@ class AuthorSelect extends Component {
         this.state = {};
     }
 
-	componentDidMount() {
+    componentDidMount() {
         this.props.getAuthors();
-	}
+    }
+
+    componentWillUnmount() {
+        this.props.cleanAuthors();
+    }
 
 	render() {
 		return (
             <div className={styles.component}>
-                <Select floatlabel='Autores' value={this.props.selected.id}>
-                    <Option key='' value=''>
-                        Selecione um author...
-                    </Option>
-                    {this.props.authors.map((author, key) =>
-                        <Option key={author.id} value={author.id}>
-                            {author.name}
-                        </Option>
-                    )}
-                </Select>
-                <Collapsible className='add-author card-lessons'>
-                    <Header className='header card-lessons-header'>
-                        <span>Adicionar Author</span>
-                    </Header>
-                    <Content className='card-lessons-wrapper'>
-                        <div>
-                            <Input
-                                onChange={e =>
-                                    this.setState({newAuthorName: e.target.value})
-                                }
-                                floatlabel='Nome do Author'
+                <div className='input-field'>
+                    <SelectField
+                        {...this.props}
+                        floatingLabelText='Autores'
+                        style={{width: '100%'}}
+                    >
+                        {this.props.authors.map(author =>
+                            <MenuItem
+                                key={author.id}
+                                value={author.id}
+                                primaryText={author.name}
                             />
-                            <a
-                                onClick={() =>
-                                    this.props.addAuthor(this.state.newAuthorName)
-                                }
-                                className='button affirmative waves-effect waves-light'
-                            >
-                                <span>Adicionar</span>
-                            </a>
-                        </div>
-                    </Content>
-                </Collapsible>
+                        )}
+                    </SelectField>
+                </div>
+
+                <Card
+                    className='card-lessons'
+                >
+                    <CardTitle
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                    >
+                        <span style={{ display: 'flex', justifyContent: 'center' }}>Adicionar Author</span>
+                    </CardTitle>
+                    <CardText className='card-lessons-wrapper' expandable={true}>
+                        <Input
+                            onChange={e => {
+                                this.setState({
+                                    newAuthorName: e.target.value
+                                });
+                            }}
+                            floatlabel='Nome do Author'
+                        />
+                        <a
+                            onClick={() => {
+                                this.props.addAuthor(this.state.newAuthorName);
+                            }}
+                            className='button affirmative waves-effect waves-light'
+                        >
+                            <span>Adicionar</span>
+                        </a>
+                    </CardText>
+                </Card>
             </div>
 		);
 	}
@@ -65,6 +80,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     getAuthors() {
         dispatch(actions.getAuthors());
+    },
+    cleanAuthors() {
+        dispatch(actions.cleanAuthors());
     },
     addAuthor(name) {
         dispatch(actions.addAuthor(name));

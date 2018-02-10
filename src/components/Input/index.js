@@ -23,7 +23,7 @@ class Input extends React.Component {
                 <input
                     id={this.id}
                     type='text'
-                    key={this.props.defaultValue ? 'notLoadedYet' : 'loaded'}
+                    key={this.props.async && this.props.defaultValue ? 'notLoadedYet' : 'loaded'}
                     onFocus={this.handleFocus}
                     {...this.props}
                 />

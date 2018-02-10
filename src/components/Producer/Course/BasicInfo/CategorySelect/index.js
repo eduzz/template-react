@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import actions from 'actions';
-import Select, { Option } from 'components/Select';
+import { SelectField, MenuItem } from 'material-ui';
 
 class CategorySelect extends Component {
+    componentDidMount() {
+        this.props.getCategories(this.props.categories);
+    }
 
-	componentDidMount() {
-        this.props.getCategories();
-	}
+    componentWillUnmount() {
+        this.props.cleanCategories();
+    }
 
 	render() {
 		return (
 			<div className='input-field'>
-				<Select floatlabel='Categoria'>
-                    <Option key={this.props.selected.id} value={this.props.selected.id}>
-                        {this.props.selected.name || 'Selecione uma categoria...'}
-                    </Option>
+                <SelectField
+                    {...this.props}
+                    floatingLabelText='Categoria'
+                    style={{width: '100%'}}
+                >
                     {this.props.categories.map(option =>
-                        <Option key={option.id} value={option.id}>
-                            {option.name}
-                        </Option>
+                        <MenuItem
+                            key={option.id}
+                            value={option.id}
+                            primaryText={option.name}
+                        />
                     )}
-                </Select>
+                </SelectField>
 			</div>
 		);
 	}
@@ -32,8 +38,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getCategories() {
+    getCategories(categories) {
         dispatch(actions.getCategories());
+    },
+    cleanCategories() {
+        dispatch(actions.cleanCategories());
     },
 });
 

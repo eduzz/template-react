@@ -17,7 +17,7 @@ const middleware = store => next => action => {
             );
             break;
         case 'GET_COURSES':
-            get('/courses').then(
+            get('/courses?page=1&size=9999').then(
                 res => {
                     next(actions.receiveCourses(res.data.data));
                 },
@@ -43,6 +43,36 @@ const middleware = store => next => action => {
                 },
                 err => {
                     next(actions.deleteCourseError(err));
+                }
+            );
+            break;
+        case 'CREATE_COURSE':
+            post('/courses/', action.course).then(
+                res => {
+                    console.log('course -> ', res.data.data);
+                },
+                err => {
+
+                }
+            );
+            break;
+        case 'UPDATE_COURSE':
+            put('/courses/' + action.course.id, action.course).then(
+                res => {
+                    console.log('course -> ', res.data.data);
+                },
+                err => {
+
+                }
+            );
+            break;
+        case 'GET_COURSE_CUSTOMIZATION':
+            get('/courses/' + action.courseID + '/customization').then(
+                res => {
+                    next(actions.receiveCourseCustomization(res.data.data));
+                },
+                err => {
+                    next(actions.receiveCourseCustomizationError(err));
                 }
             );
             break;
