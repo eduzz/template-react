@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import nutrorApp from './reducers';
 import middleware from './middleware';
 
@@ -8,7 +8,7 @@ export const configureStore = () => {
     return store = createStore(
 		nutrorApp,
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-		applyMiddleware(middleware)
+		middleware,
 	);
 };
 
