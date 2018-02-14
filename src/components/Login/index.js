@@ -34,13 +34,13 @@ class Login extends Component {
                     </div>
                     <div className='input-box'>
                         <div className='input-field'>
-                            <input placeholder='Email' type='email' ref='username'/>
+                            <input tabIndex='1' placeholder='Email' type='email' ref='username'/>
                             <label htmlFor='email'>E-mail do Usuário</label>
                         </div>
-                        <a href="">Esqueceu sua senha?</a>
+                        <a tabIndex='3' href="">Esqueceu sua senha?</a>
                         <div className='input-field'>
-                            <input placeholder='Senha' type='password' ref='password'/>
-                            <label htmlFor='email'>Senha</label> 
+                            <input tabIndex='2' placeholder='Senha' type='password' ref='password'/>
+                            <label htmlFor='email'>Senha</label>
                         </div>
                     </div>
 
