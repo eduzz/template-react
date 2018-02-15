@@ -32,6 +32,9 @@ class CourseBasicInfo extends React.Component {
                                 <ImageUploader
                                     defaultImage={imageCover}
                                     onChange={this.props.changeCourseCover}
+                                    large={true}
+                                    icon='paper'
+                                    text='Alterar Plano de fundo'
                                 />
                         	</section>
                         </div>

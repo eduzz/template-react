@@ -14,7 +14,7 @@ const LessonCard = ({ lesson }) => (
     			<h3 className='lesson-title'>{ lesson.title }</h3>
     			<p className='card-lesson-description'>{ lesson.description }</p>
     		</div>
-    		<Link to={`/producer/lessons/${lesson.id}`} className='button small waves-effect waves-light' target='modal-lesson-edit'>
+    		<Link to={`lessons/${lesson.id}`} className='button small waves-effect waves-light' target='modal-lesson-edit'>
                 <span>Editar</span>
             </Link>
     	</div>

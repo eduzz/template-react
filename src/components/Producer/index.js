@@ -22,7 +22,7 @@ const Producer = () => (
 			<Redirect exact from='/producer' to='/producer/courses' />
 	    	<Route exact path='/producer/courses' component={ Courses } />
 	    	<Route exact path='/producer/courses/:courseID' component={ Course } />
-            <Route exact path='/producer/lessons/:lessonID' component={ Lesson } />
+            <Route exact path='/producer/courses/lessons/:lessonID' component={ Lesson } />
 			<Route exact path='/producer/packages' component={ Packages } />
 			<Route exact path='/producer/comments' component={ Comments } />
 			<Route exact path='/producer/students' component={ Students } />
