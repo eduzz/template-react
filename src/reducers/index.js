@@ -8,6 +8,7 @@ import categories from './categories';
 import authors from './authors';
 import modules from './modules';
 import upload from './upload';
+import lesson from './lesson';
 
 const nutrorApp = combineReducers({
 	courses,
@@ -19,6 +20,7 @@ const nutrorApp = combineReducers({
     authors,
     modules,
     upload,
+    lesson,
 });
 
 export default nutrorApp;

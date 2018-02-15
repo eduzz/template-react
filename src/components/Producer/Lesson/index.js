@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Input from 'components/Input';
 import TextArea from 'components/TextArea';
 import ImageUploader from 'components/ImageUploader';
 import Icon from 'components/Icon';
 import AuthorSelect from './AuthorSelect';
 import { DatePicker } from 'material-ui';
+import FileUploader from './FileUploader';
 import styles from './styles.css';
 
 class Lesson extends React.Component {
@@ -106,6 +108,12 @@ class Lesson extends React.Component {
         		</section>
 
                 <section className="form-section">
+        			<div className="row">
+                        <FileUploader />
+                    </div>
+                </section>
+
+                <section className="form-section">
                   <div className="row">
                     <div className="col m12 l4">
                       <div className="form-block">
@@ -180,4 +188,8 @@ class Lesson extends React.Component {
     }
 }
 
-export default Lesson;
+const mapStateToProps = state => ({
+    lesson: state.lesson,
+});
+
+export default connect(mapStateToProps)(Lesson);
