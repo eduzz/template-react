@@ -9,8 +9,12 @@
   :local(.component) + .page-footer {
     margin-left: 250px; }
 
+:local(.component) {
+  width: 100%;
+  max-width: 100%; }
+
 :local(.component) .form-section {
-  padding: 20px 0;
+  padding: 20px;
   border-bottom: 1px solid #EEEEEE; }
   :local(.component) .form-section .row {
     margin-bottom: 0; }

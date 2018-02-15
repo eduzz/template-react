@@ -54,7 +54,7 @@ class Course extends Component {
         		<section className={styles.component}>
                     <div className='container'>
 
-                        {this.courseID && this.courseID !== 'new' && <Loading active={!this.props.course.id} absolutePosition={true} />}
+                        {/* {this.courseID && this.courseID !== 'new' && <Loading active={!this.props.course.id} absolutePosition={true} />} */}
 
                         <div className="course-header row">
                             <div className='col s9'>

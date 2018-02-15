@@ -11,6 +11,7 @@
     :local(.component) .input-img .container .input-file {
       display: none; }
     :local(.component) .input-img .container .img-preview {
-      position: absolute; }
+      position: absolute;
+      cursor: pointer; }
     :local(.component) .input-img .container label {
       z-index: 50; }
