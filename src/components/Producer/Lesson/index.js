@@ -3,6 +3,7 @@ import Input from 'components/Input';
 import TextArea from 'components/TextArea';
 import ImageUploader from 'components/ImageUploader';
 import Icon from 'components/Icon';
+import AuthorSelect from './AuthorSelect';
 import { DatePicker } from 'material-ui';
 import styles from './styles.css';
 
@@ -54,8 +55,15 @@ class Lesson extends React.Component {
 
                 <section className="form-section">
         			<div className="row">
-        				<div className="s12 m12 col">
-        					<h3 className="form-section-title">Tipo da Aula</h3>
+        				<div className="s12 m8 col">
+                            <div className='form-block'>
+        					    <h3 className="form-block-title">Tipo da Aula</h3>
+                            </div>
+        				</div>
+                        <div className="s12 m4 col">
+                            <div className='form-block'>
+        					    <h3 className="form-block-title">Autor da Aula</h3>
+                            </div>
         				</div>
         				<div className="s12 m2 col">
         					<div className="form-block">
@@ -87,6 +95,11 @@ class Lesson extends React.Component {
 								<Icon name='video' />
 								<span>Embed</span>
 							  </a>
+        					</div>
+        				</div>
+                        <div className="s12 m4 col">
+        					<div className="form-block">
+			                    <AuthorSelect />
         					</div>
         				</div>
         			</div>
