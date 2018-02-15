@@ -53,6 +53,46 @@ class Lesson extends React.Component {
                 </section>
 
                 <section className="form-section">
+        			<div className="row">
+        				<div className="s12 m12 col">
+        					<h3 className="form-section-title">Tipo da Aula</h3>
+        				</div>
+        				<div className="s12 m2 col">
+        					<div className="form-block">
+			                  <a className="input-img login-logo">
+								<Icon name='video' />
+								<span>Video</span>
+							  </a>
+        					</div>
+        				</div>
+                        <div className="s12 m2 col">
+        					<div className="form-block">
+			                  <a className="input-img login-logo">
+								<Icon name='video' />
+								<span>Audio</span>
+							  </a>
+        					</div>
+        				</div>
+                        <div className="s12 m2 col">
+        					<div className="form-block">
+			                  <a className="input-img login-logo">
+								<Icon name='paper' />
+								<span>Texto</span>
+							  </a>
+        					</div>
+        				</div>
+                        <div className="s12 m2 col">
+        					<div className="form-block">
+			                  <a className="input-img login-logo">
+								<Icon name='video' />
+								<span>Embed</span>
+							  </a>
+        					</div>
+        				</div>
+        			</div>
+        		</section>
+
+                <section className="form-section">
                   <div className="row">
                     <div className="col m12 l4">
                       <div className="form-block">
