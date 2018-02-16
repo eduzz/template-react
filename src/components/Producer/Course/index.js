@@ -54,7 +54,7 @@ class Course extends Component {
         		<section className={styles.component}>
                     <div className='container'>
 
-                        {/* {this.courseID && this.courseID !== 'new' && <Loading active={!this.props.course.id} absolutePosition={true} />} */}
+                        {this.courseID && this.courseID !== 'new' && <Loading active={!this.props.course.id} absolutePosition={true} />}
 
                         <div className="course-header row">
                             <div className='col s9'>
@@ -71,8 +71,8 @@ class Course extends Component {
                             <div className='col s3'>
                                 <Toggle
                                     label='Publicado'
-                                    toggled={this.props.course.published === '1'}
-                                    onClick={() => this.props.changeCourseState(this.props.course.published === '1' ? '0' : '1')}
+                                    toggled={this.props.course.published}
+                                    onClick={() => this.props.changeCourseState(this.props.course.published ? 0 : 1)}
                                 />
                             </div>
                         </div>

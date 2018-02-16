@@ -1,11 +1,13 @@
-const lesson = (state = [], action) => {
+const lesson = (state = {}, action) => {
     switch (action.type) {
         case 'GET_LESSON':
-            return [];
+            return {};
         case 'RECEIVE_LESSON':
-            return [...action.lesson];
+            return {
+                ...action.lesson
+            };
         case 'RECEIVE_LESSON_ERROR':
-            return [];
+            return {};
         default:
             return state;
     }

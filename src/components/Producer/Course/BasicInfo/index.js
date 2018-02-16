@@ -16,7 +16,7 @@ class CourseBasicInfo extends React.Component {
     }
 
     render() {
-        const imageCover = this.props.course.image_cover && (cdn.includes('http') ? this.props.course.image_cover : cdn + this.props.course.image_cover);
+        const imageCover = this.props.course.image_cover && (this.props.course.image_cover.includes('http') ? this.props.course.image_cover : cdn + this.props.course.image_cover);
 
         return (
             <div className={styles.component}>
