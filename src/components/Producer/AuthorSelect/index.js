@@ -26,7 +26,8 @@ class AuthorSelect extends Component {
             <div className={styles.component}>
                 <div className='input-field'>
                     <SelectField
-                        {...this.props}
+                        value={this.props.value}
+                        onChange={this.props.onChange}
                         floatingLabelText='Autores'
                         style={{width: '100%'}}
                     >

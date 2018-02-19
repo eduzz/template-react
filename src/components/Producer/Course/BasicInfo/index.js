@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TextArea from 'components/TextArea';
 import CategorySelect from './CategorySelect';
-import AuthorSelect from './AuthorSelect';
+import AuthorSelect from 'components/Producer/AuthorSelect';
 import ImageUploader from 'components/ImageUploader';
 import styles from './styles.css';
 import { cdn } from 'constants/index';

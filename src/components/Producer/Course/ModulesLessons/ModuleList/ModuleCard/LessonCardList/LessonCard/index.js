@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from 'components/Modal';
 import { cdn } from 'constants/index';
 import { Link } from 'react-router-dom';
 import styles from './styles.css';

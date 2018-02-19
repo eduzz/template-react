@@ -2,7 +2,7 @@ const initialState = {
     title: '',
     description: '',
     id_author: null,
-    id_category: '130',
+    id_category: 130,
     image_cover: '',
     published: 1,
 };
@@ -14,7 +14,6 @@ const course = (state = initialState, action) => {
             return initialState;
         case 'RECEIVE_COURSE':
             return {
-                ...state,
                 ...action.course,
                 id_category: action.course.category.id,
                 id_author: action.course.author.id,
