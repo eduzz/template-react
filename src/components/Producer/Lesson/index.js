@@ -66,7 +66,7 @@ class Lesson extends React.Component {
 
             <div className='col s3'>
               <div className='row'>
-                <div className='form-block'> 
+                <div className='form-block'>
                   <h3 className="form-block-title">Miniatura do Curso</h3>
                   <label className="input-label">Tamanho sugerido: 170x220</label>
 
@@ -104,19 +104,19 @@ class Lesson extends React.Component {
                   <Icon name='video-line' />
                   <span>Video</span>
                 </label>
-                
+
                 <input id="type-texto" type="radio" name="class-type" value="texto" />
                 <label for="type-texto">
                   <Icon name='text-line' />
                   <span>Texto</span>
                 </label>
-                
+
                 <input id="type-audio" type="radio" name="class-type" value="audio" />
                 <label for="type-audio">
                   <Icon name='audio-line' />
                   <span>Áudio</span>
                 </label>
-                
+
                 <input id="type-embed" type="radio" name="class-type" value="embed" />
                 <label for="type-embed">
                   <Icon name='embed-line' />
@@ -175,19 +175,13 @@ class Lesson extends React.Component {
               </div>
             </div>
 
-            <div className="col m12 l4">
-              <div className="form-block">
-                <h3 className="form-block-title">Agendamento da Aula</h3>
-                <p className="date-description">Após o primeiro acesso, após quantos dias a aula ficará disponível:</p>
-                <Input
-                  rightlabel='Dias'
-                  defaultValue={this.props.lesson.days_locked}
-                  async={true}
-                  className="datepicker"
-                  onChange={e => this.props.changeLessonField('days_locked', e.target.value)}
-                />
-              </div>
-            </div>
+            <section className="form-section">
+                <div className="row">
+                    <FileUploader
+                        files={this.props.lesson.lesson_files || []}
+                    />
+                </div>
+            </section>
 
             <div className="col m12 l4">
               <div className="form-block">
