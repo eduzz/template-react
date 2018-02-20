@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'components/Modal';
 import { cdn } from 'constants/index';
+import { Link } from 'react-router-dom';
 import styles from './styles.css';
 
 const LessonCard = ({ lesson }) => (
@@ -13,9 +13,9 @@ const LessonCard = ({ lesson }) => (
     			<h3 className='lesson-title'>{ lesson.title }</h3>
     			<p className='card-lesson-description'>{ lesson.description }</p>
     		</div>
-    		<Button className='button small waves-effect waves-light' target='modal-lesson-edit'>
+    		<Link to={`lessons/${lesson.id}`} className='button small waves-effect waves-light' target='modal-lesson-edit'>
                 <span>Editar</span>
-            </Button>
+            </Link>
     	</div>
     </div>
 );

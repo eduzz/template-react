@@ -63,7 +63,7 @@ class Course extends Component {
                                     className='bigger'
                                     defaultValue={this.props.course.title}
                                     async={this.courseID && this.courseID !== 'new'}
-                                    onChange={this.props.changeCourseTitle}
+                                    onChange={e => this.props.changeCourseField('title', e.target.value)}
                                     style={{width: '100%'}}
                                     required
                                 />
@@ -71,8 +71,8 @@ class Course extends Component {
                             <div className='col s3'>
                                 <Toggle
                                     label='Publicado'
-                                    toggled={this.props.course.published === '1'}
-                                    onClick={() => this.props.changeCourseState(this.props.course.published === '1' ? '0' : '1')}
+                                    toggled={this.props.course.published}
+                                    onClick={() => this.props.changeCourseField('published', this.props.course.published ? 0 : 1)}
                                 />
                             </div>
                         </div>
@@ -113,11 +113,8 @@ const mapDispatchToProps = dispatch => ({
     cleanCourse() {
         dispatch(actions.cleanCourse());
     },
-    changeCourseTitle(e) {
-        dispatch(actions.changeCourseTitle(e.target.value));
-    },
-    changeCourseState(value) {
-        dispatch(actions.changeCourseState(value));
+    changeCourseField(field, value) {
+        dispatch(actions.changeCourseField(field, value));
     },
     saveCourse(course) {
         if(course.id) {

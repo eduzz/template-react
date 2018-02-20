@@ -1,0 +1,42 @@
+:local(.component) {
+  padding-left: 250px; }
+  :local(.component) > .container {
+    padding: 30px 30px 40px 30px;
+    min-height: calc(100vh - 60px);
+    position: relative;
+    width: 100%;
+    max-width: 100%; }
+  :local(.component) + .page-footer {
+    margin-left: 250px; }
+
+:local(.component) {
+  width: 100%;
+  max-width: 100%; }
+
+:local(.component) .form-section {
+  padding: 20px;
+  border-bottom: 1px solid #EEEEEE; }
+  :local(.component) .form-section .row {
+    margin-bottom: 0; }
+  :local(.component) .form-section .form-block {
+    padding: 10px 0;
+    display: inline-block;
+    width: 100%; }
+    :local(.component) .form-section .form-block p {
+      line-height: 1.2rem;
+      max-width: 350px; }
+    :local(.component) .form-section .form-block .radio-description {
+      max-width: 320px; }
+    :local(.component) .form-section .form-block input.datepicker {
+      margin-bottom: 0;
+      max-width: 200px; }
+  :local(.component) .form-section .form-block-title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 0 0 5px 0; }
+
+:local(.component) .form-section-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 0 0 15px 0;
+  margin: 0; }

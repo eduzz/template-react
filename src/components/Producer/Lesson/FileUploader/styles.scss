@@ -1,0 +1,119 @@
+@import 'src/assets/css/_variables.scss';
+@import 'src/assets/css/_mixins.scss';
+
+:local(.component) {
+  .filesList {
+    li {
+      @include transition;
+
+      padding: 15px 25px;
+
+      font-size: 16px;
+      line-height: 20px;  
+
+      border-radius: 3px;
+      background-color: #f6f6f6;
+
+      &:not(:last-child) { margin-bottom: 5px; }
+
+      &:hover { background-color: $light-gray; }
+
+      svg {
+        float: left;
+        margin-right: 20px;
+      }
+    }
+
+    .btnCancel {
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      float: right;
+      position: relative;
+
+      font-weight: 600;
+      line-height: 20px;
+
+      border: none;
+      border-radius: 50%;
+      background-color: $medium-gray;
+      cursor: pointer;
+
+      &:before,
+      &:after {
+        @include transition;
+
+        content: '';
+        width: 10px;
+        height: 2px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        margin: auto;
+
+        background-color: black;
+      }
+
+      &:before { transform: rotate(-45deg); }
+      &:after { transform: rotate(-135deg); }
+
+      &:hover {
+        &:before { transform: rotate(-135deg); }
+        &:after { transform: rotate(-45deg); }
+      }
+    }
+  }
+
+  .fileProgress {
+    height: 4px;
+    width: 100%;
+    display: block;
+    position: relative;
+    margin: 0 0 1rem 0;
+
+    overflow: hidden;
+    border-radius: 2px;
+    background-color: #acece6;
+
+    span {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+
+      background-color: #383838;
+
+      @include transition;
+    }
+
+    @for $i from 1 through 100 {
+      .f-#{$i} {
+        max-width: percentage($i / 100);
+      }
+    }
+  }
+
+  .inputSelect {
+    @include transition;
+
+    display: block;
+    height: 100px;
+
+    text-align: center;
+
+    border: 1px dashed #383838;
+    cursor: pointer;
+
+    &:hover { background-color: $light-gray; }
+
+    span {
+      font-size: 16px;
+      line-height: 100px;
+    }
+
+    strong { text-decoration: underline; }
+  }
+}

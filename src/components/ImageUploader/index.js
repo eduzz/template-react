@@ -34,10 +34,17 @@ class ImageUploader extends Component {
         }
     }
 
+    handleImageClick = () => {
+        if(!this.props.large) {
+            this.uploadInput.click()
+        }
+    }
+
     render() {
         return (
             <div className={styles.component}>
-                <div className='input-img large-banner'>
+                <div className={`input-img ${this.props.large ? 'large-banner' : 'card-img'}`}>
+
                     <div className='container'>
                         <Loading active={!!this.state.imagePreviewUrl && !this.props.courseBanner.url} absolutePosition={true} />
 
@@ -45,16 +52,20 @@ class ImageUploader extends Component {
                             className='img-preview'
                             alt=''
                             src={this.state.imagePreviewUrl || this.props.defaultImage}
+                            onClick={this.handleImageClick}
                         />
+
                         <input
                             className='input-file'
                             id={this.inputFileID}
                             type='file'
+                            ref={input => this.uploadInput = input}
                             onChange={e => this.handleImageChange(e)}
                         />
-                        <label htmlFor={this.inputFileID} className='button small soft top-right waves-effect'>
-                            <Icon name='paper' />
-                            <span>Alterar Plano de fundo</span>
+
+                        <label htmlFor={this.inputFileID} className={this.props.large ? 'button small soft top-right waves-effect' : 'input-img card-img'}>
+                            <Icon name={this.props.icon} />
+                            <span>{this.props.text}</span>
                         </label>
                     </div>
                 </div>

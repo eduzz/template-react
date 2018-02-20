@@ -2,7 +2,7 @@
 @import "fonts";
 @import "mixins";
 @import "reset";
-@import "materialize";  
+@import "materialize";
 
 body{
   padding:60px 0 0 0;
@@ -13,11 +13,11 @@ body{
 .main-header{
   background-color:#1B1B1B;
   position: fixed;
-  width:100%;  
+  width:100%;
   top: 0;
-  left: 0; 
+  left: 0;
   right: 0;
-  z-index: 50; 
+  z-index: 50;
   .container{
     display: flex;
     justify-content: space-between;
@@ -413,7 +413,7 @@ nav{
   padding:10px 0;
 }
 .tabs{
-  padding:20px 0 0 0; 
+  padding:20px 0 0 0;
   display: flex;
   justify-content: flex-start;
   align-items:flex-start;
@@ -571,7 +571,7 @@ nav{
       position: absolute;
       top: 20px;
       right: 20px;
-      margin:auto; 
+      margin:auto;
     }
     .center{
       justify-content: center;
@@ -621,7 +621,7 @@ nav{
     }
    input.datepicker{
     margin-bottom:0;
-    max-width: 200px; 
+    max-width: 200px;
     }
   }
   .form-block-title{
@@ -629,7 +629,7 @@ nav{
     font-weight: $medium;
     margin:0 0 10px 0;
   }
-} 
+}
 .form-section-title{
   @include fontsize(24);
   font-weight: $medium;
@@ -637,7 +637,7 @@ nav{
   margin:30px 0 0 0;
 }
 .page-footer{
-    padding:5px 0; 
+    padding:5px 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -648,7 +648,7 @@ nav{
       color:$dark-color;
       @include fontsize(12);
       letter-spacing: 0.5px;
-    } 
+    }
     .logo-footer{
       height: 20px;
       padding:0 0 0 10px;
@@ -689,10 +689,10 @@ nav{
         transform: translateX(5px) rotate(40deg);
         position: absolute;
         top: 0 ;
-        right: 40px; 
+        right: 40px;
         bottom: 0 ;
         margin: auto;
-        
+
       }
 
     &:after{
@@ -707,7 +707,7 @@ nav{
       position: absolute;
       top: 0 ;
       right: 40px ;
-      bottom: 0 ; 
+      bottom: 0 ;
       margin: auto;
     }
     &:hover{
@@ -730,10 +730,10 @@ nav{
         content: '';
         display: inline-block;
         width: 2px;
-        height: 16px; 
+        height: 16px;
         border-radius: 16px;
         position: absolute;
-        transform: translateX(5px) rotate(-40deg); 
+        transform: translateX(5px) rotate(-40deg);
       }
     }
   }
@@ -743,7 +743,7 @@ nav{
   display: block;
   width: 100%;
   background-color:#fff;
-  position:relative; 
+  position:relative;
   border-radius:4px;
   transition: all 0.3s ease-in-out;
   &:hover{
@@ -766,7 +766,7 @@ nav{
     padding:20px;
     padding-top: 0!important;
   }
-  
+
   .card-lesson-block{
     padding:20px 120px 20px 20px;
     background-color:$light-gray;
@@ -774,13 +774,13 @@ nav{
     display: flex;
     align-items:flex-start;
     justify-content: flex-start;
-    position:relative; 
-    .button{ 
+    position:relative;
+    .button{
       text-transform: uppercase;
       font-weight: $medium;
       letter-spacing: 0.5px;
       position:absolute;
-      top: 0; 
+      top: 0;
       bottom:0;
       right: 20px;
       display: block;
@@ -806,7 +806,7 @@ nav{
     }
   }
 
-} 
+}
 .check-description,
 .date-description{
   margin-bottom:10px;

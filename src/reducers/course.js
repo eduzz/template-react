@@ -2,7 +2,7 @@ const initialState = {
     title: '',
     description: '',
     id_author: null,
-    id_category: '130',
+    id_category: 130,
     image_cover: '',
     published: 1,
 };
@@ -14,7 +14,6 @@ const course = (state = initialState, action) => {
             return initialState;
         case 'RECEIVE_COURSE':
             return {
-                ...state,
                 ...action.course,
                 id_category: action.course.category.id,
                 id_author: action.course.author.id,
@@ -42,36 +41,6 @@ const course = (state = initialState, action) => {
             return {
                 ...state,
             };
-        case 'CHANGE_COURSE_TITLE':
-            return {
-                ...state,
-                title: action.title,
-            };
-        case 'CHANGE_COURSE_STATE':
-            return {
-                ...state,
-                published: action.state,
-            };
-        case 'CHANGE_COURSE_COVER':
-            return {
-                ...state,
-                image_cover: action.cover,
-            };
-        case 'CHANGE_COURSE_DESCRIPTION':
-            return {
-                ...state,
-                description: action.description,
-            };
-        case 'CHANGE_COURSE_CATEGORY':
-            return {
-                ...state,
-                id_category: action.categoryID,
-            };
-        case 'CHANGE_COURSE_AUTHOR':
-            return {
-                ...state,
-                id_author: action.authorID,
-            };
         case 'RECEIVE_IMAGE':
             return {
                 ...state,
@@ -86,6 +55,11 @@ const course = (state = initialState, action) => {
             return {
                 ...state,
                 isDeleted: true,
+            };
+        case 'CHANGE_COURSE_FIELD':
+            return {
+                ...state,
+                [action.field]: action.value,
             };
         default:
             return state;

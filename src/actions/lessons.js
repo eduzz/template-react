@@ -1,15 +1,20 @@
-export const getModuleLessons = moduleID => ({
-	type: 'GET_MODULE_LESSONS',
-	moduleID
+export const getLesson = lessonID => ({
+	type: 'GET_LESSON',
+	lessonID
 });
 
-export const receiveModuleLessons = (lessons, moduleID) => ({
-	type: 'RECEIVE_MODULE_LESSONS',
-	lessons,
-	moduleID,
+export const receiveLesson = lesson => ({
+	type: 'RECEIVE_LESSON',
+	lesson,
 });
 
-export const receiveModuleLessonsError = err => ({
-	type: 'RECEIVE_MODULE_LESSONS_ERROR',
+export const receiveLessonError = err => ({
+	type: 'RECEIVE_LESSON_ERROR',
 	err,
+});
+
+export const changeLessonField = (field, value) => ({
+    type: 'CHANGE_LESSON_FIELD',
+    field,
+    value,
 });

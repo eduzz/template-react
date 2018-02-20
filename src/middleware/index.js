@@ -6,6 +6,7 @@ import categories from './categories';
 import authors from './authors';
 import modules from './modules';
 import upload from './upload';
+import lesson from './lesson';
 
 export default applyMiddleware(
     courses,
@@ -16,4 +17,5 @@ export default applyMiddleware(
     authors,
     modules,
     upload,
+    lesson,
 );
