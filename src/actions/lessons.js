@@ -18,3 +18,8 @@ export const changeLessonField = (field, value) => ({
     field,
     value,
 });
+
+export const addLessonFile = file => ({
+    type: 'ADD_LESSON_FILE',
+    file,
+});
