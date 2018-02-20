@@ -31,7 +31,7 @@ class CourseBasicInfo extends React.Component {
 
                                 <ImageUploader
                                     defaultImage={imageCover}
-                                    onChange={this.props.changeCourseCover}
+                                    onChange={cover => this.props.changeCourseField('image_cover', cover)}
                                     large={true}
                                     icon='paper'
                                     text='Alterar Plano de fundo'
@@ -47,14 +47,14 @@ class CourseBasicInfo extends React.Component {
                                 <h3 className='form-section-title'>Detalhes do Curso</h3>
                                 <CategorySelect
                                     value={this.props.course.id_category}
-                                    onChange={(event, index, value) => this.props.changeCourseCategory(value)}
+                                    onChange={(event, index, value) => this.props.changeCourseField('id_category', value)}
                                 />
 
                                 <TextArea
                                     floatlabel='Descrição do Curso'
                                     async={this.props.courseID && this.props.courseID !== 'new'}
                                     defaultValue={this.props.course.description}
-                                    onChange={e => this.props.changeCourseDescription(e.target.value)}
+                                    onChange={e => this.props.changeCourseField('description', e.target.value)}
                                 />
                             </div>
                         </div>
@@ -63,7 +63,7 @@ class CourseBasicInfo extends React.Component {
                                 <h3 className='form-section-title'>Autor do Curso</h3>
                                 <AuthorSelect
                                     value={this.props.course.id_author}
-                                    onChange={(event, index, value) => this.props.changeCourseAuthor(value)}
+                                    onChange={(event, index, value) => this.props.changeCourseField('id_author', value)}
                                 />
                             </div>
                         </div>
@@ -82,17 +82,8 @@ const mapDispatchToProps = dispatch => ({
     getCourseCustomization(courseID) {
         dispatch(actions.getCourseCustomization(courseID));
     },
-    changeCourseCover(cover) {
-        dispatch(actions.changeCourseCover(cover));
-    },
-    changeCourseDescription(value) {
-        dispatch(actions.changeCourseDescription(value));
-    },
-    changeCourseCategory(categoryID) {
-        dispatch(actions.changeCourseCategory(categoryID));
-    },
-    changeCourseAuthor(authorID) {
-        dispatch(actions.changeCourseAuthor(authorID));
+    changeCourseField(field, value) {
+        dispatch(actions.changeCourseField(field, value));
     },
 });
 
