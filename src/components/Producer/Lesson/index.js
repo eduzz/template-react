@@ -100,25 +100,25 @@ class Lesson extends React.Component {
               <div className="row list-class-type">
                 <input id="type-video" type="radio" name="class-type" value="video" />
                 <label for="type-video">
-                  <Icon name='video' />
+                  <Icon name='video-line' />
                   <span>Video</span>
                 </label>
                 
                 <input id="type-texto" type="radio" name="class-type" value="texto" />
                 <label for="type-texto">
-                  <Icon name='video' />
+                  <Icon name='text-line' />
                   <span>Texto</span>
                 </label>
                 
                 <input id="type-audio" type="radio" name="class-type" value="audio" />
                 <label for="type-audio">
-                  <Icon name='video' />
+                  <Icon name='audio-line' />
                   <span>Áudio</span>
                 </label>
                 
                 <input id="type-embed" type="radio" name="class-type" value="embed" />
                 <label for="type-embed">
-                  <Icon name='video' />
+                  <Icon name='embed-line' />
                   <span>Embed</span>
                 </label>
               </div>
