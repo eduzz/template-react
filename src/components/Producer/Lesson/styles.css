@@ -108,3 +108,39 @@
 
 :local(.component) .list-class-type span {
   margin-top: 0; }
+
+:local(.component) .author-item {
+  width: 100%;
+  height: 50px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: space-between;
+  justify-content: space-between;
+  -webkit-flex-flow: row nowrap;
+  -ms-flex-flow: row nowrap;
+  flex-flow: row nowrap;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center; }
+  :local(.component) .author-item img, :local(.component) .author-item span, :local(.component) .author-item button {
+    margin: auto; }
+  :local(.component) .author-item img {
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 50%; }
+  :local(.component) .author-item span {
+    margin-left: 10px;
+    font-weight: bold; }
+  :local(.component) .author-item button {
+    transition: all 0.3s ease-in-out;
+    padding: 3px 20px;
+    margin-right: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: #d8d8d8; }
+    :local(.component) .author-item button:hover {
+      background-color: #b1b1b1; }

@@ -126,6 +126,11 @@ class Lesson extends React.Component {
 
             <div className="s12 m4 col">
               <div className="form-block">
+                <div className="author-item">
+                  <img src="http://via.placeholder.com/50x50" />
+                  <span>Eugênio Pacheco</span>
+                  <button type="button">Remover</button>
+                </div>
                 <AuthorSelect
                   value={this.props.lesson.id_author}
                   onChange={(event, index, value) => this.props.changeLessonField('id_author', value)}

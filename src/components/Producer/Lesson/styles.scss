@@ -131,4 +131,58 @@
 
 		span { margin-top: 0; }
 	}
+
+	.author-item {
+		width: 100%;
+		height: 50px;
+		display: -webkit-flex;
+		display: -ms-flexbox;
+		display: flex;
+
+		-ms-flex-pack: space-between;
+		justify-content: space-between;
+
+		-webkit-flex-flow: row nowrap;
+		-ms-flex-flow: row nowrap;
+		flex-flow: row nowrap;
+
+		-webkit-align-items: center;
+		-ms-flex-align: center;
+		align-items: center;
+
+		img, span, button { margin: auto; }
+
+		img {
+			margin-left: 0;
+			margin-right: 0;
+
+			border-radius: 50%;
+		}
+		
+		span {
+			margin-left: 10px;
+
+			font-weight: bold;
+		}
+		
+		button {
+			@include transition;
+
+			padding: 3px 20px;
+			margin-right: 0;
+			
+			font-weight: bold;
+			text-transform: uppercase;
+			
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+
+			background-color: $medium-gray;
+
+			&:hover {
+				background-color: $dark-gray;
+			}
+		}
+	}
 }
