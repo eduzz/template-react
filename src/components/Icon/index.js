@@ -1,6 +1,9 @@
 import React from 'react';
 
 const icons = {
+    'unknown': {
+        width: '0px',
+    },
     'airplane': {
         paths:[
             {
@@ -289,15 +292,17 @@ const icons = {
 }
 
 const Icon = ({ name }) => {
+    const icon = icons[name] || icons['unknown'];
+
     const svgParams = {
-        ...icons[name],
+        ...icon,
         paths: undefined,
     };
 
     return (
         <svg xmlns='http://www.w3.org/2000/svg' className='icon' viewBox='0 0 16 16' {...svgParams}>
-            {icons[name].paths.map(path =>
-                <path fillRule='evenodd' {...path} />
+            {icon.paths && icon.paths.map((path, key) =>
+                <path key={key} fillRule='evenodd' {...path} />
             )}
         </svg>
     );

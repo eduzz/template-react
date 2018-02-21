@@ -7,12 +7,12 @@ const lesson = (state = {}, action) => {
                 ...action.lesson,
                 chats: {
                     ...action.lesson.chats,
-                    hasjivochat: !!parseInt(action.lesson.chats.hasjivochat),
-                    haszopimchat: !!parseInt(action.lesson.chats.haszopimchat),
-                    hastawktochat: !!parseInt(action.lesson.chats.hastawktochat),
-                    haszendeskchat: !!parseInt(action.lesson.chats.haszendeskchat),
-                    haslivechat: !!parseInt(action.lesson.chats.haslivechat),
-                    haschatroll: !!parseInt(action.lesson.chats.haschatroll),
+                    hasjivochat: !!parseInt(action.lesson.chats.hasjivochat, 10),
+                    haszopimchat: !!parseInt(action.lesson.chats.haszopimchat, 10),
+                    hastawktochat: !!parseInt(action.lesson.chats.hastawktochat, 10),
+                    haszendeskchat: !!parseInt(action.lesson.chats.haszendeskchat, 10),
+                    haslivechat: !!parseInt(action.lesson.chats.haslivechat, 10),
+                    haschatroll: !!parseInt(action.lesson.chats.haschatroll, 10),
                 },
                 lesson_files: [
                     {
@@ -56,13 +56,18 @@ const lesson = (state = {}, action) => {
                 ...state,
                 [action.field]: action.value,
             };
-        case 'ADD_LESSON_FILE':
+        case 'ADD_LESSON_FILES':
             return {
                 ...state,
                 lesson_files: [
                     ...state.lesson_files,
-                    {...action.file},
+                    ...action.files,
                 ],
+            };
+        case 'REMOVE_LESSON_FILE':
+            return {
+                ...state,
+                lesson_files: state.lesson_files.filter((file, i) => action.index !== i),
             };
         default:
             return state;
