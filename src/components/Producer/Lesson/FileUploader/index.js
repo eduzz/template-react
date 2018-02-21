@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import actions from 'actions';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
 import styles from './styles.css';
@@ -24,10 +26,16 @@ class FileUploader extends React.Component {
                     <div className="col s12">
                         <div className="form-block">
                             <ul className="filesList">
-                                {this.props.files.map(file =>
-                                    <li>
+                                {this.props.files.map((file, key) =>
+                                    <li key={key}>
                                         <Icon name={file.mimetype} />
-                                        {file.title} <button className="btnCancel" type="button"></button>
+                                        {file.title}
+
+                                        <button onClick={() => this.props.dispatch(actions.removeLessonFile(key))} className="btnCancel" type="button"></button>
+
+                                        <div className="fileProgress">
+                                            <span className="f-45"></span>
+                                        </div>
                                     </li>
                                 )}
                             </ul>
@@ -45,7 +53,16 @@ class FileUploader extends React.Component {
                                 id={this.inputFileID}
                                 type='file'
                                 ref={input => this.uploadInput = input}
-                                onChange={e => {debugger;}}
+                                multiple
+                                onChange={e => {
+                                    const files = [...e.target.files].map(file => ({
+                                        title: file.name,
+                                        size: file.size,
+                                        mimetype: file.type.substring(file.type.indexOf('/') + 1),
+                                    }));
+
+                                    this.props.dispatch(actions.addLessonFiles(files));
+                                }}
                             />
                         </div>
                     </div>
@@ -55,4 +72,4 @@ class FileUploader extends React.Component {
     }
 }
 
-export default FileUploader;
+export default connect()(FileUploader);
