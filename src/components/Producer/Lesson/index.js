@@ -64,8 +64,8 @@ class Lesson extends React.Component {
             </div>
 
             <div className='col s3'>
-              <section>
-                <div className='form-block image-uploader'>
+              <div className='row'>
+                <div className='form-block'> 
                   <h3 className="form-block-title">Miniatura do Curso</h3>
                   <label className="input-label">Tamanho sugerido: 170x220</label>
 
@@ -73,10 +73,10 @@ class Lesson extends React.Component {
                     defaultImage={lessonLogo}
                     // onChange={img => this.props.changeLessonField('image', img)}
                     icon='paper'
-                    text='Alterar Logo'
+                    text='Alterar Imagem'
                   />
                 </div>
-              </section>
+              </div>
             </div>
           </div>
         </section>
