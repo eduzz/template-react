@@ -145,3 +145,11 @@ nav {
   background-color: inherit;
   height: auto;
   line-height: initial; }
+
+html .switch label .lever {
+  border: #d8d8d8 thin solid;
+  background-color: transparent; }
+  html .switch label .lever:after {
+    box-shadow: none;
+    background-color: #d8d8d8;
+    border: #d8d8d8 thin solid; }

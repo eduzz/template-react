@@ -110,3 +110,18 @@ nav{
   height: auto;
   line-height: initial;
 }
+
+html .switch {
+  label {
+    .lever {
+      border: $medium-gray thin solid;
+      background-color: transparent;
+
+      &:after {
+        box-shadow: none;
+        background-color: $medium-gray;
+        border: $medium-gray thin solid;
+      }
+    }
+  }
+}

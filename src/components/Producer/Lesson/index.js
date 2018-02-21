@@ -6,7 +6,8 @@ import TextArea from 'components/TextArea';
 import ImageUploader from 'components/ImageUploader';
 import Icon from 'components/Icon';
 import AuthorSelect from 'components/Producer/AuthorSelect';
-import { DatePicker, Toggle } from 'material-ui';
+import { DatePicker } from 'material-ui';
+import Toggle from 'components/Toggle';
 import FileUploader from './FileUploader';
 import { cdn } from 'constants/index';
 import Loading from 'components/Loading';
@@ -193,19 +194,13 @@ class Lesson extends React.Component {
           <div className="row">
             <div className="col m12 l4">
               <div className="form-block">
-                <div className="switch">
-                  <label>
                     <Toggle
+                      title='Aula Gratuita'
+                      description='Aula estará disponível sem necessidade de compra.'
                       id='check-destaque'
                       toggled={!!this.props.lesson.is_free}
                       onClick={() => this.props.changeLessonField('is_free', this.props.lesson.is_free ? 0 : 1)}
                     />
-                  </label>
-                  <label htmlFor="check-destaque">
-                    <h3 className="form-block-title">Aula Gratuita</h3>
-                    <p className="check-description">Aula estará disponível sem necessidade de compra.</p>
-                  </label>
-                </div>
               </div>
             </div>
 
