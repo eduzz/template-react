@@ -7,7 +7,7 @@ const categories = store => next => action => {
 
     switch (action.type) {
         case 'GET_CATEGORIES':
-            get('/categories').then(
+            get({url: '/categories'}).then(
                 res => {
                     next(actions.receiveCategories(res.data.data));
                 },
