@@ -48,6 +48,21 @@
 	.input-img.card-img {
 		width: 100%;
 		height: 225px;
+
+		border: none;
+		border-radius: 3px;
+		background-color: #f6f6f6;
+
+		svg, span { margin: auto; }
+
+		svg { margin-bottom: 10px; }
+
+		span { margin-top: 0; }
+
+		.img-preview {
+			object-fit: cover;
+			border:none;
+		}
 	}
 
 	.list-class-type {
@@ -95,11 +110,12 @@
 			}
 
 			&:checked + label {
-				background-color: rgba(53, 78, 126, .87);
-
 				color: #fff;
+				
+				background-color: rgba(53, 78, 126, .87);
+				border-color: $affirmative-color;
+				
 				svg { fill: #fff; }
-
 			}
 		}
 
@@ -113,10 +129,6 @@
 			fill: $affirmative-color;
 		}
 
-		span {
-			margin-top: 0;
-		}
+		span { margin-top: 0; }
 	}
-
-	.img-preview { object-fit: cover; }
 }
