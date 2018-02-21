@@ -41,6 +41,10 @@
   padding: 0 0 15px 0;
   margin: 0; }
 
+:local(.component) .input-img.card-img {
+  width: 100%;
+  height: 225px; }
+
 :local(.component) .list-class-type [type="radio"] {
   display: none;
   opacity: 0; }
@@ -61,7 +65,7 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    color: #354E7E;
+    color: #2f343e;
     cursor: pointer;
     border-radius: 3px;
     background-color: #f6f6f6;
@@ -69,9 +73,11 @@
     :local(.component) .list-class-type [type="radio"] + label:not(:last-child) {
       margin-right: 10px; }
     :local(.component) .list-class-type [type="radio"] + label:hover {
-      border-color: #354E7E; }
+      border-color: #3066d0; }
     :local(.component) .list-class-type [type="radio"] + label:before, :local(.component) .list-class-type [type="radio"] + label:after {
       display: none; }
+    :local(.component) .list-class-type [type="radio"] + label svg {
+      fill: #2f343e; }
   :local(.component) .list-class-type [type="radio"]:checked + label {
     background-color: rgba(53, 78, 126, 0.87);
     color: #fff; }
@@ -85,7 +91,10 @@
   width: 30px;
   height: 36px;
   margin-bottom: 10px;
-  fill: #354E7E; }
+  fill: #3066d0; }
 
 :local(.component) .list-class-type span {
   margin-top: 0; }
+
+:local(.component) .img-preview {
+  object-fit: cover; }
