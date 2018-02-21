@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import actions from 'actions';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
 import styles from './styles.css';
@@ -29,13 +27,13 @@ class FileUploader extends React.Component {
                                 {this.props.files.map((file, key) =>
                                     <li key={key}>
                                         <Icon name={file.mimetype} />
-                                        {file.title}
+                                        {file.title} {file.progress && `(Carregando…${parseInt(file.progress, 10)}%)`}
 
-                                        <button onClick={() => this.props.dispatch(actions.removeLessonFile(key))} className="btnCancel" type="button"></button>
+                                        <button onClick={() => this.props.onRemove(key)} className="btnCancel" type="button"></button>
 
-                                        <div className="fileProgress">
-                                            <span className="f-45"></span>
-                                        </div>
+                                        {file.progress !== undefined && <div className="fileProgress">
+                                            <span className="f-45" style={{maxWidth: `${file.progress}%`}}></span>
+                                        </div>}
                                     </li>
                                 )}
                             </ul>
@@ -54,15 +52,7 @@ class FileUploader extends React.Component {
                                 type='file'
                                 ref={input => this.uploadInput = input}
                                 multiple
-                                onChange={e => {
-                                    const files = [...e.target.files].map(file => ({
-                                        title: file.name,
-                                        size: file.size,
-                                        mimetype: file.type.substring(file.type.indexOf('/') + 1),
-                                    }));
-
-                                    this.props.dispatch(actions.addLessonFiles(files));
-                                }}
+                                onChange={e => this.props.onAdd(e.target.files)}
                             />
                         </div>
                     </div>
@@ -72,4 +62,4 @@ class FileUploader extends React.Component {
     }
 }
 
-export default connect()(FileUploader);
+export default FileUploader;

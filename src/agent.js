@@ -30,28 +30,26 @@ axios.interceptors.response.use(
     }
 );
 
-export const get = (url, headers) => axios({
-	method: 'get',
-	url: api + url,
-	headers,
+export const get = (props) => axios({
+    ...props,
+    method: 'get',
+    url: api + props.url,
 });
 
-export const post = (url, data, headers) => axios({
-	method: 'post',
-	url: api + url,
-	headers,
-	data,
+export const post = (props) => axios({
+    ...props,
+    method: 'post',
+    url: api + props.url,
 });
 
-export const put = (url, data, headers) => axios({
-	method: 'put',
-	url: api + url,
-	headers,
-	data,
+export const put = (props) => axios({
+    ...props,
+    method: 'put',
+    url: api + props.url,
 });
 
-export const del = (url, headers) => axios({
-	method: 'delete',
-	url: api + url,
-	headers,
+export const del = (props) => axios({
+    ...props,
+    method: 'delete',
+    url: api + props.url,
 });

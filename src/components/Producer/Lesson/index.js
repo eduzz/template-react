@@ -111,11 +111,23 @@ class Lesson extends React.Component {
                   <span>Texto</span>
                 </label>
 
+<<<<<<< HEAD
                 <input id="type-audio" type="radio" name="class-type" value="audio" />
                 <label for="type-audio">
                   <Icon name='audio-line' />
                   <span>Áudio</span>
                 </label>
+=======
+                    <section className="form-section">
+                        <div className="row">
+                            <FileUploader
+                                files={this.props.lesson.lesson_files || []}
+                                onAdd={files => this.props.addLessonFiles(files, this.props.lesson)}
+                                onRemove={this.props.removeLessonFile}
+                            />
+                        </div>
+                    </section>
+>>>>>>> Implemente multiple upload and loading on the uploading files
 
                 <input id="type-embed" type="radio" name="class-type" value="embed" />
                 <label for="type-embed">

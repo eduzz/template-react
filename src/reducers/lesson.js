@@ -56,19 +56,38 @@ const lesson = (state = {}, action) => {
                 ...state,
                 [action.field]: action.value,
             };
-        case 'ADD_LESSON_FILES':
+        case 'ADD_LESSON_FILES': {
+            const files = [...action.files].map(file => ({
+                front_id: action.frontId,
+                title: file.name,
+                size: file.size,
+                mimetype: file.type.substring(file.type.indexOf('/') + 1),
+                progress: 0,
+            }));
+
             return {
                 ...state,
                 lesson_files: [
                     ...state.lesson_files,
-                    ...action.files,
+                    ...files,
                 ],
             };
+        }
         case 'REMOVE_LESSON_FILE':
             return {
                 ...state,
                 lesson_files: state.lesson_files.filter((file, i) => action.index !== i),
             };
+        case 'UPLOAD_LESSON_FILE_PROGRESS': {
+            const files = [...state.lesson_files];
+
+            files[action.fileIndex].progress = action.progressEvent.loaded / action.progressEvent.total * 100;
+
+            return {
+                ...state,
+                lesson_files: files,
+            };
+        }
         default:
             return state;
     }
