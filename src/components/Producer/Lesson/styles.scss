@@ -46,9 +46,10 @@
 	}
 
 	.input-img.card-img {
-		width: 100%;
-		height: 225px;
-
+		margin: auto;
+		margin-right: 0;
+		
+		cursor: pointer;
 		border: none;
 		border-radius: 3px;
 		background-color: #f6f6f6;

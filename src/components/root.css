@@ -142,6 +142,8 @@ body {
 
 .right-label {
   margin-left: 10px; }
+  .right-label:empty {
+    display: none; }
 
 .text-center {
   text-align: center; }

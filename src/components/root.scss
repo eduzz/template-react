@@ -105,7 +105,11 @@ body{
   font-weight: $medium;
 }
 
-.right-label { margin-left: 10px; }
+.right-label {
+  margin-left: 10px;
+
+  &:empty { display: none; }
+}
 
 .text-center { text-align: center; }
 
