@@ -73,7 +73,7 @@ class Lesson extends React.Component {
                   <ImageUploader
                     defaultImage={lessonLogo}
                     // onChange={img => this.props.changeLessonField('image', img)}
-                    icon='paper'
+                    icon='camera-line'
                     text='Alterar Imagem'
                   />
                 </div>
