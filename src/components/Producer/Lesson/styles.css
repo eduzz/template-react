@@ -144,3 +144,25 @@
     background-color: #d8d8d8; }
     :local(.component) .author-item button:hover {
       background-color: #b1b1b1; }
+
+:local(.component) .form-block-title svg {
+  width: 10px;
+  height: 10px;
+  margin-left: 10px;
+  fill: rgba(0, 0, 0, 0.87); }
+
+:local(.component) .main p {
+  width: 100%; }
+  :local(.component) .main p span {
+    display: inline-block; }
+    :local(.component) .main p span:first-child {
+      width: 100px; }
+    :local(.component) .main p span:last-child {
+      width: calc(100% - 100px); }
+
+:local(.component) .main .switch-field {
+  width: 100px;
+  margin-top: 1.5rem; }
+
+:local(.component) .main .input-field {
+  width: calc(100% - 100px); }

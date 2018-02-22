@@ -148,6 +148,19 @@ class Lesson extends React.Component {
         </section>
 
         <section className="form-section">
+          <div classname="row">
+            <div className="s12 col">
+              <div class="form-block text-center">
+                <h3 className="form-block-title">
+                  Configurações Avançadas
+                  <Icon name="arrow-down" />
+                </h3>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="form-section">
           <div className="row">
             <div className="col m12 l4">
               <div className="form-block">
@@ -156,7 +169,7 @@ class Lesson extends React.Component {
                 <DatePicker
                   value={this.props.lesson.release_date && new Date(Date.parse(this.props.lesson.release_date))}
                   id='release-date'
-                  className="datepicker"
+                  className="datepicker-field"
                   onChange={(none, date) => this.props.changeLessonField('release_date', date)}
                 />
               </div>
@@ -167,6 +180,7 @@ class Lesson extends React.Component {
                 <h3 className="form-block-title">Agendamento da Aula</h3>
                 <p className="date-description">Após o primeiro acesso, após quantos dias a aula ficará disponível:</p>
                 <Input
+                  rightlabel='Dias'
                   defaultValue={this.props.lesson.days_locked}
                   async={true}
                   className="datepicker"
@@ -180,6 +194,7 @@ class Lesson extends React.Component {
                 <h3 className="form-block-title">Validade da Aula</h3>
                 <p className="date-description">Determine quantos dias a aula ficará disponível</p>
                 <Input
+                  rightlabel='Dias'
                   defaultValue={this.props.lesson.available_days}
                   async={true}
                   className="datepicker"
@@ -194,13 +209,13 @@ class Lesson extends React.Component {
           <div className="row">
             <div className="col m12 l4">
               <div className="form-block">
-                    <Toggle
-                      title='Aula Gratuita'
-                      description='Aula estará disponível sem necessidade de compra.'
-                      id='check-destaque'
-                      toggled={!!this.props.lesson.is_free}
-                      onClick={() => this.props.changeLessonField('is_free', this.props.lesson.is_free ? 0 : 1)}
-                    />
+                <Toggle
+                  title='Aula Gratuita'
+                  description='Aula estará disponível sem necessidade de compra.'
+                  id='check-destaque'
+                  toggled={!!this.props.lesson.is_free}
+                  onClick={() => this.props.changeLessonField('is_free', this.props.lesson.is_free ? 0 : 1)}
+                />
               </div>
             </div>
 
@@ -231,171 +246,189 @@ class Lesson extends React.Component {
                 <h3 className="form-block-title">Chats</h3>
               </div>
             </div>
+          </div>
+
+          <div className="row">
             <div className="col m12 l4">
-              <div>
-                <div className="form-block">
-                  <div className="switch">
-                    <label>
-                      <p className="date-description">Zopim</p>
-                      <Toggle
-                          id='check-comentario'
-                          toggled={chats.haszopimchat}
-                          onClick={() => this.props.changeLessonField('chats', {
-                              ...chats,
-                              haszopimchat: !chats.haszopimchat,
-                          })}
-                      />
-                    </label>
-                    <Input
-                      defaultValue={chats.zopimchat}
-                      async={true}
-                      disabled={!chats.haszopimchat}
-                      onChange={e => this.props.changeLessonField('chats', {
-                          ...chats,
-                          zompimchat: e.target.value,
-                      })}
+              <div className="form-block main">
+                <p>
+                  <span>Zopim</span>
+                  <span>Id.</span>
+                </p>
+                <div className="switch">
+                  <label className="switch-field">
+                    <Toggle
+                        id='check-comentario'
+                        toggled={chats.haszopimchat}
+                        onClick={() => this.props.changeLessonField('chats', {
+                            ...chats,
+                            haszopimchat: !chats.haszopimchat,
+                        })}
                     />
-                  </div>
+                  </label>
+                  <Input
+                    className="input-field"
+                    defaultValue={chats.zopimchat}
+                    async={true}
+                    disabled={!chats.haszopimchat}
+                    onChange={e => this.props.changeLessonField('chats', {
+                        ...chats,
+                        zompimchat: e.target.value,
+                    })}
+                  />
                 </div>
               </div>
             </div>
             <div className="col m12 l4">
-              <div>
-                <div className="form-block">
-                  <div className="switch">
-                    <label>
-                      <p className="date-description">Jivo Chat</p>
-                      <Toggle
-                        id='check-comentario'
-                        toggled={chats.hasjivochat}
-                        onClick={() => this.props.changeLessonField('chats', {
-                            ...chats,
-                            hasjivochat: !chats.hasjivochat,
-                        })}
-                      />
-                    </label>
-                    <Input
-                      defaultValue={chats.jivochat}
-                      async={true}
-                      disabled={!chats.hasjivochat}
-                      onChange={e => this.props.changeLessonField('chats', {
+              <div className="form-block main">
+                <p>
+                  <span>Jivo Chat</span>
+                  <span>Id.</span>
+                </p>
+                <div className="switch">
+                  <label className="switch-field">
+                    <Toggle
+                      id='check-comentario'
+                      toggled={chats.hasjivochat}
+                      onClick={() => this.props.changeLessonField('chats', {
                           ...chats,
-                          jivochat: e.target.value,
+                          hasjivochat: !chats.hasjivochat,
                       })}
                     />
-                  </div>
+                  </label>
+                  <Input
+                    className="input-field"
+                    defaultValue={chats.jivochat}
+                    async={true}
+                    disabled={!chats.hasjivochat}
+                    onChange={e => this.props.changeLessonField('chats', {
+                        ...chats,
+                        jivochat: e.target.value,
+                    })}
+                  />
                 </div>
               </div>
             </div>
             <div className="col m12 l4">
-              <div>
-                <div className="form-block">
-                  <div className="switch">
-                    <label>
-                      <p className="date-description">Zendesk</p>
-                      <Toggle
-                        id='check-comentario'
-                        toggled={chats.haszendeskchat}
-                        onClick={() => this.props.changeLessonField('chats', {
-                            ...chats,
-                            haszendeskchat: !chats.haszendeskchat,
-                        })}
-                      />
-                    </label>
-                    <Input
-                      defaultValue={chats.zendeskchat}
-                      async={true}
-                      disabled={!chats.haszendeskchat}
-                      onChange={e => this.props.changeLessonField('chats', {
+              <div className="form-block main">
+                <p>
+                  <span>Zendesk</span>
+                  <span>Id.</span>
+                </p>
+                <div className="switch">
+                  <label className="switch-field">
+                    <Toggle
+                      id='check-comentario'
+                      toggled={chats.haszendeskchat}
+                      onClick={() => this.props.changeLessonField('chats', {
                           ...chats,
-                          zendeskchat: e.target.value,
+                          haszendeskchat: !chats.haszendeskchat,
                       })}
                     />
-                  </div>
+                  </label>
+                  <Input
+                    className="input-field"
+                    defaultValue={chats.zendeskchat}
+                    async={true}
+                    disabled={!chats.haszendeskchat}
+                    onChange={e => this.props.changeLessonField('chats', {
+                        ...chats,
+                        zendeskchat: e.target.value,
+                    })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col m12 l4">
+              <div className="form-block main">
+                <p>
+                  <span>Tawk.to</span>
+                  <span>Id.</span>
+                </p>
+                <div className="switch">
+                  <label className="switch-field">
+                    <Toggle
+                      id='check-comentario'
+                      toggled={chats.hastawktochat}
+                      onClick={() => this.props.changeLessonField('chats', {
+                          ...chats,
+                          hastawktochat: !chats.hastawktochat,
+                      })}
+                    />
+                  </label>
+                  <Input
+                    className="input-field"
+                    defaultValue={chats.tawktochat}
+                    async={true}
+                    disabled={!chats.hastawktochat}
+                    onChange={e => this.props.changeLessonField('chats', {
+                        ...chats,
+                        tawktochat: e.target.value,
+                    })}
+                  />
                 </div>
               </div>
             </div>
             <div className="col m12 l4">
-              <div>
-                <div className="form-block">
-                  <div className="switch">
-                    <label>
-                      <p className="date-description">Tawk.to</p>
-                      <Toggle
-                        id='check-comentario'
-                        toggled={chats.hastawktochat}
-                        onClick={() => this.props.changeLessonField('chats', {
-                            ...chats,
-                            hastawktochat: !chats.hastawktochat,
-                        })}
-                      />
-                    </label>
-                    <Input
-                      defaultValue={chats.tawktochat}
-                      async={true}
-                      disabled={!chats.hastawktochat}
-                      onChange={e => this.props.changeLessonField('chats', {
+              <div className="form-block main">
+                <p>
+                  <span>Live Chat</span>
+                  <span>Id.</span>
+                </p>
+                <div className="switch">
+                  <label className="switch-field">
+                    <Toggle
+                      id='check-comentario'
+                      toggled={chats.haslivechat}
+                      onClick={() => this.props.changeLessonField('chats', {
                           ...chats,
-                          tawktochat: e.target.value,
+                          haslivechat: !chats.haslivechat,
                       })}
                     />
-                  </div>
+                  </label>
+                  <Input
+                    className="input-field"
+                    defaultValue={chats.livechat}
+                    async={true}
+                    disabled={!chats.haslivechat}
+                    onChange={e => this.props.changeLessonField('chats', {
+                        ...chats,
+                        livechat: e.target.value,
+                    })}
+                  />
                 </div>
               </div>
             </div>
             <div className="col m12 l4">
-              <div>
-                <div className="form-block">
-                  <div className="switch">
-                    <label>
-                      <p className="date-description">Live Chat</p>
-                      <Toggle
-                        id='check-comentario'
-                        toggled={chats.haslivechat}
-                        onClick={() => this.props.changeLessonField('chats', {
-                            ...chats,
-                            haslivechat: !chats.haslivechat,
-                        })}
-                      />
-                    </label>
-                    <Input
-                      defaultValue={chats.livechat}
-                      async={true}
-                      disabled={!chats.haslivechat}
-                      onChange={e => this.props.changeLessonField('chats', {
+              <div className="form-block main">
+                <p>
+                  <span>Chatroll</span>
+                  <span>Id.</span>
+                </p>
+                <div className="switch">
+                  <label className="switch-field">
+                    <Toggle
+                      id='check-comentario'
+                      toggled={chats.haschatroll}
+                      onClick={() => this.props.changeLessonField('chats', {
                           ...chats,
-                          livechat: e.target.value,
+                          haschatroll: !chats.haschatroll,
                       })}
                     />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col m12 l4">
-              <div>
-                <div className="form-block">
-                  <div className="switch">
-                    <label>
-                      <p className="date-description">Chatroll</p>
-                      <Toggle
-                        id='check-comentario'
-                        toggled={chats.haschatroll}
-                        onClick={() => this.props.changeLessonField('chats', {
-                            ...chats,
-                            haschatroll: !chats.haschatroll,
-                        })}
-                      />
-                    </label>
-                    <Input
-                      defaultValue={chats.chatroll}
-                      async={true}
-                      disabled={!chats.haschatroll}
-                      onChange={e => this.props.changeLessonField('chats', {
-                          ...chats,
-                          chatroll: e.target.value,
-                      })}
-                    />
-                  </div>
+                  </label>
+                  <Input
+                    className="input-field"
+                    defaultValue={chats.chatroll}
+                    async={true}
+                    disabled={!chats.haschatroll}
+                    onChange={e => this.props.changeLessonField('chats', {
+                        ...chats,
+                        chatroll: e.target.value,
+                    })}
+                  />
                 </div>
               </div>
             </div>

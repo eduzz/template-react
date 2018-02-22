@@ -104,6 +104,11 @@ body{
   letter-spacing: 1px;
   font-weight: $medium;
 }
+
+.right-label { margin-left: 10px; }
+
+.text-center { text-align: center; }
+
 nav{
   color:inherit;
   background-color:inherit;
@@ -123,5 +128,24 @@ html .switch {
         border: $medium-gray thin solid;
       }
     }
+  }
+}
+
+.datepicker-field {
+  hr { display: none !important; }
+
+  input {
+    background-color: #fff;
+    border: 1px solid #d8d8d8 !important;
+    
+    width: 100%;
+    max-width: 200px;
+    height: 3rem;
+    margin: 0;
+    padding: 0 10px !important;
+    
+    font-size: 1rem;
+    -webkit-box-shadow: none;
+    box-shadow: none;
   }
 }

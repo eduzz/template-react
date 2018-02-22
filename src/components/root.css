@@ -140,6 +140,12 @@ body {
   letter-spacing: 1px;
   font-weight: 500; }
 
+.right-label {
+  margin-left: 10px; }
+
+.text-center {
+  text-align: center; }
+
 nav {
   color: inherit;
   background-color: inherit;
@@ -153,3 +159,18 @@ html .switch label .lever {
     box-shadow: none;
     background-color: #d8d8d8;
     border: #d8d8d8 thin solid; }
+
+.datepicker-field hr {
+  display: none !important; }
+
+.datepicker-field input {
+  background-color: #fff;
+  border: 1px solid #d8d8d8 !important;
+  width: 100%;
+  max-width: 200px;
+  height: 3rem;
+  margin: 0;
+  padding: 0 10px !important;
+  font-size: 1rem;
+  -webkit-box-shadow: none;
+  box-shadow: none; }
