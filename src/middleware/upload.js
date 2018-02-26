@@ -31,6 +31,7 @@ const upload = store => next => action => {
                     next(actions.uploadLessonFileProgress(progressEvent, action.fileIndex));
                 }
             });
+            break;
         default:
             break;
     }
