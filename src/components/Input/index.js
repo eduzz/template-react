@@ -26,7 +26,7 @@ class Input extends React.Component {
                     key={this.props.async && this.props.defaultValue ? 'notLoadedYet' : 'loaded'}
                     onFocus={this.handleFocus}
                     {...this.props}
-                />
+                /><span className="right-label">{this.props.rightlabel}</span>
             </div>
         );
     }
