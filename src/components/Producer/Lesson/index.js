@@ -152,12 +152,6 @@ class Lesson extends React.Component {
         </section>
 
         <section className="form-section">
-            <div className="row">
-                <FileUploader />
-            </div>
-        </section>
-
-        <section className="form-section">
           <div classname="row">
             <div className="s12 col">
               <div class="form-block text-center">
