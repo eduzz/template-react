@@ -18,13 +18,3 @@ export const changeLessonField = (field, value) => ({
     field,
     value,
 });
-
-export const addLessonFiles = files => ({
-    type: 'ADD_LESSON_FILES',
-    files,
-});
-
-export const removeLessonFile = index => ({
-    type: 'REMOVE_LESSON_FILE',
-    index,
-});

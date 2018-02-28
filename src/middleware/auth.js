@@ -7,7 +7,7 @@ const auth = store => next => action => {
 
     switch (action.type) {
         case 'REQUEST_LOGIN':
-            post({url: '/oauth/token', data: action.creds}).then(
+            post('/oauth/token', action.creds).then(
                 res => {
                     next(actions.receiveLogin(res.data.data));
                 },

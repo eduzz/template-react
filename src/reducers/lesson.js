@@ -7,42 +7,13 @@ const lesson = (state = {}, action) => {
                 ...action.lesson,
                 chats: {
                     ...action.lesson.chats,
-                    hasjivochat: !!parseInt(action.lesson.chats.hasjivochat, 10),
-                    haszopimchat: !!parseInt(action.lesson.chats.haszopimchat, 10),
-                    hastawktochat: !!parseInt(action.lesson.chats.hastawktochat, 10),
-                    haszendeskchat: !!parseInt(action.lesson.chats.haszendeskchat, 10),
-                    haslivechat: !!parseInt(action.lesson.chats.haslivechat, 10),
-                    haschatroll: !!parseInt(action.lesson.chats.haschatroll, 10),
+                    hasjivochat: !!parseInt(action.lesson.chats.hasjivochat),
+                    haszopimchat: !!parseInt(action.lesson.chats.haszopimchat),
+                    hastawktochat: !!parseInt(action.lesson.chats.hastawktochat),
+                    haszendeskchat: !!parseInt(action.lesson.chats.haszendeskchat),
+                    haslivechat: !!parseInt(action.lesson.chats.haslivechat),
+                    haschatroll: !!parseInt(action.lesson.chats.haschatroll),
                 },
-                lesson_files: [
-                    {
-                        id_lesson_file: 1,
-                        id_lesson: action.lesson.id,
-                        file_name: 'download-link',
-                        size: 1000,
-                        title: 'Apostila de Marketing',
-                        mimetype: 'pdf',
-                        created_at: '2016-09-08 19:24:12.000',
-                    },
-                    {
-                        id_lesson_file: 2,
-                        id_lesson: action.lesson.id,
-                        file_name: 'download-link',
-                        size: 1000,
-                        title: 'Template de ficha de cadastro',
-                        mimetype: 'doc',
-                        created_at: '2016-09-08 19:24:12.000',
-                    },
-                    {
-                        id_lesson_file: 3,
-                        id_lesson: action.lesson.id,
-                        file_name: 'download-link',
-                        size: 1000,
-                        title: 'Planilha de dados para testes',
-                        mimetype: 'xls',
-                        created_at: '2016-09-08 19:24:12.000',
-                    },
-                ],
             };
         case 'RECEIVE_AUTHOR':
             return {
@@ -56,38 +27,6 @@ const lesson = (state = {}, action) => {
                 ...state,
                 [action.field]: action.value,
             };
-        case 'ADD_LESSON_FILES': {
-            const files = [...action.files].map(file => ({
-                front_id: action.frontId,
-                title: file.name,
-                size: file.size,
-                mimetype: file.type.substring(file.type.indexOf('/') + 1),
-                progress: 0,
-            }));
-
-            return {
-                ...state,
-                lesson_files: [
-                    ...state.lesson_files,
-                    ...files,
-                ],
-            };
-        }
-        case 'REMOVE_LESSON_FILE':
-            return {
-                ...state,
-                lesson_files: state.lesson_files.filter((file, i) => action.index !== i),
-            };
-        case 'UPLOAD_LESSON_FILE_PROGRESS': {
-            const files = [...state.lesson_files];
-
-            files[action.fileIndex].progress = action.progressEvent.loaded / action.progressEvent.total * 100;
-
-            return {
-                ...state,
-                lesson_files: files,
-            };
-        }
         default:
             return state;
     }
