@@ -7,7 +7,7 @@ const course = store => next => action => {
 
     switch (action.type) {
         case 'GET_COURSE':
-            get({url: '/courses/' + action.courseID}).then(
+            get('/courses/' + action.courseID).then(
                 res => {
                     next(actions.receiveCourse(res.data.data));
                 },
@@ -17,7 +17,7 @@ const course = store => next => action => {
             );
             break;
         case 'DELETE_COURSE':
-            del({url: '/courses/' + action.courseID}).then(
+            del('/courses/' + action.courseID).then(
                 res => {
                     next(actions.deleteCourseSuccess(res));
                 },
@@ -27,7 +27,7 @@ const course = store => next => action => {
             );
             break;
         case 'CREATE_COURSE':
-            post({url: '/courses/', data: action.course}).then(
+            post('/courses/', action.course).then(
                 res => {
                     console.log('course -> ', res.data.data);
                 },
@@ -37,7 +37,7 @@ const course = store => next => action => {
             );
             break;
         case 'UPDATE_COURSE':
-            put({url: '/courses/' + action.course.id, data: action.course}).then(
+            put('/courses/' + action.course.id, action.course).then(
                 res => {
                     console.log('course -> ', res.data.data);
                 },
@@ -47,7 +47,7 @@ const course = store => next => action => {
             );
             break;
         case 'GET_COURSE_CUSTOMIZATION':
-            get({url: '/courses/' + action.courseID + '/customization'}).then(
+            get('/courses/' + action.courseID + '/customization').then(
                 res => {
                     next(actions.receiveCourseCustomization(res.data.data));
                 },

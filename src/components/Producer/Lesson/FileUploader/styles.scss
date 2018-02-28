@@ -10,7 +10,7 @@
       position: relative;
 
       font-size: 16px;
-      line-height: 20px;
+      line-height: 20px;  
 
       border-radius: 3px;
       background-color: #f6f6f6;
@@ -118,9 +118,5 @@
     }
 
     strong { text-decoration: underline; }
-  }
-
-  .input-file {
-    display: none;  
   }
 }

@@ -281,6 +281,3 @@
     line-height: 100px; }
   :local(.component) .inputSelect strong {
     text-decoration: underline; }
-
-:local(.component) .input-file {
-  display: none; }

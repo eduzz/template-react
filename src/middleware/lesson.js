@@ -7,7 +7,7 @@ const lesson = store => next => action => {
 
     switch (action.type) {
         case 'GET_LESSON':
-            get({url: '/lessons/' + action.lessonID}).then(
+            get('/lessons/' + action.lessonID).then(
                 res => {
                     next(actions.receiveLesson(res.data.data));
                 },

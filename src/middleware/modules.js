@@ -7,7 +7,7 @@ const modules = store => next => action => {
 
     switch (action.type) {
         case 'GET_MODULES':
-            get({url: `/courses/${action.courseID}/modules`}).then(
+            get(`/courses/${action.courseID}/modules`).then(
                 res => {
                     next(actions.receiveModules(res.data.data));
                 },
@@ -17,7 +17,7 @@ const modules = store => next => action => {
             );
             break;
         case 'GET_MODULE_LESSONS':
-            get({url: `/modules/${action.moduleID}/lessons`}).then(
+            get(`/modules/${action.moduleID}/lessons`).then(
                 res => {
                     next(actions.receiveModuleLessons(res.data.data, action.moduleID));
                 },
@@ -27,7 +27,7 @@ const modules = store => next => action => {
             );
             break;
         case 'POST_MODULE':
-            post({url: '/modules', data: {id_course: action.courseID, title: action.title, description: 'description', days_locked: 1, is_draft: false, id_author: null, available_days: 1, release_date: '2018-07-07', image: 'base64', sequence: action.sequence, is_free: true}}).then(
+            post('/modules', {id_course: action.courseID, title: action.title, description: 'description', days_locked: 1, is_draft: false, id_author: null, available_days: 1, release_date: '2018-07-07', image: 'base64', sequence: action.sequence, is_free: true}).then(
                 res => {
                     next(actions.receiveModule(res.data.data, action.sequence));
                 },
@@ -37,7 +37,7 @@ const modules = store => next => action => {
             );
             break;
         case 'DELETE_MODULE_PERSIST':
-            del({url: '/modules/' + action.moduleID}).then(
+            del('/modules/' + action.moduleID).then(
                 res => {
 
                 },
@@ -47,7 +47,7 @@ const modules = store => next => action => {
             );
             break;
         case 'EDIT_MODULE_PERSIST':
-            put({url: '/modules/' + action.module.id, data: action.module}).then(
+            put('/modules/' + action.module.id, action.module).then(
                 res => {
                     next(actions.receiveModule(res.data.data, action.index));
                 },
