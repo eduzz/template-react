@@ -246,7 +246,7 @@ body{
       left: 0;
       right: 0;
       @include transition;
-      
+
     }
     span:first-child{
       transform: rotate(35deg);
@@ -348,7 +348,7 @@ body{
         margin:auto;
         right: 25px;
         @include transition;
-      } 
+      }
       &:hover{
         .icon{
           fill:$affirmative-color;
@@ -427,10 +427,10 @@ body{
 .lesson-container{
   margin-left:350px;
   min-height: calc(100vh - 60px);
-  padding: 30px; 
+  padding: 30px;
   @include transition;
   .lesson-title{
-    margin:0; 
+    margin:0;
     @include fontsize(24);
     @include transition;
     // padding:20px 0;
@@ -1453,7 +1453,7 @@ body{
     .container{
       padding:20px;
     }
-  }    
+  }
   .upsell-card{
     margin-top: 20px;
   }
@@ -1742,4 +1742,3 @@ body{
     }
   }//end modules nav
 }//end template black
-
