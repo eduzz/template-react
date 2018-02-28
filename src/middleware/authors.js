@@ -7,7 +7,7 @@ const authors = store => next => action => {
 
     switch (action.type) {
         case 'GET_AUTHORS':
-            get('/authors').then(
+            get({url: '/authors'}).then(
                 res => {
                     next(actions.receiveAuthors(res.data.data));
                 },
@@ -17,7 +17,7 @@ const authors = store => next => action => {
             );
             break;
         case 'ADD_AUTHOR':
-            post('/authors', {...action}).then(
+            post({url: '/authors', data: {...action}}).then(
                 res => {
                     next(actions.receiveAuthor(res.data.data));
                 },

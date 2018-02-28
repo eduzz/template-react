@@ -7,7 +7,7 @@ const courses = store => next => action => {
 
     switch (action.type) {
         case 'GET_COURSES':
-            get('/courses?page=1&size=9999').then(
+            get({url: '/courses?page=1&size=9999'}).then(
                 res => {
                     next(actions.receiveCourses(res.data.data));
                 },
