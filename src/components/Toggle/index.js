@@ -2,16 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Toggle = (props) => (
-    <div className="switch">
+    <a className="switch" onClick={e => {
+        props.onClick(e);
+        e.preventDefault();
+    }}>
         <label>
-            <input type="checkbox" id="check-destaque" onClick={props.onClick}/>
+            <input type="checkbox" defaultChecked={props.toggled} id={props.id} />
             <span className="lever"></span>
         </label>
-        <label htmlFor="check-destaque">
+        <label htmlFor={props.id}>
             <h3 className="form-block-title">{props.title}</h3>
             <p className="check-description">{props.description}</p>
         </label>
-    </div>
+    </a>
 );
 
 Toggle.propTypes = {

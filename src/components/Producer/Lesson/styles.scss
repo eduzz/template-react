@@ -8,7 +8,7 @@
 	.form-section{
 	  padding: 20px;
 	  border-bottom:1px solid $light-gray;
-	
+
 		.row { margin-bottom: 0; }
 
 		.form-block{
@@ -20,17 +20,17 @@
 	      line-height: 1.2rem;
 	      max-width: 350px;
 			}
-			
+
 	    .radio-description{
 	      max-width: 320px;
 			}
-			
+
 	   	input.datepicker{
 				margin-bottom:0;
 				max-width: 200px;
 	    }
 		}
-		
+
 	  .form-block-title{
 	    @include fontsize(18);
 	    font-weight: $medium;
@@ -48,7 +48,7 @@
 	.input-img.card-img {
 		margin: auto;
 		margin-right: 0;
-		
+
 		cursor: pointer;
 		border: none;
 		border-radius: 3px;
@@ -73,38 +73,38 @@
 
 			& + label {
 				@include transition;
-	
+
 				width: 130px;
 				height: 130px;
 				float: left;
 				padding: 0;
-				
+
 				display: -webkit-flex;
 				display: -ms-flexbox;
 				display: flex;
-	
+
 				-ms-flex-pack: space-around;
 				justify-content: space-around;
-	
+
 				-webkit-flex-flow: column nowrap;
 				-ms-flex-flow: column nowrap;
 				flex-flow: column nowrap;
-	
+
 				-webkit-align-items: center;
 				-ms-flex-align: center;
 				align-items: center;
 
 				color: $background-color;
-	
+
 				cursor: pointer;
 				border-radius: 3px;
 				background-color: #f6f6f6;
 				border: #f6f6f6 thin solid;
-				
+
 				&:not(:last-child) { margin-right: 10px; }
-	
+
 				&:hover { border-color: $affirmative-color; }
-	
+
 				&:before, &:after { display: none; }
 
 				svg { fill: $background-color; }
@@ -112,10 +112,10 @@
 
 			&:checked + label {
 				color: #fff;
-				
+
 				background-color: rgba(53, 78, 126, .87);
 				border-color: $affirmative-color;
-				
+
 				svg { fill: #fff; }
 			}
 		}
@@ -159,22 +159,22 @@
 
 			border-radius: 50%;
 		}
-		
+
 		span {
 			margin-left: 10px;
 
 			font-weight: bold;
 		}
-		
+
 		button {
 			@include transition;
 
 			padding: 3px 20px;
 			margin-right: 0;
-			
+
 			font-weight: bold;
 			text-transform: uppercase;
-			
+
 			border: none;
 			border-radius: 10px;
 			cursor: pointer;

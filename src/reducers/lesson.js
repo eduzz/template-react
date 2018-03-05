@@ -14,35 +14,6 @@ const lesson = (state = {}, action) => {
                     haslivechat: !!parseInt(action.lesson.chats.haslivechat, 10),
                     haschatroll: !!parseInt(action.lesson.chats.haschatroll, 10),
                 },
-                lesson_files: [
-                    {
-                        id_lesson_file: 1,
-                        id_lesson: action.lesson.id,
-                        file_name: 'download-link',
-                        size: 1000,
-                        title: 'Apostila de Marketing',
-                        mimetype: 'pdf',
-                        created_at: '2016-09-08 19:24:12.000',
-                    },
-                    {
-                        id_lesson_file: 2,
-                        id_lesson: action.lesson.id,
-                        file_name: 'download-link',
-                        size: 1000,
-                        title: 'Template de ficha de cadastro',
-                        mimetype: 'doc',
-                        created_at: '2016-09-08 19:24:12.000',
-                    },
-                    {
-                        id_lesson_file: 3,
-                        id_lesson: action.lesson.id,
-                        file_name: 'download-link',
-                        size: 1000,
-                        title: 'Planilha de dados para testes',
-                        mimetype: 'xls',
-                        created_at: '2016-09-08 19:24:12.000',
-                    },
-                ],
             };
         case 'RECEIVE_AUTHOR':
             return {
