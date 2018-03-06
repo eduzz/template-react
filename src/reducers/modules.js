@@ -2,8 +2,9 @@ const modules = (state = [], action) => {
     switch (action.type) {
         case 'RECEIVE_MODULES':
             return [...action.modules];
-        case 'GET_MODULES':
         case 'RECEIVE_MODULES_ERROR':
+            return [];
+        case 'CLEAN_MODULES':
             return [];
         case 'RECEIVE_MODULE_LESSONS':
         case 'RECEIVE_MODULE_LESSONS_ERROR':

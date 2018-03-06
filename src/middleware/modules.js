@@ -1,4 +1,4 @@
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { get, post, put, del } from 'agent';
 
 const modules = store => next => action => {
@@ -9,30 +9,30 @@ const modules = store => next => action => {
         case 'GET_MODULES':
             get({url: `/courses/${action.courseID}/modules`}).then(
                 res => {
-                    next(actions.receiveModules(res.data.data));
+                    next(actionCreators.receiveModules(res.data.data));
                 },
                 err => {
-                    next(actions.receiveModulesError(err));
+                    next(actionCreators.receiveModulesError(err));
                 }
             );
             break;
         case 'GET_MODULE_LESSONS':
             get({url: `/modules/${action.moduleID}/lessons`}).then(
                 res => {
-                    next(actions.receiveModuleLessons(res.data.data, action.moduleID));
+                    next(actionCreators.receiveModuleLessons(res.data.data, action.moduleID));
                 },
                 err => {
-                    next(actions.receiveModuleLessonsError(err));
+                    next(actionCreators.receiveModuleLessonsError(err));
                 }
             );
             break;
         case 'POST_MODULE':
             post({url: '/modules', data: {id_course: action.courseID, title: action.title, description: 'description', days_locked: 1, is_draft: false, id_author: null, available_days: 1, release_date: '2018-07-07', image: 'base64', sequence: action.sequence, is_free: true}}).then(
                 res => {
-                    next(actions.receiveModule(res.data.data, action.sequence));
+                    next(actionCreators.receiveModule(res.data.data, action.sequence));
                 },
                 err => {
-                    next(actions.receiveModuleError(err));
+                    next(actionCreators.receiveModuleError(err));
                 }
             );
             break;
@@ -49,10 +49,10 @@ const modules = store => next => action => {
         case 'EDIT_MODULE_PERSIST':
             put({url: '/modules/' + action.module.id, data: action.module}).then(
                 res => {
-                    next(actions.receiveModule(res.data.data, action.index));
+                    next(actionCreators.receiveModule(res.data.data, action.index));
                 },
                 err => {
-                    next(actions.receiveModuleError(err));
+                    next(actionCreators.receiveModuleError(err));
                 }
             );
             break;

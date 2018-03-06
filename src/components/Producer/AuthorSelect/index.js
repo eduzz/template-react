@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
 import { SelectField, MenuItem } from 'material-ui';
 import Input from 'components/Input';
@@ -14,7 +15,7 @@ class AuthorSelect extends Component {
     }
 
     componentDidMount() {
-        this.props.getAuthors();
+        this.props.fetchAuthors();
     }
 
     componentWillUnmount() {
@@ -79,15 +80,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getAuthors() {
-        dispatch(actions.getAuthors());
-    },
-    cleanAuthors() {
-        dispatch(actions.cleanAuthors());
-    },
-    addAuthor(name) {
-        dispatch(actions.addAuthor(name));
-    },
+    ...bindActionCreators(actionCreators, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthorSelect);

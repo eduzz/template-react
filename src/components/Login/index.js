@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import styles from './styles.css';
 import loginbg from 'assets/img/login-bg.jpg';
 import Footer from 'components/Footer';
@@ -11,7 +11,7 @@ class Login extends Component {
     handleSubmit = e => {
         e.preventDefault();
 
-        this.props.dispatch(actions.requestLogin({
+        this.props.dispatch(actionCreators.requestLogin({
             username: this.refs.username.value,
             password: this.refs.password.value,
         }));

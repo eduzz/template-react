@@ -1,4 +1,4 @@
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { post } from 'agent';
 
 const upload = store => next => action => {
@@ -9,10 +9,10 @@ const upload = store => next => action => {
         case 'UPLOAD_IMAGE':
             post({url: '/courses/uploadimage', data: {data: action.image}}).then(
                 res => {
-                    next(actions.receiveImage(res.data.data, action.stateLabel));
+                    next(actionCreators.receiveImage(res.data.data, action.stateLabel));
                 },
                 err => {
-                    next(actions.receiveImageError(err));
+                    next(actionCreators.receiveImageError(err));
                 }
             );
             break;
@@ -28,7 +28,7 @@ const upload = store => next => action => {
                     'Content-Type': 'multipart/form-data'
                 },
                 onUploadProgress(progressEvent) {
-                    next(actions.uploadLessonFileProgress(progressEvent, action.fileIndex));
+                    next(actionCreators.uploadLessonFileProgress(progressEvent, action.fileIndex));
                 }
             });
             break;

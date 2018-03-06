@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { SelectField, MenuItem } from 'material-ui';
 
 class CategorySelect extends Component {
     componentDidMount() {
-        this.props.getCategories(this.props.categories);
+        this.props.fetchCategories(this.props.categories);
     }
 
     componentWillUnmount() {
@@ -38,12 +39,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getCategories(categories) {
-        dispatch(actions.getCategories());
-    },
-    cleanCategories() {
-        dispatch(actions.cleanCategories());
-    },
+    ...bindActionCreators(actionCreators, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySelect);

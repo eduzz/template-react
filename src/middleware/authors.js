@@ -1,4 +1,4 @@
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { get, post } from 'agent';
 
 const authors = store => next => action => {
@@ -9,20 +9,20 @@ const authors = store => next => action => {
         case 'GET_AUTHORS':
             get({url: '/authors'}).then(
                 res => {
-                    next(actions.receiveAuthors(res.data.data));
+                    next(actionCreators.receiveAuthors(res.data.data));
                 },
                 err => {
-                    next(actions.receiveAuthorsError(err));
+                    next(actionCreators.receiveAuthorsError(err));
                 }
             );
             break;
         case 'ADD_AUTHOR':
             post({url: '/authors', data: {...action}}).then(
                 res => {
-                    next(actions.receiveAuthor(res.data.data));
+                    next(actionCreators.receiveAuthor(res.data.data));
                 },
                 err => {
-                    next(actions.receiveAuthorError(err));
+                    next(actionCreators.receiveAuthorError(err));
                 }
             );
             break;

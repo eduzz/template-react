@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import ModuleCard from './ModuleCard';
 import Loading from 'components/Loading';
 import { Snackbar, Dialog, FlatButton } from 'material-ui';
@@ -130,36 +130,36 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getModules(courseID) {
-        dispatch(actions.getModules(courseID));
+        dispatch(actionCreators.getModules(courseID));
     },
     getModuleLessons(moduleID, lessons) {
         if(!lessons.length) {
-            dispatch(actions.getModuleLessons(moduleID));
+            dispatch(actionCreators.getModuleLessons(moduleID));
         }
     },
     addModule() {
-        dispatch(actions.addModule());
+        dispatch(actionCreators.addModule());
     },
     removeModule(index) {
-        dispatch(actions.removeModule(index));
+        dispatch(actionCreators.removeModule(index));
     },
     postModule(courseID, title, sequence) {
-        dispatch(actions.postModule(courseID, title, sequence));
+        dispatch(actionCreators.postModule(courseID, title, sequence));
     },
     deleteModule(moduleID) {
-        dispatch(actions.deleteModule(moduleID));
+        dispatch(actionCreators.deleteModule(moduleID));
     },
     deleteModulePersist(moduleID) {
-        dispatch(actions.deleteModulePersist(moduleID));
+        dispatch(actionCreators.deleteModulePersist(moduleID));
     },
     deleteModuleUndo(module, index) {
-        dispatch(actions.deleteModuleUndo(module, index));
+        dispatch(actionCreators.deleteModuleUndo(module, index));
     },
     editModule(index) {
-        dispatch(actions.editModule(index));
+        dispatch(actionCreators.editModule(index));
     },
     editModulePersist(module, index) {
-        dispatch(actions.editModulePersist(module, index));
+        dispatch(actionCreators.editModulePersist(module, index));
     }
 });
 

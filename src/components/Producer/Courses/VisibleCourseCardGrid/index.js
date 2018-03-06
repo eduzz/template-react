@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import CourseCardGrid from './CourseCardGrid';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { getVisibleCourses } from 'reducers';
 import Loading from 'components/Loading';
 
 class VisibleCourseCardGrid extends Component {
 	componentDidMount() {
-        this.props.dispatch(actions.getCourses());
+		this.props.fetchCourses();
     }
 
 	render() {
@@ -28,4 +29,8 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(VisibleCourseCardGrid);
+const mapDispatchToProps = dispatch => ({
+	...bindActionCreators(actionCreators, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(VisibleCourseCardGrid);

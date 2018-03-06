@@ -3,13 +3,14 @@ const initialState = {
     description: '',
     id_author: null,
     id_category: 130,
-    image_cover: '',
+    customizations: {
+        image_cover: '',
+    },
     published: 1,
 };
 
 const course = (state = initialState, action) => {
     switch (action.type) {
-        case 'GET_COURSE':
         case 'CLEAN_COURSE':
             return initialState;
         case 'RECEIVE_COURSE':
@@ -32,19 +33,13 @@ const course = (state = initialState, action) => {
                 ...state,
                 id_author: action.author.id,
             };
-        case 'RECEIVE_COURSE_CUSTOMIZATION':
-            return {
-                ...state,
-                image_cover: action.customization.image_cover,
-            };
-        case 'RECEIVE_COURSE_CUSTOMIZATION_ERROR':
-            return {
-                ...state,
-            };
         case 'RECEIVE_IMAGE':
             return {
                 ...state,
-                image_cover: action.image.url,
+                customizations: {
+                    ...state.customizations,
+                    image_cover: action.image.url,
+                },
             };
         case 'CREATE_COURSE':
             return {

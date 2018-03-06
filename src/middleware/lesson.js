@@ -1,4 +1,4 @@
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { get } from 'agent';
 
 const lesson = store => next => action => {
@@ -9,10 +9,10 @@ const lesson = store => next => action => {
         case 'GET_LESSON':
             get({url: '/lessons/' + action.lessonID}).then(
                 res => {
-                    next(actions.receiveLesson(res.data.data));
+                    next(actionCreators.receiveLesson(res.data.data));
                 },
                 err => {
-                    next(actions.receiveLessonError(err));
+                    next(actionCreators.receiveLessonError(err));
                 }
             );
             break;

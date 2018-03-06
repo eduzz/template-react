@@ -6,17 +6,11 @@ import AuthorSelect from 'components/Producer/AuthorSelect';
 import ImageUploader from 'components/ImageUploader';
 import styles from './styles.css';
 import { cdn } from 'constants/index';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 
 class CourseBasicInfo extends React.Component {
-    componentDidMount() {
-        if(this.props.courseID && this.props.courseID !== 'new') {
-            this.props.getCourseCustomization(this.props.courseID);
-        }
-    }
-
     render() {
-        const imageCover = this.props.course.image_cover && (this.props.course.image_cover.includes('http') ? this.props.course.image_cover : cdn + this.props.course.image_cover);
+        const imageCover = this.props.course.customizations && this.props.course.customizations.image_cover && (this.props.course.customizations.image_cover.includes('http') ? this.props.course.image_cover : cdn + this.props.course.customizations.image_cover);
 
         return (
             <div className={styles.component}>
@@ -79,11 +73,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getCourseCustomization(courseID) {
-        dispatch(actions.getCourseCustomization(courseID));
-    },
     changeCourseField(field, value) {
-        dispatch(actions.changeCourseField(field, value));
+        dispatch(actionCreators.changeCourseField(field, value));
     },
 });
 

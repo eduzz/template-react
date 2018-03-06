@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { api } from './constants';
 import { getStore } from './store';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 
 axios.interceptors.request.use(
     function (config) {
@@ -24,7 +24,7 @@ axios.interceptors.response.use(
     },
     function (error) {
         if(error.response.status === 401)
-            getStore().dispatch(actions.logout());
+            getStore().dispatch(actionCreators.logout());
 
         return Promise.reject(error);
     }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import Input from 'components/Input';
 import TextArea from 'components/TextArea';
 import ImageUploader from 'components/ImageUploader';
@@ -440,17 +440,17 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     getLesson(lessonID) {
-        dispatch(actions.getLesson(lessonID));
+        dispatch(actionCreators.getLesson(lessonID));
     },
     changeLessonField(field, value) {
-        dispatch(actions.changeLessonField(field, value));
+        dispatch(actionCreators.changeLessonField(field, value));
     },
     addLessonFiles(files, lesson) {
-        [...files].forEach((file, index) => dispatch(actions.uploadLessonFile(file, lesson.id, lesson.lesson_files.length + index)));
-        dispatch(actions.addLessonFiles(files));
+        [...files].forEach((file, index) => dispatch(actionCreators.uploadLessonFile(file, lesson.id, lesson.lesson_files.length + index)));
+        dispatch(actionCreators.addLessonFiles(files));
     },
     removeLessonFile(index) {
-        dispatch(actions.removeLessonFile(index));
+        dispatch(actionCreators.removeLessonFile(index));
     },
 });
 

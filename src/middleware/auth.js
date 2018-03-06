@@ -1,4 +1,4 @@
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { post } from 'agent';
 
 const auth = store => next => action => {
@@ -9,10 +9,10 @@ const auth = store => next => action => {
         case 'REQUEST_LOGIN':
             post({url: '/oauth/token', data: action.creds}).then(
                 res => {
-                    next(actions.receiveLogin(res.data.data));
+                    next(actionCreators.receiveLogin(res.data.data));
                 },
                 err => {
-                    next(actions.receiveLoginError(err));
+                    next(actionCreators.receiveLoginError(err));
                 }
             );
             break;

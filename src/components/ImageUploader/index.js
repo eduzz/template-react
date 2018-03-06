@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
 import styles from './styles.css';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import Loading from 'components/Loading';
 
 class ImageUploader extends Component {
@@ -80,7 +80,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     uploadImage(result, stateLabel) {
-        dispatch(actions.uploadImage(result, stateLabel));
+        dispatch(actionCreators.uploadImage(result, stateLabel));
     },
 });
 

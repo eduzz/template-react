@@ -2,9 +2,9 @@ const authors = (state = [], action) => {
     switch (action.type) {
         case 'RECEIVE_AUTHORS':
             return [...action.authors];
-        case 'GET_AUTHORS':
-        case 'CLEAN_AUTHORS':
         case 'RECEIVE_AUTHORS_ERROR':
+            return [];
+        case 'CLEAN_AUTHORS':
             return [];
         case 'RECEIVE_AUTHOR':
             return [

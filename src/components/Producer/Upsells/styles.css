@@ -79,7 +79,7 @@
     transform: translateY(250px);
     visibility: hidden;
     transition: all 0.3s ease-in-out; }
-    :local(.component) .upsells-grid .actions.active {
+    :local(.component) .upsells-grid .actionCreators.active {
       transform: translateY(0);
       visibility: visible; }
     :local(.component) .upsells-grid .actions button {

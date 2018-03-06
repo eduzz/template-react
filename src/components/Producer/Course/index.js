@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { Tabs, Pane } from 'components/Tabs';
 import BasicInfo from './BasicInfo';
 import Advanced from './Advanced';
@@ -29,16 +30,18 @@ class Course extends Component {
 
     componentDidMount() {
         if(this.courseID && this.courseID !== 'new') {
-            this.props.getCourse(this.courseID);
+            this.props.fetchCourse(this.courseID);
         }
     }
 
     handleSubmit = e => {
         e.preventDefault();
 
-        this.props.saveCourse({
-            ...this.props.course,
-        });
+        if(this.props.course.id) {
+            this.props.updateCourse(this.props.course);
+        } else {
+            this.props.createCourse(this.props.course);
+        }
     }
 
     render() {
@@ -107,22 +110,23 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getCourse(courseID) {
-        dispatch(actions.getCourse(courseID));
-    },
-    cleanCourse() {
-        dispatch(actions.cleanCourse());
-    },
-    changeCourseField(field, value) {
-        dispatch(actions.changeCourseField(field, value));
-    },
-    saveCourse(course) {
-        if(course.id) {
-            dispatch(actions.updateCourse(course));
-        } else {
-            dispatch(actions.createCourse(course));
-        }
-    },
+    // getCourse(courseID) {
+    //     dispatch(actionCreators.getCourse(courseID));
+    // },
+    // cleanCourse() {
+    //     dispatch(actionCreators.cleanCourse());
+    // },
+    // changeCourseField(field, value) {
+    //     dispatch(actionCreators.changeCourseField(field, value));
+    // },
+    // saveCourse(course) {
+    //     if(course.id) {
+    //         dispatch(actionCreators.updateCourse(course));
+    //     } else {
+    //         dispatch(actionCreators.createCourse(course));
+    //     }
+    // },
+    ...bindActionCreators(actionCreators, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Course);

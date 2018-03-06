@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import { Dialog, FlatButton } from 'material-ui';
 import Loading from 'components/Loading';
 import styles from './styles.css';
@@ -233,7 +233,7 @@ class CourseAdvanced extends React.Component {
                                     // isDelConfirmOpen: false,
                                     isDeletingCourse: true,
                                 });
-                                this.props.dispatch(actions.deleteCourse(this.props.course.id));
+                                this.props.dispatch(actionCreators.deleteCourse(this.props.course.id));
                             }}
                         />,
                     ] : []}

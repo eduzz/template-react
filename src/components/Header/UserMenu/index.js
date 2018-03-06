@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actions from 'actions';
+import actionCreators from 'actionCreators';
 import jquery from 'jquery';
 import v4 from 'uuid';
 import styles from './styles.css';
@@ -34,7 +34,7 @@ class UserMenu extends Component {
                     <li><a>Meus Dados</a></li>
                     <li><a>Meus Certificados</a></li>
                     <li className='divider'></li>
-                    <li><a onClick={() => this.props.dispatch(actions.logout())}>Sair</a></li>
+                    <li><a onClick={() => this.props.dispatch(actionCreators.logout())}>Sair</a></li>
                 </ul>
             </div>
         );
