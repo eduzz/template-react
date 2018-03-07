@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "msjsdiag.debugger-for-chrome",
-    "mikestead.dotenv"
+    "mikestead.dotenv",
+    "dbaeumer.vscode-eslint",
   ]
 }
