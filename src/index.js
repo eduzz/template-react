@@ -8,7 +8,4 @@ import './assets/css/css.css';
 
 const store = configureStore();
 
-render(
-	<Root store={ store } />,
-	document.getElementById('root')
-);
+render(<Root store={store} />, document.getElementById('root'));

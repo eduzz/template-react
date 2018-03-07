@@ -1,79 +1,79 @@
 export const getModules = courseID => ({
-	type: 'GET_MODULES',
-    courseID,
+  type: 'GET_MODULES',
+  courseID
 });
 
 export const receiveModules = modules => ({
-	type: 'RECEIVE_MODULES',
-	modules,
+  type: 'RECEIVE_MODULES',
+  modules
 });
 
 export const receiveModulesError = err => ({
-	type: 'RECEIVE_MODULES_ERROR',
-	err,
+  type: 'RECEIVE_MODULES_ERROR',
+  err
 });
 
 export const addModule = () => ({
-    type: 'ADD_MODULE',
+  type: 'ADD_MODULE'
 });
 
 export const removeModule = index => ({
-    type: 'REMOVE_MODULE',
-    index,
+  type: 'REMOVE_MODULE',
+  index
 });
 
 export const postModule = (courseID, title, sequence) => ({
-    type: 'POST_MODULE',
-    courseID,
-    title,
-    sequence,
+  type: 'POST_MODULE',
+  courseID,
+  title,
+  sequence
 });
 
 export const receiveModule = (module, sequence) => ({
-    type: 'RECEIVE_MODULE',
-    module,
-    sequence,
+  type: 'RECEIVE_MODULE',
+  module,
+  sequence
 });
 
 export const receiveModuleError = err => ({
-    type: 'RECEIVE_MODULE',
-    err,
+  type: 'RECEIVE_MODULE',
+  err
 });
 
 export const deleteModule = moduleID => ({
-    type: 'DELETE_MODULE',
-    moduleID,
+  type: 'DELETE_MODULE',
+  moduleID
 });
 
 export const deleteModuleUndo = (module, index) => ({
-    type: 'DELETE_MODULE_UNDO',
-    module,
-    index,
+  type: 'DELETE_MODULE_UNDO',
+  module,
+  index
 });
 
 export const deleteModulePersist = moduleID => ({
-    type: 'DELETE_MODULE_PERSIST',
-    moduleID
+  type: 'DELETE_MODULE_PERSIST',
+  moduleID
 });
 
 export const editModulePersist = (module, index) => ({
-    type: 'EDIT_MODULE_PERSIST',
-    module,
-    index,
+  type: 'EDIT_MODULE_PERSIST',
+  module,
+  index
 });
 
 export const getModuleLessons = moduleID => ({
-	type: 'GET_MODULE_LESSONS',
-	moduleID
+  type: 'GET_MODULE_LESSONS',
+  moduleID
 });
 
 export const receiveModuleLessons = (lessons, moduleID) => ({
-	type: 'RECEIVE_MODULE_LESSONS',
-	lessons,
-	moduleID,
+  type: 'RECEIVE_MODULE_LESSONS',
+  lessons,
+  moduleID
 });
 
 export const receiveModuleLessonsError = err => ({
-	type: 'RECEIVE_MODULE_LESSONS_ERROR',
-	err,
+  type: 'RECEIVE_MODULE_LESSONS_ERROR',
+  err
 });

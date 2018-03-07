@@ -9,13 +9,13 @@ import upload from './upload';
 import lesson from './lesson';
 
 export default applyMiddleware(
-    courses,
-    course,
-    auth,
-    authors,
-    categories,
-    authors,
-    modules,
-    upload,
-    lesson,
+  courses,
+  course,
+  auth,
+  authors,
+  categories,
+  authors,
+  modules,
+  upload,
+  lesson
 );

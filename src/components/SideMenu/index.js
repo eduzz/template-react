@@ -5,13 +5,13 @@ import SideMenuOptionList from './SideMenuOptionList';
 import styles from './styles.css';
 
 const SideMenu = () => (
-    <aside className={styles.component}>
-        <div className="container">
-            <Welcome />
-            <SideMenuOptionList />
-            <SideMenuFooter />
-        </div>
-    </aside>
+  <aside className={styles.component}>
+    <div className="container">
+      <Welcome />
+      <SideMenuOptionList />
+      <SideMenuFooter />
+    </div>
+  </aside>
 );
 
 export default SideMenu;

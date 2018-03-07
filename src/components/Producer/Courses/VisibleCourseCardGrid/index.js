@@ -7,30 +7,32 @@ import { getVisibleCourses } from 'reducers';
 import Loading from 'components/Loading';
 
 class VisibleCourseCardGrid extends Component {
-	componentDidMount() {
-		this.props.fetchCourses();
-    }
+  componentDidMount() {
+    this.props.fetchCourses();
+  }
 
-	render() {
-		return (
-            <div>
-                <Loading active={!this.props.courses.length} />
-                <CourseCardGrid courses={ this.props.courses } />
-            </div>
-        );
-	}
+  render() {
+    return (
+      <div>
+        <Loading active={!this.props.courses.length} />
+        <CourseCardGrid courses={this.props.courses} />
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {
-	const filter = state.searchFilter.courses;
+  const filter = state.searchFilter.courses;
 
-	return {
-		courses: getVisibleCourses(state, filter),
-	};
+  return {
+    courses: getVisibleCourses(state, filter)
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
-	...bindActionCreators(actionCreators, dispatch),
+  ...bindActionCreators(actionCreators, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VisibleCourseCardGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  VisibleCourseCardGrid
+);

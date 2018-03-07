@@ -14,25 +14,25 @@ import News from './News';
 import Upsells from './Upsells';
 
 const Producer = () => (
-	<div>
-		<Header />
-		<SideMenu />
+  <div>
+    <Header />
+    <SideMenu />
 
-		<Switch>
-			<Redirect exact from='/producer' to='/producer/courses' />
-	    	<Route exact path='/producer/courses' component={ Courses } />
-	    	<Route exact path='/producer/courses/:courseID' component={ Course } />
-            <Route exact path='/producer/lessons/:lessonID' component={ Lesson } />
-			<Route exact path='/producer/packages' component={ Packages } />
-			<Route exact path='/producer/comments' component={ Comments } />
-			<Route exact path='/producer/students' component={ Students } />
-			<Route exact path='/producer/invites' component={ Invites } />
-			<Route exact path='/producer/news' component={ News } />
-			<Route exact path='/producer/upsells' component={ Upsells } />
-	    </Switch>
+    <Switch>
+      <Redirect exact from="/producer" to="/producer/courses" />
+      <Route exact path="/producer/courses" component={Courses} />
+      <Route exact path="/producer/courses/:courseID" component={Course} />
+      <Route exact path="/producer/lessons/:lessonID" component={Lesson} />
+      <Route exact path="/producer/packages" component={Packages} />
+      <Route exact path="/producer/comments" component={Comments} />
+      <Route exact path="/producer/students" component={Students} />
+      <Route exact path="/producer/invites" component={Invites} />
+      <Route exact path="/producer/news" component={News} />
+      <Route exact path="/producer/upsells" component={Upsells} />
+    </Switch>
 
-	    <Footer />
-	</div>
+    <Footer />
+  </div>
 );
 
 export default Producer;

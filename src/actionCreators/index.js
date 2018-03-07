@@ -9,13 +9,13 @@ import * as modules from './modules';
 import * as upload from './upload';
 
 export default {
-	...courses,
-	...course,
-	...lessons,
-	...search,
-    ...auth,
-    ...categories,
-    ...authors,
-    ...modules,
-    ...upload,
+  ...courses,
+  ...course,
+  ...lessons,
+  ...search,
+  ...auth,
+  ...categories,
+  ...authors,
+  ...modules,
+  ...upload
 };

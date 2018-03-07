@@ -17,20 +17,20 @@ import EmailFilter from './EmailFilter';
 import NameFilter from './NameFilter';
 
 export {
-    FiltersMenu,
-    ProducerFilter,
-    PeriodFilter,
-    StatusFilter,
-    CategoryFilter,
-    TagsFilter,
-    TrackFilter,
-    CourseFilter,
-    StudentFilter,
-    StudentLastAcessFilter,
-    CommentStatusFilter,
-    CommentContentFilter,
-    CommentFavoriteFilter,
-    StudentStatusFilter,
-    EmailFilter,
-    NameFilter
+  FiltersMenu,
+  ProducerFilter,
+  PeriodFilter,
+  StatusFilter,
+  CategoryFilter,
+  TagsFilter,
+  TrackFilter,
+  CourseFilter,
+  StudentFilter,
+  StudentLastAcessFilter,
+  CommentStatusFilter,
+  CommentContentFilter,
+  CommentFavoriteFilter,
+  StudentStatusFilter,
+  EmailFilter,
+  NameFilter
 };

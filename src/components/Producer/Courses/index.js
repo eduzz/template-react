@@ -6,16 +6,16 @@ import CoursesFilters from './CoursesFilters';
 import styles from './styles.css';
 
 const Courses = () => (
-    <section className={styles.component}>
-        <div className="container">
-            <PageHeader />
-            <div className="search-bar">
-                <CoursesSearch />
-                <CoursesFilters />
-            </div>
-            <VisibleCourseCardGrid />
-        </div>
-    </section>
+  <section className={styles.component}>
+    <div className="container">
+      <PageHeader />
+      <div className="search-bar">
+        <CoursesSearch />
+        <CoursesFilters />
+      </div>
+      <VisibleCourseCardGrid />
+    </div>
+  </section>
 );
 
 export default Courses;

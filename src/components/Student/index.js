@@ -7,18 +7,26 @@ import StudentCourseDetails from './StudentCourseDetails';
 import StudentLesson from './StudentLesson';
 
 const Student = () => (
-	<div className="template-black">
-		<Header />
+  <div className="template-black">
+    <Header />
 
-		<Switch>
-			<Redirect exact from='/student' to='/student/courses' />
-	    	<Route exact path='/student/courses' component={ StudentCourses } />
-	    	<Route exact path='/student/courses/:courseId' component={ StudentCourseDetails } />
-	    	<Route exact path='/student/courses/lesson/:lessonId' component={ StudentLesson } />
-	    </Switch>
+    <Switch>
+      <Redirect exact from="/student" to="/student/courses" />
+      <Route exact path="/student/courses" component={StudentCourses} />
+      <Route
+        exact
+        path="/student/courses/:courseId"
+        component={StudentCourseDetails}
+      />
+      <Route
+        exact
+        path="/student/courses/lesson/:lessonId"
+        component={StudentLesson}
+      />
+    </Switch>
 
-	    <Footer />
-	</div>
+    <Footer />
+  </div>
 );
 
 export default Student;

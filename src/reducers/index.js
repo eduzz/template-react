@@ -11,20 +11,22 @@ import upload from './upload';
 import lesson from './lesson';
 
 const nutrorApp = combineReducers({
-	courses,
-	searchFilter,
-	course,
-    auth,
-    user,
-    categories,
-    authors,
-    modules,
-    upload,
-    lesson,
+  courses,
+  searchFilter,
+  course,
+  auth,
+  user,
+  categories,
+  authors,
+  modules,
+  upload,
+  lesson
 });
 
 export default nutrorApp;
 
 export const getVisibleCourses = (state, filter = '') => {
-	return state.courses.filter(course => course.title.toLowerCase().includes(filter.toLowerCase()));
-}
+  return state.courses.filter(course =>
+    course.title.toLowerCase().includes(filter.toLowerCase())
+  );
+};
