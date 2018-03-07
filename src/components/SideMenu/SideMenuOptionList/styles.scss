@@ -1,22 +1,20 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
 
-:local(.component){
-      display:block;
-	  width: 100%;
-      height: calc(100vh - 250px);
-      overflow-y: auto;
-      ul{
-        list-style:none;
-        padding:0;
-        margin:0;
-      }
-	.icon{
-    fill:#fff;
+:local(.component) {
+  display: block;
+  width: 100%;
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .icon {
+    fill: #fff;
     width: 16px;
     height: 16px;
-    margin-right:10px;
+    margin-right: 10px;
   }
-  
-
 }

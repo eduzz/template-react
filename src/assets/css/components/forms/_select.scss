@@ -1,8 +1,12 @@
 /* Select Field
    ========================================================================== */
 
-select { display: none; }
-select.browser-default { display: block; }
+select {
+  display: none;
+}
+select.browser-default {
+  display: block;
+}
 
 select {
   background-color: $select-background;
@@ -12,7 +16,6 @@ select {
   border-radius: $select-radius;
   height: $input-height;
 }
-
 
 .input-field {
   & > select {
@@ -33,7 +36,7 @@ select {
 
 .select-wrapper {
   position: relative;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   &.valid {
     & > input.select-dropdown {
       @extend %valid-input-style;
@@ -64,12 +67,10 @@ select {
     @extend %input-after-style;
   }
 
-  
-
   input.select-dropdown {
     position: relative;
     cursor: pointer;
-    background-color:#fff;
+    background-color: #fff;
     border: none;
     border: 1px solid $medium-gray;
     outline: none;
@@ -80,7 +81,7 @@ select {
     margin: $input-margin;
     padding: 0 10px;
     display: block;
-    user-select:none;
+    user-select: none;
     box-sizing: border-box;
   }
 
@@ -101,7 +102,7 @@ select {
     position: absolute;
     top: -26px;
     font-size: $label-font-size;
-    padding-left:0;
+    padding-left: 0;
   }
 }
 
@@ -157,7 +158,9 @@ select:disabled {
   width: calc(100% - 3rem);
 }
 
-.prefix ~ label { margin-left: 3rem; }
+.prefix ~ label {
+  margin-left: 3rem;
+}
 
 // Icons
 .select-dropdown li {
@@ -174,11 +177,11 @@ select:disabled {
   border-top: 1px solid $dropdown-hover-bg-color;
 
   &.selected > span {
-    color: rgba(0, 0, 0, .7);
+    color: rgba(0, 0, 0, 0.7);
   }
 
   & > span {
-    color: rgba(0, 0, 0, .4);
+    color: rgba(0, 0, 0, 0.4);
   }
 
   & ~ li.optgroup-option {

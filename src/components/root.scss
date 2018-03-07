@@ -2,103 +2,100 @@
 @import 'src/assets/css/_mixins.scss';
 @import 'src/assets/css/_reset.scss';
 
-.container{
+.container {
   width: 100%;
   max-width: 100%;
 }
-body{
-  padding:60px 0 0 0;
+body {
+  padding: 60px 0 0 0;
 }
-.button{
-  padding:12px 30px;
-  border:0;
-  border-radius:50px;
-  background-color:#d8d8d8;
+.button {
+  padding: 12px 30px;
+  border: 0;
+  border-radius: 50px;
+  background-color: #d8d8d8;
   display: inline-block;
-  color:$primary-color;
+  color: $primary-color;
   @include transition;
-  span{
-    letter-spacing:0.5px;
-    font-weight:$medium;
-    font-size:16px;
+  span {
+    letter-spacing: 0.5px;
+    font-weight: $medium;
+    font-size: 16px;
     @include transition;
-    color:#3A3A3A;
+    color: #3a3a3a;
   }
-  .icon{
-      fill:#3a3a3a;
-      margin-right:5px;
-      @include transition;
-      height: 15px;
+  .icon {
+    fill: #3a3a3a;
+    margin-right: 5px;
+    @include transition;
+    height: 15px;
   }
-  &.affirmative{
-    background-color:$affirmative-color;
-    span{
-      color:#fff;
+  &.affirmative {
+    background-color: $affirmative-color;
+    span {
+      color: #fff;
     }
-    .icon{
-      fill:#fff;
-    }
-  }
-  &.small{
-    padding:10px 20px;
-    span{
-      font-size:12px;
-    }
-    .icon{
-      height:10px;
-      margin-right:5px;
+    .icon {
+      fill: #fff;
     }
   }
-  &.soft{
-    background-color:#e6e6e6;
-    border:1px solid #202020;
+  &.small {
+    padding: 10px 20px;
+    span {
+      font-size: 12px;
+    }
+    .icon {
+      height: 10px;
+      margin-right: 5px;
+    }
   }
-  &.outline-light{
+  &.soft {
+    background-color: #e6e6e6;
+    border: 1px solid #202020;
+  }
+  &.outline-light {
     background-color: transparent;
-    border:1px solid #fff;
-    span{
-      color:#fff;
+    border: 1px solid #fff;
+    span {
+      color: #fff;
     }
-    .icon{
-      fill:#fff;
-
+    .icon {
+      fill: #fff;
     }
-    &:hover{
-      background-color:#fff;
-      span{
-        color:$dark-color;
+    &:hover {
+      background-color: #fff;
+      span {
+        color: $dark-color;
       }
-      .icon{
-        fill:$dark-color;
+      .icon {
+        fill: $dark-color;
       }
-
     }
   }
-  &.outline-dark{
+  &.outline-dark {
     background-color: transparent;
-    border:1px solid $dark-color;
-    span{
-      color:$dark-color;
+    border: 1px solid $dark-color;
+    span {
+      color: $dark-color;
     }
-    .icon{
-      fill:$dark-color;
+    .icon {
+      fill: $dark-color;
       @include transition;
     }
-    &:hover{
-      background-color:$dark-color;
-      span{
-        color:#fff;
+    &:hover {
+      background-color: $dark-color;
+      span {
+        color: #fff;
       }
-      .icon{
-        fill:#fff;
+      .icon {
+        fill: #fff;
       }
-
     }
   }
 }
-.input-label{
+.input-label {
   display: block;
-  color:$dark-color;
+  color: $dark-color;
   text-transform: uppercase;
   margin-bottom: 5px;
   letter-spacing: 1px;
@@ -108,14 +105,18 @@ body{
 .right-label {
   margin-left: 10px;
 
-  &:empty { display: none; }
+  &:empty {
+    display: none;
+  }
 }
 
-.text-center { text-align: center; }
+.text-center {
+  text-align: center;
+}
 
-nav{
-  color:inherit;
-  background-color:inherit;
+nav {
+  color: inherit;
+  background-color: inherit;
   height: auto;
   line-height: initial;
 }
@@ -136,18 +137,20 @@ html .switch {
 }
 
 .datepicker-field {
-  hr { display: none !important; }
+  hr {
+    display: none !important;
+  }
 
   input {
     background-color: #fff;
     border: 1px solid #d8d8d8 !important;
-    
+
     width: 100%;
     max-width: 200px;
     height: 3rem;
     margin: 0;
     padding: 0 10px !important;
-    
+
     font-size: 1rem;
     -webkit-box-shadow: none;
     box-shadow: none;

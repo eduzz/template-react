@@ -1,38 +1,37 @@
-@import "variables";
-@import "fonts";
-@import "mixins";
-@import "reset";
-@import "materialize";
-@import "~slick-carousel/slick/slick.css";
-@import "~slick-carousel/slick/slick-theme.css";
+@import 'variables';
+@import 'fonts';
+@import 'mixins';
+@import 'reset';
+@import 'materialize';
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
 
-body{
-  padding:60px 0 0 0;
+body {
+  padding: 60px 0 0 0;
 }
 .waves-effect.waves-dark .waves-ripple {
   background-color: $darkest-color;
 }
 // .main-header{
-  // background-color:$darkest-color;
-  // position: fixed;
-  // width:100%;
-  // top: 0;
-  // left: 0;
-  // right: 0;
-  // z-index: 50;
-  // .container{
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items:center;
-  //   height: 60px;
-  //   padding:0 20px;
-  // }
+// background-color:$darkest-color;
+// position: fixed;
+// width:100%;
+// top: 0;
+// left: 0;
+// right: 0;
+// z-index: 50;
+// .container{
+//   display: flex;
+//   justify-content: space-between;
+//   align-items:center;
+//   height: 60px;
+//   padding:0 20px;
+// }
 // }
 // .container{
 //   width: 100%;
 //   max-width: 100%;
 // }
-
 
 // .button{
 //   padding:12px 30px;
@@ -94,8 +93,6 @@ body{
 //     }
 //   }
 // }
-
-
 
 // .input-label{
 //   display: block;
@@ -202,104 +199,102 @@ body{
 //     }
 //   }
 // }
-.course-nav{
+.course-nav {
   width: 350px;
   @include transition;
-  .modules-block{
-      height: calc(100vh - 250px);
-      overflow-y: auto;
+  .modules-block {
+    height: calc(100vh - 250px);
+    overflow-y: auto;
   }
-  .course-block{
+  .course-block {
     padding: 20px;
   }
-  .toggle-nav{
-    position:absolute;
+  .toggle-nav {
+    position: absolute;
     right: 0;
     top: 0;
     bottom: 0;
-    padding:0;
-    background-color:transparent;
-    margin:auto;
+    padding: 0;
+    background-color: transparent;
+    margin: auto;
     height: 100%;
     width: 40px;
     background-color: $dark-color;
-    border-radius:0;
+    border-radius: 0;
     display: flex;
-    align-items:center;
+    align-items: center;
     cursor: pointer;
     @include transition;
     justify-content: center;
-    div{
-      position:relative;
+    div {
+      position: relative;
       display: block;
       width: 20px;
       height: 22px;
     }
-    span{
-      margin:auto;
+    span {
+      margin: auto;
       width: 2px;
       height: 12px;
       display: block;
-      background-color:#fff;
-      position:absolute;
+      background-color: #fff;
+      position: absolute;
       top: 0;
       left: 0;
       right: 0;
       @include transition;
-
     }
-    span:first-child{
+    span:first-child {
       transform: rotate(35deg);
     }
-    span:last-child{
+    span:last-child {
       transform: rotate(-35deg);
       top: 10px;
     }
-    &:hover{
-      background-color:$darkest-color;
+    &:hover {
+      background-color: $darkest-color;
     }
-
   }
-  .course-data{
-    position:relative;
+  .course-data {
+    position: relative;
     padding-right: 40px;
     background-color: $dark-color;
     @include transition;
-    cursor:pointer;
+    cursor: pointer;
   }
-  .course-actions{
-    padding:0;
+  .course-actions {
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color:$dark-color;
-    .button{
-      border-radius:0;
-      background-color:transparent;
+    background-color: $dark-color;
+    .button {
+      border-radius: 0;
+      background-color: transparent;
       max-width: 50%;
-      padding:12px 20px;
+      padding: 12px 20px;
       display: block;
       white-space: nowrap;
-      span{
-        color:#fff;
+      span {
+        color: #fff;
         font-weight: 300;
       }
-      .icon{
-        fill:#fff;
+      .icon {
+        fill: #fff;
         margin-right: 10px;
       }
-      &:hover{
-        background-color:$darkest-color;
+      &:hover {
+        background-color: $darkest-color;
       }
     }
   }
-  .course-title{
+  .course-title {
     @include fontsize(22);
-    margin:0 0 15px 0;
+    margin: 0 0 15px 0;
     @include transition;
   }
 
-  .course-category{
+  .course-category {
     @include fontsize(12);
     text-transform: uppercase;
     font-weight: 600;
@@ -307,154 +302,153 @@ body{
     margin-bottom: 5px;
     display: block;
   }
-  .course-progress label{
+  .course-progress label {
     text-transform: uppercase;
-    font-weight:$medium;
+    font-weight: $medium;
     letter-spacing: 1px;
     @include fontsize(12);
   }
-  .progress-bar{
+  .progress-bar {
     width: 100%;
     height: 3px;
     display: block;
-    margin:8px 0;
-    background-color:#fff;
-    span{
-      background-color:$affirmative-color;
+    margin: 8px 0;
+    background-color: #fff;
+    span {
+      background-color: $affirmative-color;
       display: block;
       height: 3px;
-
     }
   }
-  .card-lessons{
-    margin:0 0 5px 0;
-    .card-lesson-block{
-      margin:0;
-      padding:20px 40px 20px 20px;
+  .card-lessons {
+    margin: 0 0 5px 0;
+    .card-lesson-block {
+      margin: 0;
+      padding: 20px 40px 20px 20px;
       @include transition;
-      cursor:pointer;
-      .card-lesson-content{
-        .lesson-title{
+      cursor: pointer;
+      .card-lesson-content {
+        .lesson-title {
           font-weight: 300;
-          margin:0;
+          margin: 0;
         }
       }
-      .icon{
+      .icon {
         width: 15px;
         height: 15px;
-        position:absolute;
+        position: absolute;
         top: 0;
         bottom: 0;
-        margin:auto;
+        margin: auto;
         right: 25px;
         @include transition;
       }
-      &:hover{
-        .icon{
-          fill:$affirmative-color;
+      &:hover {
+        .icon {
+          fill: $affirmative-color;
         }
       }
     }
-    .card-lessons-wrapper{
-      padding:0;
+    .card-lessons-wrapper {
+      padding: 0;
     }
-    .card-lesson-content{
-      padding:0;
+    .card-lesson-content {
+      padding: 0;
     }
-  }//end card lesson
-  .card-lessons-header{
+  } //end card lesson
+  .card-lessons-header {
+    &:after,
+    &:before {
+      height: 12px;
+    }
+    &:after {
+      right: 35px;
+    }
+    &:before {
+      right: 38px;
+    }
+    &.active {
       &:after,
-      &:before{
+      &:before {
         height: 12px;
       }
-      &:after{
-        right: 35px;
+      &:after {
+        transform: translateX(2px) rotate(-40deg);
       }
-      &:before{
-        right: 38px;
+      &:before {
+        transform: translateX(-2px) rotate(40deg);
       }
-      &.active{
-        &:after,
-        &:before{
-          height: 12px;
-        }
-        &:after{
-          transform: translateX(2px) rotate(-40deg);
-        }
-        &:before{
-          transform: translateX(-2px) rotate(40deg);
-        }
-      }
+    }
   }
-  &.hidden{
+  &.hidden {
     transform: translateX(-350px);
-    .course-data{
-      position:fixed;
-      top:0;
+    .course-data {
+      position: fixed;
+      top: 0;
       min-width: 350px;
       transform: translateX(30px);
-      background-color:transparentize($dark-color, 0.2);
-      &:hover{
+      background-color: transparentize($dark-color, 0.2);
+      &:hover {
         transform: translateX(350px);
-        background-color:$dark-color;
+        background-color: $dark-color;
       }
     }
-    .course-progress{
+    .course-progress {
       height: 0;
-      overflow:hidden;
+      overflow: hidden;
     }
-    .course-title{
-      margin:0;
+    .course-title {
+      margin: 0;
     }
-    .course-block{
+    .course-block {
       opacity: 1;
       @include transition;
     }
-    .toggle-nav{
+    .toggle-nav {
       background-color: transparent;
-      &:hover{
-        background-color:transparentize($dark-color, 0.2);
+      &:hover {
+        background-color: transparentize($dark-color, 0.2);
       }
-      span:first-child{
+      span:first-child {
         transform: rotate(-35deg);
       }
-      span:last-child{
+      span:last-child {
         transform: rotate(35deg);
       }
     }
   }
 }
-.lesson-container{
-  margin-left:350px;
+.lesson-container {
+  margin-left: 350px;
   min-height: calc(100vh - 60px);
   padding: 30px;
   @include transition;
-  .lesson-title{
-    margin:0;
+  .lesson-title {
+    margin: 0;
     @include fontsize(24);
     @include transition;
     // padding:20px 0;
   }
-  iframe{
+  iframe {
     width: 100%;
     height: 50vh;
     display: block;
   }
-  &.hidden{
-    margin-left:0;
-    padding:30px 50px;
+  &.hidden {
+    margin-left: 0;
+    padding: 30px 50px;
   }
-  .lesson-header{
+  .lesson-header {
     display: flex;
     justify-content: space-between;
-    align-items:center;
-    padding-bottom:15px;
+    align-items: center;
+    padding-bottom: 15px;
   }
-  .lesson-actions{
+  .lesson-actions {
     display: flex;
     justify-content: space-between;
-    padding:15px 0;
-    label{
+    padding: 15px 0;
+    label {
       display: block;
       text-transform: uppercase;
       font-weight: $medium;
@@ -462,41 +456,41 @@ body{
       margin-bottom: 5px;
     }
   }
-  .share-bar{
-    .button{
-      padding:10px;
+  .share-bar {
+    .button {
+      padding: 10px;
       display: flex;
-      align-items:center;
+      align-items: center;
       justify-content: center;
-      border-radius:0;
+      border-radius: 0;
       margin-right: 5px;
     }
-    .facebook{
+    .facebook {
       background-color: #3b5998;
     }
-    .twitter{
+    .twitter {
       background-color: #00aced;
     }
-    .linkedin{
+    .linkedin {
       background-color: #007bb6;
     }
-    .social-buttons{
+    .social-buttons {
       display: flex;
-      align-items:flex-start;
+      align-items: flex-start;
       justify-content: flex-start;
       cursor: pointer;
     }
-    .icon{
+    .icon {
       height: 15px;
-      margin:0;
-      fill:#fff;
+      margin: 0;
+      fill: #fff;
     }
   }
-  .lesson-description{
-    padding-top:30px;
-    border-top:1px solid #cecece;
-    border-bottom:1px solid #cecece;
-    p{
+  .lesson-description {
+    padding-top: 30px;
+    border-top: 1px solid #cecece;
+    border-bottom: 1px solid #cecece;
+    p {
       margin-bottom: 1rem;
       line-height: 1.4rem;
       font-weight: $light;
@@ -504,154 +498,153 @@ body{
     }
   }
 }
-.comments{
-    padding: 20px 0;
-    // &.form-section .form-block-title{
-    //   margin: 0 0 15px 0;
-    // }
-    .comment-form{
-       display: flex;
-       align-items:flex-end;
-       flex-flow:column;
-       padding:10px 0;
-      .container{
-        display: flex;
-        align-items:flex-start;
-        // flex-direction: row-reverse;
-      }
-      .input-field{
-        margin: 0 0 0 0;
-        width: 100%;
-      }
-      .input-field textarea{
-        margin-bottom:10px;
-        border-radius:50px;
-        @include fontsize(16);
-        padding:12px 10px;
-        border:1px solid $dark-gray;
-        &:active,&:focus{
-          outline: none;
-
-        }
-      }
-      .current-user-photo{
-         $user-photo-size: 45px;
-          min-width: $user-photo-size;
-          min-height: $user-photo-size;
-          max-width: $user-photo-size;
-          max-height: $user-photo-size;
-          display: block;
-          overflow: hidden;
-          border-radius:50%;
-          margin-right: 15px;
-          img{
-             width: 60px;
-             height: 100%;
-             object-fit: cover;
-          }
-      }
-      .comment-button{
-        // float: right;
-        &:hover{
-          background-color:$affirmative-color;
-          span{
-            color:#fff;
-          }
-        }
+.comments {
+  padding: 20px 0;
+  // &.form-section .form-block-title{
+  //   margin: 0 0 15px 0;
+  // }
+  .comment-form {
+    display: flex;
+    align-items: flex-end;
+    flex-flow: column;
+    padding: 10px 0;
+    .container {
+      display: flex;
+      align-items: flex-start;
+      // flex-direction: row-reverse;
+    }
+    .input-field {
+      margin: 0 0 0 0;
+      width: 100%;
+    }
+    .input-field textarea {
+      margin-bottom: 10px;
+      border-radius: 50px;
+      @include fontsize(16);
+      padding: 12px 10px;
+      border: 1px solid $dark-gray;
+      &:active,
+      &:focus {
+        outline: none;
       }
     }
-    .answers{
-      margin-left: 80px;
-          .comment:first-child{
-            padding:20px 0;
-          }
-          .comment:last-child{
-            padding:20px 0 0 0;
-          }
-          .comment{
-            padding:10px 0 20px 0;
-          }
-    }
-
-    .container > .comment{
-      border-bottom: 1px solid $medium-gray;
-    }
-    .container > .comment:last-child{
-      border-bottom: 0;
-    }
-    .comment{
-      padding:40px 0;
-      .container{
-        display: flex;
-        justify-content: flex-start;
-      }
-      .user-photo{
-        $user-photo-size: 60px;
-        min-width: $user-photo-size;
-        min-height: $user-photo-size;
-        max-width: $user-photo-size;
-        max-height: $user-photo-size;
-        display: block;
-        overflow: hidden;
-        border-radius:50%;
-        img{
-           width: 60px;
-           height: 100%;
-           object-fit: cover;
-        }
-      }
-      .content{
-        padding:0 15px;
-      }
-      .user-name{
-        @include fontsize(18);
-        font-weight: $medium;
-        display: inline-block;
-        margin:0 10px 0 0;
-      }
-      .comment-text{
-        padding:5px 0 10px 0;
-        line-height: 1.4rem;
-        font-weight: $light;
-      }
-      .comment-published-time{
-        color:$dark-gray;
-
-      }
-      .comment-user-actions{
-        .action-link{
-          font-weight:$medium;
-          text-transform: uppercase;
-          color:$dark-gray;
-          margin-right: 15px;
-          @include fontsize(14);
-          @include transition;
-          &:hover{
-            color:$affirmative-color;
-          }
-        }
-      }//end actions
-    }
-}
-.filters-backdrop{
-    background-color: transparent;
-    pointer-events: none;
-    opacity: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1001;
-    display: none;
-    &.active{
+    .current-user-photo {
+      $user-photo-size: 45px;
+      min-width: $user-photo-size;
+      min-height: $user-photo-size;
+      max-width: $user-photo-size;
+      max-height: $user-photo-size;
       display: block;
-      opacity: 0.8;
-      pointer-events: all;
+      overflow: hidden;
+      border-radius: 50%;
+      margin-right: 15px;
+      img {
+        width: 60px;
+        height: 100%;
+        object-fit: cover;
+      }
     }
+    .comment-button {
+      // float: right;
+      &:hover {
+        background-color: $affirmative-color;
+        span {
+          color: #fff;
+        }
+      }
+    }
+  }
+  .answers {
+    margin-left: 80px;
+    .comment:first-child {
+      padding: 20px 0;
+    }
+    .comment:last-child {
+      padding: 20px 0 0 0;
+    }
+    .comment {
+      padding: 10px 0 20px 0;
+    }
+  }
+
+  .container > .comment {
+    border-bottom: 1px solid $medium-gray;
+  }
+  .container > .comment:last-child {
+    border-bottom: 0;
+  }
+  .comment {
+    padding: 40px 0;
+    .container {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .user-photo {
+      $user-photo-size: 60px;
+      min-width: $user-photo-size;
+      min-height: $user-photo-size;
+      max-width: $user-photo-size;
+      max-height: $user-photo-size;
+      display: block;
+      overflow: hidden;
+      border-radius: 50%;
+      img {
+        width: 60px;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .content {
+      padding: 0 15px;
+    }
+    .user-name {
+      @include fontsize(18);
+      font-weight: $medium;
+      display: inline-block;
+      margin: 0 10px 0 0;
+    }
+    .comment-text {
+      padding: 5px 0 10px 0;
+      line-height: 1.4rem;
+      font-weight: $light;
+    }
+    .comment-published-time {
+      color: $dark-gray;
+    }
+    .comment-user-actions {
+      .action-link {
+        font-weight: $medium;
+        text-transform: uppercase;
+        color: $dark-gray;
+        margin-right: 15px;
+        @include fontsize(14);
+        @include transition;
+        &:hover {
+          color: $affirmative-color;
+        }
+      }
+    } //end actions
+  }
 }
-.filters{
-  position:fixed;
+.filters-backdrop {
+  background-color: transparent;
+  pointer-events: none;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  display: none;
+  &.active {
+    display: block;
+    opacity: 0.8;
+    pointer-events: all;
+  }
+}
+.filters {
+  position: fixed;
   left: auto;
   right: -274px;
   position: fixed;
@@ -662,13 +655,13 @@ body{
   border-radius: 0;
   border-left: 1px solid rgba(0, 0, 0, 0.125);
   text-align: left;
-  background: #FFF;
+  background: #fff;
   z-index: 1002;
-  transition: all 0.3s cubic-bezier(.42,0,.66,1);
+  transition: all 0.3s cubic-bezier(0.42, 0, 0.66, 1);
   box-shadow: none;
-  &.active{
+  &.active {
     box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.3);
-    right:0;
+    right: 0;
   }
   ::-webkit-scrollbar-track {
     background-color: $light-gray;
@@ -676,139 +669,140 @@ body{
 
   ::-webkit-scrollbar {
     width: 6px;
-    background: #F4F4F4;
+    background: #f4f4f4;
   }
 
   ::-webkit-scrollbar-thumb {
     background: $background-color;
   }
-  .container{
+  .container {
     height: calc(100vh - 130px);
     overflow-y: auto;
-    padding-top:60px;
+    padding-top: 60px;
   }
-  .filter-header{
-    padding:10px 20px;
-    background-color:#fff;
+  .filter-header {
+    padding: 10px 20px;
+    background-color: #fff;
     z-index: 9999;
   }
-  .block{
-    border-bottom:1px solid #eaeaea;
+  .block {
+    border-bottom: 1px solid #eaeaea;
   }
-  .block-header{
-    padding:10px 20px;
+  .block-header {
+    padding: 10px 20px;
     @include transition;
-    label{
+    label {
       font-weight: $medium;
-      cursor:pointer;
-      color:$background-color;
+      cursor: pointer;
+      color: $background-color;
       letter-spacing: 0.5px;
     }
     &:after,
-    &:before{
+    &:before {
       height: 12px;
     }
-    &:after{
+    &:after {
       right: 35px;
     }
-    &:before{
+    &:before {
       right: 38px;
     }
-    &.active{
+    &.active {
       &:after,
-      &:before{
+      &:before {
         height: 12px;
       }
-      &:after{
+      &:after {
         transform: translateX(2px) rotate(-40deg);
       }
-      &:before{
+      &:before {
         transform: translateX(-2px) rotate(40deg);
       }
     }
-    &:hover{
-      background-color:transparentize($light-gray, 0.5);
-      label{
-        color:$dark-color;
+    &:hover {
+      background-color: transparentize($light-gray, 0.5);
+      label {
+        color: $dark-color;
       }
     }
   }
-  .block-content{
-    padding:0 20px;
+  .block-content {
+    padding: 0 20px;
   }
-  .filter-header{
-    position:absolute;
-    top:0;
+  .filter-header {
+    position: absolute;
+    top: 0;
     left: 0;
     right: 0;
-    margin:auto;
+    margin: auto;
   }
-  .filter-close{
+  .filter-close {
     width: 30px;
     height: 30px;
     display: block;
     position: absolute;
     top: 20px;
     right: 20px;
-    padding:7px;
-    background-color:$light-gray;
-    border-radius:50%;
+    padding: 7px;
+    background-color: $light-gray;
+    border-radius: 50%;
     @include transition;
 
-    svg{
-      fill:$dark-color;
+    svg {
+      fill: $dark-color;
       @include transition;
     }
-    &:hover{
-      background-color:$dark-color;
+    &:hover {
+      background-color: $dark-color;
       transform: rotate(180deg);
-      svg{
-        fill:$light-gray;
+      svg {
+        fill: $light-gray;
       }
     }
   }
-  .action-button{
-    padding:20px 0;
+  .action-button {
+    padding: 20px 0;
     display: flex;
     justify-content: center;
-    align-items:center;
-    position:absolute;
-    bottom:0;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
     left: 0;
     right: 0;
-    background-color:#fff;
+    background-color: #fff;
   }
-  .switch label input[type=checkbox]:checked + .lever:before, .switch label input[type=checkbox]:checked + .lever:after{
-    left:16px;
+  .switch label input[type='checkbox']:checked + .lever:before,
+  .switch label input[type='checkbox']:checked + .lever:after {
+    left: 16px;
   }
-  .switch{
-    padding:5px 0;
-    label .lever{
-      width:30px;
+  .switch {
+    padding: 5px 0;
+    label .lever {
+      width: 30px;
       height: 16px;
       &:before,
-      &:after{
+      &:after {
         width: 12px;
         height: 12px;
-        left:2px
+        left: 2px;
       }
     }
   }
-  .input-field{
-    margin-top:5px;
-    input{
+  .input-field {
+    margin-top: 5px;
+    input {
       height: 40px;
       @include fontsize(13);
-      margin-bottom:5px;
+      margin-bottom: 5px;
     }
-    label{
-      color:#232323;
+    label {
+      color: #232323;
     }
   }
-  .dropdown-content li > span{
+  .dropdown-content li > span {
     @include fontsize(14);
   }
-  .filter-header-title{
+  .filter-header-title {
     @include fontsize(22);
     margin: 10px 0;
     font-weight: $medium;
@@ -976,7 +970,6 @@ body{
 //   }
 // }
 
-
 // .page-header{
 //   padding:45px 20px;
 //   margin:-20px -20px 0 -20px;
@@ -1000,96 +993,95 @@ body{
 //      font-weight: $regular;
 //   }
 // }
-.input-color{
+.input-color {
   height: 40px;
   width: 80px;
-  >div{
-    height: 100%!important;
-    width: 100%!important;
+  > div {
+    height: 100% !important;
+    width: 100% !important;
   }
 }
-.input-img{
-  padding:20px 0;
-  .container{
+.input-img {
+  padding: 20px 0;
+  .container {
     display: block;
-    background-color:#f1f1f1;
-    position:relative;
-    padding:20px;
+    background-color: #f1f1f1;
+    position: relative;
+    padding: 20px;
     font-weight: $medium;
-    border:1px solid $medium-gray;
-    border-radius:4px;
-    .button{
+    border: 1px solid $medium-gray;
+    border-radius: 4px;
+    .button {
       text-transform: uppercase;
     }
-    .top-left{
+    .top-left {
       position: absolute;
       top: 20px;
       left: 20px;
-      margin:auto;
+      margin: auto;
     }
-    .top-right{
+    .top-right {
       position: absolute;
       top: 20px;
       right: 20px;
-      margin:auto;
+      margin: auto;
     }
-    &.center{
+    &.center {
       display: flex;
       justify-content: center;
-      align-items:center;
+      align-items: center;
     }
   }
-  &.large-banner .container{
+  &.large-banner .container {
     height: 250px;
     max-width: 100%;
     width: 100%;
-    margin:0;
+    margin: 0;
   }
   &.login-logo,
   &.header-logo,
   &.card-img,
-  &.course-logo{
+  &.course-logo {
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     flex-flow: column;
     background-color: $medium-gray;
-    span{
-      color:$dark-color;
+    span {
+      color: $dark-color;
       text-transform: uppercase;
       font-weight: $medium;
     }
-    .icon{
+    .icon {
       width: 50px;
-      margin:20px;
-      fill:$dark-color;
+      margin: 20px;
+      fill: $dark-color;
     }
   }
-  &.course-logo{
+  &.course-logo {
     height: 170px;
     width: 170px;
     margin: 20px;
   }
-  &.card-img{
+  &.card-img {
     width: 170px;
     height: 220px;
   }
-  &.login-logo{
+  &.login-logo {
     width: 170px;
     height: 170px;
   }
-  &.header-logo{
+  &.header-logo {
     width: 220px;
     height: 60px;
     flex-flow: row;
-    span{
+    span {
       @include fontsize(14);
     }
-    .icon{
-      margin:10px 5px;
+    .icon {
+      margin: 10px 5px;
       width: 20px;
     }
-
   }
 }
 // .form-section{
@@ -1169,162 +1161,160 @@ body{
 //     }
 // }
 .block-header,
-.card-lessons-header{
-    padding:20px 55px 20px 20px;
-    position:relative;
-    cursor:pointer;
-      &:before{
-        transition: all .2s ease-in-out;
-        content: '';
-        display: inline-block;
-        background: $medium-gray;
-        width: 2px;
-        height: 16px;
-        border-radius: 16px;
-        transform: translateX(5px) rotate(40deg);
-        position: absolute;
-        top: 0 ;
-        right: 40px;
-        bottom: 0 ;
-        margin: auto;
+.card-lessons-header {
+  padding: 20px 55px 20px 20px;
+  position: relative;
+  cursor: pointer;
+  &:before {
+    transition: all 0.2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: $medium-gray;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    transform: translateX(5px) rotate(40deg);
+    position: absolute;
+    top: 0;
+    right: 40px;
+    bottom: 0;
+    margin: auto;
+  }
 
-      }
-
-    &:after{
-      transition: all .2s ease-in-out;
+  &:after {
+    transition: all 0.2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: $medium-gray;
+    width: 2px;
+    height: 16px;
+    border-radius: 16px;
+    transform: translateX(-5px) rotate(-40deg);
+    position: absolute;
+    top: 0;
+    right: 40px;
+    bottom: 0;
+    margin: auto;
+  }
+  &:hover {
+    &:before,
+    &:after {
+      background: $affirmative-color;
+    }
+  }
+  &.active {
+    &:before {
       content: '';
       display: inline-block;
-      background: $medium-gray;
       width: 2px;
       height: 16px;
       border-radius: 16px;
-      transform: translateX(-5px) rotate(-40deg);
+      transform: translateX(-5px) rotate(40deg);
+    }
+
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 2px;
+      height: 16px;
+      border-radius: 16px;
       position: absolute;
-      top: 0 ;
-      right: 40px ;
-      bottom: 0 ;
-      margin: auto;
-    }
-    &:hover{
-      &:before,&:after{
-        background:$affirmative-color;
-      }
-    }
-    &.active{
-      &:before{
-        content: '';
-        display: inline-block;
-        width: 2px;
-        height: 16px;
-        border-radius: 16px;
-        transform: translateX(-5px) rotate(40deg);
-
-      }
-
-      &:after{
-        content: '';
-        display: inline-block;
-        width: 2px;
-        height: 16px;
-        border-radius: 16px;
-        position: absolute;
-        transform: translateX(5px) rotate(-40deg);
-      }
+      transform: translateX(5px) rotate(-40deg);
     }
   }
-.card-lessons{
-  margin:20px 0;
+}
+.card-lessons {
+  margin: 20px 0;
   box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 0px 10px 0 rgba(0, 0, 0, 0.1);
   display: block;
   width: 100%;
-  background-color:#fff;
-  position:relative;
-  border-radius:4px;
+  background-color: #fff;
+  position: relative;
+  border-radius: 4px;
   transition: all 0.3s ease-in-out;
-  &:hover{
+  &:hover {
     box-shadow: 0 1px 2px 0 rgba(0, 5, 5, 0.46), 0 2px 20px 0 rgba(0, 0, 0, 0.1);
   }
-  .card-lessons-title{
+  .card-lessons-title {
     @include fontsize(18);
     font-weight: $medium;
-    margin:0;
+    margin: 0;
   }
-  .card-lessons-resume{
-    color:$affirmative-color;
+  .card-lessons-resume {
+    color: $affirmative-color;
     font-weight: $medium;
-    padding:5px 0 0 0;
-    .icon{
-      fill:$affirmative-color;
+    padding: 5px 0 0 0;
+    .icon {
+      fill: $affirmative-color;
     }
   }
-  .card-lessons-wrapper{
-    padding:20px;
-    padding-top: 0!important;
+  .card-lessons-wrapper {
+    padding: 20px;
+    padding-top: 0 !important;
   }
-  .card-lessons-resume span{
+  .card-lessons-resume span {
     margin-right: 10px;
   }
-  .card-lesson-block{
-    padding:20px 120px 20px 20px;
-    background-color:$light-gray;
+  .card-lesson-block {
+    padding: 20px 120px 20px 20px;
+    background-color: $light-gray;
     margin: 10px 0 0 0;
     display: flex;
-    align-items:flex-start;
+    align-items: flex-start;
     justify-content: flex-start;
-    position:relative;
-    .button{
+    position: relative;
+    .button {
       text-transform: uppercase;
       font-weight: $medium;
       letter-spacing: 0.5px;
-      position:absolute;
+      position: absolute;
       top: 0;
-      bottom:0;
+      bottom: 0;
       right: 20px;
       display: block;
       height: 35px;
-      margin:auto;
+      margin: auto;
     }
   }
-  .card-lesson-thumb{
+  .card-lesson-thumb {
     min-width: 160px;
     height: 120px;
     display: block;
-    background-color:#fff;
+    background-color: #fff;
   }
-  .card-lesson-description{
+  .card-lesson-description {
     line-height: 1.2rem;
   }
-  .card-lesson-content{
-    padding:0 20px;
-    .lesson-title{
+  .card-lesson-content {
+    padding: 0 20px;
+    .lesson-title {
       @include fontsize(16);
       font-weight: $medium;
-      margin:0 0 10px 0;
+      margin: 0 0 10px 0;
     }
   }
-
 }
 .check-description,
-.date-description{
-  margin-bottom:10px;
+.date-description {
+  margin-bottom: 10px;
   @include fontsize(16);
 }
-.input-description{
+.input-description {
   margin-bottom: 20px;
 }
-.switch{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+.switch {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
-.chips{
-  width:100%;
+.chips {
+  width: 100%;
   min-height: 9rem;
   background: #fff;
   border: 1px solid #828282;
   margin: 10px 0;
   padding: 5px;
-  &.focus{
+  &.focus {
     border-bottom: 1px solid $dark-color;
     box-shadow: 0 1px 0 0 $dark-color;
   }
@@ -1333,412 +1323,462 @@ body{
     color: #fff;
   }
 }
-.student-content{
-  >.container{
+.student-content {
+  > .container {
     padding: 20px 20px 40px 20px;
     min-height: calc(100vh - 60px);
     position: relative;
   }
-  .card.course{
+  .card.course {
     @include transition;
-    cursor:pointer;
-    &:hover{
+    cursor: pointer;
+    &:hover {
       transform: scale(1.1) translateY(-5px);
     }
   }
-  .featured-carousel{
+  .featured-carousel {
     $carousel-item-height: 250px;
     width: 100%;
-    .slick-prev, .slick-next{
+    .slick-prev,
+    .slick-next {
       z-index: 5;
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color:transparentize($dark-color, 0.3);
-      padding:0px;
+      background-color: transparentize($dark-color, 0.3);
+      padding: 0px;
       width: 40px;
       height: 100%;
-      svg{
-        fill:none;
-        stroke:#FFFFFF;
-        stroke-width:3;
-        stroke-linecap:round;
-        stroke-miterlimit:10;
+      svg {
+        fill: none;
+        stroke: #ffffff;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
         width: 20px;
       }
-      &:before{
+      &:before {
         display: none;
       }
     }
-    .slick-prev{
+    .slick-prev {
       left: 0;
     }
-    .slick-next{
+    .slick-next {
       right: 0;
     }
-    .featured-item{
+    .featured-item {
       height: $carousel-item-height;
       @include transition;
-      position:relative;
-      .content{
-        position:absolute;
-        bottom:0;
+      position: relative;
+      .content {
+        position: absolute;
+        bottom: 0;
         background-color: transparentize($dark-color, 0.3);
-        color:#fff;
+        color: #fff;
         left: 0;
         right: 0;
-        margin:auto;
-        padding:25px 50px;
+        margin: auto;
+        padding: 25px 50px;
         height: auto;
         transform: translateY(50px);
         @include transition;
-
       }
-      .item-title{
-        margin:0;
+      .item-title {
+        margin: 0;
         @include fontsize(32);
         margin-bottom: 10px;
         font-weight: $medium;
       }
-      .item-content{
+      .item-content {
         @include fontsize(14);
         line-height: 14px;
         margin-bottom: 10px;
       }
-      .button{
+      .button {
         opacity: 0;
         @include transition;
         visibility: hidden;
       }
-      img{
+      img {
         @include transition;
         height: $carousel-item-height;
         width: 100%;
         object-fit: cover;
       }
-      &:hover{
+      &:hover {
         z-index: 3;
-        .content{
+        .content {
           transform: translateY(0);
         }
-        .button{
+        .button {
           opacity: 1;
           visibility: visible;
         }
-      }//end hover
-    }//end featured item
-  }//end feature carousel
+      } //end hover
+    } //end featured item
+  } //end feature carousel
 }
-.student-course-content{
-  >.container{
+.student-course-content {
+  > .container {
     min-height: calc(100vh - 450px);
     position: relative;
   }
-  .container{
+  .container {
     padding: 20px 20px 40px 20px;
     max-width: 1080px;
     width: 100%;
   }
-  .action-button{
-    position:absolute;
+  .action-button {
+    position: absolute;
     top: 60px;
     left: 0;
     right: 0;
-    margin:auto;
+    margin: auto;
     z-index: 4;
-    .button{
+    .button {
       text-transform: uppercase;
     }
-    .container{
-      padding:20px;
+    .container {
+      padding: 20px;
     }
   }
-  .upsell-card{
+  .upsell-card {
     margin-top: 20px;
   }
-  .banner-course{
+  .banner-course {
     height: 400px;
     width: 100%;
-    position:relative;
-    color:#fff;
+    position: relative;
+    color: #fff;
     text-shadow: 1px 1px $dark-color;
-    .banner-content{
-      position:relative;
+    .banner-content {
+      position: relative;
       z-index: 2;
-      padding-top:60px;
+      padding-top: 60px;
     }
-    .course-name{
+    .course-name {
       @include fontsize(32);
       font-weight: $medium;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin:30px 0;
+      margin: 30px 0;
     }
-    .course-description{
+    .course-description {
       line-height: 1.075rem;
     }
-    .course-number-lessons{
-      padding:10px 0;
+    .course-number-lessons {
+      padding: 10px 0;
       @include fontsize(14);
       letter-spacing: 1px;
     }
-    .course-author{
+    .course-author {
       display: flex;
       justify-content: flex-start;
-      align-items:center;
-      padding:20px 0;
+      align-items: center;
+      padding: 20px 0;
     }
     .course-author-img,
-    .course-author-img img{
+    .course-author-img img {
       width: 50px;
       height: 50px;
-      border-radius:50%;
-      overflow:hidden;
+      border-radius: 50%;
+      overflow: hidden;
     }
-    .course-author-img img{
+    .course-author-img img {
       object-fit: cover;
     }
-    .course-author-data{
-      padding:20px;
+    .course-author-data {
+      padding: 20px;
       @include fontsize(18);
-      margin:0;
+      margin: 0;
     }
-    .course-progress label{
+    .course-progress label {
       text-transform: uppercase;
-      font-weight:$medium;
+      font-weight: $medium;
       letter-spacing: 1px;
     }
 
-    .progress-bar{
+    .progress-bar {
       width: 250px;
       height: 3px;
       display: block;
-      margin:8px 0;
-      background-color:#fff;
-      span{
-        background-color:$affirmative-color;
+      margin: 8px 0;
+      background-color: #fff;
+      span {
+        background-color: $affirmative-color;
         display: block;
         height: 3px;
-
       }
     }
-  }//end banner course
-  .course-news{
+  } //end banner course
+  .course-news {
     text-transform: uppercase;
     @include fontsize(14);
     display: flex;
-    align-items:center;
+    align-items: center;
     justify-content: flex-start;
-    span{
+    span {
       display: flex;
       width: 20px;
       height: 20px;
-      border-radius:50%;
-      margin:5px;
-      background-color:#fff;
-      align-items:center;
+      border-radius: 50%;
+      margin: 5px;
+      background-color: #fff;
+      align-items: center;
       justify-content: center;
       text-shadow: none;
       @include fontsize(12);
       font-weight: $bold;
-      color:$dark-color;
+      color: $dark-color;
       @include transition;
     }
-    &:hover{
-      span{
-        background-color:$affirmative-color;
-        color:#fff;
+    &:hover {
+      span {
+        background-color: $affirmative-color;
+        color: #fff;
       }
     }
   }
 }
 .banner-img,
-.banner-img img{
+.banner-img img {
   width: 100%;
   height: 400px;
 }
-.banner-img img{
+.banner-img img {
   object-fit: cover;
 }
-.banner-img{
-  position:absolute;
+.banner-img {
+  position: absolute;
   top: 60px;
   left: 0;
   right: 0;
   display: block;
-  margin:auto;
-  &:before{
-    content:"";
-    position:absolute;
+  margin: auto;
+  &:before {
+    content: '';
+    position: absolute;
     width: 100%;
     height: 200px;
     display: block;
-    bottom:0;
+    bottom: 0;
     left: 0;
     right: 0;
   }
-  &:after{
+  &:after {
     display: block;
-    top:0;
-    bottom:0;
+    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    content:"";
-    margin:auto;
-    background-color:#000;
+    content: '';
+    margin: auto;
+    background-color: #000;
     opacity: 0.3;
   }
 }
-.upsell-card{
-  margin:0 0 20px 0;
+.upsell-card {
+  margin: 0 0 20px 0;
   max-width: 250px;
   float: right;
-  .upsell-name{
-    padding:10px 20px 10px 20px;
+  .upsell-name {
+    padding: 10px 20px 10px 20px;
     @include fontsize(18);
     font-weight: $medium;
-    margin:0;
+    margin: 0;
   }
-  .upsell-description{
-    padding:0 20px;
+  .upsell-description {
+    padding: 0 20px;
     margin-bottom: 20px;
     @include fontsize(14);
     line-height: 1rem;
   }
-  .button{
+  .button {
     display: block;
     text-align: center;
-    margin:0 20px 20px 20px;
+    margin: 0 20px 20px 20px;
   }
-  .upsell-img{
+  .upsell-img {
     height: 150px;
     width: 100%;
     object-fit: cover;
   }
 }
 
-.template-black{
-  .student-course-content{
+.template-black {
+  .student-course-content {
     background-color: $darkest-color;
-    color:#fff;
-    .action-button .button{
-      background-color:transparentize(#fff, 0.7);
-      &:hover{
-        background-color:#fff;
+    color: #fff;
+    .action-button .button {
+      background-color: transparentize(#fff, 0.7);
+      &:hover {
+        background-color: #fff;
       }
     }
-    .course-news{
-      color:#fff;
+    .course-news {
+      color: #fff;
     }
   }
-  .student-content{
+  .student-content {
     background-color: $darkest-color;
   }
-  .course-progress label{
-    color:#fff;
+  .course-progress label {
+    color: #fff;
   }
-  input:not([type]):focus:not([readonly]) + label, input[type=text]:not(.browser-default):focus:not([readonly]) + label, input[type=password]:not(.browser-default):focus:not([readonly]) + label, input[type=email]:not(.browser-default):focus:not([readonly]) + label, input[type=url]:not(.browser-default):focus:not([readonly]) + label, input[type=time]:not(.browser-default):focus:not([readonly]) + label, input[type=date]:not(.browser-default):focus:not([readonly]) + label, input[type=datetime]:not(.browser-default):focus:not([readonly]) + label, input[type=datetime-local]:not(.browser-default):focus:not([readonly]) + label, input[type=tel]:not(.browser-default):focus:not([readonly]) + label, input[type=number]:not(.browser-default):focus:not([readonly]) + label, input[type=search]:not(.browser-default):focus:not([readonly]) + label, textarea.materialize-textarea:focus:not([readonly]) + label{
-      color:#fff;
+  input:not([type]):focus:not([readonly]) + label,
+  input[type='text']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='password']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='email']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='url']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='time']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='date']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='datetime']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='datetime-local']:not(.browser-default):focus:not([readonly])
+    + label,
+  input[type='tel']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='number']:not(.browser-default):focus:not([readonly]) + label,
+  input[type='search']:not(.browser-default):focus:not([readonly]) + label,
+  textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #fff;
   }
-  .filters{
-    background:rgba(33, 33, 33, 0.95);
-    label{
-      color:#fff;
+  .filters {
+    background: rgba(33, 33, 33, 0.95);
+    label {
+      color: #fff;
     }
-    .input-field input{
+    .input-field input {
       background-color: $background-color;
     }
     .action-button,
-    .filter-header{
-      background:rgba(33, 33, 33, 0.95);
-      color:#fff;
+    .filter-header {
+      background: rgba(33, 33, 33, 0.95);
+      color: #fff;
     }
     .block-header:before,
-    .block-header:after{
-      background-color:#fff;
+    .block-header:after {
+      background-color: #fff;
     }
-    .block-header:hover{
-      &:before,&:after{
+    .block-header:hover {
+      &:before,
+      &:after {
         background-color: $dark-color;
       }
     }
-  }//end filters
+  } //end filters
 
-  .page-footer{
-    background-color:$background-color;
-    span{
-      color:#fff;
+  .page-footer {
+    background-color: $background-color;
+    span {
+      color: #fff;
     }
-    .logo-footer{
-      .yellow{
-        fill:#cecece;
+    .logo-footer {
+      .yellow {
+        fill: #cecece;
         @include transition;
       }
-      .blue{
-        fill:#fff;
+      .blue {
+        fill: #fff;
         @include transition;
       }
-      .blue-logo{
+      .blue-logo {
         fill: $background-color;
       }
     }
-    &:hover .logo-footer{
-      .yellow{
-        fill:#FFCD2B;
+    &:hover .logo-footer {
+      .yellow {
+        fill: #ffcd2b;
       }
     }
   }
-  .search-bar{
-    > .input-field input{
+  .search-bar {
+    > .input-field input {
       background-color: $dark-color;
-      border:0;
-      color:#fff;
-      border-radius:50px;
+      border: 0;
+      color: #fff;
+      border-radius: 50px;
     }
-    > label{
-      color:#fff;
-    }
-  }
-  .card-lessons{
-    background-color:$dark-color;
-  }
-  .card-lesson-block{
-    background-color:$darkest-color;
-  }
-  .banner-img{
-    &:before{
-        background: rgba(26,26,26,0);
-        background: -moz-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-        background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26,26,26,0)), color-stop(53%, rgba(26,26,26,0)), color-stop(95%, rgba(26,26,26,1)), color-stop(100%, rgba(26,26,26,1)));
-        background: -webkit-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-        background: -o-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-        background: -ms-linear-gradient(top, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-        background: linear-gradient(to bottom, rgba(26,26,26,0) 0%, rgba(26,26,26,0) 53%, rgba(26,26,26,1) 95%, rgba(26,26,26,1) 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 );
+    > label {
+      color: #fff;
     }
   }
-  .upsell-card{
-    background:$dark-color;
-    border:1px solid $background-color;
-    color:#fff;
+  .card-lessons {
+    background-color: $dark-color;
   }
-  .course-nav{
-    color:#fff;
-    .course-category{
-      color:#fff;
+  .card-lesson-block {
+    background-color: $darkest-color;
+  }
+  .banner-img {
+    &:before {
+      background: rgba(26, 26, 26, 0);
+      background: -moz-linear-gradient(
+        top,
+        rgba(26, 26, 26, 0) 0%,
+        rgba(26, 26, 26, 0) 53%,
+        rgba(26, 26, 26, 1) 95%,
+        rgba(26, 26, 26, 1) 100%
+      );
+      background: -webkit-gradient(
+        left top,
+        left bottom,
+        color-stop(0%, rgba(26, 26, 26, 0)),
+        color-stop(53%, rgba(26, 26, 26, 0)),
+        color-stop(95%, rgba(26, 26, 26, 1)),
+        color-stop(100%, rgba(26, 26, 26, 1))
+      );
+      background: -webkit-linear-gradient(
+        top,
+        rgba(26, 26, 26, 0) 0%,
+        rgba(26, 26, 26, 0) 53%,
+        rgba(26, 26, 26, 1) 95%,
+        rgba(26, 26, 26, 1) 100%
+      );
+      background: -o-linear-gradient(
+        top,
+        rgba(26, 26, 26, 0) 0%,
+        rgba(26, 26, 26, 0) 53%,
+        rgba(26, 26, 26, 1) 95%,
+        rgba(26, 26, 26, 1) 100%
+      );
+      background: -ms-linear-gradient(
+        top,
+        rgba(26, 26, 26, 0) 0%,
+        rgba(26, 26, 26, 0) 53%,
+        rgba(26, 26, 26, 1) 95%,
+        rgba(26, 26, 26, 1) 100%
+      );
+      background: linear-gradient(
+        to bottom,
+        rgba(26, 26, 26, 0) 0%,
+        rgba(26, 26, 26, 0) 53%,
+        rgba(26, 26, 26, 1) 95%,
+        rgba(26, 26, 26, 1) 100%
+      );
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0 );
     }
-    .card-lessons{
-      .card-lesson-block{
-        color:#fff;
+  }
+  .upsell-card {
+    background: $dark-color;
+    border: 1px solid $background-color;
+    color: #fff;
+  }
+  .course-nav {
+    color: #fff;
+    .course-category {
+      color: #fff;
+    }
+    .card-lessons {
+      .card-lesson-block {
+        color: #fff;
         border-bottom: 1px solid $background-color;
-        &:hover{
-          background-color:lighten($dark-color, 0.2);
+        &:hover {
+          background-color: lighten($dark-color, 0.2);
         }
       }
-      .icon{
-        fill:#fff;
+      .icon {
+        fill: #fff;
       }
     }
-  }//end modules nav
-}//end template black
+  } //end modules nav
+} //end template black

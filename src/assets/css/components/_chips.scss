@@ -3,7 +3,7 @@
   height: 32px;
   font-size: 13px;
   font-weight: 500;
-  color: rgba(0,0,0,.6);
+  color: rgba(0, 0, 0, 0.6);
   line-height: 32px;
   padding: 0 12px;
   border-radius: 16px;
@@ -35,7 +35,7 @@
   margin: $input-margin;
   min-height: 45px;
   outline: none;
-  transition: all .3s;
+  transition: all 0.3s;
 
   &.focus {
     border-bottom: 1px solid $chip-selected-color;
@@ -54,7 +54,7 @@
   .input {
     background: none;
     border: 0;
-    color: rgba(0,0,0,.6);
+    color: rgba(0, 0, 0, 0.6);
     display: inline-block;
     font-size: $input-font-size;
     height: $input-height;
@@ -83,7 +83,7 @@
   width: 92%;
   width: calc(100% - 3rem);
 }
-.chips:empty ~ label  {
+.chips:empty ~ label {
   font-size: 0.8rem;
   transform: translateY(-140%);
 }

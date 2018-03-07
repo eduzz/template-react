@@ -18,11 +18,11 @@
   margin-bottom: -1px;
   position: relative;
   background: #fff;
-  padding: .75em 1.25em;
+  padding: 0.75em 1.25em;
 }
 @media (min-height: 46.75em) {
   .picker__list-item {
-    padding: .5em 1em;
+    padding: 0.5em 1em;
   }
 }
 /* Hovered time */
@@ -74,7 +74,7 @@
   background: none;
   border: 0;
   font-weight: 500;
-  font-size: .67em;
+  font-size: 0.67em;
   text-align: center;
   text-transform: uppercase;
   color: $timepicker-clock-color;
@@ -128,13 +128,13 @@
    $DEFAULT-TIME-PICKER
    ========================================================================== */
 .clockpicker-display {
-	font-size: 4rem;
-	font-weight: bold;
-	text-align: center;
-	color: rgba(255, 255, 255, 0.6);
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
-	clear: both;
-	position: relative;
+  clear: both;
+  position: relative;
 }
 
 .clockpicker-span-am-pm {
@@ -146,21 +146,20 @@
   font-weight: 500;
 }
 @media only screen and (min-width: 601px) {
-	.clockpicker-display {
-		top: 32%;
-	}
-	.clockpicker-span-am-pm {
-	  position: relative;
-	  right: auto;
-	  bottom: auto;
-	  text-align: center;
-	  margin-top: 1.2rem;
-	}
+  .clockpicker-display {
+    top: 32%;
+  }
+  .clockpicker-span-am-pm {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    text-align: center;
+    margin-top: 1.2rem;
+  }
 }
 
-
-.text-primary{
-	color: rgba(255, 255, 255, 1)
+.text-primary {
+  color: rgba(255, 255, 255, 1);
 }
 .clockpicker-span-hours {
   margin-right: 3px;
@@ -172,96 +171,96 @@
 .clockpicker-span-hours,
 .clockpicker-span-minutes,
 .clockpicker-span-am-pm div {
-	cursor: pointer;
+  cursor: pointer;
 }
 .clockpicker-moving {
-	cursor: move;
+  cursor: move;
 }
 .clockpicker-plate {
-	background-color: $timepicker-clock-plate-bg;
-	border-radius: 50%;
-	width: 270px;
-	height: 270px;
-	overflow: visible;
-	position: relative;
+  background-color: $timepicker-clock-plate-bg;
+  border-radius: 50%;
+  width: 270px;
+  height: 270px;
+  overflow: visible;
+  position: relative;
   margin: auto;
   margin-top: 25px;
   margin-bottom: 5px;
-	user-select: none;
+  user-select: none;
 }
 .clockpicker-canvas,
 .clockpicker-dial {
-	width: 270px;
-	height: 270px;
-	position: absolute;
-	left: -1px;
-	top: -1px;
+  width: 270px;
+  height: 270px;
+  position: absolute;
+  left: -1px;
+  top: -1px;
 }
 .clockpicker-minutes {
-	visibility: hidden;
+  visibility: hidden;
 }
 .clockpicker-tick {
-	border-radius: 50%;
-	color: $timepicker-clock-color;
-	line-height: 40px;
-	text-align: center;
-	width: 40px;
-	height: 40px;
-	position: absolute;
-	cursor: pointer;
+  border-radius: 50%;
+  color: $timepicker-clock-color;
+  line-height: 40px;
+  text-align: center;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  cursor: pointer;
 }
 .clockpicker-tick.active,
 .clockpicker-tick:hover {
-	background-color: transparentize($secondary-color, .75);
+  background-color: transparentize($secondary-color, 0.75);
 }
 .clockpicker-dial {
-	-webkit-transition: -webkit-transform 350ms, opacity 350ms;
-	-moz-transition: -moz-transform 350ms, opacity 350ms;
-	-ms-transition: -ms-transform 350ms, opacity 350ms;
-	-o-transition: -o-transform 350ms, opacity 350ms;
-	transition: transform 350ms, opacity 350ms;
+  -webkit-transition: -webkit-transform 350ms, opacity 350ms;
+  -moz-transition: -moz-transform 350ms, opacity 350ms;
+  -ms-transition: -ms-transform 350ms, opacity 350ms;
+  -o-transition: -o-transform 350ms, opacity 350ms;
+  transition: transform 350ms, opacity 350ms;
 }
 .clockpicker-dial-out {
-	opacity: 0;
+  opacity: 0;
 }
 .clockpicker-hours.clockpicker-dial-out {
-	-webkit-transform: scale(1.2, 1.2);
-	-moz-transform: scale(1.2, 1.2);
-	-ms-transform: scale(1.2, 1.2);
-	-o-transform: scale(1.2, 1.2);
-	transform: scale(1.2, 1.2);
+  -webkit-transform: scale(1.2, 1.2);
+  -moz-transform: scale(1.2, 1.2);
+  -ms-transform: scale(1.2, 1.2);
+  -o-transform: scale(1.2, 1.2);
+  transform: scale(1.2, 1.2);
 }
 .clockpicker-minutes.clockpicker-dial-out {
-	-webkit-transform: scale(.8, .8);
-	-moz-transform: scale(.8, .8);
-	-ms-transform: scale(.8, .8);
-	-o-transform: scale(.8, .8);
-	transform: scale(.8, .8);
+  -webkit-transform: scale(0.8, 0.8);
+  -moz-transform: scale(0.8, 0.8);
+  -ms-transform: scale(0.8, 0.8);
+  -o-transform: scale(0.8, 0.8);
+  transform: scale(0.8, 0.8);
 }
 .clockpicker-canvas {
-	-webkit-transition: opacity 175ms;
-	-moz-transition: opacity 175ms;
-	-ms-transition: opacity 175ms;
-	-o-transition: opacity 175ms;
-	transition: opacity 175ms;
+  -webkit-transition: opacity 175ms;
+  -moz-transition: opacity 175ms;
+  -ms-transition: opacity 175ms;
+  -o-transition: opacity 175ms;
+  transition: opacity 175ms;
 }
 .clockpicker-canvas-out {
-	opacity: 0.25;
+  opacity: 0.25;
 }
 .clockpicker-canvas-bearing {
-	stroke: none;
-	fill: $secondary-color;
+  stroke: none;
+  fill: $secondary-color;
 }
 .clockpicker-canvas-bg {
-	stroke: none;
-	fill: $secondary-color;
+  stroke: none;
+  fill: $secondary-color;
 }
 .clockpicker-canvas-bg-trans {
-	fill: $secondary-color;
+  fill: $secondary-color;
 }
 .clockpicker-canvas line {
-	stroke: $secondary-color;
-	stroke-width: 4;
-	stroke-linecap: round;
-	/*shape-rendering: crispEdges;*/
+  stroke: $secondary-color;
+  stroke-width: 4;
+  stroke-linecap: round;
+  /*shape-rendering: crispEdges;*/
 }

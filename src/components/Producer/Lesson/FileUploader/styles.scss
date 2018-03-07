@@ -15,9 +15,13 @@
       border-radius: 3px;
       background-color: #f6f6f6;
 
-      &:not(:last-child) { margin-bottom: 5px; }
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
 
-      &:hover { background-color: $light-gray; }
+      &:hover {
+        background-color: $light-gray;
+      }
 
       svg {
         float: left;
@@ -57,12 +61,20 @@
         background-color: black;
       }
 
-      &:before { transform: rotate(-45deg); }
-      &:after { transform: rotate(-135deg); }
+      &:before {
+        transform: rotate(-45deg);
+      }
+      &:after {
+        transform: rotate(-135deg);
+      }
 
       &:hover {
-        &:before { transform: rotate(-135deg); }
-        &:after { transform: rotate(-45deg); }
+        &:before {
+          transform: rotate(-135deg);
+        }
+        &:after {
+          transform: rotate(-45deg);
+        }
       }
     }
   }
@@ -110,17 +122,21 @@
     border: 1px dashed #383838;
     cursor: pointer;
 
-    &:hover { background-color: $light-gray; }
+    &:hover {
+      background-color: $light-gray;
+    }
 
     span {
       font-size: 16px;
       line-height: 100px;
     }
 
-    strong { text-decoration: underline; }
+    strong {
+      text-decoration: underline;
+    }
   }
 
   .input-file {
-    display: none;  
+    display: none;
   }
 }

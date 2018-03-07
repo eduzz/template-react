@@ -2,217 +2,252 @@
 @import 'src/assets/css/_mixins.scss';
 
 :local(.component) {
-    @extend %page-content;
-    @extend %container;
+  @extend %page-content;
+  @extend %container;
 
-	.form-section{
-	  padding: 20px;
-	  border-bottom:1px solid $light-gray;
+  .form-section {
+    padding: 20px;
+    border-bottom: 1px solid $light-gray;
 
-		.row { margin-bottom: 0; }
+    .row {
+      margin-bottom: 0;
+    }
 
-		.form-block{
-	    padding: 10px 0;
-	    display: inline-block;
-	    width: 100%;
+    .form-block {
+      padding: 10px 0;
+      display: inline-block;
+      width: 100%;
 
-			p {
-	      line-height: 1.2rem;
-	      max-width: 350px;
-			}
+      p {
+        line-height: 1.2rem;
+        max-width: 350px;
+      }
 
-	    .radio-description{
-	      max-width: 320px;
-			}
+      .radio-description {
+        max-width: 320px;
+      }
 
-	   	input.datepicker{
-				margin-bottom:0;
-				max-width: 200px;
-	    }
-		}
+      input.datepicker {
+        margin-bottom: 0;
+        max-width: 200px;
+      }
+    }
 
-	  .form-block-title{
-	    @include fontsize(18);
-	    font-weight: $medium;
-	    margin:0 0 5px 0;
-	  }
-	}
+    .form-block-title {
+      @include fontsize(18);
+      font-weight: $medium;
+      margin: 0 0 5px 0;
+    }
+  }
 
-	.form-section-title{
-	  @include fontsize(24);
-	  font-weight: $medium;
-	  padding:0 0 15px 0;
-	  margin:0;
-	}
+  .form-section-title {
+    @include fontsize(24);
+    font-weight: $medium;
+    padding: 0 0 15px 0;
+    margin: 0;
+  }
 
-	.input-img.card-img {
-		margin: auto;
-		margin-right: 0;
+  .input-img.card-img {
+    margin: auto;
+    margin-right: 0;
 
-		cursor: pointer;
-		border: none;
-		border-radius: 3px;
-		background-color: #f6f6f6;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background-color: #f6f6f6;
 
-		svg, span { margin: auto; }
+    svg,
+    span {
+      margin: auto;
+    }
 
-		svg { margin-bottom: 10px; }
+    svg {
+      margin-bottom: 10px;
+    }
 
-		span { margin-top: 0; }
+    span {
+      margin-top: 0;
+    }
 
-		.img-preview {
-			object-fit: cover;
-			border:none;
-		}
-	}
+    .img-preview {
+      object-fit: cover;
+      border: none;
+    }
+  }
 
-	.list-class-type {
-		[type="radio"] {
-			display: none;
-			opacity: 0;
+  .list-class-type {
+    [type='radio'] {
+      display: none;
+      opacity: 0;
 
-			& + label {
-				@include transition;
+      & + label {
+        @include transition;
 
-				width: 130px;
-				height: 130px;
-				float: left;
-				padding: 0;
+        width: 130px;
+        height: 130px;
+        float: left;
+        padding: 0;
 
-				display: -webkit-flex;
-				display: -ms-flexbox;
-				display: flex;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
 
-				-ms-flex-pack: space-around;
-				justify-content: space-around;
+        -ms-flex-pack: space-around;
+        justify-content: space-around;
 
-				-webkit-flex-flow: column nowrap;
-				-ms-flex-flow: column nowrap;
-				flex-flow: column nowrap;
+        -webkit-flex-flow: column nowrap;
+        -ms-flex-flow: column nowrap;
+        flex-flow: column nowrap;
 
-				-webkit-align-items: center;
-				-ms-flex-align: center;
-				align-items: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
 
-				color: $background-color;
+        color: $background-color;
 
-				cursor: pointer;
-				border-radius: 3px;
-				background-color: #f6f6f6;
-				border: #f6f6f6 thin solid;
+        cursor: pointer;
+        border-radius: 3px;
+        background-color: #f6f6f6;
+        border: #f6f6f6 thin solid;
 
-				&:not(:last-child) { margin-right: 10px; }
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
 
-				&:hover { border-color: $affirmative-color; }
+        &:hover {
+          border-color: $affirmative-color;
+        }
 
-				&:before, &:after { display: none; }
+        &:before,
+        &:after {
+          display: none;
+        }
 
-				svg { fill: $background-color; }
-			}
+        svg {
+          fill: $background-color;
+        }
+      }
 
-			&:checked + label {
-				color: #fff;
+      &:checked + label {
+        color: #fff;
 
-				background-color: rgba(53, 78, 126, .87);
-				border-color: $affirmative-color;
+        background-color: rgba(53, 78, 126, 0.87);
+        border-color: $affirmative-color;
 
-				svg { fill: #fff; }
-			}
-		}
+        svg {
+          fill: #fff;
+        }
+      }
+    }
 
-		svg, span { margin: auto; }
+    svg,
+    span {
+      margin: auto;
+    }
 
-		svg {
-			width: 30px;
-			height: 36px;
-			margin-bottom: 10px;
+    svg {
+      width: 30px;
+      height: 36px;
+      margin-bottom: 10px;
 
-			fill: $affirmative-color;
-		}
+      fill: $affirmative-color;
+    }
 
-		span { margin-top: 0; }
-	}
+    span {
+      margin-top: 0;
+    }
+  }
 
-	.author-item {
-		width: 100%;
-		height: 50px;
-		display: -webkit-flex;
-		display: -ms-flexbox;
-		display: flex;
+  .author-item {
+    width: 100%;
+    height: 50px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
 
-		-ms-flex-pack: space-between;
-		justify-content: space-between;
+    -ms-flex-pack: space-between;
+    justify-content: space-between;
 
-		-webkit-flex-flow: row nowrap;
-		-ms-flex-flow: row nowrap;
-		flex-flow: row nowrap;
+    -webkit-flex-flow: row nowrap;
+    -ms-flex-flow: row nowrap;
+    flex-flow: row nowrap;
 
-		-webkit-align-items: center;
-		-ms-flex-align: center;
-		align-items: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 
-		img, span, button { margin: auto; }
+    img,
+    span,
+    button {
+      margin: auto;
+    }
 
-		img {
-			margin-left: 0;
-			margin-right: 0;
+    img {
+      margin-left: 0;
+      margin-right: 0;
 
-			border-radius: 50%;
-		}
+      border-radius: 50%;
+    }
 
-		span {
-			margin-left: 10px;
+    span {
+      margin-left: 10px;
 
-			font-weight: bold;
-		}
+      font-weight: bold;
+    }
 
-		button {
-			@include transition;
+    button {
+      @include transition;
 
-			padding: 3px 20px;
-			margin-right: 0;
+      padding: 3px 20px;
+      margin-right: 0;
 
-			font-weight: bold;
-			text-transform: uppercase;
+      font-weight: bold;
+      text-transform: uppercase;
 
-			border: none;
-			border-radius: 10px;
-			cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
 
-			background-color: $medium-gray;
+      background-color: $medium-gray;
 
-			&:hover {
-				background-color: $dark-gray;
-			}
-		}
-	}
+      &:hover {
+        background-color: $dark-gray;
+      }
+    }
+  }
 
-	.form-block-title {
-		svg {
-			width: 10px;
-			height: 10px;
-			margin-left: 10px;
+  .form-block-title {
+    svg {
+      width: 10px;
+      height: 10px;
+      margin-left: 10px;
 
-			fill: rgba(0, 0, 0, 0.87);
-		}
-	}
+      fill: rgba(0, 0, 0, 0.87);
+    }
+  }
 
-	.main {
-		p {
-			width: 100%;
+  .main {
+    p {
+      width: 100%;
 
-			span {
-				display: inline-block;
+      span {
+        display: inline-block;
 
-				&:first-child { width: 100px; }
-				&:last-child { width: calc(100% - 100px); }
-			}
-		}
+        &:first-child {
+          width: 100px;
+        }
+        &:last-child {
+          width: calc(100% - 100px);
+        }
+      }
+    }
 
-		.switch-field {
-			width: 100px;
-			margin-top: 1.5rem;
-		}
-		.input-field { width: calc(100% - 100px); }
-	}
+    .switch-field {
+      width: 100px;
+      margin-top: 1.5rem;
+    }
+    .input-field {
+      width: calc(100% - 100px);
+    }
+  }
 }

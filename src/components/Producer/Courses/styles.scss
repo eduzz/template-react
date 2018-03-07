@@ -1,31 +1,30 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
-:local(.component){
+:local(.component) {
+  @extend %page-content;
 
-@extend %page-content;
+  .search-bar {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  .search-bar{
-	  padding:20px 0;
-	  display: flex;
-	  align-items:center;
-	  justify-content: space-between;
-
-	  >.input-field{
-	    width: 100%;
-	    margin: 0;
-	    margin-right: 40px;
-	    input{
-	      margin:0;
-	      box-sizing:border-box;
-	    }
-	  }
-	  .button{
-	    min-width: 140px;
-	    text-align: center;
-	    margin:0 5px;
-	  }
-	  .button:last-child{
-	    margin:0;
-	  }
-	}
+    > .input-field {
+      width: 100%;
+      margin: 0;
+      margin-right: 40px;
+      input {
+        margin: 0;
+        box-sizing: border-box;
+      }
+    }
+    .button {
+      min-width: 140px;
+      text-align: center;
+      margin: 0 5px;
+    }
+    .button:last-child {
+      margin: 0;
+    }
+  }
 }

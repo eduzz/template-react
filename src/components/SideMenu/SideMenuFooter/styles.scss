@@ -1,31 +1,30 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
 
-:local(.component){
-    position:absolute;
-    bottom:0;
-    left: 0;
-    right: 0;
-    padding:20px;
-    ul{
-      list-style:none;
-      margin:0;
-      padding:0;
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-around;
-      text-align:center;
-    }
-    .icon{
-      fill:#fff;
-      height: 30px;
-      width:30px;
-      margin-bottom: 10px;
-      display: block;
-    }
-    a{
-      color:#fff;
-      @include fontsize(12);
-    }
-  
+:local(.component) {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    text-align: center;
+  }
+  .icon {
+    fill: #fff;
+    height: 30px;
+    width: 30px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  a {
+    color: #fff;
+    @include fontsize(12);
+  }
 }

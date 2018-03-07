@@ -20,7 +20,7 @@
   flex-wrap: wrap;
 }
 :local(.component) .upsells-grid .item {
-  width: 250px;
+  swidth: 250px;
   border: 1px solid #eeeeee;
   position: relative;
   border-radius: 4px;

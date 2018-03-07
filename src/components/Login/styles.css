@@ -5,61 +5,74 @@
   min-height: 100vh;
   width: 100%;
   background: #cecece;
-  margin-top: -60px; }
-  :local(.component) .default-logo {
-    display: block;
-    height: 60px;
-    margin: auto;
-    margin-bottom: 10px; }
-  :local(.component) .nutror-logo svg {
-    height: 40px; }
-  :local(.component) .login-form {
-    width: 400px;
-    height: 100vh;
-    padding: 30px;
-    background: #fff;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-flow: column; }
-    :local(.component) .login-form a:not(.button) {
-      float: right;
-      font-size: 0.75rem;
-      color: #3066d0; }
-  :local(.component) .card-panel {
-    width: 100%;
-    padding: 150px 0 0 0; }
-    :local(.component) .card-panel .button {
-      background-color: #203153; }
-  :local(.component) .input-box {
-    margin-bottom: 10px; }
-  :local(.component) .panel-footer {
-    text-align: center;
-    bottom: 50px; }
-    :local(.component) .panel-footer p {
-      font-weight: 300; }
-  :local(.component) .login-background {
-    width: calc(100% - 400px);
-    height: 100vh;
-    display: block;
-    position: relative;
-    overflow: hidden; }
-    :local(.component) .login-background img {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      position: relative;
-      z-index: 1; }
-    :local(.component) .login-background:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      display: block;
-      margin: auto;
-      background: #203153;
-      opacity: 0.4;
-      z-index: 2; }
+  margin-top: -60px;
+}
+:local(.component) .default-logo {
+  display: block;
+  height: 60px;
+  margin: auto;
+  margin-bottom: 10px;
+}
+:local(.component) .nutror-logo svg {
+  height: 40px;
+}
+:local(.component) .login-form {
+  width: 400px;
+  height: 100vh;
+  padding: 30px;
+  background: #fff;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: column;
+}
+:local(.component) .login-form a:not(.button) {
+  float: right;
+  font-size: 0.75rem;
+  color: #3066d0;
+}
+:local(.component) .card-panel {
+  width: 100%;
+  padding: 150px 0 0 0;
+}
+:local(.component) .card-panel .button {
+  background-color: #203153;
+}
+:local(.component) .input-box {
+  margin-bottom: 10px;
+}
+:local(.component) .panel-footer {
+  text-align: center;
+  bottom: 50px;
+}
+:local(.component) .panel-footer p {
+  font-weight: 300;
+}
+:local(.component) .login-background {
+  width: calc(100% - 400px);
+  height: 100vh;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+:local(.component) .login-background img {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+:local(.component) .login-background:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: block;
+  margin: auto;
+  background: #203153;
+  opacity: 0.4;
+  z-index: 2;
+}

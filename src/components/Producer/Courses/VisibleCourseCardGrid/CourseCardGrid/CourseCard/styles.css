@@ -6,51 +6,59 @@
   border: 0;
   margin-right: 5px;
   margin-bottom: 5px;
-  border: 1px solid #EEEEEE; }
-  :local(.component) .card-image {
-    width: 100%;
-    object-fit: cover; }
-  :local(.component) .card-status {
-    color: #fff;
-    position: absolute;
-    display: block;
-    margin: 8px;
-    padding: 4px;
-    top: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    font-size: 0.875rem; }
-    :local(.component) .card-status.comming-soon {
-      background-color: rgba(255, 0, 0, 0.5); }
-    :local(.component) .card-status.free-course {
-      background-color: rgba(39, 146, 26, 0.8); }
-  :local(.component) .card-description {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    margin: auto;
-    text-align: center;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 10px 5px;
-    height: 55px; }
-  :local(.component) .card-title {
-    color: #fff;
-    font-size: 0.875rem;
-    line-height: 1rem;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-    max-height: 30px;
-    overflow: hidden;
-    display: inline-block;
-    width: 170px;
-    white-space: nowrap;
-    text-overflow: ellipsis; }
-  :local(.component) .card-category {
-    font-size: 10px;
-    color: #fff; }
+  border: 1px solid #eeeeee;
+}
+:local(.component) .card-image {
+  width: 100%;
+  object-fit: cover;
+}
+:local(.component) .card-status {
+  color: #fff;
+  position: absolute;
+  display: block;
+  margin: 8px;
+  padding: 4px;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  font-size: 0.875rem;
+}
+:local(.component) .card-status.comming-soon {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+:local(.component) .card-status.free-course {
+  background-color: rgba(39, 146, 26, 0.8);
+}
+:local(.component) .card-description {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px 5px;
+  height: 55px;
+}
+:local(.component) .card-title {
+  color: #fff;
+  font-size: 0.875rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+  max-height: 30px;
+  overflow: hidden;
+  display: inline-block;
+  width: 170px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+:local(.component) .card-category {
+  font-size: 10px;
+  color: #fff;
+}
