@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "msjsdiag.debugger-for-chrome",
+    "esbenp.prettier-vscode",
+    "mikestead.dotenv"
+  ]
+}
