@@ -20,15 +20,15 @@ export const fetchAuthors = () => dispatch =>
     err => dispatch(receiveAuthorsError(err))
   );
 
-// const receiveAuthor = author => ({
-//   type: 'RECEIVE_AUTHOR',
-//   author
-// });
+const receiveAuthor = author => ({
+  type: 'RECEIVE_AUTHOR',
+  author
+});
 
-// const receiveAuthorError = err => ({
-//   type: 'RECEIVE_AUTHOR_ERROR',
-//   err
-// });
+const receiveAuthorError = err => ({
+  type: 'RECEIVE_AUTHOR_ERROR',
+  err
+});
 
 export const addAuthor = name => ({
   type: 'ADD_AUTHOR',
