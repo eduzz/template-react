@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "es5"
+  },
+  "exclude": [
+    "build",
+    "node_modules",
+    "coverage",
+    "config",
+    "src/**/*.story.tsx"
+  ]
+}

@@ -5,35 +5,27 @@
   justify-content: center;
   height: 40px;
   margin-top: -40px;
-  background-color: #fff;
-}
-:local(.component) span {
-  color: #1c1f27;
-  font-size: 0.75rem;
-  letter-spacing: 0.5px;
-}
-:local(.component) .logo-footer {
-  height: 20px;
-  padding: 0 0 0 10px;
-  filter: grayscale(100%);
-  transition: all 0.3s ease-in-out;
-}
-:local(.component) .logo-footer .blue {
-  fill: #1f3255;
-}
-:local(.component) .logo-footer .yellow {
-  fill: #ffcd2b;
-}
-:local(.component) .avatar {
-  height: 30px;
-  transition: all 0.3s ease-in-out;
-  transform: scale(0) translateX(-20px) rotate(45deg);
-  transform-origin: 0 100%;
-  margin-top: -20px;
-}
-:local(.component):hover .avatar {
-  transform: scale(1) translateX(0) rotate(0);
-}
-:local(.component):hover .logo-footer {
-  filter: grayscale(0);
-}
+  background-color: #fff; }
+  :local(.component) span {
+    color: #1c1f27;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px; }
+  :local(.component) .logo-footer {
+    height: 20px;
+    padding: 0 0 0 10px;
+    filter: grayscale(100%);
+    transition: all 0.3s ease-in-out; }
+    :local(.component) .logo-footer .blue {
+      fill: #1f3255; }
+    :local(.component) .logo-footer .yellow {
+      fill: #ffcd2b; }
+  :local(.component) .avatar {
+    height: 30px;
+    transition: all 0.3s ease-in-out;
+    transform: scale(0) translateX(-20px) rotate(45deg);
+    transform-origin: 0 100%;
+    margin-top: -20px; }
+  :local(.component):hover .avatar {
+    transform: scale(1) translateX(0) rotate(0); }
+  :local(.component):hover .logo-footer {
+    filter: grayscale(0); }

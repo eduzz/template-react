@@ -8,59 +8,44 @@
   line-height: 1rem;
   transition: all 0.3s ease-in-out;
   font-weight: 500;
-  background-color: #2f343e;
-}
-:local(.component) .nav-button:hover {
-  background-color: #1c1f27;
-}
+  background-color: #2f343e; }
+  :local(.component) .nav-button:hover {
+    background-color: #1c1f27; }
 
 :local(.component) .submenu .nav-button {
-  background-color: #1c1f27;
-}
-:local(.component) .submenu .nav-button:hover {
-  background-color: #0c0c0c;
-}
+  background-color: #1c1f27; }
+  :local(.component) .submenu .nav-button:hover {
+    background-color: #0c0c0c; }
 
 :local(.component) .collapsible-header {
   position: relative;
-  cursor: pointer;
-}
-:local(.component) .collapsible-header:before,
-:local(.component) .collapsible-header:after {
-  transition: all 0.2s ease-in-out;
-  content: '';
-  display: inline-block;
-  background: #d8d8d8;
-  width: 2px;
-  height: 10px;
-  border-radius: 16px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-:local(.component) .collapsible-header:before {
-  transform: translateX(2px) rotate(40deg);
-  right: 26px;
-}
-:local(.component) .collapsible-header:after {
-  transform: translateX(-2px) rotate(-40deg);
-  right: 27.7px;
-}
-:local(.component) .collapsible-header:hover:before,
-:local(.component) .collapsible-header:hover:after {
-  background: #3066d0;
-}
-:local(.component) .collapsible-header.active:before,
-:local(.component) .collapsible-header.active:after {
-  content: '';
-  display: inline-block;
-  width: 2px;
-  border-radius: 16px;
-}
-:local(.component) .collapsible-header.active:before {
-  transform: translateX(-3.6px) rotate(40deg);
-}
-:local(.component) .collapsible-header.active:after {
-  transform: translateX(3.6px) rotate(-40deg);
-}
+  cursor: pointer; }
+  :local(.component) .collapsible-header:before, :local(.component) .collapsible-header:after {
+    transition: all 0.2s ease-in-out;
+    content: '';
+    display: inline-block;
+    background: #d8d8d8;
+    width: 2px;
+    height: 10px;
+    border-radius: 16px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto; }
+  :local(.component) .collapsible-header:before {
+    transform: translateX(2px) rotate(40deg);
+    right: 26px; }
+  :local(.component) .collapsible-header:after {
+    transform: translateX(-2px) rotate(-40deg);
+    right: 27.7px; }
+  :local(.component) .collapsible-header:hover:before, :local(.component) .collapsible-header:hover:after {
+    background: #3066d0; }
+  :local(.component) .collapsible-header.active:before, :local(.component) .collapsible-header.active:after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    border-radius: 16px; }
+  :local(.component) .collapsible-header.active:before {
+    transform: translateX(-3.6px) rotate(40deg); }
+  :local(.component) .collapsible-header.active:after {
+    transform: translateX(3.6px) rotate(-40deg); }

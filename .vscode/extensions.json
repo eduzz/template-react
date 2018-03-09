@@ -1,7 +1,12 @@
 {
   "recommendations": [
+    "HookyQR.beautify",
+    "EditorConfig.editorconfig",
     "msjsdiag.debugger-for-chrome",
-    "mikestead.dotenv",
     "dbaeumer.vscode-eslint",
+    "eg2.tslint",
+    "rbbit.typescript-hero",
+    "robertohuertasm.vscode-icons",
+    "NuclleaR.vscode-extension-auto-import"
   ]
 }

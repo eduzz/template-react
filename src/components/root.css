@@ -4,14 +4,12 @@
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  -moz-osx-font-smoothing: grayscale; }
 
 html,
 body {
   padding: 60px 0 0 0;
-  font-size: 16px;
-}
+  font-size: 16px; }
 
 html,
 body,
@@ -101,8 +99,7 @@ video {
   font: inherit;
   vertical-align: baseline;
   text-decoration: none;
-  font-family: 'Montserrat', sans-serif;
-}
+  font-family: "Montserrat", sans-serif; }
 
 /* HTML5 display-role reset for older browsers */
 article,
@@ -116,52 +113,42 @@ hgroup,
 menu,
 nav,
 section {
-  display: block;
-}
+  display: block; }
 
 body {
-  line-height: 1;
-}
+  line-height: 1; }
 
 ol,
 ul {
-  list-style: none;
-}
+  list-style: none; }
 
 blockquote,
 q {
-  quotes: none;
-}
+  quotes: none; }
 
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
   content: '';
-  content: none;
-}
+  content: none; }
 
 table {
   border-collapse: collapse;
-  border-spacing: 0;
-}
+  border-spacing: 0; }
 
 img {
-  max-width: 100%;
-}
+  max-width: 100%; }
 
 a {
-  color: #1b1b1b;
-}
+  color: #1b1b1b; }
 
 .container {
   width: 100%;
-  max-width: 100%;
-}
+  max-width: 100%; }
 
 body {
-  padding: 60px 0 0 0;
-}
+  padding: 60px 0 0 0; }
 
 .button {
   padding: 12px 30px;
@@ -170,83 +157,61 @@ body {
   background-color: #d8d8d8;
   display: inline-block;
   color: #1b1b1b;
-  transition: all 0.3s ease-in-out;
-}
-.button span {
-  letter-spacing: 0.5px;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all 0.3s ease-in-out;
-  color: #3a3a3a;
-}
-.button .icon {
-  fill: #3a3a3a;
-  margin-right: 5px;
-  transition: all 0.3s ease-in-out;
-  height: 15px;
-}
-.button.affirmative {
-  background-color: #3066d0;
-}
-.button.affirmative span {
-  color: #fff;
-}
-.button.affirmative .icon {
-  fill: #fff;
-}
-.button.small {
-  padding: 10px 20px;
-}
-.button.small span {
-  font-size: 12px;
-}
-.button.small .icon {
-  height: 10px;
-  margin-right: 5px;
-}
-.button.soft {
-  background-color: #e6e6e6;
-  border: 1px solid #202020;
-}
-.button.outline-light {
-  background-color: transparent;
-  border: 1px solid #fff;
-}
-.button.outline-light span {
-  color: #fff;
-}
-.button.outline-light .icon {
-  fill: #fff;
-}
-.button.outline-light:hover {
-  background-color: #fff;
-}
-.button.outline-light:hover span {
-  color: #1c1f27;
-}
-.button.outline-light:hover .icon {
-  fill: #1c1f27;
-}
-.button.outline-dark {
-  background-color: transparent;
-  border: 1px solid #1c1f27;
-}
-.button.outline-dark span {
-  color: #1c1f27;
-}
-.button.outline-dark .icon {
-  fill: #1c1f27;
-  transition: all 0.3s ease-in-out;
-}
-.button.outline-dark:hover {
-  background-color: #1c1f27;
-}
-.button.outline-dark:hover span {
-  color: #fff;
-}
-.button.outline-dark:hover .icon {
-  fill: #fff;
-}
+  transition: all 0.3s ease-in-out; }
+  .button span {
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    color: #3a3a3a; }
+  .button .icon {
+    fill: #3a3a3a;
+    margin-right: 5px;
+    transition: all 0.3s ease-in-out;
+    height: 15px; }
+  .button.affirmative {
+    background-color: #3066d0; }
+    .button.affirmative span {
+      color: #fff; }
+    .button.affirmative .icon {
+      fill: #fff; }
+  .button.small {
+    padding: 10px 20px; }
+    .button.small span {
+      font-size: 12px; }
+    .button.small .icon {
+      height: 10px;
+      margin-right: 5px; }
+  .button.soft {
+    background-color: #e6e6e6;
+    border: 1px solid #202020; }
+  .button.outline-light {
+    background-color: transparent;
+    border: 1px solid #fff; }
+    .button.outline-light span {
+      color: #fff; }
+    .button.outline-light .icon {
+      fill: #fff; }
+    .button.outline-light:hover {
+      background-color: #fff; }
+      .button.outline-light:hover span {
+        color: #1c1f27; }
+      .button.outline-light:hover .icon {
+        fill: #1c1f27; }
+  .button.outline-dark {
+    background-color: transparent;
+    border: 1px solid #1c1f27; }
+    .button.outline-dark span {
+      color: #1c1f27; }
+    .button.outline-dark .icon {
+      fill: #1c1f27;
+      transition: all 0.3s ease-in-out; }
+    .button.outline-dark:hover {
+      background-color: #1c1f27; }
+      .button.outline-dark:hover span {
+        color: #fff; }
+      .button.outline-dark:hover .icon {
+        fill: #fff; }
 
 .input-label {
   display: block;
@@ -254,40 +219,32 @@ body {
   text-transform: uppercase;
   margin-bottom: 5px;
   letter-spacing: 1px;
-  font-weight: 500;
-}
+  font-weight: 500; }
 
 .right-label {
-  margin-left: 10px;
-}
-.right-label:empty {
-  display: none;
-}
+  margin-left: 10px; }
+  .right-label:empty {
+    display: none; }
 
 .text-center {
-  text-align: center;
-}
+  text-align: center; }
 
 nav {
   color: inherit;
   background-color: inherit;
   height: auto;
-  line-height: initial;
-}
+  line-height: initial; }
 
 html .switch label .lever {
   border: #d8d8d8 thin solid;
-  background-color: transparent;
-}
-html .switch label .lever:after {
-  box-shadow: none;
-  background-color: #d8d8d8;
-  border: #d8d8d8 thin solid;
-}
+  background-color: transparent; }
+  html .switch label .lever:after {
+    box-shadow: none;
+    background-color: #d8d8d8;
+    border: #d8d8d8 thin solid; }
 
 .datepicker-field hr {
-  display: none !important;
-}
+  display: none !important; }
 
 .datepicker-field input {
   background-color: #fff;
@@ -299,5 +256,4 @@ html .switch label .lever:after {
   padding: 0 10px !important;
   font-size: 1rem;
   -webkit-box-shadow: none;
-  box-shadow: none;
-}
+  box-shadow: none; }

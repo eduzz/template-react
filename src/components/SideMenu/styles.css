@@ -8,19 +8,14 @@
   left: 0;
   box-sizing: border-box;
   transform: initial;
-  overflow: initial;
-}
-:local(.component) .container {
-  width: 100%;
-  max-width: 100%;
-}
-:local(.component) ::-webkit-scrollbar-track {
-  background-color: #1c1f27;
-}
-:local(.component) ::-webkit-scrollbar {
-  width: 6px;
-  background: #f4f4f4;
-}
-:local(.component) ::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
-}
+  overflow: initial; }
+  :local(.component) .container {
+    width: 100%;
+    max-width: 100%; }
+  :local(.component) ::-webkit-scrollbar-track {
+    background-color: #1c1f27; }
+  :local(.component) ::-webkit-scrollbar {
+    width: 6px;
+    background: #f4f4f4; }
+  :local(.component) ::-webkit-scrollbar-thumb {
+    background: #1a1a1a; }
