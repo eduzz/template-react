@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
-import Input from 'components/Input';
+import Card, { CardActions } from 'material-ui/Card';
+import Collapse from 'material-ui/transitions/Collapse';
 import LessonCardList from './LessonCardList';
-import { IconMenu, IconButton, MenuItem } from 'material-ui';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+import IconButton from 'material-ui/IconButton';
+import TextField from 'material-ui/TextField';
+import Options from './Options';
 
 const styles = require('./styles.css');
 
@@ -21,6 +23,7 @@ interface IProps {
 interface IState {
   isEditing: boolean;
   title: string;
+  isExpanded: boolean;
 }
 
 class ModuleCard extends Component<IProps, IState> {
@@ -30,6 +33,7 @@ class ModuleCard extends Component<IProps, IState> {
     this.state = {
       isEditing: false,
       title: '',
+      isExpanded: false,
     };
   }
 
@@ -40,56 +44,72 @@ class ModuleCard extends Component<IProps, IState> {
     });
   }
 
+  handleTitleChange = (e: any) => {
+    this.setState({
+      title: e.target.value
+    });
+  }
+
+  handleCancel = () => {
+    this.setState({
+      isEditing: false
+    });
+
+    this.props.onCancel();
+  }
+
+  handleSave = () => {
+    this.setState({
+      isEditing: false
+    });
+
+    if (this.props.newModule) {
+      this.props.onEdit(this.state.title);
+    } else {
+      this.props.onSave(this.state.title);
+    }
+  }
+
+  handleEdit = () => {
+    this.setState({
+      isEditing: true
+    });
+  }
+
+  handleExpand = () => {
+    this.setState({ isExpanded: !this.state.isExpanded });
+
+    this.props.onExpandChange(!this.state.isExpanded);
+  }
+
   render() {
     return (
       <div className={styles.component}>
         <Card
-          onExpandChange={this.props.onExpandChange}
           className='card-lessons'
         >
-          <CardTitle actAsExpander={false} showExpandableButton={true}>
-            <div>
+          <CardActions>
+            <div className='card-actions-form'>
               {this.state.isEditing ? (
                 <div className='row'>
-                  <div className='col s6'>
-                    <Input
-                      floatlabel='Nome do módulo'
+                  <div className='col s9'>
+                    <TextField
+                      label='Nome do módulo'
                       autoFocus
-                      onChange={(e: any) => {
-                        this.setState({
-                          title: e.target.value
-                        });
-                      }}
-                      defaultValue={this.state.title}
-                      style={{
-                        width: '100%'
-                      }}
+                      onChange={this.handleTitleChange}
+                      value={this.state.title}
+                      fullWidth
                     />
                   </div>
-                  <div className='col s6 actions'>
+                  <div className='col s3 actions'>
                     <a
-                      onClick={() => {
-                        this.setState({
-                          isEditing: false
-                        });
-                        this.props.onCancel();
-                      }}
+                      onClick={this.handleCancel}
                       style={{ cursor: 'pointer' }}
                     >
                       Cancelar
                     </a>
                     <a
-                      onClick={() => {
-                        this.setState({
-                          isEditing: false
-                        });
-
-                        if (this.props.newModule) {
-                          this.props.onEdit(this.state.title);
-                        } else {
-                          this.props.onSave(this.state.title);
-                        }
-                      }}
+                      onClick={this.handleSave}
                       style={{ cursor: 'pointer' }}
                     >
                       Salvar
@@ -99,28 +119,6 @@ class ModuleCard extends Component<IProps, IState> {
               ) : (
                   <span>
                     {this.state.title}
-                    <IconMenu
-                      iconButtonElement={
-                        <IconButton>
-                          <MoreVertIcon />
-                        </IconButton>
-                      }
-                      anchorOrigin={{ horizontal: 'left', vertical: 'top' }}
-                      targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-                    >
-                      <MenuItem
-                        primaryText='Editar'
-                        onClick={() => {
-                          this.setState({
-                            isEditing: true
-                          });
-                        }}
-                      />
-                      <MenuItem
-                        primaryText='Excluir'
-                        onClick={this.props.onDelete}
-                      />
-                    </IconMenu>
                   </span>
                 )}
               <div className='card-lessons-resume'>
@@ -128,10 +126,25 @@ class ModuleCard extends Component<IProps, IState> {
                 <span>12 Aulas</span>
               </div>
             </div>
-          </CardTitle>
-          <CardText className='card-lessons-wrapper' expandable={true}>
+
+            {!this.state.isEditing &&
+              <Options
+                onEdit={this.handleEdit}
+                onDelete={this.props.onDelete}
+              />
+            }
+
+            <IconButton
+              onClick={this.handleExpand}
+              className={`expand-icon ${this.state.isExpanded && 'expanded'}`}
+              aria-expanded={this.state.isExpanded}
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={this.state.isExpanded} timeout='auto' unmountOnExit>
             <LessonCardList lessons={this.props.lessons || []} />
-          </CardText>
+          </Collapse>
         </Card>
       </div>
     );

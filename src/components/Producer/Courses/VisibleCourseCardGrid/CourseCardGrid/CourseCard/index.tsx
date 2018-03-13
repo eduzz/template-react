@@ -8,7 +8,7 @@ const courseCard = ({ data }: any) => (
   <Link to={`courses/${data.id}`} className={styles.component}>
     <div className={`card-status free-course`}> GRATUITO </div>
     <div className='card-image'>
-      <img src={cdn + data.avatar} alt='...' />
+      <img src={cdn + data.customizations.avatar} alt='...' />
     </div>
 
     <div className='card-description'>

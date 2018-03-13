@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import TextArea from 'components/TextArea';
 import CategorySelect from './CategorySelect';
 import AuthorSelect from 'components/Producer/AuthorSelect';
 import ImageUploader from 'components/ImageUploader';
 import { cdn } from 'constants/index';
 import { changeCourseField } from 'actionCreators/course';
+import TextField from 'material-ui/TextField';
 
 const styles = require('./styles.css');
 
 interface IProps {
   course: any;
-  changeCourseField?: Function;
-  dispatch?: any;
+  changeCourseField: any;
   courseID: number | string;
 }
 
@@ -66,13 +65,14 @@ class CourseBasicInfo extends Component<IProps> {
                   }
                 />
 
-                <TextArea
-                  floatlabel='Descrição do Curso'
-                  async={this.props.courseID && this.props.courseID !== 'new'}
-                  defaultValue={this.props.course.description}
+                <TextField
+                  label='Descrição do Curso'
+                  value={this.props.course.description}
                   onChange={(e: any) =>
                     this.props.changeCourseField('description', e.target.value)
                   }
+                  multiline
+                  fullWidth
                 />
               </div>
             </div>
@@ -99,7 +99,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators(changeCourseField, dispatch),
+  ...bindActionCreators({ changeCourseField }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseBasicInfo);

@@ -10,14 +10,17 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "lint": "tslint -p . && tsc --noEmit"
+    "lint": "tslint -p . && tsc --noEmit",
+    "precommit": "yarn lint",
+    "prepush": "yarn lint"
   },
   "dependencies": {
-    "@types/material-ui": "^0.21.1",
     "@types/react-redux": "^5.0.15",
+    "@types/redux": "^3.6.0",
     "@types/uuid": "^3.4.3",
     "axios": "0.18.0",
-    "material-ui": "^0.20.0",
+    "material-ui": "^1.0.0-beta.37",
+    "material-ui-icons": "^1.0.0-beta.36",
     "materialize-css": "^0.100.2",
     "react": "16.2.0",
     "react-color": "^2.13.8",
@@ -50,11 +53,5 @@
     "tslint": "5.9.1",
     "tslint-eslint-rules": "5.1.0",
     "typescript": "2.7.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint",
-      "pre-push": "yarn lint"
-    }
   }
 }

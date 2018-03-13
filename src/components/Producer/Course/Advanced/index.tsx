@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import actionCreators from 'actionCreators';
-import { Dialog, FlatButton } from 'material-ui';
-import Loading from 'components/Loading';
+// import actionCreators from 'actionCreators';
+// import Dialog from 'material-ui/Dialog';
+// import Button from 'material-ui/Button';
+// import Loading from 'components/Loading';
 
 const styles = require('./styles.css');
 
@@ -284,22 +285,22 @@ class CourseAdvanced extends Component<IProps, IState> {
           </div>
         </section>
 
-        <Dialog
+        {/* <Dialog
           actions={
             !this.state.isDeletingCourse
               ? [
-                <FlatButton
-                  label='Cancelar'
-                  primary={true}
+                <Button
+                  color='primary'
                   onClick={() => {
                     this.setState({
                       isDelConfirmOpen: false
                     });
                   }}
-                />,
-                <FlatButton
-                  label='Excluir'
-                  primary={false}
+                >
+                  Cancelar
+                </Button>,
+                <Button
+                  color='primary'
                   onClick={() => {
                     this.setState({
                       // isDelConfirmOpen: false,
@@ -309,7 +310,9 @@ class CourseAdvanced extends Component<IProps, IState> {
                       actionCreators.deleteCourse(this.props.course.id)
                     );
                   }}
-                />
+                >
+                  Excluir
+                </Button>
               ]
               : []
           }
@@ -324,7 +327,7 @@ class CourseAdvanced extends Component<IProps, IState> {
           ) : (
               <span />
             )}
-        </Dialog>
+        </Dialog> */}
       </div>
     );
   }

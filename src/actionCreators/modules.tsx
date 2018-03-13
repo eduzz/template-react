@@ -1,17 +1,53 @@
-export const getModules = (courseID: number) => ({
-  type: 'GET_MODULES',
-  courseID
+import { get, post, del, put } from 'agent';
+
+export const cleanModules = () => ({
+  type: 'CLEAN_MODULES',
 });
 
-export const receiveModules = (modules: Array<Object>) => ({
+const receiveModules = (modules: Object[]) => ({
   type: 'RECEIVE_MODULES',
   modules
 });
 
-export const receiveModulesError = (err: any) => ({
+const receiveModulesError = (err: any) => ({
   type: 'RECEIVE_MODULES_ERROR',
   err
 });
+
+export const fetchModules = (courseID: number | string) =>
+  (dispatch: any) => {
+    dispatch({
+      type: 'REQUEST_MODULES',
+    });
+
+    get({ url: `/courses/${courseID}/modules` }).then(
+      res => dispatch(receiveModules(res.data.data)),
+      err => dispatch(receiveModulesError(err)),
+    );
+  };
+
+const receiveModuleLessons = (lessons: Array<Object>, moduleID: number) => ({
+  type: 'RECEIVE_MODULE_LESSONS',
+  lessons,
+  moduleID
+});
+
+const receiveModuleLessonsError = (err: any) => ({
+  type: 'RECEIVE_MODULE_LESSONS_ERROR',
+  err
+});
+
+export const fetchModuleLessons = (moduleID: number) =>
+  (dispatch: any) => {
+    dispatch({
+      type: 'REQUEST_MODULE_LESSONS',
+    });
+
+    get({ url: `/modules/${moduleID}/lessons` }).then(
+      res => dispatch(receiveModuleLessons(res.data.data, moduleID)),
+      err => dispatch(receiveModuleLessonsError(err)),
+    );
+  };
 
 export const addModule = () => ({
   type: 'ADD_MODULE'
@@ -22,23 +58,39 @@ export const removeModule = (index: number) => ({
   index
 });
 
-export const postModule = (courseID: number, title: string, sequence: number) => ({
-  type: 'POST_MODULE',
-  courseID,
-  title,
-  sequence
-});
-
-export const receiveModule = (module: Object, sequence: number) => ({
+const receiveModule = (module: Object, sequence: number) => ({
   type: 'RECEIVE_MODULE',
   module,
   sequence
 });
 
-export const receiveModuleError = (err: any) => ({
+const receiveModuleError = (err: any) => ({
   type: 'RECEIVE_MODULE',
   err
 });
+
+export const postModule = (courseID: number, title: string, sequence: number) =>
+  (dispatch: any) => {
+    post({
+      url: '/modules',
+      data: {
+        id_course: courseID,
+        title,
+        description: 'description',
+        days_locked: 1,
+        is_draft: false,
+        id_author: null,
+        available_days: 1,
+        release_date: '2018-07-07',
+        image: 'base64',
+        sequence,
+        is_free: true
+      }
+    }).then(
+      res => dispatch(receiveModule(res.data.data, sequence)),
+      err => dispatch(receiveModuleError(err)),
+    );
+  };
 
 export const deleteModule = (moduleID: number) => ({
   type: 'DELETE_MODULE',
@@ -51,29 +103,13 @@ export const deleteModuleUndo = (module: Object, index: number) => ({
   index
 });
 
-export const deleteModulePersist = (moduleID: number) => ({
-  type: 'DELETE_MODULE_PERSIST',
-  moduleID
-});
+export const deleteModulePersist = (moduleID: number) =>
+  (dispatch: any) => del({ url: '/modules/' + moduleID }).then(res => { }, err => { });
 
-export const editModulePersist = (module: Object, index: number) => ({
-  type: 'EDIT_MODULE_PERSIST',
-  module,
-  index
-});
-
-export const getModuleLessons = (moduleID: number) => ({
-  type: 'GET_MODULE_LESSONS',
-  moduleID
-});
-
-export const receiveModuleLessons = (lessons: Array<Object>, moduleID: number) => ({
-  type: 'RECEIVE_MODULE_LESSONS',
-  lessons,
-  moduleID
-});
-
-export const receiveModuleLessonsError = (err: any) => ({
-  type: 'RECEIVE_MODULE_LESSONS_ERROR',
-  err
-});
+export const editModulePersist = (module: any, index: number) =>
+  (dispatch: any) => {
+    put({ url: '/modules/' + module.id, data: module }).then(
+      res => dispatch(receiveModule(res.data.data, index)),
+      err => dispatch(receiveModuleError(err)),
+    );
+  };

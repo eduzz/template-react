@@ -5,3 +5,11 @@
 
 :local(.component) a {
   margin: 10px; }
+
+:local(.component) .expand-icon {
+  margin-left: auto; }
+  :local(.component) .expand-icon .expanded {
+    transform: rotate(180deg); }
+
+:local(.component) .card-actions-form {
+  width: 100%; }

@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getLesson, changeLessonField, addLessonFiles, removeLessonFile } from 'actionCreators/lessons';
-import Input from 'components/Input';
-import TextArea from 'components/TextArea';
 import ImageUploader from 'components/ImageUploader';
 import Icon from 'components/Icon';
 import AuthorSelect from 'components/Producer/AuthorSelect';
-import { DatePicker } from 'material-ui';
-import Toggle from 'components/Toggle';
+import TextField from 'material-ui/TextField';
+import Toggle from '../Toggle';
 import FileUploader from './FileUploader';
 import { cdn } from 'constants/index';
 import Loading from 'components/Loading';
@@ -62,10 +60,9 @@ class Lesson extends Component<IProps> {
                 <div className='row'>
                   <div className='form-block'>
                     <h3 className='form-block-title'>Titulo da Aula</h3>
-                    <Input
-                      defaultValue={this.props.lesson.title}
-                      async={true}
-                      style={{ width: '100%' }}
+                    <TextField
+                      value={this.props.lesson.title}
+                      fullWidth
                       required
                       onChange={(e: any) =>
                         this.props.changeLessonField('title', e.target.value)
@@ -77,10 +74,10 @@ class Lesson extends Component<IProps> {
                 <div className='row'>
                   <div className='form-block'>
                     <h3 className='form-block-title'>Descrição da Aula</h3>
-                    <TextArea
-                      defaultValue={this.props.lesson.description}
-                      async={true}
-                      style={{ width: '100%' }}
+                    <TextField
+                      value={this.props.lesson.description}
+                      fullWidth
+                      multiline
                       onChange={(e: any) =>
                         this.props.changeLessonField(
                           'description',
@@ -228,7 +225,7 @@ class Lesson extends Component<IProps> {
                   <p className='date-description'>
                     Selecione a data para qual a aula estará disponível.
                   </p>
-                  <DatePicker
+                  {/* <DatePicker
                     value={
                       this.props.lesson.release_date &&
                       new Date(Date.parse(this.props.lesson.release_date))
@@ -238,6 +235,12 @@ class Lesson extends Component<IProps> {
                     onChange={(none, date) =>
                       this.props.changeLessonField('release_date', date)
                     }
+                  /> */}
+                  <TextField
+                    id='date'
+                    type='date'
+                    defaultValue='2017-05-24'
+                    className='datepicker-field'
                   />
                 </div>
               </div>
@@ -249,10 +252,8 @@ class Lesson extends Component<IProps> {
                     Após o primeiro acesso, após quantos dias a aula ficará
                     disponível:
                   </p>
-                  <Input
-                    rightlabel='Dias'
-                    defaultValue={this.props.lesson.days_locked}
-                    async={true}
+                  <TextField
+                    value={this.props.lesson.days_locked}
                     className='datepicker'
                     onChange={(e: any) =>
                       this.props.changeLessonField(
@@ -270,10 +271,8 @@ class Lesson extends Component<IProps> {
                   <p className='date-description'>
                     Determine quantos dias a aula ficará disponível
                   </p>
-                  <Input
-                    rightlabel='Dias'
-                    defaultValue={this.props.lesson.available_days}
-                    async={true}
+                  <TextField
+                    value={this.props.lesson.available_days}
                     className='datepicker'
                     onChange={(e: any) =>
                       this.props.changeLessonField(
@@ -353,10 +352,9 @@ class Lesson extends Component<IProps> {
                         }
                       />
                     </label>
-                    <Input
+                    <TextField
                       className='input-field'
-                      defaultValue={chats.zopimchat}
-                      async={true}
+                      value={chats.zopimchat}
                       disabled={!chats.haszopimchat}
                       onChange={(e: any) =>
                         this.props.changeLessonField('chats', {
@@ -386,10 +384,9 @@ class Lesson extends Component<IProps> {
                         }
                       />
                     </label>
-                    <Input
+                    <TextField
                       className='input-field'
-                      defaultValue={chats.jivochat}
-                      async={true}
+                      value={chats.jivochat}
                       disabled={!chats.hasjivochat}
                       onChange={(e: any) =>
                         this.props.changeLessonField('chats', {
@@ -419,10 +416,9 @@ class Lesson extends Component<IProps> {
                         }
                       />
                     </label>
-                    <Input
+                    <TextField
                       className='input-field'
-                      defaultValue={chats.zendeskchat}
-                      async={true}
+                      value={chats.zendeskchat}
                       disabled={!chats.haszendeskchat}
                       onChange={(e: any) =>
                         this.props.changeLessonField('chats', {
@@ -455,10 +451,9 @@ class Lesson extends Component<IProps> {
                         }
                       />
                     </label>
-                    <Input
+                    <TextField
                       className='input-field'
-                      defaultValue={chats.tawktochat}
-                      async={true}
+                      value={chats.tawktochat}
                       disabled={!chats.hastawktochat}
                       onChange={(e: any) =>
                         this.props.changeLessonField('chats', {
@@ -488,10 +483,9 @@ class Lesson extends Component<IProps> {
                         }
                       />
                     </label>
-                    <Input
+                    <TextField
                       className='input-field'
-                      defaultValue={chats.livechat}
-                      async={true}
+                      value={chats.livechat}
                       disabled={!chats.haslivechat}
                       onChange={(e: any) =>
                         this.props.changeLessonField('chats', {
@@ -521,10 +515,9 @@ class Lesson extends Component<IProps> {
                         }
                       />
                     </label>
-                    <Input
+                    <TextField
                       className='input-field'
-                      defaultValue={chats.chatroll}
-                      async={true}
+                      value={chats.chatroll}
                       disabled={!chats.haschatroll}
                       onChange={(e: any) =>
                         this.props.changeLessonField('chats', {

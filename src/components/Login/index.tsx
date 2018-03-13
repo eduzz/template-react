@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import actionCreators from 'actionCreators';
+import { requestLogin } from 'actionCreators/auth';
 import Footer from 'components/Footer';
 
 const styles = require('./styles.css');
 const loginbg = require('assets/img/login-bg.jpg');
 
 interface IProps {
-  dispatch: any;
+  requestLogin: any;
 }
 
 class Login extends Component<IProps> {
@@ -21,12 +22,10 @@ class Login extends Component<IProps> {
   handleSubmit = (e: any) => {
     e.preventDefault();
 
-    this.props.dispatch(
-      actionCreators.requestLogin({
-        username: this.refs.username.value,
-        password: this.refs.password.value
-      })
-    );
+    this.props.requestLogin({
+      username: this.refs.username.value,
+      password: this.refs.password.value
+    });
   }
 
   render() {
@@ -53,6 +52,7 @@ class Login extends Component<IProps> {
             <div className='input-box'>
               <div className='input-field'>
                 <input
+                  autoFocus
                   tabIndex={1}
                   placeholder='Email'
                   type='email'
@@ -98,4 +98,8 @@ class Login extends Component<IProps> {
   }
 }
 
-export default connect()(Login);
+const mapDispatchToProps = (dispatch: any) => ({
+  ...bindActionCreators({ requestLogin }, dispatch),
+});
+
+export default connect(undefined, mapDispatchToProps)(Login);

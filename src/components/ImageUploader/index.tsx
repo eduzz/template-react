@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
-import actionCreators from 'actionCreators';
+import { uploadImage } from 'actionCreators/upload';
 import Loading from 'components/Loading';
 
 const styles = require('./styles.css');
@@ -115,7 +115,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   uploadImage(result: string, stateLabel: string) {
-    dispatch(actionCreators.uploadImage(result, stateLabel));
+    dispatch(uploadImage(result, stateLabel));
   }
 });
 

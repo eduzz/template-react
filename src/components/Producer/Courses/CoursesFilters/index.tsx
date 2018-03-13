@@ -7,7 +7,7 @@ import {
   StatusFilter,
   CategoryFilter,
   TagsFilter
-} from 'components/Filters';
+} from './Filters';
 
 interface IState {
   isActive: boolean;

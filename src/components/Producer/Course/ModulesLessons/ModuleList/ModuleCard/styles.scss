@@ -4,8 +4,16 @@
     align-items: center;
     height: 70px;
   }
-
   a {
     margin: 10px;
+  }
+  .expand-icon {
+    margin-left: auto;
+    .expanded {
+      transform: rotate(180deg);
+    }
+  }
+  .card-actions-form {
+    width: 100%;
   }
 }

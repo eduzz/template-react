@@ -3,32 +3,26 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ModuleCard from './ModuleCard';
 import Loading from 'components/Loading';
-import { Snackbar, Dialog, FlatButton } from 'material-ui';
+import Dialog, { DialogContent, DialogContentText, DialogActions } from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
+import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
+import Button from 'material-ui/Button';
 import { v4 } from 'uuid';
-import {
-  getModules,
-  getModuleLessons,
-  addModule,
-  removeModule,
-  postModule,
-  deleteModule,
-  deleteModulePersist,
-  deleteModuleUndo,
-  editModulePersist
-} from 'actionCreators/modules';
+import { fetchModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo } from 'actionCreators/modules';
 
 interface IProps {
   courseID: string | number;
   modules: Array<any>;
-  getModules: any;
-  removeModule: any;
+  fetchModules: any;
+  fetchModuleLessons: any;
   addModule: any;
-  deleteModule: any;
-  deleteModuleUndo: any;
-  deleteModulePersist: any;
-  getModuleLessons: any;
   postModule: any;
   editModulePersist: any;
+  removeModule: any;
+  deleteModule: any;
+  deleteModulePersist: any;
+  deleteModuleUndo: any;
 }
 
 interface IState {
@@ -51,9 +45,42 @@ class ModuleList extends Component<IProps, IState> {
   }
 
   componentDidMount() {
-    if (this.props.courseID && this.props.courseID !== 'new') {
-      this.props.getModules(this.props.courseID);
+    if (this.props.courseID && this.props.courseID !== 'new' && !this.props.modules.length) {
+      this.props.fetchModules(this.props.courseID);
     }
+  }
+
+  handleSnackbarClose = () => {
+    this.setState({
+      isUndoOpen: false
+    });
+
+    this.props.deleteModulePersist(this.state.module.id);
+  }
+
+  handleSnackbarUndo = () => {
+    this.setState({
+      isUndoOpen: false
+    });
+    this.props.deleteModuleUndo(
+      this.state.module,
+      this.state.index
+    );
+  }
+
+  handleDeleteCancel = () => {
+    this.setState({
+      isDelConfirmOpen: false
+    });
+  }
+
+  handleDeleteConfirm = () => {
+    this.setState({
+      isUndoOpen: true,
+      isDelConfirmOpen: false
+    });
+
+    this.props.deleteModule(this.state.module.id);
   }
 
   render() {
@@ -68,8 +95,8 @@ class ModuleList extends Component<IProps, IState> {
             lessons={module.lessons}
             newModule={module.id}
             onExpandChange={() => {
-              if (!module.lessons.length) {
-                this.props.getModuleLessons(module.id);
+              if (!module.lessons || (module.lessons && !module.lessons.length)) {
+                this.props.fetchModuleLessons(module.id);
               }
             }}
             onSave={(title: string) =>
@@ -110,20 +137,19 @@ class ModuleList extends Component<IProps, IState> {
           </div>
         </div>
 
-        <Dialog
+        {/* <Dialog
           actions={[
-            <FlatButton
-              label='Cancelar'
-              primary={true}
+            <Button
+              color='primary'
               onClick={() => {
                 this.setState({
                   isDelConfirmOpen: false
                 });
               }}
-            />,
-            <FlatButton
-              label='Excluir'
-              primary={false}
+            >
+              Cancelar
+            </Button>,
+            <Button
               onClick={() => {
                 this.setState({
                   isUndoOpen: true,
@@ -131,15 +157,38 @@ class ModuleList extends Component<IProps, IState> {
                 });
                 this.props.deleteModule(this.state.module.id);
               }}
-            />
+            >
+              Excluir
+            </Button>
           ]}
           modal={false}
           open={this.state.isDelConfirmOpen}
         >
           Tem certeza que deseja excluir este Módulo?
+        </Dialog> */}
+
+        <Dialog
+          open={this.state.isDelConfirmOpen}
+          keepMounted
+          aria-labelledby='alert-dialog-slide-title'
+          aria-describedby='alert-dialog-slide-description'
+        >
+          <DialogContent>
+            <DialogContentText>
+              Tem certeza que deseja excluir este Módulo?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleDeleteCancel} color='primary'>
+              Cancelar
+            </Button>
+            <Button onClick={this.handleDeleteConfirm} color='secondary'>
+              Excluir
+            </Button>
+          </DialogActions>
         </Dialog>
 
-        <Snackbar
+        {/* <Snackbar
           open={this.state.isUndoOpen}
           message='Módulo Excluido'
           autoHideDuration={3000}
@@ -164,6 +213,30 @@ class ModuleList extends Component<IProps, IState> {
             });
             this.props.deleteModulePersist(this.state.module.id);
           }}
+        /> */}
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={this.state.isUndoOpen}
+          autoHideDuration={6000}
+          onClose={this.handleSnackbarClose}
+          message={<span>Módulo Excluido</span>}
+          action={[
+            <Button key='undo' color='secondary' size='small' onClick={this.handleSnackbarUndo}>
+              UNDO
+            </Button>,
+            <IconButton
+              key='close'
+              aria-label='Close'
+              color='inherit'
+              onClick={this.handleSnackbarClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
         />
       </div>
     );
@@ -175,17 +248,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({
-    getModules,
-    getModuleLessons,
-    addModule,
-    removeModule,
-    postModule,
-    deleteModule,
-    deleteModulePersist,
-    deleteModuleUndo,
-    editModulePersist
-  }, dispatch),
+  ...bindActionCreators({ fetchModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModuleList);

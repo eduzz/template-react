@@ -1,7 +1,8 @@
 import React from 'react';
-import Toggle from '../../../Toggle';
-import InputRange from '../../../InputRange';
-import Input from '../../../Input';
+// import InputRange from '../../../InputRange';
+// import Input from '../../../Input';
+import TextField from 'material-ui/TextField';
+import Toggle from '../../Toggle';
 
 const certificates = () => (
   <section className='form-section'>
@@ -15,12 +16,12 @@ const certificates = () => (
     </div>
     <div className='row'>
       <div className='col m12 l12'>
-        <InputRange min={0} max={100} value={50} />
+        {/* <InputRange min={0} max={100} value={50} /> */}
       </div>
     </div>
     <div className='row'>
       <div className='col m12 l12'>
-        <Input title='Nome do Professor' />
+        <TextField label='Nome do Professor' />
       </div>
     </div>
   </section>

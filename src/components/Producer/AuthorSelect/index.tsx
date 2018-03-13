@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actionCreators/authors';
-import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { SelectField, MenuItem } from 'material-ui';
-import Input from 'components/Input';
+import Card, { CardHeader, CardContent } from 'material-ui/Card';
+import { MenuItem } from 'material-ui/Menu';
+import TextField from 'material-ui/TextField';
+import Select from 'material-ui/Select';
 
 const styles = require('./styles.css');
 
@@ -42,36 +43,36 @@ class AuthorSelect extends Component<IProps, IState> {
     return (
       <div className={styles.component}>
         <div className='input-field'>
-          <SelectField
+          <Select
             value={this.props.value}
             onChange={this.props.onChange}
-            floatingLabelText='Autores'
-            style={{ width: '100%' }}
+            fullWidth
           >
             {this.props.authors.map(author => (
               <MenuItem
                 key={author.id}
                 value={author.id}
-                primaryText={author.name}
-              />
+              >
+                {author.name}
+              </MenuItem>
             ))}
-          </SelectField>
+          </Select>
         </div>
 
         <Card className='card-lessons'>
-          <CardTitle actAsExpander={true} showExpandableButton={true}>
+          <CardHeader>
             <span style={{ display: 'flex', justifyContent: 'center' }}>
               Adicionar Author
             </span>
-          </CardTitle>
-          <CardText className='card-lessons-wrapper' expandable={true}>
-            <Input
+          </CardHeader>
+          <CardContent className='card-lessons-wrapper'>
+            <TextField
               onChange={(e: any) => {
                 this.setState({
                   newAuthorName: e.target.value
                 });
               }}
-              floatlabel='Nome do Author'
+              fullWidth
             />
             <a
               onClick={() => {
@@ -81,7 +82,7 @@ class AuthorSelect extends Component<IProps, IState> {
             >
               <span>Adicionar</span>
             </a>
-          </CardText>
+          </CardContent>
         </Card>
       </div>
     );

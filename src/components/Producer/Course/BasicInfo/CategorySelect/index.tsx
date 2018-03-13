@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actionCreators/categories';
-import { SelectField, MenuItem } from 'material-ui';
+import { MenuItem } from 'material-ui/Menu';
+import Select from 'material-ui/Select';
 
 interface IProps {
   fetchCategories: any;
   cleanCategories: any;
   categories: Array<any>;
-  value: number | string;
+  value: number;
   onChange: any;
 }
 
@@ -24,19 +25,20 @@ class CategorySelect extends Component<IProps> {
   render() {
     return (
       <div className='input-field'>
-        <SelectField
-          {...this.props}
-          floatingLabelText='Categoria'
-          style={{ width: '100%' }}
+        <Select
+          value={this.props.value}
+          onChange={this.props.onChange}
+          fullWidth
         >
           {this.props.categories.map(option => (
             <MenuItem
               key={option.id}
               value={option.id}
-              primaryText={option.name}
-            />
+            >
+              {option.name}
+            </MenuItem>
           ))}
-        </SelectField>
+        </Select>
       </div>
     );
   }

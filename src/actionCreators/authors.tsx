@@ -1,4 +1,4 @@
-import { get } from 'agent';
+import { get, post } from 'agent';
 
 export const cleanAuthors = () => ({
   type: 'CLEAN_AUTHORS'
@@ -20,19 +20,24 @@ export const fetchAuthors = () => (dispatch: Function) =>
     err => dispatch(receiveAuthorsError(err))
   );
 
-// const receiveAuthor = (author: any) => ({
-//   type: 'RECEIVE_AUTHOR',
-//   author
-// });
-
-// const receiveAuthorError = (err: any) => ({
-//   type: 'RECEIVE_AUTHOR_ERROR',
-//   err
-// });
-
-export const addAuthor = (name: string) => ({
-  type: 'ADD_AUTHOR',
-  name,
-  description: 'test',
-  avatar: 'test'
+const receiveAuthor = (author: any) => ({
+  type: 'RECEIVE_AUTHOR',
+  author
 });
+
+const receiveAuthorError = (err: any) => ({
+  type: 'RECEIVE_AUTHOR_ERROR',
+  err
+});
+
+export const addAuthor = (name: string) =>
+  (dispatch: any) => {
+    post({ url: '/authors', data: { name, description: 'test', avatar: 'test' } }).then(
+      res => {
+        dispatch(receiveAuthor(res.data.data));
+      },
+      err => {
+        dispatch(receiveAuthorError(err));
+      }
+    );
+  };
