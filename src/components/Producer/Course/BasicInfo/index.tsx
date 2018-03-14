@@ -60,7 +60,7 @@ class CourseBasicInfo extends Component<IProps> {
                 <h3 className='form-section-title'>Detalhes do Curso</h3>
                 <CategorySelect
                   value={this.props.course.id_category}
-                  onChange={(event: any, index: number, value: number) =>
+                  onChange={(event: any, value: number) =>
                     this.props.changeCourseField('id_category', value)
                   }
                 />
