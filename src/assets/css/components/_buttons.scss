@@ -66,9 +66,9 @@
   color: $button-raised-color;
   background-color: $button-raised-background;
   text-align: center;
-  letter-spacing: .5px;
+  letter-spacing: 0.5px;
   @extend .z-depth-1;
-  transition: .2s ease-out;
+  transition: 0.2s ease-out;
   cursor: pointer;
 
   &:hover {
@@ -123,7 +123,7 @@
   background-color: $button-floating-background;
   border-radius: $button-floating-radius;
   @extend .z-depth-1;
-  transition: .3s;
+  transition: 0.3s;
   cursor: pointer;
   vertical-align: middle;
 
@@ -146,7 +146,7 @@ button.btn-floating {
 .fixed-action-btn {
   &.active {
     ul {
-     visibility: visible;
+      visibility: visible;
     }
   }
 
@@ -256,7 +256,7 @@ button.btn-floating {
   background-color: transparent;
   color: $button-flat-color;
   cursor: pointer;
-  transition: background-color .2s;
+  transition: background-color 0.2s;
 
   &:focus,
   &:hover {
@@ -264,7 +264,7 @@ button.btn-floating {
   }
 
   &:focus {
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &.disabled {

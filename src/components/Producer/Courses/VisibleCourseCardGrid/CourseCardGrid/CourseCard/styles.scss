@@ -1,70 +1,66 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
-
-:local(.component){
+:local(.component) {
   width: 185px;
   height: 240px;
   position: relative;
   display: inline-block;
-  border:0;
-  margin-right:5px;
-  margin-bottom:5px;
-  border:1px solid $light-gray;
-  .card-image{
+  border: 0;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  border: 1px solid $light-gray;
+  .card-image {
     width: 100%;
     object-fit: cover;
   }
-  .card-status{
-    color:#fff;
+  .card-status {
+    color: #fff;
     position: absolute;
     display: block;
-    margin:8px;
-    padding:4px;
-    top:0;
-    left:0;
-    right:0;
-    text-align:center;
-    text-transform:uppercase;
-    font-weight:$medium;
-    letter-spacing:0.5px;
+    margin: 8px;
+    padding: 4px;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: $medium;
+    letter-spacing: 0.5px;
     @include fontsize(14);
-    &.comming-soon{
-      background-color:transparentize(#ff0000, 0.5);
+    &.comming-soon {
+      background-color: transparentize(#ff0000, 0.5);
     }
-    &.free-course{
-      background-color:transparentize(#27921A , 0.2);
-
+    &.free-course {
+      background-color: transparentize(#27921a, 0.2);
     }
-    &.blocked{}
   }
-  .card-description{
+  .card-description {
     position: absolute;
-    bottom:0;
+    bottom: 0;
     display: block;
-    margin:auto;
-    text-align:center;
+    margin: auto;
+    text-align: center;
     width: 100%;
-    background:rgba(0,0,0,0.8);
-    padding:10px 5px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10px 5px;
     height: 55px;
   }
-  .card-title{
-    color:#fff;
+  .card-title {
+    color: #fff;
     @include fontsize(14);
     line-height: 1rem;
-    font-weight:$medium;
-    letter-spacing:0.5px;
+    font-weight: $medium;
+    letter-spacing: 0.5px;
     margin-bottom: 4px;
     max-height: 30px;
-    overflow:hidden;
-
-    display:inline-block;
-    width:170px;
+    overflow: hidden;
+    display: inline-block;
+    width: 170px;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-  .card-category{
-    font-size:10px;
-    color:#fff;
+  .card-category {
+    font-size: 10px;
+    color: #fff;
   }
 }

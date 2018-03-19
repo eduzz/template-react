@@ -1,10 +1,15 @@
 :local(.component) {
-    .add-author {
-        margin-top: 35px;
-
-        .header {
-            display: flex;
-            justify-content: center;;
-        }
+  .add-author {
+    margin-top: 35px;
+    .header {
+      display: flex;
+      justify-content: center;
     }
+  }
+  .expand-icon {
+    margin-left: auto;
+    .expanded {
+      transform: rotate(180deg);
+    }
+  }
 }

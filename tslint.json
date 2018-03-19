@@ -1,0 +1,91 @@
+{
+  "rules": {
+    "adjacent-overload-signatures": true,
+    "member-ordering": [
+      true,
+      {
+        "order": "fields-first"
+      }
+    ],
+    "no-namespace": [
+      true,
+      "allow-declarations"
+    ],
+    "no-reference": true,
+    "no-var-requires": false,
+    "only-arrow-functions": [
+      false
+    ],
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      },
+      {
+        "call-signature": "onespace",
+        "index-signature": "onespace",
+        "parameter": "onespace",
+        "property-declaration": "onespace",
+        "variable-declaration": "onespace"
+      }
+    ],
+    "interface-name": [
+      true,
+      "always-prefix"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "no-duplicate-variable": true,
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "linebreak-style": [
+      false,
+      "LF"
+    ],
+    "max-file-line-count": [
+      true,
+      600
+    ],
+    "max-line-length": [
+      false,
+      150
+    ],
+    "no-default-export": false,
+    "no-require-imports": false,
+    "no-trailing-whitespace": true,
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "no-consecutive-blank-lines": [
+      true
+    ],
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "object-literal-shorthand": true,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore"
+    ],
+    "no-extra-semi": [
+      true
+    ],
+    "no-var-keyword": [
+      true
+    ]
+  },
+  "rulesDirectory": [
+    "node_modules/tslint-eslint-rules/dist/rules"
+  ]
+}

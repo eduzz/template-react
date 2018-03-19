@@ -52,7 +52,7 @@
       position: relative;
       z-index: 1; }
     :local(.component) .login-background:before {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       right: 0;

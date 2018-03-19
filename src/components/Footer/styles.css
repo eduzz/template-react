@@ -16,9 +16,9 @@
     filter: grayscale(100%);
     transition: all 0.3s ease-in-out; }
     :local(.component) .logo-footer .blue {
-      fill: #1F3255; }
+      fill: #1f3255; }
     :local(.component) .logo-footer .yellow {
-      fill: #FFCD2B; }
+      fill: #ffcd2b; }
   :local(.component) .avatar {
     height: 30px;
     transition: all 0.3s ease-in-out;

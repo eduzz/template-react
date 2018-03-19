@@ -1,17 +1,17 @@
 @import 'src/assets/css/_variables.scss';
 
-:local(.component){
+:local(.component) {
   background-color: $background-color;
   position: fixed;
   width: 250px;
   display: block;
-  height:calc(100vh - 60px);
-  top:60px;
-  left:0;
-  box-sizing:border-box;
+  height: calc(100vh - 60px);
+  top: 60px;
+  left: 0;
+  box-sizing: border-box;
   transform: initial;
   overflow: initial;
-  .container{
+  .container {
     width: 100%;
     max-width: 100%;
   }
@@ -21,11 +21,10 @@
 
   ::-webkit-scrollbar {
     width: 6px;
-    background: #F4F4F4;
+    background: #f4f4f4;
   }
 
   ::-webkit-scrollbar-thumb {
     background: $darkest-color;
   }
-	
 }

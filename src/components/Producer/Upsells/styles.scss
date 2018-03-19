@@ -1,119 +1,118 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
-:local(.component){
-	@extend %page-content;
-	.upsells-grid{
-		padding:30px 0;
-		display: flex;
-		align-items:flex-start;
-		justify-content: flex-start;
-		flex-wrap: wrap;
-		.item{
-			width: 250px;
-			border: 1px solid $light-gray;
-			position: relative;
-			border-radius:4px;
-			overflow:hidden;
-			margin-right:15px;
-		}
-		.settings{
-			border: 0;
-		    background: transparent;
-		    padding: 10px;
-		    height: 50px;
-		    min-width: 50px;
-		    display: flex;
-		    align-items: center;
-		    justify-content: center;
-		    border-radius: 50%;
-		    @include transition;
-		    cursor: pointer;
-			.icon{
-				height: 25px;
-				fill:$dark-gray;
-		    	@include transition;
-			}
-		    &:hover{
-		    	background-color:$light-gray;
-		    }
-		}
-		.content{
-			padding:15px 0 15px 15px;
-			display: flex;
-			justify-content: space-between;
-			align-items:center;
-			position:relative;
-			z-index: 2;
-			background:#fff;
-			border-top: 1px solid $light-gray;
-		}
-		.title{
-			margin:0;
-			@include fontsize(16);
-			font-weight: $semibold;
-			margin-bottom:5px;
-			max-height: 32px;
-			min-height: 32px;
-			overflow: hidden;
-		}
-		.image,
-		.image img{
-			height: 200px;
-			object-fit: cover;
-			width: 100%;
-		}
-		.actions{
-			display: flex;
-			align-items:flex-start;
-			justify-content: space-between;
-			position: absolute;
-			top: 0;
-			bottom:0;
-			left: 0;
-			right: 0;
-			background: #fff;
-			overflow:hidden;
-			height: 100%;
-			z-index: 1;
-			padding:30px;
-			transform:translateY(250px);
-			visibility: hidden;
-			@include transition;
-			&.active{
-				transform:translateY(0);
-				visibility: visible;
-
-			}
-			button{
-				border:0;
-				text-align: center;
-				display: flex;
-				align-items:center;
-				flex-flow:column;
-				background:transparent;
-				cursor:pointer;
-				&:hover{
-					.icon{
-						fill:$affirmative-color;
-					}
-					span{
-						color:$affirmative-color;
-					}
-				} 
-				span{
-					color:$background-color;
-					font-weight: $medium;
-					@include transition;
-					@include fontsize(14);
-				}
-			}
-			.icon{
-				height: 30px;
-				display: block;
-				margin: 10px auto;
-				fill: $background-color;
-				@include transition;
-			}
-		}
-	}
+:local(.component) {
+  @extend %page-content;
+  .upsells-grid {
+    padding: 30px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .item {
+      swidth: 250px;
+      border: 1px solid $light-gray;
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-right: 15px;
+    }
+    .settings {
+      border: 0;
+      background: transparent;
+      padding: 10px;
+      height: 50px;
+      min-width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      @include transition;
+      cursor: pointer;
+      .icon {
+        height: 25px;
+        fill: $dark-gray;
+        @include transition;
+      }
+      &:hover {
+        background-color: $light-gray;
+      }
+    }
+    .content {
+      padding: 15px 0 15px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      background: #fff;
+      border-top: 1px solid $light-gray;
+    }
+    .title {
+      margin: 0;
+      @include fontsize(16);
+      font-weight: $semibold;
+      margin-bottom: 5px;
+      max-height: 32px;
+      min-height: 32px;
+      overflow: hidden;
+    }
+    .image,
+    .image img {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .actions {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      overflow: hidden;
+      height: 100%;
+      z-index: 1;
+      padding: 30px;
+      transform: translateY(250px);
+      visibility: hidden;
+      @include transition;
+      &.active {
+        transform: translateY(0);
+        visibility: visible;
+      }
+      button {
+        border: 0;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-flow: column;
+        background: transparent;
+        cursor: pointer;
+        &:hover {
+          .icon {
+            fill: $affirmative-color;
+          }
+          span {
+            color: $affirmative-color;
+          }
+        }
+        span {
+          color: $background-color;
+          font-weight: $medium;
+          @include transition;
+          @include fontsize(14);
+        }
+      }
+      .icon {
+        height: 30px;
+        display: block;
+        margin: 10px auto;
+        fill: $background-color;
+        @include transition;
+      }
+    }
+  }
 }

@@ -16,6 +16,6 @@
     background-color: #1c1f27; }
   :local(.component) ::-webkit-scrollbar {
     width: 6px;
-    background: #F4F4F4; }
+    background: #f4f4f4; }
   :local(.component) ::-webkit-scrollbar-thumb {
     background: #1a1a1a; }

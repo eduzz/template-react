@@ -16,8 +16,8 @@
   justify-content: flex-start;
   flex-wrap: wrap; }
   :local(.component) .upsells-grid .item {
-    width: 250px;
-    border: 1px solid #EEEEEE;
+    swidth: 250px;
+    border: 1px solid #eeeeee;
     position: relative;
     border-radius: 4px;
     overflow: hidden;
@@ -39,7 +39,7 @@
       fill: #b1b1b1;
       transition: all 0.3s ease-in-out; }
     :local(.component) .upsells-grid .settings:hover {
-      background-color: #EEEEEE; }
+      background-color: #eeeeee; }
   :local(.component) .upsells-grid .content {
     padding: 15px 0 15px 15px;
     display: flex;
@@ -48,7 +48,7 @@
     position: relative;
     z-index: 2;
     background: #fff;
-    border-top: 1px solid #EEEEEE; }
+    border-top: 1px solid #eeeeee; }
   :local(.component) .upsells-grid .title {
     margin: 0;
     font-size: 1rem;

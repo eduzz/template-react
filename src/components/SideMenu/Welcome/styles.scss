@@ -1,39 +1,39 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
 
-:local(.component){
-	display:block;
-	width: 100%;
-	padding:20px;
-	display: flex;
-	align-items:center;
-	background: $dark-color;
-	.user-photo{
-		$photo-size: 40px;
-	    display: block;
-	    width: $photo-size;
-	    height: $photo-size;
-	    border-radius:50%;
-	    overflow:hidden;
-	    img{
-	      width: $photo-size;
-	      height: $photo-size;
-	      object-fit:cover;
-	    }
-	  }//end user photo
-	  .user-data{
-	    color:#fff;
-	    padding-left:10px;
-	    .message{
-	      @include fontsize(10);
-	      letter-spacing:0.7px;
-	      text-transform:uppercase;
-	    }
-	    .name{
-	      color:#fff;
-	      @include fontsize(15);
-	      letter-spacing:1px;
-	      margin:2px 0;
-	    }
-	  }    
+:local(.component) {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  background: $dark-color;
+  .user-photo {
+    $photo-size: 40px;
+    display: block;
+    width: $photo-size;
+    height: $photo-size;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      width: $photo-size;
+      height: $photo-size;
+      object-fit: cover;
+    }
+  } //end user photo
+  .user-data {
+    color: #fff;
+    padding-left: 10px;
+    .message {
+      @include fontsize(10);
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+    .name {
+      color: #fff;
+      @include fontsize(15);
+      letter-spacing: 1px;
+      margin: 2px 0;
+    }
+  }
 }

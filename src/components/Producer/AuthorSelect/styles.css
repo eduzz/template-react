@@ -3,3 +3,8 @@
   :local(.component) .add-author .header {
     display: flex;
     justify-content: center; }
+
+:local(.component) .expand-icon {
+  margin-left: auto; }
+  :local(.component) .expand-icon .expanded {
+    transform: rotate(180deg); }

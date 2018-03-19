@@ -9,7 +9,7 @@
   :local(.component) .filesList li:not(:last-child) {
     margin-bottom: 5px; }
   :local(.component) .filesList li:hover {
-    background-color: #EEEEEE; }
+    background-color: #eeeeee; }
   :local(.component) .filesList li svg {
     float: left;
     margin-right: 20px; }
@@ -275,7 +275,7 @@
   border: 1px dashed #383838;
   cursor: pointer; }
   :local(.component) .inputSelect:hover {
-    background-color: #EEEEEE; }
+    background-color: #eeeeee; }
   :local(.component) .inputSelect span {
     font-size: 16px;
     line-height: 100px; }

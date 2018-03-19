@@ -5,13 +5,13 @@
   position: relative;
 }
 
-input[type=range],
-input[type=range] + .thumb {
+input[type='range'],
+input[type='range'] + .thumb {
   @extend .no-select;
   cursor: pointer;
 }
 
-input[type=range] {
+input[type='range'] {
   position: relative;
   background-color: transparent;
   border: none;
@@ -25,7 +25,7 @@ input[type=range] {
   }
 }
 
-input[type=range] + .thumb {
+input[type='range'] + .thumb {
   position: absolute;
   top: 10px;
   left: 0;
@@ -61,17 +61,17 @@ input[type=range] + .thumb {
 }
 
 // WebKit
-input[type=range] {
+input[type='range'] {
   -webkit-appearance: none;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
+input[type='range']::-webkit-slider-runnable-track {
   height: $track-height;
   background: #c2c0c2;
   border: none;
 }
 
-input[type=range]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   border: none;
   height: $range-height;
@@ -80,28 +80,28 @@ input[type=range]::-webkit-slider-thumb {
   background-color: $radio-fill-color;
   transform-origin: 50% 50%;
   margin: -5px 0 0 0;
-  transition: .3s;
+  transition: 0.3s;
 }
 
-input[type=range]:focus::-webkit-slider-runnable-track {
+input[type='range']:focus::-webkit-slider-runnable-track {
   background: #ccc;
 }
 
 // FireFox
-input[type=range] {
+input[type='range'] {
   /* fix for FF unable to apply focus style bug  */
   border: 1px solid white;
 
   /*required for proper track sizing in FF*/
 }
 
-input[type=range]::-moz-range-track {
+input[type='range']::-moz-range-track {
   height: $track-height;
   background: #ddd;
   border: none;
 }
 
-input[type=range]::-moz-range-thumb {
+input[type='range']::-moz-range-thumb {
   border: none;
   height: $range-height;
   width: $range-width;
@@ -111,17 +111,17 @@ input[type=range]::-moz-range-thumb {
 }
 
 // hide the outline behind the border
-input[type=range]:-moz-focusring {
+input[type='range']:-moz-focusring {
   outline: 1px solid #fff;
   outline-offset: -1px;
 }
 
-input[type=range]:focus::-moz-range-track {
+input[type='range']:focus::-moz-range-track {
   background: #ccc;
 }
 
 // IE 10+
-input[type=range]::-ms-track {
+input[type='range']::-ms-track {
   height: $track-height;
 
   // remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead
@@ -135,15 +135,15 @@ input[type=range]::-ms-track {
   color: transparent;
 }
 
-input[type=range]::-ms-fill-lower {
+input[type='range']::-ms-fill-lower {
   background: #777;
 }
 
-input[type=range]::-ms-fill-upper {
+input[type='range']::-ms-fill-upper {
   background: #ddd;
 }
 
-input[type=range]::-ms-thumb {
+input[type='range']::-ms-thumb {
   border: none;
   height: $range-height;
   width: $range-width;
@@ -151,10 +151,10 @@ input[type=range]::-ms-thumb {
   background: $radio-fill-color;
 }
 
-input[type=range]:focus::-ms-fill-lower {
+input[type='range']:focus::-ms-fill-lower {
   background: #888;
 }
 
-input[type=range]:focus::-ms-fill-upper {
+input[type='range']:focus::-ms-fill-upper {
   background: #ccc;
 }

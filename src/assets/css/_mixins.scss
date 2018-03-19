@@ -1,33 +1,33 @@
-@mixin fontsize($size){
+@mixin fontsize($size) {
   $size: $size/16;
-  font-size:#{$size}rem;
+  font-size: #{$size}rem;
 }
-@mixin transition($time:0.3s) {
+@mixin transition($time: 0.3s) {
   transition: all $time ease-in-out;
 }
 
-%page-content{
-  padding-left:250px;
-  >.container{
-    padding:30px 30px 40px 30px;
+%page-content {
+  padding-left: 250px;
+  > .container {
+    padding: 30px 30px 40px 30px;
     min-height: calc(100vh - 60px);
-    position:relative;
+    position: relative;
     width: 100%;
-  	max-width: 100%;
+    max-width: 100%;
   }
-  &+.page-footer{
-    margin-left:250px;
+  & + .page-footer {
+    margin-left: 250px;
   }
 }
 
-%container{
-	  width: 100%;
-  	max-width: 100%;
+%container {
+  width: 100%;
+  max-width: 100%;
 }
 
-%form-section-title{
+%form-section-title {
   @include fontsize(24);
   font-weight: $medium;
-  padding:0 0 15px 0;
-  margin:0;
+  padding: 0 0 15px 0;
+  margin: 0;
 }

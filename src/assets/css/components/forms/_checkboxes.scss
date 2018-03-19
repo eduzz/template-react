@@ -12,15 +12,15 @@ form p:last-child {
 }
 
 /* Remove default checkbox */
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
+[type='checkbox']:not(:checked),
+[type='checkbox']:checked {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
 // Checkbox Styles
-[type="checkbox"] {
+[type='checkbox'] {
   // Text Label Style
   + label {
     position: relative;
@@ -46,7 +46,7 @@ form p:last-child {
     border: 2px solid $radio-empty-color;
     border-radius: 1px;
     margin-top: 2px;
-    transition: .2s;
+    transition: 0.2s;
   }
 
   &:not(.filled-in) + label:after {
@@ -64,12 +64,12 @@ form p:last-child {
     transform: scale(1);
     border: 0;
     border-radius: 50%;
-    box-shadow: 0 0 0 10px rgba(0,0,0,.1);
-    background-color: rgba(0,0,0,.1);
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
   }
 }
 
-[type="checkbox"]:checked {
+[type='checkbox']:checked {
   + label:before {
     top: -4px;
     left: -5px;
@@ -91,8 +91,8 @@ form p:last-child {
 }
 
 /* Indeterminate checkbox */
-[type="checkbox"]:indeterminate {
-  +label:before {
+[type='checkbox']:indeterminate {
+  + label:before {
     top: -11px;
     left: -12px;
     width: 10px;
@@ -114,7 +114,7 @@ form p:last-child {
 }
 
 // Filled in Style
-[type="checkbox"].filled-in {
+[type='checkbox'].filled-in {
   // General
   + label:after {
     border-radius: 2px;
@@ -126,7 +126,8 @@ form p:last-child {
     left: 0;
     position: absolute;
     /* .1s delay is for check animation */
-    transition: border .25s, background-color .25s, width .20s .1s, height .20s .1s, top .20s .1s, left .20s .1s;
+    transition: border 0.25s, background-color 0.25s, width 0.2s 0.1s,
+      height 0.2s 0.1s, top 0.2s 0.1s, left 0.2s 0.1s;
     z-index: 1;
   }
 
@@ -179,7 +180,7 @@ form p:last-child {
   &.tabbed:focus + label:after {
     border-radius: 2px;
     border-color: $radio-empty-color;
-    background-color: rgba(0,0,0,.1);
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &.tabbed:checked:focus + label:after {

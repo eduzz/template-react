@@ -15,7 +15,7 @@
 
 :local(.component) .form-section {
   padding: 20px;
-  border-bottom: 1px solid #EEEEEE; }
+  border-bottom: 1px solid #eeeeee; }
   :local(.component) .form-section .row {
     margin-bottom: 0; }
   :local(.component) .form-section .form-block {
@@ -48,7 +48,8 @@
   border: none;
   border-radius: 3px;
   background-color: #f6f6f6; }
-  :local(.component) .input-img.card-img svg, :local(.component) .input-img.card-img span {
+  :local(.component) .input-img.card-img svg,
+  :local(.component) .input-img.card-img span {
     margin: auto; }
   :local(.component) .input-img.card-img svg {
     margin-bottom: 10px; }
@@ -58,10 +59,10 @@
     object-fit: cover;
     border: none; }
 
-:local(.component) .list-class-type [type="radio"] {
+:local(.component) .list-class-type [type='radio'] {
   display: none;
   opacity: 0; }
-  :local(.component) .list-class-type [type="radio"] + label {
+  :local(.component) .list-class-type [type='radio'] + label {
     transition: all 0.3s ease-in-out;
     width: 130px;
     height: 130px;
@@ -83,22 +84,23 @@
     border-radius: 3px;
     background-color: #f6f6f6;
     border: #f6f6f6 thin solid; }
-    :local(.component) .list-class-type [type="radio"] + label:not(:last-child) {
+    :local(.component) .list-class-type [type='radio'] + label:not(:last-child) {
       margin-right: 10px; }
-    :local(.component) .list-class-type [type="radio"] + label:hover {
+    :local(.component) .list-class-type [type='radio'] + label:hover {
       border-color: #3066d0; }
-    :local(.component) .list-class-type [type="radio"] + label:before, :local(.component) .list-class-type [type="radio"] + label:after {
+    :local(.component) .list-class-type [type='radio'] + label:before, :local(.component) .list-class-type [type='radio'] + label:after {
       display: none; }
-    :local(.component) .list-class-type [type="radio"] + label svg {
+    :local(.component) .list-class-type [type='radio'] + label svg {
       fill: #2f343e; }
-  :local(.component) .list-class-type [type="radio"]:checked + label {
+  :local(.component) .list-class-type [type='radio']:checked + label {
     color: #fff;
     background-color: rgba(53, 78, 126, 0.87);
     border-color: #3066d0; }
-    :local(.component) .list-class-type [type="radio"]:checked + label svg {
+    :local(.component) .list-class-type [type='radio']:checked + label svg {
       fill: #fff; }
 
-:local(.component) .list-class-type svg, :local(.component) .list-class-type span {
+:local(.component) .list-class-type svg,
+:local(.component) .list-class-type span {
   margin: auto; }
 
 :local(.component) .list-class-type svg {
@@ -124,7 +126,9 @@
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center; }
-  :local(.component) .author-item img, :local(.component) .author-item span, :local(.component) .author-item button {
+  :local(.component) .author-item img,
+  :local(.component) .author-item span,
+  :local(.component) .author-item button {
     margin: auto; }
   :local(.component) .author-item img {
     margin-left: 0;
