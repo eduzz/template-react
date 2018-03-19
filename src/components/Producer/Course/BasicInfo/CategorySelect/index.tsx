@@ -27,7 +27,7 @@ class CategorySelect extends Component<IProps> {
       <div className='input-field'>
         <Select
           value={this.props.value}
-          onChange={this.props.onChange}
+          onChange={(event: any) => this.props.onChange(event.target.value, event)}
           fullWidth
         >
           {this.props.categories.map(option => (

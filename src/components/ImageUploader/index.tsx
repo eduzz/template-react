@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Icon from 'components/Icon';
 import { v4 } from 'uuid';
-import { uploadImage } from 'actionCreators/upload';
 import Loading from 'components/Loading';
 
 const styles = require('./styles.css');
 
 interface IProps {
-  uploadImage: any;
   large?: boolean;
-  courseBanner: any;
-  defaultImage?: string;
+  value?: string;
   text?: string;
   icon?: string;
   onChange?: any;
@@ -43,7 +39,7 @@ class ImageUploader extends Component<IProps, IState> {
 
     if (file) {
       reader.onloadend = () => {
-        this.props.uploadImage(reader.result, 'courseBanner');
+        this.props.onChange(reader.result);
 
         this.setState({
           imagePreviewUrl: reader.result
@@ -64,22 +60,18 @@ class ImageUploader extends Component<IProps, IState> {
     return (
       <div className={styles.component}>
         <div
-          className={`input-img ${
-            this.props.large ? 'large-banner' : 'card-img'
-            }`}
+          className={`input-img ${this.props.large ? 'large-banner' : 'card-img'}`}
         >
           <div className='container'>
             <Loading
-              active={
-                !!this.state.imagePreviewUrl && !this.props.courseBanner.url
-              }
+              active={Boolean(this.state.imagePreviewUrl) && !this.props.value}
               absolutePosition={true}
             />
 
             <img
               className='img-preview'
               alt=''
-              src={this.state.imagePreviewUrl || this.props.defaultImage}
+              src={this.state.imagePreviewUrl || this.props.value}
               onClick={this.handleImageClick}
             />
 
@@ -93,11 +85,7 @@ class ImageUploader extends Component<IProps, IState> {
 
             <label
               htmlFor={this.inputFileID}
-              className={
-                this.props.large
-                  ? 'button small soft top-right waves-effect'
-                  : 'input-img card-img'
-              }
+              className={this.props.large ? 'button small soft top-right waves-effect' : 'input-img card-img'}
             >
               <Icon name={this.props.icon} />
               <span>{this.props.text}</span>
@@ -109,14 +97,4 @@ class ImageUploader extends Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  courseBanner: state.upload.courseBanner || {}
-});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  uploadImage(result: string, stateLabel: string) {
-    dispatch(uploadImage(result, stateLabel));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ImageUploader);
+export default ImageUploader;

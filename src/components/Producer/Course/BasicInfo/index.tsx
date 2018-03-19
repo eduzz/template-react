@@ -5,7 +5,8 @@ import CategorySelect from './CategorySelect';
 import AuthorSelect from 'components/Producer/AuthorSelect';
 import ImageUploader from 'components/ImageUploader';
 import { cdn } from 'constants/index';
-import { changeCourseField } from 'actionCreators/course';
+import { changeCourseField, receiveCourseImageCover } from 'actionCreators/course';
+import { uploadImage } from 'actionCreators/upload';
 import TextField from 'material-ui/TextField';
 
 const styles = require('./styles.css');
@@ -14,6 +15,8 @@ interface IProps {
   course: any;
   changeCourseField: any;
   courseID: number | string;
+  uploadImage: any;
+  receiveCourseImageCover: any;
 }
 
 class CourseBasicInfo extends Component<IProps> {
@@ -22,7 +25,7 @@ class CourseBasicInfo extends Component<IProps> {
       this.props.course.customizations &&
       this.props.course.customizations.image_cover &&
       (this.props.course.customizations.image_cover.includes('http')
-        ? this.props.course.image_cover
+        ? this.props.course.customizations.image_cover
         : cdn + this.props.course.customizations.image_cover);
 
     return (
@@ -41,9 +44,11 @@ class CourseBasicInfo extends Component<IProps> {
                 </label>
 
                 <ImageUploader
-                  defaultImage={imageCover}
+                  value={imageCover}
                   onChange={(cover: any) =>
-                    this.props.changeCourseField('image_cover', cover)
+                    this.props.uploadImage(cover).then(
+                      (res: any) => this.props.receiveCourseImageCover(res.data.data.url),
+                    )
                   }
                   large={true}
                   icon='paper'
@@ -59,9 +64,12 @@ class CourseBasicInfo extends Component<IProps> {
               <div className='form-block'>
                 <h3 className='form-section-title'>Detalhes do Curso</h3>
                 <CategorySelect
-                  value={this.props.course.id_category}
-                  onChange={(event: any, value: number) =>
-                    this.props.changeCourseField('id_category', value)
+                  value={this.props.course.category.id}
+                  onChange={(value: number) =>
+                    this.props.changeCourseField('category', {
+                      id: value,
+                      name: this.props.course.category.name,
+                    })
                   }
                 />
 
@@ -80,9 +88,13 @@ class CourseBasicInfo extends Component<IProps> {
               <div className='form-block'>
                 <h3 className='form-section-title'>Autor do Curso</h3>
                 <AuthorSelect
-                  value={this.props.course.id_author}
-                  onChange={(event: any, index: number, value: number) =>
-                    this.props.changeCourseField('id_author', value)
+                  value={this.props.course.author.id}
+                  onChange={(value: number) =>
+                    this.props.changeCourseField('author', {
+                      id: value,
+                      name: this.props.course.author.name,
+                      avatar: this.props.course.author.avatar
+                    })
                   }
                 />
               </div>
@@ -99,7 +111,8 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ changeCourseField }, dispatch),
+  uploadImage,
+  ...bindActionCreators({ changeCourseField, receiveCourseImageCover }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseBasicInfo);

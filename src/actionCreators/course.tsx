@@ -6,12 +6,12 @@ export const cleanCourse = () => ({
 
 const receiveCourse = (course: any) => ({
   type: 'RECEIVE_COURSE',
-  course
+  course,
 });
 
 const receiveCourseError = (err: any) => ({
   type: 'RECEIVE_COURSE_ERROR',
-  err
+  err,
 });
 
 export const fetchCourse = (courseID: number) => (dispatch: Function) => {
@@ -25,18 +25,18 @@ export const fetchCourse = (courseID: number) => (dispatch: Function) => {
 
 const deleteCourseSuccess = (err: any) => ({
   type: 'DELETE_COURSE_SUCCESS',
-  err
+  err,
 });
 
 const deleteCourseError = (err: any) => ({
   type: 'DELETE_COURSE_ERROR',
-  err
+  err,
 });
 
 export const deleteCourse = (courseID: number) => (dispatch: Function) => {
   dispatch({
     type: 'DELETE_COURSE',
-    courseID
+    courseID,
   });
 
   del({ url: '/courses/' + courseID }).then(
@@ -45,16 +45,16 @@ export const deleteCourse = (courseID: number) => (dispatch: Function) => {
   );
 };
 
-export const changeCourseField = (field: string, value: (string | number)) => ({
+export const changeCourseField = (field: string, value: any) => ({
   type: 'CHANGE_COURSE_FIELD',
   field,
-  value
+  value,
 });
 
 export const createCourse = (course: Object) => (dispatch: Function) => {
   dispatch({
     type: 'CREATE_COURSE',
-    course
+    course,
   });
 
   post({ url: '/courses/', data: course }).then(
@@ -66,7 +66,7 @@ export const createCourse = (course: Object) => (dispatch: Function) => {
 export const updateCourse = (course: any) => (dispatch: Function) => {
   dispatch({
     type: 'UPDATE_COURSE',
-    course
+    course,
   });
 
   put({ url: '/courses/' + course.id, data: course }).then(
@@ -74,3 +74,8 @@ export const updateCourse = (course: any) => (dispatch: Function) => {
     err => console.error('course -> ', err)
   );
 };
+
+export const receiveCourseImageCover = (imageCover: string) => ({
+  type: 'RECEIVE_COURSE_IMAGE_COVER',
+  imageCover,
+});

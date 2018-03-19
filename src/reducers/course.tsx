@@ -1,8 +1,12 @@
 const initialState = {
   title: '',
   description: '',
-  id_author: 0,
-  id_category: 130,
+  category: {
+    id: 0,
+  },
+  author: {
+    id: 0,
+  },
   customizations: {
     image_cover: ''
   },
@@ -15,12 +19,11 @@ const course = (state: any = initialState, action: any) => {
       return initialState;
     case 'RECEIVE_COURSE':
       return {
+        ...state,
         ...action.course,
-        id_category: action.course.category.id,
-        id_author: action.course.author.id
       };
     case 'RECEIVE_COURSE_ERROR':
-      return {};
+      return initialState;
     case 'DELETE_COURSE_SUCCESS':
       return {
         ...state,
@@ -31,15 +34,18 @@ const course = (state: any = initialState, action: any) => {
     case 'RECEIVE_AUTHOR':
       return {
         ...state,
-        id_author: action.author.id
+        author: {
+          ...state.author,
+          id: action.author.id,
+        },
       };
-    case 'RECEIVE_IMAGE':
+    case 'RECEIVE_COURSE_IMAGE_COVER':
       return {
         ...state,
         customizations: {
           ...state.customizations,
-          image_cover: action.image.url
-        }
+          image_cover: action.imageCover,
+        },
       };
     case 'CREATE_COURSE':
       return {

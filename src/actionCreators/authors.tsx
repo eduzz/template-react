@@ -6,28 +6,28 @@ export const cleanAuthors = () => ({
 
 const receiveAuthors = (authors: Array<Object>) => ({
   type: 'RECEIVE_AUTHORS',
-  authors
+  authors,
 });
 
 const receiveAuthorsError = (err: any) => ({
   type: 'RECEIVE_AUTHORS_ERROR',
-  err
+  err,
 });
 
 export const fetchAuthors = () => (dispatch: Function) =>
-  get({ url: '/authors' }).then(
+  get({ url: '/authors?page=1&size=9999' }).then(
     res => dispatch(receiveAuthors(res.data.data)),
     err => dispatch(receiveAuthorsError(err))
   );
 
 const receiveAuthor = (author: any) => ({
   type: 'RECEIVE_AUTHOR',
-  author
+  author,
 });
 
 const receiveAuthorError = (err: any) => ({
   type: 'RECEIVE_AUTHOR_ERROR',
-  err
+  err,
 });
 
 export const addAuthor = (name: string) =>

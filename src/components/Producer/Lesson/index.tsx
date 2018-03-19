@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { getLesson, changeLessonField, addLessonFiles, removeLessonFile } from 'actionCreators/lessons';
+import { fetchLesson, changeLessonField, addLessonFiles, removeLessonFile } from 'actionCreators/lessons';
 import ImageUploader from 'components/ImageUploader';
 import Icon from 'components/Icon';
 import AuthorSelect from 'components/Producer/AuthorSelect';
@@ -14,12 +14,12 @@ import Loading from 'components/Loading';
 const styles = require('./styles.css');
 
 interface IProps {
-  getLesson: any;
   lesson: any;
   match: any;
   changeLessonField: any;
   addLessonFiles: any;
   removeLessonFile: any;
+  fetchLesson: any;
 }
 
 class Lesson extends Component<IProps> {
@@ -32,7 +32,7 @@ class Lesson extends Component<IProps> {
   }
 
   componentDidMount() {
-    this.props.getLesson(this.lessonID);
+    this.props.fetchLesson(this.lessonID);
   }
 
   render() {
@@ -98,7 +98,7 @@ class Lesson extends Component<IProps> {
                     </label>
 
                     <ImageUploader
-                      defaultImage={lessonLogo}
+                      value={lessonLogo}
                       // onChange={img => this.props.changeLessonField('image', img)}
                       icon='camera-line'
                       text='Alterar Imagem'
@@ -174,14 +174,14 @@ class Lesson extends Component<IProps> {
 
               <div className='s12 m4 col'>
                 <div className='form-block'>
-                  <div className='author-item'>
+                  {/* <div className='author-item'>
                     <img alt='' src='http://via.placeholder.com/50x50' />
                     <span>Eugênio Pacheco</span>
                     <button type='button'>Remover</button>
-                  </div>
+                  </div> */}
                   <AuthorSelect
                     value={this.props.lesson.id_author}
-                    onChange={(event: any, index: number, value: string | number) =>
+                    onChange={(value: number) =>
                       this.props.changeLessonField('id_author', value)
                     }
                   />
@@ -194,9 +194,7 @@ class Lesson extends Component<IProps> {
             <div className='row'>
               <FileUploader
                 files={this.props.lesson.lesson_files || []}
-                onAdd={(files: any) =>
-                  this.props.addLessonFiles(files, this.props.lesson)
-                }
+                onAdd={(files: any) => this.props.addLessonFiles(files, this.props.lesson)}
                 onRemove={this.props.removeLessonFile}
               />
             </div>
@@ -542,7 +540,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ getLesson, changeLessonField, addLessonFiles, removeLessonFile }, dispatch),
+  ...bindActionCreators({ fetchLesson, changeLessonField, addLessonFiles, removeLessonFile }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Lesson);

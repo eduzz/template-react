@@ -1,18 +1,25 @@
-const lesson = (state: any = {}, action: any) => {
+const initialState = {
+  id_author: 0,
+};
+
+const lesson = (state: any = initialState, action: any) => {
   switch (action.type) {
-    case 'GET_LESSON':
-      return {};
+    case 'CLEAN_LESSON':
+      return initialState;
     case 'RECEIVE_LESSON':
+      const chats = action.lesson.chats || {};
+
       return {
+        ...state,
         ...action.lesson,
         chats: {
-          ...action.lesson.chats,
-          hasjivochat: !!parseInt(action.lesson.chats.hasjivochat, 10),
-          haszopimchat: !!parseInt(action.lesson.chats.haszopimchat, 10),
-          hastawktochat: !!parseInt(action.lesson.chats.hastawktochat, 10),
-          haszendeskchat: !!parseInt(action.lesson.chats.haszendeskchat, 10),
-          haslivechat: !!parseInt(action.lesson.chats.haslivechat, 10),
-          haschatroll: !!parseInt(action.lesson.chats.haschatroll, 10)
+          ...chats,
+          hasjivochat: Boolean(parseInt(chats.hasjivochat, 10)),
+          haszopimchat: Boolean(parseInt(chats.haszopimchat, 10)),
+          hastawktochat: Boolean(parseInt(chats.hastawktochat, 10)),
+          haszendeskchat: Boolean(parseInt(chats.haszendeskchat, 10)),
+          haslivechat: Boolean(parseInt(chats.haslivechat, 10)),
+          haschatroll: Boolean(parseInt(chats.haschatroll, 10)),
         }
       };
     case 'RECEIVE_AUTHOR':
@@ -21,7 +28,7 @@ const lesson = (state: any = {}, action: any) => {
         id_author: action.author.id
       };
     case 'RECEIVE_LESSON_ERROR':
-      return {};
+      return initialState;
     case 'CHANGE_LESSON_FIELD':
       return {
         ...state,

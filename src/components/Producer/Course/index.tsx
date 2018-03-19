@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { cleanCourse, fetchCourse, updateCourse, createCourse, changeCourseField } from 'actionCreators/course';
+import { cleanModules } from 'actionCreators/modules';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import BasicInfo from './BasicInfo';
 import Advanced from './Advanced';
@@ -35,6 +36,7 @@ interface IProps {
   updateCourse: any;
   createCourse: any;
   changeCourseField: any;
+  cleanModules: any;
 }
 
 interface IState {
@@ -56,6 +58,7 @@ class Course extends Component<IProps, IState> {
 
   componentWillUnmount() {
     this.props.cleanCourse();
+    this.props.cleanModules();
   }
 
   componentDidMount() {
@@ -155,7 +158,7 @@ const mapStateToProps = (state: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ cleanCourse, fetchCourse, updateCourse, createCourse, changeCourseField }, dispatch),
+  ...bindActionCreators({ cleanCourse, fetchCourse, updateCourse, createCourse, changeCourseField, cleanModules }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Course);
