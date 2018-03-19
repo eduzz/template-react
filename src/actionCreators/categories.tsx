@@ -17,7 +17,7 @@ const receiveCategoriesError = (err: any) => ({
 export const fetchCategories = () => (dispatch: Function) => {
   dispatch(cleanCategories());
 
-  get({ url: '/categories?page=1&size=9999' }).then(
+  get({ url: '/categories' }).then(
     res => {
       dispatch(receiveCategories(res.data.data));
     },

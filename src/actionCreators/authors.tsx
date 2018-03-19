@@ -15,7 +15,7 @@ const receiveAuthorsError = (err: any) => ({
 });
 
 export const fetchAuthors = () => (dispatch: Function) =>
-  get({ url: '/authors?page=1&size=9999' }).then(
+  get({ url: '/authors' }).then(
     res => dispatch(receiveAuthors(res.data.data)),
     err => dispatch(receiveAuthorsError(err))
   );
