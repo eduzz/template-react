@@ -79,3 +79,7 @@ export const receiveCourseImageCover = (imageCover: string) => ({
   type: 'RECEIVE_COURSE_IMAGE_COVER',
   imageCover,
 });
+
+export const cleanCourseImageCover = () => ({
+  type: 'CLEAN_COURSE_IMAGE_COVER',
+});

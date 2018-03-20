@@ -8,7 +8,7 @@ const initialState = {
     id: 0,
   },
   customizations: {
-    image_cover: ''
+    image_cover: '',
   },
   published: 1
 };
@@ -45,6 +45,14 @@ const course = (state: any = initialState, action: any) => {
         customizations: {
           ...state.customizations,
           image_cover: action.imageCover,
+        },
+      };
+    case 'CLEAN_COURSE_IMAGE_COVER':
+      return {
+        ...state,
+        customizations: {
+          ...state.customizations,
+          image_cover: '',
         },
       };
     case 'CREATE_COURSE':

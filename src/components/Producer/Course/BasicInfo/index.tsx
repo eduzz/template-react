@@ -5,7 +5,7 @@ import CategorySelect from './CategorySelect';
 import AuthorSelect from 'components/Producer/AuthorSelect';
 import ImageUploader from 'components/ImageUploader';
 import { cdn } from 'constants/index';
-import { changeCourseField, receiveCourseImageCover } from 'actionCreators/course';
+import { changeCourseField, receiveCourseImageCover, cleanCourseImageCover } from 'actionCreators/course';
 import { uploadImage } from 'actionCreators/upload';
 import TextField from 'material-ui/TextField';
 
@@ -17,6 +17,7 @@ interface IProps {
   courseID: number | string;
   uploadImage: any;
   receiveCourseImageCover: any;
+  cleanCourseImageCover: any;
 }
 
 class CourseBasicInfo extends Component<IProps> {
@@ -45,11 +46,12 @@ class CourseBasicInfo extends Component<IProps> {
 
                 <ImageUploader
                   value={imageCover}
-                  onChange={(cover: any) =>
+                  onChange={(cover: any) => {
+                    this.props.cleanCourseImageCover();
                     this.props.uploadImage(cover).then(
                       (res: any) => this.props.receiveCourseImageCover(res.data.data.url),
-                    )
-                  }
+                    );
+                  }}
                   large={true}
                   icon='paper'
                   text='Alterar Plano de fundo'
@@ -112,7 +114,7 @@ const mapStateToProps = (state: any) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   uploadImage,
-  ...bindActionCreators({ changeCourseField, receiveCourseImageCover }, dispatch),
+  ...bindActionCreators({ changeCourseField, receiveCourseImageCover, cleanCourseImageCover }, dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseBasicInfo);
