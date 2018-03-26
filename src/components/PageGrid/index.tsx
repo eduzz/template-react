@@ -15,7 +15,7 @@ class PageGrid extends React.Component<IProps> {
 
           return (
             <Fragment key={index}>
-              <Grid item xs={component.size} style={component.style}>
+              <Grid item {...component.size} style={component.style}>
                 {Component &&
                   <Component {...component.props} />
                 }
