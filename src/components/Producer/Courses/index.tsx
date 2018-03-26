@@ -1,6 +1,6 @@
 import React from 'react';
 import PageHeader from './PageHeader';
-import VisibleCourseCardGrid from './VisibleCourseCardGrid';
+import CourseCardGrid from 'components/CourseCardGrid';
 import CoursesSearch from './CoursesSearch';
 import CoursesFilters from './CoursesFilters';
 
@@ -14,7 +14,7 @@ const courses = () => (
         <CoursesSearch />
         <CoursesFilters />
       </div>
-      <VisibleCourseCardGrid />
+      <CourseCardGrid options={{ url: '/courses' }} />
     </div>
   </section>
 );

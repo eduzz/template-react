@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@types/react-redux": "^5.0.15",
+    "@types/react-slick": "^0.15.1",
     "@types/redux": "^3.6.0",
     "@types/uuid": "^3.4.3",
     "axios": "0.18.0",
@@ -29,9 +30,10 @@
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.13.0",
-    "react-slick": "^0.15.4",
+    "react-slick": "^0.22.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
+    "slick-carousel": "^1.8.1",
     "tslib": "1.9.0",
     "validatorjs": "3.14.2"
   },
