@@ -41,7 +41,10 @@ class Course extends Component<any, any> {
   render() {
     return (
       <section className='student-course-content'>
-        <PageGrid layouts={this.state.layouts} />
+        <PageGrid
+          layouts={JSON.parse(localStorage.getItem('courseLayouts')) || this.state.layouts}
+          onChangeLayout={(layouts: any) => localStorage.setItem('courseLayouts', JSON.stringify(layouts))}
+        />
       </section>
     );
   }

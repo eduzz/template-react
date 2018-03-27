@@ -5,10 +5,12 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 interface IProps {
   layouts: any;
+  onChangeLayout?: any;
 }
 
 interface IState {
   layouts: any;
+  breakpoint: string;
 }
 
 class PageGrid extends React.Component<IProps, IState> {
@@ -17,15 +19,32 @@ class PageGrid extends React.Component<IProps, IState> {
 
     this.state = {
       layouts: this.props.layouts,
+      breakpoint: 'lg',
     };
   }
 
   handleLayoutChange = (currentLayout: any, allLayouts: any) => {
-    console.log(currentLayout, allLayouts);
+    const layouts = this.state.layouts[this.state.breakpoint].map((layout: any, i: number) => {
+      const newLayout = allLayouts[this.state.breakpoint][i];
+
+      return {
+        ...layout,
+        h: newLayout.h,
+        w: newLayout.w,
+        x: newLayout.x,
+        y: newLayout.y,
+      };
+    });
+
+    this.props.onChangeLayout({
+      [this.state.breakpoint]: layouts,
+    });
   }
 
   handleBreakpointChange = (newBreakpoint: any) => {
-    console.log(newBreakpoint);
+    this.setState({
+      breakpoint: newBreakpoint,
+    });
   }
 
   render() {
@@ -37,18 +56,21 @@ class PageGrid extends React.Component<IProps, IState> {
         onBreakpointChange={this.handleBreakpointChange}
         rowHeight={1}
         containerPadding={[0, 0]}
+        measureBeforeMount={true}
       >
-        {this.props.layouts && this.props.layouts.lg.map((component: any, index: number) => {
-          const Component = components[component.type];
+        {this.props.layouts &&
+          this.props.layouts[this.state.breakpoint] &&
+          this.props.layouts[this.state.breakpoint].map((component: any, index: number) => {
+            const Component = components[component.type];
 
-          return (
-            <div key={index}>
-              {Component &&
-                <Component {...component.props} />
-              }
-            </div>
-          );
-        })}
+            return (
+              <div key={index}>
+                {Component &&
+                  <Component {...component.props} />
+                }
+              </div>
+            );
+          })}
       </ResponsiveReactGridLayout>
     );
   }
