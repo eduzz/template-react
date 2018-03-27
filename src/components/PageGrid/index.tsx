@@ -36,6 +36,7 @@ class PageGrid extends React.Component<IProps, IState> {
         onLayoutChange={this.handleLayoutChange}
         onBreakpointChange={this.handleBreakpointChange}
         rowHeight={1}
+        containerPadding={[0, 0]}
       >
         {this.props.layouts && this.props.layouts.lg.map((component: any, index: number) => {
           const Component = components[component.type];
