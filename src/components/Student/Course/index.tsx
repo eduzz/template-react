@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PageGrid from 'components/PageGrid';
 
 class Course extends Component<any, any> {
@@ -7,20 +6,40 @@ class Course extends Component<any, any> {
     super(props);
 
     this.state = {
-      components: [],
+      layouts: {
+        lg: [{
+          type: 'CourseBanner',
+          i: '0',
+          w: 12,
+          h: 40,
+          x: 0,
+          y: 0,
+        }, {
+          type: 'ModuleList',
+          props: {
+            courseID: 3231,
+          },
+          i: '1',
+          w: 8,
+          h: 27,
+          x: 1,
+          y: 40,
+        }, {
+          type: 'UpsellCard',
+          i: '2',
+          w: 2,
+          h: 36,
+          x: 9,
+          y: 40,
+        }]
+      }
     };
-  }
-
-  async componentDidMount() {
-    axios.get('https://nutror-mock-server.herokuapp.com/grid/course').then(
-      res => this.setState({ components: res.data })
-    );
   }
 
   render() {
     return (
       <section className='student-course-content'>
-        <PageGrid components={this.state.components} />
+        <PageGrid layouts={this.state.layouts} />
       </section>
     );
   }

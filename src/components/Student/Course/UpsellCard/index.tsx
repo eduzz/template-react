@@ -1,7 +1,7 @@
 import React from 'react';
 
 const UpsellCard = () => (
-  <div className='upsell-card'>
+  <div className='upsell-card' >
     <img
       src='https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg'
       alt=''
