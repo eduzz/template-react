@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
 
 class Courses extends Component<any, any> {
@@ -45,10 +46,19 @@ class Courses extends Component<any, any> {
   render() {
     return (
       <section className='student-content'>
-        <PageGrid layouts={this.state.layouts} />
+        <PageGrid
+          layouts={JSON.parse(localStorage.getItem('coursesLayouts')) || this.state.layouts}
+          onChangeLayout={(layouts: any) => localStorage.setItem('coursesLayouts', JSON.stringify(layouts))}
+          isDraggable={this.props.pageGrid.enabled}
+          isResizable={this.props.pageGrid.enabled}
+        />
       </section>
     );
   }
 }
 
-export default Courses;
+const mapStateToProps = (state: any) => ({
+  pageGrid: state.pageGrid,
+});
+
+export default connect(mapStateToProps)(Courses);

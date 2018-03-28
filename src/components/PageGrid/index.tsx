@@ -6,6 +6,8 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 interface IProps {
   layouts: any;
   onChangeLayout?: any;
+  isDraggable?: boolean;
+  isResizable?: boolean;
 }
 
 interface IState {
@@ -24,21 +26,23 @@ class PageGrid extends React.Component<IProps, IState> {
   }
 
   handleLayoutChange = (currentLayout: any, allLayouts: any) => {
-    const layouts = this.state.layouts[this.state.breakpoint].map((layout: any, i: number) => {
-      const newLayout = allLayouts[this.state.breakpoint][i];
+    if (this.props.onChangeLayout) {
+      const layouts = this.state.layouts[this.state.breakpoint].map((layout: any, i: number) => {
+        const newLayout = allLayouts[this.state.breakpoint][i];
 
-      return {
-        ...layout,
-        h: newLayout.h,
-        w: newLayout.w,
-        x: newLayout.x,
-        y: newLayout.y,
-      };
-    });
+        return {
+          ...layout,
+          h: newLayout.h,
+          w: newLayout.w,
+          x: newLayout.x,
+          y: newLayout.y,
+        };
+      });
 
-    this.props.onChangeLayout({
-      [this.state.breakpoint]: layouts,
-    });
+      this.props.onChangeLayout({
+        [this.state.breakpoint]: layouts,
+      });
+    }
   }
 
   handleBreakpointChange = (newBreakpoint: any) => {
@@ -57,6 +61,8 @@ class PageGrid extends React.Component<IProps, IState> {
         rowHeight={1}
         containerPadding={[0, 0]}
         measureBeforeMount={true}
+        isDraggable={this.props.isDraggable}
+        isResizable={this.props.isResizable}
       >
         {this.props.layouts &&
           this.props.layouts[this.state.breakpoint] &&

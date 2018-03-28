@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import Slider from 'react-slick';
+import { fetchHighlights } from 'actionCreators/highlights';
+import { Link } from 'react-router-dom';
+import { cdn } from 'constants/index';
 
 function SamplePrevArrow(props: any) {
   const { className, onClick } = props;
@@ -16,6 +20,7 @@ function SamplePrevArrow(props: any) {
     </div>
   );
 }
+
 function SampleNextArrow(props: any) {
   const { className, onClick } = props;
   return (
@@ -26,141 +31,64 @@ function SampleNextArrow(props: any) {
     </div>
   );
 }
-class SimpleSlider extends Component {
-  render() {
-    let settings = {
-      dots: false,
-      infinite: false,
-      speed: 500,
-      slidesToShow: 4,
-      adaptiveHeight: true,
-      slidesToScroll: 1,
-      prevArrow: <SamplePrevArrow />,
-      nextArrow: <SampleNextArrow />
+
+interface IProps {
+  highlights: any;
+  fetchHighlights: any;
+}
+
+interface IState {
+  settings: any;
+}
+
+class Carousel extends Component<IProps, IState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      settings: {
+        dots: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        adaptiveHeight: true,
+        slidesToScroll: 1,
+        prevArrow: <SamplePrevArrow />,
+        nextArrow: <SampleNextArrow />
+      }
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchHighlights();
+  }
+
+  render() {
     return (
-      <Slider {...settings} className='featured-carousel'>
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Curso de Photoshop</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag dentro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
+      <Slider {...this.state.settings} className='featured-carousel'>
+        {this.props.highlights.map((highlight: any) =>
+          <div key={highlight.id} className='featured-item'>
+            <div className='content'>
+              <h3 className='item-title'>{highlight.title}</h3>
+              <p className='item-content'>Mussum Ipsum, cacilds vidis litro abertis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet.</p>
+              <Link to={`courses/${highlight.id}`} className='button outline'>
+                <span>Acessar</span>
+              </Link>
+            </div>
+            <img alt='' src={highlight.customizations && cdn + highlight.customizations.avatar} />
           </div>
-          <img
-            alt=''
-            src='https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg'
-          />
-        </div>
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Curso de Ilustracao</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag dentro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
-          </div>
-          <img
-            alt=''
-            src='https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg'
-          />
-        </div>
-
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Paisagens dahora paaaaakas</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag dentro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
-          </div>
-          <img
-            alt=''
-            src='https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg'
-          />
-        </div>
-
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Curso de Ilustracao</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag dentro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
-          </div>
-          <img
-            alt=''
-            src='https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg'
-          />
-        </div>
-
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Paisagens dahora paaaaakas</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag dentro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
-          </div>
-          <img
-            alt=''
-            src='https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg'
-          />
-        </div>
-
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Curso de Ilustracao</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag dentro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
-          </div>
-          <img
-            alt=''
-            src='https://cdn.pixabay.com/photo/2014/07/27/13/49/tree-402953__340.jpg'
-          />
-        </div>
-
-        <div className='featured-item'>
-          <div className='content'>
-            <h3 className='item-title'>Paisagens dahora paaaaakas</h3>
-            <p className='item-content'>
-              Este Destaque é muito importante para testar o layout e ver se nao
-              quebra nenhuma tag denimport PageGrid from '../../PageGrid/index';
-              tro dos items do carousel
-            </p>
-            <a className='button outline'>
-              <span>Acessar</span>
-            </a>
-          </div>
-          <img
-            alt=''
-            src='https://img.elo7.com.br/product/original/115E580/painel-paisagem-g-frete-gratis-decoracao-de-festa.jpg'
-          />
-        </div>
+        )}
       </Slider>
     );
   }
 }
 
-export default SimpleSlider;
+const mapStateToProps = (state: any) => ({
+  highlights: state.courses,
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  ...bindActionCreators({ fetchHighlights }, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Carousel);
