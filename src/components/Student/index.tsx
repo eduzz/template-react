@@ -13,7 +13,7 @@ const student = () => (
     <Switch>
       <Redirect exact from='/student' to='/student/courses' />
       <Route exact path='/student/courses' component={Courses} />
-      <Route exact path='/student/courses/:courseId' component={Course} />
+      <Route exact path='/student/courses/:courseID' component={Course} />
       {/* <Route exact path='/student/courses/lesson/:lessonId' component={StudentLesson} /> */}
     </Switch>
 
