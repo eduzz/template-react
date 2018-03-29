@@ -16,28 +16,28 @@ class Courses extends Component<any, any> {
           maxH: 24,
           minH: 24,
           x: 0,
-          y: 0,
+          y: 0
         }, {
           type: 'CoursesSearch',
           i: '1',
-          w: 12,
+          w: 8,
           h: 7,
           maxH: 7,
           minH: 7,
-          x: 1,
-          y: 3,
+          x: 2,
+          y: 24
         }, {
           type: 'CourseCardGrid',
           props: {
             options: {
               url: '/user/courses?page=1&size=9999',
-            },
+            }
           },
           i: '2',
           w: 12,
-          h: 160,
-          x: 1,
-          y: 5,
+          h: 31,
+          x: 0,
+          y: 31
         }]
       }
     };
