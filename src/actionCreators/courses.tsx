@@ -14,11 +14,15 @@ const cleanCourses = () => ({
   type: 'CLEAN_COURSES'
 });
 
-export const fetchCourses = () => (dispatch: Function) => {
-  dispatch(cleanCourses());
+export const fetchCourses = (options: any) =>
+  async (dispatch: Function) => {
+    dispatch(cleanCourses());
 
-  return get({ url: '/courses?page=1&size=9999' }).then(
-    res => dispatch(receiveCourses(res.data.data)),
-    err => dispatch(receiveCoursesError(err))
-  );
-};
+    try {
+      const response = await get({ ...options });
+
+      dispatch(receiveCourses(response.data.data));
+    } catch (error) {
+      dispatch(receiveCoursesError(error));
+    }
+  };

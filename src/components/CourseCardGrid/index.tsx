@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import CourseCardGrid from './CourseCardGrid';
 import { connect } from 'react-redux';
+import CourseCard from './CourseCard';
 import { fetchCourses } from 'actionCreators/courses';
 import { getVisibleCourses } from 'reducers';
 import Loading from 'components/Loading';
 
+const styles = require('./styles.css');
+
 interface IProps {
   fetchCourses: any;
   courses: any;
+  options: any;
 }
 
-class VisibleCourseCardGrid extends Component<IProps> {
+class CourseCardGrid extends Component<IProps> {
   componentDidMount() {
-    this.props.fetchCourses();
+    this.props.fetchCourses(this.props.options);
   }
 
   render() {
     return (
-      <div>
+      <div className={styles.component}>
         <Loading active={!this.props.courses.length} />
-        <CourseCardGrid courses={this.props.courses} />
+
+        {this.props.courses.map((course: any) =>
+          <CourseCard key={course.id} data={course} />
+        )}
       </div>
     );
   }
@@ -38,4 +44,4 @@ const mapDispatchToProps = (dispatch: any) => ({
   ...bindActionCreators({ fetchCourses }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VisibleCourseCardGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(CourseCardGrid);

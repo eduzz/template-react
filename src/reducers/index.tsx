@@ -9,6 +9,8 @@ import authors from './authors';
 import modules from './modules';
 import upload from './upload';
 import lesson from './lesson';
+import pageGrid from './pageGrid';
+import highlights from './highlights';
 
 const nutrorApp = combineReducers({
   courses,
@@ -20,7 +22,9 @@ const nutrorApp = combineReducers({
   authors,
   modules,
   upload,
-  lesson
+  lesson,
+  pageGrid,
+  highlights
 });
 
 export default nutrorApp;

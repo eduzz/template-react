@@ -63,6 +63,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { logout } from 'actionCreators/auth';
+import { enablePageGrid } from 'actionCreators/pageGrid';
 
 const styles = require('./styles.css');
 
@@ -70,6 +71,7 @@ interface IProps {
   onEdit: any;
   onDelete: any;
   logout: any;
+  enablePageGrid: any;
 }
 
 class Options extends Component<IProps> {
@@ -92,6 +94,11 @@ class Options extends Component<IProps> {
   handleLogout = () => {
     this.handleClose();
     this.props.logout();
+  }
+
+  handleLayoutEdit = () => {
+    this.handleClose();
+    this.props.enablePageGrid();
   }
 
   render() {
@@ -117,6 +124,7 @@ class Options extends Component<IProps> {
         >
           <MenuItem>Meus Dados</MenuItem>
           <MenuItem>Meus Certificados</MenuItem>
+          <MenuItem onClick={this.handleLayoutEdit}>Editar Layout</MenuItem>
           <MenuItem onClick={this.handleLogout}>Sair</MenuItem>
         </Menu>
       </div>
@@ -125,7 +133,7 @@ class Options extends Component<IProps> {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ logout }, dispatch),
+  ...bindActionCreators({ logout, enablePageGrid }, dispatch),
 });
 
 export default connect(undefined, mapDispatchToProps)(Options);
