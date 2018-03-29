@@ -37,40 +37,30 @@ interface IProps {
   fetchHighlights: any;
 }
 
-interface IState {
-  settings: any;
-}
-
-class Carousel extends Component<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      settings: {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        adaptiveHeight: true,
-        slidesToScroll: 1,
-        prevArrow: <SamplePrevArrow />,
-        nextArrow: <SampleNextArrow />
-      }
-    };
-  }
-
+class Carousel extends Component<IProps> {
   componentDidMount() {
     this.props.fetchHighlights();
   }
 
   render() {
+    const settings = {
+      dots: false,
+      infinite: false,
+      speed: 500,
+      slidesToShow: this.props.highlights.length < 4 ? this.props.highlights.length : 4,
+      adaptiveHeight: true,
+      slidesToScroll: 1,
+      prevArrow: <SamplePrevArrow />,
+      nextArrow: <SampleNextArrow />
+    };
+
     return (
-      <Slider {...this.state.settings} className='featured-carousel'>
+      <Slider {...settings} className='featured-carousel'>
         {this.props.highlights.map((highlight: any) =>
           <div key={highlight.id} className='featured-item'>
             <div className='content'>
               <h3 className='item-title'>{highlight.title}</h3>
-              <p className='item-content'>Mussum Ipsum, cacilds vidis litro abertis. Nullam volutpat risus nec leo commodo, ut interdum diam laoreet.</p>
+              <p className='item-content'>{highlight.description}</p>
               <Link to={`courses/${highlight.id}`} className='button outline'>
                 <span>Acessar</span>
               </Link>
@@ -84,7 +74,7 @@ class Carousel extends Component<IProps, IState> {
 }
 
 const mapStateToProps = (state: any) => ({
-  highlights: state.courses,
+  highlights: state.highlights,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
