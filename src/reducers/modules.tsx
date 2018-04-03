@@ -2,12 +2,9 @@ const modules = (state: any = [], action: any) => {
   switch (action.type) {
     case 'RECEIVE_MODULES':
       return [...action.modules];
-    case 'RECEIVE_MODULES_ERROR':
-      return [];
     case 'CLEAN_MODULES':
       return [];
     case 'RECEIVE_MODULE_LESSONS':
-    case 'RECEIVE_MODULE_LESSONS_ERROR':
       return lessons(state, action);
     case 'ADD_MODULE':
       return [...state, {}];
@@ -34,8 +31,6 @@ const modules = (state: any = [], action: any) => {
 
       return [...modules];
     }
-    case 'RECEIVE_MODULE_ERROR':
-      return [...state];
     default:
       return state;
   }
@@ -55,8 +50,6 @@ const lessons = (state: any = [], action: any) => {
       });
 
       return [...modules];
-    case 'RECEIVE_MODULE_LESSONS_ERROR':
-      return [...state];
     default:
       return state;
   }

@@ -52,9 +52,9 @@ class CourseBanner extends Component<IProps> {
               <div className='row'>
                 <div className='col s12 m6 l3'>
                   <div className='course-progress'>
-                    <label>Progresso: 20%</label>
+                    <label>Progresso: {parseInt(this.props.course.progress || 0)}%</label>
                     <div className='progress-bar'>
-                      <span style={{ width: '40%' }} />
+                      <span style={{ width: this.props.course.progress || 0 + '%' }} />
                     </div>
                   </div>
                 </div>

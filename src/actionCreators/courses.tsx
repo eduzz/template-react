@@ -5,11 +5,6 @@ const receiveCourses = (courses: Array<Object>) => ({
   courses
 });
 
-const receiveCoursesError = (err: any) => ({
-  type: 'RECEIVE_COURSES_ERROR',
-  err
-});
-
 const cleanCourses = () => ({
   type: 'CLEAN_COURSES'
 });
@@ -19,7 +14,6 @@ export const fetchCourses = (type: string) =>
     dispatch(cleanCourses());
 
     get({ url: type === 'producer' ? '/courses' : '/user/courses' }).then(
-      res => dispatch(receiveCourses(res.data.data)),
-      err => dispatch(receiveCoursesError(err)),
+      res => dispatch(receiveCourses(res.data.data))
     );
   };

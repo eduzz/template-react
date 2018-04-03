@@ -9,20 +9,10 @@ const receiveCategories = (categories: Array<Object>) => ({
   categories
 });
 
-const receiveCategoriesError = (err: any) => ({
-  type: 'RECEIVE_CATEGORIES_ERROR',
-  err
-});
-
 export const fetchCategories = () => (dispatch: Function) => {
   dispatch(cleanCategories());
 
   get({ url: '/categories' }).then(
-    res => {
-      dispatch(receiveCategories(res.data.data));
-    },
-    err => {
-      dispatch(receiveCategoriesError(err));
-    }
+    res => dispatch(receiveCategories(res.data.data))
   );
 };

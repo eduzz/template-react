@@ -27,8 +27,6 @@ const lesson = (state: any = initialState, action: any) => {
         ...state,
         id_author: action.author.id
       };
-    case 'RECEIVE_LESSON_ERROR':
-      return initialState;
     case 'CHANGE_LESSON_FIELD':
       return {
         ...state,

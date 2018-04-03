@@ -22,15 +22,11 @@ const course = (state: any = initialState, action: any) => {
         ...state,
         ...action.course,
       };
-    case 'RECEIVE_COURSE_ERROR':
-      return initialState;
     case 'DELETE_COURSE_SUCCESS':
       return {
         ...state,
         isDeleted: true
       };
-    case 'DELETE_COURSE_ERROR':
-      return state;
     case 'RECEIVE_AUTHOR':
       return {
         ...state,
@@ -69,6 +65,11 @@ const course = (state: any = initialState, action: any) => {
       return {
         ...state,
         [action.field]: action.value
+      };
+    case 'RECEIVE_COURSE_PROGRESS':
+      return {
+        ...state,
+        progress: action.progress,
       };
     default:
       return state;

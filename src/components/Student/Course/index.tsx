@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
-import { fetchCourse } from 'actionCreators/course';
+import { fetchCourse, fetchCourseProgress } from 'actionCreators/course';
 
 interface IProps {
   fetchCourse: any;
+  fetchCourseProgress: any;
   match: any;
   pageGrid: any;
 }
@@ -21,6 +22,7 @@ class Course extends Component<IProps> {
 
   componentDidMount() {
     this.props.fetchCourse(this.courseID);
+    this.props.fetchCourseProgress(this.courseID);
   }
 
   render() {
@@ -71,4 +73,4 @@ const mapStateToProps = (state: any) => ({
   pageGrid: state.pageGrid,
 });
 
-export default connect(mapStateToProps, { fetchCourse })(Course);
+export default connect(mapStateToProps, { fetchCourse, fetchCourseProgress })(Course);

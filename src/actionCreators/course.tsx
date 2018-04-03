@@ -1,42 +1,38 @@
 import { get, put, post, del } from 'agent';
 
-export const cleanCourse = () => ({
-  type: 'CLEAN_COURSE'
-});
-
 const receiveCourse = (course: any) => ({
   type: 'RECEIVE_COURSE',
   course,
 });
 
-const receiveCourseError = (err: any) => ({
-  type: 'RECEIVE_COURSE_ERROR',
-  err,
+const deleteCourseSuccess = (res: any) => ({
+  type: 'DELETE_COURSE_SUCCESS',
+  res,
+});
+
+const receiveCourseProgress = (progress: number) => ({
+  type: 'RECEIVE_COURSE_PROGRESS',
+  progress,
+});
+
+export const cleanCourse = () => ({
+  type: 'CLEAN_COURSE'
 });
 
 export const fetchCourse = (courseID: number) => (dispatch: Function) => {
   dispatch(cleanCourse());
 
   get({ url: '/learner/course/' + courseID }).then(
-    res => dispatch(receiveCourse(res.data.data)),
-    err => dispatch(receiveCourseError(err))
+    res => dispatch(receiveCourse(res.data.data))
   );
 };
 
-// export const fetchCourseProgress = (courseID: number) =>
-//   (dispatch: Function) => {
-//     get({ url: ''})
-//   };
-
-const deleteCourseSuccess = (err: any) => ({
-  type: 'DELETE_COURSE_SUCCESS',
-  err,
-});
-
-const deleteCourseError = (err: any) => ({
-  type: 'DELETE_COURSE_ERROR',
-  err,
-});
+export const fetchCourseProgress = (courseID: number) =>
+  (dispatch: Function) => {
+    get({ url: '/learner/course/' + courseID + '/progress' }).then(
+      res => dispatch(receiveCourseProgress(res.data.data.progress))
+    );
+  };
 
 export const deleteCourse = (courseID: number) => (dispatch: Function) => {
   dispatch({
@@ -45,8 +41,7 @@ export const deleteCourse = (courseID: number) => (dispatch: Function) => {
   });
 
   del({ url: '/courses/' + courseID }).then(
-    res => dispatch(deleteCourseSuccess(res)),
-    err => dispatch(deleteCourseError(err))
+    res => dispatch(deleteCourseSuccess(res))
   );
 };
 
@@ -63,8 +58,7 @@ export const createCourse = (course: Object) => (dispatch: Function) => {
   });
 
   post({ url: '/courses/', data: course }).then(
-    res => console.log('course -> ', res.data.data),
-    err => console.error('course -> ', err)
+    res => console.log('course -> ', res.data.data)
   );
 };
 
@@ -75,8 +69,7 @@ export const updateCourse = (course: any) => (dispatch: Function) => {
   });
 
   put({ url: '/courses/' + course.id, data: course }).then(
-    res => console.log('course -> ', res.data.data),
-    err => console.error('course -> ', err)
+    res => console.log('course -> ', res.data.data)
   );
 };
 

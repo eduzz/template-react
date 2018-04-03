@@ -9,15 +9,9 @@ const receiveAuthors = (authors: Array<Object>) => ({
   authors,
 });
 
-const receiveAuthorsError = (err: any) => ({
-  type: 'RECEIVE_AUTHORS_ERROR',
-  err,
-});
-
 export const fetchAuthors = () => (dispatch: Function) =>
   get({ url: '/authors' }).then(
-    res => dispatch(receiveAuthors(res.data.data)),
-    err => dispatch(receiveAuthorsError(err))
+    res => dispatch(receiveAuthors(res.data.data))
   );
 
 const receiveAuthor = (author: any) => ({
@@ -25,19 +19,9 @@ const receiveAuthor = (author: any) => ({
   author,
 });
 
-const receiveAuthorError = (err: any) => ({
-  type: 'RECEIVE_AUTHOR_ERROR',
-  err,
-});
-
 export const addAuthor = (name: string) =>
   (dispatch: any) => {
     post({ url: '/authors', data: { name, description: 'test', avatar: 'test' } }).then(
-      res => {
-        dispatch(receiveAuthor(res.data.data));
-      },
-      err => {
-        dispatch(receiveAuthorError(err));
-      }
+      res => dispatch(receiveAuthor(res.data.data))
     );
   };
