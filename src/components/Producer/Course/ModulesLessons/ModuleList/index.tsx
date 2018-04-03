@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ModuleCard from './ModuleCard';
 import Loading from 'components/Loading';
@@ -247,8 +246,14 @@ const mapStateToProps = (state: any) => ({
   modules: state.modules
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ fetchModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModuleList);
+export default connect(mapStateToProps, {
+  fetchModules,
+  fetchModuleLessons,
+  addModule,
+  postModule,
+  editModulePersist,
+  removeModule,
+  deleteModule,
+  deleteModulePersist,
+  deleteModuleUndo
+})(ModuleList);

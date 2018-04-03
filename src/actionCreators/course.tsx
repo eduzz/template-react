@@ -17,11 +17,16 @@ const receiveCourseError = (err: any) => ({
 export const fetchCourse = (courseID: number) => (dispatch: Function) => {
   dispatch(cleanCourse());
 
-  get({ url: '/courses/' + courseID }).then(
+  get({ url: '/learner/course/' + courseID }).then(
     res => dispatch(receiveCourse(res.data.data)),
     err => dispatch(receiveCourseError(err))
   );
 };
+
+// export const fetchCourseProgress = (courseID: number) =>
+//   (dispatch: Function) => {
+//     get({ url: ''})
+//   };
 
 const deleteCourseSuccess = (err: any) => ({
   type: 'DELETE_COURSE_SUCCESS',

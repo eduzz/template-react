@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchLesson, changeLessonField, addLessonFiles, removeLessonFile } from 'actionCreators/lessons';
 import ImageUploader from 'components/ImageUploader';
@@ -539,8 +538,9 @@ const mapStateToProps = (state: any) => ({
   lesson: state.lesson
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ fetchLesson, changeLessonField, addLessonFiles, removeLessonFile }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Lesson);
+export default connect(mapStateToProps, {
+  fetchLesson,
+  changeLessonField,
+  addLessonFiles,
+  removeLessonFile
+})(Lesson);

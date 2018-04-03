@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CategorySelect from './CategorySelect';
 import AuthorSelect from 'components/Producer/AuthorSelect';
@@ -112,9 +111,9 @@ const mapStateToProps = (state: any) => ({
   course: state.course || {}
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+export default connect(mapStateToProps, {
   uploadImage,
-  ...bindActionCreators({ changeCourseField, receiveCourseImageCover, cleanCourseImageCover }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CourseBasicInfo);
+  changeCourseField,
+  receiveCourseImageCover,
+  cleanCourseImageCover
+})(CourseBasicInfo);

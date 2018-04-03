@@ -29,9 +29,7 @@ class Courses extends Component<any, any> {
         }, {
           type: 'CourseCardGrid',
           props: {
-            options: {
-              url: '/user/courses?page=1&size=9999',
-            }
+            type: 'student',
           },
           i: '2',
           w: 12,

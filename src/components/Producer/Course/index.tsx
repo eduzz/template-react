@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { cleanCourse, fetchCourse, updateCourse, createCourse, changeCourseField } from 'actionCreators/course';
 import { cleanModules } from 'actionCreators/modules';
@@ -157,8 +156,11 @@ const mapStateToProps = (state: any) => ({
   course: state.course
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ cleanCourse, fetchCourse, updateCourse, createCourse, changeCourseField, cleanModules }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Course);
+export default connect(mapStateToProps, {
+  cleanCourse,
+  fetchCourse,
+  updateCourse,
+  createCourse,
+  changeCourseField,
+  cleanModules
+})(Course);

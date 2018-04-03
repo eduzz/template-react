@@ -14,15 +14,12 @@ const cleanCourses = () => ({
   type: 'CLEAN_COURSES'
 });
 
-export const fetchCourses = (options: any) =>
-  async (dispatch: Function) => {
+export const fetchCourses = (type: string) =>
+  (dispatch: Function) => {
     dispatch(cleanCourses());
 
-    try {
-      const response = await get({ ...options });
-
-      dispatch(receiveCourses(response.data.data));
-    } catch (error) {
-      dispatch(receiveCoursesError(error));
-    }
+    get({ url: type === 'producer' ? '/courses' : '/user/courses' }).then(
+      res => dispatch(receiveCourses(res.data.data)),
+      err => dispatch(receiveCoursesError(err)),
+    );
   };

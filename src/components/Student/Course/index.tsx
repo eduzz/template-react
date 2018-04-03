@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
 import { fetchCourse } from 'actionCreators/course';
@@ -72,8 +71,4 @@ const mapStateToProps = (state: any) => ({
   pageGrid: state.pageGrid,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ fetchCourse }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Course);
+export default connect(mapStateToProps, { fetchCourse })(Course);

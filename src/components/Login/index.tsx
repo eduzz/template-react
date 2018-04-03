@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { requestLogin } from 'actionCreators/auth';
 import Footer from 'components/Footer';
@@ -98,8 +97,4 @@ class Login extends Component<IProps> {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ requestLogin }, dispatch),
-});
-
-export default connect(undefined, mapDispatchToProps)(Login);
+export default connect(undefined, { requestLogin })(Login);

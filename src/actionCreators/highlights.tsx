@@ -12,7 +12,7 @@ const receiveHighlightsError = (err: any) => ({
 
 export const fetchHighlights = () =>
   (dispatch: any) => {
-    get({ url: '/courses/highlights' }).then(
+    get({ url: '/user/highlights' }).then(
       res => dispatch(receiveHighlights(res.data.data)),
       err => dispatch(receiveHighlightsError(err)),
     );
