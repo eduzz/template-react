@@ -71,6 +71,11 @@ const course = (state: any = initialState, action: any) => {
         ...state,
         progress: action.progress,
       };
+    case 'RECEIVE_COURSE_NEWS':
+      return {
+        ...state,
+        news: action.news,
+      };
     default:
       return state;
   }

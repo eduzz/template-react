@@ -1,12 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { cdn } from 'constants/index';
+import { fetchCourse, fetchCourseProgress, fetchCourseNews } from 'actionCreators/course';
 
 interface IProps {
   course: any;
+  courseID: number;
+  fetchCourse: any;
+  fetchCourseProgress: any;
+  fetchCourseNews: any;
 }
 
 class CourseBanner extends Component<IProps> {
+  componentDidMount() {
+    this.props.fetchCourse(this.props.courseID);
+    this.props.fetchCourseProgress(this.props.courseID);
+    this.props.fetchCourseNews(this.props.courseID);
+  }
+
   render() {
     const imageCover =
       this.props.course.customizations &&
@@ -60,7 +71,7 @@ class CourseBanner extends Component<IProps> {
                 </div>
                 <div className='col s12 m6 l3'>
                   <a className='course-news'>
-                    Novidades <span>4</span>
+                    Novidades <span>{this.props.course.news && this.props.course.news.length || 0}</span>
                   </a>
                 </div>
               </div>
@@ -76,4 +87,4 @@ const mapStateToProps = (state: any) => ({
   course: state.course,
 });
 
-export default connect(mapStateToProps)(CourseBanner);
+export default connect(mapStateToProps, { fetchCourse, fetchCourseProgress, fetchCourseNews })(CourseBanner);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
-import { fetchCourse, fetchCourseProgress } from 'actionCreators/course';
 
 interface IProps {
   fetchCourse: any;
@@ -20,20 +19,18 @@ class Course extends Component<IProps> {
     this.courseID = this.props.match.params.courseID;
   }
 
-  componentDidMount() {
-    this.props.fetchCourse(this.courseID);
-    this.props.fetchCourseProgress(this.courseID);
-  }
-
   render() {
     this.layouts = {
       lg: [{
         type: 'CourseBanner',
+        props: {
+          courseID: this.courseID,
+        },
         i: '0',
         w: 12,
         h: 40,
-        maxH: 40,
-        minH: 40,
+        // maxH: 40,
+        // minH: 40,
         x: 0,
         y: 0,
       }, {
@@ -47,7 +44,10 @@ class Course extends Component<IProps> {
         x: 1,
         y: 40,
       }, {
-        type: 'UpsellCard',
+        type: 'UpsellList',
+        props: {
+          courseID: this.courseID,
+        },
         i: '2',
         w: 2,
         h: 36,
@@ -57,10 +57,10 @@ class Course extends Component<IProps> {
     };
 
     return (
-      <section className='student-course-content'>
+      <section className='student-course-content' >
         <PageGrid
-          layouts={JSON.parse(localStorage.getItem('courseLayouts')) || this.layouts}
-          onChangeLayout={(layouts: any) => localStorage.setItem('courseLayouts', JSON.stringify(layouts))}
+          layouts={this.layouts}
+          // onChangeLayout={(layouts: any) => localStorage.setItem('courseLayouts', JSON.stringify(layouts))}
           isDraggable={this.props.pageGrid.enabled}
           isResizable={this.props.pageGrid.enabled}
         />
@@ -73,4 +73,4 @@ const mapStateToProps = (state: any) => ({
   pageGrid: state.pageGrid,
 });
 
-export default connect(mapStateToProps, { fetchCourse, fetchCourseProgress })(Course);
+export default connect(mapStateToProps)(Course);

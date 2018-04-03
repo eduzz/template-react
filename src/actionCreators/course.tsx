@@ -15,6 +15,11 @@ const receiveCourseProgress = (progress: number) => ({
   progress,
 });
 
+const receiveCourseNews = (news: any) => ({
+  type: 'RECEIVE_COURSE_NEWS',
+  news,
+});
+
 export const cleanCourse = () => ({
   type: 'CLEAN_COURSE'
 });
@@ -31,6 +36,13 @@ export const fetchCourseProgress = (courseID: number) =>
   (dispatch: Function) => {
     get({ url: '/learner/course/' + courseID + '/progress' }).then(
       res => dispatch(receiveCourseProgress(res.data.data.progress))
+    );
+  };
+
+export const fetchCourseNews = (courseID: number) =>
+  (dispatch: Function) => {
+    get({ url: '/learner/course/' + courseID + '/news' }).then(
+      res => dispatch(receiveCourseNews(res.data.data))
     );
   };
 
