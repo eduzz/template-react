@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { logout } from 'actionCreators/auth';
-import { enablePageGrid } from 'actionCreators/pageGrid';
 
 const styles = require('./styles.css');
 
@@ -63,7 +62,6 @@ class Options extends Component<IProps> {
         >
           <MenuItem>Meus Dados</MenuItem>
           <MenuItem>Meus Certificados</MenuItem>
-          <MenuItem onClick={this.handleLayoutEdit}>Editar Layout</MenuItem>
           <MenuItem onClick={this.handleLogout}>Sair</MenuItem>
         </Menu>
       </div>
@@ -71,4 +69,4 @@ class Options extends Component<IProps> {
   }
 }
 
-export default connect(undefined, { logout, enablePageGrid })(Options);
+export default connect(undefined, { logout })(Options);

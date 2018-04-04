@@ -11,7 +11,7 @@ interface IProps {
 
 class Course extends Component<IProps> {
   private courseID: number;
-  private layouts: any;
+  private layout: any;
 
   constructor(props: any) {
     super(props);
@@ -20,48 +20,49 @@ class Course extends Component<IProps> {
   }
 
   render() {
-    this.layouts = {
-      lg: [{
+    this.layout = [
+      {
         type: 'CourseBanner',
         props: {
           courseID: this.courseID,
         },
-        i: '0',
-        w: 12,
-        h: 40,
-        x: 0,
-        y: 0,
-      }, {
+        size: {
+          xs: 12,
+        },
+      },
+      {
+        size: {
+          xs: 2,
+        },
+      },
+      {
         type: 'ModuleList',
         props: {
           courseID: this.courseID,
         },
-        i: '1',
-        w: 8,
-        h: 27,
-        x: 1,
-        y: 40,
-      }, {
-        type: 'UpsellList',
+        size: {
+          xs: 6,
+        },
+      },
+      {
+        type: 'UpsellCard',
         props: {
           courseID: this.courseID,
         },
-        i: '2',
-        w: 2,
-        h: 36,
-        x: 9,
-        y: 40,
-      }]
-    };
+        size: {
+          xs: 2,
+        },
+      },
+      {
+        size: {
+          xs: 2,
+        },
+      }
+    ];
 
     return (
       <section className='student-course-content' >
-        <PageGrid
-          layouts={this.layouts}
-          // onChangeLayout={(layouts: any) => localStorage.setItem('courseLayouts', JSON.stringify(layouts))}
-          isDraggable={this.props.pageGrid.enabled}
-          isResizable={this.props.pageGrid.enabled}
-        />
+        <PageGrid layout={this.layout} />
       </section>
     );
   }

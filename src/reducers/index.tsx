@@ -9,7 +9,6 @@ import authors from './authors';
 import modules from './modules';
 import upload from './upload';
 import lesson from './lesson';
-import pageGrid from './pageGrid';
 import highlights from './highlights';
 import upsells from './upsells';
 
@@ -24,7 +23,6 @@ const nutrorApp = combineReducers({
   modules,
   upload,
   lesson,
-  pageGrid,
   highlights,
   upsells,
 });
