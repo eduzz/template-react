@@ -39,6 +39,7 @@ class Course extends Component<IProps> {
         type: 'ModuleList',
         props: {
           courseID: this.courseID,
+          editable: false,
         },
         size: {
           xs: 6,

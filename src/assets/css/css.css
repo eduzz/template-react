@@ -6353,7 +6353,7 @@ body {
   margin-top: 20px; }
 
 .student-course-content .banner-course {
-  height: 400px;
+  min-height: 400px;
   width: 100%;
   position: relative;
   color: #fff;

@@ -21,7 +21,10 @@ const modulesLessons = ({ courseID }: any) => (
       </div>
       <div className='row'>
         <div className='col s12'>
-          <ModuleList courseID={courseID} />
+          <ModuleList
+            courseID={courseID}
+            editable={true}
+          />
         </div>
       </div>
     </div>
