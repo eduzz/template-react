@@ -44,9 +44,7 @@ class CourseBanner extends Component<IProps> {
               <h1 className='course-name'>
                 {this.props.course.title}
               </h1>
-              <p className='course-description'>
-                {this.props.course.description}
-              </p>
+              <p className='course-description' dangerouslySetInnerHTML={{ __html: this.props.course.description }}></p>
 
               <div className='course-author'>
                 <div className='course-author-img'>

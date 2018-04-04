@@ -29,8 +29,6 @@ class Course extends Component<IProps> {
         i: '0',
         w: 12,
         h: 40,
-        // maxH: 40,
-        // minH: 40,
         x: 0,
         y: 0,
       }, {
