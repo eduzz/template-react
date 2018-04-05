@@ -23,6 +23,7 @@ interface IProps {
   deleteModulePersist: any;
   deleteModuleUndo: any;
   editable: boolean;
+  type?: string;
 }
 
 interface IState {
@@ -95,6 +96,8 @@ class ModuleList extends Component<IProps, IState> {
             lessons={module.lessons}
             newModule={module.id}
             editable={this.props.editable}
+            courseID={this.props.courseID}
+            type={this.props.type}
             onExpandChange={() => {
               if (!module.lessons || (module.lessons && !module.lessons.length)) {
                 this.props.fetchModuleLessons(module.id);

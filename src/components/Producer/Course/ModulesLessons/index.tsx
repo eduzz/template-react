@@ -1,5 +1,5 @@
 import React from 'react';
-import ModuleList from './ModuleList';
+import ModuleList from 'components/ModuleList';
 
 const styles = require('./styles.css');
 
