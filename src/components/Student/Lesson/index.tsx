@@ -1,157 +1,20 @@
 import React, { Component } from 'react';
 import Icon from 'components/Icon';
-import ModuleList from 'components/ModuleList';
+// import SideMenu from './SideMenu';
 
 class Lesson extends Component<any, any> {
   constructor(props: any) {
     super(props);
 
     this.state = {
-      isHidden: false
+      isHidden: true
     };
   }
 
   render() {
     return (
       <section className='lesson-page template-black'>
-        <aside
-          className={`side-nav course-nav ${
-            this.state.isHidden ? 'hidden' : ''
-            }`}
-        >
-          <div className='container'>
-            <div
-              className='course-block course-data'
-              onClick={() =>
-                this.setState({
-                  isHidden: !this.state.isHidden
-                })
-              }
-            >
-              <a
-                className='toggle-nav'
-                onClick={() =>
-                  this.setState({
-                    isHidden: !this.state.isHidden
-                  })
-                }
-              >
-                <div>
-                  <span />
-                  <span />
-                </div>
-              </a>
-              <label className='course-category'>Marketing e Vendas</label>
-              <h2 className='course-title'>Primeira Venda</h2>
-              <div className='course-progress'>
-                <label>Progresso: 20%</label>
-                <div className='progress-bar'>
-                  <span style={{ width: '40%' }} />
-                </div>
-              </div>
-            </div>
-            <div className='course-block course-actions'>
-              <a className='button'>
-                <Icon name='home' />
-                <span>Inicio</span>
-              </a>
-              <a className='button'>
-                <Icon name='video' />
-                <span>Tela do Curso</span>
-              </a>
-            </div>
-
-            <div className='modules-block'>
-            <ModuleList
-              courseID={this.props.match.params.courseID}
-              editable={false}
-              type='simple'
-            />
-              {/* <Collapsible className='card-lessons'>
-                <Header className='card-lessons-header'>
-                  <h3 className='card-lessons-title'>Modulo 01</h3>
-                </Header>
-
-                <Content className='card-lessons-wrapper'>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                </Content>
-              </Collapsible>
-              <Collapsible className='card-lessons'>
-                <Header className='card-lessons-header'>
-                  <h3 className='card-lessons-title'>Modulo 02</h3>
-                </Header>
-
-                <Content className='card-lessons-wrapper'>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>
-                        Aula interna do modulo de como domar um dragao from hell
-                      </h3>
-                      <Icon name='replay' />
-                    </div>
-                  </a>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                </Content>
-              </Collapsible>
-              <Collapsible className='card-lessons'>
-                <Header className='card-lessons-header'>
-                  <h3 className='card-lessons-title'>Modulo 02</h3>
-                </Header>
-
-                <Content className='card-lessons-wrapper'>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>
-                        Aula interna do modulo de como domar um dragao from hell
-                      </h3>
-                      <Icon name='replay' />
-                    </div>
-                  </a>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                  <a className='card-lesson-block'>
-                    <div className='card-lesson-content'>
-                      <h3 className='lesson-title'>Aula interna do modulo</h3>
-                      <Icon name='play' />
-                    </div>
-                  </a>
-                </Content>
-              </Collapsible> */}
-            </div>
-          </div>
-        </aside>
+        {/* <SideMenu courseID={this.props.match.params.courseID} /> */}
         <article
           className={`lesson-container ${this.state.isHidden ? 'hidden' : ''}`}
         >
