@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actionCreators/authors';
 import Card, { CardActions } from 'material-ui/Card';
@@ -115,8 +114,4 @@ const mapStateToProps = (state: any) => ({
   authors: state.authors
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators(actionCreators, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthorSelect);
+export default connect(mapStateToProps, actionCreators)(AuthorSelect);

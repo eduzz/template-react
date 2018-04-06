@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
 import { fetchHighlights } from 'actionCreators/highlights';
@@ -77,8 +76,4 @@ const mapStateToProps = (state: any) => ({
   highlights: state.highlights,
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ fetchHighlights }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Carousel);
+export default connect(mapStateToProps, { fetchHighlights })(Carousel);

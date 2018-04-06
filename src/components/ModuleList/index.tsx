@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ModuleCard from './ModuleCard';
 import Loading from 'components/Loading';
@@ -23,6 +22,8 @@ interface IProps {
   deleteModule: any;
   deleteModulePersist: any;
   deleteModuleUndo: any;
+  editable: boolean;
+  type?: string;
 }
 
 interface IState {
@@ -94,6 +95,9 @@ class ModuleList extends Component<IProps, IState> {
             title={module.title}
             lessons={module.lessons}
             newModule={module.id}
+            editable={this.props.editable}
+            courseID={this.props.courseID}
+            type={this.props.type}
             onExpandChange={() => {
               if (!module.lessons || (module.lessons && !module.lessons.length)) {
                 this.props.fetchModuleLessons(module.id);
@@ -126,7 +130,7 @@ class ModuleList extends Component<IProps, IState> {
           />
         ))}
 
-        <div className='row'>
+        {this.props.editable && <div className='row'>
           <div className='col s12 center'>
             <a
               className='button affirmative waves-effect waves-light'
@@ -135,37 +139,7 @@ class ModuleList extends Component<IProps, IState> {
               <span>Adicionar Módulo</span>
             </a>
           </div>
-        </div>
-
-        {/* <Dialog
-          actions={[
-            <Button
-              color='primary'
-              onClick={() => {
-                this.setState({
-                  isDelConfirmOpen: false
-                });
-              }}
-            >
-              Cancelar
-            </Button>,
-            <Button
-              onClick={() => {
-                this.setState({
-                  isUndoOpen: true,
-                  isDelConfirmOpen: false
-                });
-                this.props.deleteModule(this.state.module.id);
-              }}
-            >
-              Excluir
-            </Button>
-          ]}
-          modal={false}
-          open={this.state.isDelConfirmOpen}
-        >
-          Tem certeza que deseja excluir este Módulo?
-        </Dialog> */}
+        </div>}
 
         <Dialog
           open={this.state.isDelConfirmOpen}
@@ -187,33 +161,6 @@ class ModuleList extends Component<IProps, IState> {
             </Button>
           </DialogActions>
         </Dialog>
-
-        {/* <Snackbar
-          open={this.state.isUndoOpen}
-          message='Módulo Excluido'
-          autoHideDuration={3000}
-          action={
-            <span
-              onClick={() => {
-                this.setState({
-                  isUndoOpen: false
-                });
-                this.props.deleteModuleUndo(
-                  this.state.module,
-                  this.state.index
-                );
-              }}
-            >
-              UNDO
-            </span>
-          }
-          onRequestClose={() => {
-            this.setState({
-              isUndoOpen: false
-            });
-            this.props.deleteModulePersist(this.state.module.id);
-          }}
-        /> */}
 
         <Snackbar
           anchorOrigin={{
@@ -247,8 +194,14 @@ const mapStateToProps = (state: any) => ({
   modules: state.modules
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ fetchModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModuleList);
+export default connect(mapStateToProps, {
+  fetchModules,
+  fetchModuleLessons,
+  addModule,
+  postModule,
+  editModulePersist,
+  removeModule,
+  deleteModule,
+  deleteModulePersist,
+  deleteModuleUndo
+})(ModuleList);

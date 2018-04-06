@@ -1,61 +1,14 @@
 import { get, post, del, put } from 'agent';
 
-export const cleanModules = () => ({
-  type: 'CLEAN_MODULES',
-});
-
 const receiveModules = (modules: Object[]) => ({
   type: 'RECEIVE_MODULES',
   modules
 });
 
-const receiveModulesError = (err: any) => ({
-  type: 'RECEIVE_MODULES_ERROR',
-  err
-});
-
-export const fetchModules = (courseID: number | string) =>
-  (dispatch: any) => {
-    dispatch({
-      type: 'REQUEST_MODULES',
-    });
-
-    get({ url: `/courses/${courseID}/modules` }).then(
-      res => dispatch(receiveModules(res.data.data)),
-      err => dispatch(receiveModulesError(err)),
-    );
-  };
-
 const receiveModuleLessons = (lessons: Array<Object>, moduleID: number) => ({
   type: 'RECEIVE_MODULE_LESSONS',
   lessons,
   moduleID
-});
-
-const receiveModuleLessonsError = (err: any) => ({
-  type: 'RECEIVE_MODULE_LESSONS_ERROR',
-  err
-});
-
-export const fetchModuleLessons = (moduleID: number) =>
-  (dispatch: any) => {
-    dispatch({
-      type: 'REQUEST_MODULE_LESSONS',
-    });
-
-    get({ url: `/modules/${moduleID}/lessons` }).then(
-      res => dispatch(receiveModuleLessons(res.data.data, moduleID)),
-      err => dispatch(receiveModuleLessonsError(err)),
-    );
-  };
-
-export const addModule = () => ({
-  type: 'ADD_MODULE'
-});
-
-export const removeModule = (index: number) => ({
-  type: 'REMOVE_MODULE',
-  index
 });
 
 const receiveModule = (module: Object, sequence: number) => ({
@@ -67,6 +20,41 @@ const receiveModule = (module: Object, sequence: number) => ({
 const receiveModuleError = (err: any) => ({
   type: 'RECEIVE_MODULE',
   err
+});
+
+export const cleanModules = () => ({
+  type: 'CLEAN_MODULES',
+});
+
+export const fetchModules = (courseID: number | string) =>
+  (dispatch: any) => {
+    dispatch({
+      type: 'REQUEST_MODULES',
+    });
+
+    get({ url: `/courses/${courseID}/modules` }).then(
+      res => dispatch(receiveModules(res.data.data))
+    );
+  };
+
+export const fetchModuleLessons = (moduleID: number) =>
+  (dispatch: any) => {
+    dispatch({
+      type: 'REQUEST_MODULE_LESSONS',
+    });
+
+    get({ url: `/modules/${moduleID}/lessons` }).then(
+      res => dispatch(receiveModuleLessons(res.data.data, moduleID))
+    );
+  };
+
+export const addModule = () => ({
+  type: 'ADD_MODULE'
+});
+
+export const removeModule = (index: number) => ({
+  type: 'REMOVE_MODULE',
+  index
 });
 
 export const postModule = (courseID: number, title: string, sequence: number) =>

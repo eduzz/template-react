@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import CourseCard from './CourseCard';
 import { fetchCourses } from 'actionCreators/courses';
@@ -11,12 +10,12 @@ const styles = require('./styles.css');
 interface IProps {
   fetchCourses: any;
   courses: any;
-  options: any;
+  type: string;
 }
 
 class CourseCardGrid extends Component<IProps> {
   componentDidMount() {
-    this.props.fetchCourses(this.props.options);
+    this.props.fetchCourses(this.props.type);
   }
 
   render() {
@@ -40,8 +39,4 @@ const mapStateToProps = (state: any) => {
   };
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators({ fetchCourses }, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CourseCardGrid);
+export default connect(mapStateToProps, { fetchCourses })(CourseCardGrid);

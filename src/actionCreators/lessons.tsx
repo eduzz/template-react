@@ -9,22 +9,12 @@ const receiveLesson = (lesson: Object) => ({
   lesson
 });
 
-const receiveLessonError = (err: any) => ({
-  type: 'RECEIVE_LESSON_ERROR',
-  err
-});
-
 export const fetchLesson = (lessonID: number) =>
   (dispatch: any) => {
     dispatch(cleanLesson);
 
     get({ url: '/lessons/' + lessonID }).then(
-      res => {
-        dispatch(receiveLesson(res.data.data));
-      },
-      err => {
-        dispatch(receiveLessonError(err));
-      }
+      res => dispatch(receiveLesson(res.data.data))
     );
   };
 

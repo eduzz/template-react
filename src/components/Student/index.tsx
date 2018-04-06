@@ -4,7 +4,7 @@ import Header from 'components/Header';
 // import Footer from 'components/Footer';
 import Courses from './Courses';
 import Course from './Course';
-// import StudentLesson from './StudentLesson';
+import Lesson from './Lesson';
 
 const student = () => (
   <div className='template-black'>
@@ -13,8 +13,8 @@ const student = () => (
     <Switch>
       <Redirect exact from='/student' to='/student/courses' />
       <Route exact path='/student/courses' component={Courses} />
-      <Route exact path='/student/courses/:courseId' component={Course} />
-      {/* <Route exact path='/student/courses/lesson/:lessonId' component={StudentLesson} /> */}
+      <Route exact path='/student/courses/:courseID' component={Course} />
+      <Route exact path='/student/courses/:courseID/lessons/:lessonID' component={Lesson} />
     </Switch>
 
     {/* <Footer /> */}

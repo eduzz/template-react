@@ -14,7 +14,7 @@ const courses = () => (
         <CoursesSearch />
         <CoursesFilters />
       </div>
-      <CourseCardGrid options={{ url: '/courses' }} />
+      <CourseCardGrid type='producer' />
     </div>
   </section>
 );

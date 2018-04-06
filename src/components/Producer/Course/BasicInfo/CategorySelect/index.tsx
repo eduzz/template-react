@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actionCreators/categories';
 import { MenuItem } from 'material-ui/Menu';
@@ -48,8 +47,4 @@ const mapStateToProps = (state: any) => ({
   categories: state.categories
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
-  ...bindActionCreators(actionCreators, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategorySelect);
+export default connect(mapStateToProps, actionCreators)(CategorySelect);

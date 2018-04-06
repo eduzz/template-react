@@ -18,6 +18,9 @@ interface IProps {
   onSave: any;
   onDelete: any;
   lessons: Array<any>;
+  editable?: boolean;
+  courseID: string | number;
+  type: string;
 }
 
 interface IState {
@@ -121,13 +124,15 @@ class ModuleCard extends Component<IProps, IState> {
                     {this.state.title}
                   </span>
                 )}
-              <div className='card-lessons-resume'>
-                <span>Duração Total: 12Hrs</span>
-                <span>12 Aulas</span>
-              </div>
+              {this.props.type !== 'simple' &&
+                <div className='card-lessons-resume'>
+                  <span>Duração Total: 12Hrs</span>
+                  <span>12 Aulas</span>
+                </div>
+              }
             </div>
 
-            {!this.state.isEditing &&
+            {this.props.editable && !this.state.isEditing &&
               <Options
                 onEdit={this.handleEdit}
                 onDelete={this.props.onDelete}
@@ -143,7 +148,7 @@ class ModuleCard extends Component<IProps, IState> {
             </IconButton>
           </CardActions>
           <Collapse in={this.state.isExpanded} timeout='auto' unmountOnExit>
-            <LessonCardList lessons={this.props.lessons || []} />
+            <LessonCardList type={this.props.type} courseID={this.props.courseID} editable={this.props.editable} lessons={this.props.lessons || []} />
           </Collapse>
         </Card>
       </div>

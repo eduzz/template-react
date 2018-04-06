@@ -5,15 +5,9 @@ const receiveHighlights = (highlights: any) => ({
   highlights,
 });
 
-const receiveHighlightsError = (err: any) => ({
-  type: 'RECEIVE_HIGHLIGHTS_ERROR',
-  err,
-});
-
 export const fetchHighlights = () =>
   (dispatch: any) => {
-    get({ url: '/courses/highlights' }).then(
-      res => dispatch(receiveHighlights(res.data.data)),
-      err => dispatch(receiveHighlightsError(err)),
+    get({ url: '/user/highlights' }).then(
+      res => dispatch(receiveHighlights(res.data.data))
     );
   };
