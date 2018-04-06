@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
 
 class Courses extends Component<any, any> {
@@ -48,8 +47,4 @@ class Courses extends Component<any, any> {
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  pageGrid: state.pageGrid,
-});
-
-export default connect(mapStateToProps)(Courses);
+export default Courses;

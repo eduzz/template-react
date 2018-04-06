@@ -11,7 +11,7 @@ const receiveLesson = (lesson: Object) => ({
 
 export const fetchLesson = (lessonID: number) =>
   (dispatch: any) => {
-    dispatch(cleanLesson);
+    dispatch(cleanLesson());
 
     get({ url: '/lessons/' + lessonID }).then(
       res => dispatch(receiveLesson(res.data.data))
