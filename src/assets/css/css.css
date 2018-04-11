@@ -5574,69 +5574,6 @@ body {
 .waves-effect.waves-dark .waves-ripple {
   background-color: #1a1a1a; }
 
-.lesson-container {
-  margin-left: 350px;
-  min-height: calc(100vh - 60px);
-  padding: 30px;
-  transition: all 0.3s ease-in-out; }
-  .lesson-container .lesson-title {
-    margin: 0;
-    font-size: 1.5rem;
-    transition: all 0.3s ease-in-out; }
-  .lesson-container iframe {
-    width: 100%;
-    height: 50vh;
-    display: block; }
-  .lesson-container.hidden {
-    margin-left: 0;
-    padding: 30px 50px; }
-  .lesson-container .lesson-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 15px; }
-  .lesson-container .lesson-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0; }
-    .lesson-container .lesson-actions label {
-      display: block;
-      text-transform: uppercase;
-      font-weight: 500;
-      letter-spacing: 1px;
-      margin-bottom: 5px; }
-  .lesson-container .share-bar .button {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0;
-    margin-right: 5px; }
-  .lesson-container .share-bar .facebook {
-    background-color: #3b5998; }
-  .lesson-container .share-bar .twitter {
-    background-color: #00aced; }
-  .lesson-container .share-bar .linkedin {
-    background-color: #007bb6; }
-  .lesson-container .share-bar .social-buttons {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    cursor: pointer; }
-  .lesson-container .share-bar .icon {
-    height: 15px;
-    margin: 0;
-    fill: #fff; }
-  .lesson-container .lesson-description {
-    padding-top: 30px;
-    border-top: 1px solid #cecece;
-    border-bottom: 1px solid #cecece; }
-    .lesson-container .lesson-description p {
-      margin-bottom: 1rem;
-      line-height: 1.4rem;
-      font-weight: 300;
-      font-size: 1rem; }
-
 .filters-backdrop {
   background-color: transparent;
   pointer-events: none;

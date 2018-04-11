@@ -11,6 +11,8 @@ import { fetchRating } from 'actionCreators/rating';
 import Loading from 'components/Loading';
 import Rating from './Rating';
 
+const styles = require('./styles.css');
+
 interface IProps {
   lesson: any;
   fetchLesson: any;
@@ -30,26 +32,28 @@ class Lesson extends Component<IProps> {
 
   render() {
     return (
-      <section className='lesson-page template-black'>
-        <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} />
-        <SideMenu courseID={this.props.match.params.courseID} />
-        <article className='lesson-container hidden'>
-          <Navigation
-            title={this.props.lesson.title}
-            next={this.props.lesson.next}
-            prev={this.props.lesson.previous}
-            courseID={this.props.match.params.courseID}
-            onChange={this.handleCourseChange}
-          />
-          <Player embed={this.props.lesson.embed} />
-          <div className='lesson-actions'>
-            <Share url={this.props.lesson.share} />
-            <Rating lessonID={this.props.match.params.lessonID} />
-          </div>
-          <Description text={this.props.lesson.description} />
-          <Comments />
-        </article>
-      </section>
+      <div className={styles.component}>
+        <section className='lesson-page template-black'>
+          <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} />
+          <SideMenu courseID={this.props.match.params.courseID} />
+          <article className='lesson-container hidden'>
+            <Navigation
+              title={this.props.lesson.title}
+              next={this.props.lesson.next}
+              prev={this.props.lesson.previous}
+              courseID={this.props.match.params.courseID}
+              onChange={this.handleCourseChange}
+            />
+            <Player embed={this.props.lesson.embed} />
+            <div className='lesson-actions'>
+              <Share url={this.props.lesson.share} />
+              <Rating lessonID={this.props.match.params.lessonID} />
+            </div>
+            <Description text={this.props.lesson.description} />
+            <Comments />
+          </article>
+        </section>
+      </div>
     );
   }
 }
