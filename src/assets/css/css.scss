@@ -194,225 +194,224 @@ body {
 //     }
 //   }
 // }
-.course-nav {
-  width: 350px;
-  @include transition;
-  .modules-block {
-    height: calc(100vh - 250px);
-    overflow-y: auto;
-  }
-  .course-block {
-    padding: 20px;
-  }
-  .toggle-nav {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    padding: 0;
-    background-color: transparent;
-    margin: auto;
-    height: 100%;
-    width: 40px;
-    background-color: $dark-color;
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    @include transition;
-    justify-content: center;
-    div {
-      position: relative;
-      display: block;
-      width: 20px;
-      height: 22px;
-    }
-    span {
-      margin: auto;
-      width: 2px;
-      height: 12px;
-      display: block;
-      background-color: #fff;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      @include transition;
-    }
-    span:first-child {
-      transform: rotate(35deg);
-    }
-    span:last-child {
-      transform: rotate(-35deg);
-      top: 10px;
-    }
-    &:hover {
-      background-color: $darkest-color;
-    }
-  }
-  .course-data {
-    position: relative;
-    padding-right: 40px;
-    background-color: $dark-color;
-    @include transition;
-    cursor: pointer;
-  }
-  .course-actions {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: $dark-color;
-    .button {
-      border-radius: 0;
-      background-color: transparent;
-      max-width: 50%;
-      padding: 12px 20px;
-      display: block;
-      white-space: nowrap;
-      span {
-        color: #fff;
-        font-weight: 300;
-      }
-      .icon {
-        fill: #fff;
-        margin-right: 10px;
-      }
-      &:hover {
-        background-color: $darkest-color;
-      }
-    }
-  }
-  .course-title {
-    @include fontsize(22);
-    margin: 0 0 15px 0;
-    @include transition;
-  }
-  .course-category {
-    @include fontsize(12);
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    display: block;
-  }
-  .course-progress label {
-    text-transform: uppercase;
-    font-weight: $medium;
-    letter-spacing: 1px;
-    @include fontsize(12);
-  }
-  .progress-bar {
-    width: 100%;
-    height: 3px;
-    display: block;
-    margin: 8px 0;
-    background-color: #fff;
-    span {
-      background-color: $affirmative-color;
-      display: block;
-      height: 3px;
-    }
-  }
-  .card-lessons {
-    margin: 0 0 5px 0;
-    .card-lesson-block {
-      margin: 0;
-      padding: 20px 40px 20px 20px;
-      @include transition;
-      cursor: pointer;
-      .card-lesson-content {
-        .lesson-title {
-          font-weight: 300;
-          margin: 0;
-        }
-      }
-      .icon {
-        width: 15px;
-        height: 15px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        right: 25px;
-        @include transition;
-      }
-      &:hover {
-        .icon {
-          fill: $affirmative-color;
-        }
-      }
-    }
-    .card-lessons-wrapper {
-      padding: 0;
-    }
-    .card-lesson-content {
-      padding: 0;
-    }
-  } //end card lesson
-  .card-lessons-header {
-    &:after,
-    &:before {
-      height: 12px;
-    }
-    &:after {
-      right: 35px;
-    }
-    &:before {
-      right: 38px;
-    }
-    &.active {
-      &:after,
-      &:before {
-        height: 12px;
-      }
-      &:after {
-        transform: translateX(2px) rotate(-40deg);
-      }
-      &:before {
-        transform: translateX(-2px) rotate(40deg);
-      }
-    }
-  }
-  &.hidden {
-    transform: translateX(-350px);
-    .course-data {
-      position: fixed;
-      top: 0;
-      min-width: 350px;
-      transform: translateX(30px);
-      background-color: transparentize($dark-color, 0.2);
-      &:hover {
-        transform: translateX(350px);
-        background-color: $dark-color;
-      }
-    }
-    .course-progress {
-      height: 0;
-      overflow: hidden;
-    }
-    .course-title {
-      margin: 0;
-    }
-    .course-block {
-      opacity: 1;
-      @include transition;
-    }
-    .toggle-nav {
-      background-color: transparent;
-      &:hover {
-        background-color: transparentize($dark-color, 0.2);
-      }
-      span:first-child {
-        transform: rotate(-35deg);
-      }
-      span:last-child {
-        transform: rotate(35deg);
-      }
-    }
-  }
-}
-
+// .course-nav {
+//   width: 350px;
+//   @include transition;
+//   .modules-block {
+//     height: calc(100vh - 250px);
+//     overflow-y: auto;
+//   }
+//   .course-block {
+//     padding: 20px;
+//   }
+//   .toggle-nav {
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     padding: 0;
+//     background-color: transparent;
+//     margin: auto;
+//     height: 100%;
+//     width: 40px;
+//     background-color: $dark-color;
+//     border-radius: 0;
+//     display: flex;
+//     align-items: center;
+//     cursor: pointer;
+//     @include transition;
+//     justify-content: center;
+//     div {
+//       position: relative;
+//       display: block;
+//       width: 20px;
+//       height: 22px;
+//     }
+//     span {
+//       margin: auto;
+//       width: 2px;
+//       height: 12px;
+//       display: block;
+//       background-color: #fff;
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       right: 0;
+//       @include transition;
+//     }
+//     span:first-child {
+//       transform: rotate(35deg);
+//     }
+//     span:last-child {
+//       transform: rotate(-35deg);
+//       top: 10px;
+//     }
+//     &:hover {
+//       background-color: $darkest-color;
+//     }
+//   }
+//   .course-data {
+//     position: relative;
+//     padding-right: 40px;
+//     background-color: $dark-color;
+//     @include transition;
+//     cursor: pointer;
+//   }
+//   .course-actions {
+//     padding: 0;
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-start;
+//     background-color: $dark-color;
+//     .button {
+//       border-radius: 0;
+//       background-color: transparent;
+//       max-width: 50%;
+//       padding: 12px 20px;
+//       display: block;
+//       white-space: nowrap;
+//       span {
+//         color: #fff;
+//         font-weight: 300;
+//       }
+//       .icon {
+//         fill: #fff;
+//         margin-right: 10px;
+//       }
+//       &:hover {
+//         background-color: $darkest-color;
+//       }
+//     }
+//   }
+//   .course-title {
+//     @include fontsize(22);
+//     margin: 0 0 15px 0;
+//     @include transition;
+//   }
+//   .course-category {
+//     @include fontsize(12);
+//     text-transform: uppercase;
+//     font-weight: 600;
+//     letter-spacing: 1px;
+//     margin-bottom: 5px;
+//     display: block;
+//   }
+//   .course-progress label {
+//     text-transform: uppercase;
+//     font-weight: $medium;
+//     letter-spacing: 1px;
+//     @include fontsize(12);
+//   }
+//   .progress-bar {
+//     width: 100%;
+//     height: 3px;
+//     display: block;
+//     margin: 8px 0;
+//     background-color: #fff;
+//     span {
+//       background-color: $affirmative-color;
+//       display: block;
+//       height: 3px;
+//     }
+//   }
+//   .card-lessons {
+//     margin: 0 0 5px 0;
+//     .card-lesson-block {
+//       margin: 0;
+//       padding: 20px 40px 20px 20px;
+//       @include transition;
+//       cursor: pointer;
+//       .card-lesson-content {
+//         .lesson-title {
+//           font-weight: 300;
+//           margin: 0;
+//         }
+//       }
+//       .icon {
+//         width: 15px;
+//         height: 15px;
+//         position: absolute;
+//         top: 0;
+//         bottom: 0;
+//         margin: auto;
+//         right: 25px;
+//         @include transition;
+//       }
+//       &:hover {
+//         .icon {
+//           fill: $affirmative-color;
+//         }
+//       }
+//     }
+//     .card-lessons-wrapper {
+//       padding: 0;
+//     }
+//     .card-lesson-content {
+//       padding: 0;
+//     }
+//   } //end card lesson
+//   .card-lessons-header {
+//     &:after,
+//     &:before {
+//       height: 12px;
+//     }
+//     &:after {
+//       right: 35px;
+//     }
+//     &:before {
+//       right: 38px;
+//     }
+//     &.active {
+//       &:after,
+//       &:before {
+//         height: 12px;
+//       }
+//       &:after {
+//         transform: translateX(2px) rotate(-40deg);
+//       }
+//       &:before {
+//         transform: translateX(-2px) rotate(40deg);
+//       }
+//     }
+//   }
+//   &.hidden {
+//     transform: translateX(-350px);
+//     .course-data {
+//       position: fixed;
+//       top: 0;
+//       min-width: 350px;
+//       transform: translateX(30px);
+//       background-color: transparentize($dark-color, 0.2);
+//       &:hover {
+//         transform: translateX(350px);
+//         background-color: $dark-color;
+//       }
+//     }
+//     .course-progress {
+//       height: 0;
+//       overflow: hidden;
+//     }
+//     .course-title {
+//       margin: 0;
+//     }
+//     .course-block {
+//       opacity: 1;
+//       @include transition;
+//     }
+//     .toggle-nav {
+//       background-color: transparent;
+//       &:hover {
+//         background-color: transparentize($dark-color, 0.2);
+//       }
+//       span:first-child {
+//         transform: rotate(-35deg);
+//       }
+//       span:last-child {
+//         transform: rotate(35deg);
+//       }
+//     }
+//   }
+// }
 .lesson-container {
   margin-left: 350px;
   min-height: calc(100vh - 60px);

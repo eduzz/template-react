@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import SideMenu from './SideMenu';
+import SideMenu from './SideMenu';
 import Navigation from './Navigation';
 import Player from './Player';
 import Share from './Share';
@@ -32,7 +32,7 @@ class Lesson extends Component<IProps> {
     return (
       <section className='lesson-page template-black'>
         <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} />
-        {/* <SideMenu courseID={this.props.match.params.courseID} /> */}
+        <SideMenu courseID={this.props.match.params.courseID} />
         <article className='lesson-container hidden'>
           <Navigation
             title={this.props.lesson.title}
