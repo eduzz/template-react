@@ -36,7 +36,7 @@ class Lesson extends Component<IProps> {
         <section className='lesson-page template-black'>
           <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} />
           <SideMenu courseID={this.props.match.params.courseID} />
-          <article className='lesson-container hidden'>
+          <article className='lesson-container'>
             <Navigation
               title={this.props.lesson.title}
               next={this.props.lesson.next}

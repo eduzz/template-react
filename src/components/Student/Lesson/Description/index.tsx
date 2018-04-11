@@ -7,13 +7,11 @@ interface IProps {
 
 const Description = ({ text }: IProps) => (
   <div className='lesson-description'>
-    <div className='container'>
-      <div className='row'>
-        <div className='col s12 m8 l9' dangerouslySetInnerHTML={{ __html: text }}>
-        </div>
-        <div className='col s12 m4 l3'>
-          <UpsellList courseID={5581} />
-        </div>
+    <div className='row'>
+      <div className='col s12 m8 l9' dangerouslySetInnerHTML={{ __html: text }}>
+      </div>
+      <div className='col s12 m4 l3'>
+        <UpsellList courseID={5581} />
       </div>
     </div>
   </div>

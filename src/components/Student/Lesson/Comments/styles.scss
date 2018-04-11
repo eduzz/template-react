@@ -11,6 +11,8 @@
       .container {
         display: flex;
         align-items: flex-start; // flex-direction: row-reverse;
+        width: 100%;
+        max-width: 100%;
       }
       .input-field {
         margin: 0 0 0 0;
@@ -76,6 +78,8 @@
       .container {
         display: flex;
         justify-content: flex-start;
+        width: 100%;
+        max-width: 100%;
       }
       .user-photo {
         $user-photo-size: 60px;

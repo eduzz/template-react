@@ -7,7 +7,9 @@
     padding: 10px 0; }
     :local(.component) .comments .comment-form .container {
       display: flex;
-      align-items: flex-start; }
+      align-items: flex-start;
+      width: 100%;
+      max-width: 100%; }
     :local(.component) .comments .comment-form .input-field {
       margin: 0 0 0 0;
       width: 100%; }
@@ -52,7 +54,9 @@
     padding: 40px 0; }
     :local(.component) .comments .comment .container {
       display: flex;
-      justify-content: flex-start; }
+      justify-content: flex-start;
+      width: 100%;
+      max-width: 100%; }
     :local(.component) .comments .comment .user-photo {
       min-width: 60px;
       min-height: 60px;

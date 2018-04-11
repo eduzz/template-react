@@ -1,12 +1,15 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
 :local(.component) {
-  .course-nav {
-    width: 350px;
+  &.course-nav {
     @include transition;
+    width: 350px;
+    color: #fff;
+    position: fixed;
     .modules-block {
-      height: calc(100vh - 250px);
+      height: calc(100vh - 229px);
       overflow-y: auto;
+      background-color: $dark-color;
     }
     .course-block {
       padding: 20px;
@@ -102,6 +105,7 @@
       letter-spacing: 1px;
       margin-bottom: 5px;
       display: block;
+      color: #fff;
     }
     .course-progress label {
       text-transform: uppercase;
@@ -126,6 +130,8 @@
       .card-lesson-block {
         margin: 0;
         padding: 20px 40px 20px 20px;
+        color: #fff;
+        border-bottom: 1px solid $background-color;
         @include transition;
         cursor: pointer;
         .card-lesson-content {
@@ -145,6 +151,7 @@
           @include transition;
         }
         &:hover {
+          background-color: lighten($dark-color, 0.2);
           .icon {
             fill: $affirmative-color;
           }
@@ -155,6 +162,9 @@
       }
       .card-lesson-content {
         padding: 0;
+      }
+      svg {
+        fill: #fff;
       }
     } //end card lesson
     .card-lessons-header {
@@ -216,6 +226,10 @@
         span:last-child {
           transform: rotate(35deg);
         }
+      }
+      &+article {
+        margin-left: 0;
+        padding: 30px 50px;
       }
     }
   }

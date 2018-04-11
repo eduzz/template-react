@@ -89,15 +89,3 @@
   background: #1c1f27;
   border: 1px solid #2f343e;
   color: #fff; }
-
-:local(.component) .template-black .course-nav {
-  color: #fff; }
-  :local(.component) .template-black .course-nav .course-category {
-    color: #fff; }
-  :local(.component) .template-black .course-nav .card-lessons .card-lesson-block {
-    color: #fff;
-    border-bottom: 1px solid #2f343e; }
-    :local(.component) .template-black .course-nav .card-lessons .card-lesson-block:hover {
-      background-color: #1c1f28; }
-  :local(.component) .template-black .course-nav .card-lessons .icon {
-    fill: #fff; }

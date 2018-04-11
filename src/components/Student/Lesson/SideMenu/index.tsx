@@ -23,64 +23,60 @@ class SideMenu extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className={styles.component}>
-        <aside
-          className={`side-nav course-nav ${
-            this.state.isHidden ? 'hidden' : ''
-            }`}
+      <aside
+        className={`side-nav course-nav ${styles.component} ${
+          this.state.isHidden ? 'hidden' : ''
+          }`}
+      >
+        <div
+          className='course-block course-data'
+          onClick={() =>
+            this.setState({
+              isHidden: !this.state.isHidden
+            })
+          }
         >
-          <div className='container'>
-            <div
-              className='course-block course-data'
-              onClick={() =>
-                this.setState({
-                  isHidden: !this.state.isHidden
-                })
-              }
-            >
-              <a
-                className='toggle-nav'
-                onClick={() =>
-                  this.setState({
-                    isHidden: !this.state.isHidden
-                  })
-                }
-              >
-                <div>
-                  <span />
-                  <span />
-                </div>
-              </a>
-              <label className='course-category'>Marketing e Vendas</label>
-              <h2 className='course-title'>Primeira Venda</h2>
-              <div className='course-progress'>
-                <label>Progresso: 20%</label>
-                <div className='progress-bar'>
-                  <span style={{ width: '40%' }} />
-                </div>
-              </div>
+          <a
+            className='toggle-nav'
+            onClick={() =>
+              this.setState({
+                isHidden: !this.state.isHidden
+              })
+            }
+          >
+            <div>
+              <span />
+              <span />
             </div>
-            <div className='course-block course-actions'>
-              <a className='button'>
-                <Icon name='home' />
-                <span>Inicio</span>
-              </a>
-              <a className='button'>
-                <Icon name='video' />
-                <span>Tela do Curso</span>
-              </a>
-            </div>
-
-            <div className='modules-block'>
-              <ModuleList
-                courseID={this.props.courseID}
-                editable={false}
-                type='simple'
-              />
+          </a>
+          <label className='course-category'>Marketing e Vendas</label>
+          <h2 className='course-title'>Primeira Venda</h2>
+          <div className='course-progress'>
+            <label>Progresso: 20%</label>
+            <div className='progress-bar'>
+              <span style={{ width: '40%' }} />
             </div>
           </div>
-        </aside>
-      </div>
+        </div>
+        <div className='course-block course-actions'>
+          <a className='button'>
+            <Icon name='home' />
+            <span>Inicio</span>
+          </a>
+          <a className='button'>
+            <Icon name='video' />
+            <span>Tela do Curso</span>
+          </a>
+        </div>
+
+        <div className='modules-block'>
+          <ModuleList
+            courseID={this.props.courseID}
+            editable={false}
+            type='simple'
+          />
+        </div>
+      </aside>
     );
   }
 }
