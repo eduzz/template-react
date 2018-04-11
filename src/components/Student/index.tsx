@@ -6,18 +6,22 @@ import Courses from './Courses';
 import Course from './Course';
 import Lesson from './Lesson';
 
+const styles = require('./styles.css');
+
 const student = () => (
-  <div className='template-black'>
-    <Header />
+  <div className={styles.component}>
+    <div className='template-black'>
+      <Header />
 
-    <Switch>
-      <Redirect exact from='/student' to='/student/courses' />
-      <Route exact path='/student/courses' component={Courses} />
-      <Route exact path='/student/courses/:courseID' component={Course} />
-      <Route exact path='/student/courses/:courseID/lessons/:lessonID' component={Lesson} />
-    </Switch>
+      <Switch>
+        <Redirect exact from='/student' to='/student/courses' />
+        <Route exact path='/student/courses' component={Courses} />
+        <Route exact path='/student/courses/:courseID' component={Course} />
+        <Route exact path='/student/courses/:courseID/lessons/:lessonID' component={Lesson} />
+      </Switch>
 
-    {/* <Footer /> */}
+      {/* <Footer /> */}
+    </div>
   </div>
 );
 
