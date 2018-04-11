@@ -8,6 +8,7 @@ import Description from './Description';
 import Comments from './Comments';
 import { fetchLesson } from 'actionCreators/lessons';
 import Loading from 'components/Loading';
+import Rating from './Rating';
 
 interface IProps {
   lesson: any;
@@ -34,7 +35,10 @@ class Lesson extends Component<IProps> {
             onChange={(lessonID: number | string) => this.props.fetchLesson(lessonID)}
           />
           <Player embed={this.props.lesson.embed} />
-          <Share url={this.props.lesson.share} />
+          <div className='lesson-actions'>
+            <Share url={this.props.lesson.share} />
+            <Rating lessonID={this.props.match.params.lessonID} />
+          </div>
           <Description text={this.props.lesson.description} />
           <Comments />
         </article>
