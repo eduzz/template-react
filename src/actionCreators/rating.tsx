@@ -7,7 +7,13 @@ const receiveRating = (rating: any) => ({
 
 export const sendRating = (lessonID: any, rating: any) =>
   (dispatch: Function) => {
-    return post({ url: `/learner/lessons/${lessonID}/ratings`, data: rating }).then(
+    dispatch(receiveRating(rating));
+
+    const data = {
+      rating: rating.user_rating,
+    };
+
+    return post({ url: `/learner/lessons/${lessonID}/ratings`, data }).then(
       res => {
         console.log(res.data);
       }

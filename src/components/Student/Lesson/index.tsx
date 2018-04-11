@@ -7,18 +7,25 @@ import Share from './Share';
 import Description from './Description';
 import Comments from './Comments';
 import { fetchLesson } from 'actionCreators/lessons';
+import { fetchRating } from 'actionCreators/rating';
 import Loading from 'components/Loading';
 import Rating from './Rating';
 
 interface IProps {
   lesson: any;
   fetchLesson: any;
+  fetchRating: any;
   match: any;
 }
 
 class Lesson extends Component<IProps> {
   componentDidMount() {
     this.props.fetchLesson(this.props.match.params.lessonID);
+  }
+
+  handleCourseChange = (lessonID: number | string) => {
+    this.props.fetchLesson(lessonID);
+    this.props.fetchRating(lessonID);
   }
 
   render() {
@@ -32,7 +39,7 @@ class Lesson extends Component<IProps> {
             next={this.props.lesson.next}
             prev={this.props.lesson.previous}
             courseID={this.props.match.params.courseID}
-            onChange={(lessonID: number | string) => this.props.fetchLesson(lessonID)}
+            onChange={this.handleCourseChange}
           />
           <Player embed={this.props.lesson.embed} />
           <div className='lesson-actions'>
@@ -51,4 +58,4 @@ const mapStateToProps = (state: any) => ({
   lesson: state.lesson,
 });
 
-export default connect(mapStateToProps, { fetchLesson })(Lesson);
+export default connect(mapStateToProps, { fetchLesson, fetchRating })(Lesson);
