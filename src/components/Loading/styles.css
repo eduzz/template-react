@@ -1,8 +1,11 @@
 @keyframes offset {
   50% {
-    stroke-dasharray: 0 90 90 90 55; }
+    stroke-dasharray: 0 90 90 90 55;
+  }
   100% {
-    stroke-dasharray: 0 0 90 90 55; } }
+    stroke-dasharray: 0 0 90 90 55;
+  }
+}
 
 :local(.component) .loading-wrapper {
   padding: 5px;
@@ -18,16 +21,22 @@
   align-items: center;
   justify-content: center;
   z-index: 55;
-  text-align: center; }
+  text-align: center;
+}
 
 :local(.component) .absolute {
   position: absolute;
   background-color: #c9c9c9;
-  z-index: 70; }
-  :local(.component) .absolute .loading-icon {
-    stroke: #fff; }
-    :local(.component) .absolute .loading-icon + p {
-      color: #fff; }
+  z-index: 70;
+}
+
+:local(.component) .absolute .loading-icon {
+  stroke: #fff;
+}
+
+:local(.component) .absolute .loading-icon+p {
+  color: #fff;
+}
 
 :local(.component) .loading-icon {
   width: 50px;
@@ -35,14 +44,17 @@
   stroke: #1a1a1a;
   stroke-miterlimit: 10;
   stroke-width: 2px;
-  transform-origin: 50% 50%; }
+  transform-origin: 50% 50%;
+}
 
 :local(.component) .a1 {
   stroke-dasharray: 120;
   stroke-dashoffset: 0;
-  animation: offset 2.5s reverse cubic-bezier(0.2, 0.01, 0.83, 1) infinite; }
+  animation: offset 2.5s reverse cubic-bezier(0.2, 0.01, 0.83, 1) infinite;
+}
 
 :local(.component) .a2 {
   stroke-dasharray: 125;
   stroke-dashoffset: 0;
-  animation: offset 2.5s cubic-bezier(0.2, 0.01, 0.83, 1) infinite; }
+  animation: offset 2.5s cubic-bezier(0.2, 0.01, 0.83, 1) infinite;
+}
