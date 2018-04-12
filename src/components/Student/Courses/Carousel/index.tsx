@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import { fetchHighlights } from 'actionCreators/highlights';
 import { Link } from 'react-router-dom';
 import { cdn } from 'constants/index';
+import Loading from 'components/Loading';
 
 function SamplePrevArrow(props: any) {
   const { className, onClick } = props;
@@ -54,20 +55,23 @@ class Carousel extends Component<IProps> {
     };
 
     return (
-      <Slider {...settings} className='featured-carousel'>
-        {this.props.highlights.map((highlight: any) =>
-          <div key={highlight.id} className='featured-item'>
-            <div className='content'>
-              <h3 className='item-title'>{highlight.title}</h3>
-              <p className='item-content'>{highlight.description}</p>
-              <Link to={`courses/${highlight.id}`} className='button outline'>
-                <span>Acessar</span>
-              </Link>
+      <div>
+        <Loading active={!this.props.highlights.length} />
+        <Slider {...settings} className='featured-carousel'>
+          {this.props.highlights.map((highlight: any) =>
+            <div key={highlight.id} className='featured-item'>
+              <div className='content'>
+                <h3 className='item-title'>{highlight.title}</h3>
+                <p className='item-content'>{highlight.description}</p>
+                <Link to={`courses/${highlight.id}`} className='button outline'>
+                  <span>Acessar</span>
+                </Link>
+              </div>
+              <img alt='' src={highlight.customizations && cdn + highlight.customizations.avatar} />
             </div>
-            <img alt='' src={highlight.customizations && cdn + highlight.customizations.avatar} />
-          </div>
-        )}
-      </Slider>
+          )}
+        </Slider>
+      </div>
     );
   }
 }
