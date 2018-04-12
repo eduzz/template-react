@@ -13,6 +13,7 @@ import highlights from './highlights';
 import upsells from './upsells';
 import rating from './rating';
 import comments from './comments';
+import loading from './loading';
 
 const nutrorApp = combineReducers({
   courses,
@@ -29,6 +30,7 @@ const nutrorApp = combineReducers({
   upsells,
   rating,
   comments,
+  loading,
 });
 
 export default nutrorApp;
