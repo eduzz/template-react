@@ -1,7 +1,7 @@
 FROM nginx:alpine
 
-COPY nginx.conf /etc/nginx/conf.d/nutror.conf
+ADD nginx.conf /etc/nginx/conf.d/student.conf
 
-COPY build /usr/share/nginx/html
+ADD build /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
