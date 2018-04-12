@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
+import Loading from 'components/Loading';
 
 class Courses extends Component<any, any> {
   private layout: any;
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      qtdRequestLoading: 1,
+    };
+  }
 
   render() {
     this.layout = [
@@ -40,8 +49,11 @@ class Courses extends Component<any, any> {
       }
     ];
 
+    const activeRequestLoading = this.props.loading.qtdRequestLoading;
+
     return (
       <section className='student-content'>
+        <Loading absolutePosition={true} active={activeRequestLoading > 0} />
         <PageGrid layout={this.layout} />
       </section>
     );
@@ -50,6 +62,7 @@ class Courses extends Component<any, any> {
 
 const mapStateToProps = (state: any) => ({
   pageGrid: state.pageGrid,
+  loading: state.loading
 });
 
 export default connect(mapStateToProps)(Courses);
