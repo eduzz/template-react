@@ -1,91 +1,100 @@
-:local(.component) .template-black .student-course-content {
-  background-color: #1a1a1a;
-  color: #fff; }
-  :local(.component) .template-black .student-course-content .action-button .button {
-    background-color: rgba(255, 255, 255, 0.3); }
-    :local(.component) .template-black .student-course-content .action-button .button:hover {
+:local(.component) .template-black {
+  min-height: calc(100vh - 52px);
+  background-color: #1a1a1a; }
+  :local(.component) .template-black .student-course-content {
+    background-color: #1a1a1a;
+    color: #fff; }
+    :local(.component) .template-black .student-course-content .action-button .button {
+      background-color: rgba(255, 255, 255, 0.3); }
+      :local(.component) .template-black .student-course-content .action-button .button:hover {
+        background-color: #fff; }
+    :local(.component) .template-black .student-course-content .course-news {
+      color: #fff; }
+  :local(.component) .template-black .student-content {
+    background-color: #1a1a1a; }
+    :local(.component) .template-black .student-content > div {
+      width: 100%; }
+    :local(.component) .template-black .student-content .loading-icon {
+      stroke: #fff; }
+      :local(.component) .template-black .student-content .loading-icon + p {
+        color: #fff; }
+  :local(.component) .template-black .course-progress label {
+    color: #fff; }
+  :local(.component) .template-black input:not([type]):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='text']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='password']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='email']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='url']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='time']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='date']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='datetime']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='datetime-local']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='tel']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='number']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black input[type='search']:not(.browser-default):focus:not([readonly]) + label,
+  :local(.component) .template-black textarea.materialize-textarea:focus:not([readonly]) + label {
+    color: #fff; }
+  :local(.component) .template-black .filters {
+    background: rgba(33, 33, 33, 0.95); }
+    :local(.component) .template-black .filters label {
+      color: #fff; }
+    :local(.component) .template-black .filters .input-field input {
+      background-color: #2f343e; }
+    :local(.component) .template-black .filters .action-button,
+    :local(.component) .template-black .filters .filter-header {
+      background: rgba(33, 33, 33, 0.95);
+      color: #fff; }
+    :local(.component) .template-black .filters .block-header:before,
+    :local(.component) .template-black .filters .block-header:after {
       background-color: #fff; }
-  :local(.component) .template-black .student-course-content .course-news {
-    color: #fff; }
-
-:local(.component) .template-black .student-content {
-  background-color: #1a1a1a; }
-
-:local(.component) .template-black .course-progress label {
-  color: #fff; }
-
-:local(.component) .template-black input:not([type]):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='text']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='password']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='email']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='url']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='time']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='date']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='datetime']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='datetime-local']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='tel']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='number']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black input[type='search']:not(.browser-default):focus:not([readonly]) + label,
-:local(.component) .template-black textarea.materialize-textarea:focus:not([readonly]) + label {
-  color: #fff; }
-
-:local(.component) .template-black .filters {
-  background: rgba(33, 33, 33, 0.95); }
-  :local(.component) .template-black .filters label {
-    color: #fff; }
-  :local(.component) .template-black .filters .input-field input {
+    :local(.component) .template-black .filters .block-header:hover:before, :local(.component) .template-black .filters .block-header:hover:after {
+      background-color: #1c1f27; }
+  :local(.component) .template-black .page-footer {
     background-color: #2f343e; }
-  :local(.component) .template-black .filters .action-button,
-  :local(.component) .template-black .filters .filter-header {
-    background: rgba(33, 33, 33, 0.95);
+    :local(.component) .template-black .page-footer span {
+      color: #fff; }
+    :local(.component) .template-black .page-footer .logo-footer .yellow {
+      fill: #cecece;
+      transition: all 0.3s ease-in-out; }
+    :local(.component) .template-black .page-footer .logo-footer .blue {
+      fill: #fff;
+      transition: all 0.3s ease-in-out; }
+    :local(.component) .template-black .page-footer .logo-footer .blue-logo {
+      fill: #2f343e; }
+    :local(.component) .template-black .page-footer:hover .logo-footer .yellow {
+      fill: #ffcd2b; }
+  :local(.component) .template-black .search-bar > .input-field input {
+    background-color: #1c1f27;
+    border: 0;
+    color: #fff;
+    border-radius: 50px; }
+  :local(.component) .template-black .search-bar > label {
     color: #fff; }
-  :local(.component) .template-black .filters .block-header:before,
-  :local(.component) .template-black .filters .block-header:after {
-    background-color: #fff; }
-  :local(.component) .template-black .filters .block-header:hover:before, :local(.component) .template-black .filters .block-header:hover:after {
+  :local(.component) .template-black .card-lessons {
     background-color: #1c1f27; }
-
-:local(.component) .template-black .page-footer {
-  background-color: #2f343e; }
-  :local(.component) .template-black .page-footer span {
+  :local(.component) .template-black .card-lesson-block {
+    background-color: #1a1a1a; }
+  :local(.component) .template-black .banner-img:before {
+    background: rgba(26, 26, 26, 0);
+    background: -moz-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, #1a1a1a), color-stop(100%, #1a1a1a));
+    background: -webkit-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: -o-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: -ms-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0); }
+  :local(.component) .template-black .upsell-card {
+    background: #1c1f27;
+    border: 1px solid #2f343e;
     color: #fff; }
-  :local(.component) .template-black .page-footer .logo-footer .yellow {
-    fill: #cecece;
-    transition: all 0.3s ease-in-out; }
-  :local(.component) .template-black .page-footer .logo-footer .blue {
-    fill: #fff;
-    transition: all 0.3s ease-in-out; }
-  :local(.component) .template-black .page-footer .logo-footer .blue-logo {
-    fill: #2f343e; }
-  :local(.component) .template-black .page-footer:hover .logo-footer .yellow {
-    fill: #ffcd2b; }
-
-:local(.component) .template-black .search-bar > .input-field input {
-  background-color: #1c1f27;
-  border: 0;
-  color: #fff;
-  border-radius: 50px; }
-
-:local(.component) .template-black .search-bar > label {
-  color: #fff; }
-
-:local(.component) .template-black .card-lessons {
-  background-color: #1c1f27; }
-
-:local(.component) .template-black .card-lesson-block {
-  background-color: #1a1a1a; }
-
-:local(.component) .template-black .banner-img:before {
-  background: rgba(26, 26, 26, 0);
-  background: -moz-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, #1a1a1a), color-stop(100%, #1a1a1a));
-  background: -webkit-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-  background: -o-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-  background: -ms-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-  background: linear-gradient(to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0); }
-
-:local(.component) .template-black .upsell-card {
-  background: #1c1f27;
-  border: 1px solid #2f343e;
-  color: #fff; }
+  :local(.component) .template-black .course-nav {
+    color: #fff; }
+    :local(.component) .template-black .course-nav .course-category {
+      color: #fff; }
+    :local(.component) .template-black .course-nav .card-lessons .card-lesson-block {
+      color: #fff;
+      border-bottom: 1px solid #2f343e; }
+      :local(.component) .template-black .course-nav .card-lessons .card-lesson-block:hover {
+        background-color: #1c1f28; }
+    :local(.component) .template-black .course-nav .card-lessons .icon {
+      fill: #fff; }

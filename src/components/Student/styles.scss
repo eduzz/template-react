@@ -2,6 +2,8 @@
 @import 'src/assets/css/_mixins.scss';
 :local(.component) {
   .template-black {
+    min-height: calc(100vh - 52px);
+    background-color: #1a1a1a;
     .student-course-content {
       background-color: $darkest-color;
       color: #fff;
@@ -17,6 +19,15 @@
     }
     .student-content {
       background-color: $darkest-color;
+      >div {
+        width: 100%;
+      }
+      .loading-icon {
+        stroke: #fff;
+        +p {
+          color: #fff;
+        }
+      }
     }
     .course-progress label {
       color: #fff;
@@ -118,5 +129,23 @@
       border: 1px solid $background-color;
       color: #fff;
     }
+    .course-nav {
+      color: #fff;
+      .course-category {
+        color: #fff;
+      }
+      .card-lessons {
+        .card-lesson-block {
+          color: #fff;
+          border-bottom: 1px solid $background-color;
+          &:hover {
+            background-color: lighten($dark-color, 0.2);
+          }
+        }
+        .icon {
+          fill: #fff;
+        }
+      }
+    } //end modules nav
   } //end template black
 }
