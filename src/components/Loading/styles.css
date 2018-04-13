@@ -24,6 +24,10 @@
   position: absolute;
   background-color: #c9c9c9;
   z-index: 70; }
+  :local(.component) .absolute .loading-icon {
+    stroke: #fff; }
+    :local(.component) .absolute .loading-icon + p {
+      color: #fff; }
 
 :local(.component) .loading-icon {
   width: 50px;
