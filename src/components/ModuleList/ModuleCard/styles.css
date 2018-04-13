@@ -13,3 +13,6 @@
 
 :local(.component) .card-actions-form {
   width: 100%; }
+
+:local(.component) svg {
+  fill: #fff; }
