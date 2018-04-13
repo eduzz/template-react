@@ -1,4 +1,5 @@
 import { get, put, post, del } from 'agent';
+import { increaseLoading, decreaseLoading } from './loading';
 
 const receiveCourse = (course: any) => ({
   type: 'RECEIVE_COURSE',
@@ -26,23 +27,38 @@ export const cleanCourse = () => ({
 
 export const fetchCourse = (courseID: number) => (dispatch: Function) => {
   dispatch(cleanCourse());
+  dispatch(increaseLoading());
 
   get({ url: '/learner/course/' + courseID }).then(
-    res => dispatch(receiveCourse(res.data.data))
+    res => {
+      dispatch(receiveCourse(res.data.data));
+
+      dispatch(decreaseLoading());
+    }
   );
 };
 
 export const fetchCourseProgress = (courseID: number) =>
   (dispatch: Function) => {
+    dispatch(increaseLoading());
     get({ url: '/learner/course/' + courseID + '/progress' }).then(
-      res => dispatch(receiveCourseProgress(res.data.data.progress))
+      res => {
+        dispatch(receiveCourseProgress(res.data.data.progress));
+
+        dispatch(decreaseLoading());
+      }
     );
   };
 
 export const fetchCourseNews = (courseID: number) =>
   (dispatch: Function) => {
+    dispatch(increaseLoading());
     get({ url: '/learner/course/' + courseID + '/news' }).then(
-      res => dispatch(receiveCourseNews(res.data.data))
+      res => {
+        dispatch(receiveCourseNews(res.data.data));
+
+        dispatch(decreaseLoading());
+      }
     );
   };
 
