@@ -28,6 +28,9 @@
     position: absolute;
     background-color: rgba(201, 201, 201, 1);
     z-index: 70;
+    .loading-icon {
+      stroke: #fff;
+    }
   }
   .loading-icon {
     width: 50px;
