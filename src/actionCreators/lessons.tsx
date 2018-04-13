@@ -1,4 +1,5 @@
 import { get } from 'agent';
+import { increaseLoading, decreaseLoading } from './loading';
 
 export const cleanLesson = () => ({
   type: 'CLEAN_LESSON',
@@ -12,9 +13,14 @@ const receiveLesson = (lesson: Object) => ({
 export const fetchLesson = (lessonID: number) =>
   (dispatch: any) => {
     dispatch(cleanLesson());
+    dispatch(increaseLoading());
 
     get({ url: '/lessons/' + lessonID }).then(
-      res => dispatch(receiveLesson(res.data.data))
+      res => {
+        dispatch(receiveLesson(res.data.data));
+
+        dispatch(decreaseLoading());
+      }
     );
   };
 

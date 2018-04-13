@@ -15,6 +15,7 @@ const styles = require('./styles.css');
 
 interface IProps {
   lesson: any;
+  loading: any;
   fetchLesson: any;
   fetchRating: any;
   match: any;
@@ -28,6 +29,10 @@ class Lesson extends Component<IProps> {
   handleCourseChange = (lessonID: number | string) => {
     this.props.fetchLesson(lessonID);
     this.props.fetchRating(lessonID);
+    this.state = {
+      isHidden: true,
+      qtdRequestLoading: 1,
+    };
   }
 
   render() {
@@ -60,6 +65,7 @@ class Lesson extends Component<IProps> {
 
 const mapStateToProps = (state: any) => ({
   lesson: state.lesson,
+  loading: state.loading,
 });
 
 export default connect(mapStateToProps, { fetchLesson, fetchRating })(Lesson);
