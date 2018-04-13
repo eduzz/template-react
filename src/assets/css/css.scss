@@ -194,431 +194,428 @@ body {
 //     }
 //   }
 // }
-.course-nav {
-  width: 350px;
-  @include transition;
-  .modules-block {
-    height: calc(100vh - 250px);
-    overflow-y: auto;
-  }
-  .course-block {
-    padding: 20px;
-  }
-  .toggle-nav {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    padding: 0;
-    background-color: transparent;
-    margin: auto;
-    height: 100%;
-    width: 40px;
-    background-color: $dark-color;
-    border-radius: 0;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    @include transition;
-    justify-content: center;
-    div {
-      position: relative;
-      display: block;
-      width: 20px;
-      height: 22px;
-    }
-    span {
-      margin: auto;
-      width: 2px;
-      height: 12px;
-      display: block;
-      background-color: #fff;
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      @include transition;
-    }
-    span:first-child {
-      transform: rotate(35deg);
-    }
-    span:last-child {
-      transform: rotate(-35deg);
-      top: 10px;
-    }
-    &:hover {
-      background-color: $darkest-color;
-    }
-  }
-  .course-data {
-    position: relative;
-    padding-right: 40px;
-    background-color: $dark-color;
-    @include transition;
-    cursor: pointer;
-  }
-  .course-actions {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    background-color: $dark-color;
-    .button {
-      border-radius: 0;
-      background-color: transparent;
-      max-width: 50%;
-      padding: 12px 20px;
-      display: block;
-      white-space: nowrap;
-      span {
-        color: #fff;
-        font-weight: 300;
-      }
-      .icon {
-        fill: #fff;
-        margin-right: 10px;
-      }
-      &:hover {
-        background-color: $darkest-color;
-      }
-    }
-  }
-  .course-title {
-    @include fontsize(22);
-    margin: 0 0 15px 0;
-    @include transition;
-  }
-  .course-category {
-    @include fontsize(12);
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 5px;
-    display: block;
-  }
-  .course-progress label {
-    text-transform: uppercase;
-    font-weight: $medium;
-    letter-spacing: 1px;
-    @include fontsize(12);
-  }
-  .progress-bar {
-    width: 100%;
-    height: 3px;
-    display: block;
-    margin: 8px 0;
-    background-color: #fff;
-    span {
-      background-color: $affirmative-color;
-      display: block;
-      height: 3px;
-    }
-  }
-  .card-lessons {
-    margin: 0 0 5px 0;
-    .card-lesson-block {
-      margin: 0;
-      padding: 20px 40px 20px 20px;
-      @include transition;
-      cursor: pointer;
-      .card-lesson-content {
-        .lesson-title {
-          font-weight: 300;
-          margin: 0;
-        }
-      }
-      .icon {
-        width: 15px;
-        height: 15px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        right: 25px;
-        @include transition;
-      }
-      &:hover {
-        .icon {
-          fill: $affirmative-color;
-        }
-      }
-    }
-    .card-lessons-wrapper {
-      padding: 0;
-    }
-    .card-lesson-content {
-      padding: 0;
-    }
-  } //end card lesson
-  .card-lessons-header {
-    &:after,
-    &:before {
-      height: 12px;
-    }
-    &:after {
-      right: 35px;
-    }
-    &:before {
-      right: 38px;
-    }
-    &.active {
-      &:after,
-      &:before {
-        height: 12px;
-      }
-      &:after {
-        transform: translateX(2px) rotate(-40deg);
-      }
-      &:before {
-        transform: translateX(-2px) rotate(40deg);
-      }
-    }
-  }
-  &.hidden {
-    transform: translateX(-350px);
-    .course-data {
-      position: fixed;
-      top: 0;
-      min-width: 350px;
-      transform: translateX(30px);
-      background-color: transparentize($dark-color, 0.2);
-      &:hover {
-        transform: translateX(350px);
-        background-color: $dark-color;
-      }
-    }
-    .course-progress {
-      height: 0;
-      overflow: hidden;
-    }
-    .course-title {
-      margin: 0;
-    }
-    .course-block {
-      opacity: 1;
-      @include transition;
-    }
-    .toggle-nav {
-      background-color: transparent;
-      &:hover {
-        background-color: transparentize($dark-color, 0.2);
-      }
-      span:first-child {
-        transform: rotate(-35deg);
-      }
-      span:last-child {
-        transform: rotate(35deg);
-      }
-    }
-  }
-}
-
-.lesson-container {
-  margin-left: 350px;
-  min-height: calc(100vh - 60px);
-  padding: 30px;
-  @include transition;
-  .lesson-title {
-    margin: 0;
-    @include fontsize(24);
-    @include transition; // padding:20px 0;
-  }
-  iframe {
-    width: 100%;
-    height: 50vh;
-    display: block;
-  }
-  &.hidden {
-    margin-left: 0;
-    padding: 30px 50px;
-  }
-  .lesson-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 15px;
-  }
-  .lesson-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    label {
-      display: block;
-      text-transform: uppercase;
-      font-weight: $medium;
-      letter-spacing: 1px;
-      margin-bottom: 5px;
-    }
-  }
-  .share-bar {
-    .button {
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0;
-      margin-right: 5px;
-    }
-    .facebook {
-      background-color: #3b5998;
-    }
-    .twitter {
-      background-color: #00aced;
-    }
-    .linkedin {
-      background-color: #007bb6;
-    }
-    .social-buttons {
-      display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
-      cursor: pointer;
-    }
-    .icon {
-      height: 15px;
-      margin: 0;
-      fill: #fff;
-    }
-  }
-  .lesson-description {
-    padding-top: 30px;
-    border-top: 1px solid #cecece;
-    border-bottom: 1px solid #cecece;
-    p {
-      margin-bottom: 1rem;
-      line-height: 1.4rem;
-      font-weight: $light;
-      @include fontsize(16);
-    }
-  }
-}
-
-.comments {
-  padding: 20px 0; // &.form-section .form-block-title{
-  //   margin: 0 0 15px 0;
-  // }
-  .comment-form {
-    display: flex;
-    align-items: flex-end;
-    flex-flow: column;
-    padding: 10px 0;
-    .container {
-      display: flex;
-      align-items: flex-start; // flex-direction: row-reverse;
-    }
-    .input-field {
-      margin: 0 0 0 0;
-      width: 100%;
-    }
-    .input-field textarea {
-      margin-bottom: 10px;
-      border-radius: 50px;
-      @include fontsize(16);
-      padding: 12px 10px;
-      border: 1px solid $dark-gray;
-      &:active,
-      &:focus {
-        outline: none;
-      }
-    }
-    .current-user-photo {
-      $user-photo-size: 45px;
-      min-width: $user-photo-size;
-      min-height: $user-photo-size;
-      max-width: $user-photo-size;
-      max-height: $user-photo-size;
-      display: block;
-      overflow: hidden;
-      border-radius: 50%;
-      margin-right: 15px;
-      img {
-        width: 60px;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    .comment-button {
-      // float: right;
-      &:hover {
-        background-color: $affirmative-color;
-        span {
-          color: #fff;
-        }
-      }
-    }
-  }
-  .answers {
-    margin-left: 80px;
-    .comment:first-child {
-      padding: 20px 0;
-    }
-    .comment:last-child {
-      padding: 20px 0 0 0;
-    }
-    .comment {
-      padding: 10px 0 20px 0;
-    }
-  }
-  .container>.comment {
-    border-bottom: 1px solid $medium-gray;
-  }
-  .container>.comment:last-child {
-    border-bottom: 0;
-  }
-  .comment {
-    padding: 40px 0;
-    .container {
-      display: flex;
-      justify-content: flex-start;
-    }
-    .user-photo {
-      $user-photo-size: 60px;
-      min-width: $user-photo-size;
-      min-height: $user-photo-size;
-      max-width: $user-photo-size;
-      max-height: $user-photo-size;
-      display: block;
-      overflow: hidden;
-      border-radius: 50%;
-      img {
-        width: 60px;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    .content {
-      padding: 0 15px;
-    }
-    .user-name {
-      @include fontsize(18);
-      font-weight: $medium;
-      display: inline-block;
-      margin: 0 10px 0 0;
-    }
-    .comment-text {
-      padding: 5px 0 10px 0;
-      line-height: 1.4rem;
-      font-weight: $light;
-    }
-    .comment-published-time {
-      color: $dark-gray;
-    }
-    .comment-user-actions {
-      .action-link {
-        font-weight: $medium;
-        text-transform: uppercase;
-        color: $dark-gray;
-        margin-right: 15px;
-        @include fontsize(14);
-        @include transition;
-        &:hover {
-          color: $affirmative-color;
-        }
-      }
-    } //end actions
-  }
-}
-
+// .course-nav {
+//   width: 350px;
+//   @include transition;
+//   .modules-block {
+//     height: calc(100vh - 250px);
+//     overflow-y: auto;
+//   }
+//   .course-block {
+//     padding: 20px;
+//   }
+//   .toggle-nav {
+//     position: absolute;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     padding: 0;
+//     background-color: transparent;
+//     margin: auto;
+//     height: 100%;
+//     width: 40px;
+//     background-color: $dark-color;
+//     border-radius: 0;
+//     display: flex;
+//     align-items: center;
+//     cursor: pointer;
+//     @include transition;
+//     justify-content: center;
+//     div {
+//       position: relative;
+//       display: block;
+//       width: 20px;
+//       height: 22px;
+//     }
+//     span {
+//       margin: auto;
+//       width: 2px;
+//       height: 12px;
+//       display: block;
+//       background-color: #fff;
+//       position: absolute;
+//       top: 0;
+//       left: 0;
+//       right: 0;
+//       @include transition;
+//     }
+//     span:first-child {
+//       transform: rotate(35deg);
+//     }
+//     span:last-child {
+//       transform: rotate(-35deg);
+//       top: 10px;
+//     }
+//     &:hover {
+//       background-color: $darkest-color;
+//     }
+//   }
+//   .course-data {
+//     position: relative;
+//     padding-right: 40px;
+//     background-color: $dark-color;
+//     @include transition;
+//     cursor: pointer;
+//   }
+//   .course-actions {
+//     padding: 0;
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-start;
+//     background-color: $dark-color;
+//     .button {
+//       border-radius: 0;
+//       background-color: transparent;
+//       max-width: 50%;
+//       padding: 12px 20px;
+//       display: block;
+//       white-space: nowrap;
+//       span {
+//         color: #fff;
+//         font-weight: 300;
+//       }
+//       .icon {
+//         fill: #fff;
+//         margin-right: 10px;
+//       }
+//       &:hover {
+//         background-color: $darkest-color;
+//       }
+//     }
+//   }
+//   .course-title {
+//     @include fontsize(22);
+//     margin: 0 0 15px 0;
+//     @include transition;
+//   }
+//   .course-category {
+//     @include fontsize(12);
+//     text-transform: uppercase;
+//     font-weight: 600;
+//     letter-spacing: 1px;
+//     margin-bottom: 5px;
+//     display: block;
+//   }
+//   .course-progress label {
+//     text-transform: uppercase;
+//     font-weight: $medium;
+//     letter-spacing: 1px;
+//     @include fontsize(12);
+//   }
+//   .progress-bar {
+//     width: 100%;
+//     height: 3px;
+//     display: block;
+//     margin: 8px 0;
+//     background-color: #fff;
+//     span {
+//       background-color: $affirmative-color;
+//       display: block;
+//       height: 3px;
+//     }
+//   }
+//   .card-lessons {
+//     margin: 0 0 5px 0;
+//     .card-lesson-block {
+//       margin: 0;
+//       padding: 20px 40px 20px 20px;
+//       @include transition;
+//       cursor: pointer;
+//       .card-lesson-content {
+//         .lesson-title {
+//           font-weight: 300;
+//           margin: 0;
+//         }
+//       }
+//       .icon {
+//         width: 15px;
+//         height: 15px;
+//         position: absolute;
+//         top: 0;
+//         bottom: 0;
+//         margin: auto;
+//         right: 25px;
+//         @include transition;
+//       }
+//       &:hover {
+//         .icon {
+//           fill: $affirmative-color;
+//         }
+//       }
+//     }
+//     .card-lessons-wrapper {
+//       padding: 0;
+//     }
+//     .card-lesson-content {
+//       padding: 0;
+//     }
+//   } //end card lesson
+//   .card-lessons-header {
+//     &:after,
+//     &:before {
+//       height: 12px;
+//     }
+//     &:after {
+//       right: 35px;
+//     }
+//     &:before {
+//       right: 38px;
+//     }
+//     &.active {
+//       &:after,
+//       &:before {
+//         height: 12px;
+//       }
+//       &:after {
+//         transform: translateX(2px) rotate(-40deg);
+//       }
+//       &:before {
+//         transform: translateX(-2px) rotate(40deg);
+//       }
+//     }
+//   }
+//   &.hidden {
+//     transform: translateX(-350px);
+//     .course-data {
+//       position: fixed;
+//       top: 0;
+//       min-width: 350px;
+//       transform: translateX(30px);
+//       background-color: transparentize($dark-color, 0.2);
+//       &:hover {
+//         transform: translateX(350px);
+//         background-color: $dark-color;
+//       }
+//     }
+//     .course-progress {
+//       height: 0;
+//       overflow: hidden;
+//     }
+//     .course-title {
+//       margin: 0;
+//     }
+//     .course-block {
+//       opacity: 1;
+//       @include transition;
+//     }
+//     .toggle-nav {
+//       background-color: transparent;
+//       &:hover {
+//         background-color: transparentize($dark-color, 0.2);
+//       }
+//       span:first-child {
+//         transform: rotate(-35deg);
+//       }
+//       span:last-child {
+//         transform: rotate(35deg);
+//       }
+//     }
+//   }
+// }
+// .lesson-container {
+//   margin-left: 350px;
+//   min-height: calc(100vh - 60px);
+//   padding: 30px;
+//   @include transition;
+//   .lesson-title {
+//     margin: 0;
+//     @include fontsize(24);
+//     @include transition; // padding:20px 0;
+//   }
+//   iframe {
+//     width: 100%;
+//     height: 50vh;
+//     display: block;
+//   }
+//   &.hidden {
+//     margin-left: 0;
+//     padding: 30px 50px;
+//   }
+//   .lesson-header {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: center;
+//     padding-bottom: 15px;
+//   }
+//   .lesson-actions {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 15px 0;
+//     label {
+//       display: block;
+//       text-transform: uppercase;
+//       font-weight: $medium;
+//       letter-spacing: 1px;
+//       margin-bottom: 5px;
+//     }
+//   }
+//   .share-bar {
+//     .button {
+//       padding: 10px;
+//       display: flex;
+//       align-items: center;
+//       justify-content: center;
+//       border-radius: 0;
+//       margin-right: 5px;
+//     }
+//     .facebook {
+//       background-color: #3b5998;
+//     }
+//     .twitter {
+//       background-color: #00aced;
+//     }
+//     .linkedin {
+//       background-color: #007bb6;
+//     }
+//     .social-buttons {
+//       display: flex;
+//       align-items: flex-start;
+//       justify-content: flex-start;
+//       cursor: pointer;
+//     }
+//     .icon {
+//       height: 15px;
+//       margin: 0;
+//       fill: #fff;
+//     }
+//   }
+//   .lesson-description {
+//     padding-top: 30px;
+//     border-top: 1px solid #cecece;
+//     border-bottom: 1px solid #cecece;
+//     p {
+//       margin-bottom: 1rem;
+//       line-height: 1.4rem;
+//       font-weight: $light;
+//       @include fontsize(16);
+//     }
+//   }
+// }
+// .comments {
+//   padding: 20px 0; // &.form-section .form-block-title{
+//   //   margin: 0 0 15px 0;
+//   // }
+//   .comment-form {
+//     display: flex;
+//     align-items: flex-end;
+//     flex-flow: column;
+//     padding: 10px 0;
+//     .container {
+//       display: flex;
+//       align-items: flex-start; // flex-direction: row-reverse;
+//     }
+//     .input-field {
+//       margin: 0 0 0 0;
+//       width: 100%;
+//     }
+//     .input-field textarea {
+//       margin-bottom: 10px;
+//       border-radius: 50px;
+//       @include fontsize(16);
+//       padding: 12px 10px;
+//       border: 1px solid $dark-gray;
+//       &:active,
+//       &:focus {
+//         outline: none;
+//       }
+//     }
+//     .current-user-photo {
+//       $user-photo-size: 45px;
+//       min-width: $user-photo-size;
+//       min-height: $user-photo-size;
+//       max-width: $user-photo-size;
+//       max-height: $user-photo-size;
+//       display: block;
+//       overflow: hidden;
+//       border-radius: 50%;
+//       margin-right: 15px;
+//       img {
+//         width: 60px;
+//         height: 100%;
+//         object-fit: cover;
+//       }
+//     }
+//     .comment-button {
+//       // float: right;
+//       &:hover {
+//         background-color: $affirmative-color;
+//         span {
+//           color: #fff;
+//         }
+//       }
+//     }
+//   }
+//   .answers {
+//     margin-left: 80px;
+//     .comment:first-child {
+//       padding: 20px 0;
+//     }
+//     .comment:last-child {
+//       padding: 20px 0 0 0;
+//     }
+//     .comment {
+//       padding: 10px 0 20px 0;
+//     }
+//   }
+//   .container>.comment {
+//     border-bottom: 1px solid $medium-gray;
+//   }
+//   .container>.comment:last-child {
+//     border-bottom: 0;
+//   }
+//   .comment {
+//     padding: 40px 0;
+//     .container {
+//       display: flex;
+//       justify-content: flex-start;
+//     }
+//     .user-photo {
+//       $user-photo-size: 60px;
+//       min-width: $user-photo-size;
+//       min-height: $user-photo-size;
+//       max-width: $user-photo-size;
+//       max-height: $user-photo-size;
+//       display: block;
+//       overflow: hidden;
+//       border-radius: 50%;
+//       img {
+//         width: 60px;
+//         height: 100%;
+//         object-fit: cover;
+//       }
+//     }
+//     .content {
+//       padding: 0 15px;
+//     }
+//     .user-name {
+//       @include fontsize(18);
+//       font-weight: $medium;
+//       display: inline-block;
+//       margin: 0 10px 0 0;
+//     }
+//     .comment-text {
+//       padding: 5px 0 10px 0;
+//       line-height: 1.4rem;
+//       font-weight: $light;
+//     }
+//     .comment-published-time {
+//       color: $dark-gray;
+//     }
+//     .comment-user-actions {
+//       .action-link {
+//         font-weight: $medium;
+//         text-transform: uppercase;
+//         color: $dark-gray;
+//         margin-right: 15px;
+//         @include fontsize(14);
+//         @include transition;
+//         &:hover {
+//           color: $affirmative-color;
+//         }
+//       }
+//     } //end actions
+//   }
+// }
 .filters-backdrop {
   background-color: transparent;
   pointer-events: none;
@@ -1601,139 +1598,139 @@ body {
   }
 }
 
-.template-black {
-  .student-course-content {
-    background-color: $darkest-color;
-    color: #fff;
-    .action-button .button {
-      background-color: transparentize(#fff, 0.7);
-      &:hover {
-        background-color: #fff;
-      }
-    }
-    .course-news {
-      color: #fff;
-    }
-  }
-  .student-content {
-    background-color: $darkest-color;
-  }
-  .course-progress label {
-    color: #fff;
-  }
-  input:not([type]):focus:not([readonly])+label,
-  input[type='text']:not(.browser-default):focus:not([readonly])+label,
-  input[type='password']:not(.browser-default):focus:not([readonly])+label,
-  input[type='email']:not(.browser-default):focus:not([readonly])+label,
-  input[type='url']:not(.browser-default):focus:not([readonly])+label,
-  input[type='time']:not(.browser-default):focus:not([readonly])+label,
-  input[type='date']:not(.browser-default):focus:not([readonly])+label,
-  input[type='datetime']:not(.browser-default):focus:not([readonly])+label,
-  input[type='datetime-local']:not(.browser-default):focus:not([readonly])+label,
-  input[type='tel']:not(.browser-default):focus:not([readonly])+label,
-  input[type='number']:not(.browser-default):focus:not([readonly])+label,
-  input[type='search']:not(.browser-default):focus:not([readonly])+label,
-  textarea.materialize-textarea:focus:not([readonly])+label {
-    color: #fff;
-  }
-  .filters {
-    background: rgba(33, 33, 33, 0.95);
-    label {
-      color: #fff;
-    }
-    .input-field input {
-      background-color: $background-color;
-    }
-    .action-button,
-    .filter-header {
-      background: rgba(33, 33, 33, 0.95);
-      color: #fff;
-    }
-    .block-header:before,
-    .block-header:after {
-      background-color: #fff;
-    }
-    .block-header:hover {
-      &:before,
-      &:after {
-        background-color: $dark-color;
-      }
-    }
-  } //end filters
-  .page-footer {
-    background-color: $background-color;
-    span {
-      color: #fff;
-    }
-    .logo-footer {
-      .yellow {
-        fill: #cecece;
-        @include transition;
-      }
-      .blue {
-        fill: #fff;
-        @include transition;
-      }
-      .blue-logo {
-        fill: $background-color;
-      }
-    }
-    &:hover .logo-footer {
-      .yellow {
-        fill: #ffcd2b;
-      }
-    }
-  }
-  .search-bar {
-    >.input-field input {
-      background-color: $dark-color;
-      border: 0;
-      color: #fff;
-      border-radius: 50px;
-    }
-    >label {
-      color: #fff;
-    }
-  }
-  .card-lessons {
-    background-color: $dark-color;
-  }
-  .card-lesson-block {
-    background-color: $darkest-color;
-  }
-  .banner-img {
-    &:before {
-      background: rgba(26, 26, 26, 0);
-      background: -moz-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
-      background: -webkit-gradient( left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, rgba(26, 26, 26, 1)), color-stop(100%, rgba(26, 26, 26, 1)));
-      background: -webkit-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
-      background: -o-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
-      background: -ms-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
-      background: linear-gradient( to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0);
-    }
-  }
-  .upsell-card {
-    background: $dark-color;
-    border: 1px solid $background-color;
-    color: #fff;
-  }
-  .course-nav {
-    color: #fff;
-    .course-category {
-      color: #fff;
-    }
-    .card-lessons {
-      .card-lesson-block {
-        color: #fff;
-        border-bottom: 1px solid $background-color;
-        &:hover {
-          background-color: lighten($dark-color, 0.2);
-        }
-      }
-      .icon {
-        fill: #fff;
-      }
-    }
-  } //end modules nav
-} //end template black
+// .template-black {
+//   .student-course-content {
+//     background-color: $darkest-color;
+//     color: #fff;
+//     .action-button .button {
+//       background-color: transparentize(#fff, 0.7);
+//       &:hover {
+//         background-color: #fff;
+//       }
+//     }
+//     .course-news {
+//       color: #fff;
+//     }
+//   }
+//   .student-content {
+//     background-color: $darkest-color;
+//   }
+//   .course-progress label {
+//     color: #fff;
+//   }
+//   input:not([type]):focus:not([readonly])+label,
+//   input[type='text']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='password']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='email']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='url']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='time']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='date']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='datetime']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='datetime-local']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='tel']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='number']:not(.browser-default):focus:not([readonly])+label,
+//   input[type='search']:not(.browser-default):focus:not([readonly])+label,
+//   textarea.materialize-textarea:focus:not([readonly])+label {
+//     color: #fff;
+//   }
+//   .filters {
+//     background: rgba(33, 33, 33, 0.95);
+//     label {
+//       color: #fff;
+//     }
+//     .input-field input {
+//       background-color: $background-color;
+//     }
+//     .action-button,
+//     .filter-header {
+//       background: rgba(33, 33, 33, 0.95);
+//       color: #fff;
+//     }
+//     .block-header:before,
+//     .block-header:after {
+//       background-color: #fff;
+//     }
+//     .block-header:hover {
+//       &:before,
+//       &:after {
+//         background-color: $dark-color;
+//       }
+//     }
+//   } //end filters
+//   .page-footer {
+//     background-color: $background-color;
+//     span {
+//       color: #fff;
+//     }
+//     .logo-footer {
+//       .yellow {
+//         fill: #cecece;
+//         @include transition;
+//       }
+//       .blue {
+//         fill: #fff;
+//         @include transition;
+//       }
+//       .blue-logo {
+//         fill: $background-color;
+//       }
+//     }
+//     &:hover .logo-footer {
+//       .yellow {
+//         fill: #ffcd2b;
+//       }
+//     }
+//   }
+//   .search-bar {
+//     >.input-field input {
+//       background-color: $dark-color;
+//       border: 0;
+//       color: #fff;
+//       border-radius: 50px;
+//     }
+//     >label {
+//       color: #fff;
+//     }
+//   }
+//   .card-lessons {
+//     background-color: $dark-color;
+//   }
+//   .card-lesson-block {
+//     background-color: $darkest-color;
+//   }
+//   .banner-img {
+//     &:before {
+//       background: rgba(26, 26, 26, 0);
+//       background: -moz-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
+//       background: -webkit-gradient( left top, left bottom, color-stop(0%, rgba(26, 26, 26, 0)), color-stop(53%, rgba(26, 26, 26, 0)), color-stop(95%, rgba(26, 26, 26, 1)), color-stop(100%, rgba(26, 26, 26, 1)));
+//       background: -webkit-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
+//       background: -o-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
+//       background: -ms-linear-gradient( top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
+//       background: linear-gradient( to bottom, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, rgba(26, 26, 26, 1) 95%, rgba(26, 26, 26, 1) 100%);
+//       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1a1a1a', endColorstr='#1a1a1a', GradientType=0);
+//     }
+//   }
+//   .upsell-card {
+//     background: $dark-color;
+//     border: 1px solid $background-color;
+//     color: #fff;
+//   }
+//   .course-nav {
+//     color: #fff;
+//     .course-category {
+//       color: #fff;
+//     }
+//     .card-lessons {
+//       .card-lesson-block {
+//         color: #fff;
+//         border-bottom: 1px solid $background-color;
+//         &:hover {
+//           background-color: lighten($dark-color, 0.2);
+//         }
+//       }
+//       .icon {
+//         fill: #fff;
+//       }
+//     }
+//   } //end modules nav
+// } //end template black

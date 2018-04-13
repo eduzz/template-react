@@ -22,9 +22,10 @@ const receiveModuleError = (err: any) => ({
   err
 });
 
-export const cleanModules = () => ({
-  type: 'CLEAN_MODULES',
-});
+export const cleanModules = () =>
+  (dispatch: any) => dispatch({
+    type: 'CLEAN_MODULES',
+  });
 
 export const fetchModules = (courseID: number | string) =>
   (dispatch: any) => {

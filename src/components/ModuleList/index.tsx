@@ -8,12 +8,13 @@ import IconButton from 'material-ui/IconButton';
 import CloseIcon from 'material-ui-icons/Close';
 import Button from 'material-ui/Button';
 import { v4 } from 'uuid';
-import { fetchModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo } from 'actionCreators/modules';
+import { fetchModules, cleanModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo } from 'actionCreators/modules';
 
 interface IProps {
   courseID: string | number;
   modules: Array<any>;
   fetchModules: any;
+  cleanModules: any;
   fetchModuleLessons: any;
   addModule: any;
   postModule: any;
@@ -49,6 +50,10 @@ class ModuleList extends Component<IProps, IState> {
     if (this.props.courseID && this.props.courseID !== 'new' && !this.props.modules.length) {
       this.props.fetchModules(this.props.courseID);
     }
+  }
+
+  componentWillUnmount() {
+    this.props.cleanModules();
   }
 
   handleSnackbarClose = () => {
@@ -196,6 +201,7 @@ const mapStateToProps = (state: any) => ({
 
 export default connect(mapStateToProps, {
   fetchModules,
+  cleanModules,
   fetchModuleLessons,
   addModule,
   postModule,

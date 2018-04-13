@@ -1,0 +1,62 @@
+:local(.component) .lesson-container {
+  margin-left: 350px;
+  min-height: calc(100vh - 60px);
+  padding: 30px;
+  transition: all 0.3s ease-in-out; }
+  :local(.component) .lesson-container .lesson-title {
+    margin: 0;
+    font-size: 1.5rem;
+    transition: all 0.3s ease-in-out; }
+  :local(.component) .lesson-container iframe {
+    width: 100%;
+    height: 50vh;
+    display: block; }
+  :local(.component) .lesson-container.hidden {
+    margin-left: 0;
+    padding: 30px 50px; }
+  :local(.component) .lesson-container .lesson-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px; }
+  :local(.component) .lesson-container .lesson-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0; }
+    :local(.component) .lesson-container .lesson-actions label {
+      display: block;
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 5px; }
+  :local(.component) .lesson-container .share-bar .button {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0;
+    margin-right: 5px; }
+  :local(.component) .lesson-container .share-bar .facebook {
+    background-color: #3b5998; }
+  :local(.component) .lesson-container .share-bar .twitter {
+    background-color: #00aced; }
+  :local(.component) .lesson-container .share-bar .linkedin {
+    background-color: #007bb6; }
+  :local(.component) .lesson-container .share-bar .social-buttons {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    cursor: pointer; }
+  :local(.component) .lesson-container .share-bar .icon {
+    height: 15px;
+    margin: 0;
+    fill: #fff; }
+  :local(.component) .lesson-container .lesson-description {
+    padding-top: 30px;
+    border-top: 1px solid #cecece;
+    border-bottom: 1px solid #cecece; }
+    :local(.component) .lesson-container .lesson-description p {
+      margin-bottom: 1rem;
+      line-height: 1.4rem;
+      font-weight: 300;
+      font-size: 1rem; }
