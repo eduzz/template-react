@@ -62,7 +62,7 @@ class Courses extends Component<any, any> {
 
 const mapStateToProps = (state: any) => ({
   pageGrid: state.pageGrid,
-  loading: state.loading
+  loading: state.loading,
 });
 
 export default connect(mapStateToProps)(Courses);
