@@ -22,5 +22,6 @@ export const fetchCourses = (type: string, page: number, size: number) =>
       res => {
         dispatch(receiveCourses(res.data.data, res.data.paginator.totalPages));
         dispatch(decreaseLoading());
+      }
     );
   };

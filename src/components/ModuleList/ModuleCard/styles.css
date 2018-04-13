@@ -1,18 +1,25 @@
 :local(.component) .actions {
   display: flex;
   align-items: center;
-  height: 70px; }
+  height: 70px;
+}
 
 :local(.component) a {
-  margin: 10px; }
+  margin: 10px;
+}
 
 :local(.component) .expand-icon {
-  margin-left: auto; }
-  :local(.component) .expand-icon .expanded {
-    transform: rotate(180deg); }
+  margin-left: auto;
+}
+
+:local(.component) .expand-icon .expanded {
+  transform: rotate(180deg);
+}
 
 :local(.component) .card-actions-form {
-  width: 100%; }
+  width: 100%;
+}
 
 :local(.component) svg {
-  fill: #fff; }
+  fill: #fff;
+}
