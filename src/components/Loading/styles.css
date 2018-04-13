@@ -27,7 +27,7 @@
   :local(.component) .absolute .loading-icon {
     stroke: #fff; }
     :local(.component) .absolute .loading-icon + p {
-      color: #ffffff; }
+      color: #fff; }
 
 :local(.component) .loading-icon {
   width: 50px;
