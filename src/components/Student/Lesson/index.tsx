@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import Icon from 'components/Icon';
 // import SideMenu from './SideMenu';
+import { connect } from 'react-redux';
+import Loading from 'components/Loading';
 
 class Lesson extends Component<any, any> {
   constructor(props: any) {
     super(props);
 
     this.state = {
-      isHidden: true
+      isHidden: true,
+      qtdRequestLoading: 1,
     };
   }
 
   render() {
+    const activeRequestLoading = this.props.loading.qtdRequestLoading;
+
     return (
       <section className='lesson-page template-black'>
+        <Loading absolutePosition={true} active={activeRequestLoading > 0} />
         {/* <SideMenu courseID={this.props.match.params.courseID} /> */}
         <article
           className={`lesson-container ${this.state.isHidden ? 'hidden' : ''}`}
@@ -410,7 +416,12 @@ class Lesson extends Component<any, any> {
     );
   }
 }
-export default Lesson;
+
+const mapStateToProps = (state: any) => ({
+  loading: state.loading,
+});
+
+export default connect(mapStateToProps)(Lesson);
 
 // import React, { Component } from 'react';
 

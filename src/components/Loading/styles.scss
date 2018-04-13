@@ -30,6 +30,9 @@
     z-index: 70;
     .loading-icon {
       stroke: #fff;
+      +p {
+        color: #fff;
+      }
     }
   }
   .loading-icon {
