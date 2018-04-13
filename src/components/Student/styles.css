@@ -45,14 +45,6 @@
   color: #fff;
 }
 
-:local(.component) .template-black .student-content {
-  background-color: #1a1a1a;
-}
-
-:local(.component) .template-black .course-progress label {
-  color: #fff;
-}
-
 :local(.component) .template-black input:not([type]):focus:not([readonly])+label,
 :local(.component) .template-black input[type='text']:not(.browser-default):focus:not([readonly])+label,
 :local(.component) .template-black input[type='password']:not(.browser-default):focus:not([readonly])+label,
@@ -142,6 +134,10 @@
   background-color: #1a1a1a;
 }
 
+:local(.component) .template-black .lesson-container {
+  background-color: #fff;
+}
+
 :local(.component) .template-black .banner-img:before {
   background: rgba(26, 26, 26, 0);
   background: -moz-linear-gradient(top, rgba(26, 26, 26, 0) 0%, rgba(26, 26, 26, 0) 53%, #1a1a1a 95%, #1a1a1a 100%);
@@ -157,4 +153,25 @@
   background: #1c1f27;
   border: 1px solid #2f343e;
   color: #fff;
+}
+
+:local(.component) .template-black .course-nav {
+  color: #fff;
+}
+
+:local(.component) .template-black .course-nav .course-category {
+  color: #fff;
+}
+
+:local(.component) .template-black .course-nav .card-lessons .card-lesson-block {
+  color: #fff;
+  border-bottom: 1px solid #2f343e;
+}
+
+:local(.component) .template-black .course-nav .card-lessons .card-lesson-block:hover {
+  background-color: #1c1f28;
+}
+
+:local(.component) .template-black .course-nav .card-lessons .icon {
+  fill: #fff;
 }
