@@ -19,4 +19,10 @@
   svg {
     fill: #fff;
   }
+  .loading-icon {
+    stroke: #fff;
+    +p {
+      padding-bottom: 20px;
+    }
+  }
 }
