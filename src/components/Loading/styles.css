@@ -23,7 +23,7 @@
 :local(.component) .absolute {
   position: absolute;
   background-color: #c9c9c9;
-  z-index: 70; }
+  z-index: 56; }
   :local(.component) .absolute .loading-icon {
     stroke: #fff; }
     :local(.component) .absolute .loading-icon + p {
