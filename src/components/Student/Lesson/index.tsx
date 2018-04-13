@@ -65,7 +65,7 @@ class Lesson extends Component<IProps> {
 
 const mapStateToProps = (state: any) => ({
   lesson: state.lesson,
-  loading: state.loading,
+  loading: state.loading
 });
 
 export default connect(mapStateToProps, { fetchLesson, fetchRating })(Lesson);
