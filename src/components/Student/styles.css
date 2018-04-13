@@ -4,6 +4,9 @@
   :local(.component) .template-black .student-course-content {
     background-color: #1a1a1a;
     color: #fff; }
+    :local(.component) .template-black .student-course-content > div {
+      width: 100%;
+      margin: 0; }
     :local(.component) .template-black .student-course-content .action-button .button {
       background-color: rgba(255, 255, 255, 0.3); }
       :local(.component) .template-black .student-course-content .action-button .button:hover {

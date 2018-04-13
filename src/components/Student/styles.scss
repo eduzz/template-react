@@ -7,6 +7,10 @@
     .student-course-content {
       background-color: $darkest-color;
       color: #fff;
+      >div {
+        width: 100%;
+        margin: 0;
+      }
       .action-button .button {
         background-color: transparentize(#fff, 0.7);
         &:hover {
