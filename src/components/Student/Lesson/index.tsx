@@ -50,7 +50,7 @@ class Lesson extends Component<IProps> {
               <Rating lessonID={this.props.match.params.lessonID} />
             </div>
             <Description text={this.props.lesson.description} />
-            <Comments />
+            <Comments lessonID={this.props.match.params.lessonID} />
           </article>
         </section>
       </div>
