@@ -22,7 +22,12 @@
 
 :local(.component) .absolute {
   position: absolute;
-  background-color: rgba(201, 201, 201, 0.5); }
+  background-color: #c9c9c9;
+  z-index: 56; }
+  :local(.component) .absolute .loading-icon {
+    stroke: #fff; }
+    :local(.component) .absolute .loading-icon + p {
+      color: #ffffff; }
 
 :local(.component) .loading-icon {
   width: 50px;

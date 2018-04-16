@@ -1,4 +1,5 @@
 import { get } from 'agent';
+import { increaseLoading, decreaseLoading } from './loading';
 
 const receiveHighlights = (highlights: any) => ({
   type: 'RECEIVE_HIGHLIGHTS',
@@ -7,7 +8,13 @@ const receiveHighlights = (highlights: any) => ({
 
 export const fetchHighlights = () =>
   (dispatch: any) => {
+    dispatch(increaseLoading());
+
     get({ url: '/user/highlights' }).then(
-      res => dispatch(receiveHighlights(res.data.data))
+      res => {
+        dispatch(receiveHighlights(res.data.data));
+
+        dispatch(decreaseLoading());
+      }
     );
   };

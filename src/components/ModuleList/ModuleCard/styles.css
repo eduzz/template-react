@@ -13,3 +13,11 @@
 
 :local(.component) .card-actions-form {
   width: 100%; }
+
+:local(.component) svg {
+  fill: #fff; }
+
+:local(.component) .loading-icon {
+  stroke: #fff; }
+  :local(.component) .loading-icon + p {
+    padding-bottom: 20px; }

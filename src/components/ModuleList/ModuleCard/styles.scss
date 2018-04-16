@@ -16,4 +16,13 @@
   .card-actions-form {
     width: 100%;
   }
+  svg {
+    fill: #fff;
+  }
+  .loading-icon {
+    stroke: #fff;
+    +p {
+      padding-bottom: 20px;
+    }
+  }
 }
