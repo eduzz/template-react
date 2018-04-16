@@ -1,6 +1,6 @@
 export const getTime = (date: any) => {
-  // const oldDate = new Date(date);
-  const oldDate = new Date('2018-04-7 00:36:56.000');
+  // const oldDate = new Date('2018-04-15 00:36:56.000');
+  const oldDate = new Date(date);
   const newDate = new Date();
   const milliseconds = newDate.getTime() - oldDate.getTime();
 
