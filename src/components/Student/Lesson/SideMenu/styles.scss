@@ -163,7 +163,7 @@
       .card-lesson-content {
         padding: 0;
       }
-      svg {
+      svg:not(.loading-icon) {
         fill: #fff;
       }
     } //end card lesson

@@ -132,7 +132,7 @@
       padding: 0; }
     :local(.component).course-nav .card-lessons .card-lesson-content {
       padding: 0; }
-    :local(.component).course-nav .card-lessons svg {
+    :local(.component).course-nav .card-lessons svg:not(.loading-icon) {
       fill: #fff; }
   :local(.component).course-nav .card-lessons-header:after, :local(.component).course-nav .card-lessons-header:before {
     height: 12px; }
