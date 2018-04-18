@@ -1,5 +1,4 @@
 import { get, post, del, put } from 'agent';
-import { increaseLoading, decreaseLoading } from './loading';
 
 const receiveModules = (modules: Object[]) => ({
   type: 'RECEIVE_MODULES',
@@ -33,14 +32,11 @@ export const fetchModules = (courseID: number | string) =>
     dispatch({
       type: 'REQUEST_MODULES',
     });
-    dispatch(increaseLoading());
 
     get({ url: `/courses/${courseID}/modules` }).then(
       res => {
         dispatch(receiveModules(res.data.data));
-
-        dispatch(decreaseLoading());
-      }
+      },
     );
   };
 

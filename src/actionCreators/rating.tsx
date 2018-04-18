@@ -1,4 +1,5 @@
 import { get, post } from 'agent';
+import { increaseLoading, decreaseLoading } from './loading';
 
 const receiveRating = (rating: any) => ({
   type: 'RECEIVE_RATING',
@@ -9,6 +10,8 @@ export const sendRating = (lessonID: any, rating: any) =>
   (dispatch: Function) => {
     dispatch(receiveRating(rating));
 
+    dispatch(increaseLoading());
+
     const data = {
       rating: rating.user_rating,
     };
@@ -16,6 +19,10 @@ export const sendRating = (lessonID: any, rating: any) =>
     return post({ url: `/learner/lessons/${lessonID}/ratings`, data }).then(
       res => {
         console.log(res.data);
+        dispatch(decreaseLoading());
+      },
+      err => {
+        dispatch(decreaseLoading());
       }
     );
   };

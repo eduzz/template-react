@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import SideMenu from './SideMenu';
 import Navigation from './Navigation';
 import Player from './Player';
 import Share from './Share';
@@ -8,8 +7,9 @@ import Description from './Description';
 import Comments from './Comments';
 import { fetchLesson } from 'actionCreators/lessons';
 import { fetchRating } from 'actionCreators/rating';
-import Loading from 'components/Loading';
+// import Loading from 'components/Loading';
 import Rating from './Rating';
+import SideMenu from './SideMenu';
 
 const styles = require('./styles.css');
 
@@ -39,7 +39,7 @@ class Lesson extends Component<IProps> {
     return (
       <div className={styles.component}>
         <section className='lesson-page template-black'>
-          <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} />
+          {/* <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} /> */}
           <SideMenu courseID={this.props.match.params.courseID} />
           <article className='lesson-container'>
             <Navigation

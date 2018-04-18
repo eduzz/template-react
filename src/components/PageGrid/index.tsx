@@ -9,7 +9,7 @@ interface IProps {
 class PageGrid extends React.Component<IProps> {
   render() {
     return (
-      <Grid container>
+      <Grid container spacing={0}>
         {this.props.layout.map((component: any, index: number) => {
           const Component = components[component.type];
 

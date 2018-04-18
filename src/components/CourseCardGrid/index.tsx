@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import CourseCard from './CourseCard';
 import { fetchCourses, cleanCourses } from 'actionCreators/courses';
 import { getVisibleCourses } from 'reducers';
-// import Loading from 'components/Loading';
 import { CircularProgress } from 'material-ui/Progress';
 
 const styles = require('./styles.css');
@@ -53,18 +52,32 @@ class CourseCardGrid extends Component<IProps, IState> {
   }
 
   render() {
+    if (this.props.courses.length) {
+      return (
+        <div className={styles.component}>
+          <div className='content'>
+            {/* <Loading active={!this.props.courses.length} /> */}
+
+            {this.props.courses.map((course: any) =>
+              <CourseCard className='cards' key={course.id} data={course} />
+            )}
+
+          </div>
+          <div className='circular-loading'>
+            {!this.props.courses.finished && <CircularProgress size={50} />}
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className={styles.component}>
-        <div className='content'>
-          {/* <Loading active={!this.props.courses.length} /> */}
-
-          {this.props.courses.map((course: any) =>
-            <CourseCard className='cards' key={course.id} data={course} />
+        <div className='content loading'>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((index: any) =>
+            <div className='loading-block' key={index}>
+              <div className='loading-effect'></div>
+            </div>
           )}
-
-        </div>
-        <div className='loading'>
-          {!this.props.courses.finished && <CircularProgress size={50} />}
         </div>
       </div>
     );

@@ -16,7 +16,7 @@ const courses = (state: any = [], action: any) => {
         ...state,
       ];
 
-      courses['finished'] = false;
+      courses['finished'] = courses.length ? false : true;
 
       return courses;
     }

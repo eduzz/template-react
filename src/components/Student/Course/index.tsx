@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PageGrid from 'components/PageGrid';
-import Loading from 'components/Loading';
 
 interface IProps {
   fetchCourse: any;
@@ -67,11 +66,8 @@ class Course extends Component<IProps> {
       }
     ];
 
-    const activeRequestLoading = this.props.loading.qtdRequestLoading;
-
     return (
       <section className='student-course-content' >
-        <Loading absolutePosition={true} active={activeRequestLoading > 0} />
         <PageGrid layout={this.layout} />
       </section>
     );
@@ -80,7 +76,6 @@ class Course extends Component<IProps> {
 
 const mapStateToProps = (state: any) => ({
   pageGrid: state.pageGrid,
-  loading: state.loading,
 });
 
 export default connect(mapStateToProps)(Course);

@@ -1,0 +1,16 @@
+:local(.component) {
+  .loading {
+    padding-top: 8px;
+    width: 100%;
+  }
+
+  .loading-block {
+    padding: 0 4px;
+  }
+
+  .loading-effect {
+    width: 100%;
+    height: calc(250px - 8px);
+    background-color: rgba(165, 165, 165, 0.1)
+  }
+}

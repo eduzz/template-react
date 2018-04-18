@@ -1,0 +1,6 @@
+:local(.component) {
+  position: fixed;
+  width: 100%; }
+  :local(.component) .progress {
+    height: 3px;
+    margin: 0; }
