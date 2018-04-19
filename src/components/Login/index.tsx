@@ -87,7 +87,7 @@ class Login extends Component<IProps> {
           </div>
           <div className='panel-footer'>
             <p>Não tem uma conta ainda?</p>
-            <a href='' className='button outline-light'>
+            <a href='' className='button outline-dark'>
               <span>Comece Agora</span>
             </a>
           </div>
