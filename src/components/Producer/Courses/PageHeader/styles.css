@@ -16,14 +16,14 @@
   :local(.component) .page-title-icon .icon {
     width: 45px;
     height: 45px;
-    fill: #1c1f27;
+    fill: #172b4d;
     margin-right: 15px; }
   :local(.component) .page-title {
     font-size: 1.75rem;
     font-weight: 400;
     margin: 0;
     margin-bottom: 5px;
-    color: #1c1f27; }
+    color: #172b4d; }
   :local(.component) .page-subtitle {
     font-size: 1rem;
     letter-spacing: 0.5px;

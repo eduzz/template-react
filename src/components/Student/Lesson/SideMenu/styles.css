@@ -6,7 +6,7 @@
   :local(.component).course-nav .modules-block {
     height: calc(100vh - 229px);
     overflow-y: auto;
-    background-color: #1c1f27; }
+    background-color: #172b4d; }
   :local(.component).course-nav .course-block {
     padding: 20px; }
   :local(.component).course-nav .toggle-nav {
@@ -19,7 +19,7 @@
     margin: auto;
     height: 100%;
     width: 40px;
-    background-color: #1c1f27;
+    background-color: #172b4d;
     border-radius: 0;
     display: flex;
     align-items: center;
@@ -52,7 +52,7 @@
   :local(.component).course-nav .course-data {
     position: relative;
     padding-right: 40px;
-    background-color: #1c1f27;
+    background-color: #172b4d;
     transition: all 0.3s ease-in-out;
     cursor: pointer; }
   :local(.component).course-nav .course-actions {
@@ -60,7 +60,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: #1c1f27; }
+    background-color: #172b4d; }
     :local(.component).course-nav .course-actions .button {
       border-radius: 0;
       background-color: transparent;
@@ -125,7 +125,7 @@
         right: 25px;
         transition: all 0.3s ease-in-out; }
       :local(.component).course-nav .card-lessons .card-lesson-block:hover {
-        background-color: #1c1f28; }
+        background-color: #172b4e; }
         :local(.component).course-nav .card-lessons .card-lesson-block:hover .icon {
           fill: #3066d0; }
     :local(.component).course-nav .card-lessons .card-lessons-wrapper {
@@ -153,10 +153,10 @@
       top: 0;
       min-width: 350px;
       transform: translateX(30px);
-      background-color: rgba(28, 31, 39, 0.8); }
+      background-color: rgba(23, 43, 77, 0.8); }
       :local(.component).course-nav.hidden .course-data:hover {
         transform: translateX(350px);
-        background-color: #1c1f27; }
+        background-color: #172b4d; }
     :local(.component).course-nav.hidden .course-progress {
       height: 0;
       overflow: hidden; }
@@ -168,7 +168,7 @@
     :local(.component).course-nav.hidden .toggle-nav {
       background-color: transparent; }
       :local(.component).course-nav.hidden .toggle-nav:hover {
-        background-color: rgba(28, 31, 39, 0.8); }
+        background-color: rgba(23, 43, 77, 0.8); }
       :local(.component).course-nav.hidden .toggle-nav span:first-child {
         transform: rotate(-35deg); }
       :local(.component).course-nav.hidden .toggle-nav span:last-child {

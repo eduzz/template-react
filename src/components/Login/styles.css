@@ -26,12 +26,12 @@
     :local(.component) .login-form a:not(.button) {
       float: right;
       font-size: 0.75rem;
-      color: #3066d0; }
+      color: #172b4d; }
   :local(.component) .card-panel {
     width: 100%;
     padding: 150px 0 0 0; }
     :local(.component) .card-panel .button {
-      background-color: #203153; }
+      background-color: #78cc5c; }
   :local(.component) .input-box {
     margin-bottom: 10px; }
   :local(.component) .panel-footer {
@@ -51,15 +51,3 @@
       object-fit: cover;
       position: relative;
       z-index: 1; }
-    :local(.component) .login-background:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      display: block;
-      margin: auto;
-      background: #203153;
-      opacity: 0.4;
-      z-index: 2; }

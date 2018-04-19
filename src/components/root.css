@@ -195,19 +195,19 @@ body {
     .button.outline-light:hover {
       background-color: #fff; }
       .button.outline-light:hover span {
-        color: #1c1f27; }
+        color: #172b4d; }
       .button.outline-light:hover .icon {
-        fill: #1c1f27; }
+        fill: #172b4d; }
   .button.outline-dark {
     background-color: transparent;
-    border: 1px solid #1c1f27; }
+    border: 1px solid #172b4d; }
     .button.outline-dark span {
-      color: #1c1f27; }
+      color: #172b4d; }
     .button.outline-dark .icon {
-      fill: #1c1f27;
+      fill: #172b4d;
       transition: all 0.3s ease-in-out; }
     .button.outline-dark:hover {
-      background-color: #1c1f27; }
+      background-color: #172b4d; }
       .button.outline-dark:hover span {
         color: #fff; }
       .button.outline-dark:hover .icon {
@@ -215,7 +215,7 @@ body {
 
 .input-label {
   display: block;
-  color: #1c1f27;
+  color: #172b4d;
   text-transform: uppercase;
   margin-bottom: 5px;
   letter-spacing: 1px;

@@ -13,7 +13,7 @@
     width: 100%;
     max-width: 100%; }
   :local(.component) ::-webkit-scrollbar-track {
-    background-color: #1c1f27; }
+    background-color: #172b4d; }
   :local(.component) ::-webkit-scrollbar {
     width: 6px;
     background: #f4f4f4; }
