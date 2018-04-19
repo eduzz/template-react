@@ -12,7 +12,12 @@
     "eject": "react-scripts-ts eject",
     "lint": "tslint -p . && tsc --noEmit",
     "precommit": "yarn lint",
-    "prepush": "yarn lint"
+    "prepush": "yarn lint",
+    "docker-build": "docker build . -t nutror-front --compress",
+    "docker-tag": "docker tag nutror-front infraeduzz/nutror-front",
+    "docker-push": "docker push infraeduzz/nutror-front",
+    "deploy": "yarn build && yarn docker-build && yarn docker-tag && yarn docker-push",
+    "dev": "docker-compose up --build"
   },
   "dependencies": {
     "@types/react-grid-layout": "^0.16.4",
