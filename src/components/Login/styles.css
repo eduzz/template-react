@@ -9,8 +9,7 @@
   :local(.component) .default-logo {
     display: block;
     height: 60px;
-    margin: auto;
-    margin-bottom: 10px; }
+    margin: 150px auto auto; }
   :local(.component) .nutror-logo svg {
     height: 40px; }
   :local(.component) .login-form {
@@ -18,18 +17,21 @@
     height: 100vh;
     padding: 30px;
     background: #fff;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-flow: column; }
+    position: relative; }
+    :local(.component) .login-form form {
+      width: 100%;
+      height: calc(100vh - 310px);
+      display: flex;
+      align-items: center;
+      flex-flow: column; }
     :local(.component) .login-form a:not(.button) {
       float: right;
       font-size: 0.75rem;
       color: #172b4d; }
+  :local(.component) form .card-panel {
+    margin-bottom: 60px; }
   :local(.component) .card-panel {
-    width: 100%;
-    padding: 150px 0 0 0; }
+    width: 100%; }
     :local(.component) .card-panel .button {
       background-color: #78cc5c; }
   :local(.component) .input-box {
@@ -51,3 +53,5 @@
       object-fit: cover;
       position: relative;
       z-index: 1; }
+  :local(.component) footer {
+    margin-top: 0; }

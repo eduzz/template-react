@@ -11,8 +11,7 @@
   .default-logo {
     display: block;
     height: 60px;
-    margin: auto;
-    margin-bottom: 10px;
+    margin: 150px auto auto;
   }
   .nutror-logo svg {
     height: 40px;
@@ -24,19 +23,24 @@
     padding: 30px;
     background: #fff;
     position: relative;
-    display: flex; // text-align: center;
-    align-items: center;
-    justify-content: space-between;
-    flex-flow: column;
+    form {
+      width: 100%;
+      height: calc(100vh - 310px);
+      display: flex;
+      align-items: center;
+      flex-flow: column;
+    }
     a:not(.button) {
       float: right;
       @include fontsize(12);
       color: $text-color;
     }
   }
+  form .card-panel {
+    margin-bottom: 60px;
+  }
   .card-panel {
     width: 100%;
-    padding: 150px 0 0 0;
     .button {
       background-color: $primary-brand;
     }
@@ -64,5 +68,8 @@
       position: relative;
       z-index: 1;
     }
+  }
+  footer {
+    margin-top: 0;
   }
 }
