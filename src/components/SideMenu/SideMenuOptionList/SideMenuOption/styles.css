@@ -10,10 +10,10 @@
   font-weight: 500;
   background-color: #2f343e; }
   :local(.component) .nav-button:hover {
-    background-color: #172b4d; }
+    background-color: #1c1f27; }
 
 :local(.component) .submenu .nav-button {
-  background-color: #172b4d; }
+  background-color: #1c1f27; }
   :local(.component) .submenu .nav-button:hover {
     background-color: #0c0c0c; }
 
