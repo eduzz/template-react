@@ -6,10 +6,16 @@
   width: 100%;
   background: #cecece;
   margin-top: -60px; }
+  :local(.component) .title {
+    margin: 0 0 10px;
+    display: inline-block;
+    color: #596375;
+    font-size: 1rem;
+    font-weight: 600; }
   :local(.component) .default-logo {
     display: block;
     height: 60px;
-    margin: 150px auto auto; }
+    margin: auto; }
   :local(.component) .nutror-logo svg {
     height: 40px; }
   :local(.component) .login-form {
@@ -17,10 +23,14 @@
     height: 100vh;
     padding: 30px;
     background: #fff;
-    position: relative; }
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column; }
+    :local(.component) .login-form > div {
+      margin: auto 0; }
     :local(.component) .login-form form {
       width: 100%;
-      height: calc(100vh - 310px);
       display: flex;
       align-items: center;
       flex-flow: column; }
@@ -54,4 +64,4 @@
       position: relative;
       z-index: 1; }
   :local(.component) footer {
-    margin-top: 0; }
+    margin: auto auto 0; }

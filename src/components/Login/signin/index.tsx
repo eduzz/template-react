@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { requestLogin } from 'actionCreators/auth';
 
 interface IProps {
@@ -31,7 +32,7 @@ export class SignIn extends Component<IProps> {
               <input
                 autoFocus
                 tabIndex={1}
-                placeholder='Email'
+                placeholder='E-mail'
                 type='email'
                 ref='username'
               />
@@ -61,9 +62,9 @@ export class SignIn extends Component<IProps> {
         </div>
         <div className='panel-footer'>
           <p>Não tem uma conta ainda?</p>
-          <a href='' className='button outline-dark'>
+          <Link to={`/login/signup`} className='button outline-dark'>
             <span>Comece Agora</span>
-          </a>
+          </Link>
         </div>
       </form>
     );
