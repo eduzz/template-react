@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ModuleCard from './ModuleCard';
-import Loading from 'components/Loading';
 import Dialog, { DialogContent, DialogContentText, DialogActions } from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
@@ -9,6 +8,8 @@ import CloseIcon from 'material-ui-icons/Close';
 import Button from 'material-ui/Button';
 import { v4 } from 'uuid';
 import { fetchModules, cleanModules, fetchModuleLessons, addModule, postModule, editModulePersist, removeModule, deleteModule, deleteModulePersist, deleteModuleUndo } from 'actionCreators/modules';
+
+const styles = require('./styles.css');
 
 interface IProps {
   courseID: string | number;
@@ -47,7 +48,7 @@ class ModuleList extends Component<IProps, IState> {
   }
 
   componentDidMount() {
-    if (this.props.courseID && this.props.courseID !== 'new' && !this.props.modules.length) {
+    if (this.props.courseID && this.props.courseID !== 'new') {
       this.props.fetchModules(this.props.courseID);
     }
   }
@@ -91,9 +92,7 @@ class ModuleList extends Component<IProps, IState> {
 
   render() {
     return (
-      <div>
-        <Loading active={!this.props.modules.length} />
-
+      this.props.modules.length ? <div>
         {this.props.modules.map((module, key) => (
           <ModuleCard
             key={module.id || v4()}
@@ -191,6 +190,19 @@ class ModuleList extends Component<IProps, IState> {
           ]}
         />
       </div>
+        :
+        <div className={styles.component}>
+          <div className='loading'>
+            <div className='block'>
+              <div className='line'></div>
+              <div className='line'></div>
+            </div>
+            <div className='block'>
+              <div className='line'></div>
+              <div className='line'></div>
+            </div>
+          </div>
+        </div>
     );
   }
 }

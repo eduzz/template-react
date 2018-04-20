@@ -1,11 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
 import ModuleList from 'components/ModuleList';
 import Icon from 'components/Icon';
+import { fetchCourse, fetchCourseProgress } from 'actionCreators/course';
+import { Link } from 'react-router-dom';
 
 const styles = require('./styles.css');
 
 interface IProps {
   courseID: number | string;
+  course: any;
+  lesson: any;
+  fetchCourse: any;
+  fetchCourseProgress: any;
 }
 
 interface IState {
@@ -19,6 +26,11 @@ class SideMenu extends Component<IProps, IState> {
     this.state = {
       isHidden: false,
     };
+  }
+
+  componentDidMount() {
+    this.props.fetchCourse(this.props.courseID);
+    this.props.fetchCourseProgress(this.props.courseID);
   }
 
   render() {
@@ -49,24 +61,41 @@ class SideMenu extends Component<IProps, IState> {
               <span />
             </div>
           </a>
-          <label className='course-category'>Marketing e Vendas</label>
-          <h2 className='course-title'>Primeira Venda</h2>
-          <div className='course-progress'>
-            <label>Progresso: 20%</label>
-            <div className='progress-bar'>
-              <span style={{ width: '40%' }} />
+          {this.props.course.title ?
+            <Fragment>
+              <label className='course-category'>{this.props.course.category.name}</label>
+              <h2 className='course-title'>{this.props.course.title}</h2>
+              <div className='course-progress'>
+                <label>Progresso: {parseInt(this.props.course.progress || 0)}%</label>
+                <div className='progress-bar'>
+                  <span style={{ width: this.props.course.progress || 0 + '%' }} />
+                </div>
+              </div>
+            </Fragment>
+            :
+            <div className='loading'>
+              <div className='course-category'>
+                <div className='line'></div>
+              </div>
+              <div className='course-title'>
+                <div className='line'></div>
+              </div>
+              <div className='course-progress'>
+                <div className='line'></div>
+                <div className='line'></div>
+              </div>
             </div>
-          </div>
+          }
         </div>
         <div className='course-block course-actions'>
-          <a className='button'>
+          <Link to='/student/courses' className='button'>
             <Icon name='home' />
             <span>Inicio</span>
-          </a>
-          <a className='button'>
+          </Link>
+          <Link to={`/student/courses/${this.props.courseID}`} className='button'>
             <Icon name='video' />
             <span>Tela do Curso</span>
-          </a>
+          </Link>
         </div>
 
         <div className='modules-block'>
@@ -81,4 +110,8 @@ class SideMenu extends Component<IProps, IState> {
   }
 }
 
-export default SideMenu;
+const mapStateToProps = (state: any) => ({
+  course: state.course,
+});
+
+export default connect(mapStateToProps, { fetchCourse, fetchCourseProgress })(SideMenu);

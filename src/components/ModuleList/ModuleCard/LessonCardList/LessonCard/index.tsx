@@ -19,7 +19,7 @@ const lessonCard = ({ courseID, lesson, editable, type }: any) => (
           type !== 'simple' ?
             <p className='card-lesson-description' dangerouslySetInnerHTML={{ __html: lesson.description }}></p>
             :
-            <Icon name='play' />
+            <Icon name={lesson.watched ? 'replay' : 'play'} />
         }
       </div>
       {editable && <Link

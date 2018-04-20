@@ -6,6 +6,10 @@ const receiveHighlights = (highlights: any) => ({
   highlights,
 });
 
+export const cleanHighlights = () => ({
+  type: 'CLEAN_HIGHLIGHTS',
+});
+
 export const fetchHighlights = () =>
   (dispatch: any) => {
     dispatch(increaseLoading());
@@ -14,6 +18,9 @@ export const fetchHighlights = () =>
       res => {
         dispatch(receiveHighlights(res.data.data));
 
+        dispatch(decreaseLoading());
+      },
+      err => {
         dispatch(decreaseLoading());
       }
     );

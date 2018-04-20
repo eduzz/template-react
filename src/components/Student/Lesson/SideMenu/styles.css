@@ -176,3 +176,23 @@
     :local(.component).course-nav.hidden + article {
       margin-left: 0;
       padding: 30px 50px; }
+  :local(.component).course-nav .loading .course-category .line {
+    height: 11px;
+    width: 50%;
+    margin-bottom: 5px;
+    background-color: rgba(165, 165, 165, 0.1); }
+  :local(.component).course-nav .loading .course-title .line {
+    height: 22px;
+    width: 90%;
+    margin-bottom: 15px;
+    background-color: rgba(165, 165, 165, 0.1); }
+  :local(.component).course-nav .loading .course-progress {
+    height: 26px;
+    margin-bottom: 9px; }
+    :local(.component).course-nav .loading .course-progress .line {
+      height: 10px;
+      background-color: rgba(165, 165, 165, 0.1); }
+    :local(.component).course-nav .loading .course-progress:nth-child(1) {
+      width: 109px; }
+    :local(.component).course-nav .loading .course-progress:nth-child(2) {
+      width: 109px; }

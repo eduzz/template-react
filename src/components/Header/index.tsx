@@ -2,11 +2,13 @@ import React from 'react';
 import UserMenu from './UserMenu';
 import Icon from 'components/Icon';
 import { Link } from 'react-router-dom';
+import Progress from 'components/Progress';
 
 const styles = require('./styles.css');
 
 const header = () => (
   <header className={styles.component}>
+    <Progress />
     <div className='container'>
       <a className='header-logo'>
         <svg viewBox='0 0 376 376'>

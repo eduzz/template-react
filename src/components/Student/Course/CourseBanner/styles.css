@@ -2,3 +2,50 @@
   display: flex;
   justify-content: flex-start;
   cursor: pointer; }
+
+:local(.component) .loading {
+  pointer-events: none; }
+  :local(.component) .loading .banner-course {
+    height: 400px; }
+  :local(.component) .loading .course-name {
+    height: 33px;
+    width: 50vw;
+    margin: 30px 0 30px 0;
+    background-color: rgba(165, 165, 165, 0.1); }
+  :local(.component) .loading .lines .line {
+    height: 10px;
+    margin-bottom: 5px;
+    background-color: rgba(165, 165, 165, 0.1); }
+    :local(.component) .loading .lines .line:nth-child(1) {
+      width: 65vw; }
+    :local(.component) .loading .lines .line:nth-child(2) {
+      width: 70vw; }
+    :local(.component) .loading .lines .line:nth-child(3) {
+      width: 50vw; }
+  :local(.component) .loading .course-author {
+    height: 113px;
+    padding: 20px 0 20px 0; }
+    :local(.component) .loading .course-author .course-author-img {
+      background-color: rgba(165, 165, 165, 0.1); }
+    :local(.component) .loading .course-author .line {
+      height: 10px;
+      width: 100px;
+      background-color: rgba(165, 165, 165, 0.1); }
+  :local(.component) .loading .course-progress {
+    margin-top: 3px; }
+    :local(.component) .loading .course-progress .line {
+      margin-bottom: 5px;
+      width: 100px;
+      background-color: rgba(165, 165, 165, 0.1); }
+      :local(.component) .loading .course-progress .line:nth-child(1) {
+        height: 10px;
+        width: 125px; }
+      :local(.component) .loading .course-progress .line:nth-child(2) {
+        height: 3px;
+        width: 250px; }
+  :local(.component) .loading .course-news .line {
+    height: 10px;
+    width: 82px;
+    background-color: rgba(165, 165, 165, 0.1); }
+  :local(.component) .loading .course-news span {
+    background-color: rgba(165, 165, 165, 0.1); }

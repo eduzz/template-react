@@ -12,13 +12,15 @@ const receiveLesson = (lesson: Object) => ({
 
 export const fetchLesson = (lessonID: number) =>
   (dispatch: any) => {
-    dispatch(cleanLesson());
     dispatch(increaseLoading());
 
     get({ url: '/lessons/' + lessonID }).then(
       res => {
         dispatch(receiveLesson(res.data.data));
 
+        dispatch(decreaseLoading());
+      },
+      err => {
         dispatch(decreaseLoading());
       }
     );

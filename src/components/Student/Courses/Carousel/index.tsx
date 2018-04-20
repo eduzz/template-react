@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
-import { fetchHighlights } from 'actionCreators/highlights';
+import { fetchHighlights, cleanHighlights } from 'actionCreators/highlights';
 import { Link } from 'react-router-dom';
 import { cdn } from 'constants/index';
-import Loading from 'components/Loading';
+import Grid from 'material-ui/Grid';
+
+const styles = require('./styles.css');
 
 function SamplePrevArrow(props: any) {
   const { className, onClick } = props;
@@ -35,11 +37,16 @@ function SampleNextArrow(props: any) {
 interface IProps {
   highlights: any;
   fetchHighlights: any;
+  cleanHighlights: any;
 }
 
 class Carousel extends Component<IProps> {
   componentDidMount() {
     this.props.fetchHighlights();
+  }
+
+  componentWillUnmount() {
+    this.props.cleanHighlights();
   }
 
   render() {
@@ -54,23 +61,40 @@ class Carousel extends Component<IProps> {
       nextArrow: <SampleNextArrow />
     };
 
-    return (
-      <div>
-        <Loading active={!this.props.highlights.length} />
-        <Slider {...settings} className='featured-carousel'>
-          {this.props.highlights.map((highlight: any) =>
-            <div key={highlight.id} className='featured-item'>
-              <div className='content'>
-                <h3 className='item-title'>{highlight.title}</h3>
-                <p className='item-content'>{highlight.description}</p>
-                <Link to={`courses/${highlight.id}`} className='button outline'>
-                  <span>Acessar</span>
-                </Link>
+    if (this.props.highlights.length) {
+      return (
+        <div className={styles.component}>
+          <Slider {...settings} className='featured-carousel'>
+            {this.props.highlights.map((highlight: any) =>
+              <div key={highlight.id} className='featured-item'>
+                <div className='content'>
+                  <h3 className='item-title'>{highlight.title}</h3>
+                  <p className='item-content'>{highlight.description}</p>
+                  <Link to={`courses/${highlight.id}`} className='button outline'>
+                    <span>Acessar</span>
+                  </Link>
+                </div>
+                <img alt='' src={highlight.customizations && cdn + highlight.customizations.avatar} />
               </div>
-              <img alt='' src={highlight.customizations && cdn + highlight.customizations.avatar} />
-            </div>
-          )}
-        </Slider>
+            )}
+          </Slider>
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.component}>
+        <Grid container className='loading' justify='center' spacing={0}>
+          <Grid item xs={4} className='loading-block'>
+            <div className='loading-effect'></div>
+          </Grid>
+          <Grid item xs={4} className='loading-block'>
+            <div className='loading-effect'></div>
+          </Grid>
+          <Grid item xs={4} className='loading-block'>
+            <div className='loading-effect'></div>
+          </Grid>
+        </Grid>
       </div>
     );
   }
@@ -80,4 +104,4 @@ const mapStateToProps = (state: any) => ({
   highlights: state.highlights,
 });
 
-export default connect(mapStateToProps, { fetchHighlights })(Carousel);
+export default connect(mapStateToProps, { fetchHighlights, cleanHighlights })(Carousel);

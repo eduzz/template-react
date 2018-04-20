@@ -16,13 +16,13 @@ const receiveAnswers = (answers: any, commentID: any) => ({
   commentID,
 });
 
-const cleanComments = () => ({
+export const cleanComments = () => ({
   type: 'CLEAN_COMMENTS',
 });
 
 export const fetchComments = (lessonID: any) =>
   (dispatch: Function) => {
-    dispatch(cleanComments());
+    // dispatch(cleanComments());
 
     get({ url: `/learner/lessons/${lessonID}/comments` }).then(
       res => dispatch(receiveComments(res.data.data))

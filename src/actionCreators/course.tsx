@@ -34,6 +34,9 @@ export const fetchCourse = (courseID: number) => (dispatch: Function) => {
       dispatch(receiveCourse(res.data.data));
 
       dispatch(decreaseLoading());
+    },
+    err => {
+      dispatch(decreaseLoading());
     }
   );
 };
@@ -57,6 +60,9 @@ export const fetchCourseNews = (courseID: number) =>
       res => {
         dispatch(receiveCourseNews(res.data.data));
 
+        dispatch(decreaseLoading());
+      },
+      err => {
         dispatch(decreaseLoading());
       }
     );
