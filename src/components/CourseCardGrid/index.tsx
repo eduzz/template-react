@@ -4,6 +4,7 @@ import CourseCard from './CourseCard';
 import { fetchCourses, cleanCourses } from 'actionCreators/courses';
 import { getVisibleCourses } from 'reducers';
 import { CircularProgress } from 'material-ui/Progress';
+import InfinityScroll from 'components/InfinityScroll';
 
 const styles = require('./styles.css');
 
@@ -21,33 +22,18 @@ interface IState {
 class CourseCardGrid extends Component<IProps, IState> {
   private PAGE_SIZE: number = 10;
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      pageNumber: 1,
-    };
-  }
-
   componentDidMount() {
-    this.props.fetchCourses(this.props.type, this.state.pageNumber, this.PAGE_SIZE);
-
-    document.addEventListener('scroll', this.handleScroll.bind(this));
+    this.props.cleanCourses();
+    this.props.fetchCourses(this.props.type, 1, this.PAGE_SIZE);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('scroll', this.handleScroll);
-
     this.props.cleanCourses();
   }
 
-  handleScroll = (e: any) => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && this.props.courses.finished && this.state.pageNumber < this.props.courses.totalPages) {
-      this.props.fetchCourses(this.props.type, this.state.pageNumber + 1, this.PAGE_SIZE);
-
-      this.setState({
-        pageNumber: this.state.pageNumber + 1,
-      });
+  handleScrollToBottom = (pageNumber: number) => {
+    if (this.props.courses.finished) {
+      this.props.fetchCourses(this.props.type, pageNumber, this.PAGE_SIZE);
     }
   }
 
@@ -55,17 +41,19 @@ class CourseCardGrid extends Component<IProps, IState> {
     if (this.props.courses.length) {
       return (
         <div className={styles.component}>
-          <div className='content'>
-            {/* <Loading active={!this.props.courses.length} /> */}
-
-            {this.props.courses.map((course: any) =>
-              <CourseCard className='cards' key={course.id} data={course} />
-            )}
-
-          </div>
-          <div className='circular-loading'>
-            {!this.props.courses.finished && <CircularProgress size={50} />}
-          </div>
+          <InfinityScroll
+            onScrollToBottom={this.handleScrollToBottom}
+            totalPages={this.props.courses.totalPages}
+          >
+            <div className='content'>
+              {this.props.courses.map((course: any) =>
+                <CourseCard className='cards' key={course.id} data={course} />
+              )}
+            </div>
+            <div className='circular-loading'>
+              {!this.props.courses.finished && <CircularProgress size={50} />}
+            </div>
+          </InfinityScroll>
         </div>
       );
     }

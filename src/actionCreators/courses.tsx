@@ -7,7 +7,7 @@ const receiveCourses = (courses: Array<Object>, totalPages: any) => ({
 });
 
 export const cleanCourses = () => ({
-  type: 'CLEAN_COURSES'
+  type: 'CLEAN_COURSES',
 });
 
 export const fetchCourses = (type: string, page: number, size: number) =>

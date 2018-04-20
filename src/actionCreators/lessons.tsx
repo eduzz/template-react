@@ -19,6 +19,9 @@ export const fetchLesson = (lessonID: number) =>
         dispatch(receiveLesson(res.data.data));
 
         dispatch(decreaseLoading());
+      },
+      err => {
+        dispatch(decreaseLoading());
       }
     );
   };

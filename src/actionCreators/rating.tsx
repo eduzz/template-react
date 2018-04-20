@@ -18,7 +18,6 @@ export const sendRating = (lessonID: any, rating: any) =>
 
     return post({ url: `/learner/lessons/${lessonID}/ratings`, data }).then(
       res => {
-        console.log(res.data);
         dispatch(decreaseLoading());
       },
       err => {

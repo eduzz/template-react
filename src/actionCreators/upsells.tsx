@@ -11,7 +11,10 @@ export const fetchUpsells = (courseID: number) =>
     dispatch(increaseLoading());
 
     get({ url: `/learner/course/${courseID}/upsell` }).then(
-      res => dispatch(receiveUpsells(res.data.data)),
+      res => {
+        dispatch(receiveUpsells(res.data.data));
+        dispatch(decreaseLoading());
+      },
       err => dispatch(decreaseLoading()),
     );
   };
