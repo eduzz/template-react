@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const Description = ({ text }: IProps) => (
-  text ?
+  text !== undefined ?
     <div className='lesson-description'>
       <div className='row'>
         <div className='col s12 m8 l9' dangerouslySetInnerHTML={{ __html: text }}>
