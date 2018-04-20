@@ -47,6 +47,8 @@
       text-transform: none;
       padding: 12px 30px;
       border-radius: 30px; }
+      :local(.component) .card-panel .button[disabled] {
+        opacity: .5; }
   :local(.component) .input-box {
     margin-bottom: 10px; }
   :local(.component) .panel-footer {

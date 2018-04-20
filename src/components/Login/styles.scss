@@ -58,6 +58,9 @@
       text-transform: none;
       padding: 12px 30px;
       border-radius: 30px;
+      &[disabled] {
+        opacity: .5;
+      }
     }
   }
   .input-box {
