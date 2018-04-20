@@ -4,6 +4,8 @@ import Icon from 'material-ui/Icon';
 import { connect } from 'react-redux';
 import { fetchRating, sendRating } from 'actionCreators/rating';
 
+const styles = require('./styles.css');
+
 interface IProps {
   lessonID: any;
   rating: any;
@@ -36,17 +38,33 @@ class Rating extends Component<IProps, IState> {
 
     const rating = this.props.rating.user_rating || this.props.rating.avg || 0;
 
+    if (this.props.rating.avg) {
+      return (
+        <div className='rating'>
+          {ratingValues.map(rate =>
+            <Checkbox
+              key={rate}
+              style={{ color }}
+              icon={<Icon>star_border</Icon>}
+              checkedIcon={<Icon>star</Icon>}
+              checked={rating >= rate}
+              disabled={this.props.rating.user_rating}
+              onClick={() => this.handleChange(rate)}
+            />
+          )}
+        </div>
+      );
+    }
+
     return (
-      <div className='rating'>
+      <div className={styles.loading}>
         {ratingValues.map(rate =>
           <Checkbox
+            className='star'
             key={rate}
-            style={{ color }}
-            icon={<Icon>star_border</Icon>}
             checkedIcon={<Icon>star</Icon>}
-            checked={rating >= rate}
-            disabled={this.props.rating.user_rating}
-            onClick={() => this.handleChange(rate)}
+            checked={true}
+            disabled={true}
           />
         )}
       </div>

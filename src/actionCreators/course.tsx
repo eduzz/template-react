@@ -31,7 +31,7 @@ export const fetchCourse = (courseID: number) => (dispatch: Function) => {
 
   get({ url: '/learner/course/' + courseID }).then(
     res => {
-      dispatch(receiveCourse(res.data.data));
+      dispatch(receiveCourse(res.data.data || {}));
 
       dispatch(decreaseLoading());
     },
@@ -58,7 +58,7 @@ export const fetchCourseNews = (courseID: number) =>
     dispatch(increaseLoading());
     get({ url: '/learner/course/' + courseID + '/news' }).then(
       res => {
-        dispatch(receiveCourseNews(res.data.data));
+        dispatch(receiveCourseNews(res.data.data || []));
 
         dispatch(decreaseLoading());
       },
@@ -75,7 +75,7 @@ export const deleteCourse = (courseID: number) => (dispatch: Function) => {
   });
 
   del({ url: '/courses/' + courseID }).then(
-    res => dispatch(deleteCourseSuccess(res))
+    res => dispatch(deleteCourseSuccess(res || {}))
   );
 };
 

@@ -30,7 +30,7 @@ export const fetchRating = (lessonID: any) =>
   (dispatch: Function) => {
     return get({ url: `/learner/lessons/${lessonID}/ratings` }).then(
       res => {
-        dispatch(receiveRating(res.data.data));
+        dispatch(receiveRating(res.data.data || {}));
 
         return res.data;
       }

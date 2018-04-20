@@ -1,0 +1,21 @@
+:local(.component) {
+  .lesson-header {
+    .button {
+      height: 42px;
+      width: 185px;
+      background-color: rgba(165, 165, 165, 0.1);
+    }
+
+    .lesson-title {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      .line {
+        height: 20px;
+        width: 50%;
+        background-color: rgba(165, 165, 165, 0.1);
+      }
+    }
+  }
+}

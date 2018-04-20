@@ -13,7 +13,7 @@ interface IProps {
   title: string;
   onExpandChange: any;
   onCancel: any;
-  newModule: any;
+  id: any;
   onEdit: any;
   onSave: any;
   onDelete: any;
@@ -21,6 +21,7 @@ interface IProps {
   editable?: boolean;
   courseID: string | number;
   type: string;
+  totalLessons: any;
 }
 
 interface IState {
@@ -66,7 +67,7 @@ class ModuleCard extends Component<IProps, IState> {
       isEditing: false
     });
 
-    if (this.props.newModule) {
+    if (this.props.id) {
       this.props.onEdit(this.state.title);
     } else {
       this.props.onSave(this.state.title);
@@ -126,8 +127,9 @@ class ModuleCard extends Component<IProps, IState> {
                 )}
               {this.props.type !== 'simple' &&
                 <div className='card-lessons-resume'>
-                  <span>Duração Total: 12Hrs</span>
-                  <span>12 Aulas</span>
+                  {this.props.totalLessons <= 0 && <span>Nenhuma aula</span>}
+                  {this.props.totalLessons === 1 && <span>1 Aula</span>}
+                  {this.props.totalLessons > 1 && <span>{this.props.totalLessons} Aulas</span>}
                 </div>
               }
             </div>

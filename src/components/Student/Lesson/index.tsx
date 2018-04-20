@@ -7,6 +7,7 @@ import Description from './Description';
 import Comments from './Comments';
 import { fetchLesson } from 'actionCreators/lessons';
 import { fetchRating } from 'actionCreators/rating';
+import { fetchComments } from 'actionCreators/comments';
 // import Loading from 'components/Loading';
 import Rating from './Rating';
 import SideMenu from './SideMenu';
@@ -19,6 +20,7 @@ interface IProps {
   fetchLesson: any;
   fetchRating: any;
   match: any;
+  fetchComments: any;
 }
 
 class Lesson extends Component<IProps> {
@@ -29,6 +31,7 @@ class Lesson extends Component<IProps> {
   handleCourseChange = (lessonID: number | string) => {
     this.props.fetchLesson(lessonID);
     this.props.fetchRating(lessonID);
+    this.props.fetchComments(lessonID);
     this.state = {
       isHidden: true,
       qtdRequestLoading: 1,
@@ -40,7 +43,7 @@ class Lesson extends Component<IProps> {
       <div className={styles.component}>
         <section className='lesson-page template-black'>
           {/* <Loading active={!this.props.lesson.id} absolutePosition={true} lockPageScroll={true} /> */}
-          <SideMenu lesson={this.props.lesson} courseID={this.props.match.params.courseID} />
+          <SideMenu courseID={this.props.match.params.courseID} />
           <article className='lesson-container'>
             <Navigation
               title={this.props.lesson.title}
@@ -68,4 +71,4 @@ const mapStateToProps = (state: any) => ({
   loading: state.loading,
 });
 
-export default connect(mapStateToProps, { fetchLesson, fetchRating })(Lesson);
+export default connect(mapStateToProps, { fetchLesson, fetchRating, fetchComments })(Lesson);

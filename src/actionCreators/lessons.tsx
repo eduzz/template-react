@@ -16,7 +16,7 @@ export const fetchLesson = (lessonID: number) =>
 
     get({ url: '/lessons/' + lessonID }).then(
       res => {
-        dispatch(receiveLesson(res.data.data));
+        dispatch(receiveLesson(res.data.data || []));
 
         dispatch(decreaseLoading());
       },

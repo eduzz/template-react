@@ -10,7 +10,6 @@ const styles = require('./styles.css');
 interface IProps {
   courseID: number | string;
   course: any;
-  lesson: any;
   fetchCourse: any;
   fetchCourseProgress: any;
 }
@@ -90,11 +89,11 @@ class SideMenu extends Component<IProps, IState> {
         <div className='course-block course-actions'>
           <Link to='/student/courses' className='button'>
             <Icon name='home' />
-            <span>Inicio</span>
+            <span>Vitrine</span>
           </Link>
           <Link to={`/student/courses/${this.props.courseID}`} className='button'>
             <Icon name='video' />
-            <span>Tela do Curso</span>
+            <span>Curso</span>
           </Link>
         </div>
 
@@ -103,6 +102,7 @@ class SideMenu extends Component<IProps, IState> {
             courseID={this.props.courseID}
             editable={false}
             type='simple'
+            placeholderLines={5}
           />
         </div>
       </aside>

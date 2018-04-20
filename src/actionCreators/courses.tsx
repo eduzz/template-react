@@ -18,7 +18,7 @@ export const fetchCourses = (type: string, page: number, size: number) =>
 
     get({ url: (type === 'producer' ? '/courses' : '/user/courses') + `?page=${page}&size=${size}` }).then(
       res => {
-        dispatch(receiveCourses(res.data.data, res.data.paginator.totalPages));
+        dispatch(receiveCourses(res.data.data || [], res.data.paginator.totalPages));
       }
     );
   };
