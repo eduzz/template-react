@@ -55,6 +55,9 @@
     width: 100%;
     .button {
       background-color: $primary-brand;
+      text-transform: none;
+      padding: 12px 30px;
+      border-radius: 30px;
     }
   }
   .input-box {

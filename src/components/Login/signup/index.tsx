@@ -1,7 +1,30 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { requestRegister } from 'actionCreators/signup';
+import Button from 'material-ui/Button';
 
-export default class SignUp extends Component {
+interface IProps {
+  requestRegister: any;
+}
+
+export class SignUp extends Component<IProps> {
+  public refs: any;
+
+  constructor(props: IProps) {
+    super(props);
+  }
+
+  handleSubmit = (e: any) => {
+    e.preventDefault();
+
+    this.props.requestRegister({
+      name: this.refs.name.value,
+      username: this.refs.username.value,
+      password: this.refs.password.value,
+    });
+  }
+
   render() {
     return (
       <form>
@@ -56,13 +79,13 @@ export default class SignUp extends Component {
             </div>
           </div>
 
-          <button
+          <Button
+            size='medium'
             className='waves-effect waves-light button affirmative'
-            type='submit'
+            onClick={this.handleSubmit}
           >
-            {' '}
-            <span>Entrar</span>
-          </button>
+            Entrar
+          </Button>
         </div>
         <div className='panel-footer'>
           <p>Já possui uma conta?</p>
@@ -74,3 +97,5 @@ export default class SignUp extends Component {
     );
   }
 }
+
+export default connect(undefined, { requestRegister })(SignUp);

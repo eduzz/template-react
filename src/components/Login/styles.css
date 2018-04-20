@@ -43,7 +43,10 @@
   :local(.component) .card-panel {
     width: 100%; }
     :local(.component) .card-panel .button {
-      background-color: #78cc5c; }
+      background-color: #78cc5c;
+      text-transform: none;
+      padding: 12px 30px;
+      border-radius: 30px; }
   :local(.component) .input-box {
     margin-bottom: 10px; }
   :local(.component) .panel-footer {

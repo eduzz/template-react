@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { requestLogin } from 'actionCreators/auth';
+import Button from 'material-ui/Button';
 
 interface IProps {
   requestLogin: any;
@@ -12,7 +13,6 @@ export class SignIn extends Component<IProps> {
 
   constructor(props: IProps) {
     super(props);
-
   }
 
   handleSubmit = (e: any) => {
@@ -23,9 +23,10 @@ export class SignIn extends Component<IProps> {
       password: this.refs.password.value
     });
   }
+
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form>
         <div className='card-panel'>
           <div className='input-box'>
             <div className='input-field'>
@@ -52,13 +53,13 @@ export class SignIn extends Component<IProps> {
             </div>
           </div>
 
-          <button
+          <Button
+            size='medium'
             className='waves-effect waves-light button affirmative'
-            type='submit'
+            onClick={this.handleSubmit}
           >
-            {' '}
-            <span>Entrar</span>
-          </button>
+            Entrar
+          </Button>
         </div>
         <div className='panel-footer'>
           <p>Não tem uma conta ainda?</p>
