@@ -45,6 +45,7 @@ class Course extends Component<IProps> {
         props: {
           courseID: this.courseID,
           editable: false,
+          placeholderLines: 2,
         },
         size: {
           xs: 6,

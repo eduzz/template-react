@@ -8,8 +8,9 @@
 
 :local(.component) .expand-icon {
   margin-left: auto; }
-  :local(.component) .expand-icon .expanded {
-    transform: rotate(180deg); }
+
+:local(.component) .expanded {
+  transform: rotate(180deg); }
 
 :local(.component) .card-actions-form {
   width: 100%; }

@@ -1,0 +1,27 @@
+:local(.loading) {
+  .lines {
+    height: 287px;
+
+    .line {
+      height: 10px;
+      margin-bottom: 5px;
+      background-color: rgba(165, 165, 165, 0.1);
+
+      &:nth-child(1) {
+        width: 75%;
+      }
+      &:nth-child(2) {
+        width: 60%;
+      }
+      &:nth-child(3) {
+        width: 70%;
+      }
+      &:nth-child(4) {
+        width: 80%;
+      }
+      &:nth-child(5) {
+        width: 60%;
+      }
+    }
+  }
+}

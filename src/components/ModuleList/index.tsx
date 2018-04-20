@@ -25,6 +25,7 @@ interface IProps {
   deleteModulePersist: any;
   deleteModuleUndo: any;
   editable: boolean;
+  placeholderLines?: number;
   type?: string;
 }
 
@@ -98,10 +99,11 @@ class ModuleList extends Component<IProps, IState> {
             key={module.id || v4()}
             title={module.title}
             lessons={module.lessons}
-            newModule={module.id}
+            id={module.id}
             editable={this.props.editable}
             courseID={this.props.courseID}
             type={this.props.type}
+            totalLessons={module.total_lessons}
             onExpandChange={() => {
               if (!module.lessons || (module.lessons && !module.lessons.length)) {
                 this.props.fetchModuleLessons(module.id);
@@ -193,14 +195,12 @@ class ModuleList extends Component<IProps, IState> {
         :
         <div className={styles.component}>
           <div className='loading'>
-            <div className='block'>
-              <div className='line'></div>
-              <div className='line'></div>
-            </div>
-            <div className='block'>
-              <div className='line'></div>
-              <div className='line'></div>
-            </div>
+            {Array.apply(null, Array(this.props.placeholderLines)).map((e: any, index: number) =>
+              <div key={index} className='block'>
+                <div className='line'></div>
+                <div className='line'></div>
+              </div>
+            )}
           </div>
         </div>
     );

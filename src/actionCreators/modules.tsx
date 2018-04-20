@@ -33,9 +33,9 @@ export const fetchModules = (courseID: number | string) =>
       type: 'REQUEST_MODULES',
     });
 
-    get({ url: `/courses/${courseID}/modules` }).then(
+    get({ url: `/learner/course/${courseID}/modules` }).then(
       res => {
-        dispatch(receiveModules(res.data.data));
+        dispatch(receiveModules(res.data.data || []));
       },
     );
   };
@@ -47,7 +47,7 @@ export const fetchModuleLessons = (moduleID: number) =>
     });
 
     get({ url: `/modules/${moduleID}/lessons` }).then(
-      res => dispatch(receiveModuleLessons(res.data.data, moduleID))
+      res => dispatch(receiveModuleLessons(res.data.data || [], moduleID))
     );
   };
 
@@ -78,7 +78,7 @@ export const postModule = (courseID: number, title: string, sequence: number) =>
         is_free: true
       }
     }).then(
-      res => dispatch(receiveModule(res.data.data, sequence)),
+      res => dispatch(receiveModule(res.data.data || {}, sequence)),
       err => dispatch(receiveModuleError(err)),
     );
   };
@@ -100,7 +100,7 @@ export const deleteModulePersist = (moduleID: number) =>
 export const editModulePersist = (module: any, index: number) =>
   (dispatch: any) => {
     put({ url: '/modules/' + module.id, data: module }).then(
-      res => dispatch(receiveModule(res.data.data, index)),
+      res => dispatch(receiveModule(res.data.data || {}, index)),
       err => dispatch(receiveModuleError(err)),
     );
   };

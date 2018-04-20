@@ -16,7 +16,7 @@ export const fetchHighlights = () =>
 
     get({ url: '/user/highlights' }).then(
       res => {
-        dispatch(receiveHighlights(res.data.data));
+        dispatch(receiveHighlights(res.data.data || []));
 
         dispatch(decreaseLoading());
       },
