@@ -14,6 +14,7 @@ import upsells from './upsells';
 import rating from './rating';
 import comments from './comments';
 import loading from './loading';
+import validateForm from './validateForm';
 
 const nutrorApp = combineReducers({
   courses,
@@ -31,6 +32,7 @@ const nutrorApp = combineReducers({
   rating,
   comments,
   loading,
+  validateForm,
 });
 
 export default nutrorApp;

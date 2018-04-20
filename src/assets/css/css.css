@@ -3654,7 +3654,7 @@ textarea.materialize-textarea {
   background-color: #fff;
   border: none;
   border: 1px solid #d8d8d8;
-  border-radius: 0;
+  border-radius: 5px;
   outline: none;
   height: 3rem;
   width: 100%;
@@ -3733,8 +3733,8 @@ textarea.materialize-textarea {
   input[type='number']:not(.browser-default):focus:not([readonly]),
   input[type='search']:not(.browser-default):focus:not([readonly]),
   textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #1b1b1b;
-    box-shadow: 0 1px 0 0 #1b1b1b; }
+    border-bottom: 1px solid #1e3356;
+    box-shadow: 0 1px 0 0 #1e3356; }
   input:not([type]):focus:not([readonly]) + label,
   input[type='text']:not(.browser-default):focus:not([readonly]) + label,
   input[type='password']:not(.browser-default):focus:not([readonly]) + label,

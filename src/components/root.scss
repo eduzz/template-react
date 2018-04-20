@@ -1,14 +1,15 @@
 @import 'src/assets/css/_variables.scss';
 @import 'src/assets/css/_mixins.scss';
 @import 'src/assets/css/_reset.scss';
-
 .container {
   width: 100%;
   max-width: 100%;
 }
+
 body {
   padding: 60px 0 0 0;
 }
+
 .button {
   padding: 12px 30px;
   border: 0;
@@ -65,25 +66,25 @@ body {
     &:hover {
       background-color: #fff;
       span {
-        color: $dark-color;
+        color: $secondary-brand;
       }
       .icon {
-        fill: $dark-color;
+        fill: $secondary-brand;
       }
     }
   }
   &.outline-dark {
     background-color: transparent;
-    border: 1px solid $dark-color;
+    border: 1px solid $secondary-brand;
     span {
-      color: $dark-color;
+      color: $secondary-brand;
     }
     .icon {
-      fill: $dark-color;
+      fill: $secondary-brand;
       @include transition;
     }
     &:hover {
-      background-color: $dark-color;
+      background-color: $secondary-brand;
       span {
         color: #fff;
       }
@@ -93,6 +94,7 @@ body {
     }
   }
 }
+
 .input-label {
   display: block;
   color: $dark-color;
@@ -104,7 +106,6 @@ body {
 
 .right-label {
   margin-left: 10px;
-
   &:empty {
     display: none;
   }
@@ -126,7 +127,6 @@ html .switch {
     .lever {
       border: $medium-gray thin solid;
       background-color: transparent;
-
       &:after {
         box-shadow: none;
         background-color: $medium-gray;
@@ -140,17 +140,14 @@ html .switch {
   hr {
     display: none !important;
   }
-
   input {
     background-color: #fff;
     border: 1px solid #d8d8d8 !important;
-
     width: 100%;
     max-width: 200px;
     height: 3rem;
     margin: 0;
     padding: 0 10px !important;
-
     font-size: 1rem;
     -webkit-box-shadow: none;
     box-shadow: none;

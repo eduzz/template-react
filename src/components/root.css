@@ -195,19 +195,19 @@ body {
     .button.outline-light:hover {
       background-color: #fff; }
       .button.outline-light:hover span {
-        color: #1c1f27; }
+        color: #1e3356; }
       .button.outline-light:hover .icon {
-        fill: #1c1f27; }
+        fill: #1e3356; }
   .button.outline-dark {
     background-color: transparent;
-    border: 1px solid #1c1f27; }
+    border: 1px solid #1e3356; }
     .button.outline-dark span {
-      color: #1c1f27; }
+      color: #1e3356; }
     .button.outline-dark .icon {
-      fill: #1c1f27;
+      fill: #1e3356;
       transition: all 0.3s ease-in-out; }
     .button.outline-dark:hover {
-      background-color: #1c1f27; }
+      background-color: #1e3356; }
       .button.outline-dark:hover span {
         color: #fff; }
       .button.outline-dark:hover .icon {
