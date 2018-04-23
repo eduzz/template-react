@@ -13,6 +13,7 @@ const formRules = [
   {
     ref: 'username',
     required: true,
+    isSame: 'usernameConfirm',
   },
   {
     ref: 'usernameConfirm',
@@ -22,6 +23,7 @@ const formRules = [
   {
     ref: 'password',
     required: true,
+    isSame: 'passwordConfirm',
   },
   {
     ref: 'passwordConfirm',
