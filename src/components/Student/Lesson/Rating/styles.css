@@ -1,4 +1,0 @@
-:local(.loading) {
-  pointer-events: none; }
-  :local(.loading) .star {
-    color: rgba(165, 165, 165, 0.1); }
