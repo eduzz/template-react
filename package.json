@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start-css": "node-sass-chokidar src/ -o src/ --watch --recursive",
+    "start-css": "yarn node-sass-chokidar src/ -o src/ --watch --recursive",
     "start-js": "react-scripts-ts start",
     "prestart": "yarn build-css",
     "start": "npm-run-all -p start-css start-js",
-    "build-css": "node-sass-chokidar src/ -o src/",
+    "build-css": "yarn node-sass-chokidar src/ -o src/",
     "build-js": "react-scripts-ts build",
     "build": "yarn build-css && yarn build-js",
     "test": "react-scripts-ts test --env=jsdom",

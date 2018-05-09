@@ -2,7 +2,8 @@ version: '2'
 services:
 
   web:
-    container_name: church-web
+    container_name: nutror-v3-front-producer
+    tty: true
     build: docker/dev
     ports:
       - "3000:3000"
