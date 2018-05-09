@@ -1,0 +1,38 @@
+@import '../../assets/variables';
+
+:local(.component) {
+  background: $primary_color;
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+
+  .container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+    height: 300px;
+    max-width: calc(100% - 30px);
+    color: white
+  }
+
+  .logo {
+    text-align: center;
+
+    img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .buttons {
+    justify-content: space-between
+  }
+
+  .card {
+    margin-bottom: 15
+  }
+}

@@ -1,0 +1,7 @@
+@import '../../assets/variables';
+
+:local(.component) {
+  .content-error {
+    background: $error_color
+  }
+}

@@ -1,0 +1,6 @@
+:local(.component) {
+  text-align: left;
+  margin-top: 10px;
+  width: calc(100% + 8px); }
+  :local(.component) .text {
+    padding: 15px 15px 0 15px; }
