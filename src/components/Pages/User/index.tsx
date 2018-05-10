@@ -1,12 +1,12 @@
 import { IAppRoute } from 'interfaces/route';
 import * as React from 'react';
 
-import UserListPage from './list';
+import UserTabsPage from './Tabs';
 
 export default class UserIndexPage extends React.PureComponent {
   public static routes: IAppRoute[] = [{
     path: '/',
-    component: UserListPage
+    component: UserTabsPage
   }];
 
   render() {

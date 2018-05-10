@@ -1,6 +1,6 @@
 import AppToolbar from 'components/AppToolbar';
 import { IAppRoute } from 'interfaces/route';
-import { Typography } from 'material-ui';
+import { Card, CardContent, Typography } from 'material-ui';
 import React, { Fragment, PureComponent } from 'react';
 
 export default class DashboardIndexPage extends PureComponent {
@@ -10,7 +10,12 @@ export default class DashboardIndexPage extends PureComponent {
     return (
       <Fragment>
         <AppToolbar title='Dashboard' />
-        <Typography>Dashboard Content</Typography>
+
+        <Card>
+          <CardContent>
+            <Typography>Content</Typography>
+          </CardContent>
+        </Card>
       </Fragment>
     );
   }

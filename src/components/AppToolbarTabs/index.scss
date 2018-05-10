@@ -1,19 +1,25 @@
 @import '../../assets/variables';
 
 :local(.component) {
-  height: $tabbar_height;
+  height: $header_height;
   margin-top: $content_padding * -1;
   margin-bottom: $content_padding;
 
   @include media-min-breakpoints(sm) {
+    height: $header_height_up_sm;
     margin-top: $content_padding_up_sm * -1;
     margin-bottom: $content_padding_up_sm;
   }
 
   .app-bar {
-    margin-left: $drawer_width;
+    position: fixed;
+    top: $header_height;
+    left: 0;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.29);
 
     @include media-min-breakpoints(md) {
+      left: $drawer_width;
+      top: $header_height_up_sm;
       width: calc(100% - #{$drawer_width});
     }
   }

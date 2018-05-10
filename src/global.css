@@ -1,57 +1,17 @@
 .root {
-  padding: 1rem;
-}
+  padding: 1rem; }
 
 .text-center {
-  text-align: center;
-}
+  text-align: center; }
 
 .padding {
-  padding: 1rem;
-}
+  padding: 1rem; }
 
 .mdi-icon {
-  fill: currentColor;
-}
+  fill: currentColor; }
 
 [class*=' MuiButton'] .mdi-icon {
-  margin-right: 10px;
-}
+  margin-right: 10px; }
 
-/* simple animations from Animated.css */
-
-.animated {
-  animation-duration: 1s;
-  animation-fill-mode: both;
-}
-
-.animated.infinite {
-  animation-iteration-count: infinite;
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-    display: none;
-  }
-}
-
-.fadeOut {
-  animation-name: fadeOut;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.fadeIn {
-  animation-name: fadeIn;
-}
+.hide {
+  display: none; }
