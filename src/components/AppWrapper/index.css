@@ -1,6 +1,7 @@
 :local(.drawer) {
   width: 240px;
-  border-right: none; }
+  border-right: none !important;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12) !important; }
   @media screen and (min-width: 960px) {
     :local(.drawer) {
       width: 240px;
@@ -12,12 +13,6 @@
   display: flex;
   width: 100vw;
   height: 100vh; }
-  :local(.component) .app-bar {
-    position: absolute;
-    margin-left: 240px; }
-    @media screen and (min-width: 960px) {
-      :local(.component) .app-bar {
-        width: calc(100% - 240px); } }
   :local(.component) .icon-menu {
     margin-left: -15px;
     margin-right: 10px; }
@@ -27,16 +22,12 @@
   :local(.component) .content {
     background-color: #fafafa;
     width: 100vw;
-    height: calc(100vh - 56px);
+    height: 100vh;
     overflow: auto;
-    margin-top: 56px;
     padding: 12px; }
     @media screen and (min-width: 600px) {
       :local(.component) .content {
-        height: calc(100vh - 64px);
-        margin-top: 64px;
         padding: 24px; } }
     @media screen and (min-width: 960px) {
       :local(.component) .content {
-        width: calc(100% - 240px);
         margin-left: 240px; } }

@@ -2,7 +2,8 @@
 
 :local(.drawer) {
   width: $drawer_width;
-  border-right: none; // box-shadow: theme.shadows[5];
+  border-right: none !important;
+  box-shadow: $box-shadow !important;
   @include media-min-breakpoints(md) {
     width: $drawer_width;
     position: relative;
@@ -16,15 +17,6 @@
   width: 100vw;
   height: 100vh;
 
-  .app-bar {
-    position: absolute;
-    margin-left: $drawer_width;
-
-    @include media-min-breakpoints(md) {
-      width: calc(100% - #{$drawer_width});
-    }
-  }
-
   .icon-menu {
     margin-left: -15px;
     margin-right: 10px;
@@ -37,19 +29,15 @@
   .content {
     background-color: $content_background_color;
     width: 100vw;
-    height: calc(100vh - #{$header_height});
+    height: 100vh;
     overflow: auto;
-    margin-top: $header_height;
-    padding: 12px;
+    padding: $content_padding;
 
     @include media-min-breakpoints(sm) {
-      height: calc(100vh - #{$header_height_up_sm});
-      margin-top: $header_height_up_sm;
-      padding: 24px;
+      padding: $content_padding_up_sm;
     }
 
     @include media-min-breakpoints(md) {
-      width: calc(100% - #{$drawer_width});
       margin-left: $drawer_width;
     }
   }

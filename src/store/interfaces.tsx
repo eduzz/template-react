@@ -1,10 +1,16 @@
-import { Action, Store } from 'redux';
+import { Store } from 'redux';
 
-import { IAppStoreAuthState, typeAppStoreAuthActions } from './reducers/auth';
+import { IAppStoreAuthState } from './reducers/auth';
+import { IAppStoreDrawerState } from './reducers/drawer';
 
-export interface IAppStore extends Store<IAppStoreState, Action<typeAppStoreAuthActions>> {
+export interface IAppDispatcher<T> {
+  (params: { type: T, [key: string]: any }): void;
+}
+
+export interface IAppStore extends Store<IAppStoreState> {
 }
 
 export interface IAppStoreState {
   auth: IAppStoreAuthState;
+  drawer: IAppStoreDrawerState;
 }

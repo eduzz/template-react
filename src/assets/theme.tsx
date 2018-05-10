@@ -19,8 +19,6 @@ export const theme = createMuiTheme({
   }
 });
 
-console.log(theme);
-
 export const whiteTheme = createMuiTheme({
   palette: {
     primary: {

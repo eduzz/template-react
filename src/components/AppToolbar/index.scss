@@ -1,0 +1,21 @@
+@import '../../assets/variables';
+
+:local(.component) {
+  height: $header_height;
+  margin-top: $content_padding * -1;
+  margin-bottom: $content_padding;
+
+  @include media-min-breakpoints(sm) {
+    height: $header_height_up_sm;
+    margin-top: $content_padding_up_sm * -1;
+    margin-bottom: $content_padding_up_sm;
+  }
+
+  .app-bar {
+    margin-left: $drawer_width;
+
+    @include media-min-breakpoints(md) {
+      width: calc(100% - #{$drawer_width});
+    }
+  }
+}

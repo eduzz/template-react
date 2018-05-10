@@ -27,6 +27,7 @@ class AppDrawerUser extends PureComponent<IProps & IPropsFromConnect> {
       <Grid container className={style.component} wrap='nowrap'>
         <Grid item xs={true} >
           <Typography variant='body2' color='inherit' className='text'>
+            <small>Bem vindo</small>
             Daniel
           </Typography>
         </Grid>

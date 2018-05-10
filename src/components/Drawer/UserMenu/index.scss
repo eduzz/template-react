@@ -1,9 +1,15 @@
 :local(.component) {
   text-align: left;
-  margin-top: 10px;
+  margin-top: 20px;
   width: calc(100% + 8px);
 
   .text {
-    padding: 15px 15px 0 15px;
+    padding: 8px 15px 0 15px;
+    line-height: normal;
+
+    small {
+      display: block;
+      margin-bottom: 2px;
+    }
   }
 }

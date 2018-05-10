@@ -1,0 +1,14 @@
+:local(.component) {
+  height: 56px;
+  margin-top: -12px;
+  margin-bottom: 12px; }
+  @media screen and (min-width: 600px) {
+    :local(.component) {
+      height: 64px;
+      margin-top: -24px;
+      margin-bottom: 24px; } }
+  :local(.component) .app-bar {
+    margin-left: 240px; }
+    @media screen and (min-width: 960px) {
+      :local(.component) .app-bar {
+        width: calc(100% - 240px); } }

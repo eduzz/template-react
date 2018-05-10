@@ -1,34 +1,27 @@
-import { whiteTheme } from 'assets/theme';
 import AppDrawer from 'components/Drawer';
 import { IAppRoute } from 'interfaces/route';
-import { AppBar, Drawer, Hidden, IconButton, MuiThemeProvider, Toolbar, Typography } from 'material-ui';
-import MenuIcon from 'mdi-react/MenuIcon';
+import { Drawer, Hidden } from 'material-ui';
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { IAppStoreState } from 'store';
+import { closeDrawer } from 'store/actionsCreators';
 
 const styles = require('./index.css');
-
-interface IState {
-  drawerOpened: boolean;
-}
 
 interface IProps {
   routes: IAppRoute[];
 }
 
-export default class AppWrapper extends PureComponent<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { drawerOpened: false };
-  }
+interface IPropsFromConnect {
+  drawerOpened: boolean;
+  closeDrawer?: typeof closeDrawer;
+}
 
-  toggleMenu() {
-    this.setState({ drawerOpened: !this.state.drawerOpened });
-  }
-
+class AppWrapper extends PureComponent<IProps & IPropsFromConnect> {
   render() {
-    const { drawerOpened } = this.state;
-    const { children, routes } = this.props;
-    const items = <AppDrawer routes={routes} closeDrawer={this.toggleMenu.bind(this)} />;
+    const { } = this.state;
+    const { children, routes, drawerOpened, closeDrawer } = this.props;
+    const items = <AppDrawer routes={routes} closeDrawer={() => closeDrawer()} />;
 
     return (
       <div className={styles.component}>
@@ -38,7 +31,7 @@ export default class AppWrapper extends PureComponent<IProps, IState> {
             anchor='left'
             open={drawerOpened}
             classes={{ paper: styles.drawer }}
-            onClose={this.toggleMenu.bind(this)}
+            onClose={() => closeDrawer()}
             ModalProps={{ keepMounted: true }}>
             {items}
           </Drawer>
@@ -52,23 +45,20 @@ export default class AppWrapper extends PureComponent<IProps, IState> {
           </Drawer>
         </Hidden>
         <main className='content'>
-          <MuiThemeProvider theme={whiteTheme}>
-            <AppBar className='app-bar' elevation={1}>
-              <Toolbar>
-                <IconButton color='inherit'
-                  onClick={this.toggleMenu.bind(this)}
-                  className='icon-menu'>
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant='title' color='inherit' noWrap>
-                  App
-            </Typography>
-              </Toolbar>
-            </AppBar>
-          </MuiThemeProvider>
           {children}
         </main>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
+  return {
+    ...ownProps,
+    drawerOpened: state.drawer.isOpened
+  };
+};
+
+export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
+  closeDrawer
+})(AppWrapper);
