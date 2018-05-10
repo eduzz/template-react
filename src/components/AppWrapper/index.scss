@@ -1,0 +1,57 @@
+@import '../../assets/variables';
+
+:local(.drawer) {
+  width: $drawer_width;
+  border-right: none; // box-shadow: theme.shadows[5];
+  @include media-min-breakpoints(md) {
+    width: $drawer_width;
+    position: relative;
+    height: 100vh;
+  }
+}
+
+:local(.component) {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  .app-bar {
+    position: absolute;
+    margin-left: $drawer_width;
+
+    @include media-min-breakpoints(md) {
+      width: calc(100% - #{$drawer_width});
+    }
+  }
+
+  .icon-menu {
+    margin-left: -15px;
+    margin-right: 10px;
+
+    @include media-min-breakpoints(md) {
+      display: none;
+    }
+  }
+
+  .content {
+    background-color: $content_background_color;
+    width: 100vw;
+    height: calc(100vh - #{$header_height});
+    overflow: auto;
+    margin-top: $header_height;
+    padding: 12px;
+
+    @include media-min-breakpoints(sm) {
+      height: calc(100vh - #{$header_height_up_sm});
+      margin-top: $header_height_up_sm;
+      padding: 24px;
+    }
+
+    @include media-min-breakpoints(md) {
+      width: calc(100% - #{$drawer_width});
+      margin-left: $drawer_width;
+    }
+  }
+
+}

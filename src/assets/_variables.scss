@@ -2,5 +2,42 @@ $primary_color: #393C47;
 $primary_text_color: #fff;
 $secondary_color: #009358;
 $secondary_text_color: #fff;
-
 $error_color: #d24a3f;
+$content_background_color: #fafafa;
+
+$drawer_width: 240px;
+$header_height: 56px;
+$header_height_up_sm: 64px;
+
+$breakpoints: (xs: 599px, sm: 959px, md: 1279px, lg: 1919px);
+$breakpoints-min: ( xs: 0, sm: 600px, md: 960px, lg: 1280px, xl: 1920px);
+
+@mixin media-min-breakpoints($size) {
+  @include media-min(map-get($breakpoints-min, $size)) {
+    @content;
+  }
+}
+
+@mixin media-max-breakpoints($size) {
+  @include media-max(map-get($breakpoints, $size)) {
+    @content;
+  }
+}
+
+@mixin media-min($size) {
+  @media screen and (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin media-max($size) {
+  @media screen and (max-width: $size) {
+    @content;
+  }
+}
+
+@mixin media-min-max($min, $max) {
+  @media screen and (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}

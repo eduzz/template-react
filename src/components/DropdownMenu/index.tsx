@@ -1,15 +1,15 @@
-import { WithStyles } from 'decorators/withStyles';
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from 'material-ui';
 import { MdiReactIconComponentType } from 'mdi-react';
 import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import * as React from 'react';
+
+const styles = require('./index.css');
 
 interface IState {
   targetElem?: HTMLElement;
 }
 
 interface IProps {
-  classes?: any;
   options: {
     text: string;
     icon?: MdiReactIconComponentType;
@@ -17,11 +17,6 @@ interface IProps {
   }[];
 }
 
-@WithStyles({
-  text: {
-    paddingLeft: '0 !important'
-  }
-})
 export default class DropdownMenu extends React.PureComponent<IProps, IState> {
   constructor(props: any) {
     super(props);
@@ -41,10 +36,10 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
 
   render() {
     const { targetElem } = this.state;
-    const { options, classes } = this.props;
+    const { options } = this.props;
 
     return (
-      <div>
+      <div className={styles.component}>
         <IconButton onClick={this.open.bind(this)} color='inherit'>
           <MoreVertIcon />
         </IconButton>
@@ -62,7 +57,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
                   <option.icon />
                 </ListItemIcon>
               }
-              <ListItemText className={option.icon ? classes.text : null} inset primary={option.text} />
+              <ListItemText className={option.icon ? 'text' : null} inset primary={option.text} />
             </MenuItem>
           )}
         </Menu>

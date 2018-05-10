@@ -1,6 +1,7 @@
-import { WithStyles } from 'decorators/withStyles';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui';
 import * as React from 'react';
+
+const styles = require('./index.css');
 
 interface IState {
   openned: boolean;
@@ -9,15 +10,7 @@ interface IState {
   confirmation?: boolean;
 }
 
-@WithStyles({
-  root: {
-    zIndex: 1600
-  },
-  content: {
-    minWidth: '250px',
-  }
-})
-export default class AlertComponent extends React.PureComponent<{ classes?: any, innerRef?: any }, IState> {
+export default class AlertComponent extends React.PureComponent<{}, IState> {
   resultResolve: (result: boolean) => void;
   button: HTMLElement;
 
@@ -47,17 +40,16 @@ export default class AlertComponent extends React.PureComponent<{ classes?: any,
 
   render() {
     const { openned, title, message, confirmation } = this.state;
-    const { classes } = this.props;
 
     return (
       <Dialog
         open={openned}
         keepMounted
         onClose={this.onClose.bind(this, false)}
-        className={classes.root}
+        className={styles.component}
       >
         <DialogTitle>{title}</DialogTitle>
-        <DialogContent className={classes.content}>
+        <DialogContent className='content'>
           <DialogContentText>
             {message}
           </DialogContentText>
