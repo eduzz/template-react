@@ -1,4 +1,5 @@
 import { post } from 'api';
+import { logError } from 'errorHandler';
 import { IAppDispatcher } from 'store/interfaces';
 
 import { typeAppStoreAuthActions } from '../reducers/auth';
@@ -17,6 +18,7 @@ export function requestLogin<T>(email: T, password: string) {
       const token = await post<string>('/auth/login', { email, password });
       dispatch({ type: 'RECEIVE_LOGIN', token });
     } catch (error) {
+      logError(error);
       dispatch({ type: 'RECEIVE_LOGIN_ERROR', error });
     }
   };

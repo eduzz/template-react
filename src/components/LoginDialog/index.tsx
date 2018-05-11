@@ -43,10 +43,11 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
   }
 
   async onSubmit(event: Event) {
+    event.preventDefault();
+
     const { model } = this.state;
     const { requestLogin } = this.props;
 
-    event.preventDefault();
     await this.isFormValid();
 
     requestLogin(model.email, model.password);

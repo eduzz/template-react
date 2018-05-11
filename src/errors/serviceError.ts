@@ -1,10 +1,10 @@
 export class ServiceError<T = any> extends Error {
   public readonly ignoreLog: boolean;
-  public readonly metadata: T;
+  public readonly extraData: T;
 
-  constructor(message: string, metadata?: T, ignoreLog: boolean = true) {
+  constructor(message: string, extraData?: T, ignoreLog: boolean = true) {
     super(message);
-    this.metadata = metadata || null;
+    this.extraData = extraData || null;
     this.ignoreLog = ignoreLog;
   }
 }

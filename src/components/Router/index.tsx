@@ -20,18 +20,18 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     return this.browserRouter.history;
   }
 
-  public previousPage() {
+  previousPage() {
     this.history.goBack();
   }
 
-  public reload(): void {
+  reload(): void {
     /* Hack for reload, dont judge me: https://github.com/ReactTraining/react-router/issues/1982 */
     const path = this.history.location.pathname;
     this.history.replace('/reload');
     setTimeout(() => this.history.replace(path));
   }
 
-  public navigate(path: string): void {
+  navigate(path: string): void {
     if (path === this.history.location.pathname) {
       this.reload();
       return;
@@ -40,7 +40,7 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     this.history.push(path);
   }
 
-  public render(): JSX.Element {
+  render(): JSX.Element {
     const { routes } = this.props;
 
     return (

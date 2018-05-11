@@ -11,7 +11,9 @@ export default class UserIndexPage extends React.PureComponent {
 
   render() {
     return (
-      <div>{this.props.children}</div>
+      <div>
+        {this.props.children}
+      </div>
     );
   }
 }

@@ -25,6 +25,10 @@ export class ApiError extends ServiceError<IApiErrorMeta> {
   constructor(request: AxiosRequestConfig, axiosResponse: AxiosResponse, err: any) {
     const response = !axiosResponse ? { status: -1, data: '' } : { status: axiosResponse.status, data: axiosResponse.data };
 
+    delete err.request;
+    delete err.response;
+    delete err.config;
+
     super('api-error', {
       request: {
         baseURL: request.baseURL,

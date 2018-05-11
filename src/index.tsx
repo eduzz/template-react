@@ -1,3 +1,5 @@
+import './errorHandler';
+
 import moment from 'moment';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -13,4 +15,5 @@ ReactDOM.render(
   <Root />,
   document.getElementById('root') as HTMLElement
 );
+
 registerServiceWorker();

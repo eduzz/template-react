@@ -40,6 +40,8 @@ export default class UserTabList extends PureComponent<{}, IState> {
 
     return (
       <Paper>
+        <button onClick={() => { throw new Error('olá'); }}>Error</button>
+
         {loading && <LinearProgress color='secondary' />}
         <Table>
           <TableHead>
