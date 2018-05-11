@@ -4,51 +4,50 @@ import * as React from 'react';
 const styles = require('./index.css');
 
 interface IState {
-  openned: boolean;
-  message?: string;
+  opened: boolean;
+  message?: React.ReactNode;
   title?: string;
   confirmation?: boolean;
 }
 
-export default class AlertComponent extends React.PureComponent<{}, IState> {
-  resultResolve: (result: boolean) => void;
-  button: HTMLElement;
+interface IProps {
+  opened: boolean;
+  message: React.ReactNode;
+  title?: string;
+  confirmation?: boolean;
+  onClose: (ok: boolean) => void;
+}
 
-  constructor(props: any) {
+export default class AppAlert extends React.PureComponent<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
-    this.state = { openned: false, title: 'Alerta' };
+    this.state = { opened: false };
   }
 
-  componentDidMount() {
-    setTimeout(() => this.button = document.getElementById('alert-button'));
-  }
+  static getDerivedStateFromProps(nextProps: IProps, prevState: IState): IState {
+    // prevent any changes before close the dialog. ex: title, message e etc
+    if (!nextProps.opened) {
+      return { ...prevState, opened: false };
+    }
 
-  show(message: string, title: string, confirmation: boolean = false): Promise<boolean> {
-    this.setState({ openned: true, message, title, confirmation });
-
-    setTimeout(() => this.button.focus(), 500);
-
-    return new Promise<boolean>(resolve => {
-      this.resultResolve = resolve;
-    });
+    return nextProps;
   }
 
   onClose(ok: boolean) {
-    this.setState({ openned: false });
-    this.resultResolve(ok);
+    this.props.onClose(ok);
   }
 
   render() {
-    const { openned, title, message, confirmation } = this.state;
+    const { opened, title, message, confirmation } = this.state;
 
     return (
       <Dialog
-        open={openned}
+        open={opened}
         keepMounted
         onClose={this.onClose.bind(this, false)}
         className={styles.component}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle>{title || 'Atenção'}</DialogTitle>
         <DialogContent className='content'>
           <DialogContentText>
             {message}

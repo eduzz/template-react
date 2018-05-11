@@ -49,10 +49,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
     const { requestLogin } = this.props;
 
     await this.isFormValid();
-
     requestLogin(model.email, model.password);
-
-    this.setState({ formSubmitted: true });
   }
 
   render() {
