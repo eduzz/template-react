@@ -13,7 +13,7 @@ if (SENTRY_KEY) {
 
   Raven.setShouldSendCallback(() => {
     let err: any = Raven.lastException();
-    // if (!err || err.ignoreLog || err.reported) return false;
+    if (!err || err.ignoreLog || err.reported) return false;
 
     err.reported = true;
     return true;

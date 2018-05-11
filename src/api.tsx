@@ -20,7 +20,7 @@ export async function del<T = any>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'DELETE', params });
 }
 
-async function request(options: AxiosRequestConfig) {
+async function request(options: AxiosRequestConfig, retry: boolean = true) {
   try {
     const token = getStore().getState().auth.authToken;
     const result = await axios({
@@ -33,16 +33,22 @@ async function request(options: AxiosRequestConfig) {
     });
     return result.data;
   } catch (err) {
-    handleError(err);
+    return await handleError(err, retry);
   }
 }
 
-function handleError(err: AxiosError): never {
-  // if (err.response.status !== 401) {
-  throw new ApiError(err.config, err.response, err);
-  // }
+async function handleError(err: AxiosError, retry: boolean) {
+  if (!err.response || err.response.status !== 401 || !retry) {
+    throw new ApiError(err.config, err.response, err);
+  }
 
-  // return authService.showLogin().switchMap(() => {
-  //   return request(method, url, data);
-  // });
+  return new Promise(resolve => {
+    getStore().dispatch({ type: 'OPEN_LOGIN_DIALOG' });
+    getStore().subscribe(() => {
+      const state = getStore().getState();
+      if (!state.auth.isAuthenticated) return;
+
+      resolve(request(err.config, false));
+    });
+  });
 }
