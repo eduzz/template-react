@@ -1,3 +1,5 @@
+import { IUserToken } from 'interfaces/userToken';
+
 export type typeAppStoreAuthActions = 'OPEN_LOGIN_DIALOG' | 'REQUEST_LOGIN' | 'RECEIVE_LOGIN' | 'RECEIVE_LOGIN_ERROR' | 'LOGOUT';
 
 export interface IAppStoreAuthState {
@@ -5,15 +7,19 @@ export interface IAppStoreAuthState {
   isFetching: boolean;
   isAuthenticated: boolean;
   authToken: string;
+  user: IUserToken;
   error: any;
 }
+
+const authToken = localStorage.getItem('EDUZZ_PRODUCER_AUTHTOKEN');
 
 const initialState: IAppStoreAuthState = {
   isLoginFormOpened: false,
   isFetching: false,
-  isAuthenticated: !!localStorage.getItem('EDUZZ_PRODUCER_AUTHTOKEN'),
-  authToken: localStorage.getItem('EDUZZ_PRODUCER_AUTHTOKEN'),
-  error: null
+  isAuthenticated: !!authToken,
+  authToken,
+  error: null,
+  user: authToken ? JSON.parse(atob(authToken.split('.')[1])) : null
 };
 
 function auth(state: IAppStoreAuthState = initialState, action: any): IAppStoreAuthState {
@@ -32,11 +38,13 @@ function auth(state: IAppStoreAuthState = initialState, action: any): IAppStoreA
         error: null
       };
     case 'RECEIVE_LOGIN':
-      localStorage.setItem('EDUZZ_PRODUCER_AUTHTOKEN', action.token);
+      const { token, user } = action;
+      localStorage.setItem('EDUZZ_PRODUCER_AUTHTOKEN', token);
 
       return {
         ...state,
-        authToken: action.token,
+        authToken: token,
+        user,
         isFetching: false,
         isAuthenticated: true,
         isLoginFormOpened: false,

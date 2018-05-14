@@ -17,12 +17,9 @@ export const configureStore = () => {
     applyMiddleware(thunk, createRavenMiddleware(Raven, {
       getUserContext(state: IAppStoreState) {
         if (!state.auth.isAuthenticated) return null;
-
-        //TODO: change to the real user
         return {
-          id: '1',
-          username: 'Teste',
-          email: 'teste@eduzz.com'
+          ...state.auth.user,
+          id: state.auth.user.id.toString()
         };
       }
     }))

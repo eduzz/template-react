@@ -10,13 +10,15 @@ export function openLoginDialog() {
   };
 }
 
-export function requestLogin<T>(email: T, password: string) {
+export function requestLogin<T>(username: T, password: string) {
   return async (dispatch: IAppDispatcher<typeAppStoreAuthActions>) => {
     try {
       dispatch({ type: 'REQUEST_LOGIN' });
 
-      const token = await post<string>('/auth/login', { email, password });
-      dispatch({ type: 'RECEIVE_LOGIN', token });
+      const { data } = await post('/oauth/token', { username, password });
+      const user = JSON.parse(atob(data.token.split('.')[1]));
+
+      dispatch({ type: 'RECEIVE_LOGIN', token: data.token, user });
     } catch (error) {
       logError(error);
       dispatch({ type: 'RECEIVE_LOGIN_ERROR', error });

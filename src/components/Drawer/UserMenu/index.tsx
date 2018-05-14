@@ -1,4 +1,5 @@
 import DropdownMenu from 'components/DropdownMenu';
+import { IUserToken } from 'interfaces/userToken';
 import { Grid, Typography } from 'material-ui';
 import { ExitToAppIcon, KeyVariantIcon } from 'mdi-react';
 import React, { PureComponent } from 'react';
@@ -13,6 +14,7 @@ interface IProps {
 }
 
 interface IPropsFromConnect {
+  user?: IUserToken;
   logout?: typeof logout;
 }
 
@@ -23,12 +25,14 @@ class AppDrawerUser extends PureComponent<IProps & IPropsFromConnect> {
   }
 
   render() {
+    const { user } = this.props;
+
     return (
       <Grid container className={style.component} wrap='nowrap'>
         <Grid item xs={true} >
           <Typography variant='body2' color='inherit' className='text'>
             <small>Bem vindo</small>
-            Daniel
+            {user && user.name}
           </Typography>
         </Grid>
         <Grid item>
@@ -48,7 +52,10 @@ class AppDrawerUser extends PureComponent<IProps & IPropsFromConnect> {
 }
 
 const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
-  return {};
+  return {
+    ...ownProps,
+    user: state.auth.user
+  };
 };
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {

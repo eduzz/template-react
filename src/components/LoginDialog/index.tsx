@@ -4,7 +4,6 @@ import Snackbar from 'components/Snackbar';
 import { Button, Card, CardActions, CardContent, Dialog, LinearProgress } from 'material-ui';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { IS_DEVELOPMENT } from 'settings';
 import { IAppStoreState } from 'store';
 import { clearLoginError, requestLogin } from 'store/actionsCreators';
 
@@ -13,7 +12,7 @@ import LoginValidator from './validator';
 const styles = require('./index.css');
 
 interface IState extends IStateForm<{
-  email: string;
+  username: string;
   password: string;
 }> { }
 
@@ -38,7 +37,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
 
     return {
       ...prevState,
-      model: !IS_DEVELOPMENT ? {} : { email: 'daniel.prado@eduzz.com', password: '123mudar' }
+      model: {}
     };
   }
 
@@ -49,7 +48,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
     const { requestLogin } = this.props;
 
     await this.isFormValid();
-    requestLogin(model.email, model.password);
+    requestLogin(model.username, model.password);
   }
 
   render() {
@@ -73,10 +72,10 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
                   label='Email'
                   type='email'
                   disabled={loading}
-                  value={model.email}
+                  value={model.username}
                   submitted={formSubmitted}
-                  error={this.getErrorMessage('email')}
-                  onChange={this.updateModel((model, v) => model.email = v)}
+                  error={this.getErrorMessage('username')}
+                  onChange={this.updateModel((model, v) => model.username = v)}
                   margin='none'
                 />
 

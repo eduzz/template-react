@@ -1,22 +1,23 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { ApiError } from 'errors/api';
+import { IAppDefaultApiResponse } from 'interfaces/apiResponse';
 import { API_ENDPOINT } from 'settings';
 
 import { getStore } from './store';
 
-export async function get<T = any>(url: string, params?: any): Promise<T> {
+export async function get<T = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'GET', params });
 }
 
-export async function post<T = any>(url: string, data: any): Promise<T> {
+export async function post<T = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'POST', data });
 }
 
-export async function put<T = any>(url: string, data: any): Promise<T> {
+export async function put<T = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'PUT', data });
 }
 
-export async function del<T = any>(url: string, params?: any): Promise<T> {
+export async function del<T = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'DELETE', params });
 }
 
