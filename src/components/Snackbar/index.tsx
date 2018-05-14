@@ -1,12 +1,11 @@
+import { IconButton, Snackbar as CoreSnackbar } from '@material-ui/core';
+import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
-import { IconButton, Snackbar as CoreSnackbar } from 'material-ui';
 import CloseIcon from 'mdi-react/CloseIcon';
 import React, { PureComponent } from 'react';
 import { SNACKBAR_DEFAULT_TIMEOUT } from 'settings';
 
 import SnackbarGlobalProvider from './global';
-
-const styles = require('./index.css');
 
 interface IState {
   opened: boolean;
@@ -20,8 +19,18 @@ interface IProps {
   timeout?: number;
   error?: Error;
   onClose: () => void;
+  classes?: any;
 }
 
+@WithStyles(theme => ({
+  contentError: {
+    background: theme.palette.error.main
+  },
+  close: {
+    width: theme.spacing.unit * 4,
+    height: theme.spacing.unit * 4,
+  },
+}))
 export default class Snackbar extends PureComponent<IProps, IState> {
   static Global = SnackbarGlobalProvider;
 
@@ -60,28 +69,26 @@ export default class Snackbar extends PureComponent<IProps, IState> {
 
   public render(): JSX.Element {
     const { opened, message, isError } = this.state;
-    const { timeout } = this.props;
+    const { timeout, classes } = this.props;
 
     return (
-      <span className={styles.component}>
-        <CoreSnackbar
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          open={opened}
-          autoHideDuration={timeout || (isError ? null : SNACKBAR_DEFAULT_TIMEOUT)}
-          onClose={this.handleClose.bind(this)}
-          message={<span>{message}</span>}
-          ContentProps={{ className: isError ? 'content-error' : null }}
-          action={[
-            <IconButton
-              key='close'
-              color='inherit'
-              className='close'
-              onClick={this.handleClose.bind(this, null, 'close')}>
-              <CloseIcon />
-            </IconButton>
-          ]}
-        />
-      </span>
+      <CoreSnackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={opened}
+        autoHideDuration={timeout || (isError ? null : SNACKBAR_DEFAULT_TIMEOUT)}
+        onClose={this.handleClose.bind(this)}
+        message={<span>{message}</span>}
+        ContentProps={{ className: isError ? classes.contentError : null }}
+        action={[
+          <IconButton
+            key='close'
+            color='inherit'
+            className='close'
+            onClick={this.handleClose.bind(this, null, 'close')}>
+            <CloseIcon />
+          </IconButton>
+        ]}
+      />
     );
   }
 }

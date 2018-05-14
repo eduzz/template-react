@@ -13,6 +13,8 @@ interface IProps {
   routes: IAppRoute[];
 }
 
+export const RouterContext = React.createContext<() => AppRouter>(null);
+
 export default class AppRouter extends React.PureComponent<IProps, IState> {
   browserRouter: RouteComponentProps<any>;
 

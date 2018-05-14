@@ -1,9 +1,5 @@
-import { TextField } from 'material-ui';
-import DatePicker from 'material-ui-pickers/DatePicker';
-import { TextFieldProps } from 'material-ui/TextField';
-import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
-import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
-import { Moment } from 'moment';
+import { TextField } from '@material-ui/core';
+import { TextFieldProps } from '@material-ui/core/TextField';
 import * as React from 'react';
 import { PureComponent } from 'react';
 
@@ -102,23 +98,24 @@ export default class Field extends PureComponent<IProps, IState> {
   }
 
   renderDate() {
-    const { touched } = this.state;
-    const { error, value, submitted, label, format } = this.props;
+    // TODO: update picker
+    return null as React.ReactNode;
+    // const { touched } = this.state;
+    // const { error, value, submitted, label, format } = this.props;
 
-    return (
-      <DatePicker
-        label={label}
-        value={value || null}
-        format={format || 'DD/MM/YYYY'}
-        fullWidth={true}
-        margin={'normal'}
-        leftArrowIcon={<ChevronLeftIcon />}
-        rightArrowIcon={<ChevronRightIcon />}
-        error={(submitted || touched) && !!error}
-        helperText={(submitted || touched) && error}
-        onChange={(date: Moment) => this.onChange(date.toDate())}
-      />
-    );
+    //return (
+    // <DatePicker
+    //   value={value || null}
+    //   format={format || 'DD/MM/YYYY'}
+    //   fullWidth={true}
+    //   margin={'normal'}
+    //   leftArrowIcon={<ChevronLeftIcon />}
+    //   rightArrowIcon={<ChevronRightIcon />}
+    //   error={(submitted || touched) && !!error}
+    //   helperText={(submitted || touched) && error}
+    //   onChange={(date: Moment) => this.onChange(date.toDate())}
+    // />
+    //);
   }
 
 }

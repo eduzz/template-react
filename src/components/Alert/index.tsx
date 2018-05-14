@@ -1,9 +1,9 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { variables } from 'assets/theme';
+import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 
 import { AlertGlobalProvider } from './global';
-
-const styles = require('./index.css');
 
 interface IState {
   opened: boolean;
@@ -19,6 +19,7 @@ interface IProps {
   confirmation?: boolean;
   global?: boolean;
   onClose: (ok: boolean) => void;
+  classes?: any;
 }
 
 export interface IAlertShowParams {
@@ -27,6 +28,16 @@ export interface IAlertShowParams {
   confirmation?: boolean;
 }
 
+@WithStyles({
+  root: {
+    zIndex: 1600
+  },
+  content: {
+    minWidth: '250px',
+    paddingLeft: variables.contentPaddingUpSm,
+    paddingRight: variables.contentPaddingUpSm
+  }
+})
 export default class Alert extends React.PureComponent<IProps, IState> {
   static Global = AlertGlobalProvider;
 
@@ -64,17 +75,18 @@ export default class Alert extends React.PureComponent<IProps, IState> {
 
   render() {
     const { opened, title, message, confirmation } = this.state;
+    const { classes } = this.props;
 
     return (
       <Dialog
         open={opened}
         keepMounted
         onClose={this.onClose.bind(this, false)}
-        className={styles.component}
+        className={classes.root}
       >
         <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
-        <DialogContent className='content'>
-          <DialogContentText>
+        <DialogContent>
+          <DialogContentText className={classes.content}>
             {message}
           </DialogContentText>
         </DialogContent>

@@ -1,4 +1,4 @@
-import { LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from 'material-ui';
+import { LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core';
 import React, { PureComponent } from 'react';
 
 interface IState {

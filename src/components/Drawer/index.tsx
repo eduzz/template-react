@@ -1,17 +1,39 @@
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { darken } from '@material-ui/core/styles/colorManipulator';
 import AppDrawerUser from 'components/Drawer/UserMenu';
-import { RouterContext } from 'components/Root';
-import AppRouter from 'components/Router';
+import AppRouter, { RouterContext } from 'components/Router';
+import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
-import { List, ListItem, ListItemIcon, ListItemText } from 'material-ui';
 import React, { PureComponent } from 'react';
-
-const styles = require('./index.css');
 
 interface IProps {
   closeDrawer: Function;
   routes: IAppRoute[];
+  classes?: any;
 }
 
+@WithStyles(theme => ({
+  root: {
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    height: '100vh'
+  },
+  header: {
+    padding: '10px 0',
+    textAlign: 'center',
+    background: darken(theme.palette.primary.main, 0.15)
+  },
+  logo: {
+    maxWidth: '150px',
+    marginTop: '10px'
+  },
+  icon: {
+    margin: '0'
+  },
+  text: {
+    color: 'inherit'
+  }
+}))
 export default class AppDrawer extends PureComponent<IProps> {
   getRouter: () => AppRouter;
 
@@ -26,16 +48,16 @@ export default class AppDrawer extends PureComponent<IProps> {
   }
 
   render() {
-    const { closeDrawer, routes } = this.props;
+    const { closeDrawer, routes, classes } = this.props;
 
     return (
-      <div className={styles.component}>
+      <div className={classes.root}>
         <RouterContext.Consumer>
           {getRouter => (this.getRouter = getRouter) && null}
         </RouterContext.Consumer>
 
-        <div className='header'>
-          <img src={require('assets/images/logo-white.png')} className='logo' />
+        <div className={classes.header}>
+          <img src={require('assets/images/logo-white.png')} className={classes.logo} />
           <AppDrawerUser closeDrawer={closeDrawer} />
         </div>
 
@@ -43,11 +65,11 @@ export default class AppDrawer extends PureComponent<IProps> {
           {routes.map((route, index) =>
             <ListItem button key={index} onClick={this.toRoute.bind(this, route)}>
               {!!route.sideDrawer.icon &&
-                <ListItemIcon className='icon' classes={{ root: 'text' }}>
+                <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
                   <route.sideDrawer.icon />
                 </ListItemIcon>
               }
-              <ListItemText primary={route.sideDrawer.display} classes={{ primary: 'text' }} />
+              <ListItemText primary={route.sideDrawer.display} classes={{ primary: classes.text }} />
             </ListItem>
           )}
         </List>

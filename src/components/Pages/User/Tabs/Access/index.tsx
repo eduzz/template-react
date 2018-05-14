@@ -1,4 +1,4 @@
-import { Typography } from 'material-ui';
+import { Typography } from '@material-ui/core';
 import React, { PureComponent } from 'react';
 
 export default class UserTabAccess extends PureComponent {

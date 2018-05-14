@@ -1,17 +1,18 @@
+import './assets/global.css';
+import './errorHandler';
+
+import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { theme } from 'assets/theme';
 import Alert from 'components/Alert';
 import LoginDialog from 'components/LoginDialog';
-import AppRouter from 'components/Router';
+import AppRouter, { RouterContext } from 'components/Router';
 import Snackbar from 'components/Snackbar';
-import { CssBaseline, MuiThemeProvider } from 'material-ui';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
 import React from 'react';
 import { Provider } from 'react-redux';
 import baseRoutes from 'routes';
 import { configureStore, IAppStore } from 'store';
-
-export const RouterContext = React.createContext<() => AppRouter>(null);
 
 class App extends React.PureComponent {
   store: IAppStore;
