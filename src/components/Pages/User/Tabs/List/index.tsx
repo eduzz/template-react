@@ -1,4 +1,3 @@
-import Alert from 'components/Alert';
 import { LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from 'material-ui';
 import React, { PureComponent } from 'react';
 
@@ -8,7 +7,6 @@ interface IState {
   pageSize: number;
   all: {}[];
   items: {}[];
-  alertMessage?: React.ReactNode;
 }
 
 export default class UserTabList extends PureComponent<{}, IState> {
@@ -23,14 +21,6 @@ export default class UserTabList extends PureComponent<{}, IState> {
     };
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        alertMessage: 'Teste 2'
-      });
-    }, 2000);
-  }
-
   paginate(page: number, pageSize: number, all: {}[]): void {
     this.setState({
       items: all.slice(10 * page, (10 * page) + pageSize),
@@ -42,12 +32,10 @@ export default class UserTabList extends PureComponent<{}, IState> {
   }
 
   render() {
-    const { items, all, pageSize, page, loading, alertMessage } = this.state;
+    const { items, all, pageSize, page, loading } = this.state;
 
     return (
       <Paper>
-        <Alert confirmation opened={!!alertMessage} message={alertMessage} onClose={() => this.setState({ alertMessage: null })} />
-
         {loading && <LinearProgress color='secondary' />}
         <Table>
           <TableHead>
