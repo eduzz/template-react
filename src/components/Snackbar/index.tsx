@@ -1,8 +1,10 @@
 import { errorMessageFormatter } from 'formatters/errorMessage';
-import { IconButton, Snackbar } from 'material-ui';
+import { IconButton, Snackbar as CoreSnackbar } from 'material-ui';
 import CloseIcon from 'mdi-react/CloseIcon';
 import React, { PureComponent } from 'react';
 import { SNACKBAR_DEFAULT_TIMEOUT } from 'settings';
+
+import SnackbarGlobalProvider from './global';
 
 const styles = require('./index.css');
 
@@ -16,12 +18,13 @@ interface IProps {
   opened: boolean;
   message?: string;
   timeout?: number;
-  actions?: JSX.Element[];
   error?: Error;
   onClose: () => void;
 }
 
-export default class AppSnackbar extends PureComponent<IProps, IState> {
+export default class Snackbar extends PureComponent<IProps, IState> {
+  static Global = SnackbarGlobalProvider;
+
   constructor(props: IProps) {
     super(props);
     this.state = { opened: false };
@@ -42,6 +45,14 @@ export default class AppSnackbar extends PureComponent<IProps, IState> {
     };
   }
 
+  static show(message: string, timeout?: number) {
+    return SnackbarGlobalProvider.show(message, null, timeout);
+  }
+
+  static error(error: any) {
+    return SnackbarGlobalProvider.show(null, error);
+  }
+
   handleClose(event: any, reason: string) {
     if (reason === 'clickaway') return;
     this.props.onClose();
@@ -53,7 +64,7 @@ export default class AppSnackbar extends PureComponent<IProps, IState> {
 
     return (
       <span className={styles.component}>
-        <Snackbar
+        <CoreSnackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           open={opened}
           autoHideDuration={timeout || (isError ? null : SNACKBAR_DEFAULT_TIMEOUT)}

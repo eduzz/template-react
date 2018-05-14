@@ -2,6 +2,7 @@ import { theme } from 'assets/theme';
 import Alert from 'components/Alert';
 import LoginDialog from 'components/LoginDialog';
 import AppRouter from 'components/Router';
+import Snackbar from 'components/Snackbar';
 import { CssBaseline, MuiThemeProvider } from 'material-ui';
 import MomentUtils from 'material-ui-pickers/utils/moment-utils';
 import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
@@ -33,6 +34,7 @@ class App extends React.PureComponent {
             <CssBaseline />
             <LoginDialog />
             <Alert.Global />
+            <Snackbar.Global />
 
             <RouterContext.Provider value={this.getRouter.bind(this)}>
               <AppRouter routes={baseRoutes} ref={ref => this.router = ref} />

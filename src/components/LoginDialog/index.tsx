@@ -1,6 +1,6 @@
 import Field from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
-import AppSnackbar from 'components/Snackbar';
+import Snackbar from 'components/Snackbar';
 import { Button, Card, CardActions, CardContent, Dialog, LinearProgress } from 'material-ui';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -58,7 +58,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
 
     return (
       <Dialog fullScreen open={opened}>
-        <AppSnackbar opened={!!error} error={error} onClose={() => clearLoginError()} />
+        <Snackbar opened={!!error} error={error} onClose={() => clearLoginError()} />
 
         <div className={styles.component}>
           <form className='container' onSubmit={this.onSubmit.bind(this)}>

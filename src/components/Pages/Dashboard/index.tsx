@@ -1,4 +1,4 @@
-import AppToolbar from 'components/AppToolbar';
+import Toolbar from 'components/Toolbar';
 import { IAppRoute } from 'interfaces/route';
 import { Card, CardContent, Typography } from 'material-ui';
 import React, { Fragment, PureComponent } from 'react';
@@ -9,7 +9,7 @@ export default class DashboardIndexPage extends PureComponent {
   render() {
     return (
       <Fragment>
-        <AppToolbar title='Dashboard' />
+        <Toolbar title='Dashboard' />
 
         <Card>
           <CardContent>
