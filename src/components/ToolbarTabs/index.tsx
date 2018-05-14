@@ -7,7 +7,7 @@ const styles = require('./index.css');
 interface IProps {
 }
 
-export class AppToolbarTabs extends PureComponent<IProps> {
+export class ToolbarTabs extends PureComponent<IProps> {
   render() {
     const { children } = this.props;
 

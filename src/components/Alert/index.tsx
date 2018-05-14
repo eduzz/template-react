@@ -1,6 +1,8 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui';
 import * as React from 'react';
 
+import { AlertGlobalProvider } from './global';
+
 const styles = require('./index.css');
 
 interface IState {
@@ -15,10 +17,19 @@ interface IProps {
   message: React.ReactNode;
   title?: string;
   confirmation?: boolean;
+  global?: boolean;
   onClose: (ok: boolean) => void;
 }
 
-export default class AppAlert extends React.PureComponent<IProps, IState> {
+export interface IAlertShowParams {
+  message?: React.ReactNode;
+  title?: string;
+  confirmation?: boolean;
+}
+
+export default class Alert extends React.PureComponent<IProps, IState> {
+  static Global = AlertGlobalProvider;
+
   constructor(props: IProps) {
     super(props);
     this.state = { opened: false };
@@ -30,11 +41,25 @@ export default class AppAlert extends React.PureComponent<IProps, IState> {
       return { ...prevState, opened: false };
     }
 
-    return nextProps;
+    return nextProps as any;
+  }
+
+  static show(params: string): Promise<boolean>;
+  static show(params: IAlertShowParams): Promise<boolean>;
+  static show(params: string | IAlertShowParams) {
+    const paramsData = typeof params === 'string' ? { message: params } : params;
+    return AlertGlobalProvider.show(paramsData);
+  }
+
+  static confirm(params: string): Promise<boolean>;
+  static confirm(params: IAlertShowParams): Promise<boolean>;
+  static confirm(params: string | IAlertShowParams) {
+    const paramsData = typeof params === 'string' ? { message: params } : params;
+    return AlertGlobalProvider.show({ ...paramsData, confirmation: true });
   }
 
   onClose(ok: boolean) {
-    this.props.onClose(ok);
+    this.props.onClose && this.props.onClose(ok);
   }
 
   render() {
@@ -47,7 +72,7 @@ export default class AppAlert extends React.PureComponent<IProps, IState> {
         onClose={this.onClose.bind(this, false)}
         className={styles.component}
       >
-        <DialogTitle>{title || 'Atenção'}</DialogTitle>
+        <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
         <DialogContent className='content'>
           <DialogContentText>
             {message}
@@ -66,4 +91,5 @@ export default class AppAlert extends React.PureComponent<IProps, IState> {
       </Dialog>
     );
   }
+
 }

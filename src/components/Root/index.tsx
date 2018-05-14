@@ -1,4 +1,5 @@
 import { theme } from 'assets/theme';
+import Alert from 'components/Alert';
 import LoginDialog from 'components/LoginDialog';
 import AppRouter from 'components/Router';
 import { CssBaseline, MuiThemeProvider } from 'material-ui';
@@ -31,6 +32,7 @@ class App extends React.PureComponent {
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
             <LoginDialog />
+            <Alert.Global />
 
             <RouterContext.Provider value={this.getRouter.bind(this)}>
               <AppRouter routes={baseRoutes} ref={ref => this.router = ref} />

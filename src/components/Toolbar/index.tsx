@@ -1,5 +1,5 @@
 import { whiteTheme } from 'assets/theme';
-import { AppBar, IconButton, MuiThemeProvider, Toolbar, Typography } from 'material-ui';
+import { AppBar, IconButton, MuiThemeProvider, Toolbar as CoreToolbar, Typography } from 'material-ui';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -16,7 +16,7 @@ interface IPropsFromConnect {
   openDrawer?: typeof openDrawer;
 }
 
-class AppToolbar extends PureComponent<IProps & IPropsFromConnect> {
+class Toolbar extends PureComponent<IProps & IPropsFromConnect> {
   render() {
     const { openDrawer, children, title } = this.props;
 
@@ -24,7 +24,7 @@ class AppToolbar extends PureComponent<IProps & IPropsFromConnect> {
       <div className={styles.component}>
         <MuiThemeProvider theme={whiteTheme}>
           <AppBar className='app-bar' elevation={1}>
-            <Toolbar>
+            <CoreToolbar>
               <IconButton color='inherit'
                 onClick={() => openDrawer()}
                 className='icon-menu'>
@@ -36,7 +36,7 @@ class AppToolbar extends PureComponent<IProps & IPropsFromConnect> {
                   {title || 'App'}
                 </Typography>
               }
-            </Toolbar>
+            </CoreToolbar>
           </AppBar>
         </MuiThemeProvider>
       </div>
@@ -50,4 +50,4 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
   openDrawer
-})(AppToolbar);
+})(Toolbar);

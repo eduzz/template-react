@@ -1,4 +1,4 @@
-import AppAlert from 'components/Alert';
+import Alert from 'components/Alert';
 import { LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from 'material-ui';
 import React, { PureComponent } from 'react';
 
@@ -46,7 +46,7 @@ export default class UserTabList extends PureComponent<{}, IState> {
 
     return (
       <Paper>
-        <AppAlert confirmation opened={!!alertMessage} message={alertMessage} onClose={() => this.setState({ alertMessage: null })} />
+        <Alert confirmation opened={!!alertMessage} message={alertMessage} onClose={() => this.setState({ alertMessage: null })} />
 
         {loading && <LinearProgress color='secondary' />}
         <Table>
