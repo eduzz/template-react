@@ -1,5 +1,4 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { variables } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 
@@ -28,16 +27,16 @@ export interface IAlertShowParams {
   confirmation?: boolean;
 }
 
-@WithStyles({
+@WithStyles(theme => ({
   root: {
     zIndex: 1600
   },
   content: {
     minWidth: '250px',
-    paddingLeft: variables.contentPaddingUpSm,
-    paddingRight: variables.contentPaddingUpSm
+    paddingLeft: theme.variables.contentPaddingUpSm,
+    paddingRight: theme.variables.contentPaddingUpSm
   }
-})
+}))
 export default class Alert extends React.PureComponent<IProps, IState> {
   static Global = AlertGlobalProvider;
 

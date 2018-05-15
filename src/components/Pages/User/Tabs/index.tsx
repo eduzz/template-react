@@ -30,7 +30,7 @@ export default class UserTabsPage extends React.PureComponent<{}, IState> {
         <ToolbarTabs>
           <Tabs value={currentTab} onChange={this.onTabChange.bind(this)}>
             <Tab label='Lista' />
-            <Tab label='Papeis de Acesso' />
+            <Tab label='Grupos de Acesso' />
           </Tabs>
         </ToolbarTabs>
 
