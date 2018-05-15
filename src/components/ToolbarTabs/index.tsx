@@ -1,5 +1,5 @@
 import { AppBar, MuiThemeProvider } from '@material-ui/core';
-import { variables, whiteTheme } from 'assets/theme';
+import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
 
@@ -9,23 +9,23 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    height: variables.headerHeight,
-    marginTop: variables.contentPadding * -1,
-    marginBottom: variables.contentPadding,
+    height: theme.variables.headerHeight,
+    marginTop: theme.variables.contentPadding * -1,
+    marginBottom: theme.variables.contentPadding,
     [theme.breakpoints.up('sm')]: {
-      marginTop: variables.contentPaddingUpSm * -1,
-      marginBottom: variables.contentPaddingUpSm
+      marginTop: theme.variables.contentPaddingUpSm * -1,
+      marginBottom: theme.variables.contentPaddingUpSm
     }
   },
   appBar: {
     position: 'fixed',
-    top: variables.headerHeight,
+    top: theme.variables.headerHeight,
     left: 0,
     boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.29)',
     [theme.breakpoints.up('md')]: {
-      left: variables.drawerWidth,
-      top: variables.headerHeightUpSm,
-      width: `calc(100% - ${variables.drawerWidth}px)`
+      left: theme.variables.drawerWidth,
+      top: theme.variables.headerHeightUpSm,
+      width: `calc(100% - ${theme.variables.drawerWidth}px)`
     }
   }
 }))

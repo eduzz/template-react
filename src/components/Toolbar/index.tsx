@@ -1,5 +1,5 @@
 import { AppBar, IconButton, MuiThemeProvider, Toolbar as CoreToolbar, Typography } from '@material-ui/core';
-import { variables, whiteTheme } from 'assets/theme';
+import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
@@ -18,18 +18,18 @@ interface IPropsFromConnect {
 
 @WithStyles(theme => ({
   root: {
-    height: variables.headerHeight,
-    marginTop: variables.contentPadding * -1,
-    marginBottom: variables.contentPadding,
+    height: theme.variables.headerHeight,
+    marginTop: theme.variables.contentPadding * -1,
+    marginBottom: theme.variables.contentPadding,
     [theme.breakpoints.up('sm')]: {
-      marginTop: variables.contentPaddingUpSm * -1,
-      marginBottom: variables.contentPaddingUpSm
+      marginTop: theme.variables.contentPaddingUpSm * -1,
+      marginBottom: theme.variables.contentPaddingUpSm
     }
   },
   appBar: {
-    marginLeft: variables.drawerWidth,
+    marginLeft: theme.variables.drawerWidth,
     [theme.breakpoints.up('md')]: {
-      width: `calc(100% - ${variables.drawerWidth}px)`
+      width: `calc(100% - ${theme.variables.drawerWidth}px)`
     }
   },
   iconMenu: {

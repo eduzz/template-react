@@ -1,5 +1,4 @@
 import { Drawer, Hidden } from '@material-ui/core';
-import { variables } from 'assets/theme';
 import AppDrawer from 'components/Drawer';
 import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
@@ -26,11 +25,11 @@ interface IPropsFromConnect {
     height: '100vh'
   },
   drawer: {
-    width: variables.drawerWidth,
+    width: theme.variables.drawerWidth,
     borderRight: 'none !important',
-    boxShadow: `${variables.boxShadow} !important`,
+    boxShadow: `${theme.variables.boxShadow} !important`,
     [theme.breakpoints.up('md')]: {
-      width: variables.drawerWidth,
+      width: theme.variables.drawerWidth,
       position: 'relative',
       height: '100vh'
     }
@@ -40,9 +39,9 @@ interface IPropsFromConnect {
     width: '100vw',
     height: '100vh',
     overflow: 'auto',
-    padding: variables.contentPadding,
+    padding: theme.variables.contentPadding,
     [theme.breakpoints.up('sm')]: {
-      padding: variables.contentPaddingUpSm,
+      padding: theme.variables.contentPaddingUpSm,
     }
   }
 }))
