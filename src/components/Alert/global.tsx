@@ -25,7 +25,7 @@ export class AlertGlobalProvider extends PureComponent<{}, IState> {
 
     //prevent an alert to overhide another
     return lastPromise = lastPromise.then(async () => {
-      await new Promise(resolve => setTimeout(() => resolve(), 500));
+      await new Promise(resolve => setTimeout(() => resolve(), 300));
       return globalAlert(params);
     });
   }
@@ -38,7 +38,7 @@ export class AlertGlobalProvider extends PureComponent<{}, IState> {
   show(params: IAlertShowParams): Promise<boolean> {
     const result = new Promise<boolean>(resolve => {
       this.promiseResolve = resolve;
-      this.setState({ opened: true, ...params });
+      this.setState({ opened: true, confirmation: false, ...params });
     });
 
     result.then(() => this.setState({ opened: false }));

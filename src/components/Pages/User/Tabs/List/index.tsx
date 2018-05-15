@@ -1,38 +1,74 @@
-import { LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TablePagination, TableRow } from '@material-ui/core';
-import React, { PureComponent } from 'react';
+import {
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@material-ui/core';
+import ErrorMessage from 'components/ErrorMessage';
+import { IUser } from 'interfaces/user';
+import { RefreshIcon } from 'mdi-react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { IAppStoreState } from 'store';
+import { requestUserList } from 'store/actionCreators/user';
+
+import ListItem from './ListItem';
 
 interface IState {
-  loading: boolean;
-  page: number;
   pageSize: number;
-  all: {}[];
-  items: {}[];
+  page: number;
+  items: IUser[];
 }
 
-export default class UserTabList extends PureComponent<{}, IState> {
-  constructor(props: {}) {
+interface IPropsFromConnect {
+  loading: boolean;
+  error: any;
+  all: IUser[];
+  requestUserList?: typeof requestUserList;
+}
+
+class UserTabList extends Component<IPropsFromConnect, IState> {
+  constructor(props: IPropsFromConnect) {
     super(props);
-    this.state = {
-      loading: true,
-      page: 0,
-      pageSize: 10,
-      all: [],
-      items: []
+    this.state = { page: 0, pageSize: 10, items: [] };
+  }
+
+  static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState) {
+    const { page, pageSize } = currentState;
+
+    return {
+      ...currentState,
+      items: nextProps.all.slice(pageSize * page, (pageSize * page) + pageSize)
     };
   }
 
-  paginate(page: number, pageSize: number, all: {}[]): void {
+  componentDidMount() {
+    this.load();
+  }
+
+  load() {
+    this.props.requestUserList();
+  }
+
+  paginate(page: number, pageSize: number): void {
+    const { all, loading } = this.props;
+    if (loading) return;
+
     this.setState({
-      items: all.slice(10 * page, (10 * page) + pageSize),
-      all,
+      items: all.slice(pageSize * page, (pageSize * page) + pageSize),
       pageSize,
-      loading: false,
       page
     });
   }
 
   render() {
-    const { items, all, pageSize, page, loading } = this.state;
+    const { items, pageSize, page } = this.state;
+    const { loading, all, error } = this.props;
 
     return (
       <Paper>
@@ -40,14 +76,27 @@ export default class UserTabList extends PureComponent<{}, IState> {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Titulo</TableCell>
-              <TableCell>Tipo</TableCell>
-              <TableCell>Dia</TableCell>
+              <TableCell>Nome</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Curso</TableCell>
+              <TableCell>Grupo</TableCell>
+              <TableCell>
+                <IconButton onClick={() => this.load()}>
+                  <RefreshIcon />
+                </IconButton>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {items.map(informative => null
-              // <TablListItemeItem key={informative.id} informative={informative} />
+            {error &&
+              <TableRow>
+                <TableCell colSpan={5} className='error'>
+                  <ErrorMessage error={error} tryAgain={() => this.load()} />
+                </TableCell>
+              </TableRow>
+            }
+            {items.map(user =>
+              <ListItem key={user.id} user={user} />
             )}
           </TableBody>
         </Table>
@@ -59,10 +108,23 @@ export default class UserTabList extends PureComponent<{}, IState> {
           rowsPerPage={pageSize}
           rowsPerPageOptions={[10, 25, 50]}
           page={page}
-          onChangePage={(event, page) => this.paginate(page, pageSize, all)}
-          onChangeRowsPerPage={(event) => this.paginate(page, Number(event.target.value), all)}
+          onChangePage={(event, page) => this.paginate(page, pageSize)}
+          onChangeRowsPerPage={(event) => this.paginate(page, Number(event.target.value))}
         />
       </Paper>
     );
   }
 }
+
+const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
+  return {
+    ...ownProps,
+    loading: state.user.isFetching,
+    all: state.user.users,
+    error: state.user.error
+  } as IPropsFromConnect;
+};
+
+export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
+  requestUserList
+})(UserTabList);

@@ -5,7 +5,7 @@ import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { openDrawer } from 'store/actionsCreators';
+import { openDrawer } from 'store/actionCreators';
 
 interface IProps {
   title?: string;

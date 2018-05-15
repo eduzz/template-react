@@ -33,11 +33,11 @@ export interface IAlertShowParams {
   },
   content: {
     minWidth: '250px',
-    paddingLeft: theme.variables.contentPaddingUpSm,
-    paddingRight: theme.variables.contentPaddingUpSm
+    padding: theme.variables.contentPaddingUpSm,
+    paddingTop: 0
   }
 }))
-export default class Alert extends React.PureComponent<IProps, IState> {
+export default class Alert extends React.Component<IProps, IState> {
   static Global = AlertGlobalProvider;
 
   constructor(props: IProps) {

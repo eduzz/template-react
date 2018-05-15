@@ -5,7 +5,7 @@ import { IAppRoute } from 'interfaces/route';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { closeDrawer } from 'store/actionsCreators';
+import { closeDrawer } from 'store/actionCreators';
 
 interface IProps {
   routes: IAppRoute[];

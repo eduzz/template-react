@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { IAppStoreState } from 'store';
-import { openLoginDialog } from 'store/actionsCreators';
+import { openLoginDialog } from 'store/actionCreators';
 
 interface IProps {
   route: IAppRoute;

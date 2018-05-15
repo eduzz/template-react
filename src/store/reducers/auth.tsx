@@ -23,7 +23,7 @@ const initialState: IAppStoreAuthState = {
 };
 
 function auth(state: IAppStoreAuthState = initialState, action: any): IAppStoreAuthState {
-  switch (action.type) {
+  switch (action.type as typeAppStoreAuthActions) {
     case 'OPEN_LOGIN_DIALOG':
       return {
         ...state,

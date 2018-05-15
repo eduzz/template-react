@@ -9,7 +9,7 @@ const initialState: IAppStoreDrawerState = {
 };
 
 function drawer(state: IAppStoreDrawerState = initialState, action: any): IAppStoreDrawerState {
-  switch (action.type) {
+  switch (action.type as typeAppStoreDrawerActions) {
     case 'OPEN_DRAWER':
       return {
         ...state,

@@ -9,3 +9,19 @@
 .hide {
   display: none;
 }
+
+[class*='MuiTable'] tr td,
+[class*='MuiTable'] tr th {
+  padding: 0px 15px 0px 15px !important;
+}
+
+[class*='MuiTable'] tr td:last-child,
+[class*='MuiTable'] tr th:last-child {
+  text-align: right !important;
+  width: 50px;
+}
+
+[class*='MuiTable'] tr td:last-child button,
+[class*='MuiTable'] tr th:last-child button {
+  margin-right: -10px;
+}
