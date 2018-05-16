@@ -10,6 +10,12 @@ export function openUserFormModal() {
   };
 }
 
+export function cancelUserFormModal() {
+  return async (dispatch: IAppDispatcher<typeAppStoreUserActions>, getState: () => IAppStoreState) => {
+    dispatch({ type: 'CANCEL_USER_FORM_DIALOG' });
+  };
+}
+
 export function requestUserList<T>() {
   return async (dispatch: IAppDispatcher<typeAppStoreUserActions>, getState: () => IAppStoreState) => {
     try {

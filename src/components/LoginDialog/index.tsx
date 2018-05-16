@@ -63,15 +63,6 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
     this.state = { formSubmitted: false, model: {} };
   }
 
-  static getDerivedStateFromProps(nextProps: IPropsFromConnect, prevState: IState): IState {
-    if (nextProps.opened) return prevState;
-
-    return {
-      ...prevState,
-      model: {}
-    };
-  }
-
   async onSubmit(event: Event) {
     event.preventDefault();
 
@@ -89,7 +80,13 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
     const { opened, loading, error, clearLoginError, classes } = this.props;
 
     return (
-      <Dialog fullScreen open={opened} TransitionComponent={Transition}>
+      <Dialog
+        fullScreen
+        disableBackdropClick
+        disableEscapeKeyDown
+        open={opened}
+        onExited={this.resetForm.bind(this)}
+        TransitionComponent={Transition}>
         <Snackbar opened={!!error} error={error} onClose={() => clearLoginError()} />
 
         <div className={classes.root}>

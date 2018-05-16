@@ -5,24 +5,24 @@ import { WithStyles } from 'decorators/withStyles';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
+import { cancelUserFormModal } from 'store/actionCreators/user';
 
 import UserValidator from './validator';
 
 interface IState extends IStateForm<{
   email: string;
-  password: string;
+  group: string;
 }> { }
 
 interface IPropsFromConnect {
   opened: boolean;
   loading: boolean;
   classes?: any;
+  cancelUserFormModal?: typeof cancelUserFormModal;
 }
 
 @WithStyles(theme => ({
   content: {
-    padding: theme.variables.contentPaddingUpSm,
-    paddingTop: 0,
     width: 400,
     maxWidth: 'calc(95vw - 50px)'
   }
@@ -35,8 +35,20 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
     this.state = { formSubmitted: false, model: {} };
   }
 
-  onClose() {
-    this.setState({ formSubmitted: false, model: {} });
+  onCancel() {
+    this.props.cancelUserFormModal();
+  }
+
+  async onSubmit(event: Event) {
+    event.preventDefault();
+
+    // const { model } = this.state;
+    // const { requestLogin } = this.props;
+
+    const isValid = await this.isFormValid();
+    if (!isValid) return;
+
+    // requestLogin(model.username, model.password);
   }
 
   render() {
@@ -46,15 +58,16 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
     return (
       <Dialog
         open={opened}
-        onClose={this.onClose.bind(this)}
+        disableBackdropClick
+        disableEscapeKeyDown
+        onExited={this.resetForm.bind(this)}
         TransitionComponent={Transition}>
 
-        <form>
+        <form onSubmit={this.onSubmit.bind(this)}>
           <DialogTitle>Novo Usuário</DialogTitle>
           <DialogContent>
 
             <div className={classes.content}>
-
               <Field
                 label='Email'
                 type='email'
@@ -66,15 +79,24 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                 margin='none'
               />
 
+              <Field
+                label='Grupo'
+                type='select'
+                disabled={loading}
+                value={model.group}
+                submitted={formSubmitted}
+                error={this.getErrorMessage('group')}
+                onChange={this.updateModel((model, v) => model.group = v)}
+              />
             </div>
 
           </DialogContent>
           <DialogActions>
-            <Button color='primary'>
-              Disagree
+            <Button onClick={this.onCancel.bind(this)}>
+              Cancelar
             </Button>
-            <Button color='primary' autoFocus>
-              Agree
+            <Button color='secondary' type='submit'>
+              Salvar
             </Button>
           </DialogActions>
         </form>
@@ -91,6 +113,7 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
 };
 
 export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
+  cancelUserFormModal
 })(UserFormModal);
 
 function Transition(props: any) {

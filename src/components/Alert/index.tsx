@@ -32,9 +32,7 @@ export interface IAlertShowParams {
     zIndex: 1600
   },
   content: {
-    minWidth: '250px',
-    padding: theme.variables.contentPaddingUpSm,
-    paddingTop: 0
+    minWidth: '250px'
   }
 }))
 export default class Alert extends React.Component<IProps, IState> {
