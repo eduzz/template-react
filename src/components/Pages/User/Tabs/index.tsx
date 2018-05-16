@@ -1,16 +1,25 @@
 import { Tab, Tabs } from '@material-ui/core';
+import FabButton from 'components/FabButton';
 import UserTabAccess from 'components/Pages/User/Tabs/Access';
 import UserTabList from 'components/Pages/User/Tabs/List';
 import Toolbar from 'components/Toolbar';
 import { ToolbarTabs } from 'components/ToolbarTabs';
+import { AccountPlusIcon, KeyPlusIcon } from 'mdi-react';
 import * as React from 'react';
 import { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { IAppStoreState } from 'store';
+import { openUserFormModal } from 'store/actionCreators/user';
 
 interface IState {
   currentTab: number;
 }
 
-export default class UserTabsPage extends React.PureComponent<{}, IState> {
+interface IPropsFromConnect {
+  openUserFormModal?: typeof openUserFormModal;
+}
+
+class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
   constructor(props: any) {
     super(props);
     this.state = { currentTab: 0 };
@@ -18,6 +27,10 @@ export default class UserTabsPage extends React.PureComponent<{}, IState> {
 
   onTabChange(event: any, tab: number) {
     this.setState({ currentTab: tab });
+  }
+
+  addUser() {
+    this.props.openUserFormModal();
   }
 
   render() {
@@ -35,13 +48,33 @@ export default class UserTabsPage extends React.PureComponent<{}, IState> {
         </ToolbarTabs>
 
         <span className={currentTab === 0 ? '' : 'hide'}>
+          <FabButton hasTabs actions={[{
+            icon: AccountPlusIcon,
+            tooltip: 'Adicionar usuário',
+            onClick: () => this.addUser()
+          }]} />
+
           <UserTabList />
         </span>
 
         <span className={currentTab === 1 ? '' : 'hide'}>
+          <FabButton hasTabs actions={[{
+            icon: KeyPlusIcon,
+            tooltip: 'Adicionar perfil',
+            onClick: () => this.addUser()
+          }]} />
+
           <UserTabAccess />
         </span>
       </Fragment>
     );
   }
 }
+
+const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
+  return {};
+};
+
+export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
+  openUserFormModal
+})(UserTabsPage);

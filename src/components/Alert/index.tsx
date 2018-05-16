@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@material-ui/core';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 
@@ -80,6 +80,7 @@ export default class Alert extends React.Component<IProps, IState> {
       <Dialog
         open={opened}
         keepMounted
+        TransitionComponent={Transition}
         onClose={this.onClose.bind(this, false)}
         className={classes.root}
       >
@@ -91,11 +92,11 @@ export default class Alert extends React.Component<IProps, IState> {
         </DialogContent>
         <DialogActions>
           {confirmation &&
-            <Button onClick={this.onClose.bind(this, false)}>
+            <Button onClick={this.onClose.bind(this, false)} autoFocus>
               Cancelar
             </Button>
           }
-          <Button id='alert-button' onClick={this.onClose.bind(this, true)} color='primary'>
+          <Button autoFocus={!confirmation} onClick={this.onClose.bind(this, true)} color='primary'>
             OK
           </Button>
         </DialogActions>
@@ -103,4 +104,8 @@ export default class Alert extends React.Component<IProps, IState> {
     );
   }
 
+}
+
+function Transition(props: any) {
+  return <Slide direction='up' {...props} />;
 }

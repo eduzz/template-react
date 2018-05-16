@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Dialog, LinearProgress } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Dialog, LinearProgress, Slide } from '@material-ui/core';
 import Field from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
@@ -89,7 +89,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
     const { opened, loading, error, clearLoginError, classes } = this.props;
 
     return (
-      <Dialog fullScreen open={opened}>
+      <Dialog fullScreen open={opened} TransitionComponent={Transition}>
         <Snackbar opened={!!error} error={error} onClose={() => clearLoginError()} />
 
         <div className={classes.root}>
@@ -152,3 +152,7 @@ export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
   requestLogin,
   clearLoginError
 })(LoginDialog);
+
+function Transition(props: any) {
+  return <Slide direction='up' {...props} />;
+}

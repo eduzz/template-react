@@ -1,6 +1,7 @@
 import { IUser } from 'interfaces/user';
 
 export type typeAppStoreUserActions =
+  'OPEN_USER_FORM_DIALOG' |
   'REQUEST_USER_LIST' | 'RECEIVE_USER_LIST' | 'RECEIVE_USER_LIST_ERROR' |
   'REQUEST_USER_DELETE' | 'RECEIVE_USER_DELETE' | 'RECEIVE_USER_DELETE_ERROR';
 
@@ -8,16 +9,33 @@ export interface IAppStoreUserState {
   isFetching: boolean;
   users: IUser[];
   error: any;
+  userFormModal: {
+    isOpened: boolean;
+    error: boolean;
+  };
 }
 
 const initialState: IAppStoreUserState = {
   isFetching: false,
   users: [],
-  error: null
+  error: null,
+  userFormModal: {
+    isOpened: false,
+    error: null
+  }
 };
 
 function user(state: IAppStoreUserState = initialState, action: any): IAppStoreUserState {
   switch (action.type as typeAppStoreUserActions) {
+    case 'OPEN_USER_FORM_DIALOG':
+      return {
+        ...state,
+        userFormModal: {
+          ...state.userFormModal,
+          isOpened: true,
+          error: null
+        }
+      };
     case 'REQUEST_USER_LIST':
       return {
         ...state,

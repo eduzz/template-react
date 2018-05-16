@@ -4,9 +4,9 @@ import { IAppDispatcher, IAppStoreState } from 'store/interfaces';
 
 import { typeAppStoreUserActions } from '../reducers/user';
 
-export function cleanListError() {
-  return async (dispatch: IAppDispatcher<typeAppStoreUserActions>) => {
-    dispatch({ type: 'RECEIVE_USER_LIST_ERROR', error: null });
+export function openUserFormModal() {
+  return async (dispatch: IAppDispatcher<typeAppStoreUserActions>, getState: () => IAppStoreState) => {
+    dispatch({ type: 'OPEN_USER_FORM_DIALOG' });
   };
 }
 
@@ -34,6 +34,12 @@ export function requestUserList<T>() {
       logError(error);
       dispatch({ type: 'RECEIVE_USER_LIST_ERROR', error });
     }
+  };
+}
+
+export function cleanListError() {
+  return async (dispatch: IAppDispatcher<typeAppStoreUserActions>) => {
+    dispatch({ type: 'RECEIVE_USER_LIST_ERROR', error: null });
   };
 }
 

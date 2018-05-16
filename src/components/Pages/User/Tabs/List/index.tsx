@@ -10,6 +10,7 @@ import {
   TableRow,
 } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
+import TableWrapper from 'components/TableWrapper';
 import { IUser } from 'interfaces/user';
 import { RefreshIcon } from 'mdi-react';
 import React, { Component } from 'react';
@@ -73,33 +74,35 @@ class UserTabList extends Component<IPropsFromConnect, IState> {
     return (
       <Paper>
         {loading && <LinearProgress color='secondary' />}
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Nome</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Curso</TableCell>
-              <TableCell>Grupo</TableCell>
-              <TableCell>
-                <IconButton onClick={() => this.load()}>
-                  <RefreshIcon />
-                </IconButton>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {error &&
+        <TableWrapper>
+          <Table>
+            <TableHead>
               <TableRow>
-                <TableCell colSpan={5} className='error'>
-                  <ErrorMessage error={error} tryAgain={() => this.load()} />
+                <TableCell>Nome</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Curso</TableCell>
+                <TableCell>Grupo</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => this.load()}>
+                    <RefreshIcon />
+                  </IconButton>
                 </TableCell>
               </TableRow>
-            }
-            {items.map(user =>
-              <ListItem key={user.id} user={user} />
-            )}
-          </TableBody>
-        </Table>
+            </TableHead>
+            <TableBody>
+              {error &&
+                <TableRow>
+                  <TableCell colSpan={5} className='error'>
+                    <ErrorMessage error={error} tryAgain={() => this.load()} />
+                  </TableCell>
+                </TableRow>
+              }
+              {items.map(user =>
+                <ListItem key={user.id} user={user} />
+              )}
+            </TableBody>
+          </Table>
+        </TableWrapper>
         <TablePagination
           labelRowsPerPage='items por página'
           labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
@@ -111,7 +114,7 @@ class UserTabList extends Component<IPropsFromConnect, IState> {
           onChangePage={(event, page) => this.paginate(page, pageSize)}
           onChangeRowsPerPage={(event) => this.paginate(page, Number(event.target.value))}
         />
-      </Paper>
+      </Paper >
     );
   }
 }
