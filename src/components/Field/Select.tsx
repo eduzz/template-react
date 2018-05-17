@@ -1,24 +1,36 @@
 import { MenuItem, TextField } from '@material-ui/core';
+import { TextFieldProps } from '@material-ui/core/TextField';
 import React, { PureComponent } from 'react';
+
+interface IState {
+  touched: boolean;
+}
 
 // @ts-ignore
 interface IProps extends TextFieldProps {
   error?: string;
   submitted?: boolean;
   value?: any;
-  mask?: string;
-  touched: boolean;
+  options: { value: any, label: string }[];
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export default class FieldSelect extends PureComponent<IProps> {
+export default class FieldSelect extends PureComponent<IProps, IState> {
+  constructor(props: any) {
+    super(props);
+    this.state = { touched: false };
+  }
+
   onChange(event: any) {
+    this.setState({ touched: true });
+
     const value = event.target ? event.target.value : event;
     this.props.onChange(value === 'null' ? null : value);
   }
 
   render() {
-    const { error, submitted, touched, value } = this.props;
+    const { touched } = this.state;
+    const { error, submitted, value, options } = this.props;
 
     return (
       <TextField
@@ -38,7 +50,7 @@ export default class FieldSelect extends PureComponent<IProps> {
         <MenuItem value='null'>
           Selecione...
         </MenuItem>
-        {[{ value: 1, label: 'Teste' }].map(option => (
+        {(options || []).map(option => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>

@@ -2,17 +2,19 @@ import { TextField } from '@material-ui/core';
 import { TextFieldProps } from '@material-ui/core/TextField';
 import React, { PureComponent } from 'react';
 
-// @ts-ignore
-interface IProps extends TextFieldProps {
-  error?: string;
-  submitted?: boolean;
-  value?: any;
-  mask?: string;
+interface IState {
   touched: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-export default class FieldText extends PureComponent<IProps> {
+// @ts-ignore
+interface IProps extends TextFieldProps {
+  value?: any;
+  error?: string;
+  submitted?: boolean;
+  mask?: 'phone';
+}
+
+export default class FieldText extends PureComponent<IProps, IState> {
   private readonly masks: any = {
     phone: {
       apply: (value: string) => {
@@ -31,7 +33,13 @@ export default class FieldText extends PureComponent<IProps> {
     },
   };
 
+  constructor(props: any) {
+    super(props);
+    this.state = { touched: false };
+  }
+
   onChange(event: any) {
+    this.setState({ touched: true });
     const value = this.cleanValue(event.target ? event.target.value : event);
     this.props.onChange(value);
   }
@@ -51,7 +59,8 @@ export default class FieldText extends PureComponent<IProps> {
   }
 
   render() {
-    const { error, submitted, touched } = this.props;
+    const { touched } = this.state;
+    const { error, submitted } = this.props;
     const value = this.getValue();
 
     return (

@@ -6873,7 +6873,11 @@ raven-js@*:
   version "3.23.1"
   resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.23.1.tgz#34a5d7b5b3dd626a3d59e7a264e1d19a4c799cdb"
 
-raven-js@3.25.1, raven-js@>=3.21.0:
+raven-js@3.25.2:
+  version "3.25.2"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.25.2.tgz#d3ad1c694f70855dda6f705204ee6ab76ba62884"
+
+raven-js@>=3.21.0:
   version "3.25.1"
   resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.25.1.tgz#05df39b41af140e3b2fa34e2c522e2b4f99a98be"
 

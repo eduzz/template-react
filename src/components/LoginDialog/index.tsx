@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, Dialog, LinearProgress, Slide } from '@material-ui/core';
-import Field from 'components/Field';
+import { FieldText } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
@@ -98,7 +98,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
             <Card>
               <CardContent>
 
-                <Field
+                <FieldText
                   label='Email'
                   type='email'
                   disabled={loading}
@@ -109,7 +109,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
                   margin='none'
                 />
 
-                <Field
+                <FieldText
                   label='Senha'
                   type='password'
                   disabled={loading}

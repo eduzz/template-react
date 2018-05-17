@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@material-ui/core';
-import Field from 'components/Field';
+import { FieldAutocomplete, FieldDate, FieldSelect, FieldText } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
 import React from 'react';
@@ -68,7 +68,7 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
           <DialogContent>
 
             <div className={classes.content}>
-              <Field
+              <FieldText
                 label='Email'
                 type='email'
                 disabled={loading}
@@ -79,15 +79,26 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                 margin='none'
               />
 
-              <Field
+              <FieldSelect
                 label='Grupo'
-                type='select'
+                options={[{ value: 1, label: 'Teste' }]}
                 disabled={loading}
                 value={model.group}
                 submitted={formSubmitted}
                 error={this.getErrorMessage('group')}
                 onChange={this.updateModel((model, v) => model.group = v)}
               />
+
+              <FieldDate
+                label='Grupo'
+                disabled={loading}
+                value={model.group}
+                submitted={formSubmitted}
+                error={this.getErrorMessage('group')}
+                onChange={this.updateModel((model, v) => model.group = v)}
+              />
+
+              <FieldAutocomplete />
             </div>
 
           </DialogContent>

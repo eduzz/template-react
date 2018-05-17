@@ -1,5 +1,6 @@
 import './assets/global.css';
 import './errorHandler';
+import 'moment/locale/pt-br';
 
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { theme } from 'assets/theme';
@@ -30,7 +31,7 @@ class App extends React.PureComponent {
   render() {
     return (
       <Provider store={this.store}>
-        <MuiPickersUtilsProvider utils={MomentUtils}>
+        <MuiPickersUtilsProvider utils={MomentUtils} locale='pt-br'>
           <MuiThemeProvider theme={theme}>
             <CssBaseline />
             <LoginDialog />
