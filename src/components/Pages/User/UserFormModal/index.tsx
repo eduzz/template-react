@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@material-ui/core';
-import { FieldAutocomplete, FieldDate, FieldSelect, FieldText } from 'components/Field';
+import { FieldDate, FieldSelect, FieldText } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
 import React from 'react';
@@ -98,7 +98,6 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                 onChange={this.updateModel((model, v) => model.group = v)}
               />
 
-              <FieldAutocomplete />
             </div>
 
           </DialogContent>
