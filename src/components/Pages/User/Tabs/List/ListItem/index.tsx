@@ -7,7 +7,7 @@ import { DeleteIcon } from 'mdi-react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { cleanDeleteError, requestUserDelete } from 'store/actionCreators/user';
+import { cleanUserDeleteError, requestUserDelete } from 'store/actionCreators/user';
 
 interface IProps {
   user: IUser;
@@ -15,7 +15,7 @@ interface IProps {
 
 interface IPropsFromConnect {
   requestUserDelete?: typeof requestUserDelete;
-  cleanDeleteError?: typeof cleanDeleteError;
+  cleanUserDeleteError?: typeof cleanUserDeleteError;
 }
 
 class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
@@ -29,7 +29,7 @@ class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
   }
 
   render(): JSX.Element {
-    const { user, cleanDeleteError } = this.props;
+    const { user, cleanUserDeleteError } = this.props;
 
     return (
       <TableRow>
@@ -40,7 +40,7 @@ class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
         <TableCell>
           {user.isFetching && <CircularProgress color='secondary' size={20} />}
           {!user.isFetching && user.error &&
-            <ErrorMessageIcon error={user.error} onDismiss={() => cleanDeleteError(user)} />
+            <ErrorMessageIcon error={user.error} onDismiss={() => cleanUserDeleteError(user)} />
           }
           {!user.isFetching && !user.error &&
             <DropdownMenu options={[{
@@ -61,5 +61,5 @@ const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
   requestUserDelete,
-  cleanDeleteError
+  cleanUserDeleteError
 })(ListItem);

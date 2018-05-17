@@ -66,6 +66,7 @@ class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
 
           <UserTabAccess />
         </span>
+
       </Fragment>
     );
   }

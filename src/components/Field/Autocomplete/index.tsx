@@ -89,7 +89,10 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
   }
 
   handleSuggestionsFetchRequested({ value }: SuggestionsFetchRequestedParams) {
-    const suggestions = this.props.options;
+    const suggestions = this.props.options
+      .filter(o => o.label.toLowerCase().includes(value.toLowerCase()))
+      .slice(0, 10);
+
     this.setState({ suggestions });
   }
 
@@ -102,12 +105,12 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
   }
 
   render() {
-    const { term } = this.state;
-    const { classes, options, placeholder, disabled, label } = this.props;
+    const { term, suggestions } = this.state;
+    const { classes, placeholder, disabled, label } = this.props;
 
     return (
       <Autosuggest
-        suggestions={options}
+        suggestions={suggestions}
         theme={{
           container: classes.container,
           suggestionsContainerOpen: `${classes.suggestionsContainerOpen} ${label ? classes.suggestionsContainerOpenWithLabel : ''}`,
@@ -129,7 +132,7 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
           value: term || '',
           onBlur: this.handleBlur.bind(this),
           onChange: this.handleChange.bind(this),
-          endAdornment: (
+          endAdornment: (!term ? null :
             <InputAdornment position='end' onClick={this.handleClearValue.bind(this)}>
               <IconButton disabled={disabled} className={classes.adornment}>
                 <CloseIcon />

@@ -26,12 +26,12 @@
   margin-right: -10px;
 }
 
-[class*='MuiDialogContent-'],
-[class*='MuiDialog-'] {
+[class*='MuiDialogContent'],
+[class*='MuiDialog'] {
   overflow-y: visible !important;
   max-height: none !important;
 }
 
-[class*='MuiDialog-'] {
+/* [class*='MuiModal-'] {
   overflow: auto !important;
-}
+} */

@@ -5,19 +5,19 @@ import { API_ENDPOINT } from 'settings';
 
 import { getStore } from './store';
 
-export async function get<T = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
+export async function get<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'GET', params });
 }
 
-export async function post<T = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
+export async function post<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'POST', data });
 }
 
-export async function put<T = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
+export async function put<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'PUT', data });
 }
 
-export async function del<T = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
+export async function del<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'DELETE', params });
 }
 
@@ -28,7 +28,7 @@ async function request(options: AxiosRequestConfig, retry: boolean = true) {
       ...options,
       baseURL: API_ENDPOINT,
       headers: {
-        Authorization: `bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-type': 'application/json'
       },
     });

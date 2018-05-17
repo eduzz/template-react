@@ -25,7 +25,7 @@ export default class FieldSelect extends PureComponent<IProps, IState> {
     this.setState({ touched: true });
 
     const value = event.target ? event.target.value : event;
-    this.props.onChange(value === 'null' ? null : value);
+    this.props.onChange(value);
   }
 
   render() {
@@ -38,7 +38,7 @@ export default class FieldSelect extends PureComponent<IProps, IState> {
           fullWidth: true,
           margin: 'normal',
           ...this.props,
-          value: value || 'null',
+          value: value === undefined ? '' : value,
           select: true,
           error: (submitted || touched) && !!error,
           helperText: (submitted || touched) && error,
@@ -47,7 +47,7 @@ export default class FieldSelect extends PureComponent<IProps, IState> {
           touched: null
         }}
       >
-        <MenuItem value='null'>
+        <MenuItem value={undefined}>
           Selecione...
         </MenuItem>
         {(options || []).map(option => (

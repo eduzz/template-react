@@ -90,7 +90,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
         <Snackbar opened={!!error} error={error} onClose={() => clearLoginError()} />
 
         <div className={classes.root}>
-          <form className={classes.container} onSubmit={this.onSubmit.bind(this)}>
+          <form className={classes.container} onSubmit={this.onSubmit.bind(this)} noValidate>
             <div className={classes.logo}>
               <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
             </div>

@@ -66,8 +66,30 @@ export function requestUserDelete(user: IUser) {
   };
 }
 
-export function cleanDeleteError(user: IUser) {
+export function cleanUserDeleteError(user: IUser) {
   return (dispatch: IAppDispatcher<typeAppStoreUserActions>) => {
     dispatch({ type: 'RECEIVE_USER_DELETE_ERROR', user, error: null });
+  };
+}
+
+export function requestUserSave(data: { email: string, group: number, course: number }) {
+  return async (dispatch: IAppDispatcher<typeAppStoreUserActions>) => {
+    try {
+      dispatch({ type: 'REQUEST_USER_SAVE', data });
+
+      await new Promise((resolve, reject) => setTimeout(() => {
+        if (Math.random() > 0.8) return reject(Error('Tste'));
+        dispatch({ type: 'RECEIVED_USER_SAVE', data });
+      }, 2000));
+    } catch (error) {
+      logError(error);
+      dispatch({ type: 'RECEIVED_USER_SAVE_ERROR', error });
+    }
+  };
+}
+
+export function cleanUserSaveError() {
+  return (dispatch: IAppDispatcher<typeAppStoreUserActions>) => {
+    dispatch({ type: 'RECEIVED_USER_SAVE_ERROR', error: null });
   };
 }
