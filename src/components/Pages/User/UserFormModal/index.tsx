@@ -1,5 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@material-ui/core';
-import { FieldDate, FieldSelect, FieldText } from 'components/Field';
+import { FieldAutocomplete, FieldSelect, FieldText } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
 import React from 'react';
@@ -11,7 +11,8 @@ import UserValidator from './validator';
 
 interface IState extends IStateForm<{
   email: string;
-  group: string;
+  group: number;
+  course: number;
 }> { }
 
 interface IPropsFromConnect {
@@ -89,13 +90,14 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                 onChange={this.updateModel((model, v) => model.group = v)}
               />
 
-              <FieldDate
-                label='Grupo'
+              <FieldAutocomplete
+                label='Curso'
+                options={[{ value: 1, label: 'Teste' }]}
                 disabled={loading}
-                value={model.group}
+                value={model.course}
                 submitted={formSubmitted}
-                error={this.getErrorMessage('group')}
-                onChange={this.updateModel((model, v) => model.group = v)}
+                error={this.getErrorMessage('course')}
+                onChange={this.updateModel((model, v) => model.course = v)}
               />
 
             </div>

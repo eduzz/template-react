@@ -10,13 +10,13 @@
   display: none;
 }
 
-[class*='MuiTable'] tr td,
-[class*='MuiTable'] tr th {
+[class*='MuiTable-'] tr td,
+[class*='MuiTable-'] tr th {
   padding: 3px 15px 3px 15px !important;
 }
 
-[class*='MuiTable'] tr td:last-child,
-[class*='MuiTable'] tr th:last-child {
+[class*='MuiTable-'] tr td:last-child,
+[class*='MuiTable-'] tr th:last-child {
   text-align: right !important;
   width: 50px;
 }
@@ -24,4 +24,14 @@
 [class*='MuiTable'] tr td:last-child button,
 [class*='MuiTable'] tr th:last-child button {
   margin-right: -10px;
+}
+
+[class*='MuiDialogContent-'],
+[class*='MuiDialog-'] {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+[class*='MuiDialog-'] {
+  overflow: auto !important;
 }
