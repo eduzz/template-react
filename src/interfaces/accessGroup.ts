@@ -4,5 +4,11 @@ import { IStoreItemStatus } from './storeItemStatus';
 export interface IAccessGroup extends IStoreItemStatus {
   id: number;
   name: string;
-  modules?: IAccessGroupModule[];
+  modules?: Array<IAccessGroupModule & {
+    view?: boolean;
+    create?: boolean;
+    edit?: boolean;
+    delete?: boolean;
+  }
+  >;
 }

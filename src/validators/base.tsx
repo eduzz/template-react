@@ -7,7 +7,7 @@ export interface IValidatorResult<T> {
 }
 
 export abstract class BaseValidator<T> {
-  private rules: any;
+  protected rules: any;
   private messages: any = {
     same: 'A confirmação não coincide.',
     confirmed: 'A confirmação não coincide.',

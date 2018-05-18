@@ -2,6 +2,7 @@ import { AnyAction, combineReducers } from 'redux';
 import { IAppStoreState } from 'store/interfaces';
 
 import accessGroup from './accessGroup';
+import accessGroupModule from './accessGroupModule';
 import auth, { enAuthStoreActions } from './auth';
 import course from './course';
 import drawer from './drawer';
@@ -12,7 +13,8 @@ const appReducers = combineReducers({
   drawer,
   user,
   course,
-  accessGroup
+  accessGroup,
+  accessGroupModule
 });
 
 export default function rootReducers(state: IAppStoreState, action: AnyAction) {
