@@ -1,6 +1,10 @@
 import { ICourse } from 'interfaces/course';
 
-export type typeAppStoreCourseActions = 'REQUEST_COURSE_LIST' | 'RECEIVED_COURSE_LIST' | 'RECEIVED_COURSE_LIST_ERROR';
+export enum enCourseStoreActions {
+  requestList = 'COURSE_LIST_REQUEST',
+  receiveList = 'COURSE_LIST_RECEIVE',
+  receiveListError = 'COURSE_LIST_RECEIVE_ERROR'
+}
 
 export interface IAppStoreCourseState {
   isFetching: boolean;
@@ -15,21 +19,21 @@ const initialState: IAppStoreCourseState = {
 };
 
 function course(state: IAppStoreCourseState = initialState, action: any): IAppStoreCourseState {
-  switch (action.type as typeAppStoreCourseActions) {
-    case 'REQUEST_COURSE_LIST':
+  switch (action.type as enCourseStoreActions) {
+    case enCourseStoreActions.requestList:
       return {
         ...state,
         isFetching: true,
         error: null
       };
-    case 'RECEIVED_COURSE_LIST':
+    case enCourseStoreActions.receiveList:
       return {
         ...state,
         isFetching: false,
         courses: action.courses || [],
         error: null
       };
-    case 'RECEIVED_COURSE_LIST_ERROR':
+    case enCourseStoreActions.receiveListError:
       return {
         ...state,
         isFetching: false,

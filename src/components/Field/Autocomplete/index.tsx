@@ -3,6 +3,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { WithStyles } from 'decorators/withStyles';
+import { SearchIcon } from 'mdi-react';
 import CloseIcon from 'mdi-react/CloseIcon';
 import React from 'react';
 import Autosuggest, {
@@ -132,7 +133,13 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
           value: term || '',
           onBlur: this.handleBlur.bind(this),
           onChange: this.handleChange.bind(this),
-          endAdornment: (!term ? null :
+          endAdornment: (!term ?
+            <InputAdornment position='end'>
+              <IconButton disabled={true} className={classes.adornment}>
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+            :
             <InputAdornment position='end' onClick={this.handleClearValue.bind(this)}>
               <IconButton disabled={disabled} className={classes.adornment}>
                 <CloseIcon />

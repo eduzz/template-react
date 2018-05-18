@@ -10,6 +10,10 @@ export interface IAppDispatcher<T> {
   (params: { type: T, [key: string]: any }): void;
 }
 
+export interface IActionCreator<T, R = void> {
+  (dispatch: IAppDispatcher<T>, getState: () => IAppStoreState): R;
+}
+
 export interface IAppStore extends Store<IAppStoreState> {
 }
 

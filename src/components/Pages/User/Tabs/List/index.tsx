@@ -10,9 +10,10 @@ import {
   TableRow,
 } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
+import IconMessage from 'components/IconMessage';
 import TableWrapper from 'components/TableWrapper';
 import { IUser } from 'interfaces/user';
-import { RefreshIcon } from 'mdi-react';
+import { CreationIcon, RefreshIcon } from 'mdi-react';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -94,6 +95,13 @@ class UserTabList extends Component<IPropsFromConnect, IState> {
                 <TableRow>
                   <TableCell colSpan={5} className='error'>
                     <ErrorMessage error={error} tryAgain={() => this.load()} />
+                  </TableCell>
+                </TableRow>
+              }
+              {!error && !items.length &&
+                <TableRow>
+                  <TableCell colSpan={5}>
+                    <IconMessage icon={CreationIcon} message='Nenhum usuário criado' />
                   </TableCell>
                 </TableRow>
               }

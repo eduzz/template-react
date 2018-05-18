@@ -1,4 +1,7 @@
-export type typeAppStoreDrawerActions = 'OPEN_DRAWER' | 'CLOSE_DRAWER';
+export enum enDrawerStoreActions {
+  open = 'DRAWER_OPEN',
+  close = 'CDRAWER_LOSE'
+}
 
 export interface IAppStoreDrawerState {
   isOpened: boolean;
@@ -9,13 +12,13 @@ const initialState: IAppStoreDrawerState = {
 };
 
 function drawer(state: IAppStoreDrawerState = initialState, action: any): IAppStoreDrawerState {
-  switch (action.type as typeAppStoreDrawerActions) {
-    case 'OPEN_DRAWER':
+  switch (action.type as enDrawerStoreActions) {
+    case enDrawerStoreActions.open:
       return {
         ...state,
         isOpened: true
       };
-    case 'CLOSE_DRAWER':
+    case enDrawerStoreActions.close:
       return {
         ...state,
         isOpened: false

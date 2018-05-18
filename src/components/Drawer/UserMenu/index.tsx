@@ -6,7 +6,7 @@ import { ExitToAppIcon, KeyVariantIcon } from 'mdi-react';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { logout } from 'store/actionCreators';
+import { logout } from 'store/actionCreators/auth';
 
 interface IProps {
   closeDrawer: Function;

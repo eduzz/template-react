@@ -1,15 +1,11 @@
-import { IAppDispatcher } from 'store/interfaces';
+import { IActionCreator } from 'store/interfaces';
 
-import { typeAppStoreDrawerActions } from '../reducers/drawer';
+import { enDrawerStoreActions } from '../reducers/drawer';
 
-export function openDrawer() {
-  return (dispatch: IAppDispatcher<typeAppStoreDrawerActions>) => {
-    dispatch({ type: 'OPEN_DRAWER' });
-  };
+export function openDrawer(): IActionCreator<enDrawerStoreActions> {
+  return dispatch => dispatch({ type: enDrawerStoreActions.open });
 }
 
-export function closeDrawer() {
-  return (dispatch: IAppDispatcher<typeAppStoreDrawerActions>) => {
-    dispatch({ type: 'CLOSE_DRAWER' });
-  };
+export function closeDrawer(): IActionCreator<enDrawerStoreActions> {
+  return dispatch => dispatch({ type: enDrawerStoreActions.close });
 }

@@ -1,10 +1,21 @@
 import { IUser } from 'interfaces/user';
 
-export type typeAppStoreUserActions =
-  'OPEN_USER_FORM_DIALOG' | 'CANCEL_USER_FORM_DIALOG' |
-  'REQUEST_USER_LIST' | 'RECEIVE_USER_LIST' | 'RECEIVE_USER_LIST_ERROR' |
-  'REQUEST_USER_DELETE' | 'RECEIVE_USER_DELETE' | 'RECEIVE_USER_DELETE_ERROR' |
-  'REQUEST_USER_SAVE' | 'RECEIVED_USER_SAVE' | 'RECEIVED_USER_SAVE_ERROR';
+export enum enUserStoreActions {
+  openForm = 'USER_FORM_OPEN',
+  closeForm = 'USER_FORM_CANCEL',
+
+  requestList = 'USER_LIST_REQUEST',
+  receiveList = 'USER_LIST_RECEIVE',
+  receiveListError = 'USER_LIST_RECEIVE_ERROR',
+
+  requestDelete = 'USER_DELETE_REQUEST',
+  receiveDelete = 'USER_DELETE_RECEIVE',
+  receiveDeleteError = 'USER_DELETE_RECEIVE_ERROR',
+
+  requestSave = 'USER_SAVE_REQUEST',
+  receiveSave = 'USER_SAVE_RECEIVE',
+  receiveSaveError = 'USER_SAVE_RECEIVE_ERROR'
+}
 
 export interface IAppStoreUserState {
   isFetching: boolean;
@@ -24,75 +35,88 @@ const initialState: IAppStoreUserState = {
   isUserFormModalOpened: false
 };
 
-function user(state: IAppStoreUserState = initialState, action: any): IAppStoreUserState {
-  switch (action.type as typeAppStoreUserActions) {
-    case 'OPEN_USER_FORM_DIALOG':
+export default function user(state: IAppStoreUserState = initialState, action: any): IAppStoreUserState {
+  switch (action.type as enUserStoreActions) {
+    case enUserStoreActions.openForm:
+    case enUserStoreActions.closeForm:
+      return form(state, action);
+
+    case enUserStoreActions.requestList:
+    case enUserStoreActions.receiveList:
+    case enUserStoreActions.receiveListError:
+      return list(state, action);
+
+    case enUserStoreActions.requestDelete:
+    case enUserStoreActions.receiveDelete:
+    case enUserStoreActions.receiveDeleteError:
+      return del(state, action);
+
+    case enUserStoreActions.requestSave:
+    case enUserStoreActions.receiveSave:
+    case enUserStoreActions.receiveSaveError:
+      return save(state, action);
+    default:
+      return state;
+  }
+}
+
+function form(state: IAppStoreUserState, action: any): IAppStoreUserState {
+  switch (action.type as enUserStoreActions) {
+    case enUserStoreActions.openForm:
       return {
         ...state,
         isUserFormModalOpened: true
       };
-    case 'CANCEL_USER_FORM_DIALOG':
+    case enUserStoreActions.closeForm:
       return {
         ...state,
         isUserFormModalOpened: false
       };
-    case 'REQUEST_USER_LIST':
+    default:
+      return state;
+  }
+}
+
+function list(state: IAppStoreUserState, action: any): IAppStoreUserState {
+  switch (action.type as enUserStoreActions) {
+    case enUserStoreActions.requestList:
       return {
         ...state,
         isFetching: true,
         error: null
       };
-    case 'RECEIVE_USER_LIST':
+    case enUserStoreActions.receiveList:
       return {
         ...state,
         isFetching: false,
-        users: action.users.map((u: IUser, index: number) => ({ ...u, index })),
+        users: (action.users || []).map((a: IUser, index: number) => ({ ...a, index })),
         error: null
       };
-    case 'RECEIVE_USER_LIST_ERROR':
+    case enUserStoreActions.receiveListError:
       return {
         ...state,
         isFetching: false,
         error: action.error
       };
-    case 'REQUEST_USER_DELETE':
-      return {
-        ...state,
-        users: [
-          ...state.users.slice(0, action.user.index),
-          { ...action.user, isFetching: true },
-          ...state.users.slice(action.user.index + 1)
-        ]
-      };
-    case 'RECEIVE_USER_DELETE':
-      return {
-        ...state,
-        users: ([
-          ...state.users.slice(0, action.user.index),
-          ...state.users.slice(action.user.index + 1)
-        ]).map((u: IUser, index: number) => ({ ...u, index }))
-      };
-    case 'RECEIVE_USER_DELETE_ERROR':
-      return {
-        ...state,
-        users: [
-          ...state.users.slice(0, action.user.index),
-          { ...action.user, isFetching: false, error: action.error },
-          ...state.users.slice(action.user.index + 1)
-        ]
-      };
-    case 'REQUEST_USER_SAVE':
+    default:
+      return state;
+  }
+}
+
+function save(state: IAppStoreUserState, action: any): IAppStoreUserState {
+  switch (action.type as enUserStoreActions) {
+    case enUserStoreActions.requestSave:
       return {
         ...state,
         isSaving: true
       };
-    case 'RECEIVED_USER_SAVE':
+    case enUserStoreActions.receiveSave:
       return {
         ...state,
         isSaving: false,
         isUserFormModalOpened: false
       };
-    case 'RECEIVED_USER_SAVE_ERROR':
+    case enUserStoreActions.receiveSaveError:
       return {
         ...state,
         isSaving: false,
@@ -103,4 +127,35 @@ function user(state: IAppStoreUserState = initialState, action: any): IAppStoreU
   }
 }
 
-export default user;
+function del(state: IAppStoreUserState = initialState, action: any): IAppStoreUserState {
+  switch (action.type as enUserStoreActions) {
+    case enUserStoreActions.requestDelete:
+      return {
+        ...state,
+        users: [
+          ...state.users.slice(0, action.user.index),
+          { ...action.user, isFetching: true },
+          ...state.users.slice(action.user.index + 1)
+        ]
+      };
+    case enUserStoreActions.receiveDelete:
+      return {
+        ...state,
+        users: ([
+          ...state.users.slice(0, action.user.index),
+          ...state.users.slice(action.user.index + 1)
+        ]).map((a: IUser, index: number) => ({ ...a, index }))
+      };
+    case enUserStoreActions.receiveDeleteError:
+      return {
+        ...state,
+        users: [
+          ...state.users.slice(0, action.user.index),
+          { ...action.user, isFetching: false, error: action.error },
+          ...state.users.slice(action.user.index + 1)
+        ]
+      };
+    default:
+      return state;
+  }
+}

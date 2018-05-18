@@ -1,39 +1,33 @@
 import { post } from 'api';
 import { logError } from 'errorHandler';
-import { IAppDispatcher } from 'store/interfaces';
+import { IActionCreator } from 'store/interfaces';
 
-import { typeAppStoreAuthActions } from '../reducers/auth';
+import { enAuthStoreActions } from '../reducers/auth';
 
-export function openLoginDialog() {
-  return (dispatch: IAppDispatcher<typeAppStoreAuthActions>) => {
-    dispatch({ type: 'OPEN_LOGIN_DIALOG' });
-  };
+export function openLoginDialog(): IActionCreator<enAuthStoreActions> {
+  return dispatch => dispatch({ type: enAuthStoreActions.openLogin });
 }
 
-export function requestLogin<T>(username: T, password: string) {
-  return async (dispatch: IAppDispatcher<typeAppStoreAuthActions>) => {
+export function requestLogin<T>(username: T, password: string): IActionCreator<enAuthStoreActions> {
+  return async dispatch => {
     try {
-      dispatch({ type: 'REQUEST_LOGIN' });
+      dispatch({ type: enAuthStoreActions.requestLogin });
 
       const { data } = await post('/oauth/token', { username, password });
       const user = JSON.parse(atob(data.token.split('.')[1]));
 
-      dispatch({ type: 'RECEIVE_LOGIN', token: data.token, user });
+      dispatch({ type: enAuthStoreActions.receiveLogin, token: data.token, user });
     } catch (error) {
       logError(error);
-      dispatch({ type: 'RECEIVE_LOGIN_ERROR', error });
+      dispatch({ type: enAuthStoreActions.receiveLoginError, error });
     }
   };
 }
 
-export function logout() {
-  return async (dispatch: IAppDispatcher<typeAppStoreAuthActions>) => {
-    dispatch({ type: 'LOGOUT' });
-  };
+export function logout(): IActionCreator<enAuthStoreActions> {
+  return async dispatch => dispatch({ type: enAuthStoreActions.logout });
 }
 
-export function clearLoginError() {
-  return async (dispatch: IAppDispatcher<typeAppStoreAuthActions>) => {
-    dispatch({ type: 'RECEIVE_LOGIN_ERROR', error: null });
-  };
+export function clearLoginError(): IActionCreator<enAuthStoreActions> {
+  return async dispatch => dispatch({ type: enAuthStoreActions.receiveLoginError, error: null });
 }

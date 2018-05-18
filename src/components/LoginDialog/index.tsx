@@ -6,7 +6,7 @@ import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { clearLoginError, requestLogin } from 'store/actionCreators';
+import { clearLoginError, requestLogin } from 'store/actionCreators/auth';
 
 import LoginValidator from './validator';
 

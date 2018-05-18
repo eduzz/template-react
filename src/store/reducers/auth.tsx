@@ -1,6 +1,12 @@
 import { IUserToken } from 'interfaces/userToken';
 
-export type typeAppStoreAuthActions = 'OPEN_LOGIN_DIALOG' | 'REQUEST_LOGIN' | 'RECEIVE_LOGIN' | 'RECEIVE_LOGIN_ERROR' | 'LOGOUT';
+export enum enAuthStoreActions {
+  openLogin = 'AUTH_LOGIN_OPEN',
+  requestLogin = 'AUTH_LOGIN_REQUEST',
+  receiveLogin = 'AUTH_LOGIN_RECEIVE',
+  receiveLoginError = 'AUTH_LOGIN_RECEIVE_ERROR',
+  logout = 'AUTH_LOGOUT'
+}
 
 export interface IAppStoreAuthState {
   isLoginFormOpened: boolean;
@@ -23,13 +29,13 @@ const initialState: IAppStoreAuthState = {
 };
 
 function auth(state: IAppStoreAuthState = initialState, action: any): IAppStoreAuthState {
-  switch (action.type as typeAppStoreAuthActions) {
-    case 'OPEN_LOGIN_DIALOG':
+  switch (action.type as enAuthStoreActions) {
+    case enAuthStoreActions.openLogin:
       return {
         ...state,
         isLoginFormOpened: true
       };
-    case 'REQUEST_LOGIN':
+    case enAuthStoreActions.requestLogin:
       return {
         ...state,
         isFetching: true,
@@ -37,7 +43,7 @@ function auth(state: IAppStoreAuthState = initialState, action: any): IAppStoreA
         authToken: null,
         error: null
       };
-    case 'RECEIVE_LOGIN':
+    case enAuthStoreActions.receiveLogin:
       const { token, user } = action;
       localStorage.setItem('EDUZZ_PRODUCER_AUTHTOKEN', token);
 
@@ -50,13 +56,13 @@ function auth(state: IAppStoreAuthState = initialState, action: any): IAppStoreA
         isLoginFormOpened: false,
         error: null
       };
-    case 'RECEIVE_LOGIN_ERROR':
+    case enAuthStoreActions.receiveLoginError:
       return {
         ...state,
         isFetching: false,
         error: action.error
       };
-    case 'LOGOUT':
+    case enAuthStoreActions.logout:
       localStorage.removeItem('EDUZZ_PRODUCER_AUTHTOKEN');
 
       return {

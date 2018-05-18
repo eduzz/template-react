@@ -9,6 +9,7 @@ import * as React from 'react';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
+import { openAccessGroupFormModal } from 'store/actionCreators/accessGroup';
 import { openUserFormModal } from 'store/actionCreators/user';
 
 interface IState {
@@ -17,6 +18,7 @@ interface IState {
 
 interface IPropsFromConnect {
   openUserFormModal?: typeof openUserFormModal;
+  openAccessGroupFormModal?: typeof openAccessGroupFormModal;
 }
 
 class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
@@ -33,6 +35,10 @@ class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
     this.props.openUserFormModal();
   }
 
+  addAccessGroup() {
+    this.props.openAccessGroupFormModal();
+  }
+
   render() {
     const { currentTab } = this.state;
 
@@ -42,12 +48,12 @@ class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
 
         <ToolbarTabs>
           <Tabs value={currentTab} onChange={this.onTabChange.bind(this)}>
-            <Tab label='Lista' />
             <Tab label='Grupos de Acesso' />
+            <Tab label='Lista' />
           </Tabs>
         </ToolbarTabs>
 
-        <span className={currentTab === 0 ? '' : 'hide'}>
+        <span className={currentTab === 1 ? '' : 'hide'}>
           <FabButton hasTabs actions={[{
             icon: AccountPlusIcon,
             tooltip: 'Adicionar usuário',
@@ -57,11 +63,11 @@ class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
           <UserTabList />
         </span>
 
-        <span className={currentTab === 1 ? '' : 'hide'}>
+        <span className={currentTab === 0 ? '' : 'hide'}>
           <FabButton hasTabs actions={[{
             icon: KeyPlusIcon,
-            tooltip: 'Adicionar perfil',
-            onClick: () => this.addUser()
+            tooltip: 'Criar novo grupo',
+            onClick: () => this.addAccessGroup()
           }]} />
 
           <UserTabAccess />
@@ -77,5 +83,6 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
 };
 
 export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
-  openUserFormModal
+  openUserFormModal,
+  openAccessGroupFormModal
 })(UserTabsPage);
