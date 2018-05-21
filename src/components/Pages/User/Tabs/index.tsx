@@ -48,12 +48,12 @@ class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
 
         <ToolbarTabs>
           <Tabs value={currentTab} onChange={this.onTabChange.bind(this)}>
-            <Tab label='Grupos de Acesso' />
             <Tab label='Lista' />
+            <Tab label='Grupos de Acesso' />
           </Tabs>
         </ToolbarTabs>
 
-        <span className={currentTab === 1 ? '' : 'hide'}>
+        <span className={currentTab === 0 ? '' : 'hide'}>
           <FabButton hasTabs actions={[{
             icon: AccountPlusIcon,
             tooltip: 'Adicionar usuário',
@@ -63,7 +63,7 @@ class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
           <UserTabList />
         </span>
 
-        <span className={currentTab === 0 ? '' : 'hide'}>
+        <span className={currentTab === 1 ? '' : 'hide'}>
           <FabButton hasTabs actions={[{
             icon: KeyPlusIcon,
             tooltip: 'Criar novo grupo',
