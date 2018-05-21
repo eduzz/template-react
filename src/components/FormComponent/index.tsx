@@ -1,5 +1,6 @@
+import { IFieldValidationContext } from 'components/Field';
+import FieldBase from 'components/Field/Base';
 import { ChangeEvent, Component } from 'react';
-import { BaseValidator } from 'validators/base';
 
 export interface IStateForm<T = any> {
   model?: Partial<T>;
@@ -8,13 +9,31 @@ export interface IStateForm<T = any> {
 }
 
 export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
-  protected abstract validator: BaseValidator<S['model']>;
+  public registerFields: IFieldValidationContext = {
+    bind: field => {
+      this.fields.push(field);
+    },
+    unbind: field => {
+      const index = this.fields.findIndex(f => f === field);
+      this.fields.splice(index, 1);
+    },
+  };
+
+  protected fields: FieldBase<any, any>[];
+
+  constructor(props: any) {
+    super(props);
+    this.fields = [];
+  }
 
   public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
-    const { errors, valid } = await this.validator.validate(this.state.model);
-    this.setState({ validation: errors, formSubmitted });
+    this.setState({ formSubmitted });
 
-    return valid;
+    if (!this.fields.length) {
+      console.warn('There is no field registred, did you use FieldValidation.Provider?');
+    }
+
+    return this.fields.every(f => f.isValid());
   }
 
   public resetForm() {

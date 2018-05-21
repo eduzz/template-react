@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
-import { FieldAutocomplete, FieldSelect, FieldText } from 'components/Field';
+import { FieldAutocomplete, FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
@@ -10,8 +10,6 @@ import { IAppStoreState } from 'store';
 import { cleanAccessGroupListError, requestAccessGroupList } from 'store/actionCreators/accessGroup';
 import { cleanCourseListError, requestCourseList } from 'store/actionCreators/course';
 import { cancelUserFormModal, cleanUserSaveError, requestUserSave } from 'store/actionCreators/user';
-
-import UserValidator from './validator';
 
 interface IState extends IStateForm<{
   email: string;
@@ -43,8 +41,6 @@ interface IPropsFromConnect {
   }
 }))
 class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
-  validator = new UserValidator();
-
   constructor(props: any) {
     super(props);
     this.state = { formSubmitted: false, model: {} };
@@ -109,55 +105,57 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
         {loading && <LinearProgress color='secondary' />}
 
         <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <DialogTitle>Novo Usuário</DialogTitle>
-          <DialogContent className={classes.content}>
-            {loadingError &&
-              <ErrorMessage error={loadingError} tryAgain={this.tryLoad.bind(this)} />
-            }
+          <FieldValidation.Provider value={this.registerFields}>
+            <DialogTitle>Novo Usuário</DialogTitle>
+            <DialogContent className={classes.content}>
+              {loadingError &&
+                <ErrorMessage error={loadingError} tryAgain={this.tryLoad.bind(this)} />
+              }
 
-            {!loadingError &&
-              <Fragment>
-                <FieldText
-                  label='Email'
-                  type='email'
-                  disabled={loading}
-                  value={model.email}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('email')}
-                  onChange={this.updateModel((model, v) => model.email = v)}
-                  margin='none'
-                />
+              {!loadingError &&
+                <Fragment>
+                  <FieldText
+                    label='Email'
+                    type='email'
+                    disabled={loading}
+                    value={model.email}
+                    submitted={formSubmitted}
+                    validation='required|email'
+                    onChange={this.updateModel((model, v) => model.email = v)}
+                    margin='none'
+                  />
 
-                <FieldSelect
-                  label='Grupo'
-                  options={accessGroups}
-                  disabled={loading}
-                  value={model.group}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('group')}
-                  onChange={this.updateModel((model, v) => model.group = v)}
-                />
+                  <FieldSelect
+                    label='Grupo'
+                    options={accessGroups}
+                    disabled={loading}
+                    value={model.group}
+                    submitted={formSubmitted}
+                    validation='required'
+                    onChange={this.updateModel((model, v) => model.group = v)}
+                  />
 
-                <FieldAutocomplete
-                  label='Curso'
-                  options={courses}
-                  disabled={loading}
-                  value={model.course}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('course')}
-                  onChange={this.updateModel((model, v) => model.course = v)}
-                />
-              </Fragment>
-            }
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.onCancel.bind(this)}>
-              Cancelar
+                  <FieldAutocomplete
+                    label='Curso'
+                    options={courses}
+                    disabled={loading}
+                    value={model.course}
+                    submitted={formSubmitted}
+                    validation='required'
+                    onChange={this.updateModel((model, v) => model.course = v)}
+                  />
+                </Fragment>
+              }
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.onCancel.bind(this)}>
+                Cancelar
             </Button>
-            <Button color='secondary' type='submit' disabled={loading || !!loadingError}>
-              Salvar
+              <Button color='secondary' type='submit' disabled={loading || !!loadingError}>
+                Salvar
             </Button>
-          </DialogActions>
+            </DialogActions>
+          </FieldValidation.Provider>
         </form>
       </Dialog>
     );

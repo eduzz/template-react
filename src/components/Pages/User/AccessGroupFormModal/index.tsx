@@ -1,9 +1,10 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
-import { FieldSelect, FieldText } from 'components/Field';
+import { FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
+import { IAccessGroup } from 'interfaces/accessGroup';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -16,12 +17,9 @@ import {
 } from 'store/actionCreators/accessGroup';
 import { cleanCourseListError, requestCourseList } from 'store/actionCreators/course';
 
-import AccessGroupValidator from './validator';
-
 interface IState extends IStateForm<{
-  email: string;
-  group: number;
-  course: number;
+  name: string;
+  modules: IAccessGroup['modules'][];
 }> { }
 
 interface IPropsFromConnect {
@@ -45,8 +43,6 @@ interface IPropsFromConnect {
   }
 }))
 class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
-  validator = new AccessGroupValidator();
-
   constructor(props: any) {
     super(props);
     this.state = { formSubmitted: false, model: {} };
@@ -93,7 +89,7 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
 
   render() {
     const { model, formSubmitted } = this.state;
-    const { opened, loading, classes, saveError, loadingError, cleanAccessGroupSaveError, accessGroups } = this.props;
+    const { opened, loading, classes, saveError, loadingError, cleanAccessGroupSaveError } = this.props;
 
     return (
       <Dialog
@@ -108,45 +104,36 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
         {loading && <LinearProgress color='secondary' />}
 
         <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <DialogTitle>Grupo de Acesso</DialogTitle>
-          <DialogContent className={classes.content}>
-            {loadingError &&
-              <ErrorMessage error={loadingError} tryAgain={this.tryLoad.bind(this)} />
-            }
+          <FieldValidation.Provider value={this.registerFields}>
+            <DialogTitle>Grupo de Acesso</DialogTitle>
+            <DialogContent className={classes.content}>
+              {loadingError &&
+                <ErrorMessage error={loadingError} tryAgain={this.tryLoad.bind(this)} />
+              }
 
-            {!loadingError &&
-              <Fragment>
-                <FieldText
-                  label='Email'
-                  type='email'
-                  disabled={loading}
-                  value={model.email}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('email')}
-                  onChange={this.updateModel((model, v) => model.email = v)}
-                  margin='none'
-                />
-
-                <FieldSelect
-                  label='Grupo'
-                  options={accessGroups}
-                  disabled={loading}
-                  value={model.group}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('group')}
-                  onChange={this.updateModel((model, v) => model.group = v)}
-                />
-              </Fragment>
-            }
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.onCancel.bind(this)}>
-              Cancelar
+              {!loadingError &&
+                <Fragment>
+                  <FieldText
+                    label='Nome'
+                    disabled={loading}
+                    value={model.name}
+                    submitted={formSubmitted}
+                    validation='required'
+                    onChange={this.updateModel((model, v) => model.name = v)}
+                    margin='none'
+                  />
+                </Fragment>
+              }
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={this.onCancel.bind(this)}>
+                Cancelar
             </Button>
-            <Button color='secondary' type='submit' disabled={loading || !!loadingError}>
-              Salvar
+              <Button color='secondary' type='submit' disabled={loading || !!loadingError}>
+                Salvar
             </Button>
-          </DialogActions>
+            </DialogActions>
+          </FieldValidation.Provider>
         </form>
       </Dialog>
     );

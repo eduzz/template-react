@@ -1,19 +1,11 @@
 import { DatePicker } from 'material-ui-pickers';
 import { ChevronLeftIcon, ChevronRightIcon } from 'mdi-react';
 import { Moment } from 'moment';
-import { PureComponent } from 'react';
 import React from 'react';
 
-interface IState {
-  touched: boolean;
-}
+import FieldBase, { IPropsFieldBase } from './Base';
 
-interface IProps {
-  label: string;
-  disabled?: boolean;
-  value?: any;
-  error?: string;
-  submitted?: boolean;
+interface IProps extends IPropsFieldBase {
   minDate?: Date;
   maxDate?: Date;
   disablePast?: boolean;
@@ -22,20 +14,14 @@ interface IProps {
   onChange: (value: Date) => void;
 }
 
-export default class FieldDate extends PureComponent<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { touched: false };
-  }
-
+export default class FieldDate extends FieldBase<IProps> {
   onChange(value: Moment) {
-    this.setState({ touched: true });
-    this.props.onChange(value ? value.toDate() : null);
+    super.onChange(value ? value.toDate() : null);
   }
 
   render() {
-    const { touched } = this.state;
-    const { error, value, submitted, label, format } = this.props;
+    const { touched, error } = this.state;
+    const { value, submitted, label, format } = this.props;
 
     return (
       <DatePicker

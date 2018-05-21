@@ -13,24 +13,17 @@ import Autosuggest, {
   SuggestionsFetchRequestedParams,
 } from 'react-autosuggest';
 
+import FieldBase, { IPropsFieldBase, IStateFieldBase } from '../Base';
 import Input from './Input';
 import SuggestionsContainer from './SuggestionsContainer';
 
-interface IState {
+interface IState extends IStateFieldBase {
   term: string;
   suggestions: IProps['options'][0][];
 }
 
-interface IProps {
-  label?: string;
-  placeholder?: string;
-  classes?: any;
-  value: any;
-  error?: string;
-  submitted?: boolean;
-  disabled?: boolean;
+interface IProps extends IPropsFieldBase {
   options: { value: any, label: string }[];
-  onChange: (value: any) => void;
 }
 
 @WithStyles(theme => ({
@@ -59,15 +52,19 @@ interface IProps {
     marginRight: -15
   }
 }))
-export default class IntegrationAutosuggest extends React.Component<IProps, IState> {
+export default class IntegrationAutosuggest extends FieldBase<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { term: '', suggestions: [] };
+    this.state = { ...this.state, term: '', suggestions: [] };
   }
 
-  static getDerivedStateFromProps({ options, value }: IProps, currentState: IState) {
-    const term: string = (options.find(o => o.value === value) || { label: null }).label;
-    return { ...currentState, term };
+  static getDerivedStateFromProps(nextProps: IProps, currentState: IState) {
+    const term: string = (nextProps.options.find(o => o.value === nextProps.value) || { label: null }).label;
+    return {
+      ...currentState,
+      term,
+      ...FieldBase.getDerivedStateFromProps(nextProps, currentState)
+    };
   }
 
   getSuggestionValue(suggestion: IProps['options'][0]) {
@@ -86,7 +83,7 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
   }
 
   handleSelected(event: React.FormEvent<any>, data: SuggestionSelectedEventData<IProps['options'][0]>) {
-    this.props.onChange(data.suggestion.value);
+    super.onChange(data.suggestion.value);
   }
 
   handleSuggestionsFetchRequested({ value }: SuggestionsFetchRequestedParams) {
@@ -102,11 +99,11 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
   }
 
   handleClearValue() {
-    this.props.onChange(null);
+    super.onChange(null);
   }
 
   render() {
-    const { term, suggestions } = this.state;
+    const { term, suggestions, error, touched } = this.state;
     const { classes, placeholder, disabled, label } = this.props;
 
     return (
@@ -127,7 +124,9 @@ export default class IntegrationAutosuggest extends React.Component<IProps, ISta
         renderSuggestion={this.renderSuggestion.bind(this)}
         onSuggestionSelected={this.handleSelected.bind(this)}
         inputProps={{
-          ...this.props,
+          ...this.props as any,
+          error,
+          touched,
           classes,
           placeholder: placeholder || 'Pesquisar...',
           value: term || '',

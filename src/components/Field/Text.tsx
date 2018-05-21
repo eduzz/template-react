@@ -1,20 +1,13 @@
 import { TextField } from '@material-ui/core';
-import { TextFieldProps } from '@material-ui/core/TextField';
-import React, { PureComponent } from 'react';
+import React, { Fragment } from 'react';
 
-interface IState {
-  touched: boolean;
-}
+import FieldBase, { IPropsFieldBase } from './Base';
 
-// @ts-ignore
-interface IProps extends TextFieldProps {
-  value?: any;
-  error?: string;
-  submitted?: boolean;
+interface IProps extends IPropsFieldBase {
   mask?: 'phone';
 }
 
-export default class FieldText extends PureComponent<IProps, IState> {
+export default class FieldText extends FieldBase<IProps> {
   private readonly masks: any = {
     phone: {
       apply: (value: string) => {
@@ -33,15 +26,9 @@ export default class FieldText extends PureComponent<IProps, IState> {
     },
   };
 
-  constructor(props: any) {
-    super(props);
-    this.state = { touched: false };
-  }
-
   onChange(event: any) {
-    this.setState({ touched: true });
     const value = this.cleanValue(event.target ? event.target.value : event);
-    this.props.onChange(value);
+    super.onChange(value);
   }
 
   getValue(): string {
@@ -59,24 +46,28 @@ export default class FieldText extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { touched } = this.state;
-    const { error, submitted } = this.props;
+    const { touched, error } = this.state;
+    const { submitted } = this.props;
     const value = this.getValue();
 
     return (
-      <TextField
-        {...{
-          fullWidth: true,
-          margin: 'normal',
-          ...this.props,
-          value: (value === undefined || value === null ? '' : value).toString(),
-          error: (submitted || touched) && !!error,
-          helperText: (submitted || touched) && error,
-          onChange: this.onChange.bind(this),
-          submitted: null,
-          touched: null
-        }}
-      />
+      <Fragment>
+        {super.render()}
+
+        <TextField
+          {...{
+            fullWidth: true,
+            margin: 'normal',
+            ...this.props,
+            value: (value === undefined || value === null ? '' : value).toString(),
+            error: (submitted || touched) && !!error,
+            helperText: (submitted || touched) && error,
+            onChange: this.onChange.bind(this),
+            submitted: null,
+            touched: null
+          }}
+        />
+      </Fragment>
     );
   }
 }

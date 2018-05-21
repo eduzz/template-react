@@ -1,5 +1,5 @@
 import { Button, Card, CardActions, CardContent, Dialog, LinearProgress, Slide } from '@material-ui/core';
-import { FieldText } from 'components/Field';
+import { FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
@@ -7,8 +7,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import { clearLoginError, requestLogin } from 'store/actionCreators/auth';
-
-import LoginValidator from './validator';
 
 interface IState extends IStateForm<{
   username: string;
@@ -56,8 +54,6 @@ interface IPropsFromConnect {
   }
 }))
 class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
-  validator = new LoginValidator();
-
   constructor(props: any) {
     super(props);
     this.state = { formSubmitted: false, model: {} };
@@ -91,43 +87,46 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
 
         <div className={classes.root}>
           <form className={classes.container} onSubmit={this.onSubmit.bind(this)} noValidate>
-            <div className={classes.logo}>
-              <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
-            </div>
 
-            <Card>
-              <CardContent>
+            <FieldValidation.Provider value={this.registerFields}>
+              <div className={classes.logo}>
+                <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
+              </div>
 
-                <FieldText
-                  label='Email'
-                  type='email'
-                  disabled={loading}
-                  value={model.username}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('username')}
-                  onChange={this.updateModel((model, v) => model.username = v)}
-                  margin='none'
-                />
+              <Card>
+                <CardContent>
 
-                <FieldText
-                  label='Senha'
-                  type='password'
-                  disabled={loading}
-                  value={model.password}
-                  submitted={formSubmitted}
-                  error={this.getErrorMessage('password')}
-                  onChange={this.updateModel((model, v) => model.password = v)}
-                />
+                  <FieldText
+                    label='Email'
+                    type='email'
+                    disabled={loading}
+                    value={model.username}
+                    submitted={formSubmitted}
+                    validation='required|email'
+                    onChange={this.updateModel((model, v) => model.username = v)}
+                    margin='none'
+                  />
 
-              </CardContent>
+                  <FieldText
+                    label='Senha'
+                    type='password'
+                    disabled={loading}
+                    value={model.password}
+                    submitted={formSubmitted}
+                    validation='required'
+                    onChange={this.updateModel((model, v) => model.password = v)}
+                  />
 
-              <CardActions className={classes.buttons}>
-                <Button disabled={loading} size='small'>Recuperar Acesso</Button>
-                <Button disabled={loading} color='secondary' type='submit'>Entrar</Button>
-              </CardActions>
+                </CardContent>
 
-              {loading && <LinearProgress color='secondary' />}
-            </Card>
+                <CardActions className={classes.buttons}>
+                  <Button disabled={loading} size='small'>Recuperar Acesso</Button>
+                  <Button disabled={loading} color='secondary' type='submit'>Entrar</Button>
+                </CardActions>
+
+                {loading && <LinearProgress color='secondary' />}
+              </Card>
+            </ FieldValidation.Provider>
 
           </form>
         </div>
