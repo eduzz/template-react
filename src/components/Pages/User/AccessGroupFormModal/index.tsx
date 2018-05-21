@@ -65,7 +65,10 @@ interface IPropsFromConnect {
     opacity: 0.8,
     borderBottom: '1px solid ' + theme.palette.divider,
     paddingBottom: 15
-
+  },
+  tableThSwitch: {
+    width: 62,
+    textAlign: 'center'
   }
 }))
 class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
@@ -170,10 +173,10 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
                     <thead>
                       <tr>
                         <th className={classes.tableTh}>Ações</th>
-                        <th className={classes.tableTh}>Exibir</th>
-                        <th className={classes.tableTh}>Criar</th>
-                        <th className={classes.tableTh}>Editar</th>
-                        <th className={classes.tableTh}>Excluir</th>
+                        <th className={`${classes.tableTh} ${classes.tableThSwitch}`}>Exibir</th>
+                        <th className={`${classes.tableTh} ${classes.tableThSwitch}`}>Criar</th>
+                        <th className={`${classes.tableTh} ${classes.tableThSwitch}`}>Editar</th>
+                        <th className={`${classes.tableTh} ${classes.tableThSwitch}`}>Excluir</th>
                       </tr>
                     </thead>
                     <tbody>
