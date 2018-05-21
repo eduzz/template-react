@@ -40,10 +40,6 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     this.setState({ formSubmitted: false, model: {}, validation: {} });
   }
 
-  public getErrorMessage(key: string): string {
-    return (this.state.validation || {})[key];
-  }
-
   protected updateModel(handler: (model: S['model'], value: any) => void): any {
     return (event: ChangeEvent<any>) => {
       let { model, formSubmitted } = this.state as any;

@@ -5,7 +5,7 @@ import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IAccessGroup } from 'interfaces/accessGroup';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import {
@@ -112,17 +112,15 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
               }
 
               {!loadingError &&
-                <Fragment>
-                  <FieldText
-                    label='Nome'
-                    disabled={loading}
-                    value={model.name}
-                    submitted={formSubmitted}
-                    validation='required'
-                    onChange={this.updateModel((model, v) => model.name = v)}
-                    margin='none'
-                  />
-                </Fragment>
+                <FieldText
+                  label='Nome'
+                  disabled={loading}
+                  value={model.name}
+                  submitted={formSubmitted}
+                  validation='required'
+                  onChange={this.updateModel((model, v) => model.name = v)}
+                  margin='none'
+                />
               }
             </DialogContent>
             <DialogActions>
