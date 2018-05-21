@@ -14,7 +14,7 @@ export function requestAccessGroupModuleList(): IActionCreator<enAccessGroupModu
       await new Promise((resolve, reject) => setTimeout(() => {
         dispatch({
           type: enAccessGroupModuleStoreActions.receiveList,
-          accessGroups: new Array(5).fill('').map<IAccessGroupModule>((v, index) => ({
+          modules: new Array(5).fill('').map<IAccessGroupModule>((v, index) => ({
             id: index,
             name: 'Modulo ' + index
           }))

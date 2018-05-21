@@ -29,6 +29,7 @@ export function requestUserList(): IActionCreator<enUserStoreActions> {
             group: 'Administradores'
           }))
         });
+        requestUserList()(dispatch, getState);
         resolve();
       }, 2000));
     } catch (error) {

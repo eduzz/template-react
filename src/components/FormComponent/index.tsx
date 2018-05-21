@@ -4,7 +4,6 @@ import { ChangeEvent, Component } from 'react';
 
 export interface IStateForm<T = any> {
   model?: Partial<T>;
-  validation?: { [key in keyof Partial<T>]: string; };
   formSubmitted?: boolean;
 }
 
@@ -37,13 +36,21 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   }
 
   public resetForm() {
-    this.setState({ formSubmitted: false, model: {}, validation: {} });
+    this.setState({ formSubmitted: false, model: {} });
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): any {
     return (event: ChangeEvent<any>) => {
-      let { model, formSubmitted } = this.state as any;
-      handler(model, (event || {} as any).target ? event.target.value : event);
+      let { model, formSubmitted } = this.state;
+      let value = event;
+
+      if ((event || {} as any).target) {
+        value = event.target.checked !== undefined ?
+          event.target.checked :
+          event.target.value;
+      }
+
+      handler(model, value);
 
       this.setState({ model });
       this.isFormValid(formSubmitted);

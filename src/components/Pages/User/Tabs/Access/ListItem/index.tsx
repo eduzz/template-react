@@ -3,11 +3,15 @@ import Alert from 'components/Alert';
 import DropdownMenu from 'components/DropdownMenu';
 import ErrorMessageIcon from 'components/ErrorMessageIcon';
 import { IAccessGroup } from 'interfaces/accessGroup';
-import { DeleteIcon } from 'mdi-react';
+import { DeleteIcon, EditIcon } from 'mdi-react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { cleanAccessGroupDeleteError, requestAccessGroupDelete } from 'store/actionCreators/accessGroup';
+import {
+  cleanAccessGroupDeleteError,
+  openAccessGroupFormModal,
+  requestAccessGroupDelete,
+} from 'store/actionCreators/accessGroup';
 
 interface IProps {
   accessGroup: IAccessGroup;
@@ -16,9 +20,11 @@ interface IProps {
 interface IPropsFromConnect {
   requestAccessGroupDelete?: typeof requestAccessGroupDelete;
   cleanAccessGroupDeleteError?: typeof cleanAccessGroupDeleteError;
+  openAccessGroupFormModal?: typeof openAccessGroupFormModal;
 }
 
 class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
+
   async delete() {
     const { accessGroup } = this.props;
 
@@ -29,7 +35,7 @@ class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
   }
 
   render(): JSX.Element {
-    const { accessGroup, cleanAccessGroupDeleteError } = this.props;
+    const { accessGroup, cleanAccessGroupDeleteError, openAccessGroupFormModal } = this.props;
 
     return (
       <TableRow>
@@ -42,6 +48,10 @@ class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
           }
           {!accessGroup.isFetching && !accessGroup.error &&
             <DropdownMenu options={[{
+              text: 'Editar',
+              icon: EditIcon,
+              handler: () => openAccessGroupFormModal(accessGroup)
+            }, {
               text: 'Excluir',
               icon: DeleteIcon,
               handler: () => this.delete()
@@ -59,5 +69,6 @@ const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
   requestAccessGroupDelete,
-  cleanAccessGroupDeleteError
+  cleanAccessGroupDeleteError,
+  openAccessGroupFormModal
 })(ListItem);

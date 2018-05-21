@@ -4,12 +4,12 @@ import { IActionCreator } from 'store/interfaces';
 
 import { enAccessGroupStoreActions } from '../reducers/accessGroup';
 
-export function openAccessGroupFormModal(): IActionCreator<enAccessGroupStoreActions> {
-  return async (dispatch, getState) => dispatch({ type: enAccessGroupStoreActions.openForm });
+export function openAccessGroupFormModal(model: IAccessGroup = null): IActionCreator<enAccessGroupStoreActions> {
+  return async dispatch => dispatch({ type: enAccessGroupStoreActions.openForm, model });
 }
 
 export function cancelAccessGroupFormModal(): IActionCreator<enAccessGroupStoreActions> {
-  return async (dispatch, getState) => dispatch({ type: enAccessGroupStoreActions.closeForm });
+  return async dispatch => dispatch({ type: enAccessGroupStoreActions.closeForm });
 }
 
 export function requestAccessGroupList(): IActionCreator<enAccessGroupStoreActions> {
@@ -23,7 +23,14 @@ export function requestAccessGroupList(): IActionCreator<enAccessGroupStoreActio
         dispatch({
           type: enAccessGroupStoreActions.receiveList, accessGroups: new Array(5).fill('').map<IAccessGroup>((v, index) => ({
             id: index,
-            name: 'Group ' + index
+            name: 'Group ' + index,
+            modules: [{
+              id: 1,
+              name: 'Module 1',
+              create: true,
+              view: false,
+              delete: true
+            }]
           }))
         });
         resolve();
@@ -61,13 +68,14 @@ export function cleanAccessGroupDeleteError(accessGroup: IAccessGroup): IActionC
 }
 
 export function requestAccessGroupSave(data: IAccessGroup): IActionCreator<enAccessGroupStoreActions> {
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       dispatch({ type: enAccessGroupStoreActions.requestSave, data });
 
       await new Promise((resolve, reject) => setTimeout(() => {
         if (Math.random() > 0.8) return reject(Error('Tste'));
         dispatch({ type: enAccessGroupStoreActions.receiveSave, data });
+        requestAccessGroupList()(dispatch, getState);
       }, 2000));
     } catch (error) {
       logError(error);

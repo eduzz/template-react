@@ -23,7 +23,8 @@ export interface IAppStoreAccessGroupState {
   accessGroups: IAccessGroup[];
   error: any;
   saveError: any;
-  isAccessGroupFormModalOpened: boolean;
+  isFormOpened: boolean;
+  formModel: IAccessGroup;
 }
 
 const initialState: IAppStoreAccessGroupState = {
@@ -32,7 +33,8 @@ const initialState: IAppStoreAccessGroupState = {
   accessGroups: [],
   error: null,
   saveError: null,
-  isAccessGroupFormModalOpened: false
+  isFormOpened: false,
+  formModel: null
 };
 
 export default function accessGroup(state: IAppStoreAccessGroupState = initialState, action: any): IAppStoreAccessGroupState {
@@ -65,12 +67,13 @@ function form(state: IAppStoreAccessGroupState, action: any): IAppStoreAccessGro
     case enAccessGroupStoreActions.openForm:
       return {
         ...state,
-        isAccessGroupFormModalOpened: true
+        isFormOpened: true,
+        formModel: action.model
       };
     case enAccessGroupStoreActions.closeForm:
       return {
         ...state,
-        isAccessGroupFormModalOpened: false
+        isFormOpened: false
       };
     default:
       return state;
@@ -114,7 +117,7 @@ function save(state: IAppStoreAccessGroupState, action: any): IAppStoreAccessGro
       return {
         ...state,
         isSaving: false,
-        isAccessGroupFormModalOpened: false
+        isFormOpened: false
       };
     case enAccessGroupStoreActions.receiveSaveError:
       return {

@@ -1,45 +1,71 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  LinearProgress,
+  Slide,
+  Switch,
+  Typography,
+} from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
 import { FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IAccessGroup } from 'interfaces/accessGroup';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import {
   cancelAccessGroupFormModal,
-  cleanAccessGroupListError,
   cleanAccessGroupSaveError,
-  requestAccessGroupList,
   requestAccessGroupSave,
 } from 'store/actionCreators/accessGroup';
+import { cleanAccessGroupModuleListError, requestAccessGroupModuleList } from 'store/actionCreators/accessGroupModule';
 import { cleanCourseListError, requestCourseList } from 'store/actionCreators/course';
 
 interface IState extends IStateForm<{
   name: string;
-  modules: IAccessGroup['modules'][];
+  modules: IAccessGroup['modules'];
 }> { }
 
 interface IPropsFromConnect {
   opened: boolean;
   loading: boolean;
-  accessGroups: { value: number, label: string }[];
+  model: IAccessGroup;
+  modules: IAccessGroup['modules'];
   classes?: any;
   loadingError?: any;
   saveError?: any;
+  requestAccessGroupModuleList?: typeof requestAccessGroupModuleList;
+  cleanAccessGroupModuleListError?: typeof cleanAccessGroupModuleListError;
   cancelAccessGroupFormModal?: typeof cancelAccessGroupFormModal;
-  requestAccessGroupList?: typeof requestAccessGroupList;
-  cleanAccessGroupListError?: typeof cleanAccessGroupListError;
   requestAccessGroupSave?: typeof requestAccessGroupSave;
   cleanAccessGroupSaveError?: typeof cleanAccessGroupSaveError;
 }
 
 @WithStyles(theme => ({
   content: {
-    width: 400,
+    width: 500,
     maxWidth: 'calc(95vw - 50px)'
+  },
+  table: {
+    width: '100%',
+    marginTop: 40,
+    borderSpacing: 0
+  },
+  tableTh: {
+    textAlign: 'left',
+    fontFamily: theme.typography.fontFamily,
+    fontWeight: 'normal',
+    fontSize: 13,
+    textTransform: 'uppercase',
+    opacity: 0.8,
+    borderBottom: '1px solid ' + theme.palette.divider,
+    paddingBottom: 15
+
   }
 }))
 class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
@@ -48,12 +74,29 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
     this.state = { formSubmitted: false, model: {} };
   }
 
-  static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState) {
+  static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState): IState {
     if (nextProps.opened && !nextProps.loadingError) {
-      if (!nextProps.accessGroups.length) nextProps.requestAccessGroupList();
+      if (!nextProps.modules.length) nextProps.requestAccessGroupModuleList();
     }
 
-    return currentState;
+    if (!nextProps.opened) {
+      return {
+        ...currentState,
+        model: {}
+      };
+    }
+
+    return {
+      ...currentState,
+      model: {
+        name: nextProps.model.name,
+        ...currentState.model,
+        modules: [
+          ...nextProps.modules.filter(m => (currentState.model.modules || []).every(cm => cm.id !== m.id)),
+          ...(currentState.model.modules || [])
+        ].filter(m => !!m)
+      }
+    };
   }
 
   onCancel() {
@@ -73,16 +116,16 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
   }
 
   tryLoad() {
-    const { loading, accessGroups, requestAccessGroupList } = this.props;
+    const { loading, modules, requestAccessGroupModuleList } = this.props;
     if (loading) true;
 
-    if (!accessGroups.length) requestAccessGroupList();
+    if (!modules.length) requestAccessGroupModuleList();
   }
 
   resetState() {
-    const { cleanAccessGroupListError } = this.props;
+    const { cleanAccessGroupModuleListError } = this.props;
 
-    cleanAccessGroupListError();
+    cleanAccessGroupModuleListError();
 
     this.resetForm();
   }
@@ -112,15 +155,61 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
               }
 
               {!loadingError &&
-                <FieldText
-                  label='Nome'
-                  disabled={loading}
-                  value={model.name}
-                  submitted={formSubmitted}
-                  validation='required'
-                  onChange={this.updateModel((model, v) => model.name = v)}
-                  margin='none'
-                />
+                <Fragment>
+                  <FieldText
+                    label='Nome'
+                    disabled={loading}
+                    value={model.name}
+                    submitted={formSubmitted}
+                    validation='required'
+                    onChange={this.updateModel((model, v) => model.name = v)}
+                    margin='none'
+                  />
+
+                  <table className={classes.table}>
+                    <thead>
+                      <tr>
+                        <th className={classes.tableTh}>Ações</th>
+                        <th className={classes.tableTh}>Exibir</th>
+                        <th className={classes.tableTh}>Criar</th>
+                        <th className={classes.tableTh}>Editar</th>
+                        <th className={classes.tableTh}>Excluir</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(model.modules || []).map(module =>
+                        <tr key={module.id}>
+                          <td><Typography>{module.name}</Typography></td>
+                          <td>
+                            <Switch
+                              checked={module.view || false}
+                              onChange={this.updateModel((model, v) => module.view = v)}
+                            />
+                          </td>
+                          <td>
+                            <Switch
+                              checked={module.create || false}
+                              onChange={this.updateModel((model, v) => module.create = v)}
+                            />
+                          </td>
+                          <td>
+                            <Switch
+                              checked={module.edit || false}
+                              onChange={this.updateModel((model, v) => module.edit = v)}
+                            />
+                          </td>
+                          <td>
+                            <Switch
+                              checked={module.delete || false}
+                              onChange={this.updateModel((model, v) => module.delete = v)}
+                            />
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+
+                </Fragment>
               }
             </DialogContent>
             <DialogActions>
@@ -139,21 +228,30 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
 }
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
+  const model = state.accessGroup.formModel || {} as IAccessGroup;
+
   return {
-    opened: state.accessGroup.isAccessGroupFormModalOpened,
-    loading: state.accessGroup.isFetching || state.accessGroup.isSaving,
-    loadingError: state.accessGroup.error,
+    model,
+    opened: state.accessGroup.isFormOpened,
+    loading: state.accessGroupModule.isFetching || state.accessGroup.isSaving,
+    loadingError: state.accessGroupModule.error,
     saveError: state.accessGroup.saveError,
-    accessGroups: state.accessGroup.accessGroups.map(g => ({ value: g.id, label: g.name }))
+    modules: state.accessGroupModule.modules.map(module => {
+
+      return {
+        ...module,
+        ...((model.modules || []).find(m => m.id === module.id) || {})
+      };
+    })
   };
 };
 
 export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
   cancelAccessGroupFormModal,
   requestCourseList,
-  requestAccessGroupList,
+  requestAccessGroupModuleList,
   cleanCourseListError,
-  cleanAccessGroupListError,
+  cleanAccessGroupModuleListError,
   requestAccessGroupSave,
   cleanAccessGroupSaveError
 })(AccessGroupFormModal);

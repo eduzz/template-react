@@ -8,13 +8,13 @@ export enum enAccessGroupModuleStoreActions {
 
 export interface IAppStoreAccessGroupModuleState {
   isFetching: boolean;
-  accessGroupModules: IAccessGroupModule[];
+  modules: IAccessGroupModule[];
   error: any;
 }
 
 const initialState: IAppStoreAccessGroupModuleState = {
   isFetching: false,
-  accessGroupModules: [],
+  modules: [],
   error: null
 };
 
@@ -30,7 +30,7 @@ function accessGroupModule(state: IAppStoreAccessGroupModuleState = initialState
       return {
         ...state,
         isFetching: false,
-        accessGroupModules: action.accessGroupModules || [],
+        modules: action.modules || [],
         error: null
       };
     case enAccessGroupModuleStoreActions.receiveListError:
