@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import FieldBase, { IPropsFieldBase } from './Base';
 
 interface IProps extends IPropsFieldBase {
-  options: { value: any, label: string }[];
+  options: { value: string | number, label: string }[];
 }
 
 export default class FieldSelect extends FieldBase<IProps> {
@@ -26,6 +26,7 @@ export default class FieldSelect extends FieldBase<IProps> {
             margin: 'normal',
             ...this.props,
             value: value === undefined ? '' : value,
+            required: this.isRequired,
             select: true,
             error: !!this.errorMessage,
             helperText: this.errorMessage,
@@ -36,7 +37,7 @@ export default class FieldSelect extends FieldBase<IProps> {
         >
           <MenuItem value={undefined}>
             Selecione...
-        </MenuItem>
+          </MenuItem>
           {(options || []).map(option => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}

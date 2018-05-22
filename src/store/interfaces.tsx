@@ -3,6 +3,7 @@ import { Store } from 'redux';
 import { IAppStoreAccessGroupState } from './reducers/accessGroup';
 import { IAppStoreAccessGroupModuleState } from './reducers/accessGroupModule';
 import { IAppStoreAuthState } from './reducers/auth';
+import { IAppStoreCategoryState } from './reducers/category';
 import { IAppStoreCourseState } from './reducers/course';
 import { IAppStoreDrawerState } from './reducers/drawer';
 import { IAppStoreUserState } from './reducers/user';
@@ -23,6 +24,7 @@ export interface IAppStoreState {
   drawer: IAppStoreDrawerState;
   user: IAppStoreUserState;
   course: IAppStoreCourseState;
+  category: IAppStoreCategoryState;
   accessGroup: IAppStoreAccessGroupState;
   accessGroupModule: IAppStoreAccessGroupModuleState;
 }

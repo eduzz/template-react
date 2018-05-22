@@ -48,7 +48,7 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     return (
       <BrowserRouter ref={ref => this.browserRouter = ref as any}>
         <Switch>
-          {routes.map(this.renderRoute.bind(this))}
+          {routes.map(router => this.renderRoute(router))}
           <Route path='/reload' exact render={() => <div></div>} />
           <Route render={() => <Redirect to='/' />} />
         </Switch>
@@ -56,15 +56,23 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     );
   }
 
-  public renderRoute(route: IAppRoute, index: number): JSX.Element {
+  public renderRoute(route: IAppRoute, baseUrl: string = ''): JSX.Element {
+    const path = (baseUrl + route.path)
+      .replace(/\/\//gi, '/')
+      .replace(/\/$/gi, '') || '/';
+
     return (
-      <Route key={index} exact={route.exact} path={route.path}
+      <Route key={route.path} exact={route.exact} path={path}
         render={props => route.allowAnonymous ?
           <route.component {...props}>
-            {(route.subRoutes || []).map(this.renderRoute.bind(this))}
+            <Switch>
+              {(route.subRoutes || []).map(child => this.renderRoute(child, path))}
+            </Switch>
           </route.component> :
           <AppRouterProtected route={route} routeProps={props}>
-            {(route.subRoutes || []).map(this.renderRoute.bind(this))}
+            <Switch>
+              {(route.subRoutes || []).map(child => this.renderRoute(child, path))}
+            </Switch>
           </AppRouterProtected>
         } />
     );

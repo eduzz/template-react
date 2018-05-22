@@ -40,6 +40,7 @@ export default class FieldDate extends FieldBase<IProps> {
           rightArrowIcon={<ChevronRightIcon />}
           error={!!this.errorMessage}
           helperText={this.errorMessage}
+          required={this.isRequired}
           onChange={this.onChange.bind(this)}
         />
       </Fragment>

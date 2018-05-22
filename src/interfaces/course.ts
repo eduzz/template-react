@@ -1,3 +1,5 @@
+import { ICategory } from './category';
+
 export interface ICourse {
   id: number;
   title: string;
@@ -11,10 +13,7 @@ export interface ICourse {
     avatar?: string;
     image_cover?: string;
   };
-  category: {
-    id: number;
-    name: string;
-  };
+  category: ICategory;
   producer: {
     id: number;
     name: string;

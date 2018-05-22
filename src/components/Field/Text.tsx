@@ -57,6 +57,7 @@ export default class FieldText extends FieldBase<IProps> {
             fullWidth: true,
             margin: 'normal',
             ...this.props,
+            required: this.isRequired,
             value: (value === undefined || value === null ? '' : value).toString(),
             error: !!this.errorMessage,
             helperText: this.errorMessage,

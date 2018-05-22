@@ -131,6 +131,7 @@ export default class IntegrationAutosuggest extends FieldBase<IProps, IState> {
             errorMessage: this.errorMessage,
             classes,
             placeholder: placeholder || 'Pesquisar...',
+            required: this.isRequired,
             value: term || '',
             onBlur: this.handleBlur.bind(this),
             onChange: this.handleChange.bind(this),

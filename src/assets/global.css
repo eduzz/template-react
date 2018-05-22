@@ -2,7 +2,7 @@
   fill: currentColor;
 }
 
-[class*=' MuiButton']:not([class*=' MuiButton-fab']) .mdi-icon {
+[class*=' MuiButton']:not([class*=' MuiButton-fab']):not(.icon-right) .mdi-icon {
   margin-right: 10px;
 }
 

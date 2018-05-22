@@ -36,6 +36,10 @@ export default abstract class FieldBase<P extends IPropsFieldBase, S extends ISt
       errorProp || errorMessage : null;
   }
 
+  get isRequired() {
+    return (this.props.validation || '').includes('required');
+  }
+
   static getDerivedStateFromProps({ value, validation }: IPropsFieldBase, currentState: IStateFieldBase): IStateFieldBase {
     const error = validate(value, validation);
 
