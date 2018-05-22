@@ -41,11 +41,6 @@ interface IPropsFromConnect {
   }
 }))
 class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { formSubmitted: false, model: {} };
-  }
-
   static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState) {
     if (nextProps.opened && !nextProps.loadingError) {
       if (!nextProps.courses.length) nextProps.requestCourseList();
@@ -89,7 +84,7 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
   }
 
   render() {
-    const { model, formSubmitted } = this.state;
+    const { model } = this.state;
     const { opened, loading, courses, classes, saveError, loadingError, cleanUserSaveError, accessGroups } = this.props;
 
     return (
@@ -119,7 +114,6 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                     type='email'
                     disabled={loading}
                     value={model.email}
-                    submitted={formSubmitted}
                     validation='required|email'
                     onChange={this.updateModel((model, v) => model.email = v)}
                     margin='none'
@@ -130,7 +124,6 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                     options={accessGroups}
                     disabled={loading}
                     value={model.group}
-                    submitted={formSubmitted}
                     validation='required'
                     onChange={this.updateModel((model, v) => model.group = v)}
                   />
@@ -140,7 +133,6 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                     options={courses}
                     disabled={loading}
                     value={model.course}
-                    submitted={formSubmitted}
                     validation='required'
                     onChange={this.updateModel((model, v) => model.course = v)}
                   />

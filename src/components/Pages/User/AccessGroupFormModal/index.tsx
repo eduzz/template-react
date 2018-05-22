@@ -72,11 +72,6 @@ interface IPropsFromConnect {
   }
 }))
 class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { formSubmitted: false, model: {} };
-  }
-
   static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState): IState {
     if (nextProps.opened && !nextProps.loadingError) {
       if (!nextProps.modules.length) nextProps.requestAccessGroupModuleList();
@@ -134,7 +129,7 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
   }
 
   render() {
-    const { model, formSubmitted } = this.state;
+    const { model } = this.state;
     const { opened, loading, classes, saveError, loadingError, cleanAccessGroupSaveError } = this.props;
 
     return (
@@ -163,7 +158,6 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
                     label='Nome'
                     disabled={loading}
                     value={model.name}
-                    submitted={formSubmitted}
                     validation='required'
                     onChange={this.updateModel((model, v) => model.name = v)}
                     margin='none'

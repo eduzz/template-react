@@ -7,13 +7,13 @@ import { FieldValidation, IFieldValidationContext } from '.';
 export interface IStateFieldBase {
   touched: boolean;
   errorMessage: string;
+  submitted: boolean;
 }
 
 export interface IPropsFieldBase extends TextFieldProps {
   label: string;
   disabled?: boolean;
   value?: any;
-  submitted?: boolean;
   classes?: any;
   validation?: string;
   errorMessage?: string;
@@ -29,8 +29,8 @@ export default abstract class FieldBase<P extends IPropsFieldBase, S extends ISt
   }
 
   get errorMessage() {
-    const { submitted, errorMessage: errorProp } = this.props;
-    const { touched, errorMessage } = this.state;
+    const { errorMessage: errorProp } = this.props;
+    const { submitted, touched, errorMessage } = this.state;
 
     return submitted || touched ?
       errorProp || errorMessage : null;
@@ -43,6 +43,10 @@ export default abstract class FieldBase<P extends IPropsFieldBase, S extends ISt
       ...currentState,
       errorMessage: error.message
     };
+  }
+
+  public serFormSubmitted(submitted: boolean) {
+    this.setState({ submitted });
   }
 
   public isValid() {

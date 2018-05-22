@@ -4,7 +4,6 @@ import { ChangeEvent, Component } from 'react';
 
 export interface IStateForm<T = any> {
   model?: Partial<T>;
-  formSubmitted?: boolean;
 }
 
 export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
@@ -23,10 +22,11 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   constructor(props: any) {
     super(props);
     this.fields = [];
+    this.state = { model: {} } as any;
   }
 
   public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
-    this.setState({ formSubmitted });
+    this.fields.forEach(f => f.serFormSubmitted(formSubmitted));
 
     if (!this.fields.length) {
       console.warn('There is no field registred, did you use FieldValidation.Provider?');
@@ -36,12 +36,13 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   }
 
   public resetForm() {
-    this.setState({ formSubmitted: false, model: {} });
+    this.setState({ model: {} });
+    this.fields.forEach(f => f.serFormSubmitted(false));
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): any {
     return (event: ChangeEvent<any>) => {
-      let { model, formSubmitted } = this.state;
+      let { model } = this.state;
       let value = event;
 
       if ((event || {} as any).target) {
@@ -53,7 +54,6 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
       handler(model, value);
 
       this.setState({ model });
-      this.isFormValid(formSubmitted);
     };
   }
 

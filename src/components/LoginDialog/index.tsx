@@ -54,11 +54,6 @@ interface IPropsFromConnect {
   }
 }))
 class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { formSubmitted: false, model: {} };
-  }
-
   async onSubmit(event: Event) {
     event.preventDefault();
 
@@ -72,7 +67,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
   }
 
   render() {
-    const { model, formSubmitted } = this.state;
+    const { model } = this.state;
     const { opened, loading, error, clearLoginError, classes } = this.props;
 
     return (
@@ -101,7 +96,6 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
                     type='email'
                     disabled={loading}
                     value={model.username}
-                    submitted={formSubmitted}
                     validation='required|email'
                     onChange={this.updateModel((model, v) => model.username = v)}
                     margin='none'
@@ -112,7 +106,6 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
                     type='password'
                     disabled={loading}
                     value={model.password}
-                    submitted={formSubmitted}
                     validation='required'
                     onChange={this.updateModel((model, v) => model.password = v)}
                   />
