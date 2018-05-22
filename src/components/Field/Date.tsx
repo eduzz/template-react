@@ -20,8 +20,7 @@ export default class FieldDate extends FieldBase<IProps> {
   }
 
   render() {
-    const { touched, error } = this.state;
-    const { value, submitted, label, format } = this.props;
+    const { value, label, format } = this.props;
 
     return (
       <DatePicker
@@ -36,8 +35,8 @@ export default class FieldDate extends FieldBase<IProps> {
         margin={'normal'}
         leftArrowIcon={<ChevronLeftIcon />}
         rightArrowIcon={<ChevronRightIcon />}
-        error={(submitted || touched) && !!error}
-        helperText={(submitted || touched) && error}
+        error={!!this.errorMessage}
+        helperText={this.errorMessage}
         onChange={this.onChange.bind(this)}
       />
     );

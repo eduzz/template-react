@@ -46,8 +46,6 @@ export default class FieldText extends FieldBase<IProps> {
   }
 
   render() {
-    const { touched, error } = this.state;
-    const { submitted } = this.props;
     const value = this.getValue();
 
     return (
@@ -60,8 +58,8 @@ export default class FieldText extends FieldBase<IProps> {
             margin: 'normal',
             ...this.props,
             value: (value === undefined || value === null ? '' : value).toString(),
-            error: (submitted || touched) && !!error,
-            helperText: (submitted || touched) && error,
+            error: !!this.errorMessage,
+            helperText: this.errorMessage,
             onChange: this.onChange.bind(this),
             submitted: null,
             touched: null

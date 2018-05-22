@@ -2,7 +2,7 @@ import { TextField } from '@material-ui/core';
 import React from 'react';
 
 export default function Input(props: any) {
-  const { classes, ref, endAdornment, submitted, touched, error, ...other } = props;
+  const { classes, ref, endAdornment, errorMessage, ...other } = props;
 
   return (
     <TextField
@@ -11,8 +11,8 @@ export default function Input(props: any) {
         fullWidth: true,
         margin: 'normal',
         ...other,
-        error: (submitted || touched) && !!error,
-        helperText: (submitted || touched) && error,
+        error: errorMessage,
+        helperText: errorMessage,
         submitted: null,
         touched: null
       }}

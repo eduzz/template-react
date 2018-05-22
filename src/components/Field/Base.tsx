@@ -6,7 +6,7 @@ import { FieldValidation, IFieldValidationContext } from '.';
 
 export interface IStateFieldBase {
   touched: boolean;
-  error: string;
+  errorMessage: string;
 }
 
 export interface IPropsFieldBase extends TextFieldProps {
@@ -16,6 +16,7 @@ export interface IPropsFieldBase extends TextFieldProps {
   submitted?: boolean;
   classes?: any;
   validation?: string;
+  errorMessage?: string;
   onChange: (value: any) => void;
 }
 
@@ -27,17 +28,25 @@ export default abstract class FieldBase<P extends IPropsFieldBase, S extends ISt
     this.state = { touched: false, error: null } as any;
   }
 
-  static getDerivedStateFromProps({ value, validation }: IPropsFieldBase, currentState: IStateFieldBase) {
+  get errorMessage() {
+    const { submitted, errorMessage: errorProp } = this.props;
+    const { touched, errorMessage } = this.state;
+
+    return submitted || touched ?
+      errorProp || errorMessage : null;
+  }
+
+  static getDerivedStateFromProps({ value, validation }: IPropsFieldBase, currentState: IStateFieldBase): IStateFieldBase {
     const error = validate(value, validation);
 
     return {
       ...currentState,
-      error: error.message
+      errorMessage: error.message
     };
   }
 
   public isValid() {
-    return !this.state.error;
+    return !this.state.errorMessage && !this.props.errorMessage;
   }
 
   public componentWillUnmount() {

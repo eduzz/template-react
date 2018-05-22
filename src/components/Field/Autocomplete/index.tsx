@@ -103,7 +103,7 @@ export default class IntegrationAutosuggest extends FieldBase<IProps, IState> {
   }
 
   render() {
-    const { term, suggestions, error, touched } = this.state;
+    const { term, suggestions } = this.state;
     const { classes, placeholder, disabled, label } = this.props;
 
     return (
@@ -125,8 +125,7 @@ export default class IntegrationAutosuggest extends FieldBase<IProps, IState> {
         onSuggestionSelected={this.handleSelected.bind(this)}
         inputProps={{
           ...this.props as any,
-          error,
-          touched,
+          errorMessage: this.errorMessage,
           classes,
           placeholder: placeholder || 'Pesquisar...',
           value: term || '',

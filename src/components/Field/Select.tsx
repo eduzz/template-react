@@ -14,8 +14,7 @@ export default class FieldSelect extends FieldBase<IProps> {
   }
 
   render() {
-    const { touched, error } = this.state;
-    const { submitted, value, options } = this.props;
+    const { value, options } = this.props;
 
     return (
       <TextField
@@ -25,8 +24,8 @@ export default class FieldSelect extends FieldBase<IProps> {
           ...this.props,
           value: value === undefined ? '' : value,
           select: true,
-          error: (submitted || touched) && !!error,
-          helperText: (submitted || touched) && error,
+          error: !!this.errorMessage,
+          helperText: this.errorMessage,
           onChange: this.onChange.bind(this),
           submitted: null,
           touched: null
