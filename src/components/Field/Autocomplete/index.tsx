@@ -5,7 +5,7 @@ import parse from 'autosuggest-highlight/parse';
 import { WithStyles } from 'decorators/withStyles';
 import { SearchIcon } from 'mdi-react';
 import CloseIcon from 'mdi-react/CloseIcon';
-import React from 'react';
+import React, { Fragment } from 'react';
 import Autosuggest, {
   ChangeEvent,
   RenderSuggestionParams,
@@ -107,45 +107,49 @@ export default class IntegrationAutosuggest extends FieldBase<IProps, IState> {
     const { classes, placeholder, disabled, label } = this.props;
 
     return (
-      <Autosuggest
-        suggestions={suggestions}
-        theme={{
-          container: classes.container,
-          suggestionsContainerOpen: `${classes.suggestionsContainerOpen} ${label ? classes.suggestionsContainerOpenWithLabel : ''}`,
-          suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion,
-        }}
-        renderInputComponent={Input}
-        renderSuggestionsContainer={SuggestionsContainer}
-        shouldRenderSuggestions={() => true}
-        onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested.bind(this)}
-        onSuggestionsClearRequested={this.handleSuggestionsClearRequested.bind(this)}
-        getSuggestionValue={this.getSuggestionValue.bind(this)}
-        renderSuggestion={this.renderSuggestion.bind(this)}
-        onSuggestionSelected={this.handleSelected.bind(this)}
-        inputProps={{
-          ...this.props as any,
-          errorMessage: this.errorMessage,
-          classes,
-          placeholder: placeholder || 'Pesquisar...',
-          value: term || '',
-          onBlur: this.handleBlur.bind(this),
-          onChange: this.handleChange.bind(this),
-          endAdornment: (!term ?
-            <InputAdornment position='end'>
-              <IconButton disabled={true} className={classes.adornment}>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-            :
-            <InputAdornment position='end' onClick={this.handleClearValue.bind(this)}>
-              <IconButton disabled={disabled} className={classes.adornment}>
-                <CloseIcon />
-              </IconButton>
-            </InputAdornment>
-          )
-        }}
-      />
+      <Fragment>
+        {super.render()}
+
+        <Autosuggest
+          suggestions={suggestions}
+          theme={{
+            container: classes.container,
+            suggestionsContainerOpen: `${classes.suggestionsContainerOpen} ${label ? classes.suggestionsContainerOpenWithLabel : ''}`,
+            suggestionsList: classes.suggestionsList,
+            suggestion: classes.suggestion,
+          }}
+          renderInputComponent={Input}
+          renderSuggestionsContainer={SuggestionsContainer}
+          shouldRenderSuggestions={() => true}
+          onSuggestionsFetchRequested={this.handleSuggestionsFetchRequested.bind(this)}
+          onSuggestionsClearRequested={this.handleSuggestionsClearRequested.bind(this)}
+          getSuggestionValue={this.getSuggestionValue.bind(this)}
+          renderSuggestion={this.renderSuggestion.bind(this)}
+          onSuggestionSelected={this.handleSelected.bind(this)}
+          inputProps={{
+            ...this.props as any,
+            errorMessage: this.errorMessage,
+            classes,
+            placeholder: placeholder || 'Pesquisar...',
+            value: term || '',
+            onBlur: this.handleBlur.bind(this),
+            onChange: this.handleChange.bind(this),
+            endAdornment: (!term ?
+              <InputAdornment position='end'>
+                <IconButton disabled={true} className={classes.adornment}>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+              :
+              <InputAdornment position='end' onClick={this.handleClearValue.bind(this)}>
+                <IconButton disabled={disabled} className={classes.adornment}>
+                  <CloseIcon />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+      </Fragment>
     );
   }
 

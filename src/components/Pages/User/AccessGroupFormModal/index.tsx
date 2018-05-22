@@ -1,12 +1,12 @@
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   LinearProgress,
   Slide,
-  Switch,
   Typography,
 } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
@@ -184,25 +184,25 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
                         <tr key={module.id}>
                           <td><Typography>{module.name}</Typography></td>
                           <td>
-                            <Switch
+                            <Checkbox
                               checked={module.view || false}
                               onChange={this.updateModel((model, v) => module.view = v)}
                             />
                           </td>
                           <td>
-                            <Switch
+                            <Checkbox
                               checked={module.create || false}
                               onChange={this.updateModel((model, v) => module.create = v)}
                             />
                           </td>
                           <td>
-                            <Switch
+                            <Checkbox
                               checked={module.edit || false}
                               onChange={this.updateModel((model, v) => module.edit = v)}
                             />
                           </td>
                           <td>
-                            <Switch
+                            <Checkbox
                               checked={module.delete || false}
                               onChange={this.updateModel((model, v) => module.delete = v)}
                             />
