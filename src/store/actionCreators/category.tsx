@@ -1,6 +1,6 @@
 import { get } from 'api';
 import { logError } from 'errorHandler';
-import { IAppDefaultApiResponse } from 'interfaces/apiResponse';
+import { IApiResponse } from 'interfaces/apiResponse';
 import { ICategory } from 'interfaces/category';
 import { IActionCreator } from 'store/interfaces';
 
@@ -13,7 +13,7 @@ export function requestCategoryList(): IActionCreator<enCategoryStoreActions> {
 
       dispatch({ type: enCategoryStoreActions.requestList });
 
-      const { data } = await get<IAppDefaultApiResponse<ICategory[]>>('/categories');
+      const { data } = await get<IApiResponse<ICategory[]>>('/categories');
       dispatch({ type: enCategoryStoreActions.receiveList, categories: data });
     } catch (error) {
       logError(error);

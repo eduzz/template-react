@@ -1,10 +1,11 @@
-import { TextField } from '@material-ui/core';
+import { CircularProgress, InputAdornment, TextField } from '@material-ui/core';
 import React, { Fragment } from 'react';
 
 import FieldBase, { IPropsFieldBase } from './Base';
 
 interface IProps extends IPropsFieldBase {
   mask?: 'phone';
+  loading?: boolean;
 }
 
 export default class FieldText extends FieldBase<IProps> {
@@ -47,6 +48,7 @@ export default class FieldText extends FieldBase<IProps> {
 
   render() {
     const value = this.getValue();
+    const { loading } = this.props;
 
     return (
       <Fragment>
@@ -63,7 +65,15 @@ export default class FieldText extends FieldBase<IProps> {
             helperText: this.errorMessage,
             onChange: this.onChange.bind(this),
             submitted: null,
-            touched: null
+            touched: null,
+            loading: null
+          }}
+          InputProps={{
+            endAdornment: !loading ? null : (
+              <InputAdornment position='end'>
+                <CircularProgress color='secondary' size={25} />
+              </InputAdornment>
+            )
           }}
         />
       </Fragment>

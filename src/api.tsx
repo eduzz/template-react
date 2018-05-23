@@ -1,23 +1,24 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { ApiError } from 'errors/api';
-import { IAppDefaultApiResponse } from 'interfaces/apiResponse';
+import { dateParseObj } from 'formatters/date';
+import { IApiResponse } from 'interfaces/apiResponse';
 import { API_ENDPOINT } from 'settings';
 
 import { getStore } from './store';
 
-export async function get<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
+export async function get<T extends IApiResponse = IApiResponse>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'GET', params });
 }
 
-export async function post<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
+export async function post<T extends IApiResponse = IApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'POST', data });
 }
 
-export async function put<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, data: any): Promise<T> {
+export async function put<T extends IApiResponse = IApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'PUT', data });
 }
 
-export async function del<T extends IAppDefaultApiResponse = IAppDefaultApiResponse>(url: string, params?: any): Promise<T> {
+export async function del<T extends IApiResponse = IApiResponse>(url: string, params?: any): Promise<T> {
   return await request({ url, method: 'DELETE', params });
 }
 
@@ -32,7 +33,7 @@ async function request(options: AxiosRequestConfig, retry: boolean = true) {
         'Content-type': 'application/json'
       },
     });
-    return result.data;
+    return dateParseObj(result.data);
   } catch (err) {
     return await handleError(err, retry);
   }

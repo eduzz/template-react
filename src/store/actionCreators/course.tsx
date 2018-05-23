@@ -1,6 +1,6 @@
 import { get } from 'api';
 import { logError } from 'errorHandler';
-import { IAppDefaultApiResponse } from 'interfaces/apiResponse';
+import { IApiResponse } from 'interfaces/apiResponse';
 import { ICourse } from 'interfaces/course';
 import { IActionCreator } from 'store/interfaces';
 
@@ -13,7 +13,7 @@ export function requestCourseList(): IActionCreator<enCourseStoreActions> {
 
       dispatch({ type: enCourseStoreActions.requestList });
 
-      const { data } = await get<IAppDefaultApiResponse<ICourse[]>>('/courses');
+      const { data } = await get<IApiResponse<ICourse[]>>('/courses');
       dispatch({ type: enCourseStoreActions.receiveList, courses: data });
     } catch (error) {
       logError(error);

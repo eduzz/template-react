@@ -1,4 +1,4 @@
-import { Button, CardActions, CardContent, CircularProgress } from '@material-ui/core';
+import { Button, CardActions, CardContent, CircularProgress, Grid } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
 import { FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
@@ -9,6 +9,7 @@ import { ChevronRightIcon } from 'mdi-react';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
+import { openAuthorFormModal, requestAuthorList } from 'store/actionCreators/author';
 import { requestCategoryList } from 'store/actionCreators/category';
 import { cleanCourseSaveError, requestCourseSave } from 'store/actionCreators/course';
 
@@ -21,13 +22,16 @@ interface IProps {
 }
 
 interface IPropsFromConnect {
-  loading: boolean;
+  loading: { category: boolean, author: boolean };
   loadingError: any;
   saving: boolean;
   savingError: any;
+  authors: { value: number, label: string }[];
   categories: { value: number, label: string }[];
   classes?: any;
+  openAuthorFormModal?: typeof openAuthorFormModal;
   requestCategoryList?: typeof requestCategoryList;
+  requestAuthorList?: typeof requestAuthorList;
   requestCourseSave?: typeof requestCourseSave;
   cleanCourseSaveError?: typeof cleanCourseSaveError;
 }
@@ -71,21 +75,15 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
   }
 
   load() {
-    const { categories, requestCategoryList } = this.props;
+    const { categories, requestCategoryList, requestAuthorList } = this.props;
+
+    requestAuthorList({ size: 999 });
     if (!categories.length) requestCategoryList();
   }
 
   render() {
     const { model, saving } = this.state;
-    const { categories, loading, loadingError, savingError, classes, cleanCourseSaveError } = this.props;
-
-    if (loading) {
-      return (
-        <div className={classes.progressWrapper}>
-          <CircularProgress color='secondary' />
-        </div>
-      );
-    }
+    const { categories, authors, loading, loadingError, savingError, classes, openAuthorFormModal, cleanCourseSaveError } = this.props;
 
     if (loadingError) {
       return (
@@ -112,7 +110,8 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               validation='required'
               value={(model.category || {} as any).id}
               options={categories}
-              disabled={saving}
+              disabled={saving || loading.category}
+              loading={loading.category}
               onChange={this.updateModel((model, id) => model.category = { id })}
             />
 
@@ -124,6 +123,23 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               value={model.description}
               onChange={this.updateModel((model, v) => model.description = v)}
             />
+
+            <Grid container alignItems='flex-end'>
+              <Grid item xs={true}>
+                <FieldSelect
+                  label='Autor'
+                  options={authors}
+                  value={(model.author || {} as any).id}
+                  disabled={saving || loading.author}
+                  loading={loading.author}
+                  onChange={this.updateModel((model, id) => model.author = { id })}
+                />
+              </Grid>
+
+              <Grid item xs={false}>
+                <Button color='secondary' onClick={() => openAuthorFormModal()}>Novo</Button>
+              </Grid>
+            </Grid>
 
           </CardContent>
 
@@ -144,16 +160,19 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
   return {
-    loading: state.category.isFetching,
-    loadingError: state.category.error,
+    loading: { category: state.category.isFetching, author: state.author.isFetching },
+    loadingError: state.category.error || state.author.error,
     saving: state.course.isSaving,
     savingError: state.course.saveError,
+    authors: state.author.authors.map(c => ({ value: c.id, label: c.name })),
     categories: state.category.categories.map(c => ({ value: c.id, label: c.name }))
   };
 };
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
+  openAuthorFormModal,
   requestCategoryList,
+  requestAuthorList,
   requestCourseSave,
   cleanCourseSaveError
 })(EssentialFormStep);

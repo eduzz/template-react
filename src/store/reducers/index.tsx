@@ -4,6 +4,7 @@ import { IAppStoreState } from 'store/interfaces';
 import accessGroup from './accessGroup';
 import accessGroupModule from './accessGroupModule';
 import auth, { enAuthStoreActions } from './auth';
+import author from './author';
 import category from './category';
 import course from './course';
 import drawer from './drawer';
@@ -15,6 +16,7 @@ const appReducers = combineReducers({
   user,
   course,
   category,
+  author,
   accessGroup,
   accessGroupModule
 });

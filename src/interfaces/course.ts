@@ -1,3 +1,4 @@
+import { IAuthor } from './author';
 import { ICategory } from './category';
 
 export interface ICourse {
@@ -13,16 +14,12 @@ export interface ICourse {
     avatar?: string;
     image_cover?: string;
   };
-  category: ICategory;
+  category: Partial<ICategory>;
   producer: {
     id: number;
     name: string;
     business_name: string;
     avatar?: string;
   };
-  author: {
-    id: number;
-    name: string;
-    avatar?: string;
-  };
+  author: Partial<IAuthor>;
 }

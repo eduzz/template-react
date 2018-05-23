@@ -30,7 +30,8 @@ function category(state: IAppStoreCategoryState = initialState, action: any): IA
       return {
         ...state,
         isFetching: false,
-        categories: action.categories || [],
+        categories: (action.categories as ICategory[] || [])
+          .sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0),
         error: null
       };
     case enCategoryStoreActions.receiveListError:

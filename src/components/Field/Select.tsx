@@ -1,10 +1,11 @@
-import { MenuItem, TextField } from '@material-ui/core';
+import { CircularProgress, InputAdornment, MenuItem, TextField } from '@material-ui/core';
 import React, { Fragment } from 'react';
 
 import FieldBase, { IPropsFieldBase } from './Base';
 
 interface IProps extends IPropsFieldBase {
-  options: { value: string | number, label: string }[];
+  options?: { value: string | number, label: string }[];
+  loading?: boolean;
 }
 
 export default class FieldSelect extends FieldBase<IProps> {
@@ -14,7 +15,7 @@ export default class FieldSelect extends FieldBase<IProps> {
   }
 
   render() {
-    const { value, options } = this.props;
+    const { value, options, children, loading } = this.props;
 
     return (
       <Fragment>
@@ -32,7 +33,15 @@ export default class FieldSelect extends FieldBase<IProps> {
             helperText: this.errorMessage,
             onChange: this.onChange.bind(this),
             submitted: null,
-            touched: null
+            touched: null,
+            loading: null
+          }}
+          InputProps={{
+            endAdornment: !loading ? null : (
+              <InputAdornment position='end'>
+                <CircularProgress size={20} />
+              </InputAdornment>
+            )
           }}
         >
           <MenuItem value={undefined}>
@@ -43,6 +52,7 @@ export default class FieldSelect extends FieldBase<IProps> {
               {option.label}
             </MenuItem>
           ))}
+          {children}
         </TextField>
       </Fragment>
     );
