@@ -16,6 +16,7 @@
     "@material-ui/core": "1.0.0",
     "autosuggest-highlight": "3.1.1",
     "axios": "0.18.0",
+    "lodash": "4.17.10",
     "material-ui-pickers": "1.0.0-rc.9",
     "mdi-react": "3.3.0",
     "moment": "2.22.1",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@types/autosuggest-highlight": "3.1.0",
     "@types/jest": "22.2.3",
+    "@types/lodash": "4.14.109",
     "@types/node": "10.1.2",
     "@types/raven-for-redux": "1.1.0",
     "@types/raven-js": "3.10.0",

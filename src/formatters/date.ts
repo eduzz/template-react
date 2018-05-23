@@ -1,26 +1,5 @@
 import moment from 'moment';
 
-export function dateParseObj<T extends { [key: string]: any }>(obj: T): T {
-  if (!obj) return obj;
-
-  if (Array.isArray(obj)) {
-    return obj.map(i => dateParseObj(i)) as any;
-  }
-
-  if (typeof obj === 'string' && isValidDateString(obj)) {
-    return moment(obj).toDate() as any;
-  }
-
-  if (typeof obj === 'object') {
-    Object.keys(obj).forEach(key => {
-      obj[key] = dateParseObj(obj[key]);
-    });
-    return obj;
-  }
-
-  return obj;
-}
-
 export function dateParse(value: any, format?: string): Date {
   if (!value) return value;
   if (value instanceof Date) return value;
@@ -44,8 +23,4 @@ export function dateHumanize(date: any): string {
     now.isSame(date, 'year') ?
       date.format('DD/MMM [às] HH:mm') :
       date.format('DD/MMM/YYYY [às] HH:mm');
-}
-
-function isValidDateString(value: any): boolean {
-  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+)Z)?)?$/.test(value);
 }

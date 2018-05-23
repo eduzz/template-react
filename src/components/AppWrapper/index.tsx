@@ -17,6 +17,8 @@ interface IPropsFromConnect {
   closeDrawer?: typeof closeDrawer;
 }
 
+export const ScrollTopContext = React.createContext<Function>(null);
+
 @WithStyles(theme => ({
   root: {
     position: 'relative',
@@ -46,6 +48,12 @@ interface IPropsFromConnect {
   }
 }))
 class AppWrapper extends PureComponent<IProps & IPropsFromConnect> {
+  mainContent: HTMLMainElement;
+
+  scrollTop() {
+    setTimeout(() => this.mainContent.scrollTo(0, 0), 500);
+  }
+
   render() {
     const { } = this.state;
     const { children, routes, drawerOpened, closeDrawer, classes } = this.props;
@@ -72,9 +80,11 @@ class AppWrapper extends PureComponent<IProps & IPropsFromConnect> {
             {items}
           </Drawer>
         </Hidden>
-        <main className={classes.content}>
-          {children}
-        </main>
+        <ScrollTopContext.Provider value={this.scrollTop.bind(this)}>
+          <main ref={ref => this.mainContent = ref} className={classes.content}>
+            {children}
+          </main>
+        </ScrollTopContext.Provider>
       </div>
     );
   }

@@ -1,7 +1,8 @@
 import { IAuthor } from './author';
 import { ICategory } from './category';
+import { IStoreItemStatus } from './storeItemStatus';
 
-export interface ICourse {
+export interface ICourse extends IStoreItemStatus {
   id: number;
   title: string;
   description?: string;

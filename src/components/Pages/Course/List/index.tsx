@@ -1,28 +1,73 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import {
+  IconButton,
+  LinearProgress,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+} from '@material-ui/core';
+import ErrorMessage from 'components/ErrorMessage';
 import FabButton from 'components/FabButton';
+import IconMessage from 'components/IconMessage';
+import { RouterContext } from 'components/Router';
+import TableWrapper from 'components/TableWrapper';
 import Toolbar from 'components/Toolbar';
-import { WithStyles } from 'decorators/withStyles';
-import { IAppRoute } from 'interfaces/route';
-import { PlusIcon } from 'mdi-react';
-import React, { Fragment, PureComponent } from 'react';
+import { ICourse } from 'interfaces/course';
+import { IPaginationResponse } from 'interfaces/pagination';
+import { CreationIcon, PlusIcon, RefreshIcon } from 'mdi-react';
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { IAppStoreState } from 'store';
+import { requestCourseList } from 'store/actionCreators/course';
 
-import { RouterContext } from '../../../Router';
+import { ScrollTopContext } from '../../../AppWrapper';
+import ListItem from './ListItem';
 
-@WithStyles({
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-})
-export default class CourseListPage extends PureComponent<{ classes?: any }> {
-  public static routes: IAppRoute[] = [];
+interface IState {
+}
+
+interface IPropsFromConnect {
+  loading: boolean;
+  error: any;
+  items: ICourse[];
+  pagination: IPaginationResponse;
+  requestCourseList?: typeof requestCourseList;
+}
+
+class CourseListPage extends Component<IPropsFromConnect, IState> {
+  scrollTop: Function;
+
+  constructor(props: IPropsFromConnect) {
+    super(props);
+    this.state = { page: 0, pageSize: 10 };
+  }
+
+  componentDidMount() {
+    this.load();
+  }
+
+  load() {
+    this.props.requestCourseList(this.props.pagination);
+  }
+
+  paginate(page: number, size: number): void {
+    this.props.requestCourseList({ page, size });
+    this.scrollTop();
+  }
 
   render() {
-    const { classes } = this.props;
+    const { loading, items, pagination, error } = this.props;
 
     return (
       <Fragment>
         <Toolbar title='Cursos' />
+
+        <ScrollTopContext.Consumer>
+          {scrollTop => (this.scrollTop = scrollTop) && null}
+        </ScrollTopContext.Consumer>
 
         <RouterContext.Consumer>
           {getRouter =>
@@ -34,30 +79,68 @@ export default class CourseListPage extends PureComponent<{ classes?: any }> {
           }
         </RouterContext.Consumer>
 
-        <Grid container>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
-            <Card>
-              <CardMedia
-                className={classes.media}
-                image='http://visitebalneariocamboriu.com.br/wp-content/uploads/2017/08/Cursos.jpg'
-              />
-              <CardContent>
-                <Typography gutterBottom variant='headline' component='h2'>
-                  Lizard
-                </Typography>
-                <Typography component='p'>
-                  Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-                  across all continents except Antarctica
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size='small'>Share </Button>
-                <Button size='small'> Learn More</Button>
-              </CardActions>
-            </Card>
-          </Grid>
-        </Grid>
+        <Paper>
+          {loading && <LinearProgress color='secondary' />}
+          <TableWrapper>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Titulo</TableCell>
+                  <TableCell>Categoria</TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => this.load()}>
+                      <RefreshIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {error &&
+                  <TableRow>
+                    <TableCell colSpan={5} className='error'>
+                      <ErrorMessage error={error} tryAgain={() => this.load()} />
+                    </TableCell>
+                  </TableRow>
+                }
+                {!error && !items.length &&
+                  <TableRow>
+                    <TableCell colSpan={5}>
+                      <IconMessage icon={CreationIcon} message='Nenhum curso criado' />
+                    </TableCell>
+                  </TableRow>
+                }
+                {items.map(course =>
+                  <ListItem key={course.id} course={course} />
+                )}
+              </TableBody>
+            </Table>
+          </TableWrapper>
+          <TablePagination
+            labelRowsPerPage='items por página'
+            labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+            component='div'
+            count={pagination.totalRows}
+            rowsPerPage={pagination.size}
+            rowsPerPageOptions={[10, 25, 50]}
+            page={pagination.page - 1}
+            onChangePage={(event, page) => this.paginate(page + 1, pagination.size)}
+            onChangeRowsPerPage={(event) => this.paginate(pagination.page + 1, Number(event.target.value))}
+          />
+        </Paper>
       </Fragment>
     );
   }
 }
+
+const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
+  return {
+    loading: state.course.isFetching,
+    items: state.course.courses,
+    error: state.course.error,
+    pagination: state.course.pagination
+  } as IPropsFromConnect;
+};
+
+export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
+  requestCourseList
+})(CourseListPage);

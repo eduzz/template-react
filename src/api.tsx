@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { ApiError } from 'errors/api';
-import { dateParseObj } from 'formatters/date';
+import { apiResponseFormmater } from 'formatters/apiResponse';
 import { IApiResponse } from 'interfaces/apiResponse';
 import { API_ENDPOINT } from 'settings';
 
@@ -33,7 +33,7 @@ async function request(options: AxiosRequestConfig, retry: boolean = true) {
         'Content-type': 'application/json'
       },
     });
-    return dateParseObj(result.data);
+    return apiResponseFormmater(result.data);
   } catch (err) {
     return await handleError(err, retry);
   }
