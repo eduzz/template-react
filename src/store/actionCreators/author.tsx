@@ -35,18 +35,17 @@ export function cleanAuthorListError(): IActionCreator<enAuthorStoreActions> {
   return dispatch => dispatch({ type: enAuthorStoreActions.receiveListError, error: null });
 }
 
-export function requestAuthorSave(data: IAuthor): IActionCreator<enAuthorStoreActions> {
+export function requestAuthorSave(model: IAuthor): IActionCreator<enAuthorStoreActions> {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: enAuthorStoreActions.requestSave, data });
+      dispatch({ type: enAuthorStoreActions.requestSave, model });
 
       //TODO: REMOVE TESTE
-      const author = data.id ?
-        await put(`/authors/${data.id}`, { avatar: 'teste', ...data }) :
-        await post('/authors', { avatar: 'teste', ...data });
+      const { data } = model.id ?
+        await put(`/authors/${model.id}`, { avatar: 'teste', ...model }) :
+        await post('/authors', { avatar: 'teste', ...model });
 
-      dispatch({ type: enAuthorStoreActions.receiveSave, author });
-      requestAuthorList()(dispatch, getState);
+      dispatch({ type: enAuthorStoreActions.receiveSave, author: data });
     } catch (error) {
       logError(error);
       dispatch({ type: enAuthorStoreActions.receiveSaveError, error });

@@ -18,6 +18,7 @@ export interface IAppStoreAuthorState {
   isSaving: boolean;
   isFormOpened: boolean;
   authors: IAuthor[];
+  lastAuthorSave: IAuthor;
   saveError: any;
   error: any;
 }
@@ -27,6 +28,7 @@ const initialState: IAppStoreAuthorState = {
   isSaving: false,
   isFormOpened: false,
   authors: [],
+  lastAuthorSave: null,
   error: null,
   saveError: null
 };
@@ -54,7 +56,8 @@ function form(state: IAppStoreAuthorState, action: any): IAppStoreAuthorState {
     case enAuthorStoreActions.openForm:
       return {
         ...state,
-        isFormOpened: true
+        isFormOpened: true,
+        lastAuthorSave: null
       };
     case enAuthorStoreActions.closeForm:
       return {
@@ -101,10 +104,17 @@ function save(state: IAppStoreAuthorState, action: any): IAppStoreAuthorState {
         isSaving: true
       };
     case enAuthorStoreActions.receiveSave:
+      const author: IAuthor = action.author;
+
+      const authors = state.authors.filter(a => a.id !== author.id);
+      authors.push(author);
+
       return {
         ...state,
         isSaving: false,
-        isFormOpened: false
+        isFormOpened: false,
+        lastAuthorSave: author,
+        authors: authors.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0),
       };
     case enAuthorStoreActions.receiveSaveError:
       return {

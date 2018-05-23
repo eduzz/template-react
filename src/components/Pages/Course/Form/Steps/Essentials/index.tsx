@@ -4,6 +4,7 @@ import { FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
+import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
 import { ChevronRightIcon } from 'mdi-react';
 import React from 'react';
@@ -15,6 +16,7 @@ import { cleanCourseSaveError, requestCourseSave } from 'store/actionCreators/co
 
 interface IState extends IStateForm<ICourse> {
   saving: boolean;
+  getNextAuthor: boolean;
 }
 
 interface IProps {
@@ -27,6 +29,7 @@ interface IPropsFromConnect {
   saving: boolean;
   savingError: any;
   authors: { value: number, label: string }[];
+  lastAuthorSaved: IAuthor;
   categories: { value: number, label: string }[];
   classes?: any;
   openAuthorFormModal?: typeof openAuthorFormModal;
@@ -55,9 +58,22 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
       nextProps.onComplete();
     }
 
+    let getNextAuthor = currentState.getNextAuthor;
+    let author = currentState.model.author;
+
+    if (currentState.getNextAuthor && nextProps.lastAuthorSaved) {
+      getNextAuthor = false;
+      author = { id: nextProps.lastAuthorSaved.id };
+    }
+
     return {
       ...currentState,
-      saving: nextProps.saving
+      saving: nextProps.saving,
+      getNextAuthor,
+      model: {
+        ...currentState.model,
+        author
+      }
     };
   }
 
@@ -81,9 +97,14 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
     if (!categories.length) requestCategoryList();
   }
 
+  newAuthor() {
+    this.setState({ getNextAuthor: true });
+    this.props.openAuthorFormModal();
+  }
+
   render() {
     const { model, saving } = this.state;
-    const { categories, authors, loading, loadingError, savingError, classes, openAuthorFormModal, cleanCourseSaveError } = this.props;
+    const { categories, authors, loading, loadingError, savingError, classes, cleanCourseSaveError } = this.props;
 
     if (loadingError) {
       return (
@@ -137,7 +158,7 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               </Grid>
 
               <Grid item xs={false}>
-                <Button color='secondary' onClick={() => openAuthorFormModal()}>Novo</Button>
+                <Button color='secondary' onClick={() => this.newAuthor()}>Novo</Button>
               </Grid>
             </Grid>
 
@@ -165,6 +186,7 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect
     saving: state.course.isSaving,
     savingError: state.course.saveError,
     authors: state.author.authors.map(c => ({ value: c.id, label: c.name })),
+    lastAuthorSaved: state.author.lastAuthorSave,
     categories: state.category.categories.map(c => ({ value: c.id, label: c.name }))
   };
 };

@@ -156,7 +156,7 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
   return {
-    opened: state.user.isUserFormModalOpened,
+    opened: state.user.isFormOpened,
     loading: state.course.isFetching || state.accessGroup.isFetching || state.user.isSaving,
     loadingError: state.course.error || state.accessGroup.error,
     saveError: state.user.saveError,

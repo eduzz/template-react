@@ -23,7 +23,7 @@ export interface IAppStoreUserState {
   users: IUser[];
   error: any;
   saveError: any;
-  isUserFormModalOpened: boolean;
+  isFormOpened: boolean;
 }
 
 const initialState: IAppStoreUserState = {
@@ -32,7 +32,7 @@ const initialState: IAppStoreUserState = {
   users: [],
   error: null,
   saveError: null,
-  isUserFormModalOpened: false
+  isFormOpened: false
 };
 
 export default function user(state: IAppStoreUserState = initialState, action: any): IAppStoreUserState {
@@ -65,12 +65,12 @@ function form(state: IAppStoreUserState, action: any): IAppStoreUserState {
     case enUserStoreActions.openForm:
       return {
         ...state,
-        isUserFormModalOpened: true
+        isFormOpened: true
       };
     case enUserStoreActions.closeForm:
       return {
         ...state,
-        isUserFormModalOpened: false
+        isFormOpened: false
       };
     default:
       return state;
@@ -89,7 +89,9 @@ function list(state: IAppStoreUserState, action: any): IAppStoreUserState {
       return {
         ...state,
         isFetching: false,
-        users: (action.users || []).map((a: IUser, index: number) => ({ ...a, index })),
+        users: (action.users as IUser[] || [])
+          .map((a: IUser, index: number) => ({ ...a, index }))
+          .sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0),
         error: null
       };
     case enUserStoreActions.receiveListError:
@@ -111,10 +113,18 @@ function save(state: IAppStoreUserState, action: any): IAppStoreUserState {
         isSaving: true
       };
     case enUserStoreActions.receiveSave:
+      const user: IUser = action.user;
+
+      const users = state.users.filter(a => a.id !== user.id);
+      users.push(user);
+
       return {
         ...state,
         isSaving: false,
-        isUserFormModalOpened: false
+        isFormOpened: false,
+        users: users
+          .map((a: IUser, index: number) => ({ ...a, index }))
+          .sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
       };
     case enUserStoreActions.receiveSaveError:
       return {
