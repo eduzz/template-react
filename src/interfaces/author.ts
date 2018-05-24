@@ -3,8 +3,9 @@ export interface IAuthor {
   name: string;
   description: string;
   avatar: string;
-  id_user?: number;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at?: Date;
+
+  idUser?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 }

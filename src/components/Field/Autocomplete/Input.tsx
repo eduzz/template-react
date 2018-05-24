@@ -11,7 +11,7 @@ export default function Input(props: any) {
         fullWidth: true,
         margin: 'normal',
         ...other,
-        error: errorMessage,
+        error: !!errorMessage,
         helperText: errorMessage,
         submitted: null,
         touched: null

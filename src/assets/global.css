@@ -32,6 +32,10 @@
   max-height: none !important;
 }
 
+.button-margin-input {
+  margin-top: 25px !important;
+}
+
 /* [class*='MuiModal-'] {
   overflow: auto !important;
 } */

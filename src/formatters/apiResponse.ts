@@ -1,11 +1,11 @@
 import camelCase from 'lodash/camelCase';
 import moment from 'moment';
 
-export function apiResponseFormmater<T extends { [key: string]: any }>(obj: T): T {
+export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): T {
   if (!obj) return obj;
 
   if (Array.isArray(obj)) {
-    return obj.map(i => apiResponseFormmater(i)) as any;
+    return obj.map(i => apiResponseFormatter(i)) as any;
   }
 
   if (typeof obj === 'string' && isValidDateString(obj)) {
@@ -18,7 +18,7 @@ export function apiResponseFormmater<T extends { [key: string]: any }>(obj: T): 
 
   if (typeof obj === 'object') {
     return Object.keys(obj).reduce((acc, key) => {
-      acc[camelCase(key)] = apiResponseFormmater(obj[key]);
+      acc[camelCase(key)] = apiResponseFormatter(obj[key]);
       return acc;
     }, {}) as any;
   }

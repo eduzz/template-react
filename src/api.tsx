@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { ApiError } from 'errors/api';
-import { apiResponseFormmater } from 'formatters/apiResponse';
+import { apiRequestFormatter } from 'formatters/apiRequest';
+import { apiResponseFormatter } from 'formatters/apiResponse';
 import { IApiResponse } from 'interfaces/apiResponse';
 import { API_ENDPOINT } from 'settings';
 
@@ -24,6 +25,9 @@ export async function del<T extends IApiResponse = IApiResponse>(url: string, pa
 
 async function request(options: AxiosRequestConfig, retry: boolean = true) {
   try {
+    options.params = options.params ? apiRequestFormatter(options.params) : null;
+    options.data = options.data ? apiRequestFormatter(options.data) : null;
+
     const token = getStore().getState().auth.authToken;
     const result = await axios({
       ...options,
@@ -33,7 +37,7 @@ async function request(options: AxiosRequestConfig, retry: boolean = true) {
         'Content-type': 'application/json'
       },
     });
-    return apiResponseFormmater(result.data);
+    return apiResponseFormatter(result.data);
   } catch (err) {
     return await handleError(err, retry);
   }

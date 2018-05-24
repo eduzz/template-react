@@ -147,7 +147,7 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               onChange={this.updateModel((model, v) => model.description = v)}
             />
 
-            <Grid container alignItems='flex-end'>
+            <Grid container>
               <Grid item xs={true}>
                 <FieldSelect
                   label='Autor'
@@ -161,7 +161,7 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               </Grid>
 
               <Grid item xs={false}>
-                <Button fullWidth size='small' color='secondary' onClick={() => this.newAuthor()}>
+                <Button fullWidth size='small' className='button-margin-input' color='secondary' onClick={() => this.newAuthor()}>
                   <AccountPlusIcon />
                   <Hidden xsDown>
                     Autor

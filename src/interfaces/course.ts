@@ -4,6 +4,7 @@ import { IStoreItemStatus } from './storeItemStatus';
 import { fakeBoolean } from './types';
 
 export interface ICourse extends IStoreItemStatus {
+  //from list
   id: number;
   title: string;
   description?: string;
@@ -11,17 +12,45 @@ export interface ICourse extends IStoreItemStatus {
   slug: string;
   published?: fakeBoolean;
   hash: string;
-  default_thumb?: string;
+  defaultThumb?: string;
   customizations: {
     avatar?: string;
-    image_cover?: string;
+    imageCover?: string;
   };
   category: Partial<ICategory>;
   producer: {
     id: number;
     name: string;
-    business_name: string;
+    businessName: string;
     avatar?: string;
   };
   author: Partial<IAuthor>;
+
+  // from get
+  progressBar?: any;
+  offer?: any;
+  fcPixel?: any;
+  glAnalytics?: any;
+  allowManualWatch?: number;
+  isMy?: any;
+  totalModules?: number;
+  totalLessons?: number;
+  share: string;
+
+  // from get advanced
+  advanced?: ICourseAdvanced;
+}
+
+export interface ICourseAdvanced {
+  disableComments: fakeBoolean;
+  accessType: fakeBoolean;
+  replyEmail?: string;
+  hasTerms: fakeBoolean;
+  termsContent?: string;
+  advertise: fakeBoolean;
+  daysAvailable: fakeBoolean;
+  newModuleNotification: fakeBoolean;
+  newLessonNotification: fakeBoolean;
+  allowManualWatch: fakeBoolean;
+  releaseAt?: Date;
 }

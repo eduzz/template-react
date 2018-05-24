@@ -5,6 +5,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
 import React, { Fragment, PureComponent } from 'react';
 
+import AdvancedFormStep from './Steps/Advanced';
 import EssentialFormStep from './Steps/Essentials';
 
 interface IState {
@@ -25,7 +26,7 @@ export default class CourseFormPage extends PureComponent<IProps, IState> {
 
   constructor(props: {}) {
     super(props);
-    this.state = { ...this.state, currentStep: 0 };
+    this.state = { ...this.state, currentStep: 1 };
   }
 
   nextStep() {
@@ -59,6 +60,7 @@ export default class CourseFormPage extends PureComponent<IProps, IState> {
           <Divider light />
 
           {currentStep === 0 && <EssentialFormStep onComplete={this.nextStep.bind(this)} />}
+          {currentStep === 1 && <AdvancedFormStep onComplete={this.nextStep.bind(this)} />}
 
         </Card>
       </Fragment>
