@@ -1,12 +1,19 @@
 version: '2'
 services:
 
+  # web:
+  #   container_name: nutror-v3-front-producer
+  #   tty: true
+  #   build: docker/dev
+  #   ports:
+  #     - "3000:3000"
+  #     - "35729:35729"
+  #   volumes:
+  #     - .:/src:cached
+
   web:
     container_name: nutror-v3-front-producer
     tty: true
-    build: docker/dev
+    build: .
     ports:
-      - "3000:3000"
-      - "35729:35729"
-    volumes:
-      - .:/src:cached
+      - "3000:80"
