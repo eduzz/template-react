@@ -48,7 +48,7 @@ export default class FieldText extends FieldBase<IProps> {
 
   render() {
     const value = this.getValue();
-    const { loading } = this.props;
+    const { loading, helperText, ...extraProps } = this.props;
 
     return (
       <Fragment>
@@ -58,11 +58,11 @@ export default class FieldText extends FieldBase<IProps> {
           {...{
             fullWidth: true,
             margin: 'normal',
-            ...this.props,
+            ...extraProps,
             required: this.isRequired,
             value: (value === undefined || value === null ? '' : value).toString(),
             error: !!this.errorMessage,
-            helperText: this.errorMessage,
+            helperText: this.errorMessage || helperText,
             onChange: this.onChange.bind(this),
             submitted: null,
             touched: null,

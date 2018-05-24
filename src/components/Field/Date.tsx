@@ -20,13 +20,14 @@ export default class FieldDate extends FieldBase<IProps> {
   }
 
   render() {
-    const { value, label, format } = this.props;
+    const { value, label, format, helperText, ...extraProps } = this.props;
 
     return (
       <Fragment>
         {super.render()}
 
         <DatePicker
+          {...extraProps}
           clearable
           clearLabel={'Limpar'}
           okLabel={'OK'}
@@ -39,7 +40,7 @@ export default class FieldDate extends FieldBase<IProps> {
           leftArrowIcon={<ChevronLeftIcon />}
           rightArrowIcon={<ChevronRightIcon />}
           error={!!this.errorMessage}
-          helperText={this.errorMessage}
+          helperText={this.errorMessage || helperText}
           required={this.isRequired}
           onChange={this.onChange.bind(this)}
         />

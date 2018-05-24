@@ -1,6 +1,6 @@
 import { IFieldValidationContext } from 'components/Field';
 import FieldBase from 'components/Field/Base';
-import { ChangeEvent, Component } from 'react';
+import { Component } from 'react';
 
 export interface IStateForm<T = any> {
   model?: Partial<T>;
@@ -41,12 +41,12 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): any {
-    return (event: ChangeEvent<any>) => {
+    return (event: any) => {
       let { model } = this.state;
       let value = event;
 
       if ((event || {} as any).target) {
-        value = event.target.checked !== undefined ?
+        value = event.target.type === 'checkbox' ?
           event.target.checked :
           event.target.value;
       }

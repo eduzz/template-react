@@ -26,7 +26,7 @@ export default class CourseFormPage extends PureComponent<IProps, IState> {
 
   constructor(props: {}) {
     super(props);
-    this.state = { ...this.state, currentStep: 0 };
+    this.state = { ...this.state, currentStep: 1 };
   }
 
   nextStep() {

@@ -20,7 +20,11 @@ export interface IPropsFieldBase extends TextFieldProps {
   onChange: (value: any) => void;
 }
 
-export default abstract class FieldBase<P extends IPropsFieldBase, S extends IStateFieldBase = IStateFieldBase> extends PureComponent<P, S> {
+export default abstract class FieldBase<
+  P extends IPropsFieldBase = IPropsFieldBase,
+  S extends IStateFieldBase = IStateFieldBase
+  > extends PureComponent<P, S> {
+
   protected validationContext: IFieldValidationContext;
 
   constructor(props: any) {
