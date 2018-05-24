@@ -1,4 +1,4 @@
-import { Button, CardActions, CardContent, CircularProgress, Grid } from '@material-ui/core';
+import { Button, CardActions, CardContent, CircularProgress, Grid, Hidden } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
 import { FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
@@ -6,7 +6,7 @@ import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
-import { ChevronRightIcon } from 'mdi-react';
+import { AccountPlusIcon, ChevronRightIcon } from 'mdi-react';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -71,6 +71,7 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
       saving: nextProps.saving,
       getNextAuthor,
       model: {
+        published: '0',
         ...currentState.model,
         author
       }
@@ -138,6 +139,7 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
 
             <FieldText
               label='Descrição'
+              validation='required'
               multiline
               rows='4'
               disabled={saving}
@@ -149,6 +151,7 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               <Grid item xs={true}>
                 <FieldSelect
                   label='Autor'
+                  validation='required'
                   options={authors}
                   value={(model.author || {} as any).id}
                   disabled={saving || loading.author}
@@ -158,7 +161,12 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
               </Grid>
 
               <Grid item xs={false}>
-                <Button color='secondary' onClick={() => this.newAuthor()}>Novo</Button>
+                <Button fullWidth size='small' color='secondary' onClick={() => this.newAuthor()}>
+                  <AccountPlusIcon />
+                  <Hidden xsDown>
+                    Autor
+                  </Hidden>
+                </Button>
               </Grid>
             </Grid>
 

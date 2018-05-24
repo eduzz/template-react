@@ -1,4 +1,4 @@
-import { del, get } from 'api';
+import { del, get, post, put } from 'api';
 import { logError } from 'errorHandler';
 import { IPaginationApiResponse } from 'interfaces/apiResponse';
 import { ICourse } from 'interfaces/course';
@@ -31,16 +31,17 @@ export function cleanCourseListError(): IActionCreator<enCourseStoreActions> {
   return dispatch => dispatch({ type: enCourseStoreActions.receiveListError, error: null });
 }
 
-export function requestCourseSave(data: ICourse): IActionCreator<enCourseStoreActions> {
+export function requestCourseSave(model: ICourse): IActionCreator<enCourseStoreActions> {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: enCourseStoreActions.requestSave, data });
+      dispatch({ type: enCourseStoreActions.requestSave, model });
 
-      await new Promise((resolve, reject) => setTimeout(() => {
-        if (Math.random() > 0.8) return reject(Error('Tste'));
-        dispatch({ type: enCourseStoreActions.receiveSave, data });
-        requestCourseList(getState().course.pagination)(dispatch, getState);
-      }, 2000));
+      const { data } = model.id ?
+        await put(`/courses/${model.id}`, model) :
+        await post('/courses', model);
+
+      dispatch({ type: enCourseStoreActions.receiveSave, data });
+      requestCourseList(getState().course.pagination)(dispatch, getState);
     } catch (error) {
       logError(error);
       dispatch({ type: enCourseStoreActions.receiveSaveError, error });

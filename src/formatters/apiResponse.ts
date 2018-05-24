@@ -12,6 +12,10 @@ export function apiResponseFormmater<T extends { [key: string]: any }>(obj: T): 
     return moment(obj).toDate() as any;
   }
 
+  if (typeof obj === 'string' && !isNaN(Number(obj))) {
+    return Number(obj) as any;
+  }
+
   if (typeof obj === 'object') {
     return Object.keys(obj).reduce((acc, key) => {
       acc[camelCase(key)] = apiResponseFormmater(obj[key]);

@@ -1,6 +1,7 @@
 import { IAuthor } from './author';
 import { ICategory } from './category';
 import { IStoreItemStatus } from './storeItemStatus';
+import { fakeBoolean } from './types';
 
 export interface ICourse extends IStoreItemStatus {
   id: number;
@@ -8,7 +9,7 @@ export interface ICourse extends IStoreItemStatus {
   description?: string;
   logo?: string;
   slug: string;
-  published?: boolean;
+  published?: fakeBoolean;
   hash: string;
   default_thumb?: string;
   customizations: {

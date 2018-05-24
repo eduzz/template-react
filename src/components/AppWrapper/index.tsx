@@ -51,7 +51,7 @@ class AppWrapper extends PureComponent<IProps & IPropsFromConnect> {
   mainContent: HTMLMainElement;
 
   scrollTop() {
-    setTimeout(() => this.mainContent.scrollTo(0, 0), 500);
+    setTimeout(() => this.mainContent.scrollTo(0, 0), 100);
   }
 
   render() {
