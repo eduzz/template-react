@@ -1,9 +1,11 @@
 import { IFieldValidationContext } from 'components/Field';
 import FieldBase from 'components/Field/Base';
-import { ChangeEvent, Component } from 'react';
+import Snackbar from 'components/Snackbar';
+import { Component } from 'react';
 
 export interface IStateForm<T = any> {
   model?: Partial<T>;
+  formSubmitted?: boolean;
 }
 
 export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
@@ -17,6 +19,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     },
   };
 
+  protected scrollTop: Function;
   protected fields: FieldBase<any, any>[];
 
   constructor(props: any) {
@@ -25,28 +28,40 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     this.state = { model: {} } as any;
   }
 
+  public bindScrollTop(scrollTop: Function): React.ReactNode {
+    this.scrollTop = scrollTop;
+    return null;
+  }
+
   public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
     this.fields.forEach(f => f.serFormSubmitted(formSubmitted));
+    this.setState({ formSubmitted });
 
     if (!this.fields.length) {
       console.warn('There is no field registred, did you use FieldValidation.Provider?');
     }
 
-    return this.fields.every(f => f.isValid());
+    const isValid = this.fields.every(f => f.isValid());
+    if (!isValid && this.scrollTop) {
+      this.scrollTop();
+      Snackbar.show('Revise os campos');
+    }
+
+    return isValid;
   }
 
   public resetForm() {
-    this.setState({ model: {} });
+    this.setState({ model: {}, formSubmitted: false });
     this.fields.forEach(f => f.serFormSubmitted(false));
   }
 
-  protected updateModel(handler: (model: S['model'], value: any) => void): any {
-    return (event: ChangeEvent<any>) => {
+  protected updateModel(handler: (model: S['model'], value: any) => void): (value: any) => void {
+    return (event: any) => {
       let { model } = this.state;
       let value = event;
 
       if ((event || {} as any).target) {
-        value = event.target.checked !== undefined ?
+        value = event.target.type === 'checkbox' ?
           event.target.checked :
           event.target.value;
       }

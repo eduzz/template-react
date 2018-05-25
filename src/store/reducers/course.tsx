@@ -18,6 +18,7 @@ export enum enCourseStoreActions {
 export interface IAppStoreCourseState {
   isFetching: boolean;
   isSaving: boolean;
+  lastCourseSaved: ICourse;
   courses: ICourse[];
   pagination: IPaginationResponse;
   saveError: any;
@@ -27,6 +28,7 @@ export interface IAppStoreCourseState {
 const initialState: IAppStoreCourseState = {
   isFetching: false,
   isSaving: false,
+  lastCourseSaved: null,
   pagination: { page: 1, size: 10, totalRows: 0, totalPages: 0 },
   courses: [],
   saveError: null,
@@ -90,7 +92,8 @@ function save(state: IAppStoreCourseState, action: any): IAppStoreCourseState {
     case enCourseStoreActions.receiveSave:
       return {
         ...state,
-        isSaving: false
+        isSaving: false,
+        lastCourseSaved: action.course
       };
     case enCourseStoreActions.receiveSaveError:
       return {

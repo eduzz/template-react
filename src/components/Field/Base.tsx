@@ -16,11 +16,16 @@ export interface IPropsFieldBase extends TextFieldProps {
   value?: any;
   classes?: any;
   validation?: string;
+  validationContext?: Object;
   errorMessage?: string;
   onChange: (value: any) => void;
 }
 
-export default abstract class FieldBase<P extends IPropsFieldBase, S extends IStateFieldBase = IStateFieldBase> extends PureComponent<P, S> {
+export default abstract class FieldBase<
+  P extends IPropsFieldBase = IPropsFieldBase,
+  S extends IStateFieldBase = IStateFieldBase
+  > extends PureComponent<P, S> {
+
   protected validationContext: IFieldValidationContext;
 
   constructor(props: any) {
@@ -40,8 +45,8 @@ export default abstract class FieldBase<P extends IPropsFieldBase, S extends ISt
     return (this.props.validation || '').includes('required');
   }
 
-  static getDerivedStateFromProps({ value, validation }: IPropsFieldBase, currentState: IStateFieldBase): IStateFieldBase {
-    const error = validate(value, validation);
+  static getDerivedStateFromProps({ value, validation, validationContext }: IPropsFieldBase, currentState: IStateFieldBase): IStateFieldBase {
+    const error = validate(value, validation, validationContext);
 
     return {
       ...currentState,

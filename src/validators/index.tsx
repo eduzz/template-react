@@ -21,10 +21,10 @@ const messages: any = {
   required_if: 'Obrigatório'
 };
 
-export function validate(value: any, rule: string): { valid: boolean, message?: string } {
+export function validate(value: any, rule: string, context: any = {}): { valid: boolean, message?: string } {
   if (!rule) return { valid: true };
 
-  const result = new validator({ value }, { value: rule }, messages);
+  const result = new validator({ value, ...context }, { value: rule }, messages);
 
   if (result.passes()) {
     return { valid: true };

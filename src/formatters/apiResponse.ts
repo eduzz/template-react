@@ -16,7 +16,7 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
     return Number(obj) as any;
   }
 
-  if (typeof obj === 'object') {
+  if (typeof obj === 'object' && !(obj instanceof Date)) {
     return Object.keys(obj).reduce((acc, key) => {
       acc[camelCase(key)] = apiResponseFormatter(obj[key]);
       return acc;

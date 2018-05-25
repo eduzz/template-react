@@ -10,3 +10,10 @@ services:
       - "35729:35729"
     volumes:
       - .:/src:cached
+
+  # web:
+  #   container_name: nutror-v3-front-producer
+  #   tty: true
+  #   build: .
+  #   ports:
+  #     - "3000:80"

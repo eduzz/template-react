@@ -1,7 +1,7 @@
-import { del, get, post, put } from 'api';
+import { del, get } from 'api';
 import { logError } from 'errorHandler';
 import { IPaginationApiResponse } from 'interfaces/apiResponse';
-import { ICourse } from 'interfaces/course';
+import { ICourse, ICourseAdvanced } from 'interfaces/course';
 import { IPaginationParams } from 'interfaces/pagination';
 import { IActionCreator } from 'store/interfaces';
 
@@ -36,12 +36,32 @@ export function requestCourseSave(model: ICourse): IActionCreator<enCourseStoreA
     try {
       dispatch({ type: enCourseStoreActions.requestSave, model });
 
-      const { data } = model.id ?
-        await put(`/courses/${model.id}`, model) :
-        await post('/courses', model);
+      //TODO: save
+      // const { data } = model.id ?
+      //   await put(`/courses/${model.id}`, model) :
+      //   await post('/courses', model);
+      const data = await new Promise(resolve => setTimeout(() => resolve({ id: Date.now(), ...model }), 2000));
 
-      dispatch({ type: enCourseStoreActions.receiveSave, data });
+      dispatch({ type: enCourseStoreActions.receiveSave, course: data });
       requestCourseList(getState().course.pagination)(dispatch, getState);
+    } catch (error) {
+      logError(error);
+      dispatch({ type: enCourseStoreActions.receiveSaveError, error });
+    }
+  };
+}
+
+export function requestCourseAdvancedSave(course: ICourse, model: ICourseAdvanced): IActionCreator<enCourseStoreActions> {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: enCourseStoreActions.requestSave, model });
+
+      //TODO: save
+      // await put(`/courses/${course.id}/advanced`, model);
+      const result = await new Promise<any>(resolve => setTimeout(() => resolve(model), 2000));
+      course.advanced = result;
+
+      dispatch({ type: enCourseStoreActions.receiveSave, course });
     } catch (error) {
       logError(error);
       dispatch({ type: enCourseStoreActions.receiveSaveError, error });

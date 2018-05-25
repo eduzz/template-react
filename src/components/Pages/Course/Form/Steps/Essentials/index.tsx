@@ -1,4 +1,5 @@
 import { Button, CardActions, CardContent, CircularProgress, Grid, Hidden } from '@material-ui/core';
+import { ScrollTopContext } from 'components/AppWrapper';
 import ErrorMessage from 'components/ErrorMessage';
 import { FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
@@ -20,7 +21,8 @@ interface IState extends IStateForm<ICourse> {
 }
 
 interface IProps {
-  onComplete: Function;
+  course?: ICourse;
+  onComplete: (course: ICourse) => void;
 }
 
 interface IPropsFromConnect {
@@ -28,6 +30,7 @@ interface IPropsFromConnect {
   loadingError: any;
   saving: boolean;
   savingError: any;
+  lastCourseSaved: ICourse;
   authors: { value: number, label: string }[];
   lastAuthorSaved: IAuthor;
   categories: { value: number, label: string }[];
@@ -52,10 +55,21 @@ interface IPropsFromConnect {
   }
 })
 class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      ...this.state,
+      model: {
+        ...this.state.model,
+        ...(props.course || {})
+      }
+    };
+  }
+
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
     if (currentState.saving && !nextProps.saving && !nextProps.savingError) {
       //save completed
-      nextProps.onComplete();
+      nextProps.onComplete(nextProps.lastCourseSaved);
     }
 
     let getNextAuthor = currentState.getNextAuthor;
@@ -115,6 +129,10 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
 
     return (
       <form onSubmit={this.onSubmit.bind(this)} noValidate>
+        <ScrollTopContext.Consumer>
+          {this.bindScrollTop.bind(this)}
+        </ScrollTopContext.Consumer>
+
         <Snackbar opened={!!savingError} error={savingError} onClose={() => cleanCourseSaveError()} />
 
         <FieldValidation.Provider value={this.registerFields}>
@@ -193,6 +211,7 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect
     loadingError: state.category.error || state.author.error,
     saving: state.course.isSaving,
     savingError: state.course.saveError,
+    lastCourseSaved: state.course.lastCourseSaved,
     authors: state.author.authors.map(c => ({ value: c.id, label: c.name })),
     lastAuthorSaved: state.author.lastAuthorSave,
     categories: state.category.categories.map(c => ({ value: c.id, label: c.name }))

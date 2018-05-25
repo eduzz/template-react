@@ -17,7 +17,7 @@ interface IPropsFromConnect {
   closeDrawer?: typeof closeDrawer;
 }
 
-export const ScrollTopContext = React.createContext<Function>(null);
+export const ScrollTopContext = React.createContext<Function>((() => { }));
 
 @WithStyles(theme => ({
   root: {
