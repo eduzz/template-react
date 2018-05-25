@@ -48,9 +48,13 @@ export interface ICourseAdvanced {
   hasTerms: fakeBoolean;
   termsContent?: string;
   advertise: fakeBoolean;
-  daysAvailable: fakeBoolean;
+  daysAvailable: number;
   newModuleNotification: fakeBoolean;
   newLessonNotification: fakeBoolean;
   allowManualWatch: fakeBoolean;
   releaseAt?: Date;
+
+  //TODO: create in api
+  payment: string;
+  emailNotification: fakeBoolean;
 }

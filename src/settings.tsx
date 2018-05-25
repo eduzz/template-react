@@ -7,4 +7,4 @@ if (!API_ENDPOINT) throw new Error('Please provide an API_ENDPOINT');
 export const SENTRY_KEY = (process.env.REACT_APP_SENTRY_KEY || '').trim();
 
 export const IS_DEVELOPMENT = ENV === 'development';
-export const SNACKBAR_DEFAULT_TIMEOUT = 5000;
+export const SNACKBAR_DEFAULT_TIMEOUT = 3000;

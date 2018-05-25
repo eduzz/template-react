@@ -48,7 +48,7 @@ export default class FieldText extends FieldBase<IProps> {
 
   render() {
     const value = this.getValue();
-    const { loading, helperText, ...extraProps } = this.props;
+    const { loading, helperText, multiline, validationContext, ...extraProps } = this.props;
 
     return (
       <Fragment>
@@ -58,7 +58,9 @@ export default class FieldText extends FieldBase<IProps> {
           {...{
             fullWidth: true,
             margin: 'normal',
+            rows: multiline ? 4 : null,
             ...extraProps,
+            multiline,
             required: this.isRequired,
             value: (value === undefined || value === null ? '' : value).toString(),
             error: !!this.errorMessage,
