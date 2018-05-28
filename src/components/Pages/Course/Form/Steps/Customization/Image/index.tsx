@@ -3,6 +3,8 @@ import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
 import { Cropper } from 'react-image-cropper';
 
+import FileSelector from './FileSelector';
+
 interface IProps {
   width: number;
   height: number;
@@ -19,28 +21,6 @@ interface IProps {
   }
 })
 export default class ImageSelector extends PureComponent<IProps> {
-  inputRef: HTMLInputElement;
-
-  resetState() {
-
-  }
-
-  selectImage() {
-    this.inputRef.click();
-  }
-
-  onFileSelected() {
-    if (!this.inputRef.files.length) return;
-
-    const file = this.inputRef.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e) => {
-      console.log(e.target.result);
-    };
-
-    reader.readAsDataURL(file);
-  }
 
   render() {
     const { width, height, classes } = this.props;
@@ -51,7 +31,6 @@ export default class ImageSelector extends PureComponent<IProps> {
         maxWidth='md'
         disableBackdropClick
         disableEscapeKeyDown
-        onExited={this.resetState.bind(this)}
         TransitionComponent={Transition}>
 
         <DialogTitle>Selecionar Imagem</DialogTitle>
@@ -86,16 +65,10 @@ export default class ImageSelector extends PureComponent<IProps> {
 
         </DialogContent>
         <DialogActions>
-          <Button>Cancelar</Button>
-          <Button color='secondary' onClick={this.selectImage.bind(this)}>Selecionar</Button>
-          <Button color='secondary'>Salvar</Button>
+          <FileSelector onLoad={url => console.log(url)} />
 
-          <input
-            type='file'
-            ref={ref => this.inputRef = ref}
-            className='hide'
-            onChange={this.onFileSelected.bind(this)}
-          />
+          <Button>Cancelar</Button>
+          <Button color='secondary'>Salvar</Button>
         </DialogActions>
       </Dialog>
     );
