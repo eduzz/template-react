@@ -1,80 +1,46 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@material-ui/core';
-import { WithStyles } from 'decorators/withStyles';
+import { Button } from '@material-ui/core';
 import React, { PureComponent } from 'react';
-import { Cropper } from 'react-image-cropper';
 
-import FileSelector from './FileSelector';
+import ImageSelector from '../ImageSelector';
+
+interface IState {
+  image?: string;
+  openedImageSelector: boolean;
+}
 
 interface IProps {
-  width: number;
-  height: number;
-  classes?: any;
 }
 
-@WithStyles({
-  imageContainer: {
-    background: '#ededed',
-  },
-  content: {
-    overflow: 'auto',
-    maxHeight: 'calc(100vh - 140px) !important'
+export default class Image extends PureComponent<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = { openedImageSelector: false };
   }
-})
-export default class ImageSelector extends PureComponent<IProps> {
+
+  handleOpenSelector() {
+    this.setState({ openedImageSelector: true });
+  }
+
+  onImageSelectorCompleted(image: string) {
+    this.setState({ image, openedImageSelector: false });
+  }
 
   render() {
-    const { width, height, classes } = this.props;
+    const { openedImageSelector, image } = this.state;
 
     return (
-      <Dialog
-        open={true}
-        maxWidth='md'
-        disableBackdropClick
-        disableEscapeKeyDown
-        TransitionComponent={Transition}>
+      <div>
+        <ImageSelector
+          opened={openedImageSelector}
+          width={500}
+          height={200}
+          onComplete={this.onImageSelectorCompleted.bind(this)}
+        />
 
-        <DialogTitle>Selecionar Imagem</DialogTitle>
-        <DialogContent className={classes.content}>
+        <Button onClick={this.handleOpenSelector.bind(this)}>Selecionar</Button>
 
-          <Cropper
-            src='https://picsum.photos/1000/400'
-            ratio={width / height}
-            width={width}
-            height={height}
-            allowNewSelection={false}
-            styles={{
-              source_img: {
-                WebkitFilter: 'blur(3.5px)',
-                filter: 'blur(3.5px)'
-              },
-              modal: {
-                opacity: 0.5,
-                backgroundColor: '#fff'
-              },
-              dotInner: {
-                borderColor: '#ff0000'
-              },
-              dotInnerCenterVertical: {
-                backgroundColor: '#ff0000'
-              },
-              dotInnerCenterHorizontal: {
-                backgroundColor: '#ff0000'
-              }
-            }}
-          />
-
-        </DialogContent>
-        <DialogActions>
-          <FileSelector onLoad={url => console.log(url)} />
-
-          <Button>Cancelar</Button>
-          <Button color='secondary'>Salvar</Button>
-        </DialogActions>
-      </Dialog>
+        {image && <img src={image} />}
+      </div>
     );
   }
-}
-
-function Transition(props: any) {
-  return <Slide direction='up' {...props} />;
 }

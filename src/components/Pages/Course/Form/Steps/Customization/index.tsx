@@ -11,7 +11,8 @@ import { IAppStoreState } from 'store';
 import { StepContext } from '..';
 import { ScrollTopContext } from '../../../../../AppWrapper';
 import StepBaseComponent from '../Base';
-import ImageSelector from './Image';
+import Image from './Image';
+import ImageSelector from './ImageSelector';
 
 interface IProps {
   onComplete: (course: ICourse) => void;
@@ -36,6 +37,8 @@ interface IPropsFromConnect {
   }
 })
 class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect, IState> {
+  imageSelector: ImageSelector;
+
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -115,7 +118,7 @@ class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect
             <Divider className={classes.divider} />
             <Typography variant='subheading'>Imagens</Typography>
 
-            <ImageSelector width={500} height={300} />
+            <Image />
 
           </CardContent>
         </FieldValidation.Provider>
