@@ -134,10 +134,10 @@ class CourseListPage extends Component<IPropsFromConnect, IState> {
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
   return {
-    loading: state.course.isFetching,
-    items: state.course.courses,
-    error: state.course.error,
-    pagination: state.course.pagination
+    loading: state.course.list.isFetching,
+    items: state.course.list.courses,
+    error: state.course.list.error,
+    pagination: state.course.list.pagination
   } as IPropsFromConnect;
 };
 

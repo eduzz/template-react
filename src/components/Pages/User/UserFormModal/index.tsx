@@ -157,11 +157,11 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
 const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
   return {
     opened: state.user.isFormOpened,
-    loading: state.course.isFetching || state.accessGroup.isFetching || state.user.isSaving,
-    loadingError: state.course.error || state.accessGroup.error,
+    loading: state.course.list.isFetching || state.accessGroup.isFetching || state.user.isSaving,
+    loadingError: state.course.list.error || state.accessGroup.error,
     saveError: state.user.saveError,
     accessGroups: state.accessGroup.accessGroups.map(g => ({ value: g.id, label: g.name })),
-    courses: state.course.courses.map(c => ({ value: c.id, label: c.title }))
+    courses: state.course.list.courses.map(c => ({ value: c.id, label: c.title }))
   };
 };
 

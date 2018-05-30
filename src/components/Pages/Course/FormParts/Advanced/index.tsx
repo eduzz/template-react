@@ -1,18 +1,18 @@
-import { Button, CardActions, CardContent, CircularProgress, Divider, Grid, Typography } from '@material-ui/core';
+import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
+import { ScrollTopContext } from 'components/AppWrapper';
 import { FieldDate, FieldRadio, FieldSwitch, FieldText, FieldValidation } from 'components/Field';
-import { FormComponent, IStateForm } from 'components/FormComponent';
-import Snackbar from 'components/Snackbar';
+import { IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
 import { booleanToFake, fakeToBoolean } from 'formatters/fakeBoolean';
 import { ICourse, ICourseAdvanced } from 'interfaces/course';
-import { ChevronRightIcon } from 'mdi-react';
-import * as moment from 'moment';
+import moment from 'moment';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { cleanCourseSaveError, requestCourseAdvancedSave } from 'store/actionCreators/course';
+import { requestCourseAdvancedSave } from 'store/actionCreators/course';
 
-import { ScrollTopContext } from '../../../../../AppWrapper';
+import { CourseFormContext } from '..';
+import CourseFormBase from '../Base';
 
 interface IProps {
   onComplete: (course: ICourse) => void;
@@ -28,21 +28,20 @@ interface IPropsFromConnect {
   saving: boolean;
   savingError?: any;
   requestCourseAdvancedSave?: typeof requestCourseAdvancedSave;
-  cleanCourseSaveError?: typeof cleanCourseSaveError;
 }
 
 @WithStyles({
   divider: {
     marginTop: 30,
     marginBottom: 10
-  },
-  footer: {
-    justifyContent: 'flex-end'
   }
 })
-class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState> {
+class AdvancedFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState> {
   constructor(props: IProps) {
     super(props);
+
+    const { course: { advanced } } = this.props;
+
     this.state = {
       ...this.state,
       model: {
@@ -58,7 +57,12 @@ class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState>
           allowManualWatch: booleanToFake(false),
           emailNotification: booleanToFake(false),
         }),
-        ...(props.course.advanced || {})
+        ...(advanced ? {
+          ...advanced,
+          releaseEnd: advanced.releaseAt ?
+            moment(advanced.releaseAt).add(advanced.daysAvailable, 'day').toDate() :
+            null
+        } : {})
       }
     };
   }
@@ -75,17 +79,21 @@ class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState>
     };
   }
 
-  async onSubmit(event: Event) {
+  async onSubmit(event?: Event) {
     const { model } = this.state;
     const { course, requestCourseAdvancedSave } = this.props;
 
-    event.preventDefault();
+    event && event.preventDefault();
 
     const isValid = await this.isFormValid();
     if (!isValid || !model.payment) return;
 
     course.advanced = model as any;
     requestCourseAdvancedSave(course, this.state.model as any);
+  }
+
+  askSave() {
+    this.onSubmit();
   }
 
   updateReleaseUntil(model: IState['model'], releaseAt: Date, releaseEnd: Date) {
@@ -97,8 +105,8 @@ class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState>
   }
 
   render() {
-    const { model, formSubmitted, saving } = this.state;
-    const { savingError, classes, cleanCourseSaveError } = this.props;
+    const { model, formSubmitted } = this.state;
+    const { classes } = this.props;
 
     return (
       <form onSubmit={this.onSubmit.bind(this)} noValidate>
@@ -106,7 +114,9 @@ class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState>
           {this.bindScrollTop.bind(this)}
         </ScrollTopContext.Consumer>
 
-        <Snackbar opened={!!savingError} error={savingError} onClose={() => cleanCourseSaveError()} />
+        <CourseFormContext.Consumer>
+          {context => this.setContext(context)}
+        </CourseFormContext.Consumer>
 
         <FieldValidation.Provider value={this.registerFields}>
           <CardContent>
@@ -308,15 +318,6 @@ class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState>
 
           </CardContent>
 
-          <CardActions className={classes.footer}>
-            <Button type='submit' disabled={saving} color='secondary' className='icon-right'>
-              {saving ? 'Salvando' : 'Próximo'}
-              {saving ?
-                <CircularProgress color='secondary' className={classes.progressButton} size={18} /> :
-                <ChevronRightIcon />
-              }
-            </Button>
-          </CardActions>
         </FieldValidation.Provider>
       </form>
     );
@@ -325,12 +326,11 @@ class AdvancedFormStep extends FormComponent<IProps & IPropsFromConnect, IState>
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
   return {
-    saving: state.course.isSaving,
-    savingError: state.course.saveError
+    saving: state.course.saveAdvanced.isSaving,
+    savingError: state.course.saveAdvanced.error
   };
 };
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  requestCourseAdvancedSave,
-  cleanCourseSaveError
+  requestCourseAdvancedSave
 })(AdvancedFormStep);

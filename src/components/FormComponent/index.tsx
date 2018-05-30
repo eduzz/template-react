@@ -1,6 +1,5 @@
 import { IFieldValidationContext } from 'components/Field';
 import FieldBase from 'components/Field/Base';
-import Snackbar from 'components/Snackbar';
 import { Component } from 'react';
 
 export interface IStateForm<T = any> {
@@ -44,7 +43,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     const isValid = this.fields.every(f => f.isValid());
     if (!isValid && this.scrollTop) {
       this.scrollTop();
-      Snackbar.show('Revise os campos');
+      // Snackbar.show('Revise os campos');
     }
 
     return isValid;

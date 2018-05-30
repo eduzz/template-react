@@ -3,12 +3,14 @@ import React from 'react';
 import FieldAutocompleteComponent from './Autocomplete';
 import FieldBase from './Base';
 import FieldCheckboxComponent from './Checkbox';
+import FieldColorComponent from './Color';
 import FieldDateComponent from './Date';
 import FieldRadioComponent from './Radio';
 import FieldSelectComponent from './Select';
 import FieldSwitchComponent from './Switch';
 import FieldTextComponent from './Text';
 
+export const FieldColor = FieldColorComponent;
 export const FieldText = FieldTextComponent;
 export const FieldSelect = FieldSelectComponent;
 export const FieldRadio = FieldRadioComponent;

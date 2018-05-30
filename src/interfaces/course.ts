@@ -58,3 +58,12 @@ export interface ICourseAdvanced {
   payment: string;
   emailNotification: fakeBoolean;
 }
+
+export interface ICourseCustomization {
+  primaryColor: string;
+  featuredColor: string;
+
+  thumbnailImage: string;
+  backgroundImage: string;
+  headerImage: string;
+}

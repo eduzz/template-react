@@ -2,7 +2,8 @@ import { IAppRoute } from 'interfaces/route';
 import * as React from 'react';
 
 import AuthorDialog from './AuthorDialog';
-import CourseFormPage from './Form';
+import CourseCreatePage from './Create';
+import CourseEditPage from './Edit';
 import CourseListPage from './List';
 
 export default class CourseIndexPage extends React.PureComponent {
@@ -12,7 +13,10 @@ export default class CourseIndexPage extends React.PureComponent {
     component: CourseListPage
   }, {
     path: '/new',
-    component: CourseFormPage
+    component: CourseCreatePage
+  }, {
+    path: '/:id/edit',
+    component: CourseEditPage
   }];
 
   render() {

@@ -1,19 +1,20 @@
-import { Button, CardActions, CardContent, CircularProgress, Grid, Hidden } from '@material-ui/core';
+import { Button, CardContent, Grid, Hidden } from '@material-ui/core';
 import { ScrollTopContext } from 'components/AppWrapper';
 import ErrorMessage from 'components/ErrorMessage';
 import { FieldSelect, FieldText, FieldValidation } from 'components/Field';
-import { FormComponent, IStateForm } from 'components/FormComponent';
-import Snackbar from 'components/Snackbar';
-import { WithStyles } from 'decorators/withStyles';
+import { IStateForm } from 'components/FormComponent';
 import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
-import { AccountPlusIcon, ChevronRightIcon } from 'mdi-react';
+import { AccountPlusIcon } from 'mdi-react';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import { openAuthorFormModal, requestAuthorList } from 'store/actionCreators/author';
 import { requestCategoryList } from 'store/actionCreators/category';
-import { cleanCourseSaveError, requestCourseSave } from 'store/actionCreators/course';
+import { requestCourseSave } from 'store/actionCreators/course';
+
+import { CourseFormContext, ICourseFormContext } from '..';
+import CourseFormBase from '../Base';
 
 interface IState extends IStateForm<ICourse> {
   saving: boolean;
@@ -39,22 +40,11 @@ interface IPropsFromConnect {
   requestCategoryList?: typeof requestCategoryList;
   requestAuthorList?: typeof requestAuthorList;
   requestCourseSave?: typeof requestCourseSave;
-  cleanCourseSaveError?: typeof cleanCourseSaveError;
 }
 
-@WithStyles({
-  progressWrapper: {
-    padding: '40px 0',
-    textAlign: 'center'
-  },
-  progressButton: {
-    marginLeft: 10
-  },
-  footer: {
-    justifyContent: 'flex-end'
-  }
-})
-class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState> {
+class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState> {
+  stepContext: ICourseFormContext;
+
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -92,15 +82,6 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
     };
   }
 
-  async onSubmit(event: Event) {
-    event.preventDefault();
-
-    const isValid = await this.isFormValid();
-    if (!isValid) return;
-
-    this.props.requestCourseSave(this.state.model as any);
-  }
-
   componentDidMount() {
     this.load();
   }
@@ -117,9 +98,22 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
     this.props.openAuthorFormModal();
   }
 
+  async onSubmit(event?: Event) {
+    event && event.preventDefault();
+
+    const isValid = await this.isFormValid();
+    if (!isValid) return;
+
+    this.props.requestCourseSave(this.state.model as any);
+  }
+
+  askSave() {
+    this.onSubmit();
+  }
+
   render() {
     const { model, saving } = this.state;
-    const { categories, authors, loading, loadingError, savingError, classes, cleanCourseSaveError } = this.props;
+    const { categories, authors, loading, loadingError } = this.props;
 
     if (loadingError) {
       return (
@@ -133,7 +127,9 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
           {this.bindScrollTop.bind(this)}
         </ScrollTopContext.Consumer>
 
-        <Snackbar opened={!!savingError} error={savingError} onClose={() => cleanCourseSaveError()} />
+        <CourseFormContext.Consumer>
+          {context => this.setContext(context)}
+        </CourseFormContext.Consumer>
 
         <FieldValidation.Provider value={this.registerFields}>
           <CardContent>
@@ -190,15 +186,6 @@ class EssentialFormStep extends FormComponent<IProps & IPropsFromConnect, IState
 
           </CardContent>
 
-          <CardActions className={classes.footer}>
-            <Button type='submit' disabled={saving} color='secondary' className='icon-right'>
-              {saving ? 'Salvando' : 'Próximo'}
-              {saving ?
-                <CircularProgress color='secondary' className={classes.progressButton} size={18} /> :
-                <ChevronRightIcon />
-              }
-            </Button>
-          </CardActions>
         </FieldValidation.Provider>
       </form>
     );
@@ -209,9 +196,9 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect
   return {
     loading: { category: state.category.isFetching, author: state.author.isFetching },
     loadingError: state.category.error || state.author.error,
-    saving: state.course.isSaving,
-    savingError: state.course.saveError,
-    lastCourseSaved: state.course.lastCourseSaved,
+    saving: state.course.save.isSaving,
+    savingError: state.course.save.error,
+    lastCourseSaved: state.course.save.lastSaved,
     authors: state.author.authors.map(c => ({ value: c.id, label: c.name })),
     lastAuthorSaved: state.author.lastAuthorSave,
     categories: state.category.categories.map(c => ({ value: c.id, label: c.name }))
@@ -222,6 +209,5 @@ export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
   openAuthorFormModal,
   requestCategoryList,
   requestAuthorList,
-  requestCourseSave,
-  cleanCourseSaveError
+  requestCourseSave
 })(EssentialFormStep);
