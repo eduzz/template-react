@@ -68,7 +68,6 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
   }
 
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
-    console.log(currentState.course || nextProps.course);
     return {
       ...currentState,
       course: currentState.course || nextProps.course,
