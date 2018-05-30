@@ -1,4 +1,5 @@
 import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
+import { ScrollTopContext } from 'components/AppWrapper';
 import { FieldDate, FieldRadio, FieldSwitch, FieldText, FieldValidation } from 'components/Field';
 import { IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
@@ -10,9 +11,8 @@ import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import { requestCourseAdvancedSave } from 'store/actionCreators/course';
 
-import { StepContext } from '..';
-import { ScrollTopContext } from '../../../../../AppWrapper';
-import StepBaseComponent from '../Base';
+import { CourseFormContext } from '..';
+import CourseFormBase from '../Base';
 
 interface IProps {
   onComplete: (course: ICourse) => void;
@@ -36,9 +36,12 @@ interface IPropsFromConnect {
     marginBottom: 10
   }
 })
-class AdvancedFormStep extends StepBaseComponent<IProps & IPropsFromConnect, IState> {
+class AdvancedFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState> {
   constructor(props: IProps) {
     super(props);
+
+    const { course: { advanced } } = this.props;
+
     this.state = {
       ...this.state,
       model: {
@@ -54,7 +57,12 @@ class AdvancedFormStep extends StepBaseComponent<IProps & IPropsFromConnect, ISt
           allowManualWatch: booleanToFake(false),
           emailNotification: booleanToFake(false),
         }),
-        ...(props.course.advanced || {})
+        ...(advanced ? {
+          ...advanced,
+          releaseEnd: advanced.releaseAt ?
+            moment(advanced.releaseAt).add(advanced.daysAvailable, 'day').toDate() :
+            null
+        } : {})
       }
     };
   }
@@ -106,9 +114,9 @@ class AdvancedFormStep extends StepBaseComponent<IProps & IPropsFromConnect, ISt
           {this.bindScrollTop.bind(this)}
         </ScrollTopContext.Consumer>
 
-        <StepContext.Consumer>
+        <CourseFormContext.Consumer>
           {context => this.setContext(context)}
-        </StepContext.Consumer>
+        </CourseFormContext.Consumer>
 
         <FieldValidation.Provider value={this.registerFields}>
           <CardContent>
@@ -318,8 +326,8 @@ class AdvancedFormStep extends StepBaseComponent<IProps & IPropsFromConnect, ISt
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
   return {
-    saving: state.course.isSaving,
-    savingError: state.course.saveError
+    saving: state.course.saveAdvanced.isSaving,
+    savingError: state.course.saveAdvanced.error
   };
 };
 

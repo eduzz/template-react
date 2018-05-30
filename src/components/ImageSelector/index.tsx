@@ -1,6 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, Typography } from '@material-ui/core';
 import ImageReader, { ImageReaderResult } from 'components/ImageReader';
 import { WithStyles } from 'decorators/withStyles';
+import imageCompress from 'helpers/imagerCompress';
 import React, { Fragment, PureComponent } from 'react';
 import { Cropper } from 'react-image-cropper';
 
@@ -19,8 +20,8 @@ interface IProps {
 
 @WithStyles({
   imageContainer: {
+    background: `url('${require('assets/images/transparency.png')}') repeat`,
     boxShadow: '5px 5px 10px #00000040',
-    border: '1px solid #00000036',
     margin: 'auto'
   },
   content: {
@@ -54,33 +55,14 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
   }
 
   async handleSave() {
-    const result = await this.resizeImage(this.cropper.crop());
+    const { width, height } = this.props;
+
+    const result = await imageCompress(this.cropper.crop(), width, height);
     this.props.onComplete(result);
   }
 
   handleCancel() {
     this.props.onComplete(null);
-  }
-
-  resizeImage(image: string) {
-    return new Promise<string>(resolve => {
-      const img = new Image();
-      img.onload = () => {
-        const ctx = this.canvas.getContext('2d');
-        this.canvas.height = this.canvas.width * (img.height / img.width);
-
-        let oc = document.createElement('canvas'), octx = oc.getContext('2d');
-
-        oc.width = img.width * 0.5;
-        oc.height = img.height * 0.5;
-        octx.drawImage(img, 0, 0, oc.width, oc.height);
-        octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-        ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5, 0, 0, this.canvas.width, this.canvas.height);
-
-        resolve(this.canvas.toDataURL());
-      };
-      img.src = image;
-    });
   }
 
   setImage(image: ImageReaderResult) {
@@ -131,11 +113,9 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
 
     return (
       <Fragment>
-        <canvas ref={ref => this.canvas = ref} className='hide' />
-
         <Dialog
           open={opened}
-          maxWidth='md'
+          maxWidth={false}
           disableBackdropClick
           disableEscapeKeyDown
           onExited={this.onExited.bind(this)}
@@ -145,9 +125,9 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
             <Grid container spacing={24} alignContent='center'>
               <Grid item xs={true}>
                 Selecionar Imagem
-              <Typography variant='body1'>
+                <Typography variant='body1'>
                   <strong>Tamanho sugerido:</strong> {height}px de altura {width}px de largura
-              </Typography>
+                </Typography>
               </Grid>
               {image &&
                 <Grid item xs={false}>

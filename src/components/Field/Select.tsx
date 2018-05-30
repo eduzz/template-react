@@ -26,7 +26,7 @@ export default class FieldSelect extends FieldBase<IProps> {
             fullWidth: true,
             margin: 'normal',
             ...this.props,
-            value: value === undefined ? '' : value,
+            value: !value ? '' : value,
             required: this.isRequired,
             select: true,
             error: !!this.errorMessage,
@@ -44,7 +44,7 @@ export default class FieldSelect extends FieldBase<IProps> {
             )
           }}
         >
-          <MenuItem value={undefined}>
+          <MenuItem value={''}>
             Selecione...
           </MenuItem>
           {(options || []).map(option => (

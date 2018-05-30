@@ -1,13 +1,13 @@
 import { FormComponent } from 'components/FormComponent';
 
-import { IStepComponent, IStepContext } from '.';
+import { ICourseFormContext, ICourseFormPartComponent } from '.';
 
-export default abstract class StepBase<P, S> extends FormComponent<P, S> implements IStepComponent {
-  stepContext: IStepContext = null;
+export default abstract class CourseFormBase<P, S> extends FormComponent<P, S> implements ICourseFormPartComponent {
+  stepContext: ICourseFormContext = null;
 
   abstract askSave(): void;
 
-  setContext(newContext: IStepContext): React.ReactNode {
+  setContext(newContext: ICourseFormContext): React.ReactNode {
     if (newContext === this.stepContext) return null;
 
     this.stepContext && this.stepContext.unregister(this);

@@ -2,9 +2,10 @@ import { CircularProgress, TableCell, TableRow } from '@material-ui/core';
 import Alert from 'components/Alert';
 import DropdownMenu from 'components/DropdownMenu';
 import ErrorMessageIcon from 'components/ErrorMessageIcon';
+import AppRouter, { RouterContext } from 'components/Router';
 import { ICourse } from 'interfaces/course';
-import { DeleteIcon } from 'mdi-react';
-import * as React from 'react';
+import { DeleteIcon, EditIcon } from 'mdi-react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import { cleanCourseDeleteError, requestCourseDelete } from 'store/actionCreators/course';
@@ -19,6 +20,13 @@ interface IPropsFromConnect {
 }
 
 class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
+  getRouter: () => AppRouter;
+
+  edit() {
+    const { course } = this.props;
+    this.getRouter().navigate(`/course/${course.id}/edit`);
+  }
+
   async delete() {
     const { course } = this.props;
 
@@ -32,23 +40,33 @@ class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
     const { course, cleanCourseDeleteError } = this.props;
 
     return (
-      <TableRow>
-        <TableCell>{course.title}</TableCell>
-        <TableCell>{course.category.name}</TableCell>
-        <TableCell>
-          {course.isFetching && <CircularProgress color='secondary' size={20} />}
-          {!course.isFetching && course.error &&
-            <ErrorMessageIcon error={course.error} onDismiss={() => cleanCourseDeleteError(course)} />
-          }
-          {!course.isFetching && !course.error &&
-            <DropdownMenu options={[{
-              text: 'Excluir',
-              icon: DeleteIcon,
-              handler: () => this.delete()
-            }]} />
-          }
-        </TableCell>
-      </TableRow>
+      <Fragment>
+        <RouterContext.Consumer>
+          {getRouter => (this.getRouter = getRouter) && null}
+        </RouterContext.Consumer>
+
+        <TableRow>
+          <TableCell>{course.title}</TableCell>
+          <TableCell>{course.category.name}</TableCell>
+          <TableCell>
+            {course.isFetching && <CircularProgress color='secondary' size={20} />}
+            {!course.isFetching && course.error &&
+              <ErrorMessageIcon error={course.error} onDismiss={() => cleanCourseDeleteError(course)} />
+            }
+            {!course.isFetching && !course.error &&
+              <DropdownMenu options={[{
+                text: 'Editar',
+                icon: EditIcon,
+                handler: () => this.edit()
+              }, {
+                text: 'Excluir',
+                icon: DeleteIcon,
+                handler: () => this.delete()
+              }]} />
+            }
+          </TableCell>
+        </TableRow>
+      </Fragment>
     );
   }
 }

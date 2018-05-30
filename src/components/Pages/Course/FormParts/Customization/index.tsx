@@ -1,18 +1,19 @@
 import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
+import { ScrollTopContext } from 'components/AppWrapper';
 import { FieldValidation } from 'components/Field';
 import FieldColor from 'components/Field/Color';
 import { IStateForm } from 'components/FormComponent';
+import ImageSelector from 'components/ImageSelector';
 import { WithStyles } from 'decorators/withStyles';
 import { ICourse, ICourseCustomization } from 'interfaces/course';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
+import { requestCourseCustomizationSave } from 'store/actionCreators/course';
 
-import { StepContext } from '..';
-import { ScrollTopContext } from '../../../../../AppWrapper';
-import StepBaseComponent from '../Base';
+import { CourseFormContext } from '..';
+import CourseFormBase from '../Base';
 import Image from './Image';
-import ImageSelector from './ImageSelector';
 
 interface IProps {
   onComplete: (course: ICourse) => void;
@@ -27,16 +28,19 @@ interface IState extends IStateForm<ICourseCustomization> {
 interface IPropsFromConnect {
   saving: boolean;
   savingError?: any;
-  // requestCourseAdvancedSave?: typeof requestCourseAdvancedSave;
+  requestCourseCustomizationSave?: typeof requestCourseCustomizationSave;
 }
 
 @WithStyles({
   divider: {
     marginTop: 30,
     marginBottom: 10
+  },
+  image: {
+    margin: '20px 0'
   }
 })
-class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect, IState> {
+class CustomizationFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState> {
   imageSelector: ImageSelector;
 
   constructor(props: IProps) {
@@ -62,13 +66,14 @@ class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect
   }
 
   async onSubmit(event?: Event) {
+    const { course, requestCourseCustomizationSave } = this.props;
+
     event && event.preventDefault();
 
     const isValid = await this.isFormValid();
     if (!isValid) return;
 
-    // course.advanced = model as any;
-    // requestCourseAdvancedSave(course, this.state.model as any);
+    requestCourseCustomizationSave(course, this.state.model as any);
   }
 
   askSave() {
@@ -85,13 +90,13 @@ class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect
           {this.bindScrollTop.bind(this)}
         </ScrollTopContext.Consumer>
 
-        <StepContext.Consumer>
+        <CourseFormContext.Consumer>
           {context => this.setContext(context)}
-        </StepContext.Consumer>
+        </CourseFormContext.Consumer>
 
         <FieldValidation.Provider value={this.registerFields}>
           <CardContent>
-            <Typography variant='subheading'>Cores</Typography>
+            <Typography variant='title'>Cores</Typography>
 
             <Grid container spacing={24}>
               <Grid item xs={12} sm={6}>
@@ -99,7 +104,6 @@ class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect
                   label='Cor Primária'
                   value={model.primaryColor}
                   onChange={this.updateModel((m, v) => m.primaryColor = v)}
-                  validation='required'
                   helperText='Essa cor será utilizada em grande parte do elementos visuais do curso.'
                 />
               </Grid>
@@ -109,16 +113,43 @@ class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect
                   label='Cor Destaque'
                   value={model.featuredColor}
                   onChange={this.updateModel((m, v) => m.featuredColor = v)}
-                  validation='required'
                   helperText='Personalize a cor de ação, ela será utilizada em botões e links, elementos que chamam atenção do aluno.'
                 />
               </Grid>
             </Grid>
 
             <Divider className={classes.divider} />
-            <Typography variant='subheading'>Imagens</Typography>
+            <Typography variant='title'>Imagens</Typography>
 
-            <Image />
+            <Image
+              label='Miniatura'
+              helperText='Essa imagem será usada na listagem do curso'
+              width={200}
+              height={200}
+              className={classes.image}
+              value={model.thumbnailImage}
+              onChange={this.updateModel(((m, v) => m.thumbnailImage = v))}
+            />
+
+            <Image
+              label='Imagem de Fundo'
+              helperText='Essa imagem será usada na tela do curso'
+              width={1440}
+              height={400}
+              className={classes.image}
+              value={model.backgroundImage}
+              onChange={this.updateModel(((m, v) => m.backgroundImage = v))}
+            />
+
+            <Image
+              label='Logo do Cabeçalho'
+              helperText='Logo que aparecerá no topo da página'
+              width={200}
+              height={40}
+              className={classes.image}
+              value={model.headerImage}
+              onChange={this.updateModel(((m, v) => m.headerImage = v))}
+            />
 
           </CardContent>
         </FieldValidation.Provider>
@@ -129,11 +160,11 @@ class CustomizationFormStep extends StepBaseComponent<IProps & IPropsFromConnect
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
   return {
-    saving: state.course.isSaving,
-    savingError: state.course.saveError
+    saving: state.course.saveCustomization.isSaving,
+    savingError: state.course.saveCustomization.error
   };
 };
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  // requestCourseAdvancedSave
+  requestCourseCustomizationSave
 })(CustomizationFormStep);

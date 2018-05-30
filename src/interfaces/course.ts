@@ -62,4 +62,8 @@ export interface ICourseAdvanced {
 export interface ICourseCustomization {
   primaryColor: string;
   featuredColor: string;
+
+  thumbnailImage: string;
+  backgroundImage: string;
+  headerImage: string;
 }

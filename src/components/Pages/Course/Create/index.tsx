@@ -10,6 +10,7 @@ import {
   Stepper,
 } from '@material-ui/core';
 import { reverseTheme } from 'assets/theme';
+import AppRouter, { RouterContext } from 'components/Router';
 import Snackbar from 'components/Snackbar';
 import Toolbar from 'components/Toolbar';
 import { WithStyles } from 'decorators/withStyles';
@@ -19,17 +20,21 @@ import { ChevronRightIcon } from 'mdi-react';
 import React, { Fragment, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import { cleanCourseSaveError } from 'store/actionCreators/course';
+import {
+  cleanCourseAdvancedSaveError,
+  cleanCourseCustomizationSaveError,
+  cleanCourseSaveError,
+} from 'store/actionCreators/course';
 
 import { ScrollTopContext } from '../../../AppWrapper';
-import { IStepComponent, IStepContext, StepContext } from './Steps';
-import AdvancedFormStep from './Steps/Advanced';
-import CustomizationFormStep from './Steps/Customization';
-import EssentialFormStep from './Steps/Essentials';
+import FormManager from '../FormParts';
+import AdvancedFormStep from '../FormParts/Advanced';
+import CustomizationFormStep from '../FormParts/Customization';
+import EssentialFormStep from '../FormParts/Essentials';
 
 interface IState {
   course?: ICourse;
-  currentStep: number;
+  currentStep: 0 | 1 | 2;
 }
 
 interface IProps {
@@ -40,6 +45,8 @@ interface IPropsFromConnect {
   saving: boolean;
   savingError: any;
   cleanCourseSaveError?: typeof cleanCourseSaveError;
+  cleanCourseAdvancedSaveError?: typeof cleanCourseAdvancedSaveError;
+  cleanCourseCustomizationSaveError?: typeof cleanCourseCustomizationSaveError;
 }
 
 @WithStyles({
@@ -57,50 +64,64 @@ interface IPropsFromConnect {
     marginLeft: 10
   }
 })
-class CourseFormPage extends PureComponent<IProps & IPropsFromConnect, IState> {
+class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState> {
   static routes: IAppRoute[] = [];
 
   scrollTop: Function;
-  steppers: IStepComponent[] = [];
-  registerCurrentStepper: IStepContext = {
-    register: (component) => {
-      this.steppers.push(component);
-    },
-    unregister: (component) => {
-      this.steppers = this.steppers.filter(s => s !== component);
-    }
-  };
+  getRouter: () => AppRouter;
+  formManager: FormManager;
 
   constructor(props: IProps & IPropsFromConnect) {
     super(props);
-
-    this.state = { ...this.state, currentStep: 2 };
+    this.state = { ...this.state, currentStep: 0 };
   }
 
-  nextStep(course: ICourse) {
+  handleStepCompleted(course: ICourse) {
+    const { currentStep } = this.state;
+
     this.scrollTop();
 
-    const { currentStep } = this.state;
-    this.setState({ currentStep: currentStep + 1, course });
+    if (currentStep === 0) {
+      Snackbar.show('Curso criado, adicone mais informações');
+    }
+
+    if (currentStep === 2) {
+      Snackbar.show('Curso salvo com successo');
+      this.getRouter().navigate(`/course`);
+      return;
+    }
+
+    this.setState({ currentStep: currentStep + 1 as any, course });
   }
 
   handleSave(event: Event) {
     event.preventDefault();
-    this.steppers.forEach(s => s.askSave());
+    this.formManager.askSave();
+  }
+
+  handleClearError() {
+    this.props.cleanCourseSaveError();
+    this.props.cleanCourseAdvancedSaveError();
+    this.props.cleanCourseCustomizationSaveError();
   }
 
   render() {
     const { currentStep, course } = this.state;
-    const { classes, saving, savingError, cleanCourseSaveError } = this.props;
+    const { classes, saving, savingError } = this.props;
 
     return (
       <Fragment>
-        <Toolbar title={course ? `Curso ${course.title}` : 'Novo Curso'} />
-        <Snackbar opened={!!savingError} error={savingError} onClose={() => cleanCourseSaveError()} />
+        <Snackbar opened={!!savingError} error={savingError} onClose={this.handleClearError.bind(this)} />
 
         <ScrollTopContext.Consumer>
           {scrollTop => (this.scrollTop = scrollTop) && null}
         </ScrollTopContext.Consumer>
+
+        <RouterContext.Consumer>
+          {getRouter => (this.getRouter = getRouter) && null}
+        </RouterContext.Consumer>
+
+        <Toolbar title={course ? `Curso ${course.title}` : 'Novo Curso'} />
 
         <Card className={classes.stepper}>
           <MuiThemeProvider theme={reverseTheme}>
@@ -119,26 +140,26 @@ class CourseFormPage extends PureComponent<IProps & IPropsFromConnect, IState> {
 
           <Divider light />
 
-          <StepContext.Provider value={this.registerCurrentStepper}>
+          <FormManager ref={ref => this.formManager = ref}>
             {currentStep === 0 &&
-              <EssentialFormStep course={course} onComplete={this.nextStep.bind(this)} />
+              <EssentialFormStep course={course} onComplete={this.handleStepCompleted.bind(this)} />
             }
 
             {currentStep === 1 &&
-              <AdvancedFormStep course={course} onComplete={this.nextStep.bind(this)} />
+              <AdvancedFormStep course={course} onComplete={this.handleStepCompleted.bind(this)} />
             }
 
             {currentStep === 2 &&
-              <CustomizationFormStep course={course} onComplete={this.nextStep.bind(this)} />
+              <CustomizationFormStep course={course} onComplete={this.handleStepCompleted.bind(this)} />
             }
-          </StepContext.Provider>
+          </FormManager>
 
           <CardActions className={classes.footer}>
             <Button onClick={this.handleSave.bind(this)} disabled={saving} color='secondary' className='icon-right'>
-              {saving ? 'Salvando' : 'Próximo'}
+              {saving ? 'Salvando' : currentStep === 2 ? 'Salvar' : 'Próximo'}
               {saving ?
                 <CircularProgress color='secondary' className={classes.progressButton} size={18} /> :
-                <ChevronRightIcon />
+                currentStep === 2 ? null : <ChevronRightIcon />
               }
             </Button>
           </CardActions>
@@ -151,11 +172,19 @@ class CourseFormPage extends PureComponent<IProps & IPropsFromConnect, IState> {
 
 const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
   return {
-    saving: state.course.isSaving,
-    savingError: state.course.saveError
+    saving:
+      state.course.save.isSaving ||
+      state.course.saveAdvanced.isSaving ||
+      state.course.saveCustomization.isSaving,
+    savingError:
+      state.course.save.error ||
+      state.course.saveAdvanced.error ||
+      state.course.saveCustomization.error
   };
 };
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  cleanCourseSaveError
-})(CourseFormPage);
+  cleanCourseSaveError,
+  cleanCourseAdvancedSaveError,
+  cleanCourseCustomizationSaveError
+})(CourseWizardPage);

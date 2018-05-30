@@ -13,8 +13,8 @@ import { openAuthorFormModal, requestAuthorList } from 'store/actionCreators/aut
 import { requestCategoryList } from 'store/actionCreators/category';
 import { requestCourseSave } from 'store/actionCreators/course';
 
-import { IStepContext, StepContext } from '..';
-import StepBaseComponent from '../Base';
+import { CourseFormContext, ICourseFormContext } from '..';
+import CourseFormBase from '../Base';
 
 interface IState extends IStateForm<ICourse> {
   saving: boolean;
@@ -42,8 +42,8 @@ interface IPropsFromConnect {
   requestCourseSave?: typeof requestCourseSave;
 }
 
-class EssentialFormStep extends StepBaseComponent<IProps & IPropsFromConnect, IState> {
-  stepContext: IStepContext;
+class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState> {
+  stepContext: ICourseFormContext;
 
   constructor(props: IProps) {
     super(props);
@@ -127,9 +127,9 @@ class EssentialFormStep extends StepBaseComponent<IProps & IPropsFromConnect, IS
           {this.bindScrollTop.bind(this)}
         </ScrollTopContext.Consumer>
 
-        <StepContext.Consumer>
+        <CourseFormContext.Consumer>
           {context => this.setContext(context)}
-        </StepContext.Consumer>
+        </CourseFormContext.Consumer>
 
         <FieldValidation.Provider value={this.registerFields}>
           <CardContent>
@@ -196,9 +196,9 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect
   return {
     loading: { category: state.category.isFetching, author: state.author.isFetching },
     loadingError: state.category.error || state.author.error,
-    saving: state.course.isSaving,
-    savingError: state.course.saveError,
-    lastCourseSaved: state.course.lastCourseSaved,
+    saving: state.course.save.isSaving,
+    savingError: state.course.save.error,
+    lastCourseSaved: state.course.save.lastSaved,
     authors: state.author.authors.map(c => ({ value: c.id, label: c.name })),
     lastAuthorSaved: state.author.lastAuthorSave,
     categories: state.category.categories.map(c => ({ value: c.id, label: c.name }))
