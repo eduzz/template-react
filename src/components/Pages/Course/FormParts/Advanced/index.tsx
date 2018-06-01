@@ -1,6 +1,6 @@
 import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
 import { ScrollTopContext } from 'components/AppWrapper';
-import { FieldDate, FieldRadio, FieldSwitch, FieldText, FieldValidation } from 'components/Field';
+import { FieldDate, FieldHtml, FieldRadio, FieldSwitch, FieldText, FieldValidation } from 'components/Field';
 import { IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
 import { booleanToFake, fakeToBoolean } from 'formatters/fakeBoolean';
@@ -241,7 +241,7 @@ class AdvancedFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState
               }
             />
 
-            <FieldText
+            <FieldHtml
               label='Termos e Condições'
               multiline
               validation='required_if:termos e condições habilitado,1'

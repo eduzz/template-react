@@ -14,17 +14,19 @@ import {
   cleanCourseAdvancedSaveError,
   cleanCourseCustomizationSaveError,
   cleanCourseSaveError,
+  clearGet,
   requestGet,
 } from 'store/actionCreators/course';
 
 import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
 import AdvancedFormStep from '../FormParts/Advanced';
-import EssentialFormStep from '../FormParts/Essentials';
 import CustomizationFormStep from '../FormParts/Customization';
+import EssentialFormStep from '../FormParts/Essentials';
 
 interface IState {
   course?: ICourse;
+  courseId: number;
   currentTab: number;
 }
 
@@ -40,6 +42,7 @@ interface IPropsFromConnect {
   savingError: any;
 
   requestGet?: typeof requestGet;
+  clearGet?: typeof clearGet;
   cleanCourseSaveError?: typeof cleanCourseSaveError;
   cleanCourseAdvancedSaveError?: typeof cleanCourseAdvancedSaveError;
   cleanCourseCustomizationSaveError?: typeof cleanCourseCustomizationSaveError;
@@ -65,13 +68,13 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   constructor(props: IProps & IPropsFromConnect) {
     super(props);
-    this.state = { ...this.state, currentTab: 0 };
+    this.state = { ...this.state, courseId: props.match.params.id, currentTab: 0 };
   }
 
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
     return {
       ...currentState,
-      course: currentState.course || nextProps.course,
+      course: currentState.course || nextProps.course
     };
   }
 
@@ -80,8 +83,8 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
   }
 
   load() {
-    const { requestGet, match } = this.props;
-    requestGet(match.params.id);
+    const { courseId } = this.state;
+    requestGet(courseId);
   }
 
   onPartComplete(course: ICourse) {
@@ -187,6 +190,7 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
   requestGet,
+  clearGet,
   cleanCourseSaveError,
   cleanCourseAdvancedSaveError,
   cleanCourseCustomizationSaveError

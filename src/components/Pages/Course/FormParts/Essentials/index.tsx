@@ -1,7 +1,7 @@
 import { Button, CardContent, Grid, Hidden } from '@material-ui/core';
 import { ScrollTopContext } from 'components/AppWrapper';
 import ErrorMessage from 'components/ErrorMessage';
-import { FieldSelect, FieldText, FieldValidation } from 'components/Field';
+import { FieldHtml, FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { IStateForm } from 'components/FormComponent';
 import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
@@ -151,11 +151,10 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
               onChange={this.updateModel((model, id) => model.category = { id })}
             />
 
-            <FieldText
+            <FieldHtml
               label='Descrição'
               validation='required'
               multiline
-              rows='4'
               disabled={saving}
               value={model.description}
               onChange={this.updateModel((model, v) => model.description = v)}

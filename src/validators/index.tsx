@@ -18,7 +18,7 @@ const messages: any = {
     string: 'Máximo :max caracteres'
   },
   required: 'Obrigatório',
-  required_if: 'Obrigatório'
+  required_if: 'Obrigatório se :other'
 };
 
 export function validate(value: any, rule: string, context: any = {}): { valid: boolean, message?: string } {

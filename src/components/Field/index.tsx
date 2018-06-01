@@ -5,6 +5,7 @@ import FieldBase from './Base';
 import FieldCheckboxComponent from './Checkbox';
 import FieldColorComponent from './Color';
 import FieldDateComponent from './Date';
+import FieldHtmlComponent from './Html';
 import FieldRadioComponent from './Radio';
 import FieldSelectComponent from './Select';
 import FieldSwitchComponent from './Switch';
@@ -18,6 +19,7 @@ export const FieldCheckbox = FieldCheckboxComponent;
 export const FieldSwitch = FieldSwitchComponent;
 export const FieldDate = FieldDateComponent;
 export const FieldAutocomplete = FieldAutocompleteComponent;
+export const FieldHtml = FieldHtmlComponent;
 
 export interface IFieldValidationContext {
   bind: (field: FieldBase<any, any>) => void;

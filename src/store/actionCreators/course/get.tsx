@@ -30,3 +30,7 @@ export function requestGet(courseId: number): IActionCreator<enCourseStoreGetAct
     }
   };
 }
+
+export function clearGet(): IActionCreator<enCourseStoreGetActions> {
+  return dispatch => dispatch({ type: enCourseStoreGetActions.receive, course: null });
+}

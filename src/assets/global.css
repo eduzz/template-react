@@ -7,12 +7,16 @@ b {
   fill: currentColor;
 }
 
+.hide {
+  display: none !important;
+}
+
 [class*=' MuiButton']:not([class*=' MuiButton-fab']):not(.icon-right) .mdi-icon {
   margin-right: 10px;
 }
 
-.hide {
-  display: none;
+.MuiCard-root {
+  overflow: visible !important;
 }
 
 [class*='MuiTable-'] tr td,

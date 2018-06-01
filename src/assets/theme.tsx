@@ -11,9 +11,9 @@ const variables = {
 };
 
 const primary = {
-  light: '#636672',
-  main: '#393C47',
-  dark: '#131620',
+  light: '#6d6d6d',
+  main: '#424242',
+  dark: '#1b1b1b',
   contrastText: '#fff',
 };
 
@@ -50,5 +50,4 @@ export const whiteTheme = createMuiTheme({
     }
   },
   variables
-
 });
