@@ -83,6 +83,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
     if (currentStep === 0) {
       Snackbar.show('Curso criado, adicone mais informações');
+      this.getRouter().changeUrl(`/course/${course.id}/edit`);
     }
 
     if (currentStep === 2) {

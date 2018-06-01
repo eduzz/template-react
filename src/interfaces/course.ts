@@ -37,8 +37,8 @@ export interface ICourse extends IStoreItemStatus {
   totalLessons?: number;
   share: string;
 
-  // from get advanced
   advanced?: ICourseAdvanced;
+  customization?: ICourseCustomization;
 }
 
 export interface ICourseAdvanced {
@@ -59,11 +59,12 @@ export interface ICourseAdvanced {
   emailNotification: fakeBoolean;
 }
 
+//TODO: create in api
 export interface ICourseCustomization {
-  primaryColor: string;
-  featuredColor: string;
+  primaryColor?: string;
+  featuredColor?: string;
 
-  thumbnailImage: string;
-  backgroundImage: string;
-  headerImage: string;
+  thumbnailImage?: string;
+  backgroundImage?: string;
+  headerImage?: string;
 }

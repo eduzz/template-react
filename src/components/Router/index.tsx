@@ -42,6 +42,10 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     this.history.push(path);
   }
 
+  changeUrl(url: string) {
+    window.history.pushState && window.history.pushState(null, null, url);
+  }
+
   render(): JSX.Element {
     const { routes } = this.props;
 

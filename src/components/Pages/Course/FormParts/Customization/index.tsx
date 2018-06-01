@@ -45,10 +45,14 @@ class CustomizationFormStep extends CourseFormBase<IProps & IPropsFromConnect, I
 
   constructor(props: IProps) {
     super(props);
+
+    const { course: { customization } } = this.props;
+
     this.state = {
       ...this.state,
       model: {
-        ...this.state.model
+        ...this.state.model,
+        ...(customization || {})
       }
     };
   }

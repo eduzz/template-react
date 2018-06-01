@@ -21,6 +21,7 @@ import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
 import AdvancedFormStep from '../FormParts/Advanced';
 import EssentialFormStep from '../FormParts/Essentials';
+import CustomizationFormStep from '../FormParts/Customization';
 
 interface IState {
   course?: ICourse;
@@ -146,7 +147,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
               </span>
 
               <span className={currentTab === 2 ? '' : 'hide'}>
-                {/* <CustomizationFormStep course={course} onComplete={this.onPartComplete.bind(this)} /> */}
+                <CustomizationFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
               </span>
             </FormManager>
           }

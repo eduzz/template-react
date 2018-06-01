@@ -19,6 +19,10 @@ export function requestGet(courseId: number): IActionCreator<enCourseStoreGetAct
       ]);
 
       course.advanced = advanced;
+      course.customization = {
+        primaryColor: '#ff0000',
+        thumbnailImage: 'https://www.cqcs.com.br/wp-content/uploads/2018/03/curso.jpg'
+      };
       dispatch({ type: enCourseStoreGetActions.receive, course });
     } catch (error) {
       logError(error);
