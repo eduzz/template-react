@@ -1,10 +1,10 @@
 import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
 import { ScrollTopContext } from 'components/AppWrapper';
-import { FieldDate, FieldHtml, FieldRadio, FieldSwitch, FieldText, FieldValidation } from 'components/Field';
 import { IStateForm } from 'components/FormComponent';
 import { WithStyles } from 'decorators/withStyles';
 import { booleanToFake, fakeToBoolean } from 'formatters/fakeBoolean';
 import { ICourse, ICourseAdvanced } from 'interfaces/course';
+import { FieldDate, FieldHtml, FieldRadio, FieldSwitch, FieldText, ValidationContext } from 'material-ui-form-fields';
 import moment from 'moment';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -118,7 +118,7 @@ class AdvancedFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState
           {context => this.setContext(context)}
         </CourseFormContext.Consumer>
 
-        <FieldValidation.Provider value={this.registerFields}>
+        <ValidationContext ref={this.bindValidationContext.bind(this)}>
           <CardContent>
 
             <Typography variant='subheading'>Tipo de Acesso *</Typography>
@@ -318,7 +318,7 @@ class AdvancedFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState
 
           </CardContent>
 
-        </FieldValidation.Provider>
+        </ValidationContext>
       </form>
     );
   }

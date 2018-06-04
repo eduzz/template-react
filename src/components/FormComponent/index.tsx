@@ -1,5 +1,4 @@
-import { IFieldValidationContext } from 'components/Field';
-import FieldBase from 'components/Field/Base';
+import ValidationContext from 'material-ui-form-fields/dist/components/ValidationContext';
 import { Component } from 'react';
 
 export interface IStateForm<T = any> {
@@ -8,22 +7,11 @@ export interface IStateForm<T = any> {
 }
 
 export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
-  public registerFields: IFieldValidationContext = {
-    bind: field => {
-      this.fields.push(field);
-    },
-    unbind: field => {
-      const index = this.fields.findIndex(f => f === field);
-      this.fields.splice(index, 1);
-    },
-  };
-
+  protected validationContext: ValidationContext;
   protected scrollTop: Function;
-  protected fields: FieldBase<any, any>[];
 
   constructor(props: any) {
     super(props);
-    this.fields = [];
     this.state = { model: {} } as any;
   }
 
@@ -32,15 +20,13 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     return null;
   }
 
+  public bindValidationContext(validationContext: ValidationContext): void {
+    this.validationContext = validationContext;
+  }
+
   public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
-    this.fields.forEach(f => f.serFormSubmitted(formSubmitted));
-    this.setState({ formSubmitted });
+    const isValid = this.validationContext.isValid(formSubmitted);
 
-    if (!this.fields.length) {
-      console.warn('There is no field registred, did you use FieldValidation.Provider?');
-    }
-
-    const isValid = this.fields.every(f => f.isValid());
     if (!isValid && this.scrollTop) {
       this.scrollTop();
       // Snackbar.show('Revise os campos');
@@ -51,7 +37,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
 
   public resetForm() {
     this.setState({ model: {}, formSubmitted: false });
-    this.fields.forEach(f => f.serFormSubmitted(false));
+    this.validationContext.reset();
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): (value: any) => void {

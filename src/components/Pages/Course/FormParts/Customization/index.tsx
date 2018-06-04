@@ -1,11 +1,10 @@
 import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
 import { ScrollTopContext } from 'components/AppWrapper';
-import { FieldValidation } from 'components/Field';
-import FieldColor from 'components/Field/Color';
 import { IStateForm } from 'components/FormComponent';
 import ImageSelector from 'components/ImageSelector';
 import { WithStyles } from 'decorators/withStyles';
 import { ICourse, ICourseCustomization } from 'interfaces/course';
+import { FieldColor, ValidationContext } from 'material-ui-form-fields';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -98,7 +97,7 @@ class CustomizationFormStep extends CourseFormBase<IProps & IPropsFromConnect, I
           {context => this.setContext(context)}
         </CourseFormContext.Consumer>
 
-        <FieldValidation.Provider value={this.registerFields}>
+        <ValidationContext ref={this.bindValidationContext.bind(this)}>
           <CardContent>
             <Typography variant='title'>Cores</Typography>
 
@@ -156,7 +155,7 @@ class CustomizationFormStep extends CourseFormBase<IProps & IPropsFromConnect, I
             />
 
           </CardContent>
-        </FieldValidation.Provider>
+        </ValidationContext>
       </form>
     );
   }

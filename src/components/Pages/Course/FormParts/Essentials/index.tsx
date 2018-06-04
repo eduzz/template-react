@@ -1,10 +1,10 @@
 import { Button, CardContent, Grid, Hidden } from '@material-ui/core';
 import { ScrollTopContext } from 'components/AppWrapper';
 import ErrorMessage from 'components/ErrorMessage';
-import { FieldHtml, FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { IStateForm } from 'components/FormComponent';
 import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
+import { FieldHtml, FieldSelect, FieldText, ValidationContext } from 'material-ui-form-fields';
 import { AccountPlusIcon } from 'mdi-react';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -131,7 +131,7 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
           {context => this.setContext(context)}
         </CourseFormContext.Consumer>
 
-        <FieldValidation.Provider value={this.registerFields}>
+        <ValidationContext ref={this.bindValidationContext.bind(this)}>
           <CardContent>
             <FieldText
               label='Nome do Curso/Programa'
@@ -185,7 +185,7 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
 
           </CardContent>
 
-        </FieldValidation.Provider>
+        </ValidationContext>
       </form>
     );
   }

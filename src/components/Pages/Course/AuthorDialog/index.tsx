@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
-import { FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/author';
+import { FieldText, ValidationContext } from 'material-ui-form-fields';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -65,7 +65,7 @@ class AuthorFormModal extends FormComponent<IPropsFromConnect, IState> {
         {saving && <LinearProgress color='secondary' />}
 
         <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <FieldValidation.Provider value={this.registerFields}>
+          <ValidationContext ref={this.bindValidationContext.bind(this)}>
             <DialogTitle>Novo Autor</DialogTitle>
             <DialogContent className={classes.content}>
 
@@ -96,7 +96,7 @@ class AuthorFormModal extends FormComponent<IPropsFromConnect, IState> {
                 Salvar
             </Button>
             </DialogActions>
-          </FieldValidation.Provider>
+          </ValidationContext>
         </form>
       </Dialog>
     );

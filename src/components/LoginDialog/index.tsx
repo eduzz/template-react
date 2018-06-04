@@ -1,8 +1,8 @@
 import { Button, Card, CardActions, CardContent, Dialog, LinearProgress, Slide } from '@material-ui/core';
-import { FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
+import { FieldText, ValidationContext } from 'material-ui-form-fields';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -83,7 +83,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
         <div className={classes.root}>
           <form className={classes.container} onSubmit={this.onSubmit.bind(this)} noValidate>
 
-            <FieldValidation.Provider value={this.registerFields}>
+            <ValidationContext ref={this.bindValidationContext.bind(this)}>
               <div className={classes.logo}>
                 <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
               </div>
@@ -119,7 +119,7 @@ class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
 
                 {loading && <LinearProgress color='secondary' />}
               </Card>
-            </ FieldValidation.Provider>
+            </ValidationContext>
 
           </form>
         </div>

@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
 import ErrorMessage from 'components/ErrorMessage';
-import { FieldAutocomplete, FieldSelect, FieldText, FieldValidation } from 'components/Field';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
+import { FieldAutocomplete, FieldSelect, FieldText, ValidationContext } from 'material-ui-form-fields';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -100,7 +100,7 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
         {loading && <LinearProgress color='secondary' />}
 
         <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <FieldValidation.Provider value={this.registerFields}>
+          <ValidationContext ref={this.bindValidationContext.bind(this)}>
             <DialogTitle>Novo Usuário</DialogTitle>
             <DialogContent className={classes.content}>
               {loadingError &&
@@ -147,7 +147,7 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
                 Salvar
             </Button>
             </DialogActions>
-          </FieldValidation.Provider>
+          </ValidationContext>
         </form>
       </Dialog>
     );
