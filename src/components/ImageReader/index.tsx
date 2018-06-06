@@ -2,7 +2,8 @@ import { Button, CircularProgress } from '@material-ui/core';
 import IconMessage from 'components/IconMessage';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
-import { FolderDownloadIcon, FolderOpenIcon } from 'mdi-react';
+import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
+import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
 import React, { DragEvent, Fragment, PureComponent } from 'react';
 
 export interface ImageReaderResult {

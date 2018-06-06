@@ -3,7 +3,7 @@ import Alert from 'components/Alert';
 import DropdownMenu from 'components/DropdownMenu';
 import ErrorMessageIcon from 'components/ErrorMessageIcon';
 import { IUser } from 'interfaces/user';
-import { DeleteIcon } from 'mdi-react';
+import DeleteIcon from 'mdi-react/DeleteIcon';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';

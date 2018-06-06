@@ -1,6 +1,8 @@
 import AppWrapper from 'components/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
-import { PeopleIcon, SchoolIcon, ViewDashboardIcon } from 'mdi-react';
+import PeopleIcon from 'mdi-react/PeopleIcon';
+import SchoolIcon from 'mdi-react/SchoolIcon';
+import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
 
 import CourseIndexPage from './Course';

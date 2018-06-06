@@ -2,7 +2,7 @@ import { IconButton } from '@material-ui/core';
 import Alert from 'components/Alert';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
-import { AlertCircleIcon } from 'mdi-react';
+import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
 import React, { PureComponent } from 'react';
 
 interface IProps {

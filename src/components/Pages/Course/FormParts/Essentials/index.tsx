@@ -5,7 +5,7 @@ import { IStateForm } from 'components/FormComponent';
 import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
 import { FieldHtml, FieldSelect, FieldText, ValidationContext } from 'material-ui-form-fields';
-import { AccountPlusIcon } from 'mdi-react';
+import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
 import React from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';

@@ -16,7 +16,7 @@ import Toolbar from 'components/Toolbar';
 import { WithStyles } from 'decorators/withStyles';
 import { ICourse } from 'interfaces/course';
 import { IAppRoute } from 'interfaces/route';
-import { ChevronRightIcon } from 'mdi-react';
+import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import React, { Fragment, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
