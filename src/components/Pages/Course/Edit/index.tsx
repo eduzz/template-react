@@ -84,7 +84,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   load() {
     const { courseId } = this.state;
-    requestGet(courseId);
+    this.props.requestGet(courseId);
   }
 
   onPartComplete(course: ICourse) {

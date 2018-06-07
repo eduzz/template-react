@@ -1,7 +1,7 @@
 import { get } from 'api';
 import { logError } from 'errorHandler';
 import { IApiResponse } from 'interfaces/apiResponse';
-import { ICourse, ICourseAdvanced } from 'interfaces/course';
+import { ICourse, ICourseAdvanced, ICourseCustomization } from 'interfaces/course';
 import { IActionCreator } from 'store';
 import { enCourseStoreGetActions } from 'store/reducers/course/get';
 
@@ -13,16 +13,15 @@ export function requestGet(courseId: number): IActionCreator<enCourseStoreGetAct
 
       dispatch({ type: enCourseStoreGetActions.request });
 
-      const [{ data: course }, { data: advanced }] = await Promise.all([
+      const [{ data: course }, { data: advanced }, { data: customization }] = await Promise.all([
         get<IApiResponse<ICourse>>(`/courses/${courseId}`),
-        get<IApiResponse<ICourseAdvanced>>(`/courses/${courseId}/advanced`)
+        get<IApiResponse<ICourseAdvanced>>(`/courses/${courseId}/advanced`),
+        get<IApiResponse<ICourseCustomization>>(`/courses/${courseId}/customization`)
       ]);
 
       course.advanced = advanced;
-      course.customization = {
-        primaryColor: '#ff0000',
-        thumbnailImage: 'https://www.cqcs.com.br/wp-content/uploads/2018/03/curso.jpg'
-      };
+      course.customization = customization;
+
       dispatch({ type: enCourseStoreGetActions.receive, course });
     } catch (error) {
       logError(error);

@@ -1,3 +1,4 @@
+import { post, put } from 'api';
 import { logError } from 'errorHandler';
 import { ICourse, ICourseAdvanced } from 'interfaces/course';
 import { IActionCreator } from 'store/interfaces';
@@ -11,11 +12,9 @@ export function requestCourseSave(model: ICourse): IActionCreator<enCourseStoreS
     try {
       dispatch({ type: enCourseStoreSaveActions.requestSave, model });
 
-      //TODO: save
-      // const { data } = model.id ?
-      //   await put(`/courses/${model.id}`, model) :
-      //   await post('/courses', model);
-      const data = await new Promise(resolve => setTimeout(() => resolve({ id: Date.now(), ...model }), 2000));
+      const { data } = model.id ?
+        await put(`/courses/${model.id}`, model) :
+        await post('/courses', model);
 
       dispatch({ type: enCourseStoreSaveActions.receiveSave, course: data });
       requestCourseList(getState().course.list.pagination)(dispatch as any, getState);
@@ -51,10 +50,9 @@ function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model
     try {
       dispatch({ type: courseStoreSavePartActions.requestSave(part), model });
 
-      //TODO: save
-      // await put(`/courses/${course.id}/advanced`, model);
+      await put(`/courses/${course.id}/${part.toLowerCase()}`, model);
       const result = await new Promise<any>(resolve => setTimeout(() => resolve(model), 2000));
-      course.advanced = result;
+      course[part.toLowerCase()] = result;
 
       dispatch({ type: courseStoreSavePartActions.receiveSave(part), course });
     } catch (error) {
