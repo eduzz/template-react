@@ -6,11 +6,11 @@ node {
     }
 
     stage ('Build container') {
-        sh "docker build -t infraeduzz/nutror-front-producer -f Dockerfile ."
+        sh "docker build -t infraeduzz/nutror-v3-front-producer -f Dockerfile ."
     }
 
     stage ('Push container') {
-        sh "docker push infraeduzz/nutror-front-producer"
+        sh "docker push infraeduzz/nutror-v3-front-producer"
     }
 
 }
