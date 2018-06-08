@@ -68,7 +68,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   constructor(props: IProps & IPropsFromConnect) {
     super(props);
-    this.state = { ...this.state, courseId: props.match.params.id, currentTab: 0 };
+    this.state = { ...this.state, courseId: props.match.params.id, currentTab: 2 };
   }
 
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {

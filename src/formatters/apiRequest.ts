@@ -2,7 +2,7 @@ import padStart from 'lodash/padStart';
 import snakeCase from 'lodash/snakeCase';
 
 export function apiRequestFormatter<T>(obj: T): T {
-  if (!obj) return obj;
+  if (!obj || obj instanceof FormData) return obj;
 
   if (Array.isArray(obj)) {
     return obj.map(i => apiRequestFormatter(i)) as any;
