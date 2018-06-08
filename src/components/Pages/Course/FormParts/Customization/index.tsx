@@ -5,6 +5,7 @@ import ImageSelector from 'components/ImageSelector';
 import { WithStyles } from 'decorators/withStyles';
 import { ICourse, ICourseCustomization } from 'interfaces/course';
 import { FieldColor } from 'material-ui-form-fields';
+import FieldText from 'material-ui-form-fields/components/Text';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
@@ -140,6 +141,17 @@ class CourseCustomizationForm extends CourseFormBase<IProps & IPropsFromConnect,
               />
             </Grid>
           </Grid>
+
+          <Divider className={classes.divider} />
+          <Typography variant='title'>Estilo</Typography>
+
+          <FieldText
+            label='URL CSS externo'
+            helperText='Necessário uso de https'
+            value={model.cssUrl}
+            validation='url|regex:/^https:.+/gi'
+            onChange={this.updateModel((m, v) => m.cssUrl = v)}
+          />
 
           <Divider className={classes.divider} />
           <Typography variant='title'>Imagens</Typography>
