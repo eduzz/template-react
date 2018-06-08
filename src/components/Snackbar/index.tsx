@@ -23,6 +23,13 @@ interface IProps {
 }
 
 @WithStyles(theme => ({
+  wrapper: {
+    [theme.breakpoints.up('sm')]: {
+      top: '24px',
+      left: 'auto',
+      right: '24px'
+    }
+  },
   contentError: {
     background: theme.palette.error.main
   },
@@ -73,11 +80,12 @@ export default class Snackbar extends PureComponent<IProps, IState> {
 
     return (
       <CoreSnackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={opened}
-        autoHideDuration={timeout || (isError ? null : SNACKBAR_DEFAULT_TIMEOUT)}
+        autoHideDuration={timeout || SNACKBAR_DEFAULT_TIMEOUT}
         onClose={this.handleClose.bind(this)}
         message={<span>{message}</span>}
+        className={classes.wrapper}
         ContentProps={{ className: isError ? classes.contentError : null }}
         action={[
           <IconButton

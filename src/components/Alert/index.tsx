@@ -52,7 +52,7 @@ export default class Alert extends React.Component<IProps, IState> {
     return nextProps as any;
   }
 
-  static show(params: string): Promise<boolean>;
+  static show(message: string): Promise<boolean>;
   static show(params: IAlertShowParams): Promise<boolean>;
   static show(params: string | IAlertShowParams) {
     const paramsData = typeof params === 'string' ? { message: params } : params;

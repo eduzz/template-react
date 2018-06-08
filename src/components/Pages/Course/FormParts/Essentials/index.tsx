@@ -4,26 +4,24 @@ import ErrorMessage from 'components/ErrorMessage';
 import { IStateForm } from 'components/FormComponent';
 import { IAuthor } from 'interfaces/author';
 import { ICourse } from 'interfaces/course';
-import { FieldHtml, FieldSelect, FieldText, ValidationContext } from 'material-ui-form-fields';
+import { FieldHtml, FieldSelect, FieldText } from 'material-ui-form-fields';
 import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
 import { openAuthorFormModal, requestAuthorList } from 'store/actionCreators/author';
 import { requestCategoryList } from 'store/actionCreators/category';
 import { requestCourseSave } from 'store/actionCreators/course';
 
-import { CourseFormContext, ICourseFormContext } from '..';
+import { CourseFormContext } from '..';
 import CourseFormBase from '../Base';
 
 interface IState extends IStateForm<ICourse> {
-  saving: boolean;
   getNextAuthor: boolean;
 }
 
 interface IProps {
   course?: ICourse;
-  onComplete: (course: ICourse) => void;
 }
 
 interface IPropsFromConnect {
@@ -42,8 +40,8 @@ interface IPropsFromConnect {
   requestCourseSave?: typeof requestCourseSave;
 }
 
-class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IState> {
-  stepContext: ICourseFormContext;
+class CourseEssentialForm extends CourseFormBase<IProps & IPropsFromConnect, IState> {
+  name = 'CourseEssentialForm';
 
   constructor(props: IProps) {
     super(props);
@@ -57,11 +55,6 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
   }
 
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
-    if (currentState.saving && !nextProps.saving && !nextProps.savingError) {
-      //save completed
-      nextProps.onComplete(nextProps.lastCourseSaved);
-    }
-
     let getNextAuthor = currentState.getNextAuthor;
     let author = currentState.model.author;
 
@@ -72,7 +65,6 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
 
     return {
       ...currentState,
-      saving: nextProps.saving,
       getNextAuthor,
       model: {
         published: '0',
@@ -98,22 +90,17 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
     this.props.openAuthorFormModal();
   }
 
-  async onSubmit(event?: Event) {
-    event && event.preventDefault();
-
-    const isValid = await this.isFormValid();
-    if (!isValid) return;
-
-    this.props.requestCourseSave(this.state.model as any);
+  async doSave() {
+    return await this.props.requestCourseSave(this.state.model as any);
   }
 
-  askSave() {
-    this.onSubmit();
+  canSave() {
+    return { canSave: true };
   }
 
   render() {
-    const { model, saving } = this.state;
-    const { categories, authors, loading, loadingError } = this.props;
+    const { model } = this.state;
+    const { categories, authors, loading, saving, loadingError } = this.props;
 
     if (loadingError) {
       return (
@@ -122,71 +109,75 @@ class EssentialFormStep extends CourseFormBase<IProps & IPropsFromConnect, IStat
     }
 
     return (
-      <form onSubmit={this.onSubmit.bind(this)} noValidate>
+      <Fragment>
         <ScrollTopContext.Consumer>
           {this.bindScrollTop.bind(this)}
         </ScrollTopContext.Consumer>
 
         <CourseFormContext.Consumer>
-          {context => this.setContext(context)}
+          {this.setContext.bind(this)}
         </CourseFormContext.Consumer>
 
-        <ValidationContext ref={this.bindValidationContext.bind(this)}>
-          <CardContent>
-            <FieldText
-              label='Nome do Curso/Programa'
-              validation='required'
-              value={model.title}
-              disabled={saving}
-              onChange={this.updateModel((model, v) => model.title = v)}
-            />
+        <CardContent>
+          <FieldText
+            label='Nome do Curso/Programa'
+            validation='required'
+            value={model.title}
+            disabled={saving}
+            onChange={this.updateModel((model, v) => model.title = v)}
+          />
 
-            <FieldSelect
-              label='Categoria'
-              validation='required'
-              value={(model.category || {} as any).id}
-              options={categories}
-              disabled={saving || loading.category}
-              loading={loading.category}
-              onChange={this.updateModel((model, id) => model.category = { id })}
-            />
+          <FieldSelect
+            label='Categoria'
+            validation='required'
+            value={(model.category || {} as any).id}
+            options={categories}
+            disabled={saving || loading.category}
+            loading={loading.category}
+            onChange={this.updateModel((model, id) => model.category = { id })}
+          />
 
-            <FieldHtml
-              label='Descrição'
-              validation='required'
-              multiline
-              disabled={saving}
-              value={model.description}
-              onChange={this.updateModel((model, v) => model.description = v)}
-            />
+          <FieldHtml
+            label='Descrição'
+            validation='required'
+            multiline
+            disabled={saving}
+            value={model.description}
+            onChange={this.updateModel((model, v) => model.description = v)}
+          />
 
-            <Grid container>
-              <Grid item xs={true}>
-                <FieldSelect
-                  label='Autor'
-                  validation='required'
-                  options={authors}
-                  value={(model.author || {} as any).id}
-                  disabled={saving || loading.author}
-                  loading={loading.author}
-                  onChange={this.updateModel((model, id) => model.author = { id })}
-                />
-              </Grid>
-
-              <Grid item xs={false}>
-                <Button fullWidth size='small' className='button-margin-input' color='secondary' onClick={() => this.newAuthor()}>
-                  <AccountPlusIcon />
-                  <Hidden xsDown>
-                    Autor
-                  </Hidden>
-                </Button>
-              </Grid>
+          <Grid container>
+            <Grid item xs={true}>
+              <FieldSelect
+                label='Autor'
+                validation='required'
+                options={authors}
+                value={(model.author || {} as any).id}
+                disabled={saving || loading.author}
+                loading={loading.author}
+                onChange={this.updateModel((model, id) => model.author = { id })}
+              />
             </Grid>
 
-          </CardContent>
+            <Grid item xs={false}>
+              <Button
+                fullWidth
+                disabled={saving}
+                size='small'
+                className='button-margin-input'
+                color='secondary'
+                onClick={() => this.newAuthor()}
+              >
+                <AccountPlusIcon />
+                <Hidden xsDown>
+                  Autor
+                  </Hidden>
+              </Button>
+            </Grid>
+          </Grid>
 
-        </ValidationContext>
-      </form>
+        </CardContent>
+      </Fragment>
     );
   }
 }
@@ -209,4 +200,4 @@ export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
   requestCategoryList,
   requestAuthorList,
   requestCourseSave
-})(EssentialFormStep);
+})(CourseEssentialForm);

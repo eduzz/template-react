@@ -27,5 +27,5 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
 }
 
 function isValidDateString(value: any): boolean {
-  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+)Z)?)?$/.test(value);
+  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+))?)(Z)?$/.test(value);
 }

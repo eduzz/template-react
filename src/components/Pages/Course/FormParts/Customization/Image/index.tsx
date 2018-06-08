@@ -11,6 +11,7 @@ interface IState {
 interface IProps {
   label: string;
   helperText?: string;
+  disabled?: boolean;
   value: string;
   width: number;
   height: number;
@@ -54,7 +55,7 @@ export default class Image extends PureComponent<IProps, IState> {
 
   render() {
     const { openedImageSelector } = this.state;
-    const { label, helperText, value, width, height, classes, className } = this.props;
+    const { label, helperText, value, width, height, classes, className, disabled } = this.props;
 
     return (
       <div className={className}>
@@ -78,6 +79,7 @@ export default class Image extends PureComponent<IProps, IState> {
               fullWidth
               variant='raised'
               color='secondary'
+              disabled={disabled}
               className={classes.marginBottom}
               onClick={this.handleOpenSelector.bind(this)}>
               Selecionar
@@ -86,7 +88,7 @@ export default class Image extends PureComponent<IProps, IState> {
             <Button
               fullWidth
               variant='outlined'
-              disabled={!value}
+              disabled={!value || disabled}
               onClick={this.handleRemove.bind(this)}>
               Remover
             </Button>

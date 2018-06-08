@@ -54,13 +54,13 @@ interface IPropsFromConnect {
   }
 }))
 class LoginDialog extends FormComponent<IPropsFromConnect, IState> {
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
 
     const { model } = this.state;
     const { requestLogin } = this.props;
 
-    const isValid = await this.isFormValid();
+    const isValid = this.isFormValid();
     if (!isValid) return;
 
     requestLogin(model.username, model.password);

@@ -1,26 +1,36 @@
-import { FormComponent } from 'components/FormComponent';
+import { FormComponent, IStateForm } from 'components/FormComponent';
 
-import { ICourseFormContext, ICourseFormPartComponent } from '.';
+import { ICourseFormContext } from '.';
 
-export default abstract class CourseFormBase<P, S> extends FormComponent<P, S> implements ICourseFormPartComponent {
-  stepContext: ICourseFormContext = null;
+export default abstract class CourseFormBase<P= {}, S extends IStateForm = any> extends FormComponent<P, S>  {
+  formContext: ICourseFormContext = null;
 
-  abstract askSave(): void;
+  abstract name: string;
+  abstract doSave(): Promise<any>;
+  abstract canSave(): { canSave: boolean, reason?: string };
+
+  isFormValid(): boolean {
+    return this.formContext.canSave();
+  }
+
+  setFormSubmitted() {
+    this.setState({ formSubmitted: true });
+  }
 
   setContext(newContext: ICourseFormContext): React.ReactNode {
-    if (newContext === this.stepContext) return null;
+    if (newContext === this.formContext) return null;
 
-    this.stepContext && this.stepContext.unregister(this);
+    this.formContext && this.formContext.unregister(this);
 
     if (newContext) {
-      this.stepContext = newContext;
-      this.stepContext.register(this);
+      this.formContext = newContext;
+      this.formContext.register(this);
     }
 
     return null;
   }
 
   componentWillUnmount() {
-    this.stepContext && this.stepContext.unregister && this.stepContext.unregister(this);
+    this.formContext && this.formContext.unregister && this.formContext.unregister(this);
   }
 }

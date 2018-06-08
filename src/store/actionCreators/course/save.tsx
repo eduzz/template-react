@@ -18,9 +18,13 @@ export function requestCourseSave(model: ICourse): IActionCreator<enCourseStoreS
 
       dispatch({ type: enCourseStoreSaveActions.receiveSave, course: data });
       requestCourseList(getState().course.list.pagination)(dispatch as any, getState);
+
+      return data;
     } catch (error) {
       logError(error);
       dispatch({ type: enCourseStoreSaveActions.receiveSaveError, error });
+
+      throw error;
     }
   };
 }
@@ -46,7 +50,7 @@ export function cleanCourseCustomizationSaveError(): IActionCreator<string> {
 }
 
 function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model: any): IActionCreator<string> {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     try {
       dispatch({ type: courseStoreSavePartActions.requestSave(part), model });
 
@@ -55,9 +59,13 @@ function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model
       course[part.toLowerCase()] = result;
 
       dispatch({ type: courseStoreSavePartActions.receiveSave(part), course });
+
+      return course;
     } catch (error) {
       logError(error);
       dispatch({ type: courseStoreSavePartActions.receiveSaveError(part), error });
+
+      throw error;
     }
   };
 }

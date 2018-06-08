@@ -20,9 +20,8 @@ import {
 
 import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
-import AdvancedFormStep from '../FormParts/Advanced';
-import CustomizationFormStep from '../FormParts/Customization';
-import EssentialFormStep from '../FormParts/Essentials';
+import CourseAdvancedForm from '../FormParts/Advanced';
+import CourseEssentialForm from '../FormParts/Essentials';
 
 interface IState {
   course?: ICourse;
@@ -87,18 +86,20 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
     this.props.requestGet(courseId);
   }
 
-  onPartComplete(course: ICourse) {
-    this.scrollTop();
-  }
-
   onTabChange(event: any, tab: number) {
     this.scrollTop();
     this.setState({ currentTab: tab });
   }
 
-  handleSave(event: Event) {
-    event.preventDefault();
-    this.formManager.askSave();
+  async onSubmit(formManager: FormManager) {
+    const status = await formManager.trySave();
+
+    if (!status.success) {
+      Snackbar.error((status.reasons || ['Não foi possível salvar']).join('<br />'));
+      return;
+    }
+
+    console.log('completed!');
   }
 
   handleClearError() {
@@ -128,11 +129,13 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
           </Tabs>
         </ToolbarTabs>
 
-        <Card>
+        <FormManager onSubmit={this.onSubmit.bind(this)}>
           {!course && !loadingError &&
-            <CardContent className={classes.loadingContainer}>
-              <CircularProgress color='secondary' />
-            </CardContent>
+            <Card>
+              <CardContent className={classes.loadingContainer}>
+                <CircularProgress color='secondary' />
+              </CardContent>
+            </Card>
           }
 
           {loadingError &&
@@ -140,34 +143,38 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
           }
 
           {course &&
-            <FormManager ref={ref => this.formManager = ref}>
-              <span className={currentTab === 0 ? '' : 'hide'}>
-                <EssentialFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
-              </span>
+            <Fragment>
+              <Card>
+                <span className={currentTab === 0 ? '' : 'hide'}>
+                  <CourseEssentialForm course={course} />
+                </span>
 
-              <span className={currentTab === 1 ? '' : 'hide'}>
-                <AdvancedFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
-              </span>
+                <span className={currentTab === 1 ? '' : 'hide'}>
+                  <CourseAdvancedForm course={course} />
+                </span>
 
-              <span className={currentTab === 2 ? '' : 'hide'}>
-                <CustomizationFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
-              </span>
-            </FormManager>
+                <span className={currentTab === 2 ? '' : 'hide'}>
+                  {/* <CourseCustomizationForm course={course} /> */}
+                </span>
+              </Card>
+
+              <div className={classes.buttons}>
+                <Button
+                  color='secondary'
+                  variant='raised'
+                  disabled={saving || !course}
+                  type='submit'
+                >
+                  {saving ? 'Salvando' : 'Salvar'}
+                  {saving &&
+                    <CircularProgress color='secondary' className={classes.progressButton} size={18} />
+                  }
+                </Button>
+              </div>
+            </Fragment>
           }
-        </Card>
+        </FormManager>
 
-        <div className={classes.buttons}>
-          <Button
-            color='secondary'
-            variant='raised'
-            disabled={saving || !course}
-            onClick={this.handleSave.bind(this)}>
-            {saving ? 'Salvando' : 'Salvar'}
-            {saving &&
-              <CircularProgress color='secondary' className={classes.progressButton} size={18} />
-            }
-          </Button>
-        </div>
       </Fragment>
     );
   }
