@@ -50,7 +50,20 @@ class CourseCustomizationForm extends CourseFormBase<IProps & IPropsFromConnect,
       ...this.state,
       model: {
         ...this.state.model,
-        ...(customization || {})
+        ...(customization || {
+          titleColor: null,
+          headerLinkColor: null,
+          headerBackgroundColor: null,
+          coverBackgroundColor: null,
+          loginBackgroundColor: null,
+
+          imageCover: null,
+          imageAvatar: null,
+          logoLogin: null,
+          loginBackgroundImage: null,
+
+          cssUrl: null,
+        })
       }
     };
   }
@@ -81,24 +94,49 @@ class CourseCustomizationForm extends CourseFormBase<IProps & IPropsFromConnect,
         <CardContent>
           <Typography variant='title'>Cores</Typography>
 
+          <FieldColor
+            label='Cor do Título'
+            disabled={saving}
+            value={model.titleColor}
+            onChange={this.updateModel((m, v) => m.titleColor = v)}
+          />
+
           <Grid container spacing={24}>
             <Grid item xs={12} sm={6}>
               <FieldColor
-                label='Cor Primária'
+                label='Cor do link no cabeçalho'
                 disabled={saving}
-                value={model.primaryColor}
-                onChange={this.updateModel((m, v) => m.primaryColor = v)}
-                helperText='Essa cor será utilizada em grande parte do elementos visuais do curso.'
+                value={model.headerLinkColor}
+                onChange={this.updateModel((m, v) => m.headerLinkColor = v)}
               />
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <FieldColor
-                label='Cor Destaque'
+                label='Cor do fundo do cabeçalho'
                 disabled={saving}
-                value={model.featuredColor}
-                onChange={this.updateModel((m, v) => m.featuredColor = v)}
-                helperText='Personalize a cor de ação, ela será utilizada em botões e links, elementos que chamam atenção do aluno.'
+                value={model.headerBackgroundColor}
+                onChange={this.updateModel((m, v) => m.headerBackgroundColor = v)}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={6}>
+              <FieldColor
+                label='Cor da capa'
+                disabled={saving}
+                value={model.coverBackgroundColor}
+                onChange={this.updateModel((m, v) => m.coverBackgroundColor = v)}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <FieldColor
+                label='Cor do Login'
+                disabled={saving}
+                value={model.loginBackgroundColor}
+                onChange={this.updateModel((m, v) => m.loginBackgroundColor = v)}
               />
             </Grid>
           </Grid>
@@ -113,30 +151,8 @@ class CourseCustomizationForm extends CourseFormBase<IProps & IPropsFromConnect,
             width={200}
             height={200}
             className={classes.image}
-            value={model.thumbnailImage}
-            onChange={this.updateModel(((m, v) => m.thumbnailImage = v))}
-          />
-
-          <Image
-            label='Imagem de Fundo'
-            helperText='Essa imagem será usada na tela do curso'
-            disabled={saving}
-            width={1440}
-            height={400}
-            className={classes.image}
-            value={model.backgroundImage}
-            onChange={this.updateModel(((m, v) => m.backgroundImage = v))}
-          />
-
-          <Image
-            label='Logo do Cabeçalho'
-            helperText='Logo que aparecerá no topo da página'
-            disabled={saving}
-            width={200}
-            height={40}
-            className={classes.image}
-            value={model.headerImage}
-            onChange={this.updateModel(((m, v) => m.headerImage = v))}
+            value={model.imageCover}
+            onChange={this.updateModel(((m, v) => m.imageCover = v))}
           />
 
         </CardContent>

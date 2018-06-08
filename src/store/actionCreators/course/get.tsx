@@ -19,8 +19,8 @@ export function requestGet(courseId: number): IActionCreator<enCourseStoreGetAct
         get<IApiResponse<ICourseCustomization>>(`/courses/${courseId}/customization`)
       ]);
 
-      course.advanced = advanced;
-      course.customization = customization;
+      course.advanced = advanced || null;
+      course.customization = customization || null;
 
       dispatch({ type: enCourseStoreGetActions.receive, course });
     } catch (error) {

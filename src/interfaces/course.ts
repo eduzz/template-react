@@ -63,12 +63,20 @@ export interface ICourseAdvanced {
   emailNotification: fakeBoolean;
 }
 
-//TODO: create in api
 export interface ICourseCustomization {
-  primaryColor?: string;
-  featuredColor?: string;
+  id: number;
+  idCourse: number;
 
-  thumbnailImage?: string;
-  backgroundImage?: string;
-  headerImage?: string;
+  titleColor?: string;
+  headerLinkColor?: string;
+  headerBackgroundColor?: string;
+  coverBackgroundColor?: string;
+  loginBackgroundColor?: string;
+
+  imageCover?: string;
+  imageAvatar?: string;
+  logoLogin?: string;
+  loginBackgroundImage?: string;
+
+  cssUrl?: string;
 }

@@ -21,6 +21,7 @@ import {
 import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
 import CourseAdvancedForm from '../FormParts/Advanced';
+import CourseCustomizationForm from '../FormParts/Customization';
 import CourseEssentialForm from '../FormParts/Essentials';
 
 interface IState {
@@ -71,9 +72,13 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
   }
 
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
+    const propCourse = nextProps.course && nextProps.course.id == currentState.courseId ?
+      nextProps.course :
+      null;
+
     return {
       ...currentState,
-      course: currentState.course || nextProps.course
+      course: currentState.course || propCourse
     };
   }
 
@@ -99,7 +104,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
       return;
     }
 
-    console.log('completed!');
+    Snackbar.show('Curso atualizado');
   }
 
   handleClearError() {
@@ -110,17 +115,15 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   render() {
     const { currentTab, course } = this.state;
-    const { classes, saving, savingError, loadingError } = this.props;
+    const { classes, saving, loadingError } = this.props;
 
     return (
       <Fragment>
-        <Snackbar opened={!!savingError} error={savingError} onClose={this.handleClearError.bind(this)} />
-
         <ScrollTopContext.Consumer>
           {scrollTop => (this.scrollTop = scrollTop) && null}
         </ScrollTopContext.Consumer>
 
-        <Toolbar title={course ? `Curso ${course.title}` : 'Editar Curso'} />
+        <Toolbar title={course ? `Editar ${course.title}` : 'Editar Curso'} />
         <ToolbarTabs>
           <Tabs value={currentTab} onChange={this.onTabChange.bind(this)}>
             <Tab disabled={!course} label='Essencial' />
@@ -154,7 +157,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
                 </span>
 
                 <span className={currentTab === 2 ? '' : 'hide'}>
-                  {/* <CourseCustomizationForm course={course} /> */}
+                  <CourseCustomizationForm course={course} />
                 </span>
               </Card>
 

@@ -1,6 +1,6 @@
 import { post, put } from 'api';
 import { logError } from 'errorHandler';
-import { ICourse, ICourseAdvanced } from 'interfaces/course';
+import { ICourse, ICourseAdvanced, ICourseCustomization } from 'interfaces/course';
 import { IActionCreator } from 'store/interfaces';
 
 import { enCourseStoreSaveActions } from '../../reducers/course/save';
@@ -34,11 +34,11 @@ export function cleanCourseSaveError(): IActionCreator<enCourseStoreSaveActions>
 }
 
 export function requestCourseAdvancedSave(course: ICourse, model: ICourseAdvanced): IActionCreator<string> {
-  return requestCoursePartSave(course, 'ADVANCED', model);
+  return requestCoursePartSave(course, 'ADVANCED', model, put);
 }
 
-export function requestCourseCustomizationSave(course: ICourse, model: ICourseAdvanced): IActionCreator<string> {
-  return requestCoursePartSave(course, 'CUSTOMIZATION', model);
+export function requestCourseCustomizationSave(course: ICourse, model: ICourseCustomization): IActionCreator<string> {
+  return requestCoursePartSave(course, 'CUSTOMIZATION', model, model.id ? put : post);
 }
 
 export function cleanCourseAdvancedSaveError(): IActionCreator<string> {
@@ -49,12 +49,12 @@ export function cleanCourseCustomizationSaveError(): IActionCreator<string> {
   return cleanCoursePartSaveError('CUSTOMIZATION');
 }
 
-function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model: any): IActionCreator<string> {
+function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model: any, http: typeof put | typeof post): IActionCreator<string> {
   return async dispatch => {
     try {
       dispatch({ type: courseStoreSavePartActions.requestSave(part), model });
 
-      await put(`/courses/${course.id}/${part.toLowerCase()}`, model);
+      await http(`/courses/${course.id}/${part.toLowerCase()}`, model);
       const result = await new Promise<any>(resolve => setTimeout(() => resolve(model), 2000));
       course[part.toLowerCase()] = result;
 
