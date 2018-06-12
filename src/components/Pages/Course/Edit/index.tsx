@@ -20,9 +20,9 @@ import {
 
 import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
-import AdvancedFormStep from '../FormParts/Advanced';
-import CustomizationFormStep from '../FormParts/Customization';
-import EssentialFormStep from '../FormParts/Essentials';
+import CourseAdvancedForm from '../FormParts/Advanced';
+import CourseCustomizationForm from '../FormParts/Customization';
+import CourseEssentialForm from '../FormParts/Essentials';
 
 interface IState {
   course?: ICourse;
@@ -68,13 +68,17 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   constructor(props: IProps & IPropsFromConnect) {
     super(props);
-    this.state = { ...this.state, courseId: props.match.params.id, currentTab: 0 };
+    this.state = { ...this.state, courseId: props.match.params.id, currentTab: 2 };
   }
 
   static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
+    const propCourse = nextProps.course && nextProps.course.id == currentState.courseId ?
+      nextProps.course :
+      null;
+
     return {
       ...currentState,
-      course: currentState.course || nextProps.course
+      course: currentState.course || propCourse
     };
   }
 
@@ -84,11 +88,7 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   load() {
     const { courseId } = this.state;
-    requestGet(courseId);
-  }
-
-  onPartComplete(course: ICourse) {
-    this.scrollTop();
+    this.props.requestGet(courseId);
   }
 
   onTabChange(event: any, tab: number) {
@@ -96,9 +96,15 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
     this.setState({ currentTab: tab });
   }
 
-  handleSave(event: Event) {
-    event.preventDefault();
-    this.formManager.askSave();
+  async onSubmit(formManager: FormManager) {
+    const status = await formManager.trySave();
+
+    if (!status.success) {
+      Snackbar.error((status.reasons || ['Não foi possível salvar']).join('<br />'));
+      return;
+    }
+
+    Snackbar.show('Curso atualizado');
   }
 
   handleClearError() {
@@ -109,17 +115,15 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   render() {
     const { currentTab, course } = this.state;
-    const { classes, saving, savingError, loadingError } = this.props;
+    const { classes, saving, loadingError } = this.props;
 
     return (
       <Fragment>
-        <Snackbar opened={!!savingError} error={savingError} onClose={this.handleClearError.bind(this)} />
-
         <ScrollTopContext.Consumer>
           {scrollTop => (this.scrollTop = scrollTop) && null}
         </ScrollTopContext.Consumer>
 
-        <Toolbar title={course ? `Curso ${course.title}` : 'Editar Curso'} />
+        <Toolbar title={course ? `Editar ${course.title}` : 'Editar Curso'} />
         <ToolbarTabs>
           <Tabs value={currentTab} onChange={this.onTabChange.bind(this)}>
             <Tab disabled={!course} label='Essencial' />
@@ -128,11 +132,13 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
           </Tabs>
         </ToolbarTabs>
 
-        <Card>
+        <FormManager onSubmit={this.onSubmit.bind(this)}>
           {!course && !loadingError &&
-            <CardContent className={classes.loadingContainer}>
-              <CircularProgress color='secondary' />
-            </CardContent>
+            <Card>
+              <CardContent className={classes.loadingContainer}>
+                <CircularProgress color='secondary' />
+              </CardContent>
+            </Card>
           }
 
           {loadingError &&
@@ -140,34 +146,38 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
           }
 
           {course &&
-            <FormManager ref={ref => this.formManager = ref}>
-              <span className={currentTab === 0 ? '' : 'hide'}>
-                <EssentialFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
-              </span>
+            <Fragment>
+              <Card>
+                <span className={currentTab === 0 ? '' : 'hide'}>
+                  <CourseEssentialForm course={course} />
+                </span>
 
-              <span className={currentTab === 1 ? '' : 'hide'}>
-                <AdvancedFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
-              </span>
+                <span className={currentTab === 1 ? '' : 'hide'}>
+                  <CourseAdvancedForm course={course} />
+                </span>
 
-              <span className={currentTab === 2 ? '' : 'hide'}>
-                <CustomizationFormStep course={course} onComplete={this.onPartComplete.bind(this)} />
-              </span>
-            </FormManager>
+                <span className={currentTab === 2 ? '' : 'hide'}>
+                  <CourseCustomizationForm course={course} />
+                </span>
+              </Card>
+
+              <div className={classes.buttons}>
+                <Button
+                  color='secondary'
+                  variant='raised'
+                  disabled={saving || !course}
+                  type='submit'
+                >
+                  {saving ? 'Salvando' : 'Salvar'}
+                  {saving &&
+                    <CircularProgress color='secondary' className={classes.progressButton} size={18} />
+                  }
+                </Button>
+              </div>
+            </Fragment>
           }
-        </Card>
+        </FormManager>
 
-        <div className={classes.buttons}>
-          <Button
-            color='secondary'
-            variant='raised'
-            disabled={saving || !course}
-            onClick={this.handleSave.bind(this)}>
-            {saving ? 'Salvando' : 'Salvar'}
-            {saving &&
-              <CircularProgress color='secondary' className={classes.progressButton} size={18} />
-            }
-          </Button>
-        </div>
       </Fragment>
     );
   }

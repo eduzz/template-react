@@ -101,13 +101,13 @@ class AccessGroupFormModal extends FormComponent<IPropsFromConnect, IState> {
     this.props.cancelAccessGroupFormModal();
   }
 
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
 
     const { model } = this.state;
     const { requestAccessGroupSave } = this.props;
 
-    const isValid = await this.isFormValid();
+    const isValid = this.isFormValid();
     if (!isValid) return;
 
     requestAccessGroupSave(model as any);

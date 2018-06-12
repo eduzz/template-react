@@ -15,6 +15,15 @@ export async function post<T extends IApiResponse = IApiResponse>(url: string, d
   return await request({ url, method: 'POST', data });
 }
 
+export async function postMultipart<T extends IApiResponse = IApiResponse>(url: string, data: FormData): Promise<T> {
+  return await request({
+    url,
+    method: 'POST',
+    data,
+    headers: { 'Content-type': 'multipart/form-data' }
+  });
+}
+
 export async function put<T extends IApiResponse = IApiResponse>(url: string, data: any): Promise<T> {
   return await request({ url, method: 'PUT', data });
 }
@@ -34,7 +43,8 @@ async function request(options: AxiosRequestConfig, retry: boolean = true) {
       baseURL: API_ENDPOINT,
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json'
+        'Content-type': 'application/json',
+        ...options.headers
       },
     });
     return apiResponseFormatter(result.data);

@@ -3,6 +3,12 @@ import { ICategory } from './category';
 import { IStoreItemStatus } from './storeItemStatus';
 import { fakeBoolean } from './types';
 
+export enum enCourseAccessType {
+  paid = 0,
+  free = 1,
+  freeWithAccount = 2
+}
+
 export interface ICourse extends IStoreItemStatus {
   //from list
   id: number;
@@ -43,7 +49,7 @@ export interface ICourse extends IStoreItemStatus {
 
 export interface ICourseAdvanced {
   disableComments: fakeBoolean;
-  accessType: fakeBoolean;
+  accessType: enCourseAccessType;
   replyEmail?: string;
   hasTerms: fakeBoolean;
   termsContent?: string;
@@ -54,17 +60,23 @@ export interface ICourseAdvanced {
   allowManualWatch: fakeBoolean;
   releaseAt?: Date;
 
-  //TODO: create in api
-  payment: string;
   emailNotification: fakeBoolean;
 }
 
-//TODO: create in api
 export interface ICourseCustomization {
-  primaryColor?: string;
-  featuredColor?: string;
+  id: number;
+  idCourse: number;
 
-  thumbnailImage?: string;
-  backgroundImage?: string;
-  headerImage?: string;
+  titleColor?: string;
+  headerLinkColor?: string;
+  headerBackgroundColor?: string;
+  coverBackgroundColor?: string;
+  loginBackgroundColor?: string;
+
+  imageCover?: string;
+  imageAvatar?: string;
+  logoLogin?: string;
+  loginBackgroundImage?: string;
+
+  cssUrl?: string;
 }
