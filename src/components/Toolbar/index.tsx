@@ -1,19 +1,13 @@
 import { AppBar, IconButton, MuiThemeProvider, Toolbar as CoreToolbar, Typography } from '@material-ui/core';
 import { whiteTheme } from 'assets/theme';
+import { DrawerContext, IDrawerContext } from 'components/AppWrapper';
 import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import { openDrawer } from 'store/actionCreators/drawer';
 
 interface IProps {
   title?: string;
   classes?: any;
-}
-
-interface IPropsFromConnect {
-  openDrawer?: typeof openDrawer;
 }
 
 @WithStyles(theme => ({
@@ -39,17 +33,27 @@ interface IPropsFromConnect {
     }
   },
 }))
-class Toolbar extends PureComponent<IProps & IPropsFromConnect> {
+export default class Toolbar extends PureComponent<IProps> {
+  drawer: IDrawerContext;
+
+  openDrawer() {
+    this.drawer.open();
+  }
+
   render() {
-    const { openDrawer, children, title, classes } = this.props;
+    const { children, title, classes } = this.props;
 
     return (
       <div className={classes.root}>
+        <DrawerContext.Consumer>
+          {drawer => (this.drawer = drawer) && null}
+        </DrawerContext.Consumer>
+
         <MuiThemeProvider theme={whiteTheme}>
           <AppBar className={classes.appBar} elevation={1}>
             <CoreToolbar>
               <IconButton color='inherit'
-                onClick={() => openDrawer()}
+                onClick={this.openDrawer.bind(this)}
                 className={classes.iconMenu}>
                 <MenuIcon />
               </IconButton>
@@ -66,11 +70,3 @@ class Toolbar extends PureComponent<IProps & IPropsFromConnect> {
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
-  return ownProps;
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  openDrawer
-})(Toolbar);

@@ -1,28 +1,26 @@
 import { Grid, Typography } from '@material-ui/core';
+import { DrawerContext, IDrawerContext } from 'components/AppWrapper';
 import DropdownMenu from 'components/DropdownMenu';
 import { WithStyles } from 'decorators/withStyles';
 import { IUserToken } from 'interfaces/userToken';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import { logout } from 'store/actionCreators/auth';
+import React, { Fragment, PureComponent } from 'react';
+import { Subscription } from 'rxjs';
+import rxjsOperators, { IBindableComponent } from 'rxjs-operators';
+import authService from 'services/auth';
 
-interface IProps {
-  closeDrawer: Function;
-  classes?: any;
+interface IState {
+  user?: IUserToken;
 }
 
-interface IPropsFromConnect {
-  user?: IUserToken;
-  logout?: typeof logout;
+interface IProps {
+  classes?: any;
 }
 
 @WithStyles(theme => ({
   root: {
     textAlign: 'left',
-    marginTop: '20px',
     color: theme.palette.primary.contrastText,
     width: '100%'
   },
@@ -35,46 +33,69 @@ interface IPropsFromConnect {
     marginBottom: '2px'
   }
 }))
-class AppDrawerUser extends PureComponent<IProps & IPropsFromConnect> {
-  logoff() {
-    this.props.closeDrawer();
-    this.props.logout();
+export default class AppDrawerUser extends PureComponent<IProps, IState> implements IBindableComponent {
+  subscriptions: Subscription[] = [];
+  drawer: IDrawerContext;
+
+  constructor(props: IProps) {
+    super(props);
+    this.state = { user: null };
+  }
+
+  componentDidMount() {
+    authService.getUser().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(user => this.setState({ user }));
+  }
+
+  componentWillUnmount() {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
+
+  handleChangePassword() {
+    authService.openChangePassword();
+  }
+
+  handleLogout() {
+    this.drawer.close();
+
+    authService.logout().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe();
   }
 
   render() {
-    const { user, classes } = this.props;
+    const { user } = this.state;
+    const { classes } = this.props;
 
     return (
-      <Grid container className={classes.root} wrap='nowrap'>
-        <Grid item xs={true} >
-          <Typography variant='body2' color='inherit' className={classes.text}>
-            <small className={classes.textSmall}>Bem vindo</small>
-            {user && user.name}
-          </Typography>
+      <Fragment>
+        <DrawerContext.Consumer>
+          {drawer => (this.drawer = drawer) && null}
+        </DrawerContext.Consumer>
+
+        <Grid container className={classes.root} wrap='nowrap'>
+          <Grid item xs={true} >
+            <Typography variant='body2' color='inherit' className={classes.text}>
+              <small className={classes.textSmall}>Bem vindo</small>
+              {user && user.name}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <DropdownMenu options={[{
+              text: 'Trocar senha',
+              icon: KeyVariantIcon,
+              handler: this.handleChangePassword.bind(this)
+            }, {
+              text: 'Sair',
+              icon: ExitToAppIcon,
+              handler: this.handleLogout.bind(this)
+            }]} />
+          </Grid>
         </Grid>
-        <Grid item>
-          <DropdownMenu options={[{
-            text: 'Trocar senha',
-            icon: KeyVariantIcon,
-            handler: () => { }
-          }, {
-            text: 'Sair',
-            icon: ExitToAppIcon,
-            handler: this.logoff.bind(this)
-          }]} />
-        </Grid>
-      </Grid>
+      </Fragment>
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
-  return {
-    ...ownProps,
-    user: state.auth.user
-  };
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  logout
-})(AppDrawerUser);

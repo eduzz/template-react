@@ -6,7 +6,7 @@ export interface IStateForm<T = any> {
   formSubmitted?: boolean;
 }
 
-export abstract class FormComponent<P = {}, S extends IStateForm = any> extends Component<P, S> {
+export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
   protected validationContext: ValidationContext;
   protected scrollTop: Function;
 
@@ -24,7 +24,7 @@ export abstract class FormComponent<P = {}, S extends IStateForm = any> extends 
     this.validationContext = validationContext;
   }
 
-  public isFormValid(formSubmitted: boolean = true): boolean {
+  public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
     const isValid = this.validationContext.isValid(formSubmitted);
 
     if (!isValid && this.scrollTop) {
@@ -41,15 +41,8 @@ export abstract class FormComponent<P = {}, S extends IStateForm = any> extends 
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): (value: any) => void {
-    return (event: any) => {
-      let { model } = this.state;
-      let value = event;
-
-      if ((event || {} as any).target) {
-        value = event.target.type === 'checkbox' ?
-          event.target.checked :
-          event.target.value;
-      }
+    return (value: any) => {
+      const { model } = this.state;
 
       handler(model, value);
 

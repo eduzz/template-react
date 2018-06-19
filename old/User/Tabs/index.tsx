@@ -8,46 +8,43 @@ import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
 import KeyPlusIcon from 'mdi-react/KeyPlusIcon';
 import * as React from 'react';
 import { Fragment } from 'react';
-
-import AccessGroupFormDialog from '../AccessGroupFormDialog';
-import UserFormDialog from '../UserFormDialog';
+import { connect } from 'react-redux';
+import { IAppStoreState } from 'store';
+import { openAccessGroupFormModal } from 'store/actionCreators/accessGroup';
+import { openUserFormModal } from 'store/actionCreators/user';
 
 interface IState {
   currentTab: number;
-  dialogs: {
-    user: boolean;
-    accessGroup: boolean;
-  };
 }
 
-export default class UserTabsPage extends React.PureComponent<{}, IState> {
+interface IPropsFromConnect {
+  openUserFormModal?: typeof openUserFormModal;
+  openAccessGroupFormModal?: typeof openAccessGroupFormModal;
+}
+
+class UserTabsPage extends React.PureComponent<IPropsFromConnect, IState> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      currentTab: 0,
-      dialogs: { user: false, accessGroup: false }
-    };
+    this.state = { currentTab: 0 };
   }
 
   onTabChange(event: any, tab: number) {
     this.setState({ currentTab: tab });
   }
 
-  openDialog(opened: boolean, dialog: keyof IState['dialogs']) {
-    const dialogs = this.state.dialogs;
-    dialogs[dialog] = opened;
+  addUser() {
+    this.props.openUserFormModal();
+  }
 
-    this.setState({ dialogs });
+  addAccessGroup() {
+    this.props.openAccessGroupFormModal();
   }
 
   render() {
-    const { currentTab dialogs } = this.state;
+    const { currentTab } = this.state;
 
     return (
       <Fragment>
-        <UserFormDialog opened={dialogs.user} />
-        <AccessGroupFormDialog />
-
         <Toolbar title='Usuários' />
 
         <ToolbarTabs>
@@ -81,3 +78,12 @@ export default class UserTabsPage extends React.PureComponent<{}, IState> {
     );
   }
 }
+
+const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
+  return {};
+};
+
+export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
+  openUserFormModal,
+  openAccessGroupFormModal
+})(UserTabsPage);

@@ -6,8 +6,13 @@ import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
 import React, { PureComponent } from 'react';
 
+import { DrawerContext, IDrawerContext } from '../AppWrapper';
+
+interface IState {
+  routes: IAppRoute[];
+}
+
 interface IProps {
-  closeDrawer: Function;
   routes: IAppRoute[];
   classes?: any;
 }
@@ -24,8 +29,15 @@ interface IProps {
     background: darken(theme.palette.primary.main, 0.15)
   },
   logo: {
-    maxWidth: '150px',
-    marginTop: '10px'
+    maxWidth: 170,
+    maxHeight: 100,
+    marginBottom: 20
+  },
+  list: {
+    padding: 0
+  },
+  item: {
+    paddingLeft: 14
   },
   icon: {
     margin: '0'
@@ -34,21 +46,33 @@ interface IProps {
     color: 'inherit'
   }
 }))
-export default class AppDrawer extends PureComponent<IProps> {
+export default class AppDrawer extends PureComponent<IProps, IState> {
   getRouter: () => AppRouter;
+  drawer: IDrawerContext;
 
   constructor(props: any) {
     super(props);
     this.state = { routes: [] };
   }
 
+  static getDerivedStateFromProps(props: IProps, currentState: IState): IState {
+    return {
+      ...currentState,
+      routes: props.routes.filter(r => r.sideDrawer).sort((a, b) => {
+        return a.sideDrawer.order > b.sideDrawer.order ? 1 :
+          a.sideDrawer.order < b.sideDrawer.order ? -1 : 0;
+      })
+    };
+  }
+
   toRoute(route: IAppRoute) {
-    this.props.closeDrawer();
+    this.drawer.close();
     this.getRouter().navigate(route.path);
   }
 
   render() {
-    const { closeDrawer, routes, classes } = this.props;
+    const { routes } = this.state;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
@@ -56,14 +80,18 @@ export default class AppDrawer extends PureComponent<IProps> {
           {getRouter => (this.getRouter = getRouter) && null}
         </RouterContext.Consumer>
 
+        <DrawerContext.Consumer>
+          {drawer => (this.drawer = drawer) && null}
+        </DrawerContext.Consumer>
+
         <div className={classes.header}>
           <img src={require('assets/images/logo-white.png')} className={classes.logo} />
-          <AppDrawerUser closeDrawer={closeDrawer} />
+          <AppDrawerUser />
         </div>
 
-        <List>
+        <List className={classes.list}>
           {routes.map((route, index) =>
-            <ListItem button key={index} onClick={this.toRoute.bind(this, route)}>
+            <ListItem button key={index} className={classes.item} onClick={this.toRoute.bind(this, route)}>
               {!!route.sideDrawer.icon &&
                 <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
                   <route.sideDrawer.icon />

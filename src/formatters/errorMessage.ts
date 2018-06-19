@@ -2,6 +2,7 @@ export function errorMessageFormatter(err: any): string {
   const status: any = {
     '-1': 'Servidor não encontrado',
     400: 'Dados inválidos',
+    411: 'Dados inválidos',
     401: 'Sem permissão de acesso',
     403: 'Sem permissão de acesso',
     422: 'Dados inválidos'

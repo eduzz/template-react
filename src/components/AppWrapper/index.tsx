@@ -3,20 +3,22 @@ import AppDrawer from 'components/Drawer';
 import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import { closeDrawer } from 'store/actionCreators/drawer';
+
+interface IState {
+  drawerOpened: boolean;
+}
 
 interface IProps {
   routes: IAppRoute[];
   classes?: any;
 }
 
-interface IPropsFromConnect {
-  drawerOpened: boolean;
-  closeDrawer?: typeof closeDrawer;
+export interface IDrawerContext {
+  open(): void;
+  close(): void;
 }
 
+export const DrawerContext = React.createContext<IDrawerContext>(null);
 export const ScrollTopContext = React.createContext<Function>((() => { }));
 
 @WithStyles(theme => ({
@@ -47,56 +49,60 @@ export const ScrollTopContext = React.createContext<Function>((() => { }));
     }
   }
 }))
-class AppWrapper extends PureComponent<IProps & IPropsFromConnect> {
+export default class AppWrapper extends PureComponent<IProps, IState> {
   mainContent: HTMLMainElement;
+  drawerContext = {
+    open: this.toogleDrawer.bind(this, true),
+    close: this.toogleDrawer.bind(this, false)
+  };
+
+  constructor(props: IProps) {
+    super(props);
+    this.state = { drawerOpened: false };
+  }
 
   scrollTop() {
     setTimeout(() => this.mainContent.scrollTo(0, 0), 100);
   }
 
+  toogleDrawer(drawerOpened: boolean) {
+    this.setState({ drawerOpened });
+  }
+
   render() {
-    const { } = this.state;
-    const { children, routes, drawerOpened, closeDrawer, classes } = this.props;
-    const items = <AppDrawer routes={routes} closeDrawer={() => closeDrawer()} />;
+    const { drawerOpened } = this.state;
+    const { children, routes, classes } = this.props;
+    const items = <AppDrawer routes={routes} />;
 
     return (
       <div className={classes.root}>
-        <Hidden mdUp implementation='css'>
-          <Drawer
-            variant='temporary'
-            anchor='left'
-            open={drawerOpened}
-            classes={{ paper: classes.drawer }}
-            onClose={() => closeDrawer()}
-            ModalProps={{ keepMounted: true }}>
-            {items}
-          </Drawer>
-        </Hidden>
-        <Hidden smDown implementation='css'>
-          <Drawer
-            variant='permanent'
-            open
-            classes={{ paper: classes.drawer }}>
-            {items}
-          </Drawer>
-        </Hidden>
-        <ScrollTopContext.Provider value={this.scrollTop.bind(this)}>
-          <main ref={ref => this.mainContent = ref} className={classes.content}>
-            {children}
-          </main>
-        </ScrollTopContext.Provider>
+        <DrawerContext.Provider value={this.drawerContext}>
+          <Hidden mdUp implementation='css'>
+            <Drawer
+              variant='temporary'
+              anchor='left'
+              open={drawerOpened}
+              classes={{ paper: classes.drawer }}
+              onClose={this.drawerContext.close}
+              ModalProps={{ keepMounted: true }}>
+              {items}
+            </Drawer>
+          </Hidden>
+          <Hidden smDown implementation='css'>
+            <Drawer
+              variant='permanent'
+              open
+              classes={{ paper: classes.drawer }}>
+              {items}
+            </Drawer>
+          </Hidden>
+          <ScrollTopContext.Provider value={this.scrollTop.bind(this)}>
+            <main ref={ref => this.mainContent = ref} className={classes.content}>
+              {children}
+            </main>
+          </ScrollTopContext.Provider>
+        </DrawerContext.Provider>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
-  return {
-    ...ownProps,
-    drawerOpened: state.drawer.isOpened
-  };
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  closeDrawer
-})(AppWrapper);

@@ -7,6 +7,7 @@ export interface IAppRoute {
   allowAnonymous?: boolean;
   sideDrawer?: {
     icon?: MdiReactIconComponentType;
+    order?: number;
     display: string;
   };
   roles?: string[];

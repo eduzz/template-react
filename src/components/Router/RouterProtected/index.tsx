@@ -1,36 +1,53 @@
 import { IAppRoute } from 'interfaces/route';
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { PureComponent } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import { IAppStoreState } from 'store';
-import { openLoginDialog } from 'store/actionCreators/auth';
+import { Subscription } from 'rxjs';
+import rxjsOperators, { IBindableComponent } from 'rxjs-operators';
+import authService from 'services/auth';
+
+interface IState {
+  isAuthenticated: boolean;
+  canAccess: boolean;
+}
 
 interface IProps {
   route: IAppRoute;
   routeProps: RouteComponentProps<any>;
 }
 
-interface IPropsFromConnect {
-  isAuthenticated: boolean;
-  canAccess: boolean;
-  openLoginDialog?: typeof openLoginDialog;
-}
+export default class AppRouterProtected extends PureComponent<IProps, IState> implements IBindableComponent {
+  subscriptions: Subscription[] = [];
 
-class AppRouterProtected extends React.PureComponent<IProps & IPropsFromConnect> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = { isAuthenticated: false, canAccess: false };
   }
 
   componentDidMount() {
-    const { isAuthenticated, openLoginDialog } = this.props;
+    authService.getUser().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(user => {
+      if (!user) {
+        authService.openLogin();
+        return this.setState({ isAuthenticated: false });
+      }
 
-    if (isAuthenticated) return;
-    openLoginDialog();
+      this.setState({
+        isAuthenticated: true,
+        canAccess: true //TODO: check access
+      });
+    });
+  }
+
+  componentWillUnmount() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   public render(): JSX.Element {
-    const { route, routeProps, children, isAuthenticated, canAccess } = this.props;
+    const { isAuthenticated, canAccess } = this.state;
+    const { route, routeProps, children } = this.props;
 
     if (!isAuthenticated) {
       return null;
@@ -47,15 +64,3 @@ class AppRouterProtected extends React.PureComponent<IProps & IPropsFromConnect>
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
-  return {
-    ...ownProps,
-    isAuthenticated: state.auth.isAuthenticated,
-    canAccess: true
-  };
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  openLoginDialog
-})(AppRouterProtected);
