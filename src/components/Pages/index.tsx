@@ -28,7 +28,6 @@ export default class AdminModule extends React.PureComponent {
     {
       path: '/',
       sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
-      exact: true,
       roles: [],
       component: DashboardIndexPage,
       subRoutes: DashboardIndexPage.routes

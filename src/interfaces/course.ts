@@ -1,6 +1,5 @@
 import { IAuthor } from './author';
 import { ICategory } from './category';
-import { IStoreItemStatus } from './storeItemStatus';
 import { fakeBoolean } from './types';
 
 export enum enCourseAccessType {
@@ -9,7 +8,7 @@ export enum enCourseAccessType {
   freeWithAccount = 2
 }
 
-export interface ICourse extends IStoreItemStatus {
+export interface ICourse {
   //from list
   id: number;
   title: string;

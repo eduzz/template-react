@@ -1,80 +1,69 @@
-import {
-  IconButton,
-  LinearProgress,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-} from '@material-ui/core';
-import ErrorMessage from 'components/ErrorMessage';
-import IconMessage from 'components/IconMessage';
+import { IconButton, LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { IStateList, ListComponent } from 'components/Abstract/List';
+import FabButton from 'components/FabButton';
+import AccessGroupFormDialog from 'components/Pages/User/AccessGroupFormDialog';
 import TableWrapper from 'components/TableWrapper';
 import { IAccessGroup } from 'interfaces/accessGroup';
-import CreationIcon from 'mdi-react/CreationIcon';
+import KeyPlusIcon from 'mdi-react/KeyPlusIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import { requestAccessGroupList } from 'store/actionCreators/accessGroup';
+import React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import accessGroupService from 'services/accessGroup';
 
 import ListItem from './ListItem';
 
-interface IState {
-  pageSize: number;
-  page: number;
-  items: IAccessGroup[];
+interface IState extends IStateList<IAccessGroup> {
+  formOpened?: boolean;
 }
 
-interface IPropsFromConnect {
-  loading: boolean;
-  error: any;
-  all: IAccessGroup[];
-  requestAccessGroupList?: typeof requestAccessGroupList;
-}
-
-class UserTabAccess extends Component<IPropsFromConnect, IState> {
-  constructor(props: IPropsFromConnect) {
-    super(props);
-    this.state = { page: 0, pageSize: 10, items: [] };
-  }
-
-  static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState): IState {
-    const { page, pageSize } = currentState;
-
-    return {
-      ...currentState,
-      items: nextProps.all.slice(pageSize * page, (pageSize * page) + pageSize)
-    };
-  }
-
+export default class UserTabAccess extends ListComponent<{}, IState> {
   componentDidMount() {
-    this.refresh();
+    this.loadData();
   }
 
-  refresh() {
-    this.props.requestAccessGroupList();
-  }
+  loadData = () => {
+    this.setState({ loading: true });
 
-  paginate(page: number, pageSize: number): void {
-    const { all, loading } = this.props;
-    if (loading) return;
-
-    this.setState({
-      items: all.slice(pageSize * page, (pageSize * page) + pageSize),
-      pageSize,
-      page
+    accessGroupService.list().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(items => {
+      this.setAllData(items);
+    }, error => {
+      this.setState({ error, loading: false });
     });
   }
 
+  handleTryAgain = () => {
+    this.loadData();
+  }
+
+  formOpen = () => {
+    this.setState({ formOpened: true });
+  }
+
+  formCallback = (reload: boolean) => {
+    this.setState({ formOpened: false });
+
+    if (!reload) return;
+    this.loadData();
+  }
+
   render() {
-    const { items, pageSize, page } = this.state;
-    const { loading, all, error } = this.props;
+    const { items, loading, formOpened } = this.state;
 
     return (
       <Paper>
+        <FabButton hasTabs actions={[{
+          icon: KeyPlusIcon,
+          onClick: this.formOpen
+        }]} />
+
+        <AccessGroupFormDialog
+          opened={formOpened || false}
+          onComplete={() => this.formCallback(true)}
+          onCancel={() => this.formCallback(false)} />
+
         {loading && <LinearProgress color='secondary' />}
         <TableWrapper>
           <Table>
@@ -83,58 +72,27 @@ class UserTabAccess extends Component<IPropsFromConnect, IState> {
                 <TableCell style={{ width: 80 }}>#</TableCell>
                 <TableCell>Nome</TableCell>
                 <TableCell>
-                  <IconButton onClick={() => this.refresh()}>
+                  <IconButton onClick={this.loadData}>
                     <RefreshIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {error &&
-                <TableRow>
-                  <TableCell colSpan={3} className='error'>
-                    <ErrorMessage error={error} tryAgain={() => this.refresh()} />
-                  </TableCell>
-                </TableRow>
-              }
-              {!error && !items.length &&
-                <TableRow>
-                  <TableCell colSpan={3}>
-                    <IconMessage icon={CreationIcon} message='Nenhum grupo criado' />
-                  </TableCell>
-                </TableRow>
-              }
+              {this.renderEmptyAndErrorMessages(2)}
               {items.map(accessGroup =>
-                <ListItem key={accessGroup.id} accessGroup={accessGroup} />
+                <ListItem
+                  key={accessGroup.id}
+                  accessGroup={accessGroup}
+                  onDelete={this.loadData}
+                  onEdit={() => null}
+                />
               )}
             </TableBody>
           </Table>
         </TableWrapper>
-        <TablePagination
-          labelRowsPerPage='items por página'
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-          component='div'
-          count={all.length}
-          rowsPerPage={pageSize}
-          rowsPerPageOptions={[10, 25, 50]}
-          page={page}
-          onChangePage={(event, page) => this.paginate(page, pageSize)}
-          onChangeRowsPerPage={(event) => this.paginate(page, Number(event.target.value))}
-        />
+        {this.renderTablePagination()}
       </Paper >
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
-  return {
-    ...ownProps,
-    loading: state.accessGroup.isFetching,
-    all: state.accessGroup.accessGroups,
-    error: state.accessGroup.error
-  } as IPropsFromConnect;
-};
-
-export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
-  requestAccessGroupList
-})(UserTabAccess);

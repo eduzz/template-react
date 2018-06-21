@@ -6,8 +6,7 @@ import { IUserToken } from 'interfaces/userToken';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
-import { Subscription } from 'rxjs';
-import rxjsOperators, { IBindableComponent } from 'rxjs-operators';
+import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState {
@@ -33,8 +32,7 @@ interface IProps {
     marginBottom: '2px'
   }
 }))
-export default class AppDrawerUser extends PureComponent<IProps, IState> implements IBindableComponent {
-  subscriptions: Subscription[] = [];
+export default class AppDrawerUser extends PureComponent<IProps, IState>  {
   drawer: IDrawerContext;
 
   constructor(props: IProps) {
@@ -47,10 +45,6 @@ export default class AppDrawerUser extends PureComponent<IProps, IState> impleme
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(user => this.setState({ user }));
-  }
-
-  componentWillUnmount() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   handleChangePassword() {

@@ -1,11 +1,14 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import ErrorMessage from 'components/ErrorMessage';
+import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IUser } from 'interfaces/user';
 import { FieldAutocomplete, FieldSelect, FieldText, ValidationContext } from 'material-ui-form-fields';
-import React, { Fragment } from 'react';
+import React, { FormEvent, Fragment } from 'react';
+import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
+import accessGroupService from 'services/accessGroup';
 import courseService from 'services/course';
 import userService from 'services/user';
 
@@ -13,16 +16,13 @@ interface IState extends IStateForm<IUser> {
   loading: boolean;
   courses: { value: number; label: string; }[];
   accessGroups: { value: number; label: string; }[];
-
-  errors: {
-    loading?: null;
-    save?: null;
-  };
+  error?: null;
 }
 
 interface IProps {
   opened: boolean;
-  onCancel: Function;
+  onComplete: () => void;
+  onCancel: () => void;
   classes?: any;
 }
 
@@ -39,63 +39,79 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
       ...this.state,
       loading: true,
       courses: [],
-      accessGroups: [],
-      errors: {}
+      accessGroups: []
     };
   }
 
-  loadData() {
-    courseService.list().pipe(
-      rxjsOperators.logError()
-    ).subscribe(courses => {
+  loadData = () => {
+    this.setState({ loading: true });
+
+    rxjs.combineLatest(
+      courseService.list(),
+      accessGroupService.list(),
+    ).pipe(
+      rxjsOperators.cache('access-group-form-data'),
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(([courses, accessGroups]) => {
       this.setState({
-        courses: courses.map(c => ({ value: c.id, label: c.title }))
+        courses: courses.map(c => ({ value: c.id, label: c.title })),
+        accessGroups: accessGroups.map(c => ({ value: c.id, label: c.name })),
+        loading: false
       });
+    }, error => {
+      this.setState({ loading: false, error });
     });
   }
 
-  onCancel() {
-    this.props.onCancel();
-  }
-
-  onSubmit(event: Event) {
+  onSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     const { model } = this.state;
+    const { onComplete } = this.props;
 
-    const isValid = this.isFormValid();
-    if (!isValid) return;
+    if (!this.isFormValid()) return;
 
-    userService.save(model as IUser);
-  }
+    this.setState({ loading: true });
 
-  resetState() {
-    this.resetForm();
+    userService.save(model as IUser).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(() => {
+      Snackbar.show('Usuário salvo');
+      this.setState({ loading: false });
+
+      onComplete();
+    }, err => {
+      Snackbar.error(err);
+      this.setState({ loading: false });
+    });
   }
 
   render() {
-    const { model, loading, courses, errors, accessGroups } = this.state;
-    const { opened, classes } = this.props;
+    const { model, loading, courses, error, accessGroups } = this.state;
+    const { opened, classes, onCancel } = this.props;
 
     return (
       <Dialog
         open={opened}
         disableBackdropClick
         disableEscapeKeyDown
-        onExited={this.resetState.bind(this)}
+        onEnter={this.loadData}
+        onExited={this.resetForm}
         TransitionComponent={Transition}>
 
         {loading && <LinearProgress color='secondary' />}
 
-        <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <ValidationContext ref={this.bindValidationContext.bind(this)}>
+        <form onSubmit={this.onSubmit} noValidate>
+          <ValidationContext ref={this.bindValidationContext}>
             <DialogTitle>Novo Usuário</DialogTitle>
             <DialogContent className={classes.content}>
-              {errors.loading &&
-                <ErrorMessage error={errors.loading} tryAgain={this.loadData.bind(this)} />
+              {error &&
+                <ErrorMessage error={error} tryAgain={this.loadData} />
               }
 
-              {!errors.loading &&
+              {!error &&
                 <Fragment>
                   <FieldText
                     label='Email'
@@ -128,10 +144,10 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
               }
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.onCancel.bind(this)}>
+              <Button onClick={onCancel}>
                 Cancelar
             </Button>
-              <Button color='secondary' type='submit' disabled={loading || !!errors.loading}>
+              <Button color='secondary' type='submit' disabled={loading || !!error}>
                 Salvar
             </Button>
             </DialogActions>

@@ -5,8 +5,7 @@ import { WithStyles } from 'decorators/withStyles';
 import FieldText from 'material-ui-form-fields/components/Text';
 import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
 import React, { MouseEvent } from 'react';
-import { Subscription } from 'rxjs';
-import rxjsOperators, { IBindableComponent } from 'rxjs-operators';
+import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState extends IStateForm<{
@@ -27,16 +26,10 @@ interface IProps {
     justifyContent: 'space-between'
   }
 })
-export default class LoginDialogRecoveryAccess extends FormComponent<IProps, IState> implements IBindableComponent {
-  subscriptions: Subscription[] = [];
-
+export default class LoginDialogRecoveryAccess extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = { ...this.state, opened: false, loading: false };
-  }
-
-  componentWillUnmount() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   async onSubmit(event: Event) {

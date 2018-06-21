@@ -9,41 +9,29 @@ import {
   Slide,
   Typography,
 } from '@material-ui/core';
+import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import ErrorMessage from 'components/ErrorMessage';
-import { FormComponent, IStateForm } from 'components/FormComponent';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IAccessGroup } from 'interfaces/accessGroup';
 import { FieldText, ValidationContext } from 'material-ui-form-fields';
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import {
-  cancelAccessGroupFormModal,
-  cleanAccessGroupSaveError,
-  requestAccessGroupSave,
-} from 'store/actionCreators/accessGroup';
-import { cleanAccessGroupModuleListError, requestAccessGroupModuleList } from 'store/actionCreators/accessGroupModule';
-import { cleanCourseListError, requestCourseList } from 'store/actionCreators/course';
+import rxjsOperators from 'rxjs-operators';
+import accessGroupService from 'services/accessGroup';
 
 interface IState extends IStateForm<{
   name: string;
   modules: IAccessGroup['modules'];
-}> { }
-
-interface IPropsFromConnect {
-  opened: boolean;
+}> {
   loading: boolean;
-  model: IAccessGroup;
-  modules: IAccessGroup['modules'];
+  error?: any;
+}
+
+interface IProps {
+  opened: boolean;
+  onComplete: () => void;
+  onCancel: () => void;
   classes?: any;
-  loadingError?: any;
-  saveError?: any;
-  requestAccessGroupModuleList?: typeof requestAccessGroupModuleList;
-  cleanAccessGroupModuleListError?: typeof cleanAccessGroupModuleListError;
-  cancelAccessGroupFormModal?: typeof cancelAccessGroupFormModal;
-  requestAccessGroupSave?: typeof requestAccessGroupSave;
-  cleanAccessGroupSaveError?: typeof cleanAccessGroupSaveError;
 }
 
 @WithStyles(theme => ({
@@ -71,76 +59,61 @@ interface IPropsFromConnect {
     textAlign: 'center'
   }
 }))
-class AccessGroupFormDialog extends FormComponent<IPropsFromConnect, IState> {
-  static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState): IState {
-    if (nextProps.opened && !nextProps.loadingError) {
-      if (!nextProps.modules.length) nextProps.requestAccessGroupModuleList();
-    }
+export default class AccessGroupFormDialog extends FormComponent<IProps, IState> {
+  loadData = () => {
+    this.setState({ loading: true });
 
-    if (!nextProps.opened) {
-      return {
-        ...currentState,
-        model: {}
-      };
-    }
-
-    return {
-      ...currentState,
-      model: {
-        name: nextProps.model.name,
-        ...currentState.model,
-        modules: [
-          ...nextProps.modules.filter(m => (currentState.model.modules || []).every(cm => cm.id !== m.id)),
-          ...(currentState.model.modules || [])
-        ].filter(m => !!m)
-      }
-    };
+    accessGroupService.listModules().pipe(
+      rxjsOperators.cache('access-group-form-modules'),
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(modules => {
+      this.setState({
+        model: {
+          ...this.state.model,
+          modules
+        },
+        loading: false
+      });
+    }, error => {
+      this.setState({ error, loading: false });
+    });
   }
 
-  onCancel() {
-    this.props.cancelAccessGroupFormModal();
-  }
-
-  onSubmit(event: Event) {
+  onSubmit = (event: Event) => {
     event.preventDefault();
 
     const { model } = this.state;
-    const { requestAccessGroupSave } = this.props;
+    const { onComplete } = this.props;
 
-    const isValid = this.isFormValid();
-    if (!isValid) return;
+    if (!this.isFormValid()) return;
 
-    requestAccessGroupSave(model as any);
-  }
+    accessGroupService.save(model as IAccessGroup).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(() => {
+      Snackbar.show('Grupo de acesso salvo');
+      this.setState({ loading: false });
 
-  tryLoad() {
-    const { loading, modules, requestAccessGroupModuleList } = this.props;
-    if (loading) true;
-
-    if (!modules.length) requestAccessGroupModuleList();
-  }
-
-  resetState() {
-    const { cleanAccessGroupModuleListError } = this.props;
-
-    cleanAccessGroupModuleListError();
-
-    this.resetForm();
+      onComplete();
+    }, err => {
+      Snackbar.error(err);
+      this.setState({ loading: false });
+    });
   }
 
   render() {
-    const { model } = this.state;
-    const { opened, loading, classes, saveError, loadingError, cleanAccessGroupSaveError } = this.props;
+    const { model, loading, error } = this.state;
+    const { opened, classes, onCancel } = this.props;
 
     return (
       <Dialog
         open={opened}
         disableBackdropClick
         disableEscapeKeyDown
-        onExited={this.resetState.bind(this)}
+        onEnter={this.loadData}
+        onExited={this.resetForm}
         TransitionComponent={Transition}>
-
-        <Snackbar opened={!!saveError} error={saveError} onClose={() => cleanAccessGroupSaveError()} />
 
         {loading && <LinearProgress color='secondary' />}
 
@@ -148,11 +121,11 @@ class AccessGroupFormDialog extends FormComponent<IPropsFromConnect, IState> {
           <ValidationContext ref={this.bindValidationContext.bind(this)}>
             <DialogTitle>Grupo de Acesso</DialogTitle>
             <DialogContent className={classes.content}>
-              {loadingError &&
-                <ErrorMessage error={loadingError} tryAgain={this.tryLoad.bind(this)} />
+              {error &&
+                <ErrorMessage error={error} tryAgain={this.loadData.bind(this)} />
               }
 
-              {!loadingError &&
+              {!error &&
                 <Fragment>
                   <FieldText
                     label='Nome'
@@ -210,10 +183,10 @@ class AccessGroupFormDialog extends FormComponent<IPropsFromConnect, IState> {
               }
             </DialogContent>
             <DialogActions>
-              <Button onClick={this.onCancel.bind(this)}>
+              <Button onClick={onCancel}>
                 Cancelar
             </Button>
-              <Button color='secondary' type='submit' disabled={loading || !!loadingError}>
+              <Button color='secondary' type='submit' disabled={loading || !!error}>
                 Salvar
             </Button>
             </DialogActions>
@@ -223,35 +196,6 @@ class AccessGroupFormDialog extends FormComponent<IPropsFromConnect, IState> {
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
-  const model = state.accessGroup.formModel || {} as IAccessGroup;
-
-  return {
-    model,
-    opened: state.accessGroup.isFormOpened,
-    loading: state.accessGroupModule.isFetching || state.accessGroup.isSaving,
-    loadingError: state.accessGroupModule.error,
-    saveError: state.accessGroup.saveError,
-    modules: state.accessGroupModule.modules.map(module => {
-
-      return {
-        ...module,
-        ...((model.modules || []).find(m => m.id === module.id) || {})
-      };
-    })
-  };
-};
-
-export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
-  cancelAccessGroupFormModal,
-  requestCourseList,
-  requestAccessGroupModuleList,
-  cleanCourseListError,
-  cleanAccessGroupModuleListError,
-  requestAccessGroupSave,
-  cleanAccessGroupSaveError
-})(AccessGroupFormDialog);
 
 function Transition(props: any) {
   return <Slide direction='up' {...props} />;

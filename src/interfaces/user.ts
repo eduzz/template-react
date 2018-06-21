@@ -1,6 +1,4 @@
-import { IStoreItemStatus } from './storeItemStatus';
-
-export interface IUser extends IStoreItemStatus {
+export interface IUser {
   id: number;
   name: string;
   email: string;

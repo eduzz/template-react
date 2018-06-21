@@ -1,80 +1,69 @@
-import {
-  IconButton,
-  LinearProgress,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-} from '@material-ui/core';
-import ErrorMessage from 'components/ErrorMessage';
-import IconMessage from 'components/IconMessage';
+import { IconButton, LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { IStateList, ListComponent } from 'components/Abstract/List';
+import FabButton from 'components/FabButton';
+import UserFormDialog from 'components/Pages/User/UserFormDialog';
 import TableWrapper from 'components/TableWrapper';
 import { IUser } from 'interfaces/user';
-import CreationIcon from 'mdi-react/CreationIcon';
+import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import { requestUserList } from 'store/actionCreators/user';
+import React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import userService from 'services/user';
 
 import ListItem from './ListItem';
 
-interface IState {
-  pageSize: number;
-  page: number;
-  items: IUser[];
+interface IState extends IStateList<IUser> {
+  formOpened?: boolean;
 }
 
-interface IPropsFromConnect {
-  loading: boolean;
-  error: any;
-  all: IUser[];
-  requestUserList?: typeof requestUserList;
-}
-
-class UserTabList extends Component<IPropsFromConnect, IState> {
-  constructor(props: IPropsFromConnect) {
-    super(props);
-    this.state = { page: 0, pageSize: 10, items: [] };
-  }
-
-  static getDerivedStateFromProps(nextProps: IPropsFromConnect, currentState: IState) {
-    const { page, pageSize } = currentState;
-
-    return {
-      ...currentState,
-      items: nextProps.all.slice(pageSize * page, (pageSize * page) + pageSize)
-    };
-  }
-
+export default class UserTabList extends ListComponent<{}, IState> {
   componentDidMount() {
-    this.load();
+    this.loadData();
   }
 
-  load() {
-    this.props.requestUserList();
-  }
+  loadData = () => {
+    this.setState({ loading: true });
 
-  paginate(page: number, pageSize: number): void {
-    const { all, loading } = this.props;
-    if (loading) return;
-
-    this.setState({
-      items: all.slice(pageSize * page, (pageSize * page) + pageSize),
-      pageSize,
-      page
+    userService.list().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(items => {
+      this.setAllData(items);
+    }, error => {
+      this.setState({ error, loading: false });
     });
   }
 
+  handleTryAgain = () => {
+    this.loadData();
+  }
+
+  formOpen = () => {
+    this.setState({ formOpened: true });
+  }
+
+  formCallback = (reload: boolean) => {
+    this.setState({ formOpened: false });
+
+    if (!reload) return;
+    this.loadData();
+  }
+
   render() {
-    const { items, pageSize, page } = this.state;
-    const { loading, all, error } = this.props;
+    const { items, loading, formOpened } = this.state;
 
     return (
       <Paper>
+        <FabButton hasTabs actions={[{
+          icon: AccountPlusIcon,
+          onClick: this.formOpen
+        }]} />
+
+        <UserFormDialog
+          opened={formOpened || false}
+          onComplete={() => this.formCallback(true)}
+          onCancel={() => this.formCallback(false)} />
+
         {loading && <LinearProgress color='secondary' />}
         <TableWrapper>
           <Table>
@@ -85,58 +74,22 @@ class UserTabList extends Component<IPropsFromConnect, IState> {
                 <TableCell>Curso</TableCell>
                 <TableCell>Grupo</TableCell>
                 <TableCell>
-                  <IconButton onClick={() => this.load()}>
+                  <IconButton onClick={() => this.loadData()}>
                     <RefreshIcon />
                   </IconButton>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {error &&
-                <TableRow>
-                  <TableCell colSpan={5} className='error'>
-                    <ErrorMessage error={error} tryAgain={() => this.load()} />
-                  </TableCell>
-                </TableRow>
-              }
-              {!error && !items.length &&
-                <TableRow>
-                  <TableCell colSpan={5}>
-                    <IconMessage icon={CreationIcon} message='Nenhum usuário criado' />
-                  </TableCell>
-                </TableRow>
-              }
+              {this.renderEmptyAndErrorMessages(5)}
               {items.map(user =>
                 <ListItem key={user.id} user={user} />
               )}
             </TableBody>
           </Table>
         </TableWrapper>
-        <TablePagination
-          labelRowsPerPage='items por página'
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-          component='div'
-          count={all.length}
-          rowsPerPage={pageSize}
-          rowsPerPageOptions={[10, 25, 50]}
-          page={page}
-          onChangePage={(event, page) => this.paginate(page, pageSize)}
-          onChangeRowsPerPage={(event) => this.paginate(page, Number(event.target.value))}
-        />
+        {this.renderTablePagination()}
       </Paper >
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}) => {
-  return {
-    ...ownProps,
-    loading: state.user.isFetching,
-    all: state.user.users,
-    error: state.user.error
-  } as IPropsFromConnect;
-};
-
-export default connect<IPropsFromConnect, {}, {}>(mapStateToProps, {
-  requestUserList
-})(UserTabList);

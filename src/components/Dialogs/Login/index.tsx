@@ -3,9 +3,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import { Subscription } from 'rxjs';
 import * as rxjsOperators from 'rxjs-operators';
-import { IBindableComponent } from 'rxjs-operators/bindComponent';
 import authService from 'services/auth';
 
 import LoginDialogForm from './Form';
@@ -34,8 +32,8 @@ interface IProps {
     right: '0',
     bottom: '0',
     margin: 'auto',
-    width: '300px',
-    height: '440px',
+    width: 320,
+    height: 340,
     maxWidth: 'calc(100% - 30px)',
     color: 'white'
   },
@@ -53,9 +51,7 @@ interface IProps {
     height: 310
   }
 }))
-export default class LoginDialog extends PureComponent<IProps, IState> implements IBindableComponent {
-  subscriptions: Subscription[] = [];
-
+export default class LoginDialog extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = { opened: false, currentView: 0 };
@@ -68,10 +64,6 @@ export default class LoginDialog extends PureComponent<IProps, IState> implement
     ).subscribe(opened => {
       this.setState({ opened });
     });
-  }
-
-  componentWillUnmount() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   changeView(view: number) {

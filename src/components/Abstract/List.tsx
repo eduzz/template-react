@@ -6,6 +6,8 @@ import CreationIcon from 'mdi-react/CreationIcon';
 import { Component, Fragment } from 'react';
 import React from 'react';
 
+import { ScrollTopContext } from '../AppWrapper';
+
 export interface IStateList<T = any> {
   page: number;
   pageSize: number;
@@ -18,6 +20,9 @@ export interface IStateList<T = any> {
 }
 
 export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateList<any>> extends Component<P, S> {
+  scrollTop: Function;
+  abstract handleTryAgain: () => void;
+
   constructor(props: P) {
     super(props);
 
@@ -30,7 +35,12 @@ export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateLi
     } as any;
   }
 
-  handlePaginate(page: number = this.state.page, pageSize: number = this.state.pageSize): void {
+  setAllData = (all: S['all']): void => {
+    this.setState({ all, loading: false });
+    this.handlePaginate();
+  }
+
+  handlePaginate = (page: number = this.state.page, pageSize: number = this.state.pageSize): void => {
     const { all, loading } = this.state;
     if (loading) return;
 
@@ -39,24 +49,25 @@ export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateLi
       pageSize,
       page
     });
+
+    this.scrollTop && this.scrollTop();
   }
 
-  renderEmptyAndErrorMessages(props: { columns: number, handleTryAgain: Function }) {
+  renderEmptyAndErrorMessages(numberOfcolumns: number) {
     const { error, items, loading } = this.state;
-    const { columns, handleTryAgain } = props;
 
     return (
       <Fragment>
         {error && !loading &&
           <TableRow>
-            <TableCell colSpan={columns} className='error'>
-              <ErrorMessage error={error} tryAgain={handleTryAgain} />
+            <TableCell colSpan={numberOfcolumns} className='error'>
+              <ErrorMessage error={error} tryAgain={this.handleTryAgain.bind(this)} />
             </TableCell>
           </TableRow>
         }
         {!error && !items.length && !loading &&
           <TableRow>
-            <TableCell colSpan={columns}>
+            <TableCell colSpan={numberOfcolumns}>
               <IconMessage icon={CreationIcon} message='Nenhum usuário criado' />
             </TableCell>
           </TableRow>
@@ -69,18 +80,24 @@ export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateLi
     const { all, page, pageSize } = this.state;
 
     return (
-      <TablePagination
-        labelRowsPerPage='items por página'
-        labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
-        component='div'
-        count={all.length}
-        rowsPerPage={pageSize}
-        rowsPerPageOptions={[10, 25, 50]}
-        page={page}
-        onChangePage={(event, page) => this.handlePaginate(page, pageSize)}
-        onChangeRowsPerPage={(event) => this.handlePaginate(page, Number(event.target.value))}
-        {...props}
-      />
+      <Fragment>
+        <ScrollTopContext.Consumer>
+          {scrollTop => (this.scrollTop = scrollTop) && null}
+        </ScrollTopContext.Consumer>
+
+        <TablePagination
+          labelRowsPerPage='items por página'
+          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          component='div'
+          count={all.length}
+          rowsPerPage={pageSize}
+          rowsPerPageOptions={[10, 25, 50]}
+          page={page}
+          onChangePage={(event, page) => this.handlePaginate(page, pageSize)}
+          onChangeRowsPerPage={(event) => this.handlePaginate(page, Number(event.target.value))}
+          {...props}
+        />
+      </Fragment>
     );
   }
 }

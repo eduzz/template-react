@@ -37,7 +37,7 @@ export class ApiService {
 
     return this.tokenService.getToken().pipe(
       rxjsOperators.first(),
-      rxjsOperators.map(token => token ? { Authorization: `bearer ${token}` } : null),
+      rxjsOperators.map(token => token ? { Authorization: `Bearer ${token}` } : null),
       rxjsOperators.switchMap(headers => {
         return axios.request({
           baseURL: this.apiEndpoint,

@@ -4,16 +4,18 @@ import { MdiReactIconComponentType } from 'mdi-react';
 import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import * as React from 'react';
 
+export interface IOption {
+  text: string;
+  icon?: MdiReactIconComponentType;
+  handler: () => void;
+}
+
 interface IState {
   targetElem?: HTMLElement;
 }
 
 interface IProps {
-  options: {
-    text: string;
-    icon?: MdiReactIconComponentType;
-    handler: () => void
-  }[];
+  options: IOption[];
   classes?: any;
 }
 

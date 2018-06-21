@@ -15,32 +15,31 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     this.state = { model: {} } as any;
   }
 
-  public bindScrollTop(scrollTop: Function): React.ReactNode {
+  public bindScrollTop = (scrollTop: Function): React.ReactNode => {
     this.scrollTop = scrollTop;
     return null;
   }
 
-  public bindValidationContext(validationContext: ValidationContext): void {
+  public bindValidationContext = (validationContext: ValidationContext): void => {
     this.validationContext = validationContext;
   }
 
-  public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
+  public isFormValid = (formSubmitted: boolean = true): boolean => {
     const isValid = this.validationContext.isValid(formSubmitted);
 
     if (!isValid && this.scrollTop) {
       this.scrollTop();
-      // Snackbar.show('Revise os campos');
     }
 
     return isValid;
   }
 
-  public resetForm() {
+  public resetForm = () => {
     this.setState({ model: {}, formSubmitted: false });
     this.validationContext.reset();
   }
 
-  protected updateModel(handler: (model: S['model'], value: any) => void): (value: any) => void {
+  protected updateModel = (handler: (model: S['model'], value: any) => void): (value: any) => void => {
     return (value: any) => {
       const { model } = this.state;
 

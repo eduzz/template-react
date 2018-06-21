@@ -1,75 +1,61 @@
-import { CircularProgress, TableCell, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@material-ui/core';
+import ListItemComponent, { IListItemState } from 'components/Abstract/ListItem';
 import Alert from 'components/Alert';
-import DropdownMenu from 'components/DropdownMenu';
-import ErrorMessageIcon from 'components/ErrorMessageIcon';
 import { IAccessGroup } from 'interfaces/accessGroup';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import EditIcon from 'mdi-react/EditIcon';
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import {
-  cleanAccessGroupDeleteError,
-  openAccessGroupFormModal,
-  requestAccessGroupDelete,
-} from 'store/actionCreators/accessGroup';
+import rxjsOperators from 'rxjs-operators';
+import accessGroupService from 'services/accessGroup';
+
+interface IState extends IListItemState {
+
+}
 
 interface IProps {
   accessGroup: IAccessGroup;
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
-interface IPropsFromConnect {
-  requestAccessGroupDelete?: typeof requestAccessGroupDelete;
-  cleanAccessGroupDeleteError?: typeof cleanAccessGroupDeleteError;
-  openAccessGroupFormModal?: typeof openAccessGroupFormModal;
-}
-
-class ListItem extends React.PureComponent<IProps & IPropsFromConnect> {
-
-  async delete() {
-    const { accessGroup } = this.props;
+export default class ListItem extends ListItemComponent<IProps, IState> {
+  handleDelete = async () => {
+    const { accessGroup, onDelete } = this.props;
 
     const ok = await Alert.confirm(`Deseja excluir o grupo ${accessGroup.name}?`);
     if (!ok) return;
 
-    this.props.requestAccessGroupDelete(accessGroup);
+    this.setState({ loading: true });
+
+    accessGroupService.delete(accessGroup).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(() => {
+      onDelete();
+    }, error => {
+      this.setState({ loading: false, error });
+    });
   }
 
   render(): JSX.Element {
-    const { accessGroup, cleanAccessGroupDeleteError, openAccessGroupFormModal } = this.props;
+    const { accessGroup } = this.props;
 
     return (
       <TableRow>
         <TableCell>{accessGroup.id}</TableCell>
         <TableCell>{accessGroup.name}</TableCell>
         <TableCell>
-          {accessGroup.isFetching && <CircularProgress color='secondary' size={20} />}
-          {!accessGroup.isFetching && accessGroup.error &&
-            <ErrorMessageIcon error={accessGroup.error} onDismiss={() => cleanAccessGroupDeleteError(accessGroup)} />
-          }
-          {!accessGroup.isFetching && !accessGroup.error &&
-            <DropdownMenu options={[{
-              text: 'Editar',
-              icon: EditIcon,
-              handler: () => openAccessGroupFormModal(accessGroup)
-            }, {
-              text: 'Excluir',
-              icon: DeleteIcon,
-              handler: () => this.delete()
-            }]} />
-          }
+          {this.renderSideMenu([{
+            text: 'Editar',
+            icon: EditIcon,
+            handler: () => { }
+          }, {
+            text: 'Excluir',
+            icon: DeleteIcon,
+            handler: this.handleDelete
+          }])}
         </TableCell>
       </TableRow>
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: IProps) => {
-  return {};
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  requestAccessGroupDelete,
-  cleanAccessGroupDeleteError,
-  openAccessGroupFormModal
-})(ListItem);

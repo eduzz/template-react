@@ -5,9 +5,7 @@ import { WithStyles } from 'decorators/withStyles';
 import FieldText from 'material-ui-form-fields/components/Text';
 import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
 import * as React from 'react';
-import { Subscription } from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
-import { IBindableComponent } from 'rxjs-operators/bindComponent';
 import authService from 'services/auth';
 
 interface IState extends IStateForm<{
@@ -29,9 +27,7 @@ interface IProps {
     maxWidth: 'calc(95vw - 50px)'
   }
 })
-export default class ChangePasswordDialog extends FormComponent<IProps, IState> implements IBindableComponent {
-  subscriptions: Subscription[] = [];
-
+export default class ChangePasswordDialog extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = { ...this.state, opened: false, loading: false };
@@ -44,10 +40,6 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     ).subscribe(opened => {
       this.setState({ opened });
     });
-  }
-
-  componentWillUnmount() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   onCancel() {

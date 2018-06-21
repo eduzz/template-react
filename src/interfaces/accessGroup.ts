@@ -1,7 +1,6 @@
 import { IAccessGroupModule } from './accessGroupModule';
-import { IStoreItemStatus } from './storeItemStatus';
 
-export interface IAccessGroup extends IStoreItemStatus {
+export interface IAccessGroup {
   id: number;
   name: string;
   modules?: Array<IAccessGroupModule & {

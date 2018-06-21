@@ -8,8 +8,8 @@ interface IProps {
   hasTabs?: boolean;
   actions: {
     icon: MdiReactIconComponentType,
-    tooltip: string;
-    onClick: Function;
+    tooltip?: string;
+    onClick: () => void;
   }[];
 }
 
@@ -41,11 +41,19 @@ export default class FabButton extends PureComponent<IProps> {
 
     return (
       <div className={classes.root + ' header-app ' + (hasTabs ? classes.withTabs : '')}>
-        <Tooltip title={action.tooltip}>
-          <Button variant='fab' color='secondary' onClick={() => action.onClick()}>
+        {action.tooltip &&
+          <Tooltip title={action.tooltip}>
+            <Button variant='fab' color='secondary' onClick={action.onClick}>
+              <action.icon />
+            </Button>
+          </Tooltip>
+        }
+
+        {!action.tooltip &&
+          <Button variant='fab' color='secondary' onClick={action.onClick}>
             <action.icon />
           </Button>
-        </Tooltip>
+        }
       </div>
     );
   }

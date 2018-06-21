@@ -8,7 +8,7 @@ export class CourseService {
   constructor(private apiService: ApiService) { }
 
   public list(): rxjs.Observable<ICourse[]> {
-    return this.apiService.get('/courses').pipe(
+    return this.apiService.get('/user/courses?page=1&size=10&search=').pipe(
       rxjsOperators.map(c => c.data)
     );
   }

@@ -1,11 +1,11 @@
 import { Observable, Operator, Subscriber, Subscription, TeardownLogic } from 'rxjs';
 
-export interface IBindableComponent {
-  subscriptions: Subscription[];
-  componentWillUnmount(): void;
+interface IBindableComponent {
+  bindComponentSubscriptions?: Subscription[];
+  componentWillUnmount?(): void;
 }
 
-export function bindComponent<T>(component: IBindableComponent) {
+export function bindComponent<T>(component: React.Component) {
   return (source: Observable<T>) => source.lift<T>(new BindComponentOperator(component));
 }
 
@@ -15,11 +15,21 @@ class BindComponentOperator<T> implements Operator<T, T> {
   public call(subscriber: Subscriber<any>, source: Observable<any>): TeardownLogic {
     const subscription = source.subscribe(subscriber);
 
-    if (!this.component.subscriptions) {
-      this.component.subscriptions = [];
+    if (!this.component.bindComponentSubscriptions) {
+      this.component.bindComponentSubscriptions = [];
+
+      const originalWillUnmount = this.component.componentWillUnmount;
+      this.component.componentWillUnmount = () => {
+        console.log('unmounting');
+        this.component.bindComponentSubscriptions.forEach((s: Subscription) => {
+          s.unsubscribe();
+        });
+
+        originalWillUnmount && originalWillUnmount();
+      };
     }
 
-    this.component.subscriptions.push(subscription);
+    this.component.bindComponentSubscriptions.push(subscription);
     return subscription;
   }
 }

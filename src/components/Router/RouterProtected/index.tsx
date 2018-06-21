@@ -2,8 +2,7 @@ import { IAppRoute } from 'interfaces/route';
 import * as React from 'react';
 import { PureComponent } from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import { Subscription } from 'rxjs';
-import rxjsOperators, { IBindableComponent } from 'rxjs-operators';
+import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState {
@@ -16,9 +15,7 @@ interface IProps {
   routeProps: RouteComponentProps<any>;
 }
 
-export default class AppRouterProtected extends PureComponent<IProps, IState> implements IBindableComponent {
-  subscriptions: Subscription[] = [];
-
+export default class AppRouterProtected extends PureComponent<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.state = { isAuthenticated: false, canAccess: false };
@@ -39,10 +36,6 @@ export default class AppRouterProtected extends PureComponent<IProps, IState> im
         canAccess: true //TODO: check access
       });
     });
-  }
-
-  componentWillUnmount() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   public render(): JSX.Element {
