@@ -1,4 +1,5 @@
 import { LinearProgress, TableCell, TablePagination, TableRow, TableSortLabel } from '@material-ui/core';
+import { TableCellProps } from '@material-ui/core/TableCell';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
 import ErrorMessage from 'components/ErrorMessage';
 import IconMessage from 'components/IconMessage';
@@ -36,6 +37,17 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
       total: 0,
       loading: true
     } as any;
+  }
+
+  get sortableProps() {
+    const { loading, orderBy, orderDirection } = this.state;
+
+    return {
+      loading,
+      currentColumn: orderBy,
+      currentDirection: orderDirection,
+      onChange: this.handleSort
+    };
   }
 
   mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
@@ -167,22 +179,27 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
 }
 
-interface ITableCellSortableProps extends IStateList {
+interface ITableCellSortableProps extends TableCellProps {
+  loading: boolean;
+  currentColumn: string;
+  currentDirection: 'asc' | 'desc';
   column: string;
   children?: React.ReactNode;
-  onChange: (columns: string) => void;
+  onChange: (column: any) => void;
 }
 
 export function TableCellSortable(props: ITableCellSortableProps) {
-  const { orderBy, orderDirection, onChange, column, loading } = props;
+  const { currentColumn, currentDirection, onChange, column, loading, ...extra } = props;
+
   return (
     <TableCell
-      sortDirection={orderBy === column ? orderDirection : false}
+      {...extra}
+      sortDirection={currentColumn === column ? currentDirection : false}
     >
       <TableSortLabel
         disabled={loading}
-        active={orderBy === column}
-        direction={orderDirection}
+        active={currentColumn === column}
+        direction={currentDirection}
         onClick={() => onChange(column)}
       >
         {props.children}

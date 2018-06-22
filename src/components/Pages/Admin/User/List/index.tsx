@@ -73,10 +73,10 @@ export default class UserListPage extends ListComponent<{}, IState> {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCellSortable {...this.state} column='fullName' onChange={this.handleSort}>
+                  <TableCellSortable {...this.sortableProps} column='fullName'>
                     Nome
                   </TableCellSortable>
-                  <TableCellSortable {...this.state} column='email' onChange={this.handleSort}>
+                  <TableCellSortable {...this.sortableProps} column='email'>
                     Email
                   </TableCellSortable>
                   <TableCell>
