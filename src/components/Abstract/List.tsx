@@ -1,4 +1,4 @@
-import { LinearProgress, TableCell, TablePagination, TableRow } from '@material-ui/core';
+import { LinearProgress, TableCell, TablePagination, TableRow, TableSortLabel } from '@material-ui/core';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
 import ErrorMessage from 'components/ErrorMessage';
 import IconMessage from 'components/IconMessage';
@@ -22,13 +22,15 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   scrollTop: Function;
   isPaginatedData: boolean = false;
 
-  abstract handleTryAgain: () => void;
+  abstract loadData: (params?: Partial<IPaginationParams>) => void;
 
-  constructor(props: P) {
+  constructor(props: P, orderBy: string = null, orderDirection: string = 'asc') {
     super(props);
     this.state = {
       page: 0,
       pageSize: 10,
+      orderBy,
+      orderDirection,
       items: [],
       allItems: [],
       total: 0,
@@ -62,20 +64,36 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   handlePaginate = (page: number, pageSize: number): void => {
-    if (this.isPaginatedData) {
-      throw new Error('The data was paginated by the server, you must override this method');
-    }
-
     const { allItems, loading } = this.state;
     if (loading) return;
+
+    if (this.isPaginatedData) {
+      this.loadData({ page, pageSize });
+      this.scrollTop && this.scrollTop();
+      return;
+    }
 
     this.setState({
       items: allItems.slice(pageSize * page, (pageSize * page) + pageSize),
       pageSize,
-      page
+      page,
+      loading: false,
     });
 
     this.scrollTop && this.scrollTop();
+  }
+
+  handleTryAgain = () => {
+    this.loadData();
+  }
+
+  handleSort = (column: string) => {
+    const { orderBy, orderDirection, pageSize } = this.state;
+
+    this.setState({
+      orderBy: column,
+      orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
+    }, () => this.handlePaginate(0, pageSize));
   }
 
   renderLoader = () => {
@@ -103,7 +121,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         {error && !loading &&
           <TableRow>
             <TableCell colSpan={numberOfcolumns} className='error'>
-              <ErrorMessage error={error} tryAgain={this.handleTryAgain.bind(this)} />
+              <ErrorMessage error={error} tryAgain={this.handleTryAgain} />
             </TableCell>
           </TableRow>
         }
@@ -142,4 +160,29 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
       </div>
     );
   }
+
+}
+
+interface ITableCellSortableProps extends IStateList {
+  column: string;
+  children?: React.ReactNode;
+  onChange: (columns: string) => void;
+}
+
+export function TableCellSortable(props: ITableCellSortableProps) {
+  const { orderBy, orderDirection, onChange, column, loading } = props;
+  return (
+    <TableCell
+      sortDirection={orderBy === column ? orderDirection : false}
+    >
+      <TableSortLabel
+        disabled={loading}
+        active={orderBy === column}
+        direction={orderDirection}
+        onClick={() => onChange(column)}
+      >
+        {props.children}
+      </TableSortLabel>
+    </TableCell>
+  );
 }

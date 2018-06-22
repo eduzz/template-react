@@ -1,5 +1,5 @@
 import { Card, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { IStateList, ListComponent } from 'components/Abstract/List';
+import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import FabButton from 'components/FabButton';
 import TableWrapper from 'components/TableWrapper';
 import Toolbar from 'components/Toolbar';
@@ -19,6 +19,10 @@ interface IState extends IStateList<IUser> {
 }
 
 export default class UserListPage extends ListComponent<{}, IState> {
+  constructor(props: {}) {
+    super(props, 'firstName');
+  }
+
   componentDidMount() {
     this.loadData();
   }
@@ -27,6 +31,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
     this.setState({ loading: true });
 
     userService.list(this.mergeParams(params)).pipe(
+      rxjsOperators.delay(500),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(items => {
@@ -34,15 +39,6 @@ export default class UserListPage extends ListComponent<{}, IState> {
     }, error => {
       this.setState({ error, loading: false });
     });
-  }
-
-  handleTryAgain = () => {
-    this.loadData();
-  }
-
-  handlePaginate = (page: number, pageSize: number): void => {
-    this.loadData({ page, pageSize });
-    this.scrollTop && this.scrollTop();
   }
 
   formOpen = () => {
@@ -79,8 +75,12 @@ export default class UserListPage extends ListComponent<{}, IState> {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>Nome</TableCell>
-                  <TableCell>Email</TableCell>
+                  <TableCellSortable {...this.state} column='firstName' onChange={this.handleSort}>
+                    Nome
+                  </TableCellSortable>
+                  <TableCellSortable {...this.state} column='email' onChange={this.handleSort}>
+                    Email
+                  </TableCellSortable>
                   <TableCell>
                     <IconButton disabled={loading} onClick={() => this.loadData()}>
                       <RefreshIcon />
