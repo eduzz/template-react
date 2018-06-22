@@ -1,0 +1,10 @@
+node_modules
+build
+.vscode
+scripts
+.editorconfig
+docker-compose.yml
+README.md
+docker
+.env.local
+.env

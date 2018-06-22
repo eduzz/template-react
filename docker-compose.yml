@@ -1,0 +1,11 @@
+version: '2'
+services:
+
+  web:
+    container_name: church-web
+    build: docker/dev
+    ports:
+      - "3000:3000"
+      - "35729:35729"
+    volumes:
+      - .:/src:cached
