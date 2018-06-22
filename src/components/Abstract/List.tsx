@@ -1,63 +1,105 @@
-import { TableCell, TablePagination, TableRow } from '@material-ui/core';
+import { LinearProgress, TableCell, TablePagination, TableRow } from '@material-ui/core';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
 import ErrorMessage from 'components/ErrorMessage';
 import IconMessage from 'components/IconMessage';
+import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import CreationIcon from 'mdi-react/CreationIcon';
-import { Component, Fragment } from 'react';
+import { Fragment, PureComponent } from 'react';
 import React from 'react';
 
 import { ScrollTopContext } from '../AppWrapper';
 
-export interface IStateList<T = any> {
-  page: number;
-  pageSize: number;
-
+export interface IStateList<T = any> extends IPaginationParams {
   items: T[];
-  all: T[];
+  allItems: T[];
+  totalRows: number;
 
   error?: any;
   loading: boolean;
 }
 
-export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateList<any>> extends Component<P, S> {
+export abstract class ListComponent<P = {}, S extends IStateList = IStateList<any>> extends PureComponent<P, S> {
   scrollTop: Function;
+  isPaginatedData: boolean = false;
+
   abstract handleTryAgain: () => void;
 
   constructor(props: P) {
     super(props);
-
     this.state = {
       page: 0,
-      pageSize: 10,
+      size: 10,
       items: [],
-      all: [],
+      allItems: [],
+      totalRows: 0,
       loading: true
     } as any;
   }
 
-  setAllData = (all: S['all']): void => {
-    this.setState({ all, loading: false });
-    this.handlePaginate();
+  mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
+    const { term, page, size, orderBy, orderDirection } = this.state;
+    return { term, page, size, orderBy, orderDirection, ...params };
   }
 
-  handlePaginate = (page: number = this.state.page, pageSize: number = this.state.pageSize): void => {
-    const { all, loading } = this.state;
+  setPaginatedData = (data: IStateList['items'][0], paginator: IPaginationResponse) => {
+    const { totalPages, ...others } = paginator;
+    this.isPaginatedData = true;
+
+    this.setState({
+      ...others,
+      items: data,
+      allItems: data,
+      loading: false
+    });
+  }
+
+  setAllItems = (allItems: S['allItems']): void => {
+    const { page, size } = this.state;
+    this.isPaginatedData = false;
+
+    this.setState({ allItems, totalRows: allItems.length, loading: false });
+    this.handlePaginate(page, size);
+  }
+
+  handlePaginate = (page: number, size: number): void => {
+    if (this.isPaginatedData) {
+      throw new Error('The data was paginated by the server, you must override this method');
+    }
+
+    const { allItems, loading } = this.state;
     if (loading) return;
 
     this.setState({
-      items: all.slice(pageSize * page, (pageSize * page) + pageSize),
-      pageSize,
+      items: allItems.slice(size * page, (size * page) + size),
+      size,
       page
     });
 
     this.scrollTop && this.scrollTop();
   }
 
-  renderEmptyAndErrorMessages(numberOfcolumns: number) {
+  renderLoader = () => {
+    const { loading } = this.state;
+
+    return (
+      <div style={{ height: 5 }}>
+        {loading && <LinearProgress color='secondary' />}
+      </div>
+    );
+  }
+
+  renderEmptyAndErrorMessages = (numberOfcolumns: number) => {
     const { error, items, loading } = this.state;
 
     return (
       <Fragment>
+        {loading && !items.length &&
+          <TableRow>
+            <TableCell className='empty' colSpan={numberOfcolumns}>
+              Carregando...
+            </TableCell>
+          </TableRow>
+        }
         {error && !loading &&
           <TableRow>
             <TableCell colSpan={numberOfcolumns} className='error'>
@@ -68,7 +110,7 @@ export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateLi
         {!error && !items.length && !loading &&
           <TableRow>
             <TableCell colSpan={numberOfcolumns}>
-              <IconMessage icon={CreationIcon} message='Nenhum usuário criado' />
+              <IconMessage icon={CreationIcon} message='Está vázio por aqui...' />
             </TableCell>
           </TableRow>
         }
@@ -76,11 +118,11 @@ export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateLi
     );
   }
 
-  renderTablePagination(props: Partial<TablePaginationProps> = {}) {
-    const { all, page, pageSize } = this.state;
+  renderTablePagination = (props: Partial<TablePaginationProps> = {}) => {
+    const { totalRows, page, size, loading } = this.state;
 
     return (
-      <Fragment>
+      <div style={loading ? { pointerEvents: 'none', opacity: 0.7 } : null}>
         <ScrollTopContext.Consumer>
           {scrollTop => (this.scrollTop = scrollTop) && null}
         </ScrollTopContext.Consumer>
@@ -89,15 +131,15 @@ export abstract class ListComponent<P = {}, S extends IStateList<any> = IStateLi
           labelRowsPerPage='items por página'
           labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
           component='div'
-          count={all.length}
-          rowsPerPage={pageSize}
+          count={totalRows}
+          rowsPerPage={size}
           rowsPerPageOptions={[10, 25, 50]}
           page={page}
-          onChangePage={(event, page) => this.handlePaginate(page, pageSize)}
+          onChangePage={(event, page) => this.handlePaginate(page, size)}
           onChangeRowsPerPage={(event) => this.handlePaginate(page, Number(event.target.value))}
           {...props}
         />
-      </Fragment>
+      </div>
     );
   }
 }

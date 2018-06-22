@@ -1,4 +1,4 @@
-import { IconButton, LinearProgress, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { IStateList, ListComponent } from 'components/Abstract/List';
 import FabButton from 'components/FabButton';
 import UserFormDialog from 'components/Pages/User/UserFormDialog';
@@ -28,7 +28,7 @@ export default class UserTabList extends ListComponent<{}, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(items => {
-      this.setAllData(items);
+      this.setAllItems(items);
     }, error => {
       this.setState({ error, loading: false });
     });
@@ -50,7 +50,7 @@ export default class UserTabList extends ListComponent<{}, IState> {
   }
 
   render() {
-    const { items, loading, formOpened } = this.state;
+    const { items, formOpened } = this.state;
 
     return (
       <Paper>
@@ -64,7 +64,7 @@ export default class UserTabList extends ListComponent<{}, IState> {
           onComplete={() => this.formCallback(true)}
           onCancel={() => this.formCallback(false)} />
 
-        {loading && <LinearProgress color='secondary' />}
+        {this.renderLoader()}
         <TableWrapper>
           <Table>
             <TableHead>
