@@ -20,7 +20,7 @@ interface IState extends IStateList<IUser> {
 
 export default class UserListPage extends ListComponent<{}, IState> {
   constructor(props: {}) {
-    super(props, 'firstName');
+    super(props, 'fullName');
   }
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
   }
 
   loadData = (params: Partial<IPaginationParams> = {}) => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: null });
 
     userService.list(this.mergeParams(params)).pipe(
       rxjsOperators.delay(500),
@@ -36,9 +36,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
       rxjsOperators.bindComponent(this)
     ).subscribe(items => {
       this.setPaginatedData(items);
-    }, error => {
-      this.setState({ error, loading: false });
-    });
+    }, error => this.setError(error));
   }
 
   formOpen = () => {
@@ -71,11 +69,11 @@ export default class UserListPage extends ListComponent<{}, IState> {
             onCancel={() => this.formCallback(false)} />
 
           {this.renderLoader()}
-          <TableWrapper>
+          <TableWrapper minWidth={500}>
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCellSortable {...this.state} column='firstName' onChange={this.handleSort}>
+                  <TableCellSortable {...this.state} column='fullName' onChange={this.handleSort}>
                     Nome
                   </TableCellSortable>
                   <TableCellSortable {...this.state} column='email' onChange={this.handleSort}>

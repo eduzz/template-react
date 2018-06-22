@@ -24,7 +24,7 @@ export default class ListItem extends ListItemComponent<IProps> {
 
     return (
       <TableRow>
-        <TableCell>{user.firstName}</TableCell>
+        <TableCell>{user.fullName}</TableCell>
         <TableCell>{user.email}</TableCell>
         <TableCell>
           {this.renderSideMenu([{

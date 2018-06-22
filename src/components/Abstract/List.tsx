@@ -43,6 +43,10 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     return { term, page, pageSize, orderBy, orderDirection, ...params };
   }
 
+  setError = (error: any) => {
+    this.setState({ error, items: [], allItems: [], loading: false });
+  }
+
   setPaginatedData = (data: IPaginationResponse<S['items'][0]>) => {
     const { results, ...others } = data;
     this.isPaginatedData = true;
@@ -146,7 +150,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         </ScrollTopContext.Consumer>
 
         <TablePagination
-          labelRowsPerPage='items por página'
+          labelRowsPerPage='items'
           labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
           component='div'
           count={total}
