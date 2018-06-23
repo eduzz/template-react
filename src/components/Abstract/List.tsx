@@ -1,8 +1,10 @@
-import { LinearProgress, TableCell, TablePagination, TableRow } from '@material-ui/core';
+import { LinearProgress, TableCell, TablePagination, TableRow, TableSortLabel } from '@material-ui/core';
+import { TableCellProps } from '@material-ui/core/TableCell';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
 import ErrorMessage from 'components/ErrorMessage';
 import IconMessage from 'components/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
+import lodashOrderBy from 'lodash/orderBy';
 import CreationIcon from 'mdi-react/CreationIcon';
 import { Fragment, PureComponent } from 'react';
 import React from 'react';
@@ -22,13 +24,15 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   scrollTop: Function;
   isPaginatedData: boolean = false;
 
-  abstract handleTryAgain: () => void;
+  abstract loadData: (params?: Partial<IPaginationParams>) => void;
 
-  constructor(props: P) {
+  constructor(props: P, orderBy: string = null, orderDirection: string = 'asc') {
     super(props);
     this.state = {
       page: 0,
       size: 10,
+      orderBy,
+      orderDirection,
       items: [],
       allItems: [],
       totalRows: 0,
@@ -36,9 +40,24 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     } as any;
   }
 
+  get sortableProps() {
+    const { loading, orderBy, orderDirection } = this.state;
+
+    return {
+      loading,
+      currentColumn: orderBy,
+      currentDirection: orderDirection,
+      onChange: this.handleSort
+    };
+  }
+
   mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
     const { term, page, size, orderBy, orderDirection } = this.state;
     return { term, page, size, orderBy, orderDirection, ...params };
+  }
+
+  setError = (error: any) => {
+    this.setState({ error, items: [], allItems: [], loading: false });
   }
 
   setPaginatedData = (data: IStateList['items'][0], paginator: IPaginationResponse) => {
@@ -54,28 +73,49 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   setAllItems = (allItems: S['allItems']): void => {
-    const { page, size } = this.state;
+    const { page, size, orderBy, orderDirection } = this.state;
     this.isPaginatedData = false;
 
-    this.setState({ allItems, totalRows: allItems.length, loading: false });
-    this.handlePaginate(page, size);
+    if (orderBy) {
+      allItems = lodashOrderBy(allItems, orderBy, orderDirection);
+    }
+
+    const items = allItems.slice(size * page, (size * page) + size);
+    this.setState({ allItems, items, totalRows: allItems.length, loading: false });
   }
 
   handlePaginate = (page: number, size: number): void => {
-    if (this.isPaginatedData) {
-      throw new Error('The data was paginated by the server, you must override this method');
-    }
-
     const { allItems, loading } = this.state;
     if (loading) return;
 
-    this.setState({
-      items: allItems.slice(size * page, (size * page) + size),
-      size,
-      page
-    });
+    if (this.isPaginatedData) {
+      this.loadData({ page, size });
+      this.scrollTop && this.scrollTop();
+      return;
+    }
 
+    const items = allItems.slice(size * page, (size * page) + size);
+    this.setState({ items, size, page, loading: false, });
     this.scrollTop && this.scrollTop();
+  }
+
+  handleTryAgain = () => {
+    this.loadData();
+  }
+
+  handleSort = (column: string) => {
+    let { orderBy, orderDirection, allItems, size } = this.state;
+    orderDirection = column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc';
+
+    if (!this.isPaginatedData) {
+      allItems = lodashOrderBy(allItems, column, orderDirection);
+    }
+
+    this.setState({
+      allItems,
+      orderBy: column,
+      orderDirection
+    }, () => this.handlePaginate(0, size));
   }
 
   renderLoader = () => {
@@ -103,7 +143,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         {error && !loading &&
           <TableRow>
             <TableCell colSpan={numberOfcolumns} className='error'>
-              <ErrorMessage error={error} tryAgain={this.handleTryAgain.bind(this)} />
+              <ErrorMessage error={error} tryAgain={this.handleTryAgain} />
             </TableCell>
           </TableRow>
         }
@@ -128,7 +168,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         </ScrollTopContext.Consumer>
 
         <TablePagination
-          labelRowsPerPage='items por página'
+          labelRowsPerPage='items'
           labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
           component='div'
           count={totalRows}
@@ -142,4 +182,34 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
       </div>
     );
   }
+
+}
+
+interface ITableCellSortableProps extends TableCellProps {
+  loading: boolean;
+  currentColumn: string;
+  currentDirection: 'asc' | 'desc';
+  column: string;
+  children?: React.ReactNode;
+  onChange: (column: any) => void;
+}
+
+export function TableCellSortable(props: ITableCellSortableProps) {
+  const { currentColumn, currentDirection, onChange, column, loading, ...extra } = props;
+
+  return (
+    <TableCell
+      {...extra}
+      sortDirection={currentColumn === column ? currentDirection : false}
+    >
+      <TableSortLabel
+        disabled={loading}
+        active={currentColumn === column}
+        direction={currentDirection}
+        onClick={() => onChange(column)}
+      >
+        {props.children}
+      </TableSortLabel>
+    </TableCell>
+  );
 }

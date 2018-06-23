@@ -1,15 +1,15 @@
 import { MdiReactIconComponentType } from 'mdi-react';
+import { ComponentClass } from 'react';
 
 export interface IAppRoute {
   path: string;
   exact?: boolean;
-  component: any;
+  component: ComponentClass & { routes?: IAppRoute[] };
   allowAnonymous?: boolean;
   sideDrawer?: {
     icon?: MdiReactIconComponentType;
-    order?: number;
     display: string;
+    order?: number;
   };
   roles?: string[];
-  subRoutes?: IAppRoute[];
 }

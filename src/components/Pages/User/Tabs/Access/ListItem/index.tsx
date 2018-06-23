@@ -14,7 +14,7 @@ interface IState extends IListItemState {
 
 interface IProps {
   accessGroup: IAccessGroup;
-  onEdit: () => void;
+  onEdit: (accessGroup: IAccessGroup) => void;
   onDelete: () => void;
 }
 
@@ -38,7 +38,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
   }
 
   render(): JSX.Element {
-    const { accessGroup } = this.props;
+    const { accessGroup, onEdit } = this.props;
 
     return (
       <TableRow>
@@ -48,7 +48,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
           {this.renderSideMenu([{
             text: 'Editar',
             icon: EditIcon,
-            handler: () => { }
+            handler: () => onEdit(accessGroup)
           }, {
             text: 'Excluir',
             icon: DeleteIcon,

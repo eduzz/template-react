@@ -43,6 +43,12 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     return (value: any) => {
       const { model } = this.state;
 
+      if ((value || {} as any).target) {
+        value = value.target.type === 'checkbox' ?
+          value.target.checked :
+          value;
+      }
+
       handler(model, value);
 
       this.setState({ model });

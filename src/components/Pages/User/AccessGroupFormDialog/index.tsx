@@ -32,6 +32,7 @@ interface IProps {
   onComplete: () => void;
   onCancel: () => void;
   classes?: any;
+  model?: IAccessGroup;
 }
 
 @WithStyles(theme => ({
@@ -60,6 +61,12 @@ interface IProps {
   }
 }))
 export default class AccessGroupFormDialog extends FormComponent<IProps, IState> {
+  handleEnter = () => {
+    this.setState({ model: this.props.model || {} }, () => {
+      this.loadData();
+    });
+  }
+
   loadData = () => {
     this.setState({ loading: true });
 
@@ -68,10 +75,17 @@ export default class AccessGroupFormDialog extends FormComponent<IProps, IState>
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(modules => {
+      const { model } = this.state;
+
       this.setState({
         model: {
-          ...this.state.model,
-          modules
+          ...model,
+          modules: modules.map(m => {
+            return {
+              ...m,
+              ...(model.modules.find(c => c.id === m.id) || {})
+            };
+          })
         },
         loading: false
       });
@@ -111,7 +125,7 @@ export default class AccessGroupFormDialog extends FormComponent<IProps, IState>
         open={opened}
         disableBackdropClick
         disableEscapeKeyDown
-        onEnter={this.loadData}
+        onEnter={this.handleEnter}
         onExited={this.resetForm}
         TransitionComponent={Transition}>
 
@@ -149,7 +163,9 @@ export default class AccessGroupFormDialog extends FormComponent<IProps, IState>
                     <tbody>
                       {(model.modules || []).map(module =>
                         <tr key={module.id}>
-                          <td><Typography>{module.name}</Typography></td>
+                          <td>
+                            <Typography>{module.name}</Typography>
+                          </td>
                           <td>
                             <Checkbox
                               checked={module.view || false}

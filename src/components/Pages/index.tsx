@@ -22,15 +22,14 @@ export default class AdminModule extends React.PureComponent {
       path: '/user',
       sideDrawer: { display: 'Usuários', order: 1, icon: PeopleIcon },
       roles: ['admin'],
-      component: UserIndexPage,
-      subRoutes: UserIndexPage.routes
+      component: UserIndexPage
     },
     {
       path: '/',
       sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
       roles: [],
-      component: DashboardIndexPage,
-      subRoutes: DashboardIndexPage.routes
+      exact: true,
+      component: DashboardIndexPage
     },
   ];
 

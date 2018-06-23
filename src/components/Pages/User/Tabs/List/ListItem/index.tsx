@@ -4,19 +4,31 @@ import Alert from 'components/Alert';
 import { IUser } from 'interfaces/user';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import * as React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import userService from 'services/user';
 
 interface IProps {
   user: IUser;
+  onDelete: (user: IUser) => void;
 }
 
 export default class ListItem extends ListItemComponent<IProps> {
   async delete() {
-    const { user } = this.props;
+    const { user, onDelete } = this.props;
 
-    const ok = await Alert.confirm(`Deseja excluir o usuário ${user.name}?`);
-    if (!ok) return;
+    const isOk = await Alert.confirm(`Deseja excluir o usuário ${user.name}?`);
+    if (!isOk) return;
 
-    // this.props.requestUserDelete(user);
+    this.setState({ loading: true });
+
+    userService.delete(user).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(() => {
+      onDelete(user);
+    }, error => {
+      this.setState({ error, loading: false });
+    });
   }
 
   render(): JSX.Element {

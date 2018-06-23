@@ -1,5 +1,5 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { IStateList, ListComponent } from 'components/Abstract/List';
+import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import FabButton from 'components/FabButton';
 import UserFormDialog from 'components/Pages/User/UserFormDialog';
 import TableWrapper from 'components/TableWrapper';
@@ -17,6 +17,10 @@ interface IState extends IStateList<IUser> {
 }
 
 export default class UserTabList extends ListComponent<{}, IState> {
+  constructor(props: {}) {
+    super(props, 'name');
+  }
+
   componentDidMount() {
     this.loadData();
   }
@@ -69,7 +73,9 @@ export default class UserTabList extends ListComponent<{}, IState> {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Nome</TableCell>
+                <TableCellSortable {...this.sortableProps} column='name'>
+                  Nome
+                </TableCellSortable>
                 <TableCell>Email</TableCell>
                 <TableCell>Curso</TableCell>
                 <TableCell>Grupo</TableCell>
@@ -83,7 +89,7 @@ export default class UserTabList extends ListComponent<{}, IState> {
             <TableBody>
               {this.renderEmptyAndErrorMessages(5)}
               {items.map(user =>
-                <ListItem key={user.id} user={user} />
+                <ListItem key={user.id} user={user} onDelete={this.loadData} />
               )}
             </TableBody>
           </Table>

@@ -1,5 +1,5 @@
 import { IconButton, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { IStateList, ListComponent } from 'components/Abstract/List';
+import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import FabButton from 'components/FabButton';
 import AccessGroupFormDialog from 'components/Pages/User/AccessGroupFormDialog';
 import TableWrapper from 'components/TableWrapper';
@@ -14,9 +14,14 @@ import ListItem from './ListItem';
 
 interface IState extends IStateList<IAccessGroup> {
   formOpened?: boolean;
+  current?: IAccessGroup;
 }
 
 export default class UserTabAccess extends ListComponent<{}, IState> {
+  constructor(props: {}) {
+    super(props, 'id');
+  }
+
   componentDidMount() {
     this.loadData();
   }
@@ -38,8 +43,8 @@ export default class UserTabAccess extends ListComponent<{}, IState> {
     this.loadData();
   }
 
-  formOpen = () => {
-    this.setState({ formOpened: true });
+  formOpen = (accessGroup?: IAccessGroup) => {
+    this.setState({ formOpened: true, current: accessGroup });
   }
 
   formCallback = (reload: boolean) => {
@@ -50,7 +55,7 @@ export default class UserTabAccess extends ListComponent<{}, IState> {
   }
 
   render() {
-    const { items, formOpened } = this.state;
+    const { items, formOpened, current } = this.state;
 
     return (
       <Paper>
@@ -61,6 +66,7 @@ export default class UserTabAccess extends ListComponent<{}, IState> {
 
         <AccessGroupFormDialog
           opened={formOpened || false}
+          model={current}
           onComplete={() => this.formCallback(true)}
           onCancel={() => this.formCallback(false)} />
 
@@ -69,8 +75,12 @@ export default class UserTabAccess extends ListComponent<{}, IState> {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell style={{ width: 80 }}>#</TableCell>
-                <TableCell>Nome</TableCell>
+                <TableCellSortable style={{ width: 80 }} {...this.sortableProps} column='id'>
+                  #
+                </TableCellSortable>
+                <TableCellSortable {...this.sortableProps} column='name'>
+                  Nome
+                </TableCellSortable>
                 <TableCell>
                   <IconButton onClick={this.loadData}>
                     <RefreshIcon />
@@ -85,7 +95,7 @@ export default class UserTabAccess extends ListComponent<{}, IState> {
                   key={accessGroup.id}
                   accessGroup={accessGroup}
                   onDelete={this.loadData}
-                  onEdit={() => null}
+                  onEdit={this.formOpen}
                 />
               )}
             </TableBody>

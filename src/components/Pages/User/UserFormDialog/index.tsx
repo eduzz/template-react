@@ -99,6 +99,7 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
         disableEscapeKeyDown
         onEnter={this.loadData}
         onExited={this.resetForm}
+        disableEnforceFocus
         TransitionComponent={Transition}>
 
         {loading && <LinearProgress color='secondary' />}
@@ -114,13 +115,21 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
               {!error &&
                 <Fragment>
                   <FieldText
+                    label='Nome'
+                    disabled={loading}
+                    value={model.name}
+                    validation='required|min:3'
+                    onChange={this.updateModel((model, v) => model.name = v)}
+                    margin='none'
+                  />
+
+                  <FieldText
                     label='Email'
                     type='email'
                     disabled={loading}
                     value={model.email}
                     validation='required|email'
                     onChange={this.updateModel((model, v) => model.email = v)}
-                    margin='none'
                   />
 
                   <FieldSelect
