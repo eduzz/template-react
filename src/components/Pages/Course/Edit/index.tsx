@@ -1,4 +1,5 @@
 import { Button, Card, CardContent, CircularProgress, Tab, Tabs } from '@material-ui/core';
+import { ScrollTopContext } from 'components/AppWrapper';
 import ErrorMessage from 'components/ErrorMessage';
 import Snackbar from 'components/Snackbar';
 import Toolbar from 'components/Toolbar';
@@ -7,18 +8,8 @@ import { WithStyles } from 'decorators/withStyles';
 import { ICourse } from 'interfaces/course';
 import { IAppRoute } from 'interfaces/route';
 import React, { Fragment, PureComponent } from 'react';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { IAppStoreState } from 'store';
-import {
-  cleanCourseAdvancedSaveError,
-  cleanCourseCustomizationSaveError,
-  cleanCourseSaveError,
-  clearGet,
-  requestGet,
-} from 'store/actionCreators/course';
 
-import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
 import CourseAdvancedForm from '../FormParts/Advanced';
 import CourseCustomizationForm from '../FormParts/Customization';
@@ -28,24 +19,14 @@ interface IState {
   course?: ICourse;
   courseId: number;
   currentTab: number;
-}
-
-interface IProps extends RouteComponentProps<{ id: number }> {
-  classes?: any;
-}
-
-interface IPropsFromConnect {
-  course: ICourse;
 
   loadingError: any;
   saving: boolean;
   savingError: any;
+}
 
-  requestGet?: typeof requestGet;
-  clearGet?: typeof clearGet;
-  cleanCourseSaveError?: typeof cleanCourseSaveError;
-  cleanCourseAdvancedSaveError?: typeof cleanCourseAdvancedSaveError;
-  cleanCourseCustomizationSaveError?: typeof cleanCourseCustomizationSaveError;
+interface IProps extends RouteComponentProps<{ id: number }> {
+  classes?: any;
 }
 
 @WithStyles({
@@ -60,26 +41,15 @@ interface IPropsFromConnect {
     marginLeft: 10
   }
 })
-class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState> {
+export default class CourseWizardPage extends PureComponent<IProps, IState> {
   static routes: IAppRoute[] = [];
 
   scrollTop: Function;
   formManager: FormManager;
 
-  constructor(props: IProps & IPropsFromConnect) {
+  constructor(props: IProps) {
     super(props);
     this.state = { ...this.state, courseId: props.match.params.id, currentTab: 2 };
-  }
-
-  static getDerivedStateFromProps(nextProps: IProps & IPropsFromConnect, currentState: IState): IState {
-    const propCourse = nextProps.course && nextProps.course.id == currentState.courseId ?
-      nextProps.course :
-      null;
-
-    return {
-      ...currentState,
-      course: currentState.course || propCourse
-    };
   }
 
   componentDidMount() {
@@ -87,8 +57,8 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
   }
 
   load() {
-    const { courseId } = this.state;
-    this.props.requestGet(courseId);
+    // const { courseId } = this.state;
+    // this.props.requestGet(courseId);
   }
 
   onTabChange(event: any, tab: number) {
@@ -107,15 +77,9 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
     Snackbar.show('Curso atualizado');
   }
 
-  handleClearError() {
-    this.props.cleanCourseSaveError();
-    this.props.cleanCourseAdvancedSaveError();
-    this.props.cleanCourseCustomizationSaveError();
-  }
-
   render() {
-    const { currentTab, course } = this.state;
-    const { classes, saving, loadingError } = this.props;
+    const { currentTab, course, saving, loadingError } = this.state;
+    const { classes } = this.props;
 
     return (
       <Fragment>
@@ -182,26 +146,3 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
-  return {
-    course: state.course.get.course,
-    loadingError: state.course.get.error,
-    saving:
-      state.course.save.isSaving ||
-      state.course.saveAdvanced.isSaving ||
-      state.course.saveCustomization.isSaving,
-    savingError:
-      state.course.save.error ||
-      state.course.saveAdvanced.error ||
-      state.course.saveCustomization.error
-  };
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  requestGet,
-  clearGet,
-  cleanCourseSaveError,
-  cleanCourseAdvancedSaveError,
-  cleanCourseCustomizationSaveError
-})(CourseWizardPage);

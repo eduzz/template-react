@@ -1,23 +1,25 @@
-import { FormComponent, IStateForm } from 'components/FormComponent';
+import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import { ScrollTopContext } from 'components/AppWrapper';
+import React, { Fragment } from 'react';
 
-import { ICourseFormContext } from '.';
+import { CourseFormContext, ICourseFormContext } from '.';
 
 export default abstract class CourseFormBase<P= {}, S extends IStateForm = any> extends FormComponent<P, S>  {
   formContext: ICourseFormContext = null;
 
   abstract name: string;
-  abstract doSave(): Promise<any>;
-  abstract canSave(): { canSave: boolean, reason?: string };
+  abstract doSave: () => Promise<any>;
+  abstract canSave: () => { canSave: boolean, reason?: string };
 
-  isFormValid(): boolean {
+  isFormValid = (): boolean => {
     return this.formContext.canSave();
   }
 
-  setFormSubmitted() {
+  setFormSubmitted = () => {
     this.setState({ formSubmitted: true });
   }
 
-  setContext(newContext: ICourseFormContext): React.ReactNode {
+  setContext = (newContext: ICourseFormContext): React.ReactNode => {
     if (newContext === this.formContext) return null;
 
     this.formContext && this.formContext.unregister(this);
@@ -32,5 +34,20 @@ export default abstract class CourseFormBase<P= {}, S extends IStateForm = any> 
 
   componentWillUnmount() {
     this.formContext && this.formContext.unregister && this.formContext.unregister(this);
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <ScrollTopContext.Consumer>
+          {this.bindScrollTop}
+        </ScrollTopContext.Consumer>
+
+        <CourseFormContext.Consumer>
+          {this.setContext}
+        </CourseFormContext.Consumer>
+      </Fragment>
+
+    );
   }
 }

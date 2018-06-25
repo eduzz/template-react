@@ -1,17 +1,12 @@
 import { CardContent, Divider, Grid, Typography } from '@material-ui/core';
-import { ScrollTopContext } from 'components/AppWrapper';
-import { IStateForm } from 'components/FormComponent';
+import { IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
 import { booleanToFake, fakeToBoolean } from 'formatters/fakeBoolean';
 import { enCourseAccessType, ICourse, ICourseAdvanced } from 'interfaces/course';
 import { FieldDate, FieldHtml, FieldRadio, FieldSwitch, FieldText } from 'material-ui-form-fields';
 import moment from 'moment';
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
-import { requestCourseAdvancedSave } from 'store/actionCreators/course';
 
-import { CourseFormContext } from '..';
 import CourseFormBase from '../Base';
 
 interface IProps {
@@ -20,12 +15,8 @@ interface IProps {
 }
 
 interface IState extends IStateForm<ICourseAdvanced & { releaseEnd?: Date }> {
-}
-
-interface IPropsFromConnect {
   saving: boolean;
   savingError?: any;
-  requestCourseAdvancedSave?: typeof requestCourseAdvancedSave;
 }
 
 @WithStyles({
@@ -34,12 +25,11 @@ interface IPropsFromConnect {
     marginBottom: 10
   }
 })
-class CourseAdvancedForm extends CourseFormBase<IProps & IPropsFromConnect, IState> {
+export default class CourseAdvancedForm extends CourseFormBase<IProps, IState> {
   name = 'CourseAdvancedForm';
 
   constructor(props: IProps) {
     super(props);
-
     const { course: { advanced } } = this.props;
 
     this.state = {
@@ -66,15 +56,15 @@ class CourseAdvancedForm extends CourseFormBase<IProps & IPropsFromConnect, ISta
     };
   }
 
-  async doSave() {
-    const { model } = this.state;
-    const { course, requestCourseAdvancedSave } = this.props;
+  doSave = async () => {
+    // const { model } = this.state;
+    // const { course, requestCourseAdvancedSave } = this.props;
 
-    course.advanced = model as any;
-    return await requestCourseAdvancedSave(course, this.state.model as any);
+    // course.advanced = model as any;
+    // return await requestCourseAdvancedSave(course, this.state.model as any);
   }
 
-  canSave() {
+  canSave = () => {
     const { model } = this.state;
 
     if (model.accessType === undefined || model.accessType === null) {
@@ -93,21 +83,14 @@ class CourseAdvancedForm extends CourseFormBase<IProps & IPropsFromConnect, ISta
   }
 
   render() {
-    const { model, formSubmitted } = this.state;
-    const { classes, saving } = this.props;
+    const { model, formSubmitted, saving } = this.state;
+    const { classes } = this.props;
 
     return (
       <Fragment>
-        <ScrollTopContext.Consumer>
-          {this.bindScrollTop.bind(this)}
-        </ScrollTopContext.Consumer>
-
-        <CourseFormContext.Consumer>
-          {context => this.setContext(context)}
-        </CourseFormContext.Consumer>
+        {super.render()}
 
         <CardContent>
-
           <Typography variant='subheading'>Tipo de Acesso *</Typography>
           {formSubmitted && (model.accessType === undefined || model.accessType === null) &&
             <Typography color='error'>Selecione um tipo de acesso</Typography>
@@ -321,14 +304,3 @@ class CourseAdvancedForm extends CourseFormBase<IProps & IPropsFromConnect, ISta
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
-  return {
-    saving: state.course.saveAdvanced.isSaving,
-    savingError: state.course.saveAdvanced.error
-  };
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  requestCourseAdvancedSave
-})(CourseAdvancedForm);

@@ -19,8 +19,6 @@ import { ICourse } from 'interfaces/course';
 import { IAppRoute } from 'interfaces/route';
 import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import React, { Fragment, PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { IAppStoreState } from 'store';
 
 import FormManager from '../FormParts';
 import CourseAdvancedForm from '../FormParts/Advanced';
@@ -29,15 +27,12 @@ import CourseEssentialForm from '../FormParts/Essentials';
 
 interface IState {
   course?: ICourse;
+  saving: boolean;
   currentStep: 0 | 1 | 2;
 }
 
 interface IProps {
   classes?: any;
-}
-
-interface IPropsFromConnect {
-  saving: boolean;
 }
 
 @WithStyles({
@@ -55,13 +50,13 @@ interface IPropsFromConnect {
     marginLeft: 10
   }
 })
-class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState> {
+export default class CourseWizardPage extends PureComponent<IProps, IState> {
   static routes: IAppRoute[] = [];
 
   scrollTop: Function;
   getRouter: () => AppRouter;
 
-  constructor(props: IProps & IPropsFromConnect) {
+  constructor(props: IProps) {
     super(props);
     this.state = { ...this.state, currentStep: 0 };
   }
@@ -97,8 +92,8 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
   }
 
   render() {
-    const { currentStep, course } = this.state;
-    const { classes, saving } = this.props;
+    const { currentStep, course, saving } = this.state;
+    const { classes } = this.props;
 
     return (
       <Fragment>
@@ -158,15 +153,3 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
     );
   }
 }
-
-const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect => {
-  return {
-    saving:
-      state.course.save.isSaving ||
-      state.course.saveAdvanced.isSaving ||
-      state.course.saveCustomization.isSaving
-  };
-};
-
-export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-})(CourseWizardPage);

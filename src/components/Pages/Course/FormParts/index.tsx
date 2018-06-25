@@ -1,8 +1,8 @@
+import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { ICourse } from 'interfaces/course';
 import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
 import React from 'react';
 
-import { FormComponent } from '../../../FormComponent';
 import CourseFormBase from './Base';
 
 export interface ICourseFormContext {
@@ -21,7 +21,7 @@ interface IProps {
   onSubmit(manager: FormManager): void;
 }
 
-export default class FormManager extends FormComponent<IProps> {
+export default class FormManager extends FormComponent<IProps, IStateForm> {
   components: CourseFormBase[] = [];
   registerCurrentStepper: ICourseFormContext = {
     register: (component) => {
@@ -58,7 +58,7 @@ export default class FormManager extends FormComponent<IProps> {
     }
   }
 
-  onSubmit(ev: Event) {
+  onSubmit = (ev: Event) => {
     ev.preventDefault();
     this.props.onSubmit(this);
   }
