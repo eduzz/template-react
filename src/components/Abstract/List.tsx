@@ -12,8 +12,8 @@ import React from 'react';
 import { ScrollTopContext } from '../AppWrapper';
 
 export interface IStateList<T = any> extends IPaginationParams {
-  items: T[];
-  allItems: T[];
+  items: ReadonlyArray<T>;
+  allItems: ReadonlyArray<T>;
   totalRows: number;
 
   error?: any;

@@ -1,12 +1,11 @@
 import { IAppRoute } from 'interfaces/route';
-import * as React from 'react';
+import { PureComponent } from 'react';
 
-import AuthorDialog from './AuthorDialog';
 import CourseCreatePage from './Create';
 import CourseEditPage from './Edit';
 import CourseListPage from './List';
 
-export default class CourseIndexPage extends React.PureComponent {
+export default class CourseIndexPage extends PureComponent {
   public static routes: IAppRoute[] = [{
     path: '/',
     exact: true,
@@ -20,11 +19,6 @@ export default class CourseIndexPage extends React.PureComponent {
   }];
 
   render() {
-    return (
-      <div>
-        <AuthorDialog />
-        {this.props.children}
-      </div>
-    );
+    return this.props.children;
   }
 }

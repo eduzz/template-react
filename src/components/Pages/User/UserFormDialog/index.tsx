@@ -47,7 +47,7 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
     this.setState({ loading: true });
 
     rxjs.combineLatest(
-      courseService.list(),
+      courseService.list({ page: 1, size: 10 }),
       accessGroupService.list(),
     ).pipe(
       rxjsOperators.cache('access-group-form-data'),

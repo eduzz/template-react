@@ -4,7 +4,7 @@ import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
 export class AccessGroupService {
-  private data = new Array(5).fill('').map<IAccessGroup>((v, index) => ({
+  private data: ReadonlyArray<IAccessGroup> = new Array(5).fill('').map<IAccessGroup>((v, index) => ({
     id: index + 1,
     name: 'Group ' + (index + 1),
     modules: [{
@@ -18,7 +18,7 @@ export class AccessGroupService {
 
   constructor() { }
 
-  public list(): rxjs.Observable<IAccessGroup[]> {
+  public list(): rxjs.Observable<ReadonlyArray<IAccessGroup>> {
     return rxjs.of(this.data).pipe(
       rxjsOperators.delay(400)
     );
@@ -39,7 +39,18 @@ export class AccessGroupService {
     return rxjs.of(model).pipe(
       rxjsOperators.delay(400),
       rxjsOperators.map(() => {
-        this.data.push({ ...model, id: Date.now() });
+        if (!model.id) {
+          this.data = [
+            ...this.data,
+            { ...model, id: Date.now() }
+          ];
+          return;
+        }
+
+        this.data = [
+          model,
+          ...this.data.filter(d => d.id !== model.id)
+        ];
       })
     );
   }

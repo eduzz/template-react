@@ -3,7 +3,7 @@ import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
 export class UserService {
-  private users = new Array(50).fill('').map<IUser>((v, index) => ({
+  private users: ReadonlyArray<IUser> = new Array(50).fill('').map<IUser>((v, index) => ({
     id: index + 1,
     name: 'Daniel Prado ' + (index + 1),
     email: `daniel.prado.${index}@eduzz.com`,
@@ -13,7 +13,7 @@ export class UserService {
 
   constructor() { }
 
-  public list(): rxjs.Observable<IUser[]> {
+  public list(): rxjs.Observable<ReadonlyArray<IUser>> {
     return rxjs.of(this.users).pipe(
       rxjsOperators.delay(400)
     );
@@ -23,7 +23,18 @@ export class UserService {
     return rxjs.of(model).pipe(
       rxjsOperators.delay(400),
       rxjsOperators.map(() => {
-        this.users.push({ ...model, id: Date.now() });
+        if (!model.id) {
+          this.users = [
+            ...this.users,
+            { ...model, id: Date.now() }
+          ];
+          return;
+        }
+
+        this.users = [
+          model,
+          ...this.users.filter(u => u.id !== model.id)
+        ];
       })
     );
   }
