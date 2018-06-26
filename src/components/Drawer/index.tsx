@@ -1,15 +1,21 @@
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import AppDrawerUser from 'components/Drawer/UserMenu';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
+import { IUserToken } from 'interfaces/userToken';
 import React, { PureComponent } from 'react';
+import rxjsOperators from 'rxjs-operators';
+import authService from 'services/auth';
 
 import { DrawerContext, IDrawerContext } from '../AppWrapper';
+import DrawerListItem from './ListItem';
+import { IAppRouteParsed, parseRoutes } from './parser';
 
 interface IState {
-  routes: IAppRoute[];
+  user?: IUserToken;
+  routes: IAppRouteParsed[];
 }
 
 interface IProps {
@@ -35,15 +41,6 @@ interface IProps {
   },
   list: {
     padding: 0
-  },
-  item: {
-    paddingLeft: 14
-  },
-  icon: {
-    margin: '0'
-  },
-  text: {
-    color: 'inherit'
   }
 }))
 export default class AppDrawer extends PureComponent<IProps, IState> {
@@ -58,20 +55,24 @@ export default class AppDrawer extends PureComponent<IProps, IState> {
   static getDerivedStateFromProps(props: IProps, currentState: IState): IState {
     return {
       ...currentState,
-      routes: props.routes.filter(r => r.sideDrawer).sort((a, b) => {
-        return a.sideDrawer.order > b.sideDrawer.order ? 1 :
-          a.sideDrawer.order < b.sideDrawer.order ? -1 : 0;
-      })
+      routes: parseRoutes(props.routes)
     };
   }
 
-  toRoute = (route: IAppRoute) => () => {
+  componentDidMount() {
+    authService.getUser().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(user => this.setState({ user }));
+  }
+
+  toRoute = (route: IAppRoute) => {
     this.drawer.close();
     this.getRouter().navigate(route.path);
   }
 
   render() {
-    const { routes } = this.state;
+    const { routes, user } = this.state;
     const { classes } = this.props;
 
     return (
@@ -86,19 +87,12 @@ export default class AppDrawer extends PureComponent<IProps, IState> {
 
         <div className={classes.header}>
           <img src={require('assets/images/logo-white.png')} className={classes.logo} />
-          <AppDrawerUser />
+          <AppDrawerUser user={user} />
         </div>
 
         <List className={classes.list}>
-          {routes.map((route, index) =>
-            <ListItem button key={index} className={classes.item} onClick={this.toRoute(route)}>
-              {!!route.sideDrawer.icon &&
-                <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
-                  <route.sideDrawer.icon />
-                </ListItemIcon>
-              }
-              <ListItemText primary={route.sideDrawer.display} classes={{ primary: classes.text }} />
-            </ListItem>
+          {routes.map(route =>
+            <DrawerListItem key={route.path} user={user} route={route} onClick={this.toRoute} />
           )}
         </List>
       </div>

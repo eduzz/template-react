@@ -7,6 +7,7 @@ export default class UserIndexPage extends PureComponent {
   public static routes: IAppRoute[] = [{
     path: '/',
     exact: true,
+    sideDrawer: { display: 'Lista' },
     component: UserListPage
   }];
 

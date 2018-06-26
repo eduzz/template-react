@@ -9,11 +9,8 @@ import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
-interface IState {
-  user?: IUserToken;
-}
-
 interface IProps {
+  user: IUserToken;
   classes?: any;
 }
 
@@ -32,19 +29,12 @@ interface IProps {
     marginBottom: '2px'
   }
 }))
-export default class AppDrawerUser extends PureComponent<IProps, IState> {
+export default class AppDrawerUser extends PureComponent<IProps> {
   drawer: IDrawerContext;
 
   constructor(props: IProps) {
     super(props);
     this.state = { user: null };
-  }
-
-  componentDidMount() {
-    authService.getUser().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(user => this.setState({ user }));
   }
 
   handleChangePassword = () => {
@@ -61,8 +51,11 @@ export default class AppDrawerUser extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { user } = this.state;
-    const { classes } = this.props;
+    const { classes, user } = this.props;
+
+    if (!user) {
+      return null;
+    }
 
     return (
       <Fragment>
@@ -74,7 +67,7 @@ export default class AppDrawerUser extends PureComponent<IProps, IState> {
           <Grid item xs={true} >
             <Typography variant='body2' color='inherit' className={classes.text}>
               <small className={classes.textSmall}>Bem vindo</small>
-              {user && user.firstName}
+              {user.firstName}
             </Typography>
           </Grid>
           <Grid item>
