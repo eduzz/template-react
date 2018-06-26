@@ -23,7 +23,7 @@ class App extends React.PureComponent {
     super(props);
   }
 
-  getRouter() {
+  getRouter = () => {
     return this.router;
   }
 
@@ -37,7 +37,7 @@ class App extends React.PureComponent {
           <Alert.Global />
           <Snackbar.Global />
 
-          <RouterContext.Provider value={this.getRouter.bind(this)}>
+          <RouterContext.Provider value={this.getRouter}>
             <AppRouter routes={baseRoutes} ref={ref => this.router = ref} />
           </RouterContext.Provider>
         </MuiThemeProvider>

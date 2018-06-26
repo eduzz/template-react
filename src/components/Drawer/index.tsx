@@ -65,7 +65,7 @@ export default class AppDrawer extends PureComponent<IProps, IState> {
     };
   }
 
-  toRoute(route: IAppRoute) {
+  toRoute = (route: IAppRoute) => () => {
     this.drawer.close();
     this.getRouter().navigate(route.path);
   }
@@ -91,7 +91,7 @@ export default class AppDrawer extends PureComponent<IProps, IState> {
 
         <List className={classes.list}>
           {routes.map((route, index) =>
-            <ListItem button key={index} className={classes.item} onClick={this.toRoute.bind(this, route)}>
+            <ListItem button key={index} className={classes.item} onClick={this.toRoute(route)}>
               {!!route.sideDrawer.icon &&
                 <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
                   <route.sideDrawer.icon />

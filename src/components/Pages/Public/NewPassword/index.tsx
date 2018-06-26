@@ -40,13 +40,14 @@ interface IProps extends RouteComponentProps<{ t: string }, {}> {
     right: '0',
     bottom: '0',
     margin: 'auto',
-    width: '300px',
-    height: '440px',
+    width: '320px',
+    height: '400px',
     maxWidth: 'calc(100% - 30px)',
     color: 'white'
   },
   logo: {
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: 20
   },
   logoImage: {
     maxWidth: '100%',
@@ -78,7 +79,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     };
   }
 
-  async onSubmit(event: Event) {
+  onSubmit = async (event: React.FormEvent) => {
     const { model, token, tokenData } = this.state;
 
     event.preventDefault();
@@ -123,8 +124,8 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
             <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
           </div>
 
-          <form onSubmit={this.onSubmit.bind(this)} noValidate>
-            <ValidationContext ref={this.bindValidationContext.bind(this)}>
+          <form onSubmit={this.onSubmit} noValidate>
+            <ValidationContext ref={this.bindValidationContext}>
 
               <Card>
                 <CardContent>

@@ -36,7 +36,7 @@ interface IProps {
 export default class Toolbar extends PureComponent<IProps> {
   drawer: IDrawerContext;
 
-  openDrawer() {
+  openDrawer = () => {
     this.drawer.open();
   }
 
@@ -53,7 +53,7 @@ export default class Toolbar extends PureComponent<IProps> {
           <AppBar className={classes.appBar} elevation={1}>
             <CoreToolbar>
               <IconButton color='inherit'
-                onClick={this.openDrawer.bind(this)}
+                onClick={this.openDrawer}
                 className={classes.iconMenu}>
                 <MenuIcon />
               </IconButton>

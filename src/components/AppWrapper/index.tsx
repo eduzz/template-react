@@ -51,22 +51,28 @@ export const ScrollTopContext = React.createContext<Function>((() => { }));
 }))
 export default class AppWrapper extends PureComponent<IProps, IState> {
   mainContent: HTMLMainElement;
-  drawerContext = {
-    open: this.toogleDrawer.bind(this, true),
-    close: this.toogleDrawer.bind(this, false)
-  };
+  drawerContext: IDrawerContext;
 
   constructor(props: IProps) {
     super(props);
+    this.drawerContext = {
+      open: this.openDrawer,
+      close: this.closeDrawer
+    };
+
     this.state = { drawerOpened: false };
   }
 
-  scrollTop() {
+  scrollTop = () => {
     setTimeout(() => this.mainContent.scrollTo(0, 0), 100);
   }
 
-  toogleDrawer(drawerOpened: boolean) {
-    this.setState({ drawerOpened });
+  openDrawer = () => {
+    this.setState({ drawerOpened: true });
+  }
+
+  closeDrawer = () => {
+    this.setState({ drawerOpened: false });
   }
 
   render() {
@@ -96,7 +102,7 @@ export default class AppWrapper extends PureComponent<IProps, IState> {
               {items}
             </Drawer>
           </Hidden>
-          <ScrollTopContext.Provider value={this.scrollTop.bind(this)}>
+          <ScrollTopContext.Provider value={this.scrollTop}>
             <main ref={ref => this.mainContent = ref} className={classes.content}>
               {children}
             </main>

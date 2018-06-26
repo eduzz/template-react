@@ -37,8 +37,6 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
-
-    this.reCalculateRegion = this.reCalculateRegion.bind(this);
     this.state = { image: null };
   }
 
@@ -50,29 +48,29 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
     window.removeEventListener('resize', this.reCalculateRegion);
   }
 
-  onExited() {
+  onExited = () => {
     this.setState({ image: null });
   }
 
-  async handleSave() {
+  handleSave = async () => {
     const { width, height } = this.props;
 
     const result = await imageCompress(this.cropper.crop(), width, height);
     this.props.onComplete(result);
   }
 
-  handleCancel() {
+  handleCancel = () => {
     this.props.onComplete(null);
   }
 
-  setImage(image: ImageReaderResult) {
+  setImage = (image: ImageReaderResult) => {
     this.setState({ image: null });
 
     const dimentions = this.calculateRegion(image.width, image.height);
     this.setState({ image, dimentions });
   }
 
-  reCalculateRegion() {
+  reCalculateRegion = () => {
     clearTimeout(this.resizeTimeout);
     this.resizeTimeout = setTimeout(() => {
       const { image, dimentions } = this.state;
@@ -90,7 +88,7 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
     }, 500);
   }
 
-  calculateRegion(width: number, height: number): IState['dimentions'] {
+  calculateRegion = (width: number, height: number): IState['dimentions'] => {
     const dialogWidth = window.innerWidth - 90;
     const dialogHeight = window.innerHeight - 180;
 
@@ -118,7 +116,7 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
           maxWidth={false}
           disableBackdropClick
           disableEscapeKeyDown
-          onExited={this.onExited.bind(this)}
+          onExited={this.onExited}
           TransitionComponent={Transition}>
 
           <DialogTitle>
@@ -157,8 +155,8 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
 
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCancel.bind(this)}>Cancelar</Button>
-            <Button disabled={!image} color='secondary' onClick={this.handleSave.bind(this)}>OK</Button>
+            <Button onClick={this.handleCancel}>Cancelar</Button>
+            <Button disabled={!image} color='secondary' onClick={this.handleSave}>OK</Button>
           </DialogActions>
         </Dialog>
       </Fragment>

@@ -9,8 +9,8 @@ interface IState {
   timeout?: number;
 }
 
-let lastPromise = Promise.resolve(false);
-let globalSnackbar: (message: string, error: any, timeout?: number) => Promise<boolean>;
+let lastPromise = Promise.resolve();
+let globalSnackbar: (message: string, error: any, timeout?: number) => Promise<void>;
 
 export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
   promiseResolve: () => void;
@@ -20,7 +20,7 @@ export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
     this.state = { opened: false };
   }
 
-  static async show(message: string, error: any, timeout?: number): Promise<boolean> {
+  static async show(message: string, error: any, timeout?: number): Promise<void> {
     if (!globalSnackbar) throw new Error('Please, initialize an Snackbar.Global before');
 
     //prevent an Snackbar to overhide another
@@ -32,10 +32,10 @@ export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
 
   componentDidMount() {
     if (globalSnackbar) throw new Error('Only one Snackbar.Global can be initialized');
-    globalSnackbar = this.show.bind(this);
+    globalSnackbar = this.show;
   }
 
-  show(message: string, error: any, timeout?: number): Promise<void> {
+  show = (message: string, error: any, timeout?: number): Promise<void> => {
     const result = new Promise<void>(resolve => {
       this.promiseResolve = resolve;
       this.setState({ opened: true, message, error, timeout });
@@ -45,7 +45,7 @@ export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
     return result;
   }
 
-  onClose() {
+  handleClose = () => {
     this.promiseResolve && this.promiseResolve();
   }
 
@@ -58,7 +58,7 @@ export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
         message={message}
         error={error}
         timeout={timeout}
-        onClose={this.onClose.bind(this)}
+        onClose={this.handleClose}
       />
     );
   }

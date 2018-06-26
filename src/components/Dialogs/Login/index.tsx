@@ -66,7 +66,7 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
     });
   }
 
-  changeView(view: number) {
+  changeView = (view: number) => () => {
     this.setState({ currentView: view });
   }
 
@@ -91,12 +91,12 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
 
             <SwipeableViews index={currentView}>
               <div className={classes.viewContainer}>
-                <LoginDialogForm onRecoveryAccess={this.changeView.bind(this, 1)} />
+                <LoginDialogForm onRecoveryAccess={this.changeView(1)} />
               </div>
               <div className={classes.viewContainer}>
                 <LoginDialogRecoveryAccess
-                  onCancel={this.changeView.bind(this, 0)}
-                  onComplete={this.changeView.bind(this, 0)}
+                  onCancel={this.changeView(0)}
+                  onComplete={this.changeView(0)}
                 />
               </div>
             </SwipeableViews>

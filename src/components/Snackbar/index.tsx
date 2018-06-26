@@ -69,21 +69,21 @@ export default class Snackbar extends PureComponent<IProps, IState> {
     return SnackbarGlobalProvider.show(null, error);
   }
 
-  handleClose(event: any, reason: string) {
+  handleClose = (event: any, reason: string) => {
     if (reason === 'clickaway') return;
     this.props.onClose();
   }
 
   public render(): JSX.Element {
     const { opened, message, isError } = this.state;
-    const { timeout, classes } = this.props;
+    const { timeout, classes, onClose } = this.props;
 
     return (
       <CoreSnackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={opened}
         autoHideDuration={timeout || SNACKBAR_DEFAULT_TIMEOUT}
-        onClose={this.handleClose.bind(this)}
+        onClose={this.handleClose}
         message={<span>{message}</span>}
         className={classes.wrapper}
         ContentProps={{ className: isError ? classes.contentError : null }}
@@ -92,7 +92,7 @@ export default class Snackbar extends PureComponent<IProps, IState> {
             key='close'
             color='inherit'
             className='close'
-            onClick={this.handleClose.bind(this, null, 'close')}>
+            onClick={onClose}>
             <CloseIcon />
           </IconButton>
         ]}

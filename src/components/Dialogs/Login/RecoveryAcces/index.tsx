@@ -4,7 +4,7 @@ import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import FieldText from 'material-ui-form-fields/components/Text';
 import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
-import React, { MouseEvent } from 'react';
+import React, { FormEvent, MouseEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
@@ -32,7 +32,7 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     this.state = { ...this.state, opened: false, loading: false };
   }
 
-  async onSubmit(event: Event) {
+  onSubmit = async (event: FormEvent) => {
     const { model } = this.state;
 
     event.preventDefault();
@@ -62,8 +62,8 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     const { classes, onCancel } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit.bind(this)} noValidate>
-        <ValidationContext ref={this.bindValidationContext.bind(this)}>
+      <form onSubmit={this.onSubmit} noValidate>
+        <ValidationContext ref={this.bindValidationContext}>
 
           <Card>
             <CardContent>

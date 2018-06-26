@@ -37,8 +37,6 @@ export default class TableWrapper extends PureComponent<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
-
-    this.onScroll = this.onScroll.bind(this);
     this.state = { scrollEnded: true };
   }
 
@@ -53,7 +51,7 @@ export default class TableWrapper extends PureComponent<IProps, IState> {
     window.removeEventListener('resize', this.onScroll);
   }
 
-  onScroll() {
+  onScroll = () => {
     const endScroll = this.root.scrollWidth - this.root.clientWidth - 10;
     this.setState({ scrollEnded: this.root.scrollLeft >= endScroll });
   }

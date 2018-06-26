@@ -1,8 +1,9 @@
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@material-ui/core';
-import { WithStyles } from 'decorators/withStyles';
+import { IconButton, Menu } from '@material-ui/core';
 import { MdiReactIconComponentType } from 'mdi-react';
 import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import * as React from 'react';
+
+import OptionItem from './OptionItem';
 
 export interface IOption {
   text: string;
@@ -16,56 +17,44 @@ interface IState {
 
 interface IProps {
   options: IOption[];
-  classes?: any;
 }
 
-@WithStyles({
-  text: {
-    paddingLeft: '0 !important'
-  }
-})
 export default class DropdownMenu extends React.PureComponent<IProps, IState> {
   constructor(props: any) {
     super(props);
     this.state = {};
   }
 
-  open(event: any) {
+  handleOpen = (event: React.MouseEvent<HTMLElement>) => {
     this.setState({ targetElem: event.currentTarget });
   }
 
-  close(handler: Function) {
+  handleClose = () => {
     this.setState({ targetElem: null });
+  }
 
-    if (typeof handler !== 'function') return;
-    handler();
+  handleClick = (option: IOption) => {
+    this.handleClose();
+    option.handler();
   }
 
   render() {
     const { targetElem } = this.state;
-    const { options, classes } = this.props;
+    const { options } = this.props;
 
     return (
       <div>
-        <IconButton onClick={this.open.bind(this)} color='inherit'>
+        <IconButton onClick={this.handleOpen} color='inherit'>
           <MoreVertIcon />
         </IconButton>
 
         <Menu
           anchorEl={targetElem}
           open={!!targetElem}
-          onClose={this.close.bind(this)}>
-          {options.map((option, i) =>
-            <MenuItem
-              key={i}
-              onClick={this.close.bind(this, option.handler)}>
-              {!!option.icon &&
-                <ListItemIcon>
-                  <option.icon />
-                </ListItemIcon>
-              }
-              <ListItemText className={option.icon ? classes.text : null} inset primary={option.text} />
-            </MenuItem>
+          onClose={this.handleClose}
+        >
+          {options.map(option =>
+            <OptionItem key={option.text} option={option} onClick={this.handleClick} />
           )}
         </Menu>
       </div>

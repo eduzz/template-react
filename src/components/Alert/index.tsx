@@ -66,8 +66,12 @@ export default class Alert extends React.Component<IProps, IState> {
     return AlertGlobalProvider.show({ ...paramsData, confirmation: true });
   }
 
-  onClose = (ok: boolean) => {
-    this.props.onClose && this.props.onClose(ok);
+  handleOk = () => {
+    this.props.onClose(true);
+  }
+
+  handleCancel = () => {
+    this.props.onClose(false);
   }
 
   render() {
@@ -79,7 +83,7 @@ export default class Alert extends React.Component<IProps, IState> {
         open={opened}
         keepMounted
         TransitionComponent={Transition}
-        onClose={this.onClose.bind(this, false)}
+        onClose={this.handleCancel}
         className={classes.root}
       >
         <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
@@ -90,11 +94,11 @@ export default class Alert extends React.Component<IProps, IState> {
         </DialogContent>
         <DialogActions>
           {confirmation &&
-            <Button onClick={this.onClose.bind(this, false)} autoFocus>
+            <Button onClick={this.handleCancel} autoFocus>
               Cancelar
             </Button>
           }
-          <Button autoFocus={!confirmation} onClick={this.onClose.bind(this, true)} color='primary'>
+          <Button autoFocus={!confirmation} onClick={this.handleOk} color='primary'>
             OK
           </Button>
         </DialogActions>

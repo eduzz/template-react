@@ -6,7 +6,6 @@ import { IUserToken } from 'interfaces/userToken';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
-import { Subscription } from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
@@ -34,7 +33,6 @@ interface IProps {
   }
 }))
 export default class AppDrawerUser extends PureComponent<IProps, IState> {
-  subscriptions: Subscription[] = [];
   drawer: IDrawerContext;
 
   constructor(props: IProps) {
@@ -49,15 +47,11 @@ export default class AppDrawerUser extends PureComponent<IProps, IState> {
     ).subscribe(user => this.setState({ user }));
   }
 
-  componentWillUnmount() {
-    this.subscriptions.forEach(s => s.unsubscribe());
-  }
-
-  handleChangePassword() {
+  handleChangePassword = () => {
     authService.openChangePassword();
   }
 
-  handleLogout() {
+  handleLogout = () => {
     this.drawer.close();
 
     authService.logout().pipe(
@@ -87,11 +81,11 @@ export default class AppDrawerUser extends PureComponent<IProps, IState> {
             <DropdownMenu options={[{
               text: 'Trocar senha',
               icon: KeyVariantIcon,
-              handler: this.handleChangePassword.bind(this)
+              handler: this.handleChangePassword
             }, {
               text: 'Sair',
               icon: ExitToAppIcon,
-              handler: this.handleLogout.bind(this)
+              handler: this.handleLogout
             }]} />
           </Grid>
         </Grid>

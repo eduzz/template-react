@@ -2,8 +2,8 @@ import AppRouterProtected from 'components/Router/RouterProtected';
 import { History } from 'history';
 import { IAppRoute } from 'interfaces/route';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 interface IState {
   loaded: boolean;
@@ -64,6 +64,8 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     const path = (baseUrl + route.path)
       .replace(/\/\//gi, '/')
       .replace(/\/$/gi, '') || '/';
+
+    console.log(path, route);
 
     return (
       <Route key={route.path} exact={route.exact} path={path}

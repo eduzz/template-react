@@ -42,11 +42,11 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     });
   }
 
-  onCancel() {
+  onCancel = () => {
     authService.closeChangePassword();
   }
 
-  async onSubmit(event: Event) {
+  onSubmit = async (event: React.FormEvent) => {
     const { model } = this.state;
 
     event.preventDefault();
@@ -79,13 +79,13 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
         disableBackdropClick
         disableEscapeKeyDown
         open={opened}
-        onExited={this.resetForm.bind(this)}
+        onExited={this.resetForm}
         TransitionComponent={Transition}>
 
         {loading && <LinearProgress color='secondary' />}
 
-        <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <ValidationContext ref={this.bindValidationContext.bind(this)}>
+        <form onSubmit={this.onSubmit} noValidate>
+          <ValidationContext ref={this.bindValidationContext}>
             <DialogTitle>Trocar Senha</DialogTitle>
 
             <DialogContent className={classes.content}>
@@ -119,7 +119,7 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
             </DialogContent>
 
             <DialogActions>
-              <Button disabled={loading} onClick={this.onCancel.bind(this)}>Cancelar</Button>
+              <Button disabled={loading} onClick={this.onCancel}>Cancelar</Button>
               <Button color='secondary' type='submit' disabled={loading}>Salvar</Button>
             </DialogActions>
 
