@@ -1,4 +1,4 @@
-import { Card, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Card, CardContent, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import FabButton from 'components/FabButton';
 import TableWrapper from 'components/TableWrapper';
@@ -69,6 +69,15 @@ export default class UserListPage extends ListComponent<{}, IState> {
             onCancel={() => this.formCallback(false)} />
 
           {this.renderLoader()}
+
+          <CardContent>
+            <Grid container>
+              <Grid item xs={12} sm={6} lg={4}>
+                {this.renderSearch()}
+              </Grid>
+            </Grid>
+          </CardContent>
+
           <TableWrapper minWidth={500}>
             <Table>
               <TableHead>

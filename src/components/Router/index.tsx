@@ -65,8 +65,6 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
       .replace(/\/\//gi, '/')
       .replace(/\/$/gi, '') || '/';
 
-    console.log(path, route);
-
     return (
       <Route key={route.path} exact={route.exact} path={path}
         render={props => route.allowAnonymous ?

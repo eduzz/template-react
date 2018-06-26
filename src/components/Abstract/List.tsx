@@ -1,10 +1,20 @@
-import { LinearProgress, TableCell, TablePagination, TableRow, TableSortLabel } from '@material-ui/core';
+import {
+  IconButton,
+  InputAdornment,
+  LinearProgress,
+  TableCell,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+} from '@material-ui/core';
 import { TableCellProps } from '@material-ui/core/TableCell';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
 import ErrorMessage from 'components/ErrorMessage';
 import IconMessage from 'components/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
+import FieldText from 'material-ui-form-fields/components/Text';
 import CreationIcon from 'mdi-react/CreationIcon';
+import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import { Fragment, PureComponent } from 'react';
 import React from 'react';
 
@@ -21,6 +31,7 @@ export interface IStateList<T = any> extends IPaginationParams {
 
 export abstract class ListComponent<P = {}, S extends IStateList = IStateList<any>> extends PureComponent<P, S> {
   scrollTop: Function;
+  timeoutTerm: any;
   isPaginatedData: boolean = false;
 
   abstract loadData: (params?: Partial<IPaginationParams>) => void;
@@ -99,10 +110,6 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     this.scrollTop && this.scrollTop();
   }
 
-  handleTryAgain = () => {
-    this.loadData();
-  }
-
   handleSort = (column: string) => {
     const { orderBy, orderDirection, pageSize } = this.state;
 
@@ -110,6 +117,48 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
       orderBy: column,
       orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
     }, () => this.handlePaginate(0, pageSize));
+  }
+
+  handleChangeTerm = (term: string) => {
+    if (this.state.loading) return;
+
+    this.setState({ term });
+    clearTimeout(this.timeoutTerm);
+
+    if (term && term.length < 3) return;
+
+    this.timeoutTerm = setTimeout(() => this.loadData(), 500);
+  }
+
+  handleTryAgain = () => {
+    this.loadData();
+  }
+
+  renderSearch = (props: Partial<FieldText['props']> = {}) => {
+    const { term } = this.state;
+
+    return (
+      <FieldText
+        label='Pesquisar'
+        value={term}
+        onChange={this.handleChangeTerm}
+        margin='none'
+        placeholder='Digite ao menos 3 caracteres...'
+        InputLabelProps={{
+          shrink: true
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton disabled={true} style={{ marginRight: -15 }}>
+                <MagnifyIcon />
+              </IconButton>
+            </InputAdornment>
+          )
+        }}
+        {...props}
+      />
+    );
   }
 
   renderLoader = () => {
