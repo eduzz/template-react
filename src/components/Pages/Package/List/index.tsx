@@ -98,7 +98,7 @@ export default class PackageListPage extends PureComponent<IProps, IState> {
             </Grid>
             <Grid container spacing={8} className={classes.cardWrapper}>
               {items.map(item =>
-                <Grid item xs={4} md={4} lg={2} key={item.id}>
+                <Grid item xs={12} sm={4} md={4} lg={2} key={item.id}>
                   <CourseCard title={item.title} category={item.category} image={item.image} />
                 </Grid>
               )}
