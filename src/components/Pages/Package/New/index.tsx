@@ -138,7 +138,7 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
               <Table className={classes.coursesTable}>
                 <TableHead>
                   <TableRow className={classes.courseItem}>
-                    <TableCell className={classes.courseCheckCell}>22</TableCell>
+                    <TableCell className={classes.courseCheckCell}></TableCell>
                     <TableCell>Image</TableCell>
                     <TableCell>Código</TableCell>
                     <TableCell>Categoria</TableCell>
