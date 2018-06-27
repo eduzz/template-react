@@ -1,4 +1,4 @@
-import { Button, Card, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { Button, Card, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@material-ui/core';
 import { FormComponent, IStateForm } from 'components/FormComponent';
 import Toolbar from 'components/Toolbar';
 import { WithStyles } from 'decorators/withStyles';
@@ -10,7 +10,7 @@ import React, { FormEvent, Fragment } from 'react';
 interface IState extends IStateForm<{
   title: string;
   selected: Array<any>;
-  courses: Array<{ title: string, image: string, id: number, selected?: boolean }>
+  courses: Array<{ title: string, image: string, category: string, id: number, selected?: boolean }>
 }> {
 }
 
@@ -20,6 +20,12 @@ interface IProps {
 }
 
 @WithStyles(theme => ({
+  packageTitle: {
+    marginBottom: theme.spacing.unit * 3,
+  },
+  coursesTable: {
+    marginBottom: theme.spacing.unit * 3,
+  },
   courseItem: {
     borderBottom: '1px solid #cecece',
     padding: theme.spacing.unit,
@@ -33,11 +39,8 @@ interface IProps {
     objectFit: 'cover',
   },
   tableLabel: {
-    fontSize: theme.typography.fontSize * 1.5,
+    fontSize: theme.typography.fontSize * 1.2,
     fontWeight: 'bold',
-  },
-  courseTitleCell: {
-
   },
   courseCheckCell: {
     width: 50,
@@ -59,23 +62,28 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
         ...this.state.model,
         courses: [{
           id: 12322,
-          title: 'Curso 1',
+          title: 'Aprenda a operar na bolsa de valores',
           image: '//app.nutror.com/file/Uploads/60610/aprenda_bolsa_identificacao.png',
+          category: 'Contabilidade e Economia',
         },
         {
           id: 23423,
-          title: 'Curso 2',
-          image: '//app.nutror.com/file/Uploads/60610/aprenda_bolsa_identificacao.png',
+          title: 'Academia 360 Estudo de caso Aprenda Piano',
+          image: '//app.nutror.com/file/Uploads/8460/estudos-de-caso/200x200_aprenda_piano.jpg',
+          category: 'Marketing Digital',
+
         },
         {
           id: 33244,
-          title: 'Curso 3',
-          image: '//app.nutror.com/file/Uploads/60610/aprenda_bolsa_identificacao.png',
+          title: 'Academia 360 Estudo de caso ATOM SA',
+          image: '//app.nutror.com/file/Uploads/8460/estudos-de-caso/200x200_ATOM_SA.jpg',
+          category: 'Marketing Digital',
         },
         {
           id: 42367,
-          title: 'Curso 4',
-          image: '//app.nutror.com/file/Uploads/60610/aprenda_bolsa_identificacao.png',
+          title: 'Guitar Tracks by Ozielzinho',
+          image: '//app.nutror.com/file/Uploads/990/GuitarTracks/IdentificaoDoCurso.jpg',
+          category: 'Musica',
         }]
       }
     };
@@ -123,14 +131,17 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
               value={model.title}
               validation='required|min:3'
               onChange={this.updateModel((m, v) => m.title = v)}
+              className={classes.packageTitle}
             />
+            <Typography className={classes.tableLabel}>Selecione os cursos:</Typography>
             <Card>
-              <Table className={classes.table}>
+              <Table className={classes.coursesTable}>
                 <TableHead>
-                  <TableRow>
+                  <TableRow className={classes.courseItem}>
                     <TableCell className={classes.courseCheckCell}>22</TableCell>
                     <TableCell>Image</TableCell>
                     <TableCell>Código</TableCell>
+                    <TableCell>Categoria</TableCell>
                     <TableCell className={classes.courseTitleCell}>Nome do Curso</TableCell>
                   </TableRow>
                 </TableHead>
@@ -147,6 +158,7 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
                       </TableCell>
                       <TableCell className={classes.courseImageCell}><img className={classes.courseImage} src={course.image} /></TableCell>
                       <TableCell className={classes.courseCodCell}>{course.id}</TableCell>
+                      <TableCell className={classes.courseCategoryCell}>{course.category}</TableCell>
                       <TableCell className={classes.courseTitleCell}>{course.title}</TableCell>
                     </TableRow>
                   )}
