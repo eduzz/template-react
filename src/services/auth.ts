@@ -1,3 +1,4 @@
+import { DeepReadonly } from 'helpers/immutable';
 import { IUserToken } from 'interfaces/userToken';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
@@ -6,7 +7,7 @@ import apiService, { ApiService } from './api';
 import tokenService, { TokenService } from './token';
 
 export class AuthService {
-  private user$: rxjs.Observable<IUserToken>;
+  private user$: rxjs.Observable<DeepReadonly<IUserToken>>;
   private openLogin$: rxjs.BehaviorSubject<boolean>;
   private openChangePassword$: rxjs.BehaviorSubject<boolean>;
 
@@ -34,7 +35,10 @@ export class AuthService {
 
         return user;
       }),
-      rxjsOperators.catchError(() => rxjs.of(null)),
+      rxjsOperators.catchError(() => {
+        console.log('error');
+        return rxjs.of(null);
+      }),
       rxjsOperators.shareReplay(1)
     );
   }
@@ -81,7 +85,7 @@ export class AuthService {
     return this.api.post('/auth/change-password', { currentPassword, newPassword });
   }
 
-  public getUser(): rxjs.Observable<IUserToken> {
+  public getUser(): rxjs.Observable<DeepReadonly<IUserToken>> {
     return this.user$;
   }
 

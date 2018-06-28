@@ -12,7 +12,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
 
   constructor(props: any) {
     super(props);
-    this.state = { model: {} } as any;
+    this.state = { model: {} } as Readonly<S>;
   }
 
   public bindScrollTop = (scrollTop: Function): React.ReactNode => {

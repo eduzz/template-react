@@ -9,7 +9,7 @@ export class StorageService {
     return rxjs.of(true).pipe(
       rxjsOperators.map(() => localStorage.getItem(key)),
       rxjsOperators.map(data => data ? apiResponseFormatter(JSON.parse(data)) : null),
-      rxjsOperators.catchError(() => null)
+      rxjsOperators.catchError(() => rxjs.of(null))
     );
   }
 

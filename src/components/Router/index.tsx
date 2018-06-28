@@ -1,13 +1,11 @@
 import AppRouterProtected from 'components/Router/RouterProtected';
-import { History } from 'history';
+import { History, Location } from 'history';
 import { IAppRoute } from 'interfaces/route';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
-interface IState {
-  loaded: boolean;
-}
+import * as rxjs from 'rxjs';
+import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   routes: IAppRoute[];
@@ -15,25 +13,50 @@ interface IProps {
 
 export const RouterContext = React.createContext<() => AppRouter>(null);
 
-export default class AppRouter extends React.PureComponent<IProps, IState> {
+export default class AppRouter extends React.PureComponent<IProps> {
+  private listenUnregister: Function;
+  private location$: rxjs.ReplaySubject<Location>;
+
   browserRouter: RouteComponentProps<any>;
+
+  constructor(props: IProps) {
+    super(props);
+    this.location$ = new rxjs.ReplaySubject(1);
+  }
+
+  componentDidMount() {
+    this.location$.next(this.browserRouter.history.location);
+    this.listenUnregister = this.browserRouter.history.listen(location => {
+      this.location$.next(location);
+    });
+  }
+
+  componentWillUnmount() {
+    this.listenUnregister && this.listenUnregister();
+  }
 
   get history(): History {
     return this.browserRouter.history;
   }
 
-  previousPage() {
+  previousPage = () => {
     this.history.goBack();
   }
 
-  reload(): void {
+  observeChange = () => {
+    return this.location$.asObservable().pipe(
+      rxjsOperators.sampleTime(500)
+    );
+  }
+
+  reload = (): void => {
     /* Hack for reload, dont judge me: https://github.com/ReactTraining/react-router/issues/1982 */
     const path = this.history.location.pathname;
     this.history.replace('/reload');
     setTimeout(() => this.history.replace(path));
   }
 
-  navigate(path: string): void {
+  navigate = (path: string): void => {
     if (path === this.history.location.pathname) {
       this.reload();
       return;
@@ -42,7 +65,7 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     this.history.push(path);
   }
 
-  changeUrl(url: string) {
+  changeUrl = (url: string) => {
     window.history.pushState && window.history.pushState(null, null, url);
   }
 
@@ -60,7 +83,7 @@ export default class AppRouter extends React.PureComponent<IProps, IState> {
     );
   }
 
-  public renderRoute(route: IAppRoute, baseUrl: string = ''): JSX.Element {
+  private renderRoute(route: IAppRoute, baseUrl: string = ''): JSX.Element {
     const path = (baseUrl + route.path)
       .replace(/\/\//gi, '/')
       .replace(/\/$/gi, '') || '/';

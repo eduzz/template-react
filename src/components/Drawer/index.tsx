@@ -3,6 +3,7 @@ import { darken } from '@material-ui/core/styles/colorManipulator';
 import AppDrawerUser from 'components/Drawer/UserMenu';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
+import { DeepReadonly } from 'helpers/immutable';
 import { IAppRoute } from 'interfaces/route';
 import { IUserToken } from 'interfaces/userToken';
 import React, { PureComponent } from 'react';
@@ -14,7 +15,7 @@ import DrawerListItem from './ListItem';
 import { IAppRouteParsed, parseRoutes } from './parser';
 
 interface IState {
-  user?: IUserToken;
+  user?: DeepReadonly<IUserToken>;
   routes: IAppRouteParsed[];
 }
 

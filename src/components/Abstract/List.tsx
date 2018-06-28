@@ -47,7 +47,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
       allItems: [],
       total: 0,
       loading: true
-    } as any;
+    } as Readonly<S>;
   }
 
   get sortableProps() {

@@ -14,7 +14,7 @@ export default abstract class ListItemComponent<P = {}, S extends IListItemState
     this.state = {
       loading: false,
       error: null
-    } as any;
+    } as Readonly<S>;
   }
 
   handleDismisError = () => {

@@ -38,7 +38,7 @@ export default class AppRouterProtected extends PureComponent<IProps, IState> {
     });
   }
 
-  public render(): JSX.Element {
+  render(): JSX.Element {
     const { isAuthenticated, canAccess } = this.state;
     const { route, routeProps, children } = this.props;
 

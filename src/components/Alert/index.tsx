@@ -49,7 +49,7 @@ export default class Alert extends React.Component<IProps, IState> {
       return { ...prevState, opened: false };
     }
 
-    return nextProps as any;
+    return nextProps;
   }
 
   static show(params: string): Promise<boolean>;
