@@ -1,5 +1,6 @@
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import { IUser } from 'interfaces/user';
+import { IUserRole } from 'interfaces/userRole';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
@@ -12,11 +13,14 @@ export class UserService {
     return this.apiService.get('/user', params);
   }
 
-  public save(model: IUser): rxjs.Observable<void> {
-    return rxjs.of(model).pipe(
-      rxjsOperators.delay(2000),
-      rxjsOperators.map(() => null)
+  public roles(refresh: boolean = false): rxjs.Observable<IUserRole[]> {
+    return this.apiService.get('/user/roles').pipe(
+      rxjsOperators.cache('user-service-roles', { refresh })
     );
+  }
+
+  public save(model: IUser): rxjs.Observable<IUser> {
+    return this.apiService.post('/user', model);
   }
 }
 

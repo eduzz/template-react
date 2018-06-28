@@ -28,6 +28,7 @@
     "react-router-dom": "4.3.1",
     "react-scripts-ts": "2.16.0",
     "react-swipeable-views": "0.12.14",
+    "recharts": "1.0.0-beta.10",
     "rxjs": "6.2.1",
     "tslib": "1.9.3"
   },
@@ -41,6 +42,7 @@
     "@types/react-dom": "16.0.6",
     "@types/react-router-dom": "4.2.7",
     "@types/react-swipeable-views": "0.12.1",
+    "@types/recharts": "^1.0.23",
     "npm-check-updates": "2.14.2",
     "tslint": "5.10.0",
     "tslint-eslint-rules": "5.3.1",

@@ -43,11 +43,13 @@ export default class UserListPage extends ListComponent<{}, IState> {
     this.setState({ formOpened: true });
   }
 
-  formCallback = (reload: boolean) => {
+  formCallback = (reload: boolean, user?: IUser) => {
     this.setState({ formOpened: false });
 
+    console.log(user);
+
     if (!reload) return;
-    this.loadData();
+    this.handleChangeTerm(user.email);
   }
 
   render() {
@@ -65,7 +67,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
 
           <UserFormDialog
             opened={formOpened || false}
-            onComplete={() => this.formCallback(true)}
+            onComplete={user => this.formCallback(true, user)}
             onCancel={() => this.formCallback(false)} />
 
           {this.renderLoader()}
