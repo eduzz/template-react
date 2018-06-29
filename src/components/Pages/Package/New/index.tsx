@@ -9,9 +9,9 @@ import React, { FormEvent, Fragment } from 'react';
 
 interface IState extends IStateForm<{
   title: string;
-  selected: Array<any>;
   courses: Array<{ title: string, image: string, category: string, id: number, selected?: boolean }>
 }> {
+  selected: number[];
 }
 
 interface IProps {
@@ -58,6 +58,7 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
     super(props);
     this.state = {
       ...this.state,
+      selected: [],
       model: {
         ...this.state.model,
         courses: [{
@@ -97,24 +98,18 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
     //save
   }
 
-  handleClick = (event: any, id: number) => {
-    // const { selected } = this.state;
-    // const selectedIndex = selected.indexOf(id);
-    // let newSelected: any = [];
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, id);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1),
-    //   );
-    // }
+  handleClick = (courseId: number) => {
+    let { selected } = this.state;
 
-    // this.setState({ selected: newSelected });
+    console.log(courseId);
+
+    if (selected.some(id => id === courseId)) {
+      selected = selected.filter(id => id === courseId);
+    } else {
+      selected.push(courseId);
+    }
+
+    this.setState({ selected });
   }
 
   render() {
@@ -147,8 +142,8 @@ export default class PackageNewPage extends FormComponent<IProps, IState> {
                 </TableHead>
                 <TableBody>
                   {(model.courses || []).map(course =>
-                    <TableRow onClick={event => this.handleClick(event, course.id)} key={course.id} >
-                      <TableCell component='th' scope='row' className={classes.courseCheckCell}>
+                    <TableRow onClick={this.updateModel(() => course.selected = !course.selected)} key={course.id}>
+                      <TableCell className={classes.courseCheckCell}>
                         <FieldCheckbox
                           label={null}
                           value={null}
