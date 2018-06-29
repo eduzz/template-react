@@ -41,8 +41,9 @@ export abstract class FormComponent<P = {}, S extends IStateForm = any> extends 
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): (value: any) => void {
+    let { model } = this.state;
+
     return (event: any) => {
-      let { model } = this.state;
       let value = event;
 
       if ((event || {} as any).target) {
@@ -53,7 +54,7 @@ export abstract class FormComponent<P = {}, S extends IStateForm = any> extends 
 
       handler(model, value);
 
-      this.setState({ model });
+      this.setState({ model: JSON.parse(JSON.stringify(model)) });
     };
   }
 
