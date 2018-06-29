@@ -10,7 +10,6 @@ export default class DashboardIndexPage extends PureComponent {
     return (
       <Fragment>
         <Toolbar title='Dashboard' />
-
         <Card>
           <CardContent>
             <Typography>Content</Typography>

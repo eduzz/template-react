@@ -9,6 +9,7 @@ import CourseIndexPage from './Course';
 import DashboardIndexPage from './Dashboard';
 import PackageIndexPage from './Package';
 import UserIndexPage from './User';
+import StudentIndexPage from './Student';
 
 export default class AdminModule extends React.PureComponent {
   public static routes: IAppRoute[] = [
@@ -25,6 +26,13 @@ export default class AdminModule extends React.PureComponent {
       sideDrawer: { display: 'Cursos', icon: SchoolIcon },
       component: CourseIndexPage,
       subRoutes: CourseIndexPage.routes
+    },
+    {
+      path: '/students',
+      sideDrawer: { display: 'Alunos', icon: PeopleIcon },
+      roles: ['admin'],
+      component: StudentIndexPage,
+      subRoutes: StudentIndexPage.routes
     },
     {
       path: '/user',
