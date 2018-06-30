@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep';
+
 export type DeepReadonly<T> =
   T extends Array<any> ?
   ReadonlyArray<T[0]> :
@@ -26,5 +28,5 @@ type WritableObject<T> =
   T;
 
 export function makeWritable<T>(data: T): Writable<T> {
-  return JSON.parse(JSON.stringify(data));
+  return cloneDeep(data) as any;
 }

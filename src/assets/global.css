@@ -45,10 +45,14 @@ b {
   margin-right: -10px;
 }
 
-[class*='MuiDialogContent'],
 [class*='MuiDialog'] {
   overflow-y: visible !important;
   max-height: none !important;
+}
+
+[class*='MuiDialogContent'] {
+  max-height: calc(100vh - 140px) !important;
+  overflow: auto;
 }
 
 .button-margin-input {

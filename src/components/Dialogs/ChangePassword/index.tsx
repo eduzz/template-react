@@ -2,8 +2,8 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgre
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
-import FieldText from 'material-ui-form-fields/components/Text';
-import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
+import FieldText from '@react-form-fields/material-ui/components/Text';
+import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';

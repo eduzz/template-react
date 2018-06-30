@@ -1,6 +1,6 @@
-import { setConfig } from 'material-ui-form-fields/config';
-import commonMasks from 'material-ui-form-fields/mask/common/pt-br';
-import validationMessage from 'material-ui-form-fields/validator/custom-languages/pt-br';
+import { setConfig } from '@react-form-fields/material-ui/config';
+import commonMasks from '@react-form-fields/material-ui/mask/common/pt-br';
+import validationMessage from '@react-form-fields/material-ui/validator/custom-languages/pt-br';
 
 setConfig({
   masks: commonMasks,

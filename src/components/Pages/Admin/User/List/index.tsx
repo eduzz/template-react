@@ -15,6 +15,7 @@ import UserFormDialog from '../UserFormDialog';
 import ListItem from './ListItem';
 
 interface IState extends IStateList<IUser> {
+  current?: IUser;
   formOpened?: boolean;
 }
 
@@ -31,7 +32,6 @@ export default class UserListPage extends ListComponent<{}, IState> {
     this.setState({ loading: true, error: null });
 
     userService.list(this.mergeParams(params)).pipe(
-      rxjsOperators.delay(500),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(items => {
@@ -39,21 +39,28 @@ export default class UserListPage extends ListComponent<{}, IState> {
     }, error => this.setError(error));
   }
 
-  formOpen = () => {
-    this.setState({ formOpened: true });
+  handleCreate = () => {
+    this.setState({ formOpened: true, current: null });
   }
 
-  formCallback = (reload: boolean, user?: IUser) => {
+  handleEdit = (current: IUser) => {
+    this.setState({ formOpened: true, current });
+  }
+
+  formCallback = (user?: IUser) => {
     this.setState({ formOpened: false });
 
-    console.log(user);
+    this.state.current ?
+      this.loadData() :
+      this.handleChangeTerm(user.email);
+  }
 
-    if (!reload) return;
-    this.handleChangeTerm(user.email);
+  formCancel = () => {
+    this.setState({ formOpened: false });
   }
 
   render() {
-    const { items, formOpened, loading } = this.state;
+    const { items, formOpened, loading, current } = this.state;
 
     return (
       <Fragment>
@@ -62,13 +69,14 @@ export default class UserListPage extends ListComponent<{}, IState> {
         <Card>
           <FabButton actions={[{
             icon: AccountPlusIcon,
-            onClick: this.formOpen
+            onClick: this.handleCreate
           }]} />
 
           <UserFormDialog
             opened={formOpened || false}
-            onComplete={user => this.formCallback(true, user)}
-            onCancel={() => this.formCallback(false)} />
+            user={current}
+            onComplete={this.formCallback}
+            onCancel={this.formCancel} />
 
           {this.renderLoader()}
 
@@ -100,7 +108,12 @@ export default class UserListPage extends ListComponent<{}, IState> {
               <TableBody>
                 {this.renderEmptyAndErrorMessages(3)}
                 {items.map(user =>
-                  <ListItem key={user.id} user={user} />
+                  <ListItem
+                    key={user.id}
+                    user={user}
+                    onEdit={this.handleEdit}
+                    onDeleteComplete={this.loadData}
+                  />
                 )}
               </TableBody>
             </Table>

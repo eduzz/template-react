@@ -8,13 +8,14 @@ import {
   Slide,
   Typography,
 } from '@material-ui/core';
+import { CustomMessage, FieldCheckbox, FieldHidden, FieldText, ValidationContext } from '@react-form-fields/material-ui';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import ErrorMessage from 'components/ErrorMessage';
 import Snackbar from 'components/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
+import { makeWritable } from 'helpers/immutable';
 import { IUser } from 'interfaces/user';
 import { IUserRole } from 'interfaces/userRole';
-import { FieldCheckbox, FieldText, ValidationContext } from 'material-ui-form-fields';
 import React, { FormEvent, Fragment } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import userService from 'services/user';
@@ -60,18 +61,30 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
   handleEnter = () => {
     const { user } = this.props;
 
-    this.setState({ model: user ? { ...user } : {} });
+    this.setState({ model: user || {} });
     this.loadData();
   }
 
+  handleExit = () => {
+    this.resetForm();
+
+    const roles = this.state.roles.map(r => ({ ...r, selected: false }));
+    this.setState({ roles });
+  }
+
   loadData = () => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: null });
 
     userService.roles().pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(roles => {
-      this.setState({ roles, loading: false });
+      const { user } = this.props;
+
+      this.setState({
+        roles: makeWritable(roles).map(r => ({ ...r, selected: !user ? false : user.roles.includes(r.role) })),
+        loading: false
+      });
     }, error => {
       this.setState({ loading: false, error });
     });
@@ -86,18 +99,18 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
     if (!this.isFormValid()) return;
 
     this.setState({ loading: true });
-
     model.roles = roles.filter(r => r.selected).map(r => r.role);
+
     userService.save(model as IUser).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(user => {
-      Snackbar.show(`Usuário salvo${!this.isEdit ? ', um email foi enviado com a senha' : ''}`);
+      Snackbar.show(`${user.firstName} foi salvo${this.isEdit ? '' : ', um email foi enviado com a senha'}`);
       this.setState({ loading: false });
 
       onComplete(user);
     }, err => {
-      Snackbar.error(err);
+      Snackbar.error(err.message === 'email-unavailable' ? 'Email já utlizado' : err);
       this.setState({ loading: false });
     });
   }
@@ -112,7 +125,7 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
         disableBackdropClick
         disableEscapeKeyDown
         onEnter={this.handleEnter}
-        onExited={this.resetForm}
+        onExited={this.handleExit}
         TransitionComponent={Transition}>
 
         {loading && <LinearProgress color='secondary' />}
@@ -155,6 +168,13 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
                   <Typography variant='subheading' className={classes.heading}>
                     Acesso
                   </Typography>
+
+                  <FieldHidden
+                    value={roles.filter(r => r.selected).length}
+                    validation='required|numeric|min:1'
+                  >
+                    <CustomMessage rules='min,required,numeric'>Selecione ao menos um</CustomMessage>
+                  </FieldHidden>
 
                   {roles.map(role =>
                     <div key={role.role}>

@@ -12,7 +12,7 @@ import { TablePaginationProps } from '@material-ui/core/TablePagination';
 import ErrorMessage from 'components/ErrorMessage';
 import IconMessage from 'components/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
-import FieldText from 'material-ui-form-fields/components/Text';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import CreationIcon from 'mdi-react/CreationIcon';
 import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import { Fragment, PureComponent } from 'react';

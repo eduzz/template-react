@@ -3,12 +3,12 @@ import DropdownMenu, { IOption } from 'components/DropdownMenu';
 import ErrorMessageIcon from 'components/ErrorMessageIcon';
 import React, { Fragment, PureComponent } from 'react';
 
-export interface IListItemState {
+export interface IStateListItem {
   loading: boolean;
   error?: any;
 }
 
-export default abstract class ListItemComponent<P = {}, S extends IListItemState = IListItemState> extends PureComponent<P, S> {
+export default abstract class ListItemComponent<P = {}, S extends IStateListItem = IStateListItem> extends PureComponent<P, S> {
   constructor(props: P) {
     super(props);
     this.state = {

@@ -1,4 +1,4 @@
-import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
+import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import { Component } from 'react';
 
 export interface IStateForm<T = any> {
