@@ -55,6 +55,14 @@ async function askParams(answers = {}) {
     default: answers.repository,
     message: 'Repositorio'
   }, {
+    name: 'endpointDev',
+    default: answers.endpointDev || 'http://localhost:3000',
+    message: 'Endpoint API(Dev)'
+  }, {
+    name: 'endpointProd',
+    default: answers.endpointProd,
+    message: 'Endpoint API(Prod)'
+  }, {
     name: 'confirmed',
     type: 'confirm',
     message: 'Confirma as configurações?'
