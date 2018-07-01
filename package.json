@@ -8,7 +8,7 @@
     "url": "waproject-repository"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
+    "dev": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "eject": "react-scripts-ts eject",
     "docker:release": "yarn docker:build && yarn docker:push",

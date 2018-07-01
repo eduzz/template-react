@@ -1,13 +1,24 @@
-# Church Web App
+WaProject Api Front 
+===================
 
-Technologies
-------------
+Utilize o VSCode, já está configurado com sugestão de extensões.
+
+### Tecnologias
+
 * React
-* Redux with Thunk
 * Typescript
+* RxJs
 * React Router
-* Validatorjs
 * Material UI (UI Framework)
+
+### Iniciando um novo projeto
+
+```bash
+git clone git@bitbucket.org:waprojectbase/waproject-base-front.git
+yarn install # ou npm install
+
+node ./init.js
+```
 
 Environments
 ------------
