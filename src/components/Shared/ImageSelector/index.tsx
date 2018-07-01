@@ -1,9 +1,10 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, Typography } from '@material-ui/core';
-import ImageReader, { ImageReaderResult } from 'components/ImageReader';
 import { WithStyles } from 'decorators/withStyles';
 import imageCompress from 'helpers/imagerCompress';
 import React, { Fragment, PureComponent } from 'react';
 import { Cropper } from 'react-image-cropper';
+
+import ImageReader, { ImageReaderResult } from './ImageReader';
 
 interface IState {
   image?: ImageReaderResult;

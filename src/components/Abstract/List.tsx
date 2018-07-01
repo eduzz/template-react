@@ -9,16 +9,15 @@ import {
 } from '@material-ui/core';
 import { TableCellProps } from '@material-ui/core/TableCell';
 import { TablePaginationProps } from '@material-ui/core/TablePagination';
-import ErrorMessage from 'components/ErrorMessage';
-import IconMessage from 'components/IconMessage';
-import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import { ScrollTopContext } from 'components/Layout/AppWrapper';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import IconMessage from 'components/Shared/IconMessage';
+import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import CreationIcon from 'mdi-react/CreationIcon';
 import MagnifyIcon from 'mdi-react/MagnifyIcon';
-import { Fragment, PureComponent } from 'react';
 import React from 'react';
-
-import { ScrollTopContext } from '../AppWrapper';
+import { Fragment, PureComponent } from 'react';
 
 export interface IStateList<T = any> extends IPaginationParams {
   items: T[];

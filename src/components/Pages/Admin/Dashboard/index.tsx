@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid, Typography } from '@material-ui/core';
-import Toolbar from 'components/Toolbar';
+import Toolbar from 'components/Layout/Toolbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
 import React, { Fragment, PureComponent } from 'react';

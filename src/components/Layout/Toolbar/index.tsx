@@ -1,9 +1,10 @@
 import { AppBar, IconButton, MuiThemeProvider, Toolbar as CoreToolbar, Typography } from '@material-ui/core';
 import { whiteTheme } from 'assets/theme';
-import { DrawerContext, IDrawerContext } from 'components/AppWrapper';
 import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
+
+import { DrawerContext, IDrawerContext } from '../Drawer';
 
 interface IProps {
   title?: string;

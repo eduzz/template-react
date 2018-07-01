@@ -1,8 +1,9 @@
 import { Drawer, Hidden } from '@material-ui/core';
-import AppDrawer from 'components/Drawer';
 import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
 import React, { PureComponent } from 'react';
+
+import AppDrawer, { DrawerContext, IDrawerContext } from '../Drawer';
 
 interface IState {
   drawerOpened: boolean;
@@ -13,12 +14,6 @@ interface IProps {
   classes?: any;
 }
 
-export interface IDrawerContext {
-  open(): void;
-  close(): void;
-}
-
-export const DrawerContext = React.createContext<IDrawerContext>(null);
 export const ScrollTopContext = React.createContext<Function>((() => { }));
 
 @WithStyles(theme => ({

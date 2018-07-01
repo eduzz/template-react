@@ -5,7 +5,7 @@ export interface IAppRouteParsed extends IAppRoute {
   subRoutes: IAppRouteParsed[];
 }
 
-export function parseRoutes(routes: IAppRoute[], parent?: IAppRoute): IAppRouteParsed[] {
+export function routeParser(routes: IAppRoute[], parent?: IAppRoute): IAppRouteParsed[] {
   return routes.filter(r => r.sideDrawer).sort((a, b) => {
     return a.sideDrawer.order > b.sideDrawer.order ? 1 :
       a.sideDrawer.order < b.sideDrawer.order ? -1 : 0;
@@ -19,7 +19,7 @@ export function parseRoutes(routes: IAppRoute[], parent?: IAppRoute): IAppRouteP
       parent,
       path,
       subRoutes: !route.component.routes ? [] :
-        parseRoutes(route.component.routes, route)
+        routeParser(route.component.routes, route)
     };
   });
 }

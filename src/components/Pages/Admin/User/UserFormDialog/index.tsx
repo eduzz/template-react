@@ -10,8 +10,8 @@ import {
 } from '@material-ui/core';
 import { CustomMessage, FieldCheckbox, FieldHidden, FieldText, ValidationContext } from '@react-form-fields/material-ui';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import ErrorMessage from 'components/ErrorMessage';
-import Snackbar from 'components/Snackbar';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { makeWritable } from 'helpers/immutable';
 import { IUser } from 'interfaces/user';

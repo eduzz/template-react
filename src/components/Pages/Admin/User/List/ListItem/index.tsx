@@ -1,8 +1,8 @@
 import { TableCell, TableRow } from '@material-ui/core';
 import ListItemComponent, { IStateListItem } from 'components/Abstract/ListItem';
-import Alert from 'components/Alert';
-import { IOption } from 'components/DropdownMenu';
-import Snackbar from 'components/Snackbar';
+import Alert from 'components/Shared/Alert';
+import { IOption } from 'components/Shared/DropdownMenu';
+import Snackbar from 'components/Shared/Snackbar';
 import { IUser } from 'interfaces/user';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import EditIcon from 'mdi-react/EditIcon';

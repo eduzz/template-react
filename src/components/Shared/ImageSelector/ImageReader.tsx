@@ -1,6 +1,6 @@
 import { Button, CircularProgress } from '@material-ui/core';
-import IconMessage from 'components/IconMessage';
-import Snackbar from 'components/Snackbar';
+import IconMessage from 'components/Shared/IconMessage';
+import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';

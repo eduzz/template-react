@@ -1,6 +1,5 @@
 import { List } from '@material-ui/core';
 import { darken } from '@material-ui/core/styles/colorManipulator';
-import AppDrawerUser from 'components/Drawer/UserMenu';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
@@ -10,9 +9,9 @@ import React, { PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
-import { DrawerContext, IDrawerContext } from '../AppWrapper';
 import DrawerListItem from './ListItem';
-import { IAppRouteParsed, parseRoutes } from './parser';
+import { IAppRouteParsed, routeParser } from './routeParser';
+import AppDrawerUser from './UserMenu';
 
 interface IState {
   user?: DeepReadonly<IUserToken>;
@@ -23,6 +22,13 @@ interface IProps {
   routes: IAppRoute[];
   classes?: any;
 }
+
+export interface IDrawerContext {
+  open(): void;
+  close(): void;
+}
+
+export const DrawerContext = React.createContext<IDrawerContext>(null);
 
 @WithStyles(theme => ({
   root: {
@@ -56,7 +62,7 @@ export default class AppDrawer extends PureComponent<IProps, IState> {
   static getDerivedStateFromProps(props: IProps, currentState: IState): IState {
     return {
       ...currentState,
-      routes: parseRoutes(props.routes)
+      routes: routeParser(props.routes)
     };
   }
 

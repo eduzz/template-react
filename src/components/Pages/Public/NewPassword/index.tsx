@@ -1,11 +1,11 @@
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
-import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import AppRouter, { RouterContext } from 'components/Router';
-import Snackbar from 'components/Snackbar';
-import { WithStyles } from 'decorators/withStyles';
-import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
+import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import AppRouter, { RouterContext } from 'components/Router';
+import Snackbar from 'components/Shared/Snackbar';
+import { WithStyles } from 'decorators/withStyles';
+import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
 import queryString from 'query-string';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';

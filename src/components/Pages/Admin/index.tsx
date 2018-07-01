@@ -1,5 +1,6 @@
-import AppWrapper from 'components/AppWrapper';
+import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
+import { enRoles } from 'interfaces/user';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
@@ -18,7 +19,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     {
       path: '/pessoas',
       sideDrawer: { display: 'Pessoas', order: 1, icon: AccountMultipleIcon },
-      roles: [],
+      roles: [enRoles.admin],
       component: UserIndexPage
     },
     {

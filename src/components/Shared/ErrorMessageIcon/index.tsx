@@ -1,5 +1,5 @@
 import { IconButton } from '@material-ui/core';
-import Alert from 'components/Alert';
+import Alert from 'components/Shared/Alert';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';

@@ -1,6 +1,5 @@
 import { Grid, Typography } from '@material-ui/core';
-import { DrawerContext, IDrawerContext } from 'components/AppWrapper';
-import DropdownMenu from 'components/DropdownMenu';
+import DropdownMenu from 'components/Shared/DropdownMenu';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
 import { IUserToken } from 'interfaces/userToken';
@@ -9,6 +8,8 @@ import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
+
+import { DrawerContext, IDrawerContext } from '.';
 
 interface IProps {
   user: DeepReadonly<IUserToken>;

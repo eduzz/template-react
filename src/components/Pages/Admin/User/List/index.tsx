@@ -1,8 +1,8 @@
 import { Card, CardContent, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
-import FabButton from 'components/FabButton';
-import TableWrapper from 'components/TableWrapper';
-import Toolbar from 'components/Toolbar';
+import Toolbar from 'components/Layout/Toolbar';
+import FabButton from 'components/Shared/FabButton';
+import TableWrapper from 'components/Shared/TableWrapper';
 import { IPaginationParams } from 'interfaces/pagination';
 import { IUser } from 'interfaces/user';
 import AccountPlusIcon from 'mdi-react/AccountPlusIcon';

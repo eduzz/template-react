@@ -8,6 +8,7 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import { darken } from '@material-ui/core/styles/colorManipulator';
+import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
 import { IAppRoute } from 'interfaces/route';
@@ -16,8 +17,7 @@ import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 
-import AppRouter, { RouterContext } from '../Router';
-import { IAppRouteParsed } from './parser';
+import { IAppRouteParsed } from './routeParser';
 
 interface IState {
   expanded: boolean;

@@ -1,6 +1,6 @@
 import { CircularProgress } from '@material-ui/core';
-import DropdownMenu, { IOption } from 'components/DropdownMenu';
-import ErrorMessageIcon from 'components/ErrorMessageIcon';
+import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
+import ErrorMessageIcon from 'components/Shared/ErrorMessageIcon';
 import React, { Fragment, PureComponent } from 'react';
 
 export interface IStateListItem {
