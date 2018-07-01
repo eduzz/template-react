@@ -21,6 +21,8 @@ yarn dev # ou docker-compose up caso queira usar docker durante o dev
 
 Pronto, agora é só codar que ele reiniciará a aplicação com as alterações.
 
+### Environmetns (.env)
+
 ### Typescript
 
 Ele auxilia muito durante o desenvolvimento, mas alguns packges não vem com suas
