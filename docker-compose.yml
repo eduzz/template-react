@@ -1,11 +1,11 @@
-version: '2'
+version: '3'
 services:
 
   web:
-    container_name: church-web
-    build: docker/dev
+    container_name: waproject-front
+   build: docker/dev
     ports:
       - "3000:3000"
       - "35729:35729"
     volumes:
-      - .:/src:cached
+      - .:/src

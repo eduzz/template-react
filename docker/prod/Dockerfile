@@ -1,15 +1,14 @@
-FROM node:9-alpine
-
-RUN mkdir /src
-ADD . /src
-
-RUN apk --no-cache add --virtual native-deps \
-  g++ gcc libgcc libstdc++ linux-headers autoconf automake make nasm python git && \
-  npm install --quiet node-gyp -g
-
-RUN yarn global add serve && (cd /src &&  yarn install --force && yarn cache clean)
+FROM node:10-alpine
 
 WORKDIR /src
-EXPOSE 3000
 
-CMD yarn build && (cd build && serve -p 3000)
+COPY . /src/
+
+RUN yarn install --force && yarn cache clean && yarn build
+
+# Criar o container final mais leve com nginx com apenas projeto compilado
+FROM nginx:alpine
+
+COPY --from=0 /src/build /usr/share/nginx/html
+
+COPY --from=0 /src/docker/prod/nginx.conf /etc/nginx/conf.d/default.conf

@@ -1,4 +1,5 @@
 import { IconButton, Menu } from '@material-ui/core';
+import { MenuProps } from '@material-ui/core/Menu';
 import { MdiReactIconComponentType } from 'mdi-react';
 import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import * as React from 'react';
@@ -15,7 +16,7 @@ interface IState {
   targetElem?: HTMLElement;
 }
 
-interface IProps {
+interface IProps extends Partial<MenuProps> {
   options: IOption[];
 }
 
@@ -40,7 +41,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
 
   render() {
     const { targetElem } = this.state;
-    const { options } = this.props;
+    const { options, ...menuProps } = this.props;
 
     return (
       <div>
@@ -49,6 +50,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
         </IconButton>
 
         <Menu
+          {...menuProps}
           anchorEl={targetElem}
           open={!!targetElem}
           onClose={this.handleClose}

@@ -1,7 +1,6 @@
 import { Card, CardContent, Grid, Typography } from '@material-ui/core';
 import Toolbar from 'components/Layout/Toolbar';
 import { WithStyles } from 'decorators/withStyles';
-import { IAppRoute } from 'interfaces/route';
 import React, { Fragment, PureComponent } from 'react';
 import {
   Area,
@@ -33,8 +32,6 @@ interface IProps {
   }
 })
 export default class DashboardIndexPage extends PureComponent<IProps, IState> {
-  public static routes: IAppRoute[] = [];
-
   constructor(props: {}) {
     super(props);
     this.state = {

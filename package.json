@@ -1,20 +1,32 @@
 {
-  "name": "church-web",
+  "name": "waproject-base-front",
+  "description": "Front Base for WaProject",
   "version": "0.0.1",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "waproject-repository"
+  },
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "docker-build": "sh ./scripts/docker-build.sh",
+    "docker:release": "yarn docker:build && yarn docker:push",
+    "docker:build": "docker build -t waproject/front-base -f docker/prod/Dockerfile .",
+    "docker:push": "docker push waproject/front-base",
     "webpack-analyze": "node ./scripts/webpack-analyze.js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "concurrently -r \"yarn tslint -p tsconfig.json\" \"yarn tsc --noEmit\"",
+      "post-merge": "yarn"
+    }
   },
   "dependencies": {
     "@material-ui/core": "1.3.0",
+    "@react-form-fields/material-ui": "1.4.1",
     "axios": "0.18.0",
     "lodash": "4.17.10",
-    "@react-form-fields/material-ui": "1.4.1",
     "material-ui-pickers": "1.0.0-rc.10",
     "mdi-react": "4.0.0",
     "moment": "2.22.2",
@@ -40,7 +52,11 @@
     "@types/react-dom": "16.0.6",
     "@types/react-router-dom": "4.2.7",
     "@types/react-swipeable-views": "0.12.1",
-    "@types/recharts": "^1.0.23",
+    "@types/recharts": "1.0.23",
+    "husky": "0.14.3",
+    "inquirer": "6.0.0",
+    "ora": "2.1.0",
+    "rimraf": "2.6.2",
     "tslint": "5.10.0",
     "tslint-eslint-rules": "5.3.1",
     "typescript": "2.9.2",

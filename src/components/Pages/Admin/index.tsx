@@ -2,12 +2,14 @@ import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
 import { enRoles } from 'interfaces/user';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
+import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 import DashboardIndexPage from './Dashboard';
+import ExtraIndexPage from './Extra';
 import UserIndexPage from './User';
 
 interface IState {
@@ -21,6 +23,12 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       sideDrawer: { display: 'Pessoas', order: 1, icon: AccountMultipleIcon },
       roles: [enRoles.admin],
       component: UserIndexPage
+    },
+    {
+      path: '/Extra',
+      sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
+      roles: [],
+      component: ExtraIndexPage
     },
     {
       path: '/',
