@@ -92,6 +92,16 @@ async function cleanup(params) {
     from: 'waproject-front',
     to: params.project
   }]);
+
+  await replaceContent('./.env.development', [{
+    from: 'waproject-api-endpoint',
+    to: params.endpointDev
+  }]);
+
+  await replaceContent('./.env.production', [{
+    from: 'waproject-api-endpoint',
+    to: params.endpointProd
+  }]);
 }
 
 async function replaceContent(file, replacers) {
