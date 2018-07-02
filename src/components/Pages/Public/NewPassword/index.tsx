@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
+import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import FieldText from '@react-form-fields/material-ui/components/Text';
-import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import AppRouter, { RouterContext } from 'components/Router';
 import Snackbar from 'components/Shared/Snackbar';

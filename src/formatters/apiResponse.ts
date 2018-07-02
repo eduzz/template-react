@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { dateParse } from 'formatters/date';
 
 export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): T {
   if (!obj) return obj;
@@ -8,7 +8,7 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
   }
 
   if (typeof obj === 'string' && isValidDateString(obj)) {
-    return moment(obj).toDate() as any;
+    return dateParse(obj) as any;
   }
 
   if (typeof obj === 'string' && !isNaN(Number(obj))) {
