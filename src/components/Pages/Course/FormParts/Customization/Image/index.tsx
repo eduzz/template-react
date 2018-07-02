@@ -1,16 +1,20 @@
 import { Button, Grid, Typography } from '@material-ui/core';
+import { postMultipart } from 'api';
 import Alert from 'components/Alert';
 import ImageSelector from 'components/ImageSelector';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
 
 interface IState {
+  saving?: boolean;
+  tempImage?: string;
   openedImageSelector: boolean;
 }
 
 interface IProps {
   label: string;
   helperText?: string;
+  disabled?: boolean;
   value: string;
   width: number;
   height: number;
@@ -47,14 +51,34 @@ export default class Image extends PureComponent<IProps, IState> {
     onChange(null);
   }
 
-  onImageSelectorCompleted(image: string) {
-    this.setState({ openedImageSelector: false });
+  async onImageSelectorCompleted(image: string) {
+    this.setState({ openedImageSelector: false, tempImage: image });
+
+    const data = new FormData();
+    data.append('file', this.dataURItoBlob(image), `${Date.now()}.png`);
+
+    await postMultipart('/upload', data);
+
     this.props.onChange(image);
   }
 
+  dataURItoBlob(dataURI: string) {
+    const byteString = dataURI.split(',')[0].indexOf('base64') >= 0 ?
+      atob(dataURI.split(',')[1]) :
+      unescape(dataURI.split(',')[1]);
+
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const ia = new Uint8Array(byteString.length);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], { type: mimeString });
+  }
+
   render() {
-    const { openedImageSelector } = this.state;
-    const { label, helperText, value, width, height, classes, className } = this.props;
+    const { openedImageSelector, tempImage, saving } = this.state;
+    const { label, helperText, value, width, height, classes, className, disabled } = this.props;
 
     return (
       <div className={className}>
@@ -62,7 +86,7 @@ export default class Image extends PureComponent<IProps, IState> {
 
         <Grid container spacing={24}>
           <Grid item xs={12} sm={8} md={9} lg={10} xl={11}>
-            <img src={value || `https://via.placeholder.com/${width}x${height}`} className={classes.image} />
+            <img src={value || tempImage || `https://via.placeholder.com/${width}x${height}`} className={classes.image} />
           </Grid>
           <Grid item xs={12} sm={4} md={3} lg={2} xl={1}>
             <ImageSelector
@@ -78,6 +102,7 @@ export default class Image extends PureComponent<IProps, IState> {
               fullWidth
               variant='raised'
               color='secondary'
+              disabled={disabled || saving}
               className={classes.marginBottom}
               onClick={this.handleOpenSelector.bind(this)}>
               Selecionar
@@ -86,7 +111,7 @@ export default class Image extends PureComponent<IProps, IState> {
             <Button
               fullWidth
               variant='outlined'
-              disabled={!value}
+              disabled={!value || disabled || saving}
               onClick={this.handleRemove.bind(this)}>
               Remover
             </Button>

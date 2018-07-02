@@ -54,13 +54,13 @@ class UserFormModal extends FormComponent<IPropsFromConnect, IState> {
     this.props.cancelUserFormModal();
   }
 
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
 
     const { model } = this.state;
     const { requestUserSave } = this.props;
 
-    const isValid = await this.isFormValid();
+    const isValid = this.isFormValid();
     if (!isValid) return;
 
     requestUserSave(model as any);

@@ -24,12 +24,6 @@ b {
   padding: 3px 15px 3px 15px !important;
 }
 
-[class*='MuiTable-'] tr td:last-child,
-[class*='MuiTable-'] tr th:last-child {
-  text-align: right !important;
-  width: 50px;
-}
-
 [class*='MuiTable'] tr td:last-child button,
 [class*='MuiTable'] tr th:last-child button {
   margin-right: -10px;

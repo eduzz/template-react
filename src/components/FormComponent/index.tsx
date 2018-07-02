@@ -6,7 +6,7 @@ export interface IStateForm<T = any> {
   formSubmitted?: boolean;
 }
 
-export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
+export abstract class FormComponent<P = {}, S extends IStateForm = any> extends Component<P, S> {
   protected validationContext: ValidationContext;
   protected scrollTop: Function;
 
@@ -24,7 +24,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     this.validationContext = validationContext;
   }
 
-  public async isFormValid(formSubmitted: boolean = true): Promise<boolean> {
+  public isFormValid(formSubmitted: boolean = true): boolean {
     const isValid = this.validationContext.isValid(formSubmitted);
 
     if (!isValid && this.scrollTop) {
@@ -41,8 +41,9 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   }
 
   protected updateModel(handler: (model: S['model'], value: any) => void): (value: any) => void {
+    let { model } = this.state;
+
     return (event: any) => {
-      let { model } = this.state;
       let value = event;
 
       if ((event || {} as any).target) {
@@ -53,7 +54,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
 
       handler(model, value);
 
-      this.setState({ model });
+      this.setState({ model: JSON.parse(JSON.stringify(model)) });
     };
   }
 

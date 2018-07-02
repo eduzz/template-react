@@ -1,5 +1,6 @@
+import { post, put } from 'api';
 import { logError } from 'errorHandler';
-import { ICourse, ICourseAdvanced } from 'interfaces/course';
+import { ICourse, ICourseAdvanced, ICourseCustomization } from 'interfaces/course';
 import { IActionCreator } from 'store/interfaces';
 
 import { enCourseStoreSaveActions } from '../../reducers/course/save';
@@ -11,17 +12,19 @@ export function requestCourseSave(model: ICourse): IActionCreator<enCourseStoreS
     try {
       dispatch({ type: enCourseStoreSaveActions.requestSave, model });
 
-      //TODO: save
-      // const { data } = model.id ?
-      //   await put(`/courses/${model.id}`, model) :
-      //   await post('/courses', model);
-      const data = await new Promise(resolve => setTimeout(() => resolve({ id: Date.now(), ...model }), 2000));
+      const { data } = model.id ?
+        await put(`/courses/${model.id}`, model) :
+        await post('/courses', model);
 
       dispatch({ type: enCourseStoreSaveActions.receiveSave, course: data });
       requestCourseList(getState().course.list.pagination)(dispatch as any, getState);
+
+      return data;
     } catch (error) {
       logError(error);
       dispatch({ type: enCourseStoreSaveActions.receiveSaveError, error });
+
+      throw error;
     }
   };
 }
@@ -31,11 +34,11 @@ export function cleanCourseSaveError(): IActionCreator<enCourseStoreSaveActions>
 }
 
 export function requestCourseAdvancedSave(course: ICourse, model: ICourseAdvanced): IActionCreator<string> {
-  return requestCoursePartSave(course, 'ADVANCED', model);
+  return requestCoursePartSave(course, 'ADVANCED', model, put);
 }
 
-export function requestCourseCustomizationSave(course: ICourse, model: ICourseAdvanced): IActionCreator<string> {
-  return requestCoursePartSave(course, 'CUSTOMIZATION', model);
+export function requestCourseCustomizationSave(course: ICourse, model: ICourseCustomization): IActionCreator<string> {
+  return requestCoursePartSave(course, 'CUSTOMIZATION', model, model.id ? put : post);
 }
 
 export function cleanCourseAdvancedSaveError(): IActionCreator<string> {
@@ -46,20 +49,23 @@ export function cleanCourseCustomizationSaveError(): IActionCreator<string> {
   return cleanCoursePartSaveError('CUSTOMIZATION');
 }
 
-function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model: any): IActionCreator<string> {
-  return async (dispatch, getState) => {
+function requestCoursePartSave(course: ICourse, part: typeCourseSaveParts, model: any, http: typeof put | typeof post): IActionCreator<string> {
+  return async dispatch => {
     try {
       dispatch({ type: courseStoreSavePartActions.requestSave(part), model });
 
-      //TODO: save
-      // await put(`/courses/${course.id}/advanced`, model);
+      await http(`/courses/${course.id}/${part.toLowerCase()}`, model);
       const result = await new Promise<any>(resolve => setTimeout(() => resolve(model), 2000));
-      course.advanced = result;
+      course[part.toLowerCase()] = result;
 
       dispatch({ type: courseStoreSavePartActions.receiveSave(part), course });
+
+      return course;
     } catch (error) {
       logError(error);
       dispatch({ type: courseStoreSavePartActions.receiveSaveError(part), error });
+
+      throw error;
     }
   };
 }

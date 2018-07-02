@@ -32,13 +32,13 @@ class AuthorFormModal extends FormComponent<IPropsFromConnect, IState> {
     this.props.cancelAuthorFormModal();
   }
 
-  async onSubmit(event: Event) {
+  onSubmit(event: Event) {
     event.preventDefault();
 
     const { model } = this.state;
     const { requestAuthorSave } = this.props;
 
-    const isValid = await this.isFormValid();
+    const isValid = this.isFormValid();
     if (!isValid) return;
 
     requestAuthorSave(model as any);

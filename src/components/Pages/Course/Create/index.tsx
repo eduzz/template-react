@@ -10,6 +10,7 @@ import {
   Stepper,
 } from '@material-ui/core';
 import { reverseTheme } from 'assets/theme';
+import { ScrollTopContext } from 'components/AppWrapper';
 import AppRouter, { RouterContext } from 'components/Router';
 import Snackbar from 'components/Snackbar';
 import Toolbar from 'components/Toolbar';
@@ -20,17 +21,11 @@ import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import React, { Fragment, PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { IAppStoreState } from 'store';
-import {
-  cleanCourseAdvancedSaveError,
-  cleanCourseCustomizationSaveError,
-  cleanCourseSaveError,
-} from 'store/actionCreators/course';
 
-import { ScrollTopContext } from '../../../AppWrapper';
 import FormManager from '../FormParts';
-import AdvancedFormStep from '../FormParts/Advanced';
-import CustomizationFormStep from '../FormParts/Customization';
-import EssentialFormStep from '../FormParts/Essentials';
+import CourseAdvancedForm from '../FormParts/Advanced';
+import CourseCustomizationForm from '../FormParts/Customization';
+import CourseEssentialForm from '../FormParts/Essentials';
 
 interface IState {
   course?: ICourse;
@@ -43,10 +38,6 @@ interface IProps {
 
 interface IPropsFromConnect {
   saving: boolean;
-  savingError: any;
-  cleanCourseSaveError?: typeof cleanCourseSaveError;
-  cleanCourseAdvancedSaveError?: typeof cleanCourseAdvancedSaveError;
-  cleanCourseCustomizationSaveError?: typeof cleanCourseCustomizationSaveError;
 }
 
 @WithStyles({
@@ -69,14 +60,24 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
   scrollTop: Function;
   getRouter: () => AppRouter;
-  formManager: FormManager;
 
   constructor(props: IProps & IPropsFromConnect) {
     super(props);
     this.state = { ...this.state, currentStep: 0 };
   }
 
-  handleStepCompleted(course: ICourse) {
+  async onSubmit(formManager: FormManager) {
+    const status = await formManager.trySave();
+
+    if (!status.success) {
+      Snackbar.error((status.reasons || ['Não foi possível salvar']).join('<br />'));
+      return;
+    }
+
+    this.nextStep(status.results[0]);
+  }
+
+  nextStep(course: ICourse) {
     const { currentStep } = this.state;
 
     this.scrollTop();
@@ -95,25 +96,12 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
     this.setState({ currentStep: currentStep + 1 as any, course });
   }
 
-  handleSave(event: Event) {
-    event.preventDefault();
-    this.formManager.askSave();
-  }
-
-  handleClearError() {
-    this.props.cleanCourseSaveError();
-    this.props.cleanCourseAdvancedSaveError();
-    this.props.cleanCourseCustomizationSaveError();
-  }
-
   render() {
     const { currentStep, course } = this.state;
-    const { classes, saving, savingError } = this.props;
+    const { classes, saving } = this.props;
 
     return (
       <Fragment>
-        <Snackbar opened={!!savingError} error={savingError} onClose={this.handleClearError.bind(this)} />
-
         <ScrollTopContext.Consumer>
           {scrollTop => (this.scrollTop = scrollTop) && null}
         </ScrollTopContext.Consumer>
@@ -141,29 +129,29 @@ class CourseWizardPage extends PureComponent<IProps & IPropsFromConnect, IState>
 
           <Divider light />
 
-          <FormManager ref={ref => this.formManager = ref}>
+          <FormManager onSubmit={this.onSubmit.bind(this)}>
             {currentStep === 0 &&
-              <EssentialFormStep course={course} onComplete={this.handleStepCompleted.bind(this)} />
+              <CourseEssentialForm course={course} />
             }
 
             {currentStep === 1 &&
-              <AdvancedFormStep course={course} onComplete={this.handleStepCompleted.bind(this)} />
+              <CourseAdvancedForm course={course} />
             }
 
             {currentStep === 2 &&
-              <CustomizationFormStep course={course} onComplete={this.handleStepCompleted.bind(this)} />
+              <CourseCustomizationForm course={course} />
             }
-          </FormManager>
 
-          <CardActions className={classes.footer}>
-            <Button onClick={this.handleSave.bind(this)} disabled={saving} color='secondary' className='icon-right'>
-              {saving ? 'Salvando' : currentStep === 2 ? 'Salvar' : 'Próximo'}
-              {saving ?
-                <CircularProgress color='secondary' className={classes.progressButton} size={18} /> :
-                currentStep === 2 ? null : <ChevronRightIcon />
-              }
-            </Button>
-          </CardActions>
+            <CardActions className={classes.footer}>
+              <Button type='submit' disabled={saving} color='secondary' className='icon-right'>
+                {saving ? 'Salvando' : currentStep === 2 ? 'Salvar' : 'Próximo'}
+                {saving ?
+                  <CircularProgress color='secondary' className={classes.progressButton} size={18} /> :
+                  currentStep === 2 ? null : <ChevronRightIcon />
+                }
+              </Button>
+            </CardActions>
+          </FormManager>
 
         </Card>
       </Fragment>
@@ -176,16 +164,9 @@ const mapStateToProps = (state: IAppStoreState, ownProps: {}): IPropsFromConnect
     saving:
       state.course.save.isSaving ||
       state.course.saveAdvanced.isSaving ||
-      state.course.saveCustomization.isSaving,
-    savingError:
-      state.course.save.error ||
-      state.course.saveAdvanced.error ||
-      state.course.saveCustomization.error
+      state.course.saveCustomization.isSaving
   };
 };
 
 export default connect<IPropsFromConnect, {}, IProps>(mapStateToProps, {
-  cleanCourseSaveError,
-  cleanCourseAdvancedSaveError,
-  cleanCourseCustomizationSaveError
 })(CourseWizardPage);
