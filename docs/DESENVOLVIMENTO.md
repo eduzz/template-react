@@ -8,7 +8,6 @@ DESENVOLVIMENTO
 * Docker com docker-compose
 * Visual Studio Code (Recomendado mas não obrigatório)
 
-
 ### Iniciando 
 
 ```bash
@@ -22,6 +21,9 @@ yarn dev # ou docker-compose up caso queira usar docker durante o dev
 Pronto, agora é só codar que ele reiniciará a aplicação com as alterações.
 
 ### Environmetns (.env)
+
+Se precisar alterar algum valor, crie .env.development.local para sobrepor os valores.  
+Caso alterados será necessário parar o script e rodar novamente.
 
 ### Typescript
 

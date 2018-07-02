@@ -24,8 +24,8 @@ docker-compose up -d
 
 A aplicações irá iniciar, sugiro utilizar o **NGINX** para criar um proxy reverso.
 
-**ATENÇÃO:** diferente da api, o front não tem acesso o environments, ele utilizará
-**os que foram setados no .env.production durante o processo do *docker build*, 
+**ATENÇÃO:** diferente da api, o front não tem acesso o environments,
+**ele utilizará os que foram setados no .env.production durante o processo do docker build**, 
 sendo necessário rebuildar a aplicação e gerar uma nova imagem.
 
 ### Atualizando
