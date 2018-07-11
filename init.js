@@ -56,7 +56,7 @@ async function askParams(answers = {}) {
     message: 'Repositorio'
   }, {
     name: 'endpointDev',
-    default: answers.endpointDev || 'http://localhost:3000',
+    default: answers.endpointDev || 'http://localhost:3001',
     message: 'Endpoint API(Dev)'
   }, {
     name: 'endpointProd',
