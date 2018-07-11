@@ -11,6 +11,8 @@ DESENVOLVIMENTO
 ### Iniciando 
 
 ```bash
+na raíz do projeto executar os comandos abaixo:
+
 yarn install # ou npm install
 
 node ./init.js # apenas caso não tenha iniciado o projeto ainda
