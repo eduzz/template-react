@@ -1,8 +1,8 @@
-import { ICache } from 'interfaces/cache';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 
+import { ICache } from '../interfaces/cache';
 import storageService, { StorageService } from './storage';
 
 export class CacheService {
@@ -14,18 +14,18 @@ export class CacheService {
 
   public getData(key: string): rxjs.Observable<ICache> {
     if (this.memory[key]) return rxjs.of(this.memory[key]);
-    return this.storageService.get('church-cache-' + key);
+    return this.storageService.get('app-cache-' + key);
   }
 
   public saveData<T>(key: string, data: T, options: { persist: boolean, expirationMinutes: number }): rxjs.Observable<ICache<T>> {
     const cache: ICache<T> = {
       createdAt: new Date(),
-      expirationDate: moment().add(options.expirationMinutes, 'minutes').toDate(),
+      expirationDate: DateTime.local().plus({ minutes: options.expirationMinutes }).toJSDate(),
       data
     };
 
     if (options.persist) {
-      return this.storageService.set('church-cache-' + key, cache);
+      return this.storageService.set('app-cache-' + key, cache);
     }
 
     return rxjs.of(true).pipe(
@@ -38,7 +38,7 @@ export class CacheService {
 
   public isExpirated(cache: ICache): boolean {
     if (cache.expirationDate) {
-      return moment(cache.expirationDate).isBefore(moment());
+      return DateTime.fromJSDate(cache.expirationDate) < DateTime.local();
     }
 
     const difference = Date.now() - new Date(cache.createdAt).getTime();

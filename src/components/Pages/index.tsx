@@ -1,41 +1,24 @@
-import AppWrapper from 'components/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
-import PeopleIcon from 'mdi-react/PeopleIcon';
-import SchoolIcon from 'mdi-react/SchoolIcon';
-import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
 
-import CourseIndexPage from './Course';
-import DashboardIndexPage from './Dashboard';
-import UserIndexPage from './User';
+import AdminModule from './Admin';
+import NewPasswordPage from './Public/NewPassword';
 
-export default class AdminModule extends React.PureComponent {
+export default class Pages extends React.PureComponent {
   public static routes: IAppRoute[] = [
     {
-      path: '/course',
-      sideDrawer: { display: 'Cursos', order: 2, icon: SchoolIcon },
-      component: CourseIndexPage,
-    },
-    {
-      path: '/user',
-      sideDrawer: { display: 'Usuários', order: 1, icon: PeopleIcon },
-      roles: ['admin'],
-      component: UserIndexPage
+      path: '/nova-senha',
+      exact: true,
+      allowAnonymous: true,
+      component: NewPasswordPage
     },
     {
       path: '/',
-      sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
-      roles: [],
-      exact: true,
-      component: DashboardIndexPage
+      component: AdminModule
     },
   ];
 
   render() {
-    return (
-      <AppWrapper routes={AdminModule.routes}>
-        {this.props.children}
-      </AppWrapper>
-    );
+    return this.props.children;
   }
 }

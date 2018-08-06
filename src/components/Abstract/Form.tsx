@@ -1,4 +1,4 @@
-import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
+import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import { Component } from 'react';
 
 export interface IStateForm<T = any> {
@@ -12,7 +12,7 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
 
   constructor(props: any) {
     super(props);
-    this.state = { model: {} } as any;
+    this.state = { model: {} } as Readonly<S>;
   }
 
   public bindScrollTop = (scrollTop: Function): React.ReactNode => {
@@ -42,12 +42,6 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   protected updateModel = (handler: (model: S['model'], value: any) => void): (value: any) => void => {
     return (value: any) => {
       const { model } = this.state;
-
-      if ((value || {} as any).target) {
-        value = value.target.type === 'checkbox' ?
-          value.target.checked :
-          value;
-      }
 
       handler(model, value);
 

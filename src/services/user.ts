@@ -1,53 +1,33 @@
+import { DeepReadonly } from 'helpers/immutable';
+import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import { IUser } from 'interfaces/user';
+import { IUserRole } from 'interfaces/userRole';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
+import apiService, { ApiService } from './api';
+
 export class UserService {
-  private users: ReadonlyArray<IUser> = new Array(50).fill('').map<IUser>((v, index) => ({
-    id: index + 1,
-    name: 'Daniel Prado ' + (index + 1),
-    email: `daniel.prado.${index}@eduzz.com`,
-    course: 'Curso de Teste',
-    group: 'Administradores'
-  }));
+  constructor(private apiService: ApiService) { }
 
-  constructor() { }
+  public list(params: IPaginationParams): rxjs.Observable<IPaginationResponse<IUser>> {
+    return this.apiService.get('/user', params);
+  }
 
-  public list(): rxjs.Observable<ReadonlyArray<IUser>> {
-    return rxjs.of(this.users).pipe(
-      rxjsOperators.delay(400)
+  public roles(refresh: boolean = false): rxjs.Observable<DeepReadonly<IUserRole[]>> {
+    return this.apiService.get('/user/roles').pipe(
+      rxjsOperators.cache('user-service-roles', { refresh })
     );
   }
 
-  public save(model: IUser): rxjs.Observable<void> {
-    return rxjs.of(model).pipe(
-      rxjsOperators.delay(400),
-      rxjsOperators.map(() => {
-        if (!model.id) {
-          this.users = [
-            ...this.users,
-            { ...model, id: Date.now() }
-          ];
-          return;
-        }
-
-        this.users = [
-          model,
-          ...this.users.filter(u => u.id !== model.id)
-        ];
-      })
-    );
+  public save(model: IUser): rxjs.Observable<IUser> {
+    return this.apiService.post('/user', model);
   }
 
-  public delete(user: IUser): rxjs.Observable<void> {
-    return rxjs.of(user).pipe(
-      rxjsOperators.delay(400),
-      rxjsOperators.map(() => {
-        this.users = this.users.filter(u => u.id !== user.id);
-      })
-    );
+  public delete(id: number): rxjs.Observable<void> {
+    return this.apiService.delete(`/user/${id}`);
   }
 }
 
-const userService = new UserService();
+const userService = new UserService(apiService);
 export default userService;

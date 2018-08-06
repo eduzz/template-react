@@ -9,6 +9,8 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     contentPadding: number;
     contentPaddingUpSm: number;
     boxShadow: string;
+    colors?: {
+    }
   }
 
   interface Theme {

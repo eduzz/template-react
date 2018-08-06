@@ -1,14 +1,12 @@
 export interface IPaginationParams {
   term?: string;
   page: number;
-  size: number;
+  pageSize: number;
   orderBy?: string;
   orderDirection?: 'asc' | 'desc';
 }
 
-export interface IPaginationResponse {
-  page: number;
-  size: number;
-  totalRows: number;
-  totalPages: number;
+export interface IPaginationResponse<T> extends IPaginationParams {
+  total: number;
+  results: T[];
 }

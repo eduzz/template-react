@@ -1,16 +1,15 @@
 export function errorMessageFormatter(err: any): string {
+  if (typeof err === 'string') {
+    return err;
+  }
+
   const status: any = {
     '-1': 'Servidor não encontrado',
     400: 'Dados inválidos',
-    411: 'Dados inválidos',
     401: 'Sem permissão de acesso',
     403: 'Sem permissão de acesso',
     422: 'Dados inválidos'
   };
-
-  if (typeof err === 'string') {
-    return err;
-  }
 
   switch ((err || {}).message) {
     case 'no-internet':

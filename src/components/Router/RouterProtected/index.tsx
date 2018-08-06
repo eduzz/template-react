@@ -33,12 +33,12 @@ export default class AppRouterProtected extends PureComponent<IProps, IState> {
 
       this.setState({
         isAuthenticated: true,
-        canAccess: true //TODO: check access
+        canAccess: user.canAccess(...(this.props.route.roles || []))
       });
     });
   }
 
-  public render(): JSX.Element {
+  render(): JSX.Element {
     const { isAuthenticated, canAccess } = this.state;
     const { route, routeProps, children } = this.props;
 

@@ -1,26 +1,16 @@
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export function dateParse(value: any, format?: string): Date {
   if (!value) return value;
   if (value instanceof Date) return value;
 
-  const date = moment(value, format);
-  if (!date.isValid()) return value;
+  const date = format ?
+    DateTime.fromFormat(value, format) :
+    DateTime.fromISO(value);
 
-  return date.toDate();
+  return date.toJSDate();
 }
 
-export function dateFormat(date: Date, format: string = 'DD/MM/YY'): string {
-  return moment(date).format(format).replace('-feira', '');
-}
-
-export function dateHumanize(date: any): string {
-  const now = moment();
-  date = moment(date);
-
-  return now.isSame(date, 'day') ?
-    `${date.format('HH:mm')} - ${moment.duration(now.diff(date)).humanize()}` :
-    now.isSame(date, 'year') ?
-      date.format('DD/MMM [às] HH:mm') :
-      date.format('DD/MMM/YYYY [às] HH:mm');
+export function dateFormat(date: Date, format: string = 'D'): string {
+  return DateTime.fromJSDate(date).toFormat(format);
 }

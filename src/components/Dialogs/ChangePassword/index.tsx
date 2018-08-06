@@ -1,9 +1,9 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgress, Slide } from '@material-ui/core';
+import ValidationContext from '@react-form-fields/core/components/ValidationContext';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import Snackbar from 'components/Snackbar';
+import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
-import FieldText from 'material-ui-form-fields/components/Text';
-import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
@@ -42,11 +42,11 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     });
   }
 
-  onCancel() {
+  onCancel = () => {
     authService.closeChangePassword();
   }
 
-  async onSubmit(event: Event) {
+  onSubmit = async (event: React.FormEvent) => {
     const { model } = this.state;
 
     event.preventDefault();
@@ -79,13 +79,14 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
         disableBackdropClick
         disableEscapeKeyDown
         open={opened}
-        onExited={this.resetForm.bind(this)}
-        TransitionComponent={Transition}>
+        onExited={this.resetForm}
+        TransitionComponent={Transition}
+      >
 
         {loading && <LinearProgress color='secondary' />}
 
-        <form onSubmit={this.onSubmit.bind(this)} noValidate>
-          <ValidationContext ref={this.bindValidationContext.bind(this)}>
+        <form onSubmit={this.onSubmit} noValidate>
+          <ValidationContext ref={this.bindValidationContext}>
             <DialogTitle>Trocar Senha</DialogTitle>
 
             <DialogContent className={classes.content}>
@@ -119,7 +120,7 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
             </DialogContent>
 
             <DialogActions>
-              <Button disabled={loading} onClick={this.onCancel.bind(this)}>Cancelar</Button>
+              <Button disabled={loading} onClick={this.onCancel}>Cancelar</Button>
               <Button color='secondary' type='submit' disabled={loading}>Salvar</Button>
             </DialogActions>
 

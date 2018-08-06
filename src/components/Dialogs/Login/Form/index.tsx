@@ -1,10 +1,10 @@
 import { Button, Card, CardActions, CardContent, LinearProgress } from '@material-ui/core';
+import FieldText from '@react-form-fields/material-ui/components/Text';
+import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import Snackbar from 'components/Snackbar';
+import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
-import FieldText from 'material-ui-form-fields/components/Text';
-import ValidationContext from 'material-ui-form-fields/components/ValidationContext';
-import React, { MouseEvent } from 'react';
+import React, { FormEvent, MouseEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
@@ -32,7 +32,7 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     this.state = { ...this.state, opened: false, loading: false };
   }
 
-  async onSubmit(event: Event) {
+  onSubmit = async (event: FormEvent) => {
     const { model } = this.state;
 
     event.preventDefault();
@@ -59,8 +59,8 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     const { classes, onRecoveryAccess } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit.bind(this)} noValidate>
-        <ValidationContext ref={this.bindValidationContext.bind(this)}>
+      <form onSubmit={this.onSubmit} noValidate>
+        <ValidationContext ref={this.bindValidationContext}>
 
           <Card>
             <CardContent>
@@ -72,7 +72,7 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
                 value={model.email}
                 validation='required|email'
                 onChange={this.updateModel((model, v) => model.email = v)}
-                margin='none'
+                margin='dense'
               />
 
               <FieldText

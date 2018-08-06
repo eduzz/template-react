@@ -5,7 +5,7 @@
     "target": "es5",
     "experimentalDecorators": true,
     "lib": [
-      "es6",
+      "es2017",
       "dom"
     ],
     "sourceMap": true,
@@ -25,8 +25,8 @@
     "baseUrl": "./src"
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "exclude": [
     "node_modules",

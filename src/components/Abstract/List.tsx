@@ -1,20 +1,28 @@
-import { LinearProgress, TableCell, TablePagination, TableRow, TableSortLabel } from '@material-ui/core';
+import {
+  IconButton,
+  InputAdornment,
+  LinearProgress,
+  TableCell,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+} from '@material-ui/core';
 import { TableCellProps } from '@material-ui/core/TableCell';
-import { TablePaginationProps } from '@material-ui/core/TablePagination';
-import ErrorMessage from 'components/ErrorMessage';
-import IconMessage from 'components/IconMessage';
+import { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
+import FieldText from '@react-form-fields/material-ui/components/Text';
+import { ScrollTopContext } from 'components/Layout/AppWrapper';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import IconMessage from 'components/Shared/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
-import lodashOrderBy from 'lodash/orderBy';
 import CreationIcon from 'mdi-react/CreationIcon';
-import { Fragment, PureComponent } from 'react';
+import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import React from 'react';
-
-import { ScrollTopContext } from '../AppWrapper';
+import { Fragment, PureComponent } from 'react';
 
 export interface IStateList<T = any> extends IPaginationParams {
-  items: ReadonlyArray<T>;
-  allItems: ReadonlyArray<T>;
-  totalRows: number;
+  items: T[];
+  allItems: T[];
+  total: number;
 
   error?: any;
   loading: boolean;
@@ -22,6 +30,7 @@ export interface IStateList<T = any> extends IPaginationParams {
 
 export abstract class ListComponent<P = {}, S extends IStateList = IStateList<any>> extends PureComponent<P, S> {
   scrollTop: Function;
+  timeoutTerm: any;
   isPaginatedData: boolean = false;
 
   abstract loadData: (params?: Partial<IPaginationParams>) => void;
@@ -30,14 +39,14 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     super(props);
     this.state = {
       page: 0,
-      size: 10,
+      pageSize: 10,
       orderBy,
       orderDirection,
       items: [],
       allItems: [],
-      totalRows: 0,
+      total: 0,
       loading: true
-    } as any;
+    } as Readonly<S>;
   }
 
   get sortableProps() {
@@ -52,70 +61,107 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
-    const { term, page, size, orderBy, orderDirection } = this.state;
-    return { term, page, size, orderBy, orderDirection, ...params };
+    const { term, page, pageSize, orderBy, orderDirection } = this.state;
+    return { term, page, pageSize, orderBy, orderDirection, ...params };
   }
 
   setError = (error: any) => {
     this.setState({ error, items: [], allItems: [], loading: false });
   }
 
-  setPaginatedData = (data: IStateList['items'][0], paginator: IPaginationResponse) => {
-    const { totalPages, ...others } = paginator;
+  setPaginatedData = (data: IPaginationResponse<S['items'][0]>) => {
+    const { results, ...others } = data;
     this.isPaginatedData = true;
 
     this.setState({
       ...others,
-      items: data,
-      allItems: data,
+      items: results,
+      allItems: results,
       loading: false
     });
   }
 
   setAllItems = (allItems: S['allItems']): void => {
-    const { page, size, orderBy, orderDirection } = this.state;
+    const { page, pageSize } = this.state;
     this.isPaginatedData = false;
 
-    if (orderBy) {
-      allItems = lodashOrderBy(allItems, orderBy, orderDirection);
-    }
-
-    const items = allItems.slice(size * page, (size * page) + size);
-    this.setState({ allItems, items, totalRows: allItems.length, loading: false });
+    this.setState({ allItems, total: allItems.length, loading: false });
+    this.handlePaginate(page, pageSize);
   }
 
-  handlePaginate = (page: number, size: number): void => {
+  handlePaginate = (page: number, pageSize: number = this.state.pageSize): void => {
     const { allItems, loading } = this.state;
     if (loading) return;
 
     if (this.isPaginatedData) {
-      this.loadData({ page, size });
+      this.loadData({ page, pageSize });
       this.scrollTop && this.scrollTop();
       return;
     }
 
-    const items = allItems.slice(size * page, (size * page) + size);
-    this.setState({ items, size, page, loading: false, });
+    this.setState({
+      items: allItems.slice(pageSize * page, (pageSize * page) + pageSize),
+      pageSize,
+      page,
+      loading: false,
+    });
+
     this.scrollTop && this.scrollTop();
+  }
+
+  handleSort = (column: string) => {
+    const { orderBy, orderDirection, pageSize } = this.state;
+
+    this.setState({
+      orderBy: column,
+      orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
+    }, () => this.handlePaginate(0, pageSize));
+  }
+
+  handleChangeTerm = (term: string) => {
+    if (this.state.loading) return;
+
+    this.setState({ term });
+    clearTimeout(this.timeoutTerm);
+
+    if (term && term.length < 3) return;
+
+    this.timeoutTerm = setTimeout(() => this.loadData(), 500);
   }
 
   handleTryAgain = () => {
     this.loadData();
   }
 
-  handleSort = (column: string) => {
-    let { orderBy, orderDirection, allItems, size } = this.state;
-    orderDirection = column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc';
+  labelDisplayedRows = ({ from, to, count }: LabelDisplayedRowsArgs) => `${from}-${to} de ${count}`;
+  onChangePage = (event: any, page: number) => this.handlePaginate(page);
+  onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.page, Number(event.target.value));
 
-    if (!this.isPaginatedData) {
-      allItems = lodashOrderBy(allItems, column, orderDirection);
-    }
+  renderSearch = (props: Partial<FieldText['props']> = {}) => {
+    const { term } = this.state;
 
-    this.setState({
-      allItems,
-      orderBy: column,
-      orderDirection
-    }, () => this.handlePaginate(0, size));
+    return (
+      <FieldText
+        label='Pesquisar'
+        value={term}
+        onChange={this.handleChangeTerm}
+        margin='none'
+        placeholder='Digite ao menos 3 caracteres...'
+        InputLabelProps={{
+          shrink: true
+        }}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position='end'>
+              <IconButton disabled={true} style={{ marginRight: -15 }}>
+                <MagnifyIcon />
+              </IconButton>
+            </InputAdornment>
+          )
+        }}
+        {...props}
+      />
+    );
   }
 
   renderLoader = () => {
@@ -159,7 +205,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   renderTablePagination = (props: Partial<TablePaginationProps> = {}) => {
-    const { totalRows, page, size, loading } = this.state;
+    const { total, page, pageSize, loading } = this.state;
 
     return (
       <div style={loading ? { pointerEvents: 'none', opacity: 0.7 } : null}>
@@ -169,14 +215,14 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
         <TablePagination
           labelRowsPerPage='items'
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          labelDisplayedRows={this.labelDisplayedRows}
           component='div'
-          count={totalRows}
-          rowsPerPage={size}
+          count={total}
+          rowsPerPage={pageSize}
           rowsPerPageOptions={[10, 25, 50]}
           page={page}
-          onChangePage={(event, page) => this.handlePaginate(page, size)}
-          onChangeRowsPerPage={(event) => this.handlePaginate(page, Number(event.target.value))}
+          onChangePage={this.onChangePage}
+          onChangeRowsPerPage={this.onChangeRowsPerPage}
           {...props}
         />
       </div>
@@ -194,22 +240,28 @@ interface ITableCellSortableProps extends TableCellProps {
   onChange: (column: any) => void;
 }
 
-export function TableCellSortable(props: ITableCellSortableProps) {
-  const { currentColumn, currentDirection, onChange, column, loading, ...extra } = props;
+export class TableCellSortable extends PureComponent<ITableCellSortableProps> {
+  onChange = () => {
+    this.props.onChange(this.props.column);
+  }
 
-  return (
-    <TableCell
-      {...extra}
-      sortDirection={currentColumn === column ? currentDirection : false}
-    >
-      <TableSortLabel
-        disabled={loading}
-        active={currentColumn === column}
-        direction={currentDirection}
-        onClick={() => onChange(column)}
+  render() {
+    const { currentColumn, currentDirection, children, onChange, column, loading, ...extra } = this.props;
+
+    return (
+      <TableCell
+        {...extra}
+        sortDirection={currentColumn === column ? currentDirection : false}
       >
-        {props.children}
-      </TableSortLabel>
-    </TableCell>
-  );
+        <TableSortLabel
+          disabled={loading}
+          active={currentColumn === column}
+          direction={currentDirection}
+          onClick={this.onChange}
+        >
+          {children}
+        </TableSortLabel>
+      </TableCell>
+    );
+  }
 }
