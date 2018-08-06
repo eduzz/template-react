@@ -1,6 +1,11 @@
 export interface IUserToken {
   id: number;
-  name: string;
-  producer: boolean;
-  scope: string[];
+  email: string;
+  firstName: string;
+  lastName?: string;
+  roles: string[];
+  exp: number;
+
+  fullName: string;
+  canAccess(...roles: string[]): boolean;
 }

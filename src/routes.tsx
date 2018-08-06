@@ -4,7 +4,7 @@ import { IAppRoute } from 'interfaces/route';
 const baseRoutes: IAppRoute[] = [{
   path: '/',
   component: Pages,
-  subRoutes: Pages.routes,
+  allowAnonymous: true
 }];
 
 export default baseRoutes;

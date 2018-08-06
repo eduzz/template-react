@@ -1,61 +1,24 @@
-import AppWrapper from 'components/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
-import PeopleIcon from 'mdi-react/PeopleIcon';
-import SchoolIcon from 'mdi-react/SchoolIcon';
-import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
 
-import CourseIndexPage from './Course';
-import DashboardIndexPage from './Dashboard';
-import PackageIndexPage from './Package';
-import UserIndexPage from './User';
-import StudentIndexPage from './Student';
+import AdminModule from './Admin';
+import NewPasswordPage from './Public/NewPassword';
 
-export default class AdminModule extends React.PureComponent {
+export default class Pages extends React.PureComponent {
   public static routes: IAppRoute[] = [
     {
-      path: '/',
-      sideDrawer: { display: 'Dashboard', icon: ViewDashboardIcon },
+      path: '/nova-senha',
       exact: true,
-      roles: [],
-      component: DashboardIndexPage,
-      subRoutes: DashboardIndexPage.routes
+      allowAnonymous: true,
+      component: NewPasswordPage
     },
     {
-      path: '/course',
-      sideDrawer: { display: 'Cursos', icon: SchoolIcon },
-      component: CourseIndexPage,
-      subRoutes: CourseIndexPage.routes
+      path: '/',
+      component: AdminModule
     },
-    {
-      path: '/students',
-      sideDrawer: { display: 'Alunos', icon: PeopleIcon },
-      roles: ['admin'],
-      component: StudentIndexPage,
-      subRoutes: StudentIndexPage.routes
-    },
-    {
-      path: '/user',
-      sideDrawer: { display: 'Usuários', icon: PeopleIcon },
-      roles: ['admin'],
-      component: UserIndexPage,
-      subRoutes: UserIndexPage.routes
-    }
-    ,
-    {
-      path: '/packages',
-      sideDrawer: { display: 'Pacotes', icon: PeopleIcon },
-      roles: ['admin'],
-      component: PackageIndexPage,
-      subRoutes: PackageIndexPage.routes
-    }
   ];
 
   render() {
-    return (
-      <AppWrapper routes={AdminModule.routes}>
-        {this.props.children}
-      </AppWrapper>
-    );
+    return this.props.children;
   }
 }
