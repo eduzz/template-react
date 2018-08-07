@@ -33,6 +33,15 @@ interface IProps {
 }))
 export default class AppDrawerUser extends PureComponent<IProps> {
   drawer: IDrawerContext;
+  actions = [{
+    text: 'Trocar senha',
+    icon: KeyVariantIcon,
+    handler: () => this.handleChangePassword
+  }, {
+    text: 'Sair',
+    icon: ExitToAppIcon,
+    handler: () => this.handleLogout
+  }];
 
   constructor(props: IProps) {
     super(props);
@@ -73,15 +82,7 @@ export default class AppDrawerUser extends PureComponent<IProps> {
             </Typography>
           </Grid>
           <Grid item>
-            <DropdownMenu options={[{
-              text: 'Trocar senha',
-              icon: KeyVariantIcon,
-              handler: this.handleChangePassword
-            }, {
-              text: 'Sair',
-              icon: ExitToAppIcon,
-              handler: this.handleLogout
-            }]} />
+            <DropdownMenu options={this.actions} />
           </Grid>
         </Grid>
       </Fragment>

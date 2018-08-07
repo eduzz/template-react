@@ -1,6 +1,7 @@
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
 import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import AppRouter, { RouterContext } from 'components/Router';
 import Snackbar from 'components/Shared/Snackbar';
@@ -121,7 +122,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
           </RouterContext.Consumer>
 
           <div className={classes.logo}>
-            <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
+            <img src={logoWhite} className={classes.logoImage} />
           </div>
 
           <form onSubmit={this.onSubmit} noValidate>

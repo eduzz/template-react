@@ -8,23 +8,23 @@ const variables = {
   contentPadding: 12,
   contentPaddingUpSm: 24,
   boxShadow: '0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 5px 8px 0px rgba(0, 0, 0, 0.14), 0px 1px 14px 0px rgba(0, 0, 0, 0.12)',
-  colors: {
-    facebook: '#3b5998',
-    google: '#de5245'
+  color: {
+    sucess: '#009358',
+    error: '#dc3f53',
   }
 };
 
 const primary = {
-  light: '#4f5b62',
-  main: '#263238',
-  dark: '#000a12',
+  light: '#6d6d6d',
+  main: '#424242',
+  dark: '#1b1b1b',
   contrastText: '#fff',
 };
 
 const secondary = {
-  light: '#7f85ff',
-  main: '#3d58f6',
-  dark: '#002fc2',
+  light: '#4ec485',
+  main: '#009358',
+  dark: '#00642e',
   contrastText: '#fff',
 };
 
@@ -44,7 +44,7 @@ export const whiteTheme = createMuiTheme({
       light: '#ffffff',
       main: '#ffffff',
       dark: '#cccccc',
-      contrastText: '#3a3a3a'
+      contrastText: '##596375'
     },
     secondary: {
       light: '#4ec485',

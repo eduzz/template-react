@@ -1,17 +1,15 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 
 import { ApiError } from '../errors/api';
 import { API_ENDPOINT } from '../settings';
 import authService from './auth';
-import logService, { LogService } from './log';
 import tokenService, { TokenService } from './token';
 
 export class ApiService {
   constructor(
     private apiEndpoint: string,
-    private logService: LogService,
     private tokenService: TokenService
   ) { }
 
@@ -30,7 +28,7 @@ export class ApiService {
   private request<T>(method: string, url: string, data: any = null, retry: boolean = true): rxjs.Observable<T> {
     return this.tokenService.getToken().pipe(
       rxjsOperators.first(),
-      rxjsOperators.map(token => token ? { Authorization: `bearer ${token}` } : null),
+      rxjsOperators.map(token => token ? { Authorization: `Bearer ${token}` } : null),
       rxjsOperators.switchMap(headers => {
         return axios.request({
           baseURL: this.apiEndpoint,
@@ -45,23 +43,8 @@ export class ApiService {
           data: method === 'POST' ? data : null
         });
       }),
-      rxjsOperators.switchMap(res => this.checkNewToken(res)),
       rxjsOperators.map(res => res.data),
       rxjsOperators.catchError(err => this.handleError(err, retry))
-    );
-  }
-
-  private checkNewToken(response: AxiosResponse): rxjs.Observable<AxiosResponse> {
-    const token = response.headers['x-token'];
-
-    if (!token) {
-      return rxjs.of(response);
-    }
-
-    this.logService.breadcrumb('Api New Token', 'manual', token);
-
-    return this.tokenService.setToken(token).pipe(
-      rxjsOperators.map(() => response)
     );
   }
 
@@ -92,7 +75,5 @@ export class ApiService {
 
 }
 
-const apiService = new ApiService(API_ENDPOINT, logService, tokenService);
-export const publicApiService = new ApiService(API_ENDPOINT, logService, tokenService);
-
+const apiService = new ApiService(API_ENDPOINT, tokenService);
 export default apiService;

@@ -52,7 +52,7 @@ export default class ExtraIndexPage extends PureComponent<IProps, IState> {
           onComplete={this.onSelectorComplete}
         />
 
-        <Toolbar title='Extra'></Toolbar>
+        <Toolbar title='Extra' />
 
         <Card>
           <CardContent>

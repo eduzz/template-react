@@ -32,7 +32,7 @@ export default class FabButton extends PureComponent<IProps> {
       return this.renderOne();
     }
 
-    return (<div></div>);
+    return null;
   }
 
   renderOne() {

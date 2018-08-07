@@ -1,5 +1,8 @@
 {
+  "extends": "tslint-react",
   "rules": {
+    "jsx-boolean-value": ["never"],
+    "jsx-no-multiline-js": false,
     "adjacent-overload-signatures": true,
     "no-namespace": [
       true,
@@ -52,7 +55,7 @@
       150
     ],
     "no-default-export": false,
-    "no-require-imports": false,
+    "no-require-imports": true,
     "no-trailing-whitespace": true,
     "semicolon": [
       true,

@@ -92,7 +92,8 @@ export default class Snackbar extends PureComponent<IProps, IState> {
             key='close'
             color='inherit'
             className='close'
-            onClick={onClose}>
+            onClick={onClose}
+          >
             <CloseIcon />
           </IconButton>
         ]}
