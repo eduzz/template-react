@@ -83,13 +83,13 @@ async function askParams(answers = {}) {
     message: 'Confirma as configurações?'
   }]);
 
-  params.slug = lodash.kebabCase(i).toLowerCase();
 
   if (!params.confirmed) {
     console.log('---- Responda novamente:')
     return askParams(params);
   }
 
+  params.slug = lodash.kebabCase(params.slug).toLowerCase();
   return params;
 }
 
