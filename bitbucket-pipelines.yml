@@ -1,0 +1,12 @@
+image: node:8
+
+pipelines:
+  branches:
+    # master:
+    #   - step:
+    #       script:
+    #         - docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+    #         - yarn docker:release
+
+options:
+  docker: true

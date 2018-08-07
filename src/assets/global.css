@@ -1,0 +1,64 @@
+body {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+strong,
+b {
+  font-weight: 500 !important;
+}
+
+.mdi-icon {
+  fill: currentColor;
+}
+
+.hide {
+  display: none !important;
+}
+
+[class*=' MuiButton']:not([class*=' MuiButton-fab']):not(.icon-right) .mdi-icon {
+  margin-right: 10px;
+}
+
+.MuiCard-root {
+  overflow: visible !important;
+}
+
+[class*='MuiTable-'] tr td,
+[class*='MuiTable-'] tr th {
+  padding: 3px 15px 3px 15px !important;
+}
+
+[class*='MuiTable-'] tr td:last-child:not(.empty),
+[class*='MuiTable-'] tr th:last-child:not(.empty) {
+  text-align: right !important;
+  width: 50px;
+}
+
+[class*='MuiTable-'] tr td.empty {
+  font-style: italic;
+  opacity: 0.7;
+  text-align: center;
+}
+
+[class*='MuiTable'] tr td:last-child:not(.empty) button,
+[class*='MuiTable'] tr th:last-child:not(.empty) button {
+  margin-right: -10px;
+}
+
+[class*='MuiDialog'] {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+[class*='MuiDialogContent'] {
+  max-height: calc(100vh - 140px) !important;
+  overflow: auto;
+}
+
+.button-margin-input {
+  margin-top: 25px !important;
+}
+
+/* [class*='MuiModal-'] {
+  overflow: auto !important;
+} */
