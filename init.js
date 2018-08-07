@@ -156,10 +156,6 @@ async function removePackages() {
 }
 
 async function resetGit(params) {
-  await new Promise((resolve, reject) =>
-    rimraf('./.git', err => err ? reject(err) : resolve())
-  );
-
   const originalRepo = await execCommand('git remote get-url origin');
   await execCommand('git remote remove origin');
   await execCommand(`git remote add seed ${originalRepo}`);
