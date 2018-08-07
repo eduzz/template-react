@@ -152,7 +152,7 @@ async function replaceContent(file, replacers) {
 }
 
 async function removePackages() {
-  await execCommand(`yarn remove inquirer ora rimraf`);
+  await execCommand(`yarn remove inquirer ora`);
 }
 
 async function resetGit(params) {
