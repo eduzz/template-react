@@ -98,6 +98,9 @@ async function cleanup(params) {
     from: '%PROJECT-NAME%',
     to: params.project
   }, {
+    from: 'PROJECT-NAME',
+    to: params.project
+  }, {
     from: 'Projeto Base React Eduzz',
     to: params.project
   }, {

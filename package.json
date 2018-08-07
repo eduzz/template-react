@@ -1,5 +1,5 @@
 {
-  "name": "%PROJECT-SLUG%",
+  "name": "PROJECT-SLUG",
   "description": "Front Base for React Admin",
   "version": "0.0.1",
   "private": true,
@@ -11,7 +11,8 @@
     "dev": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "eject": "react-scripts-ts eject",
-    "webpack-analyze": "node ./scripts/webpack-analyze.js"
+    "webpack-analyze": "node ./scripts/webpack-analyze.js",
+    "update-base": "git pull seed master && git merge seed/master"
   },
   "husky": {
     "hooks": {
