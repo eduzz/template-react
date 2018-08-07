@@ -24,19 +24,16 @@ interface IProps {
     background: theme.palette.primary.main,
     minHeight: '100vh',
     minWidth: '100vw',
+    height: '100vh',
+    width: '100vw',
     position: 'relative'
   },
   container: {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
-    margin: 'auto',
-    width: 320,
-    height: 450,
-    maxWidth: 'calc(100% - 30px)',
-    color: 'white'
+    background: 'white',
+    height: '100vh',
+    width: '400px',
+    maxWidth: '100vw',
+    paddingTop: 'calc(50vh - 170px)'
   },
   logo: {
     textAlign: 'center',

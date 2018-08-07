@@ -1,4 +1,19 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import { Overrides } from '@material-ui/core/styles/overrides';
+
+const overrides: Overrides = {
+  MuiButton: {
+    root: {
+      borderRadius: 30,
+      paddingLeft: 20,
+      paddingRight: 20
+    },
+    sizeSmall: {
+      paddingLeft: 15,
+      paddingRight: 15
+    }
+  }
+};
 
 const variables = {
   drawerWidth: 240,
@@ -30,12 +45,14 @@ const secondary = {
 
 export const theme = createMuiTheme({
   palette: { primary, secondary },
-  variables
+  variables,
+  overrides
 });
 
 export const reverseTheme = createMuiTheme({
   palette: { primary: secondary, secondary: primary },
-  variables
+  variables,
+  overrides
 });
 
 export const whiteTheme = createMuiTheme({
@@ -53,5 +70,6 @@ export const whiteTheme = createMuiTheme({
       contrastText: '#fff',
     }
   },
-  variables
+  variables,
+  overrides
 });

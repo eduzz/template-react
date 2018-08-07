@@ -1,5 +1,6 @@
 import { List } from '@material-ui/core';
 import { darken } from '@material-ui/core/styles/colorManipulator';
+import logoWhite from 'assets/images/logo-white.png';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
@@ -93,7 +94,7 @@ export default class AppDrawer extends PureComponent<IProps, IState> {
         </DrawerContext.Consumer>
 
         <div className={classes.header}>
-          <img src={require('assets/images/logo-white.png')} className={classes.logo} />
+          <img src={logoWhite} className={classes.logo} />
           <AppDrawerUser user={user} />
         </div>
 

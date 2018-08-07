@@ -1,12 +1,18 @@
 node {
     def app
+    def dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+    def date = new Date()
 
     stage ('Clone Repository') {
          checkout scm
     }
 
+    stage ('Set Env') {
+        sh "sh ./scripts/build-set-env.sh"
+    }
+
     stage ('Build container') {
-        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f Dockerfile .")
+        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f ./prod/Dockerfile .")
     }
 
      stage('Publish to DockerHub') {

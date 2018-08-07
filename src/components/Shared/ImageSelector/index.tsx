@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, Slide, Typography } from '@material-ui/core';
+import transparencyImage from 'assets/images/transparency.png';
 import { WithStyles } from 'decorators/withStyles';
 import imageCompress from 'helpers/imagerCompress';
 import React, { Fragment, PureComponent } from 'react';
@@ -21,7 +22,7 @@ interface IProps {
 
 @WithStyles({
   imageContainer: {
-    background: `url('${require('assets/images/transparency.png')}') repeat`,
+    background: `url('${transparencyImage}') repeat`,
     boxShadow: '5px 5px 10px #00000040',
     margin: 'auto'
   },
