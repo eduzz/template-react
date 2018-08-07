@@ -1,5 +1,5 @@
-%PROJECT NAME%
-===================
+Projeto Base React Eduzz
+========================
 
 Utilize o VSCode, já está configurado com sugestão de extensões.
 
