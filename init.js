@@ -123,7 +123,7 @@ async function cleanup(params) {
     to: params.dockerCredentials || '%DOCKER-CREDENTIALS%'
   }, {
     from: '%SENTRY-DSN%',
-    to: params.sentryDsn || '%SENTRY-DSN%'
+    to: params.sentryDsn
   }];
 
   await Promise.all([
