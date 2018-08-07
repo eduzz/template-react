@@ -14,7 +14,7 @@ node {
     }
 
     stage ('Build container') {
-        app = docker.build("%DOCKER-IMAGE%", "-f Dockerfile .")
+        app = docker.build("%DOCKER-IMAGE%", "-f ./prod/Dockerfile .")
     }
 
      stage('Publish to DockerHub') {
