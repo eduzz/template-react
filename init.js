@@ -83,13 +83,12 @@ async function askParams(answers = {}) {
     message: 'Confirma as configurações?'
   }]);
 
-
   if (!params.confirmed) {
     console.log('---- Responda novamente:')
     return askParams(params);
   }
 
-  params.slug = lodash.kebabCase(params.slug).toLowerCase();
+  params.slug = lodash.kebabCase(params.project).toLowerCase();
   return params;
 }
 
@@ -105,6 +104,9 @@ async function cleanup(params) {
     to: params.project
   }, {
     from: '%PROJECT-SLUG%',
+    to: params.slug
+  }, {
+    from: 'PROJECT-SLUG',
     to: params.slug
   }, {
     from: '%PROJECT-REPO%',
