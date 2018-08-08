@@ -29,15 +29,14 @@ interface IProps {
 export default class LoginDialogForm extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { ...this.state, opened: false, loading: true };
+    this.state = { ...this.state, opened: false, loading: false };
   }
 
   onSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    const { model } = this.state;
+    const { model, loading } = this.state;
 
-    this.setState({ loading: !this.state.loading });
-    if (model) return;
+    if (loading) return;
 
     const isValid = await this.isFormValid();
     if (!isValid) return;

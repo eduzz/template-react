@@ -1,5 +1,5 @@
 import { Dialog, Slide } from '@material-ui/core';
-import logoWhite from 'assets/images/logo-white.png';
+import logo from 'assets/images/logo.png';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
@@ -36,12 +36,12 @@ interface IProps {
     paddingTop: 'calc(50vh - 170px)'
   },
   logo: {
-    textAlign: 'center',
-    marginBottom: 30
+    paddingLeft: 30,
+    marginBottom: 10
   },
   logoImage: {
     maxWidth: '100%',
-    maxHeight: 70
+    maxHeight: 50
   },
   viewContainer: {
     boxSizing: 'border-box',
@@ -85,7 +85,7 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
           <div className={classes.container}>
 
             <div className={classes.logo}>
-              <img src={logoWhite} className={classes.logoImage} />
+              <img src={logo} className={classes.logoImage} />
             </div>
 
             <SwipeableViews index={currentView}>
