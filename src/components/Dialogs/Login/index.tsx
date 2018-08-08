@@ -1,5 +1,6 @@
 import { Dialog, Slide } from '@material-ui/core';
-import logoWhite from 'assets/images/logo-white.png';
+import background from 'assets/images/background.jpg';
+import logo from 'assets/images/logo.png';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
@@ -21,30 +22,31 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    background: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main,
+    backgroundImage: `url(${background})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     minHeight: '100vh',
     minWidth: '100vw',
+    height: '100vh',
+    width: '100vw',
     position: 'relative'
   },
   container: {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
-    margin: 'auto',
-    width: 320,
-    height: 450,
-    maxWidth: 'calc(100% - 30px)',
-    color: 'white'
+    background: 'white',
+    height: '100vh',
+    width: '400px',
+    maxWidth: '100vw',
+    paddingTop: 'calc(50vh - 170px)',
+    boxShadow: theme.shadows['5']
   },
   logo: {
-    textAlign: 'center',
-    marginBottom: 30
+    paddingLeft: 30,
+    marginBottom: 10
   },
   logoImage: {
     maxWidth: '100%',
-    maxHeight: 70
+    maxHeight: 50
   },
   viewContainer: {
     boxSizing: 'border-box',
@@ -88,7 +90,7 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
           <div className={classes.container}>
 
             <div className={classes.logo}>
-              <img src={logoWhite} className={classes.logoImage} />
+              <img src={logo} className={classes.logoImage} />
             </div>
 
             <SwipeableViews index={currentView}>

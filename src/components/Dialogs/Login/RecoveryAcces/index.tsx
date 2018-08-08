@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
+import { Button, CardActions, CardContent, CircularProgress, LinearProgress, Typography } from '@material-ui/core';
 import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
@@ -33,9 +33,10 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
   }
 
   onSubmit = async (event: FormEvent) => {
-    const { model } = this.state;
+    const { model, loading } = this.state;
 
     event.preventDefault();
+    if (loading) return;
 
     const isValid = await this.isFormValid();
     if (!isValid) return;
@@ -65,28 +66,29 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
       <form onSubmit={this.onSubmit} noValidate>
         <ValidationContext ref={this.bindValidationContext}>
 
-          <Card>
-            <CardContent>
-              <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
+          <CardContent>
+            <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
 
-              <FieldText
-                label='Email'
-                type='email'
-                disabled={loading}
-                value={model.email}
-                validation='required|email'
-                onChange={this.updateModel((model, v) => model.email = v)}
-              />
+            <FieldText
+              label='Email'
+              type='email'
+              disabled={loading}
+              value={model.email}
+              validation='required|email'
+              onChange={this.updateModel((model, v) => model.email = v)}
+            />
 
-            </CardContent>
+          </CardContent>
 
-            <CardActions className={classes.buttons}>
-              <Button disabled={loading} size='small' onClick={onCancel}>Voltar</Button>
-              <Button disabled={loading} color='secondary' type='submit'>Enviar</Button>
-            </CardActions>
+          <CardActions className={classes.buttons}>
+            <Button disabled={loading} size='small' onClick={onCancel}>Voltar</Button>
+            <Button variant='raised' color='secondary' type='submit'>
+              {!loading && 'Entrar'}
+              {loading && <CircularProgress color='inherit' size={20} />}
+            </Button>
+          </CardActions>
 
-            {loading && <LinearProgress color='secondary' />}
-          </Card>
+          {loading && <LinearProgress color='secondary' />}
 
         </ValidationContext>
       </form>
