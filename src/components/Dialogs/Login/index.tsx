@@ -1,4 +1,5 @@
 import { Dialog, Slide } from '@material-ui/core';
+import background from 'assets/images/background.jpg';
 import logo from 'assets/images/logo.png';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
@@ -21,7 +22,10 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    background: theme.palette.primary.main,
+    backgroundColor: theme.palette.primary.main,
+    backgroundImage: `url(${background})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
     minHeight: '100vh',
     minWidth: '100vw',
     height: '100vh',
@@ -33,7 +37,8 @@ interface IProps {
     height: '100vh',
     width: '400px',
     maxWidth: '100vw',
-    paddingTop: 'calc(50vh - 170px)'
+    paddingTop: 'calc(50vh - 170px)',
+    boxShadow: theme.shadows['5']
   },
   logo: {
     paddingLeft: 30,
