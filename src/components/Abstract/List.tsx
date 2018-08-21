@@ -60,6 +60,10 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     };
   }
 
+  handleRefresh = () => {
+    this.loadData();
+  }
+
   mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
     const { term, page, pageSize, orderBy, orderDirection } = this.state;
     return { term, page, pageSize, orderBy, orderDirection, ...params };
