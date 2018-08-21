@@ -37,6 +37,20 @@ const overrides: Overrides = {
         display: 'none'
       }
     }
+  },
+  MuiTablePagination: {
+    input: {
+      padding: 0,
+      marginLeft: 7,
+      marginRight: 32
+    },
+    selectRoot: {
+      marginLeft: 0,
+      marginRight: 0
+    },
+    select: {
+      paddingRight: 20
+    }
   }
 };
 
