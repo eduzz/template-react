@@ -9,7 +9,7 @@ import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState extends IStateForm<{
-  email: string;
+  username: string;
   password: string;
 }> {
   opened: boolean;
@@ -43,7 +43,7 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
 
     this.setState({ loading: true });
 
-    authService.login(model.email, model.password).pipe(
+    authService.login(model.username, model.password).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(() => {
@@ -69,9 +69,9 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
               label='Email'
               type='email'
               disabled={loading}
-              value={model.email}
+              value={model.username}
               validation='required|email'
-              onChange={this.updateModel((model, v) => model.email = v)}
+              onChange={this.updateModel((model, v) => model.username = v)}
               margin='dense'
             />
 

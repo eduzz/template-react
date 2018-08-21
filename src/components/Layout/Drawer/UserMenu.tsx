@@ -36,11 +36,11 @@ export default class AppDrawerUser extends PureComponent<IProps> {
   actions = [{
     text: 'Trocar senha',
     icon: KeyVariantIcon,
-    handler: () => this.handleChangePassword
+    handler: () => this.handleChangePassword()
   }, {
     text: 'Sair',
     icon: ExitToAppIcon,
-    handler: () => this.handleLogout
+    handler: () => this.handleLogout()
   }];
 
   constructor(props: IProps) {

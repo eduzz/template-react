@@ -2,7 +2,6 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, LinearProgre
 import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -47,7 +46,7 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
   }
 
   onSubmit = async (event: React.FormEvent) => {
-    const { model } = this.state;
+    // const { model } = this.state;
 
     event.preventDefault();
 
@@ -56,18 +55,18 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
 
     this.setState({ loading: true });
 
-    authService.changePassword(model.currentPassword, model.newPassword).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(() => {
-      this.setState({ loading: false });
+    // authService.changePassword(model.currentPassword, model.newPassword).pipe(
+    //   rxjsOperators.logError(),
+    //   rxjsOperators.bindComponent(this)
+    // ).subscribe(() => {
+    //   this.setState({ loading: false });
 
-      Snackbar.show('Senha alterada com sucesso!');
-      authService.closeChangePassword();
-    }, err => {
-      Snackbar.error(err);
-      this.setState({ loading: false });
-    });
+    //   Snackbar.show('Senha alterada com sucesso!');
+    //   authService.closeChangePassword();
+    // }, err => {
+    //   Snackbar.error(err);
+    //   this.setState({ loading: false });
+    // });
   }
 
   render() {

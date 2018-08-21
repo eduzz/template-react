@@ -13,20 +13,20 @@ export class ApiService {
     private tokenService: TokenService
   ) { }
 
-  public get<T = any>(url: string, params?: any): rxjs.Observable<T> {
+  public get<T = any>(url: string, params?: any): rxjs.Observable<IApiResponse<T>> {
     return this.request('GET', url, params);
   }
 
-  public post<T = any>(url: string, body: any): rxjs.Observable<T> {
+  public post<T = any>(url: string, body: any): rxjs.Observable<IApiResponse<T>> {
     return this.request('POST', url, body);
   }
 
-  public delete<T = any>(url: string, params?: any): rxjs.Observable<T> {
+  public delete<T = any>(url: string, params?: any): rxjs.Observable<IApiResponse<T>> {
     return this.request('DELETE', url, params);
   }
 
-  private request<T>(method: string, url: string, data: any = null, retry: boolean = true): rxjs.Observable<T> {
-    return this.tokenService.getToken().pipe(
+  private request<T>(method: string, url: string, data: any = null, retry: boolean = true): rxjs.Observable<IApiResponse<T>> {
+    return this.tokenService.getAccessToken().pipe(
       rxjsOperators.first(),
       rxjsOperators.map(token => token ? { Authorization: `Bearer ${token}` } : null),
       rxjsOperators.switchMap(headers => {

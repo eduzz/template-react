@@ -4,14 +4,11 @@ import FieldText from '@react-form-fields/material-ui/components/Text';
 import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import AppRouter, { RouterContext } from 'components/Router';
-import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
 import queryString from 'query-string';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import rxjsOperators from 'rxjs-operators';
-import authService from 'services/auth';
 import tokenService from 'services/token';
 
 interface IState extends IStateForm<{
@@ -81,7 +78,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
   }
 
   onSubmit = async (event: React.FormEvent) => {
-    const { model, token, tokenData } = this.state;
+    // const { model, token, tokenData } = this.state;
 
     event.preventDefault();
 
@@ -90,17 +87,17 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
 
     this.setState({ loading: true });
 
-    authService.resetPassword(token, model.password).pipe(
-      rxjsOperators.switchMap(() => authService.login(tokenData.email, model.password)),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(() => {
-      Snackbar.show('Senha alterada com sucesso!');
-      this.getRouter().navigate('/');
-    }, err => {
-      Snackbar.error(err);
-      this.setState({ loading: false });
-    });
+    // authService.resetPassword(token, model.password).pipe(
+    //   rxjsOperators.switchMap(() => authService.login(tokenData.email, model.password)),
+    //   rxjsOperators.logError(),
+    //   rxjsOperators.bindComponent(this)
+    // ).subscribe(() => {
+    //   Snackbar.show('Senha alterada com sucesso!');
+    //   this.getRouter().navigate('/');
+    // }, err => {
+    //   Snackbar.error(err);
+    //   this.setState({ loading: false });
+    // });
   }
 
   render() {
