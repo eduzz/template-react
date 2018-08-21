@@ -21,9 +21,10 @@ import { Fragment, PureComponent } from 'react';
 
 export interface IStateList<T = any> extends IPaginationParams {
   items: T[];
+  term?: string;
   allItems: T[];
-  total: number;
-
+  total_rows: number;
+  total_pages: number;
   error?: any;
   loading: boolean;
 }
@@ -39,23 +40,19 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     super(props);
     this.state = {
       page: 0,
-      pageSize: 10,
-      orderBy,
-      orderDirection,
+      size: 10,
       items: [],
       allItems: [],
-      total: 0,
+      total_rows: 0,
       loading: true
     } as Readonly<S>;
   }
 
   get sortableProps() {
-    const { loading, orderBy, orderDirection } = this.state;
+    const { loading } = this.state;
 
     return {
       loading,
-      currentColumn: orderBy,
-      currentDirection: orderDirection,
       onChange: this.handleSort
     };
   }
@@ -65,8 +62,8 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
-    const { term, page, pageSize, orderBy, orderDirection } = this.state;
-    return { term, page, pageSize, orderBy, orderDirection, ...params };
+    const { page, size } = this.state;
+    return { page, size, ...params };
   }
 
   setError = (error: any) => {
@@ -85,52 +82,33 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     });
   }
 
-  setAllItems = (allItems: S['allItems']): void => {
-    const { page, pageSize } = this.state;
-    this.isPaginatedData = false;
+  handlePaginate = (page: number, size: number = this.state.size): void => {
+    const { loading } = this.state;
 
-    this.setState({ allItems, total: allItems.length, loading: false });
-    this.handlePaginate(page, pageSize);
-  }
-
-  handlePaginate = (page: number, pageSize: number = this.state.pageSize): void => {
-    const { allItems, loading } = this.state;
     if (loading) return;
 
-    if (this.isPaginatedData) {
-      this.loadData({ page, pageSize });
-      this.scrollTop && this.scrollTop();
-      return;
-    }
-
-    this.setState({
-      items: allItems.slice(pageSize * page, (pageSize * page) + pageSize),
-      pageSize,
-      page,
-      loading: false,
-    });
-
+    this.loadData({ page, size });
     this.scrollTop && this.scrollTop();
   }
 
   handleSort = (column: string) => {
-    const { orderBy, orderDirection, pageSize } = this.state;
+    // const { orderBy, orderDirection, size } = this.state;
 
-    this.setState({
-      orderBy: column,
-      orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
-    }, () => this.handlePaginate(0, pageSize));
+    // this.setState({
+    //   orderBy: column,
+    //   orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
+    // }, () => this.handlePaginate(0, size));
   }
 
   handleChangeTerm = (term: string) => {
-    if (this.state.loading) return;
+    // if (this.state.loading) return;
 
-    this.setState({ term });
-    clearTimeout(this.timeoutTerm);
+    // this.setState({ term });
+    // clearTimeout(this.timeoutTerm);
 
-    if (term && term.length < 3) return;
+    // if (term && term.length < 3) return;
 
-    this.timeoutTerm = setTimeout(() => this.loadData(), 500);
+    // this.timeoutTerm = setTimeout(() => this.loadData(), 500);
   }
 
   handleTryAgain = () => {
@@ -209,7 +187,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   renderTablePagination = (props: Partial<TablePaginationProps> = {}) => {
-    const { total, page, pageSize, loading } = this.state;
+    const { total_rows, page, size, loading } = this.state;
 
     return (
       <div style={loading ? { pointerEvents: 'none', opacity: 0.7 } : null}>
@@ -221,8 +199,8 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
           labelRowsPerPage='items'
           labelDisplayedRows={this.labelDisplayedRows}
           component='div'
-          count={total}
-          rowsPerPage={pageSize}
+          count={total_rows}
+          rowsPerPage={size}
           rowsPerPageOptions={[10, 25, 50]}
           page={page}
           onChangePage={this.onChangePage}

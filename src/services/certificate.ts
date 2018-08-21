@@ -7,9 +7,9 @@ import apiService from './api';
 class CertificateService {
 
   public list(params: IPaginationParams): rxjs.Observable<IPaginationResponse<ICertificate>> {
-    return apiService.get('/certificate').pipe(
+    return apiService.get('/user/certificates').pipe(
       rxjsOperators.cache('certificate-list'),
-      rxjsOperators.map(response => response.data)
+      rxjsOperators.map(response => ({ ...response.paginator, results: response.data })),
     );
   }
 }

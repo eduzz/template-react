@@ -1,5 +1,5 @@
 import { Card, CardContent, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
+import { IStateList, ListComponent } from 'components/Abstract/List';
 import Toolbar from 'components/Layout/Toolbar';
 import FabButton from 'components/Shared/FabButton';
 import TableWrapper from 'components/Shared/TableWrapper';
@@ -9,8 +9,7 @@ import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
-
-import ListItem from './ListItem';
+import ListItem from './List/ListItem';
 
 interface IState extends IStateList<ICertificate> {
 }
@@ -64,12 +63,12 @@ export default class CertificateListPage extends ListComponent<{}, IState> {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCellSortable {...this.sortableProps} column='fullName'>
+                  <TableCell>
                     Nome
-                  </TableCellSortable>
-                  <TableCellSortable {...this.sortableProps} column='email'>
+                  </TableCell>
+                  <TableCell>
                     Email
-                  </TableCellSortable>
+                  </TableCell>
                   <TableCell>
                     <IconButton disabled={loading} onClick={this.handleRefresh}>
                       <RefreshIcon />

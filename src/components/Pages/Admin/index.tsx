@@ -8,6 +8,7 @@ import authService from 'services/auth';
 
 import DashboardIndexPage from './Dashboard';
 import ExtraIndexPage from './Extra';
+import CertificateIndexPage from './Certificate';
 
 interface IState {
   routes: IAppRoute[];
@@ -16,17 +17,23 @@ interface IState {
 export default class AdminModule extends React.PureComponent<{}, IState>  {
   static routes: IAppRoute[] = [
     {
-      path: '/Extra',
-      sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
-      roles: [],
-      component: ExtraIndexPage
-    },
-    {
       path: '/',
       sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
       exact: true,
       roles: [],
       component: DashboardIndexPage
+    },
+    {
+      path: '/certificados',
+      sideDrawer: { display: 'Certificados', order: 1, icon: StarIcon },
+      roles: [],
+      component: CertificateIndexPage
+    },
+    {
+      path: '/extra',
+      sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
+      roles: [],
+      component: ExtraIndexPage
     },
   ];
 
