@@ -6,6 +6,7 @@ import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
+import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
 import ExtraIndexPage from './Extra';
 
@@ -16,16 +17,20 @@ interface IState {
 export default class AdminModule extends React.PureComponent<{}, IState>  {
   static routes: IAppRoute[] = [
     {
-      path: '/Extra',
+      path: '/extra',
       sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
       roles: [],
       component: ExtraIndexPage
     },
     {
+      path: '/certificados',
+      sideDrawer: { display: 'Certificados', order: 3, icon: StarIcon },
+      component: CertificateIndexPage
+    },
+    {
       path: '/',
       sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
       exact: true,
-      roles: [],
       component: DashboardIndexPage
     },
   ];
