@@ -25,18 +25,14 @@ export class AuthService {
         const user = this.tokenService.decode<IUserToken>(token);
         if (!user) return null;
 
-        user.fullName = `${user.firstName} ${user.lastName}`;
-        user.canAccess = (...roles: string[]) => {
-          if (!roles || roles.length === 0) return true;
-          if (user.roles.includes('sysAdmin') || user.roles.includes('admin')) return true;
-
-          return roles.some(r => user.roles.includes(r));
+        user.canAccess = () => {
+          // IMPLEMENT HERE YOUR LOGIC
+          return true;
         };
 
         return user;
       }),
       rxjsOperators.catchError(() => {
-        console.log('error');
         return rxjs.of(null);
       }),
       rxjsOperators.shareReplay(1)
@@ -53,7 +49,9 @@ export class AuthService {
 
   public login(email: string, password: string): rxjs.Observable<void> {
     return this.api.post('/auth/login', { email, password }).pipe(
-      rxjsOperators.tap(() => this.openLogin$.next(false))
+      rxjsOperators.switchMap(({ token }) => tokenService.setToken(token)),
+      rxjsOperators.tap(() => this.openLogin$.next(false)),
+      rxjsOperators.map(() => null)
     );
   }
 

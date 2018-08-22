@@ -1,9 +1,7 @@
 export interface IUserToken {
   id: number;
   email: string;
-  firstName: string;
-  lastName?: string;
-  roles: string[];
+  name: string;
   exp: number;
 
   fullName: string;

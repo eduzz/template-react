@@ -1,5 +1,6 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
+import ContactsIcon from 'mdi-react/ContactsIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
@@ -8,6 +9,7 @@ import authService from 'services/auth';
 
 import DashboardIndexPage from './Dashboard';
 import ExtraIndexPage from './Extra';
+import UserIndexPage from './User';
 
 interface IState {
   routes: IAppRoute[];
@@ -16,10 +18,16 @@ interface IState {
 export default class AdminModule extends React.PureComponent<{}, IState>  {
   static routes: IAppRoute[] = [
     {
-      path: '/Extra',
+      path: '/extra',
       sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
       roles: [],
       component: ExtraIndexPage
+    },
+    {
+      path: '/usuarios',
+      sideDrawer: { display: 'Usuários', order: 1, icon: ContactsIcon },
+      roles: [],
+      component: UserIndexPage
     },
     {
       path: '/',

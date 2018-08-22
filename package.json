@@ -8,6 +8,7 @@
     "url": "%PROJECT-REPO%"
   },
   "scripts": {
+    "start": "react-scripts-ts start",
     "dev": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "eject": "react-scripts-ts eject",
