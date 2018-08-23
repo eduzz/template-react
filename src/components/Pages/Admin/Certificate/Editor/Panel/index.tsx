@@ -16,8 +16,8 @@ interface IState {
 
 @WithStyles(theme => ({
   root: {
-    width: '700px',
-    height: '700px',
+    width: '100%',
+    height: 800,
     backgroundColor: '#cecece',
     position: 'relative',
     overflow: 'hidden',
@@ -35,16 +35,16 @@ export default class Panel extends React.Component<IProps, IState> {
 
     return (
       <EditorContext.Consumer>
-        {(value: any) =>
-          <div className={classes.root} onClick={value.dismiss}>
-            {value.items.map((item: any) =>
+        {(context: any) =>
+          <div className={classes.root} onClick={context.dismiss}>
+            {context.items.map((item: any) =>
               <Textbox
                 key={item.id}
                 id={item.id}
                 text={item.text}
-                fontSize={item.fontSize}
-                selected={value.selectedItem === item.id}
-                onMouseDown={value.select}
+                style={item.style}
+                selected={context.selectedItem === item.id}
+                onMouseDown={context.select}
               />
             )}
           </div>

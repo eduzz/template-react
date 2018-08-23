@@ -8,7 +8,7 @@ interface IProps {
   onMouseDown?: Function;
   id?: number;
   text?: string;
-  fontSize?: string;
+  style?: any;
 }
 
 @WithStyles(theme => ({
@@ -41,10 +41,7 @@ export default class Textbox extends React.PureComponent<IProps> {
   }
 
   render() {
-    const { classes, selected, text } = this.props;
-    const customStyle = {
-      fontSize: this.props.fontSize,
-    };
+    const { classes, selected, text, style } = this.props;
 
     return (
       <Rnd
@@ -52,7 +49,7 @@ export default class Textbox extends React.PureComponent<IProps> {
         default={this.default}
         onMouseDown={this.handleMouseDown}
         onClick={this.handleClick}
-        style={customStyle}
+        style={style}
       >
         <span>{text}</span>
       </Rnd>
