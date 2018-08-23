@@ -19,15 +19,15 @@ interface IProps {
 }))
 export default class VerticalAlignment extends React.PureComponent<IProps> {
   handleCenter = () => {
-    this.props.onChange('alignItems', 'center');
+    this.props.onChange({ alignItems: 'center' });
   }
 
   handleLeft = () => {
-    this.props.onChange('alignItems', 'flex-start');
+    this.props.onChange({ alignItems: 'flex-start' });
   }
 
   handleRight = () => {
-    this.props.onChange('alignItems', 'flex-end');
+    this.props.onChange({ alignItems: 'flex-end' });
   }
 
   render() {

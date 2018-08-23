@@ -11,13 +11,11 @@ interface IProps {
 export default class Editor extends React.PureComponent<IProps> {
   private defaultItem = {
     text: 'Texto',
-    style: {
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-      fontSize: 12,
-      color: '#000',
-    },
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    fontSize: 12,
+    color: '#000',
   };
 
   constructor(props: IProps) {
@@ -33,8 +31,6 @@ export default class Editor extends React.PureComponent<IProps> {
       dismiss: this.dismiss,
       modify: this.modify,
       current: this.current,
-      getText: this.getText,
-      setText: this.setText,
     };
   }
 
@@ -50,7 +46,7 @@ export default class Editor extends React.PureComponent<IProps> {
     });
   }
 
-  modify = (label: string, value: number | string) => {
+  modify = (value: any) => {
     const { items, selectedItem } = this.state as any;
 
     this.setState({
@@ -58,10 +54,7 @@ export default class Editor extends React.PureComponent<IProps> {
         if (item.id === selectedItem)
           return {
             ...item,
-            style: {
-              ...item.style,
-              [label]: value,
-            }
+            ...value,
           };
 
         return item;
@@ -73,37 +66,14 @@ export default class Editor extends React.PureComponent<IProps> {
     const { items, selectedItem } = this.state as any;
 
     if (selectedItem)
-      return items.find((item: any) => item.id === selectedItem).style[label];
+      return items.find((item: any) => item.id === selectedItem)[label];
 
     return '';
-  }
-
-  getText = () => {
-    const { items, selectedItem } = this.state as any;
-
-    if (selectedItem)
-      return items.find((item: any) => item.id === selectedItem).text;
-
-    return '';
-  }
-
-  setText = (text: string) => {
-    const { items, selectedItem } = this.state as any;
-
-    this.setState({
-      items: items.map((item: any) => {
-        if (item.id === selectedItem)
-          return {
-            ...item,
-            text,
-          };
-
-        return item;
-      }),
-    });
   }
 
   render() {
+    console.log(this.state);
+
     return (
       <EditorContext.Provider value={this.state}>
         <Toolbar />

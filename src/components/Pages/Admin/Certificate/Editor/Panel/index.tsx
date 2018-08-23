@@ -37,16 +37,20 @@ export default class Panel extends React.Component<IProps, IState> {
       <EditorContext.Consumer>
         {(context: any) =>
           <div className={classes.root} onClick={context.dismiss}>
-            {context.items.map((item: any) =>
-              <Textbox
-                key={item.id}
-                id={item.id}
-                text={item.text}
-                style={item.style}
-                selected={context.selectedItem === item.id}
-                onMouseDown={context.select}
-              />
-            )}
+            {context.items.map((item: any) => {
+              const { id, text, ...style } = item;
+
+              return (
+                <Textbox
+                  key={id}
+                  id={id}
+                  text={text}
+                  style={style}
+                  selected={context.selectedItem === id}
+                  onMouseDown={context.select}
+                />
+              );
+            })}
           </div>
         }
       </EditorContext.Consumer>

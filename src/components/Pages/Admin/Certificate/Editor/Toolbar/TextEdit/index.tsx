@@ -8,7 +8,7 @@ interface IProps {
 
 export default class TextEdit extends React.PureComponent<IProps> {
   handleChange = (e: any) => {
-    this.props.onChange(e.target.value);
+    this.props.onChange({ text: e.target.value });
   }
 
   render() {

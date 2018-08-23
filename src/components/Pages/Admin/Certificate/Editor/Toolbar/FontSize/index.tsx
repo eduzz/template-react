@@ -19,7 +19,7 @@ export default class FontSize extends React.PureComponent<IProps> {
   private defaultValue = 12;
 
   handleChange = (e: any) => {
-    this.props.onChange('fontSize', e.target.value);
+    this.props.onChange({ fontSize: e.target.value });
   }
 
   render() {

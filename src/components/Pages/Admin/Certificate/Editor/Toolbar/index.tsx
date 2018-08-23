@@ -33,8 +33,8 @@ interface IProps {
   }
 }))
 class Toolbar extends React.PureComponent<IProps> {
-  handleChange = (label: string, value: any) => {
-    this.props.context.modify(label, value);
+  handleChange = (value: any) => {
+    this.props.context.modify(value);
   }
 
   render() {
@@ -59,8 +59,8 @@ class Toolbar extends React.PureComponent<IProps> {
           onChange={this.handleChange}
         />
         <TextEdit
-          value={context.getText()}
-          onChange={context.setText}
+          value={context.current('text')}
+          onChange={this.handleChange}
         />
       </form>
     );

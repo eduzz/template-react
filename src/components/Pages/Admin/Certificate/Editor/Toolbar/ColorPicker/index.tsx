@@ -21,7 +21,7 @@ interface IState {
 }))
 export default class ColorPicker extends React.PureComponent<IProps, IState> {
   handleChange = (e: any) => {
-    this.props.onChange('color', e.target.value);
+    this.props.onChange({ color: e.target.value });
   }
 
   render() {
@@ -33,6 +33,7 @@ export default class ColorPicker extends React.PureComponent<IProps, IState> {
           type='color'
           value={value}
           onChange={this.handleChange}
+          disabled={!value}
         />
       </div>
     );

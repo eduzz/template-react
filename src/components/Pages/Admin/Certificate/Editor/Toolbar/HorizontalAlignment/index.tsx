@@ -19,15 +19,15 @@ interface IProps {
 }))
 export default class HorizontalAlignment extends React.PureComponent<IProps> {
   handleCenter = () => {
-    this.props.onChange('justifyContent', 'center');
+    this.props.onChange({ justifyContent: 'center' });
   }
 
   handleLeft = () => {
-    this.props.onChange('justifyContent', 'flex-start');
+    this.props.onChange({ justifyContent: 'flex-start' });
   }
 
   handleRight = () => {
-    this.props.onChange('justifyContent', 'flex-end');
+    this.props.onChange({ justifyContent: 'flex-end' });
   }
 
   render() {
