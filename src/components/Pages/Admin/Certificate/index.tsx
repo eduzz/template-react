@@ -4,7 +4,7 @@ import Toolbar from 'components/Layout/Toolbar';
 import FabButton from 'components/Shared/FabButton';
 import TableWrapper from 'components/Shared/TableWrapper';
 import { IPaginationParams } from 'interfaces/pagination';
-import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
+import CertificateIcon from 'mdi-react/CertificateIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment } from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -16,7 +16,7 @@ interface IState extends IStateList<ICertificate> {
 
 export default class CertificateListPage extends ListComponent<{}, IState> {
   actions = [{
-    icon: AccountPlusIcon,
+    icon: CertificateIcon,
     onClick: () => console.log('create')
   }];
 

@@ -9,6 +9,7 @@ import authService from 'services/auth';
 import DashboardIndexPage from './Dashboard';
 import ExtraIndexPage from './Extra';
 import CertificateIndexPage from './Certificate';
+import CertificateEditor from './Certificate/Editor';
 
 interface IState {
   routes: IAppRoute[];
@@ -28,6 +29,11 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       sideDrawer: { display: 'Certificados', order: 1, icon: StarIcon },
       roles: [],
       component: CertificateIndexPage
+    },
+    {
+      path: '/config-certificate',
+      roles: [],
+      component: CertificateEditor,
     },
     {
       path: '/extra',
