@@ -1,90 +1,49 @@
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import Typography from '@material-ui/core/Typography';
+import {
+  Button,
+  CircularProgress,
+  Divider,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Typography,
+} from '@material-ui/core';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import IconMessage from 'components/Shared/IconMessage';
 import { WithStyles } from 'decorators/withStyles';
+import { dateFormat } from 'formatters/date';
+import { ICertificate, ICertificateCourse } from 'interfaces/models/certificate';
 import CertificateIcon from 'mdi-react/CertificateIcon';
 import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import FormatListBulletedIcon from 'mdi-react/FormatListBulletedIcon';
+import NewBoxIcon from 'mdi-react/NewBoxIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent, SyntheticEvent } from 'react';
+import rxjsOperators from 'rxjs-operators';
+import certificateService from 'services/certificate';
 
 import CourseItem from './CourseItem';
+import styles from './styles';
 
+//import Alert from 'components/Shared/Alert';
 interface IState {
+  expanded: boolean;
+  loadingError?: any;
+  courses?: ICertificateCourse[];
 }
 
 interface IProps {
   classes?: any;
+  certificate: ICertificate;
 }
 
-@WithStyles(theme => ({
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  created: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContentc: 'center',
-    paddingLeft: '40px',
-    color: '#7A8999',
-    lineHeight: '120%',
-  },
-  smallText: {
-    fontSize: '80%',
-  },
-  details: {
-    display: 'block',
-    padding: 0,
-  },
-  crtItem: {
-    flexBasis: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    '&:hover': { backgroundColor: 'rgba(0,0,0,.02)', },
-  },
-  crtIcon: {
-    flexBasis: '40px',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  crtTitle: {
-    flexBasis: 'calc(70% - 40px)',
-    display: 'flex',
-    alignItems: 'center',
-    paddingLeft: '10px',
-  },
-  crtActions: {
-    flexBasis: 'calc(30% - 100px)',
-    textAlign: 'right',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-  crtDropdown: {
-    flexBasis: '100px',
-    textAlign: 'right',
-  },
-}))
-
+@WithStyles(styles)
 export default class CertificateItem extends PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   actions = [{
     text: 'Alterar cursos',
     icon: FormatListBulletedIcon,
-    handler: () => console.log('Alterar cursos'),
+    handler: () => this.expand(true),
   }, {
     text: 'Editar',
     icon: SquareEditOutlineIcon,
@@ -95,40 +54,93 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
     handler: () => console.log('Excluir'),
   }];
 
-  handleClick = (e: any) => {
+  constructor(props: IProps) {
+    super(props);
+    this.state = { expanded: false };
+  }
+
+  handleClick = (e: SyntheticEvent) => {
     e.stopPropagation();
   }
 
+  handleChange = (event: SyntheticEvent, expanded: boolean) => {
+    this.expand(expanded);
+  }
+
+  expand = (expanded: boolean) => {
+    this.setState({ expanded });
+
+    if (this.state.courses) return;
+    this.loadCourses();
+  }
+
+  loadCourses = () => {
+    this.setState({ courses: null, loadingError: null });
+
+    certificateService.getCourses(this.props.certificate.id).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(data => {
+      this.setState({ courses: data.results });
+    }, loadingError => this.setState({ loadingError }));
+  }
+
+  onDeleteCourse = (course: ICertificateCourse) => {
+    //const confirmation = Alert.show({ message: `Deseja excluir o curso ${course.title}?`, confirmation: true });
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, certificate } = this.props;
+    const { expanded, courses, loadingError } = this.state;
 
     return (
-      <ExpansionPanel>
+      <ExpansionPanel expanded={expanded} onChange={this.handleChange}>
         <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
           <div className={classes.crtIcon}><CertificateIcon /></div>
+
           <div className={classes.crtTitle}>
-            <Typography className={classes.heading}>Nome do certificado</Typography>
+            <Typography className={classes.heading}>{certificate.title}</Typography>
             <Typography className={classes.created} component='paragraph'>
-              <span>Criado em</span> <span className={classes.smallText}>01/01/2018</span>
+              <span>Criado em</span> <span className={classes.smallText}>{dateFormat(certificate.created_at, 'dd/MM/yyyy')}</span>
             </Typography>
           </div>
+
           <div className={classes.crtActions}>
-            <Button onClick={this.handleClick} size='small' color='default'>Adicionar</Button>
-            <Button onClick={this.handleClick} size='small' color='secondary'>Remover</Button>
+            {
+              expanded &&
+              <Fragment>
+                <Button onClick={this.handleClick} size='small' color='default'>Adicionar curso</Button>
+              </Fragment>
+            }
           </div>
+
           <div className={classes.crtDropdown}>
             <DropdownMenu options={this.actions} />
           </div>
         </ExpansionPanelSummary>
+
         <Divider />
+
         <ExpansionPanelDetails className={classes.details}>
-          <CourseItem />
+          {!!loadingError &&
+            <ErrorMessage error={loadingError} tryAgain={this.loadCourses} />
+          }
+
+          {!courses && !loadingError &&
+            <div className={classes.loader}>
+              <CircularProgress />
+            </div>
+          }
+
+          {!!courses && courses.map(course =>
+            <CourseItem key={course.id} course={course} onDelete={this.onDeleteCourse} />
+          )}
+
+          {!!courses && !courses.length &&
+            <IconMessage icon={NewBoxIcon} message='Nenhum curso adicionado' />
+          }
         </ExpansionPanelDetails>
-        <Divider />
-        <ExpansionPanelActions>
-          <Button size='small'>Cancelar</Button>
-          <Button size='small' color='primary'>Salvar</Button>
-        </ExpansionPanelActions>
+
       </ExpansionPanel>
     );
   }

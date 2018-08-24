@@ -4,6 +4,7 @@ import * as rxjsOperators from 'rxjs/operators';
 
 import { ApiError } from '../errors/api';
 import { API_ENDPOINT } from '../settings';
+import { apiResponseFormatter } from './../formatters/apiResponse';
 import authService from './auth';
 import tokenService, { TokenService } from './token';
 
@@ -43,7 +44,7 @@ export class ApiService {
           data: method === 'POST' ? data : null
         });
       }),
-      rxjsOperators.map(res => res.data),
+      rxjsOperators.map(res => apiResponseFormatter(res.data)),
       rxjsOperators.catchError(err => this.handleError(err, retry))
     );
   }

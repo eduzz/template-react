@@ -1,14 +1,17 @@
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import CloseIcon from 'mdi-react/CloseIcon';
-import React, { PureComponent } from 'react';
+import { ICertificateCourse } from 'interfaces/models/certificate';
+import TrashCanIcon from 'mdi-react/TrashCanIcon';
+import React, { PureComponent, SyntheticEvent } from 'react';
 
 interface IState {
 }
 
 interface IProps {
   classes?: any;
+  course: ICertificateCourse;
+  onDelete: (course: ICertificateCourse) => void;
 }
 
 @WithStyles(theme => ({
@@ -34,6 +37,7 @@ interface IProps {
     flexBasis: '100%',
     display: 'flex',
     alignItems: 'center',
+    padding: '5px 10px',
     '&:hover': { backgroundColor: 'rgba(0,0,0,.02)', },
   },
   crtIcon: {
@@ -42,13 +46,13 @@ interface IProps {
     alignItems: 'center',
   },
   crtTitle: {
-    flexBasis: 'calc(70% - 40px)',
+    flexBasis: 'calc(100% - 220px)',
     display: 'flex',
     alignItems: 'center',
     paddingLeft: '10px',
   },
   crtActions: {
-    flexBasis: 'calc(30% - 100px)',
+    flexBasis: '180px',
     textAlign: 'right',
     display: 'flex',
     alignItems: 'center',
@@ -63,10 +67,12 @@ interface IProps {
 export default class CourseItem extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+    console.log('aqui');
   }
 
-  handleClick = (e: any) => {
+  handleDelete = (e: SyntheticEvent) => {
     e.stopPropagation();
+    this.props.onDelete(this.props.course);
   }
 
   render() {
@@ -74,10 +80,12 @@ export default class CourseItem extends PureComponent<IProps, IState> {
 
     return (
       <div className={classes.crtItem}>
-        <div className={classes.crtTitle}><Typography component='title'>Título do curso</Typography></div>
+        <div className={classes.crtTitle}><Typography component='title'>{this.props.course.title}</Typography></div>
         <div className={classes.crtIcon} />
         <div className={classes.crtDropdown} />
-        <div className={classes.crtActions}><IconButton onClick={this.handleClick} color='secondary'><CloseIcon /></IconButton></div>
+        <div className={classes.crtActions}>
+          <IconButton onClick={this.handleDelete}><TrashCanIcon /></IconButton>
+        </div>
       </div>
     );
   }
