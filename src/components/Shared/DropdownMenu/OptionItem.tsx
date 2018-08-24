@@ -17,7 +17,8 @@ interface IProps {
 })
 export default class OptionItem extends PureComponent<IProps> {
 
-  onClick = () => {
+  onClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     this.props.onClick(this.props.option);
   }
 

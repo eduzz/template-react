@@ -74,7 +74,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
 
     return (
       <div className={classes.crtItem}>
-        <div className={classes.crtTitle}><Typography component='title'>Título do certificado</Typography></div>
+        <div className={classes.crtTitle}><Typography component='title'>Título do curso</Typography></div>
         <div className={classes.crtIcon} />
         <div className={classes.crtDropdown} />
         <div className={classes.crtActions}><IconButton onClick={this.handleClick} color='secondary'><CloseIcon /></IconButton></div>

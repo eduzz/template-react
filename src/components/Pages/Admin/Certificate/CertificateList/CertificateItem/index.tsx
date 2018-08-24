@@ -31,8 +31,20 @@ interface IProps {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
   },
+  created: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContentc: 'center',
+    paddingLeft: '40px',
+    color: '#7A8999',
+    lineHeight: '120%',
+  },
+  smallText: {
+    fontSize: '80%',
+  },
   details: {
     display: 'block',
+    padding: 0,
   },
   crtItem: {
     flexBasis: '100%',
@@ -94,15 +106,18 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
       <ExpansionPanel>
         <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
           <div className={classes.crtIcon}><CertificateIcon /></div>
-          <div className={classes.crtTitle}><Typography className={classes.heading}>Nome do certificado</Typography></div>
+          <div className={classes.crtTitle}>
+            <Typography className={classes.heading}>Nome do certificado</Typography>
+            <Typography className={classes.created} component='paragraph'>
+              <span>Criado em</span> <span className={classes.smallText}>01/01/2018</span>
+            </Typography>
+          </div>
           <div className={classes.crtActions}>
             <Button onClick={this.handleClick} size='small' color='default'>Adicionar</Button>
             <Button onClick={this.handleClick} size='small' color='secondary'>Remover</Button>
           </div>
           <div className={classes.crtDropdown}>
-            <Typography className={classes.secondaryHeading}>
-              <DropdownMenu onClick={this.handleClick} options={this.actions} />
-            </Typography>
+            <DropdownMenu options={this.actions} />
           </div>
         </ExpansionPanelSummary>
         <Divider />
