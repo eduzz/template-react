@@ -1,7 +1,7 @@
 import { Card } from '@material-ui/core';
 import Toolbar from 'components/Layout/Toolbar';
 import FabButton from 'components/Shared/FabButton';
-import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
+import PlusIcon from 'mdi-react/PlusIcon';
 import React, { Fragment, PureComponent } from 'react';
 
 import CertificateList from './CertificateList';
@@ -11,7 +11,7 @@ interface IState {
 
 export default class CertificateListPage extends PureComponent<{}, IState> {
   actions = [{
-    icon: AccountPlusIcon,
+    icon: PlusIcon,
     onClick: () => console.log('create')
   }];
 
