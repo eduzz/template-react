@@ -12,6 +12,10 @@ class CertificateService {
       rxjsOperators.map(response => ({ ...response.paginator, results: response.data })),
     );
   }
+
+  public send(params: any) {
+    return apiService.post('/producer/certificates', params);
+  }
 }
 
 const certificateService = new CertificateService();

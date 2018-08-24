@@ -1,6 +1,8 @@
 import React from 'react';
 import Toolbar from './Toolbar';
 import Panel from './Panel';
+import certificateService from 'services/certificate';
+import rxjsOperators from 'rxjs-operators';
 
 export const EditorContext = React.createContext({});
 
@@ -8,28 +10,63 @@ interface IProps {
   classes?: any;
 }
 
-export default class Editor extends React.PureComponent<IProps> {
+interface IState {
+  selectedItem: number;
+  items: any[];
+  select: Function;
+  dismiss: Function;
+  modify: Function;
+  current: Function;
+  add: Function;
+  remove: Function;
+  save: Function;
+  setPlacement: Function;
+  html: string;
+}
+
+export default class Editor extends React.PureComponent<IProps, IState> {
   private defaultItem = {
     text: 'Texto',
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     fontSize: 12,
+    fontFamily: 'Arial',
     color: '#000',
+    placement: {
+      x: 10,
+      y: 20,
+      width: 120,
+      height: 15,
+    },
   };
 
   constructor(props: IProps) {
     super(props);
 
+    const items = ['[ALUNO]', '[PROFESSOR]', '[DATA]', '[CURSO]', '[DURACAO]'].map((placeholder: any, index: number) => {
+      return {
+        ...this.defaultItem,
+        text: placeholder,
+        placement: {
+          ...this.defaultItem.placement,
+          y: this.defaultItem.placement.y * (index + 1),
+        }
+      };
+    });
+
     this.state = {
       selectedItem: null,
-      items: [],
+      items,
+      html: '',
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
       current: this.current,
       add: this.add,
       remove: this.remove,
+      save: this.save,
+      setPlacement: this.setPlacement,
     };
   }
 
@@ -46,7 +83,7 @@ export default class Editor extends React.PureComponent<IProps> {
   }
 
   modify = (value: any) => {
-    const { items, selectedItem } = this.state as any;
+    const { items, selectedItem } = this.state;
 
     this.setState({
       items: items.map((item: any) => {
@@ -62,7 +99,7 @@ export default class Editor extends React.PureComponent<IProps> {
   }
 
   current = (label: string) => {
-    const { items, selectedItem } = this.state as any;
+    const { items, selectedItem } = this.state;
 
     if (selectedItem)
       return items.find((item: any) => item.id === selectedItem)[label];
@@ -71,7 +108,7 @@ export default class Editor extends React.PureComponent<IProps> {
   }
 
   add = () => {
-    const { items } = this.state as any;
+    const { items } = this.state;
 
     this.setState({
       items: [
@@ -85,7 +122,7 @@ export default class Editor extends React.PureComponent<IProps> {
   }
 
   remove = () => {
-    const { items, selectedItem } = this.state as any;
+    const { items, selectedItem } = this.state;
 
     this.setState({
       items: items.filter((item: any) => item.id !== selectedItem),
@@ -93,11 +130,49 @@ export default class Editor extends React.PureComponent<IProps> {
     });
   }
 
+  save = () => {
+    const { items, html } = this.state;
+    const params = {
+      title: 'Test',
+      image: 'test',
+      config: items,
+      html,
+    };
+
+    certificateService.send(params).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe();
+  }
+
+  setPlacement = (placement: any) => {
+    const { items, selectedItem } = this.state;
+
+    this.setState({
+      items: items.map((item: any) => {
+        if (item.id === selectedItem)
+          return {
+            ...item,
+            placement,
+          };
+        return item;
+      }),
+    });
+  }
+
+  handlePanelChange = (html: string) => {
+    this.setState({
+      html,
+    });
+  }
+
   render() {
     return (
       <EditorContext.Provider value={this.state}>
         <Toolbar />
-        <Panel />
+        <Panel
+          onChange={this.handlePanelChange}
+        />
       </EditorContext.Provider>
     );
   }

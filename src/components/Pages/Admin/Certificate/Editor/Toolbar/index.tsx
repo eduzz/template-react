@@ -8,6 +8,8 @@ import TextEdit from './TextEdit';
 import ColorPicker from './ColorPicker';
 import Remove from './Remove';
 import Add from './Add';
+import FontFamily from './FontFamily';
+import Save from './Save';
 
 interface IProps {
   classes?: any;
@@ -30,9 +32,6 @@ interface IProps {
     border: 'solid 1px black',
     padding: 8,
   },
-  selected: {
-
-  }
 }))
 class Toolbar extends React.PureComponent<IProps> {
   handleChange = (value: any) => {
@@ -46,6 +45,10 @@ class Toolbar extends React.PureComponent<IProps> {
       <form className={classes.root}>
         <FontSize
           value={context.current('fontSize')}
+          onChange={this.handleChange}
+        />
+        <FontFamily
+          value={context.current('fontFamily')}
           onChange={this.handleChange}
         />
         <HorizontalAlignment
@@ -69,6 +72,9 @@ class Toolbar extends React.PureComponent<IProps> {
           disabled={!context.selectedItem}
           onClick={context.remove}
         />
+        <Save
+          onClick={context.save}
+        />
       </form>
     );
   }
@@ -76,6 +82,6 @@ class Toolbar extends React.PureComponent<IProps> {
 
 export default React.forwardRef((props: IProps, ref: any) => (
   <EditorContext.Consumer>
-    {(context: any) => <Toolbar {...props} context={context} {...ref} />}
+    {context => <Toolbar {...props} context={context} {...ref} />}
   </EditorContext.Consumer>
 ));

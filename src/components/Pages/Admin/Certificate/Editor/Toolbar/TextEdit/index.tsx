@@ -18,6 +18,7 @@ export default class TextEdit extends React.PureComponent<IProps> {
       <TextField
         value={value}
         onChange={this.handleChange}
+      // disabled={!value}
       />
     );
   }

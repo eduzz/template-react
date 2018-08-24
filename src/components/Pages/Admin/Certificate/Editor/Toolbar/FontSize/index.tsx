@@ -12,7 +12,7 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    height: 27,
+    marginRight: 8,
   },
 }))
 export default class FontSize extends React.PureComponent<IProps> {
@@ -26,19 +26,20 @@ export default class FontSize extends React.PureComponent<IProps> {
     const { value, classes } = this.props;
 
     return (
-      <FormControl>
+      <FormControl className={classes.root}>
         <Select
           value={value || this.defaultValue}
           onChange={this.handleChange}
-          classes={classes}
           disabled={!value}
           displayEmpty
         >
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={10}>10</MenuItem>
+          <MenuItem value={8}>10</MenuItem>
           <MenuItem value={12}>12</MenuItem>
           <MenuItem value={14}>14</MenuItem>
+          <MenuItem value={14}>20</MenuItem>
+          <MenuItem value={14}>26</MenuItem>
           <MenuItem value={32}>32</MenuItem>
+          <MenuItem value={32}>36</MenuItem>
         </Select>
       </FormControl>
     );

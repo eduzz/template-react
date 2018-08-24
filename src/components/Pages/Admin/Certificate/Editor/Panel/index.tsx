@@ -1,12 +1,13 @@
 import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import Textbox from './Textbox';
-import { ITextBox } from 'interfaces/textBox';
+import { ITextBox } from './Textbox';
 import { EditorContext } from '../';
 
 interface IProps {
   classes?: any;
-  onRef?: Function;
+  onChange?: any;
+  context?: any;
 }
 
 interface IState {
@@ -23,37 +24,63 @@ interface IState {
     overflow: 'hidden',
   },
 }))
-export default class Panel extends React.Component<IProps, IState> {
+class Panel extends React.Component<IProps, IState> {
+  private panelEl: any;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.panelEl = React.createRef();
+  }
+
+  componentDidUpdate() {
+    this.handleChange();
+  }
+
   handleDismiss = (e: any) => {
     this.setState({
       selectedItem: null,
     });
   }
 
+  handleChange = () => {
+    this.props.onChange(this.panelEl.current.innerHTML);
+  }
+
+  handlePlacementChange = (placement: any) => {
+    this.props.context.setPlacement(placement);
+
+    this.handleChange();
+  }
+
   render() {
-    const { classes } = this.props;
+    const { classes, context } = this.props;
 
     return (
-      <EditorContext.Consumer>
-        {(context: any) =>
-          <div className={classes.root} onClick={context.dismiss}>
-            {context.items.map((item: any) => {
-              const { id, text, ...style } = item;
+      <div className={classes.root} onClick={context.dismiss} ref={this.panelEl}>
+        {context.items.map((item: any) => {
+          const { id, text, placement, ...style } = item;
 
-              return (
-                <Textbox
-                  key={id}
-                  id={id}
-                  text={text}
-                  style={style}
-                  selected={context.selectedItem === id}
-                  onMouseDown={context.select}
-                />
-              );
-            })}
-          </div>
-        }
-      </EditorContext.Consumer>
+          return (
+            <Textbox
+              key={id}
+              id={id}
+              text={text}
+              style={style}
+              placement={placement}
+              onChange={this.handlePlacementChange}
+              selected={context.selectedItem === id}
+              onMouseDown={context.select}
+            />
+          );
+        })}
+      </div>
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <EditorContext.Consumer>
+    {context => <Panel {...props} context={context} {...ref} />}
+  </EditorContext.Consumer>
+));
