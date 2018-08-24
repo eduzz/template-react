@@ -23,14 +23,13 @@ export default class Editor extends React.PureComponent<IProps> {
 
     this.state = {
       selectedItem: null,
-      items: [
-        { ...this.defaultItem, id: 1 }, //mock
-        { ...this.defaultItem, id: 2 }, //mock
-      ],
+      items: [],
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
       current: this.current,
+      add: this.add,
+      remove: this.remove,
     };
   }
 
@@ -71,9 +70,30 @@ export default class Editor extends React.PureComponent<IProps> {
     return '';
   }
 
-  render() {
-    console.log(this.state);
+  add = () => {
+    const { items } = this.state as any;
 
+    this.setState({
+      items: [
+        ...items,
+        {
+          ...this.defaultItem,
+          id: items.length + 1,
+        },
+      ],
+    });
+  }
+
+  remove = () => {
+    const { items, selectedItem } = this.state as any;
+
+    this.setState({
+      items: items.filter((item: any) => item.id !== selectedItem),
+      selectedItem: null,
+    });
+  }
+
+  render() {
     return (
       <EditorContext.Provider value={this.state}>
         <Toolbar />

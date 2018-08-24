@@ -6,6 +6,8 @@ import HorizontalAlignment from './HorizontalAlignment';
 import VerticalAlignment from './VerticalAlignment';
 import TextEdit from './TextEdit';
 import ColorPicker from './ColorPicker';
+import Remove from './Remove';
+import Add from './Add';
 
 interface IProps {
   classes?: any;
@@ -61,6 +63,11 @@ class Toolbar extends React.PureComponent<IProps> {
         <TextEdit
           value={context.current('text')}
           onChange={this.handleChange}
+        />
+        <Add onClick={context.add} />
+        <Remove
+          disabled={!context.selectedItem}
+          onClick={context.remove}
         />
       </form>
     );
