@@ -18,6 +18,16 @@ class CertificateService {
     );
   }
 
+  public get(id: number): rxjs.Observable<ICertificate> {
+    return apiService.get<ICertificate>(`producer/certificates/${id}`).pipe(
+      rxjsOperators.map(response => response.data)
+    );
+  }
+
+  public send(params: any) {
+    return apiService.post('/producer/certificates', params);
+  }
+
   public searchCourses(certificateId: number, search: string): rxjs.Observable<ICertificateCourse[]> {
     return apiService.get<ICertificateCourse[]>(`producer/certificates/${certificateId}/courses`, { search, size: 10 }).pipe(
       rxjsOperators.map(response => response.data)
