@@ -2,8 +2,7 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ImageIcon from 'mdi-react/ImageIcon';
 import { WithStyles } from 'decorators/withStyles';
-// import certificateService from 'services/certificate';
-// import rxjsOperators from 'rxjs-operators';
+import axios from 'axios';
 
 interface IProps {
   classes?: any;
@@ -32,21 +31,25 @@ export default class ImageUpload extends React.PureComponent<IProps> {
     this.inputEl.current.click();
   }
 
-  handleChange = (event: any) => {
+  handleChange = async (event: any) => {
     const reader = new FileReader();
+    const formData = new FormData();
     const file = event.target.files[0];
+
+    formData.append('file', file);
 
     reader.onload = (event: any) => {
       this.props.onChange(event.target.result);
     };
     reader.readAsDataURL(file);
 
-    // certificateService.uploadBackgroundImage({ file }).pipe(
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this),
-    // ).subscribe(image => {
-    //   console.log(image);
-    // });
+    const response = await axios.post(process.env.REACT_APP_API_ENDPOINT + '/producer/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+    });
+
+    console.log(response);
   }
 
   render() {

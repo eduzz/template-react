@@ -50,6 +50,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       return {
         ...this.defaultItem,
         text: placeholder,
+        id: index + 1,
         placement: {
           ...this.defaultItem.placement,
           y: this.defaultItem.placement.y * (index + 1),
@@ -113,13 +114,14 @@ export default class Editor extends React.PureComponent<IProps, IState> {
 
   add = () => {
     const { items } = this.state;
+    const id = items[items.length - 1] ? items[items.length - 1].id + 1 : 1;
 
     this.setState({
       items: [
         ...items,
         {
           ...this.defaultItem,
-          id: items.length + 1,
+          id,
         },
       ],
     });
