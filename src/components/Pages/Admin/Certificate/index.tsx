@@ -1,95 +1,30 @@
-import { Card, CardContent, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
-import { IStateList, ListComponent } from 'components/Abstract/List';
 import Toolbar from 'components/Layout/Toolbar';
 import FabButton from 'components/Shared/FabButton';
-import TableWrapper from 'components/Shared/TableWrapper';
-import { IPaginationParams } from 'interfaces/pagination';
 import CertificateIcon from 'mdi-react/CertificateIcon';
-import RefreshIcon from 'mdi-react/RefreshIcon';
-import React, { Fragment } from 'react';
-import rxjsOperators from 'rxjs-operators';
-import certificateService from 'services/certificate';
-import ListItem from './List/ListItem';
+import React, { Fragment, PureComponent } from 'react';
 
-interface IState extends IStateList<ICertificate> {
+import AddCourseDialog from './AddCourseDialog';
+import CertificateList from './List';
+
+interface IState {
 }
 
-export default class CertificateListPage extends ListComponent<{}, IState> {
+export default class CertificateListPage extends PureComponent<{}, IState> {
   actions = [{
     icon: CertificateIcon,
     onClick: () => console.log('create')
   }];
 
-  constructor(props: {}) {
-    super(props, 'fullName');
-  }
-
-  componentDidMount() {
-    this.loadData();
-  }
-
-  loadData = (params: Partial<IPaginationParams> = {}) => {
-    this.setState({ loading: true, error: null });
-
-    certificateService.list(this.mergeParams(params)).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(items => {
-      this.setPaginatedData(items);
-    }, error => this.setError(error));
-  }
-
   render() {
-    const { items, loading } = this.state;
-
     return (
       <Fragment>
         <Toolbar title='Certificados' />
 
-        <Card>
-          <FabButton actions={this.actions} />
+        <FabButton actions={this.actions} />
 
-          {this.renderLoader()}
+        <AddCourseDialog />
 
-          <CardContent>
-            <Grid container>
-              <Grid item xs={12} sm={6} lg={4}>
-                {this.renderSearch()}
-              </Grid>
-            </Grid>
-          </CardContent>
-
-          <TableWrapper minWidth={500}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    Nome
-                  </TableCell>
-                  <TableCell>
-                    Email
-                  </TableCell>
-                  <TableCell>
-                    <IconButton disabled={loading} onClick={this.handleRefresh}>
-                      <RefreshIcon />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.renderEmptyAndErrorMessages(3)}
-                {items.map(certificate =>
-                  <ListItem
-                    key={certificate.id}
-                    certificate={certificate}
-                  />
-                )}
-              </TableBody>
-            </Table>
-          </TableWrapper>
-          {this.renderTablePagination()}
-        </Card>
-
+        <CertificateList />
       </Fragment>
     );
   }

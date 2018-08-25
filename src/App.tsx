@@ -7,10 +7,14 @@ import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
 import AppRouter, { RouterContext } from 'components/Router';
 import Alert from 'components/Shared/Alert';
+import Loader from 'components/Shared/Loader';
 import Snackbar from 'components/Shared/Snackbar';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import baseRoutes from 'routes';
+import { setup } from 'rxjs-operators';
+
+// tslint:disable:jsx-no-lambda
 
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true
@@ -18,9 +22,14 @@ const generateClassName = createGenerateClassName({
 
 class App extends React.PureComponent {
   router: AppRouter;
+  loader: Loader;
 
   constructor(props: any) {
     super(props);
+  }
+
+  componentDidMount() {
+    setup(this.loader);
   }
 
   getRouter = () => {
@@ -34,6 +43,7 @@ class App extends React.PureComponent {
           <CssBaseline />
           <Dialogs />
 
+          <Loader innerRef={ref => this.loader = ref} />
           <Alert.Global />
           <Snackbar.Global />
 
