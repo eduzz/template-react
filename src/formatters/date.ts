@@ -4,11 +4,11 @@ export function dateParse(value: any, format?: string): Date {
   if (!value) return value;
   if (value instanceof Date) return value;
 
-  const date = format ?
-    DateTime.fromFormat(value, format) :
-    DateTime.fromISO(value);
+  if (!format) {
+    return new Date(value);
+  }
 
-  return date.toJSDate();
+  return DateTime.fromFormat(value, format).toJSDate();
 }
 
 export function dateFormat(date: Date, format: string = 'D'): string {

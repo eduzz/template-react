@@ -51,6 +51,17 @@ const overrides: Overrides = {
     select: {
       paddingRight: 20
     }
+  },
+  MuiExpansionPanel: {
+    expanded: {
+      marginTop: 0,
+      marginBottom: 0
+    }
+  },
+  MuiExpansionPanelDetails: {
+    root: {
+      display: 'block'
+    }
   }
 };
 

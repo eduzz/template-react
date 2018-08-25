@@ -4,6 +4,7 @@ import * as rxjsOperators from 'rxjs/operators';
 
 import { ApiError } from '../errors/api';
 import { API_ENDPOINT } from '../settings';
+import { apiResponseFormatter } from './../formatters/apiResponse';
 import authService from './auth';
 import tokenService, { TokenService } from './token';
 
@@ -19,6 +20,10 @@ export class ApiService {
 
   public post<T = any>(url: string, body: any): rxjs.Observable<IApiResponse<T>> {
     return this.request('POST', url, body);
+  }
+
+  public put<T = any>(url: string, body: any): rxjs.Observable<IApiResponse<T>> {
+    return this.request('PUT', url, body);
   }
 
   public delete<T = any>(url: string, params?: any): rxjs.Observable<IApiResponse<T>> {
@@ -40,10 +45,10 @@ export class ApiService {
             ...headers
           },
           params: method === 'GET' ? data : null,
-          data: method === 'POST' ? data : null
+          data: method === 'POST' || method === 'PUT' ? data : null
         });
       }),
-      rxjsOperators.map(res => res.data),
+      rxjsOperators.map(res => apiResponseFormatter(res.data)),
       rxjsOperators.catchError(err => this.handleError(err, retry))
     );
   }
