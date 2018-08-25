@@ -1,5 +1,4 @@
-import camelCase from 'lodash/camelCase';
-import moment from 'moment';
+import { dateParse } from 'formatters/date';
 
 export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): T {
   if (!obj) return obj;
@@ -9,7 +8,7 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
   }
 
   if (typeof obj === 'string' && isValidDateString(obj)) {
-    return moment(obj).toDate() as any;
+    return dateParse(obj) as any;
   }
 
   if (typeof obj === 'string' && !isNaN(Number(obj))) {
@@ -18,7 +17,7 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
 
   if (typeof obj === 'object' && !(obj instanceof Date)) {
     return Object.keys(obj).reduce((acc, key) => {
-      acc[camelCase(key)] = apiResponseFormatter(obj[key]);
+      acc[key] = apiResponseFormatter(obj[key]);
       return acc;
     }, {}) as any;
   }
@@ -27,5 +26,5 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
 }
 
 function isValidDateString(value: any): boolean {
-  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+))?)(Z)?$/.test(value);
+  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+)(Z)?)?)?$/.test(value);
 }

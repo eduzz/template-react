@@ -3,9 +3,8 @@ export interface IPaginationParams {
   size: number;
 }
 
-export interface IPaginationResponse {
-  page: number;
-  size: number;
-  totalRows: number;
-  totalPages: number;
+export interface IPaginationResponse<T> extends IPaginationParams {
+  results: T[];
+  total_rows: number;
+  total_pages: number;
 }

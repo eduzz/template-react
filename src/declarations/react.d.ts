@@ -1,7 +1,7 @@
 import 'react';
 
 declare module 'React' {
-  interface Attributes {
-    innerRef?: any;
+  interface ClassAttributes<T> {
+    innerRef?: Ref<T>;
   }
 }

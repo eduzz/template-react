@@ -1,9 +1,18 @@
-import { IStoreItemStatus } from './storeItemStatus';
-
-export interface IUser extends IStoreItemStatus {
-  id: number;
-  name: string;
+export interface IUser {
+  id?: number;
+  firstName: string;
+  lastName?: string;
+  fullName?: string;
   email: string;
-  course: string;
-  group: string;
+  password?: string;
+  roles: enRoles[];
+
+  createdDate?: Date;
+  updatedDate?: Date;
+}
+
+export enum enRoles {
+  sysAdmin = 'sysAdmin',
+  admin = 'admin',
+  user = 'user'
 }

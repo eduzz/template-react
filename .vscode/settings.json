@@ -1,5 +1,6 @@
 {
   "files.exclude": {
+    "build": true,
     "**/*.css": {
       "when": "$(basename).scss"
     },
@@ -20,5 +21,10 @@
     "**/bin/**": true,
     "**/obj/**": true
   },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "tslint.autoFixOnSave": true,
+  "typescriptHero.imports.organizeOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
 }

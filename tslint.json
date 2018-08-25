@@ -1,12 +1,9 @@
 {
+  "extends": "tslint-react",
   "rules": {
+    "jsx-boolean-value": ["never"],
+    "jsx-no-multiline-js": false,
     "adjacent-overload-signatures": true,
-    "member-ordering": [
-      true,
-      {
-        "order": "fields-first"
-      }
-    ],
     "no-namespace": [
       true,
       "allow-declarations"
@@ -51,14 +48,14 @@
     ],
     "max-file-line-count": [
       true,
-      500
+      300
     ],
     "max-line-length": [
       true,
       150
     ],
     "no-default-export": false,
-    "no-require-imports": false,
+    "no-require-imports": true,
     "no-trailing-whitespace": true,
     "semicolon": [
       true,
