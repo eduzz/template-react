@@ -22,6 +22,10 @@ export class ApiService {
     return this.request('POST', url, body);
   }
 
+  public put<T = any>(url: string, body: any): rxjs.Observable<IApiResponse<T>> {
+    return this.request('PUT', url, body);
+  }
+
   public delete<T = any>(url: string, params?: any): rxjs.Observable<IApiResponse<T>> {
     return this.request('DELETE', url, params);
   }
@@ -41,7 +45,7 @@ export class ApiService {
             ...headers
           },
           params: method === 'GET' ? data : null,
-          data: method === 'POST' ? data : null
+          data: method === 'POST' || method === 'PUT' ? data : null
         });
       }),
       rxjsOperators.map(res => apiResponseFormatter(res.data)),

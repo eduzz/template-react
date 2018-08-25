@@ -1,14 +1,15 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
+import CertificateIcon from 'mdi-react/CertificateIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
+import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
 import ExtraIndexPage from './Extra';
-import CertificateIndexPage from './Certificate';
 
 interface IState {
   routes: IAppRoute[];
@@ -25,7 +26,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/certificados',
-      sideDrawer: { display: 'Certificados', order: 1, icon: StarIcon },
+      sideDrawer: { display: 'Certificados', order: 1, icon: CertificateIcon },
       roles: [],
       component: CertificateIndexPage
     },
