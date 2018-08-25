@@ -1,30 +1,27 @@
-import Toolbar from 'components/Layout/Toolbar';
-import FabButton from 'components/Shared/FabButton';
-import CertificateIcon from 'mdi-react/CertificateIcon';
+import { IAppRoute } from 'interfaces/route';
 import React, { Fragment, PureComponent } from 'react';
 
 import AddCourseDialog from './AddCourseDialog';
-import CertificateList from './List';
+import CertificateFormPage from './Form';
+import CertificateListPage from './List';
 
-interface IState {
-}
-
-export default class CertificateListPage extends PureComponent<{}, IState> {
-  actions = [{
-    icon: CertificateIcon,
-    onClick: () => console.log('create')
+export default class CertificateIndexPage extends PureComponent {
+  public static routes: IAppRoute[] = [{
+    path: '/novo',
+    component: CertificateFormPage
+  }, {
+    path: '/:id/editar',
+    component: CertificateFormPage
+  }, {
+    path: '/',
+    component: CertificateListPage
   }];
 
   render() {
     return (
       <Fragment>
-        <Toolbar title='Certificados' />
-
-        <FabButton actions={this.actions} />
-
         <AddCourseDialog />
-
-        <CertificateList />
+        {this.props.children}
       </Fragment>
     );
   }

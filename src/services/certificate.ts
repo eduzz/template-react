@@ -18,6 +18,12 @@ class CertificateService {
     );
   }
 
+  public get(id: number): rxjs.Observable<ICertificate> {
+    return apiService.get<ICertificate>(`producer/certificates/${id}`).pipe(
+      rxjsOperators.map(response => response.data)
+    );
+  }
+
   public send(params: any) {
     return apiService.post('/producer/certificates', params);
   }
