@@ -23,6 +23,13 @@ interface IState {
     position: 'relative',
     overflow: 'hidden',
   },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+  },
 }))
 class Panel extends React.Component<IProps, IState> {
   private panelEl: any;
@@ -58,6 +65,12 @@ class Panel extends React.Component<IProps, IState> {
 
     return (
       <div className={classes.root} onClick={context.dismiss} ref={this.panelEl}>
+        <img
+          alt=''
+          src={context.backgroundImage}
+          className={classes.backgroundImage}
+        />
+
         {context.items.map((item: any) => {
           const { id, text, placement, ...style } = item;
 

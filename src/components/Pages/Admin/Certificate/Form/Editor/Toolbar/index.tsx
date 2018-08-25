@@ -12,6 +12,7 @@ import Remove from './Remove';
 import Save from './Save';
 import TextEdit from './TextEdit';
 import VerticalAlignment from './VerticalAlignment';
+import ImageUpload from './ImageUpload';
 
 interface IProps {
   classes?: any;
@@ -69,6 +70,9 @@ class Toolbar extends React.PureComponent<IProps> {
           <TextEdit
             value={context.current('text')}
             onChange={this.handleChange}
+          />
+          <ImageUpload
+            onChange={context.setBackgroundImage}
           />
           <Add onClick={context.add} />
           <Remove

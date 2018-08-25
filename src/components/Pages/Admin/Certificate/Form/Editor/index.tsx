@@ -21,6 +21,8 @@ interface IState {
   remove: Function;
   save: Function;
   setPlacement: Function;
+  backgroundImage: string;
+  setBackgroundImage: Function;
   html: string;
 }
 
@@ -59,6 +61,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       selectedItem: null,
       items,
       html: '',
+      backgroundImage: '',
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
@@ -67,6 +70,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       remove: this.remove,
       save: this.save,
       setPlacement: this.setPlacement,
+      setBackgroundImage: this.setBackgroundImage,
     };
   }
 
@@ -143,6 +147,12 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe();
+  }
+
+  setBackgroundImage = (backgroundImage: string) => {
+    this.setState({
+      backgroundImage,
+    });
   }
 
   setPlacement = (placement: any) => {
