@@ -56,7 +56,7 @@ export default class CertificateFormPage extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { id, loading, error } = this.state;
+    const { id, loading, error, certificate } = this.state;
     const { classes } = this.props;
 
     console.log(this.state);
@@ -79,7 +79,9 @@ export default class CertificateFormPage extends PureComponent<IProps, IState> {
           }
 
           {!loading && !error &&
-            <Editor />
+            <Editor
+              default={certificate.config && JSON.parse(certificate.config)}
+            />
           }
         </Card>
       </Fragment>

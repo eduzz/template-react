@@ -40,6 +40,10 @@ class Panel extends React.Component<IProps, IState> {
     this.panelEl = React.createRef();
   }
 
+  componentDidMount = () => {
+    this.handleChange();
+  }
+
   componentDidUpdate() {
     this.handleChange();
   }
@@ -51,7 +55,7 @@ class Panel extends React.Component<IProps, IState> {
   }
 
   handleChange = () => {
-    this.props.onChange(this.panelEl.current.innerHTML);
+    this.props.onChange(this.panelEl.current.outerHTML);
   }
 
   handlePlacementChange = (placement: any) => {

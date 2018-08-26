@@ -8,6 +8,7 @@ export const EditorContext = React.createContext({});
 
 interface IProps {
   classes?: any;
+  default?: any;
 }
 
 interface IState {
@@ -60,7 +61,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
 
     this.state = {
       selectedItem: null,
-      items,
+      items: props.default || items,
       html: '',
       backgroundImage: '',
       select: this.select,
@@ -141,7 +142,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     const params = {
       title: 'Test',
       image: 'test',
-      config: items,
+      config: JSON.stringify(items),
       html,
     };
 
