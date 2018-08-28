@@ -1,7 +1,7 @@
 node {
     def app
     //def dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm")
-    def date = new Date()
+    //def date = new Date()
 
     stage ('Clone Repository') {
          checkout scm
