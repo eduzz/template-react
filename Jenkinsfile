@@ -12,7 +12,7 @@ node {
     }
 
     stage ('Build container') {
-        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f ./prod/Dockerfile .")
+        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f ./docker/prod/Dockerfile .")
     }
 
      stage('Publish to DockerHub') {
