@@ -1,4 +1,5 @@
 import './assets/global.css';
+import './version';
 import 'fieldConfig';
 
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
@@ -15,7 +16,6 @@ import baseRoutes from 'routes';
 import { setup } from 'rxjs-operators';
 
 // tslint:disable:jsx-no-lambda
-
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true
 });
@@ -43,7 +43,7 @@ class App extends React.PureComponent {
           <CssBaseline />
           <Dialogs />
 
-          <Loader innerRef={ref => this.loader = ref} />
+          <Loader ref={ref => this.loader = ref} />
           <Alert.Global />
           <Snackbar.Global />
 
