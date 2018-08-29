@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 node {
     def app
     def dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm")
@@ -12,7 +14,7 @@ node {
     }
 
     stage ('Build container') {
-        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f ./prod/Dockerfile .")
+        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f ./docker/prod/Dockerfile .")
     }
 
      stage('Publish to DockerHub') {
