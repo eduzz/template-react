@@ -27,16 +27,15 @@ class CacheOperator<T> implements rxjs.Operator<T, T> {
   ) { }
 
   public call(subscriber: rxjs.Subscriber<any>, source: rxjs.Observable<any>): rxjs.Subscription {
-    if (this.options.refresh) {
-      return source.pipe(
-        rxjsOperators.tap(data => cacheService.saveData(this.key, data, this.options))
-      ).subscribe(subscriber);
-    }
+    const start = this.options.refresh ?
+      cacheService.removeData(this.key) : rxjs.of(true);
 
     let currentCache: ICache;
-    return cacheService.getData(this.key).pipe(
+    return start.pipe(
+      rxjsOperators.switchMap(() => cacheService.watchData(this.key)),
       rxjsOperators.switchMap(cache => {
         currentCache = cache;
+
         if (cache && !cacheService.isExpirated(cache)) {
           return rxjs.of(cache.data);
         }
@@ -51,7 +50,7 @@ class CacheOperator<T> implements rxjs.Operator<T, T> {
 
         logService.breadcrumb('Cache Set', 'manual', data);
         return cacheService.saveData(this.key, data, this.options).pipe(
-          rxjsOperators.map(() => data)
+          rxjsOperators.filter(() => false)
         );
       })
     ).subscribe(subscriber);
