@@ -1,5 +1,6 @@
 import './assets/global.css';
 import 'fieldConfig';
+import './version';
 
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { createGenerateClassName } from '@material-ui/core/styles';

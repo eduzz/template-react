@@ -4,7 +4,9 @@ WORKDIR /src
 
 COPY . /src/
 
-RUN yarn install --force && yarn cache clean && yarn build
+RUN yarn install
+
+RUN yarn build
 
 # Criar o container final mais leve com nginx com apenas projeto compilado
 FROM nginx:alpine
