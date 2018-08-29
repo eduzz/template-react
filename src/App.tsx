@@ -1,6 +1,6 @@
 import './assets/global.css';
-import 'fieldConfig';
 import './version';
+import 'fieldConfig';
 
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { createGenerateClassName } from '@material-ui/core/styles';
@@ -13,10 +13,8 @@ import Snackbar from 'components/Shared/Snackbar';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import baseRoutes from 'routes';
-import { setup } from 'rxjs-operators';
 
 // tslint:disable:jsx-no-lambda
-
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true
 });
@@ -30,7 +28,8 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
-    setup(this.loader);
+    // setup(this.loader);
+    console.log(this.loader.show);
   }
 
   getRouter = () => {
@@ -44,7 +43,7 @@ class App extends React.PureComponent {
           <CssBaseline />
           <Dialogs />
 
-          <Loader innerRef={ref => this.loader = ref} />
+          <Loader ref={ref => this.loader = ref} />
           <Alert.Global />
           <Snackbar.Global />
 
