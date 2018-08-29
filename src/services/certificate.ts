@@ -25,7 +25,9 @@ class CertificateService {
   }
 
   public send(params: any) {
-    return apiService.post('/producer/certificates', params);
+    return apiService.post('/producer/certificates', params).pipe(
+      rxjsOperators.tap(() => cacheService.removeData('certificate-list')),
+    );
   }
 
   public searchCourses(certificateId: number, search: string): rxjs.Observable<ICertificateCourse[]> {

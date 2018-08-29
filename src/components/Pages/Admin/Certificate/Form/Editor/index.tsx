@@ -28,6 +28,10 @@ interface IState {
 }
 
 export default class Editor extends React.PureComponent<IProps, IState> {
+  static defaultProps = {
+    default: {},
+  };
+
   private defaultItem = {
     text: 'Texto',
     display: 'flex',
@@ -61,9 +65,9 @@ export default class Editor extends React.PureComponent<IProps, IState> {
 
     this.state = {
       selectedItem: null,
-      items: props.default || items,
+      items: (props.default && props.default.items) || items,
       html: '',
-      backgroundImage: '',
+      backgroundImage: (props.default && props.default.backgroundImage) || '',
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
@@ -138,11 +142,11 @@ export default class Editor extends React.PureComponent<IProps, IState> {
   }
 
   save = () => {
-    const { items, html } = this.state;
+    const { items, html, backgroundImage } = this.state;
     const params = {
       title: 'Test',
       image: 'test',
-      config: JSON.stringify(items),
+      config: JSON.stringify({ items, backgroundImage }),
       html,
     };
 
