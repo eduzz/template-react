@@ -13,6 +13,7 @@ import Snackbar from 'components/Shared/Snackbar';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import baseRoutes from 'routes';
+import { setup } from 'rxjs-operators';
 
 // tslint:disable:jsx-no-lambda
 const generateClassName = createGenerateClassName({
@@ -28,8 +29,7 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
-    // setup(this.loader);
-    console.log(this.loader.show);
+    setup(this.loader);
   }
 
   getRouter = () => {
