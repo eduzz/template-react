@@ -53,6 +53,8 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
     return {
       loading,
+      currentColumn: '',
+      currentDirection: 'asc',
       onChange: this.handleSort
     };
   }

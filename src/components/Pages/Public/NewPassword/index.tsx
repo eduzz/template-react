@@ -22,6 +22,7 @@ interface IState extends IStateForm<{
 
 interface IProps extends RouteComponentProps<{ t: string }, {}> {
   classes?: any;
+  router?: AppRouter;
 }
 
 @WithStyles(theme => ({
@@ -60,9 +61,7 @@ interface IProps extends RouteComponentProps<{ t: string }, {}> {
     justifyContent: 'flex-end'
   }
 }))
-export default class NewPasswordPage extends FormComponent<IProps, IState> {
-  getRouter: () => AppRouter;
-
+class NewPasswordPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -114,10 +113,6 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
       <div className={classes.root}>
         <div className={classes.container}>
 
-          <RouterContext.Consumer>
-            {getRouter => (this.getRouter = getRouter) && null}
-          </RouterContext.Consumer>
-
           <div className={classes.logo}>
             <img src={logoWhite} className={classes.logoImage} />
           </div>
@@ -165,3 +160,9 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <RouterContext.Consumer>
+    {router => <NewPasswordPage {...props} ref={ref} router={router} />}
+  </RouterContext.Consumer>
+));

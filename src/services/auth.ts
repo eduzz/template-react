@@ -30,7 +30,6 @@ export class AuthService {
         return user;
       }),
       rxjsOperators.catchError(err => {
-        console.error(err);
         return rxjs.of(null);
       }),
       rxjsOperators.shareReplay(1)

@@ -5,6 +5,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import AppRouter, { RouterContext } from 'components/Router';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Snackbar from 'components/Shared/Snackbar';
@@ -30,6 +31,7 @@ interface IState {
 interface IProps {
   classes?: any;
   certificate: ICertificate;
+  getRouter?: () => AppRouter;
 }
 
 @WithStyles({
@@ -37,7 +39,7 @@ interface IProps {
     visibility: 'hidden'
   }
 })
-export default class CertificateItem extends PureComponent<IProps, IState> {
+class CertificateItem extends PureComponent<IProps, IState> {
   actions = [{
     text: 'Alterar cursos',
     icon: FormatListBulletedIcon,
@@ -45,7 +47,7 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
   }, {
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => '',
+    handler: () => this.props.getRouter().navigate(`/certificados/${this.props.certificate.id}/editar`),
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
@@ -139,3 +141,9 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <RouterContext.Consumer>
+    {getRouter => <CertificateItem {...props} {...ref} getRouter={getRouter} />}
+  </RouterContext.Consumer>
+));
