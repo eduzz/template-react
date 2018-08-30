@@ -35,8 +35,8 @@ export default class Editor extends React.PureComponent<IProps, IState> {
   private defaultItem = {
     text: 'Texto',
     display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     fontSize: 12,
     fontFamily: 'Arial',
     color: '#000',
@@ -44,28 +44,16 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       x: 10,
       y: 20,
       width: 120,
-      height: 15,
+      height: 30,
     },
   };
 
   constructor(props: IProps) {
     super(props);
 
-    const items = ['[ALUNO]', '[PROFESSOR]', '[DATA]', '[CURSO]', '[DURACAO]'].map((placeholder: any, index: number) => {
-      return {
-        ...this.defaultItem,
-        text: placeholder,
-        id: index + 1,
-        placement: {
-          ...this.defaultItem.placement,
-          y: this.defaultItem.placement.y * (index + 1),
-        }
-      };
-    });
-
     this.state = {
       selectedItem: null,
-      items: (props.default && props.default.items) || items,
+      items: (props.default && props.default.items) || [],
       html: '',
       backgroundImage: (props.default && props.default.backgroundImage) || '',
       select: this.select,
@@ -117,7 +105,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     return '';
   }
 
-  add = () => {
+  add = (text: string = this.defaultItem.text) => {
     const { items } = this.state;
     const id = items[items.length - 1] ? items[items.length - 1].id + 1 : 1;
 
@@ -127,6 +115,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
         {
           ...this.defaultItem,
           id,
+          text,
         },
       ],
     });
