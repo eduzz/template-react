@@ -29,6 +29,7 @@ interface IProps {
   route: IAppRouteParsed;
   onClick: (route: IAppRoute) => void;
   classes?: any;
+  router?: AppRouter;
 }
 
 @WithStyles(theme => ({
@@ -73,16 +74,14 @@ interface IProps {
     }
   }
 }))
-export default class DrawerListItem extends PureComponent<IProps, IState> {
-  getRouter: () => AppRouter;
-
+class DrawerListItem extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = { expanded: false, active: false };
   }
 
   componentDidMount() {
-    this.getRouter().observeChange().pipe(
+    this.props.router.observeChange().pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(location => {
@@ -123,10 +122,6 @@ export default class DrawerListItem extends PureComponent<IProps, IState> {
 
     return (
       <Fragment>
-        <RouterContext.Consumer>
-          {getRouter => (this.getRouter = getRouter) && null}
-        </RouterContext.Consumer>
-
         {
           this.canAccess() && (
             !route.subRoutes.length ?
@@ -188,3 +183,9 @@ export default class DrawerListItem extends PureComponent<IProps, IState> {
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <RouterContext.Consumer>
+    {router => <DrawerListItem {...props} ref={ref} router={router} />}
+  </RouterContext.Consumer>
+));

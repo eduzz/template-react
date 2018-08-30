@@ -1,61 +1,23 @@
-# Nutro V3 - Producer
+Projeto Base React Eduzz
+========================
 
-Technologies
-------------
+Utilize o VSCode, já está configurado com sugestão de extensões.
+
+### Tecnologias
+
 * React
-* Redux with Thunk
 * Typescript
+* RxJs
 * React Router
-* Validatorjs
 * Material UI (UI Framework)
 
-Environments
-------------
+### Iniciando um novo projeto
 
-#### Default Port: 3000  
-
-| NAME                  | DEFAULT    | REQUIRED | DESCRIPTION                     |
-|-----------------------|------------|----------|---------------------------------|
-| NODE_ENV              |            | true     | production or development       |
-| REACT_APP_ENV         | production | false    | production or development       |
-| REACT_APP_API_HOST    | NULL       | true     |                                 |
-| REACT_APP_API_TIMEOUT | 15 seconds | false    | in milliseconds, 0 for infinity |
-| REACT_APP_SENTRY_KEY  | NULL       | false    | DNS public from sentry.io       |
-
-Production
-----------
-
-Example of docker-compose.yml:
-
-```yml
-version: '2'
-
-services:
-  web:
-    container_name: nutror-v3-front-producer
-    image: infraeduzz/nutror-producer
-    ports:
-      - "3000:80"
-```
-
-Development
------------
 ```bash
-#local
-yarn #install deps
-yarn start
+git clone git@github.com:eduzz/react-admin-seed.git
+yarn install # ou npm install
 
-#docker
-docker-compose up
+node ./init.js
 ```
 
-### Scripts
-* update-packages:check = Check if there is a package update
-* update-packages:do = Check and change package.json if there is a package update
-* webpack-analyze = Run webpack analyzer
-
-Publish
------------
-```bash
-sh ./scripts/build.sh [-p] #-p for production
-```
+### Para mais informações veja a pasta ./docs

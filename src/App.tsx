@@ -6,7 +6,7 @@ import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
 import { createGenerateClassName } from '@material-ui/core/styles';
 import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
-import AppRouter, { RouterContext } from 'components/Router';
+import AppRouter from 'components/Router';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
 import Snackbar from 'components/Shared/Snackbar';
@@ -21,7 +21,6 @@ const generateClassName = createGenerateClassName({
 });
 
 class App extends React.PureComponent {
-  router: AppRouter;
   loader: Loader;
 
   constructor(props: any) {
@@ -32,10 +31,6 @@ class App extends React.PureComponent {
     setup(this.loader);
   }
 
-  getRouter = () => {
-    return this.router;
-  }
-
   render() {
     return (
       <JssProvider generateClassName={generateClassName}>
@@ -44,12 +39,11 @@ class App extends React.PureComponent {
           <Dialogs />
 
           <Loader ref={ref => this.loader = ref} />
+
           <Alert.Global />
           <Snackbar.Global />
 
-          <RouterContext.Provider value={this.getRouter}>
-            <AppRouter routes={baseRoutes} ref={ref => this.router = ref} />
-          </RouterContext.Provider>
+          <AppRouter routes={baseRoutes} />
         </MuiThemeProvider>
       </JssProvider>
     );

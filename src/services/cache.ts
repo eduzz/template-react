@@ -30,7 +30,8 @@ export class CacheService {
 
   public removeData(key: string) {
     return this.storageService.set('app-cache-' + key, null).pipe(
-      rxjsOperators.tap(() => this.memory[key] = null)
+      rxjsOperators.tap(() => this.memory[key] = null),
+      rxjsOperators.tap(() => this.change$.next({ key, value: null }))
     );
   }
 
