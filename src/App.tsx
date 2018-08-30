@@ -36,6 +36,8 @@ class App extends React.PureComponent {
           <CssBaseline />
           <Dialogs />
 
+          <Loader ref={ref => this.loader = ref} />
+
           <Alert.Global />
           <Snackbar.Global />
 
