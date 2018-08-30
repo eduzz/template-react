@@ -25,6 +25,7 @@ interface IState extends IStateForm<{
 
 interface IProps extends RouteComponentProps<{ t: string }, {}> {
   classes?: any;
+  router?: AppRouter;
 }
 
 @WithStyles(theme => ({
@@ -63,9 +64,7 @@ interface IProps extends RouteComponentProps<{ t: string }, {}> {
     justifyContent: 'flex-end'
   }
 }))
-export default class NewPasswordPage extends FormComponent<IProps, IState> {
-  getRouter: () => AppRouter;
-
+class NewPasswordPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -96,7 +95,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
       rxjsOperators.bindComponent(this)
     ).subscribe(() => {
       Snackbar.show('Senha alterada com sucesso!');
-      this.getRouter().navigate('/');
+      this.props.router.navigate('/');
     }, err => {
       Snackbar.error(err);
       this.setState({ loading: false });
@@ -116,10 +115,6 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     return (
       <div className={classes.root}>
         <div className={classes.container}>
-
-          <RouterContext.Consumer>
-            {getRouter => (this.getRouter = getRouter) && null}
-          </RouterContext.Consumer>
 
           <div className={classes.logo}>
             <img src={logoWhite} className={classes.logoImage} />
@@ -168,3 +163,9 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <RouterContext.Consumer>
+    {router => <NewPasswordPage {...props} ref={ref} router={router} />}
+  </RouterContext.Consumer>
+));

@@ -13,7 +13,7 @@ interface IProps {
   routes: IAppRoute[];
 }
 
-export const RouterContext = React.createContext<() => AppRouter>(null);
+export const RouterContext = React.createContext<AppRouter>(null);
 
 export default class AppRouter extends React.PureComponent<IProps> {
 
@@ -75,13 +75,15 @@ export default class AppRouter extends React.PureComponent<IProps> {
     const { routes } = this.props;
 
     return (
-      <BrowserRouter ref={ref => this.browserRouter = ref as any}>
-        <Switch>
-          {routes.map(router => this.renderRoute(router))}
-          <Route path='/reload' exact render={() => <div />} />
-          <Route render={() => <Redirect to='/' />} />
-        </Switch>
-      </BrowserRouter>
+      <RouterContext.Provider value={this}>
+        <BrowserRouter ref={ref => this.browserRouter = ref as any}>
+          <Switch>
+            {routes.map(router => this.renderRoute(router))}
+            <Route path='/reload' exact render={() => <div />} />
+            <Route render={() => <Redirect to='/' />} />
+          </Switch>
+        </BrowserRouter>
+      </RouterContext.Provider>
     );
   }
 
