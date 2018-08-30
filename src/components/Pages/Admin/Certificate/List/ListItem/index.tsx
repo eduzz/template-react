@@ -118,7 +118,7 @@ class CertificateItem extends PureComponent<IProps, IState> {
                 size='small'
                 color='default'
               >
-                Adicionar curso
+                Vincular curso
               </Button>
             </Grid>
 

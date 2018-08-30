@@ -64,7 +64,7 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
   onSearchChange = (search: string = this.state.search) => {
     this.setState({ search });
 
-    if (search.length !== 0 && search.length < 5) {
+    if (search.length !== 0 && search.length < 3) {
       return;
     }
 
@@ -97,10 +97,10 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
 
         <DialogTitle>
           <FieldText
-            placeholder='Adicionar Curso'
+            placeholder='Vincular Curso'
             disabled={loading}
             value={search}
-            validation='string|min:5'
+            validation='string|min:3'
             onChange={this.onSearchChange}
             margin='none'
           />
