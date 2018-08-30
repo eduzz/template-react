@@ -10,7 +10,7 @@ class CertificateService {
   private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
 
   public list(): rxjs.Observable<ICertificate[]> {
-    return apiService.get<ICertificate[]>('producer/certificates').pipe(
+    return apiService.get<ICertificate[]>('producer/certificates?order=asc&orderby=title').pipe(
       rxjsOperators.map(response => response.data),
       rxjsOperators.cache('certificate-list'),
       rxjsOperators.combineLatest(this.deleted$),
