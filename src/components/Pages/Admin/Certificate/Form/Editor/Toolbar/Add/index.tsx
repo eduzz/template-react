@@ -7,11 +7,13 @@ interface IProps {
 }
 
 export default class Remove extends React.PureComponent<IProps> {
-  render() {
-    const { onClick } = this.props;
+  handleClick = (e: any) => {
+    this.props.onClick();
+  }
 
+  render() {
     return (
-      <IconButton onClick={onClick}>
+      <IconButton onClick={this.handleClick}>
         <FormatTextIcon />
       </IconButton>
     );

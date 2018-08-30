@@ -59,8 +59,6 @@ export default class CertificateFormPage extends PureComponent<IProps, IState> {
     const { id, loading, error, certificate } = this.state;
     const { classes } = this.props;
 
-    console.log(this.state);
-
     return (
       <Fragment>
         <Toolbar title={`${id ? 'Editar' : 'Novo'} certificado`} />

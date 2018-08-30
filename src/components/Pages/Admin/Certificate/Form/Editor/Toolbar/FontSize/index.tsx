@@ -33,7 +33,7 @@ export default class FontSize extends React.PureComponent<IProps> {
           disabled={!value}
           displayEmpty
         >
-          <MenuItem value={8}>10</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
           <MenuItem value={12}>12</MenuItem>
           <MenuItem value={14}>14</MenuItem>
           <MenuItem value={14}>20</MenuItem>

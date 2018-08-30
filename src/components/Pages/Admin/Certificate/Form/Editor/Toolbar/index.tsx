@@ -13,6 +13,7 @@ import Save from './Save';
 import TextEdit from './TextEdit';
 import VerticalAlignment from './VerticalAlignment';
 import ImageUpload from './ImageUpload';
+import Placeholders from './Placeholders';
 
 interface IProps {
   classes?: any;
@@ -54,6 +55,9 @@ class Toolbar extends React.PureComponent<IProps> {
           <FontFamily
             value={context.current('fontFamily')}
             onChange={this.handleChange}
+          />
+          <Placeholders
+            onChange={context.add}
           />
           <HorizontalAlignment
             value={context.current('justifyContent')}
