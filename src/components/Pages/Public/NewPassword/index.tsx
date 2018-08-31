@@ -92,7 +92,7 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
     //   rxjsOperators.bindComponent(this)
     // ).subscribe(() => {
     //   Snackbar.show('Senha alterada com sucesso!');
-    //   this.getRouter().navigate('/');
+    //   this.props.router().navigate('/');
     // }, err => {
     //   Snackbar.error(err);
     //   this.setState({ loading: false });
