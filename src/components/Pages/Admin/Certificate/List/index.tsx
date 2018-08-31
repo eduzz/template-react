@@ -21,7 +21,7 @@ interface IState {
 
 interface IProps {
   classes?: any;
-  getRouter?: () => AppRouter;
+  router?: AppRouter;
 }
 
 @WithStyles(theme => ({
@@ -37,7 +37,7 @@ interface IProps {
 class CertificateListPage extends PureComponent<IProps, IState> {
   actions = [{
     icon: PlusIcon,
-    onClick: () => this.props.getRouter().navigate('/certificados/novo')
+    onClick: () => this.props.router.navigate('/certificados/novo')
   }];
 
   constructor(props: IProps) {
@@ -99,6 +99,6 @@ class CertificateListPage extends PureComponent<IProps, IState> {
 
 export default React.forwardRef((props: IProps, ref: any) => (
   <RouterContext.Consumer>
-    {getRouter => <CertificateListPage {...props} {...ref} getRouter={getRouter} />}
+    {router => <CertificateListPage {...props} {...ref} router={router} />}
   </RouterContext.Consumer>
 ));

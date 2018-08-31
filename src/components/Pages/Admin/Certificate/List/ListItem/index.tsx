@@ -31,7 +31,7 @@ interface IState {
 interface IProps {
   classes?: any;
   certificate: ICertificate;
-  getRouter?: () => AppRouter;
+  router?: AppRouter;
 }
 
 @WithStyles({
@@ -47,7 +47,7 @@ class CertificateItem extends PureComponent<IProps, IState> {
   }, {
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => this.props.getRouter().navigate(`/certificados/${this.props.certificate.id}/editar`),
+    handler: () => this.props.router.navigate(`/certificados/${this.props.certificate.id}/editar`),
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
@@ -144,6 +144,6 @@ class CertificateItem extends PureComponent<IProps, IState> {
 
 export default React.forwardRef((props: IProps, ref: any) => (
   <RouterContext.Consumer>
-    {getRouter => <CertificateItem {...props} {...ref} getRouter={getRouter} />}
+    {router => <CertificateItem {...props} {...ref} router={router} />}
   </RouterContext.Consumer>
 ));
