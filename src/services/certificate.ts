@@ -9,10 +9,9 @@ class CertificateService {
   private openAddCourse$ = new rxjs.BehaviorSubject<number>(null);
   private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
 
-  public list(): rxjs.Observable<ICertificate[]> {
-    return apiService.get<ICertificate[]>('producer/certificates?order=asc&orderby=title').pipe(
+  public list(orderBy: string, orderDirection: string): rxjs.Observable<ICertificate[]> {
+    return apiService.get<ICertificate[]>('producer/certificates', { orderby: orderBy, order: orderDirection }).pipe(
       rxjsOperators.map(response => response.data),
-      rxjsOperators.cache('certificate-list'),
       rxjsOperators.combineLatest(this.deleted$),
       rxjsOperators.map(([certificates, deleted]) => certificates.filter(c => !deleted.includes(c.id))),
     );
@@ -25,9 +24,7 @@ class CertificateService {
   }
 
   public send(params: any) {
-    return apiService.post('/producer/certificates', params).pipe(
-      rxjsOperators.tap(() => cacheService.removeData('certificate-list')),
-    );
+    return apiService.post('/producer/certificates', params);
   }
 
   public searchCourses(certificateId: number, search: string): rxjs.Observable<ICertificateCourse[]> {
