@@ -41,7 +41,7 @@ interface IProps {
 })
 class CertificateItem extends PureComponent<IProps, IState> {
   actions = [{
-    text: 'Alterar cursos',
+    text: 'Vincular cursos',
     icon: FormatListBulletedIcon,
     handler: () => this.setExpanded(true),
   }, {
