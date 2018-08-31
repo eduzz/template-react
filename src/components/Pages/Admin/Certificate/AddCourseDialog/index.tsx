@@ -98,7 +98,6 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
         <DialogTitle>
           <FieldText
             placeholder='Vincular Curso'
-            disabled={loading}
             value={search}
             validation='string|min:3'
             onChange={this.onSearchChange}
