@@ -1,6 +1,7 @@
 import React from 'react';
-import { Rnd } from 'react-rnd';
 import { WithStyles } from 'decorators/withStyles';
+import Draggable from 'components/Shared/Draggable';
+import Resizable from 'components/Shared/Resizable';
 
 export interface ITextBox {
   id: number;
@@ -17,6 +18,7 @@ interface IProps {
   text?: string;
   placement: any;
   style?: any;
+  scale?: any;
 }
 
 interface IState {
@@ -32,6 +34,7 @@ interface IState {
 export default class Textbox extends React.PureComponent<IProps, IState> {
   static defaultProps = {
     fontSize: 12,
+    scale: 1,
   };
 
   constructor(props: IProps) {
@@ -85,6 +88,20 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     onChange && onChange(result);
   }
 
+  handleDrag = (event: any, d: any) => {
+    console.log(d);
+
+    // const placement = {
+    //   ...this.state.placement,
+    //   x: d.x / this.props.scale,
+    //   y: d.y / this.props.scale,
+    // };
+
+    // this.setState({
+    //   placement,
+    // });
+  }
+
   handleDragStop = (e: any, props: any) => {
     const { onChange } = this.props;
     const { placement } = this.state;
@@ -104,23 +121,42 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, selected, text, style } = this.props;
-    const { hover } = this.state;
-
     return (
-      <Rnd
-        className={(selected || hover) && classes.selected}
-        default={this.state.placement}
-        onMouseDown={this.handleMouseDown}
-        onMouseOver={this.handleMouseOver}
-        onMouseOut={this.handleMouseOut}
-        onResizeStop={this.handleResizeStop}
-        onDragStop={this.handleDragStop}
-        onClick={this.handleClick}
-        style={style}
+      <Resizable
+        width={100}
+        height={100}
       >
-        <span>{text}</span>
-      </Rnd>
+        <Draggable>
+          <div style={{ backgroundColor: 'red' }}>
+            test
+          </div>
+        </Draggable>
+      </Resizable>
     );
   }
+
+  // render() {
+  //   const { classes, selected, text, style } = this.props;
+  //   const { hover } = this.state;
+
+  //   const { x, y } = this.state.placement;
+
+  //   return (
+  //     <Rnd
+  //       className={(selected || hover) && classes.selected}
+  //       default={this.state.placement}
+  //       position={{ x, y }}
+  //       onMouseDown={this.handleMouseDown}
+  //       onMouseOver={this.handleMouseOver}
+  //       onMouseOut={this.handleMouseOut}
+  //       onDrag={this.handleDrag}
+  //       onResizeStop={this.handleResizeStop}
+  //       onDragStop={this.handleDragStop}
+  //       onClick={this.handleClick}
+  //       style={style}
+  //     >
+  //       <span>{text}</span>
+  //     </Rnd>
+  //   );
+  // }
 }
