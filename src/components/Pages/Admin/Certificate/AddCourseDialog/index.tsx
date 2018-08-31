@@ -4,6 +4,7 @@ import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificateCourse } from 'interfaces/models/certificate';
 import * as React from 'react';
+import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
@@ -29,8 +30,13 @@ interface IProps {
   }
 })
 export default class AddCourseDialog extends React.PureComponent<IProps, IState> {
+  search$: rxjs.Subject<string>;
+
   constructor(props: IProps) {
     super(props);
+
+    this.search$ = new rxjs.Subject();
+
     this.state = {
       certificateId: 8,
       search: '',
@@ -47,10 +53,21 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
     ).subscribe(certificateId => {
       this.setState({ opened: !!certificateId, certificateId });
     });
+
+    this.search$.pipe(
+      rxjsOperators.debounceTime(500),
+      rxjsOperators.filter(search => search.length === 0 || search.length >= 3),
+      rxjsOperators.tap(() => this.setState({ loading: true, error: null })),
+      rxjsOperators.switchMap((search) => certificateService.searchCourses(this.state.certificateId, search)),
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe(courses => {
+      this.setState({ courses, loading: false });
+    }, error => this.setState({ error, loading: false }));
   }
 
   onOpen = () => {
-    this.onSearchChange();
+    this.onSearchChange('');
   }
 
   onCancel = () => {
@@ -58,24 +75,12 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
   }
 
   onExit = () => {
-    this.setState({ search: '', courses: [] });
+    this.setState({ courses: [] });
   }
 
   onSearchChange = (search: string = this.state.search) => {
+    this.search$.next(search);
     this.setState({ search });
-
-    if (search.length !== 0 && search.length < 3) {
-      return;
-    }
-
-    this.setState({ loading: true, error: null });
-
-    certificateService.searchCourses(this.state.certificateId, search).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(courses => {
-      this.setState({ courses, loading: false });
-    }, error => this.setState({ error, loading: false }));
   }
 
   render() {
@@ -97,7 +102,7 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
 
         <DialogTitle>
           <FieldText
-            placeholder='Vincular Curso'
+            placeholder='Digite o nome do curso'
             value={search}
             validation='string|min:3'
             onChange={this.onSearchChange}
