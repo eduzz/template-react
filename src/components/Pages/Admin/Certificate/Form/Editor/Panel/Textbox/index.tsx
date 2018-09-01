@@ -1,11 +1,6 @@
 import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
-<<<<<<< HEAD
 import { Draggable, Resizable } from 'react-transforming';
-=======
-import Draggable from 'components/Shared/Draggable';
-import Resizable from 'components/Shared/Resizable';
->>>>>>> Create Draggable and Resizable components
 
 export interface ITextBox {
   id: number;
@@ -90,20 +85,6 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     onChange && onChange(result);
   }
 
-  handleDrag = (event: any, d: any) => {
-    console.log(d);
-
-    // const placement = {
-    //   ...this.state.placement,
-    //   x: d.x / this.props.scale,
-    //   y: d.y / this.props.scale,
-    // };
-
-    // this.setState({
-    //   placement,
-    // });
-  }
-
   handleDragStop = (e: any, props: any) => {
     const { onChange } = this.props;
     const { placement } = this.state;
@@ -148,29 +129,4 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
       </Draggable>
     );
   }
-
-  // render() {
-  //   const { classes, selected, text, style } = this.props;
-  //   const { hover } = this.state;
-
-  //   const { x, y } = this.state.placement;
-
-  //   return (
-  //     <Rnd
-  //       className={(selected || hover) && classes.selected}
-  //       default={this.state.placement}
-  //       position={{ x, y }}
-  //       onMouseDown={this.handleMouseDown}
-  //       onMouseOver={this.handleMouseOver}
-  //       onMouseOut={this.handleMouseOut}
-  //       onDrag={this.handleDrag}
-  //       onResizeStop={this.handleResizeStop}
-  //       onDragStop={this.handleDragStop}
-  //       onClick={this.handleClick}
-  //       style={style}
-  //     >
-  //       <span>{text}</span>
-  //     </Rnd>
-  //   );
-  // }
 }
