@@ -29,7 +29,7 @@ export default class Placeholders extends React.PureComponent<IProps> {
           onChange={this.handleChange}
           displayEmpty
         >
-          <MenuItem value='' disabled>Placeholders</MenuItem>
+          <MenuItem value='' disabled>Máscaras</MenuItem>
           <MenuItem value='[ALUNO]'>ALUNO</MenuItem>
           <MenuItem value='[AUTOR]'>AUTOR</MenuItem>
           <MenuItem value='[DATA]'>DATA</MenuItem>

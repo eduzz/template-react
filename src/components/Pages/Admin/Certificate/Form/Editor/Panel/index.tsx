@@ -18,6 +18,7 @@ interface IState {
 @WithStyles(theme => ({
   root: {
     position: 'relative',
+    marginBottom: 16,
   },
   panel: {
     backgroundColor: '#cecece',
@@ -70,13 +71,19 @@ class Panel extends React.Component<IProps, IState> {
   render() {
     const { classes, context } = this.props;
     const panelStyle = {
-      width: 800,
-      height: 600,
+      width: 3508,
+      height: 2480,
     };
-    const containerStyle = this.containerEl.current && {
-      // transform: `scale(${this.containerEl.current.offsetWidth / this.panelEl.current.offsetWidth})`,
-      transformOrigin: 'top left',
-    };
+    let scale = 1;
+    let containerStyle;
+
+    if (this.containerEl.current) {
+      scale = this.containerEl.current.offsetWidth / this.panelEl.current.offsetWidth;
+      containerStyle = {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+      };
+    }
 
     return (
       <div className={classes.root} style={containerStyle} ref={this.containerEl}>
@@ -96,7 +103,7 @@ class Panel extends React.Component<IProps, IState> {
                 id={id}
                 text={text}
                 style={style}
-                scale={this.containerEl.current.offsetWidth / this.panelEl.current.offsetWidth}
+                scale={scale}
                 placement={placement}
                 onChange={this.handlePlacementChange}
                 selected={context.selectedItem === id}
