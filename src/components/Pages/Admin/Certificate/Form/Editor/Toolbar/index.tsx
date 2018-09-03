@@ -1,7 +1,6 @@
+import React from 'react';
 import CardContent from '@material-ui/core/CardContent';
 import { WithStyles } from 'decorators/withStyles';
-import React from 'react';
-
 import { EditorContext } from '../';
 import Add from './Add';
 import ColorPicker from './ColorPicker';
@@ -14,6 +13,7 @@ import TextEdit from './TextEdit';
 import VerticalAlignment from './VerticalAlignment';
 import ImageUpload from './ImageUpload';
 import Placeholders from './Placeholders';
+import Grid from '@material-ui/core/Grid';
 
 interface IProps {
   classes?: any;
@@ -47,46 +47,56 @@ class Toolbar extends React.PureComponent<IProps> {
 
     return (
       <CardContent>
-        <div className={classes.root}>
-          <FontSize
-            value={context.current('fontSize')}
-            onChange={this.handleChange}
-          />
-          <FontFamily
-            value={context.current('fontFamily')}
-            onChange={this.handleChange}
-          />
-          <Placeholders
-            onChange={context.add}
-          />
-          <HorizontalAlignment
-            value={context.current('justifyContent')}
-            onChange={this.handleChange}
-          />
-          <VerticalAlignment
-            value={context.current('alignItems')}
-            onChange={this.handleChange}
-          />
-          <ColorPicker
-            value={context.current('color')}
-            onChange={this.handleChange}
-          />
-          <TextEdit
-            value={context.current('text')}
-            onChange={this.handleChange}
-          />
-          <ImageUpload
-            onChange={context.setBackgroundImage}
-          />
-          <Add onClick={context.add} />
-          <Remove
-            disabled={!context.selectedItem}
-            onClick={context.remove}
-          />
-          <Save
-            onClick={context.save}
-          />
-        </div>
+        <Grid container className={classes.root}>
+          <Grid item>
+            <FontSize
+              value={context.current('fontSize')}
+              onChange={this.handleChange}
+            />
+            <FontFamily
+              value={context.current('fontFamily')}
+              onChange={this.handleChange}
+            />
+            <Placeholders
+              onChange={context.add}
+            />
+          </Grid>
+          <Grid item>
+            <HorizontalAlignment
+              value={context.current('justifyContent')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <VerticalAlignment
+              value={context.current('alignItems')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <TextEdit
+              value={context.current('text')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <ColorPicker
+              value={context.current('color')}
+              onChange={this.handleChange}
+            />
+            <ImageUpload
+              onChange={context.setBackgroundImage}
+            />
+            <Add onClick={context.add} />
+            <Remove
+              disabled={!context.selectedItem}
+              onClick={context.remove}
+            />
+            <Save
+              onClick={context.save}
+            />
+          </Grid>
+        </Grid>
       </CardContent>
     );
   }
