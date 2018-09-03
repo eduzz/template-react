@@ -3,6 +3,10 @@ import Toolbar from './Toolbar';
 import Panel from './Panel';
 import certificateService from 'services/certificate';
 import rxjsOperators from 'rxjs-operators';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
 
 export const EditorContext = React.createContext({});
 
@@ -12,6 +16,7 @@ interface IProps {
 }
 
 interface IState {
+  title: string;
   selectedItem: number;
   items: any[];
   select: Function;
@@ -52,6 +57,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
+      title: '',
       selectedItem: null,
       items: (props.default && props.default.items) || [],
       html: '',
@@ -133,7 +139,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
   save = () => {
     const { items, html, backgroundImage } = this.state;
     const params = {
-      title: 'Test',
+      title: this.state.title,
       image: 'test',
       config: JSON.stringify({ items, backgroundImage }),
       html,
@@ -172,13 +178,41 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     });
   }
 
+  handleChange = (e: any) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    } as any);
+  }
+
   render() {
     return (
       <EditorContext.Provider value={this.state}>
-        <Toolbar />
-        <Panel
-          onChange={this.handlePanelChange}
-        />
+        <CardContent>
+          <Grid container spacing={8}>
+            <Grid item xs={10} lg={5}>
+              <TextField
+                fullWidth
+                placeholder='Digite o título do certificado'
+                name='title'
+                onChange={this.handleChange}
+                value={this.state.title}
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                variant='contained'
+                color='secondary'
+                onClick={this.save}
+              >
+                Salvar
+              </Button>
+            </Grid>
+          </Grid>
+          <Toolbar />
+          <Panel
+            onChange={this.handlePanelChange}
+          />
+        </CardContent>
       </EditorContext.Provider>
     );
   }

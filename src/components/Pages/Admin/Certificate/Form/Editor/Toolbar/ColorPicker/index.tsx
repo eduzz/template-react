@@ -16,7 +16,7 @@ interface IState {
     display: 'flex',
     alignItems: 'center',
     height: 45,
-    marginRight: 16,
+    margin: '0 8px 0 16px',
   },
 }))
 export default class ColorPicker extends React.PureComponent<IProps, IState> {
