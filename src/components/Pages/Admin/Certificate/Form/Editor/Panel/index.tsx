@@ -17,8 +17,10 @@ interface IState {
 
 @WithStyles(theme => ({
   root: {
-    width: '100%',
-    height: 800,
+    position: 'relative',
+    marginBottom: 16,
+  },
+  panel: {
     backgroundColor: '#cecece',
     position: 'relative',
     overflow: 'hidden',
@@ -33,11 +35,13 @@ interface IState {
 }))
 class Panel extends React.Component<IProps, IState> {
   private panelEl: any;
+  private containerEl: any;
 
   constructor(props: IProps) {
     super(props);
 
     this.panelEl = React.createRef();
+    this.containerEl = React.createRef();
   }
 
   componentDidMount = () => {
@@ -66,32 +70,49 @@ class Panel extends React.Component<IProps, IState> {
 
   render() {
     const { classes, context } = this.props;
+    const panelStyle = {
+      width: 3508,
+      height: 2480,
+    };
+    let scale = 1;
+    let containerStyle;
+
+    if (this.containerEl.current) {
+      scale = this.containerEl.current.offsetWidth / this.panelEl.current.offsetWidth;
+      containerStyle = {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+      };
+    }
 
     return (
-      <div className={classes.root} onClick={context.dismiss} ref={this.panelEl}>
-        <img
-          alt=''
-          src={context.backgroundImage}
-          className={classes.backgroundImage}
-        />
+      <div className={classes.root} style={containerStyle} ref={this.containerEl}>
+        <div className={classes.panel} onClick={context.dismiss} ref={this.panelEl} style={panelStyle}>
+          <img
+            alt=''
+            src={context.backgroundImage}
+            className={classes.backgroundImage}
+          />
 
-        {context.items.map((item: any) => {
-          const { id, text, placement, ...style } = item;
+          {context.items.map((item: any) => {
+            const { id, text, placement, ...style } = item;
 
-          return (
-            <Textbox
-              key={id}
-              id={id}
-              text={text}
-              style={style}
-              placement={placement}
-              onChange={this.handlePlacementChange}
-              selected={context.selectedItem === id}
-              onMouseDown={context.select}
-            />
-          );
-        })}
-      </div>
+            return (
+              <Textbox
+                key={id}
+                id={id}
+                text={text}
+                style={style}
+                scale={scale}
+                placement={placement}
+                onChange={this.handlePlacementChange}
+                selected={context.selectedItem === id}
+                onMouseDown={context.select}
+              />
+            );
+          })}
+        </div>
+      </div >
     );
   }
 }

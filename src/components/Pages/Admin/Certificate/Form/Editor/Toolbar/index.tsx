@@ -47,7 +47,7 @@ class Toolbar extends React.PureComponent<IProps> {
 
     return (
       <CardContent>
-        <form className={classes.root}>
+        <div className={classes.root}>
           <FontSize
             value={context.current('fontSize')}
             onChange={this.handleChange}
@@ -86,7 +86,7 @@ class Toolbar extends React.PureComponent<IProps> {
           <Save
             onClick={context.save}
           />
-        </form>
+        </div>
       </CardContent>
     );
   }

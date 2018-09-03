@@ -1,6 +1,6 @@
 import React from 'react';
-import { Rnd } from 'react-rnd';
 import { WithStyles } from 'decorators/withStyles';
+import { Draggable, Resizable } from 'react-transforming';
 
 export interface ITextBox {
   id: number;
@@ -17,6 +17,7 @@ interface IProps {
   text?: string;
   placement: any;
   style?: any;
+  scale?: any;
 }
 
 interface IState {
@@ -25,13 +26,17 @@ interface IState {
 }
 
 @WithStyles(theme => ({
+  border: {
+    border: 'solid 1px transparent',
+  },
   selected: {
-    border: 'solid 1px #424242',
+    borderColor: '#424242',
   },
 }))
 export default class Textbox extends React.PureComponent<IProps, IState> {
   static defaultProps = {
     fontSize: 12,
+    scale: 1,
   };
 
   constructor(props: IProps) {
@@ -67,14 +72,9 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     e.stopPropagation();
   }
 
-  handleResizeStop = (e: any, dir: any, refToElement: any) => {
+  handleResizeStop = (e: any, size: any) => {
     const { onChange } = this.props;
     const { placement } = this.state;
-
-    const size = {
-      width: refToElement.offsetWidth,
-      height: refToElement.offsetHeight,
-    };
 
     const result = { ...placement, ...size };
 
@@ -104,23 +104,29 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, selected, text, style } = this.props;
+    const { classes, selected, text, style, scale } = this.props;
     const { hover } = this.state;
 
     return (
-      <Rnd
-        className={(selected || hover) && classes.selected}
+      <Draggable
         default={this.state.placement}
+        className={`${classes.border} ${(selected || hover) ? classes.selected : ''}`}
         onMouseDown={this.handleMouseDown}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
-        onResizeStop={this.handleResizeStop}
         onDragStop={this.handleDragStop}
         onClick={this.handleClick}
-        style={style}
+        scale={scale}
       >
-        <span>{text}</span>
-      </Rnd>
+        <Resizable
+          style={style}
+          default={this.state.placement}
+          onResizeStop={this.handleResizeStop}
+          scale={scale}
+        >
+          <span>{text}</span>
+        </Resizable>
+      </Draggable>
     );
   }
 }
