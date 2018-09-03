@@ -37,14 +37,14 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    fontSize: 12,
+    fontSize: 36,
     fontFamily: 'Arial',
     color: '#000',
     placement: {
       x: 10,
       y: 20,
-      width: 120,
-      height: 30,
+      width: 220,
+      height: 70,
     },
   };
 

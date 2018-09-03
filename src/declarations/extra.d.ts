@@ -3,3 +3,4 @@ declare module 'react-jss/lib/JssProvider';
 declare module '*.png';
 declare module '*.jpg';
 declare module '*.gif';
+declare module 'react-transforming';
