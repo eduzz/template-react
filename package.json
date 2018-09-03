@@ -13,7 +13,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "concurrently -r \"yarn tslint -p tsconfig.json\" \"yarn tsc --noEmit\"",
       "post-merge": "yarn"
     }
   },
