@@ -2,8 +2,11 @@ import { DeepReadonly } from 'helpers/immutable';
 import { IUserToken } from 'interfaces/userToken';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
+import UAParser from 'ua-parser-js';
+import { v4 } from 'uuid';
 
 import apiService from './api';
+import storageService from './storage';
 import tokenService from './token';
 
 export class AuthService {
@@ -19,7 +22,7 @@ export class AuthService {
       rxjsOperators.map(token => {
         if (!token) return null;
 
-        const user = tokenService.decode<IUserToken>(token);
+        const user = tokenService.decode<IUserToken>(token, true);
         if (!user) return null;
 
         user.fullName = `${user.firstName} ${user.lastName}`;
@@ -45,7 +48,9 @@ export class AuthService {
   }
 
   public login(username: string, password: string): rxjs.Observable<void> {
-    return apiService.post('/oauth/token', { username, password }).pipe(
+
+    return this.getDevideInfo().pipe(
+      rxjsOperators.switchMap(deviceInfo => apiService.post('/oauth/token', { username, password, ...deviceInfo })),
       rxjsOperators.tap(() => this.openLogin$.next(false)),
       rxjsOperators.switchMap(response => tokenService.setTokens(response.data)),
       rxjsOperators.map(() => null)
@@ -74,6 +79,24 @@ export class AuthService {
 
   public isAuthenticated(): rxjs.Observable<boolean> {
     return tokenService.getAccessToken().pipe(rxjsOperators.map(token => !!token));
+  }
+
+  private getDevideInfo(): rxjs.Observable<{ device_id: string, device_name: string }> {
+    return storageService.get<string>('deviceId').pipe(
+      rxjsOperators.switchMap(deviceId => {
+        if (deviceId) return rxjs.of(deviceId);
+        return storageService.set('deviceId', v4());
+      }),
+      rxjsOperators.map(deviceId => {
+        const parser = new UAParser();
+        const { browser: { name: browser }, os: { name: device } } = parser.getResult();
+
+        return {
+          device_id: deviceId,
+          device_name: `${browser} - ${device}`
+        };
+      })
+    );
   }
 }
 

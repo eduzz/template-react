@@ -1,7 +1,5 @@
-import CardContent from '@material-ui/core/CardContent';
-import { WithStyles } from 'decorators/withStyles';
 import React from 'react';
-
+import { WithStyles } from 'decorators/withStyles';
 import { EditorContext } from '../';
 import Add from './Add';
 import ColorPicker from './ColorPicker';
@@ -9,11 +7,11 @@ import FontFamily from './FontFamily';
 import FontSize from './FontSize';
 import HorizontalAlignment from './HorizontalAlignment';
 import Remove from './Remove';
-import Save from './Save';
 import TextEdit from './TextEdit';
 import VerticalAlignment from './VerticalAlignment';
 import ImageUpload from './ImageUpload';
 import Placeholders from './Placeholders';
+import Grid from '@material-ui/core/Grid';
 
 interface IProps {
   classes?: any;
@@ -24,7 +22,7 @@ interface IProps {
   root: {
     display: 'flex',
     alignItems: 'flex-end',
-    marginBottom: 8,
+    margin: '8px 0 8px 0',
   },
   button: {
     borderRadius: 0,
@@ -46,8 +44,8 @@ class Toolbar extends React.PureComponent<IProps> {
     const { classes, context } = this.props;
 
     return (
-      <CardContent>
-        <div className={classes.root}>
+      <Grid container className={classes.root}>
+        <Grid item>
           <FontSize
             value={context.current('fontSize')}
             onChange={this.handleChange}
@@ -59,35 +57,40 @@ class Toolbar extends React.PureComponent<IProps> {
           <Placeholders
             onChange={context.add}
           />
+        </Grid>
+        <Grid item>
           <HorizontalAlignment
             value={context.current('justifyContent')}
             onChange={this.handleChange}
           />
+        </Grid>
+        <Grid item>
           <VerticalAlignment
             value={context.current('alignItems')}
             onChange={this.handleChange}
           />
-          <ColorPicker
-            value={context.current('color')}
-            onChange={this.handleChange}
-          />
+        </Grid>
+        <Grid item>
           <TextEdit
             value={context.current('text')}
             onChange={this.handleChange}
           />
-          <ImageUpload
-            onChange={context.setBackgroundImage}
-          />
+        </Grid>
+        <ColorPicker
+          value={context.current('color')}
+          onChange={this.handleChange}
+        />
+        <ImageUpload
+          onChange={context.setBackgroundImage}
+        />
+        <Grid item>
           <Add onClick={context.add} />
           <Remove
             disabled={!context.selectedItem}
             onClick={context.remove}
           />
-          <Save
-            onClick={context.save}
-          />
-        </div>
-      </CardContent>
+        </Grid>
+      </Grid>
     );
   }
 }

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 
@@ -31,9 +31,16 @@ export class ApiService {
   }
 
   private request<T>(method: string, url: string, data: any = null, retry: boolean = true): rxjs.Observable<IApiResponse<T>> {
-    return this.tokenService.getAccessToken().pipe(
+    return this.tokenService.getTokens().pipe(
       rxjsOperators.first(),
-      rxjsOperators.map(token => token ? { Authorization: `Bearer ${token}` } : null),
+      rxjsOperators.map(tokens => {
+        if (!tokens) return null;
+
+        return {
+          Authorization: `Bearer ${tokens.token}`,
+          RefreshToken: tokens.refresh_token
+        };
+      }),
       rxjsOperators.switchMap(headers => {
         return axios.request({
           baseURL: this.apiEndpoint,
@@ -48,11 +55,23 @@ export class ApiService {
           data: method === 'POST' || method === 'PUT' ? data : null
         });
       }),
+      rxjsOperators.switchMap(res => this.checkNewToken(res)),
       rxjsOperators.map(res => apiResponseFormatter(res.data)),
       rxjsOperators.catchError(err => this.handleError(err, retry))
     );
   }
 
+  private checkNewToken(response: AxiosResponse): rxjs.Observable<AxiosResponse> {
+    const token = response.headers['x-token'];
+
+    if (!token) {
+      return rxjs.of(response);
+    }
+
+    return this.tokenService.setAccessToken(token).pipe(
+      rxjsOperators.map(() => response)
+    );
+  }
   private handleError(err: AxiosError, retry: boolean) {
     if (!err.config) return rxjs.throwError(err);
 
