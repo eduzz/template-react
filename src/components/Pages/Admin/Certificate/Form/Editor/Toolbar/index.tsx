@@ -81,7 +81,7 @@ class Toolbar extends React.PureComponent<IProps> {
           onChange={this.handleChange}
         />
         <ImageUpload
-          onChange={context.setBackgroundImage}
+          onChange={context.setImage}
         />
         <Grid item>
           <Add onClick={context.add} />
