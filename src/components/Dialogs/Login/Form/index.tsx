@@ -1,6 +1,6 @@
-import { Button, Card, CardActions, CardContent, LinearProgress } from '@material-ui/core';
-import FieldText from '@react-form-fields/material-ui/components/Text';
+import { Button, CardActions, CardContent, CircularProgress, LinearProgress } from '@material-ui/core';
 import ValidationContext from '@react-form-fields/core/components/ValidationContext';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
@@ -33,9 +33,10 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
   }
 
   onSubmit = async (event: FormEvent) => {
-    const { model } = this.state;
+    const { model, loading } = this.state;
 
     event.preventDefault();
+    if (loading) return;
 
     const isValid = await this.isFormValid();
     if (!isValid) return;
@@ -62,37 +63,38 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
       <form onSubmit={this.onSubmit} noValidate>
         <ValidationContext ref={this.bindValidationContext}>
 
-          <Card>
-            <CardContent>
+          <CardContent>
 
-              <FieldText
-                label='Email'
-                type='email'
-                disabled={loading}
-                value={model.email}
-                validation='required|email'
-                onChange={this.updateModel((model, v) => model.email = v)}
-                margin='dense'
-              />
+            <FieldText
+              label='Email'
+              type='email'
+              disabled={loading}
+              value={model.email}
+              validation='required|email'
+              onChange={this.updateModel((model, v) => model.email = v)}
+              margin='dense'
+            />
 
-              <FieldText
-                label='Senha'
-                type='password'
-                disabled={loading}
-                value={model.password}
-                validation='required'
-                onChange={this.updateModel((model, v) => model.password = v)}
-              />
+            <FieldText
+              label='Senha'
+              type='password'
+              disabled={loading}
+              value={model.password}
+              validation='required'
+              onChange={this.updateModel((model, v) => model.password = v)}
+            />
 
-            </CardContent>
+          </CardContent>
 
-            <CardActions className={classes.buttons}>
-              <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
-              <Button disabled={loading} color='secondary' type='submit'>Entrar</Button>
-            </CardActions>
+          <CardActions className={classes.buttons}>
+            <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
+            <Button variant='raised' color='secondary' type='submit'>
+              {!loading && 'Entrar'}
+              {loading && <CircularProgress color='inherit' size={20} />}
+            </Button>
+          </CardActions>
 
-            {loading && <LinearProgress color='secondary' />}
-          </Card>
+          {loading && <LinearProgress color='secondary' />}
 
         </ValidationContext>
       </form>

@@ -2,7 +2,7 @@ version: '3'
 services:
 
   web:
-    container_name: waproject-front
+    container_name: %PROJECT-SLUG%
    build: docker/dev
     ports:
       - "3000:3000"

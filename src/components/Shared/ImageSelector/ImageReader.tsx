@@ -100,7 +100,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
 
     const reader = new FileReader();
 
-    reader.onload = e => this.getImageDimensions(e.target.result);
+    reader.onload = (e: any) => this.getImageDimensions(e.target.result);
     reader.onerror = () => {
       Snackbar.show('Não conseguimos carregar a imagem');
       this.setState({ loading: false });

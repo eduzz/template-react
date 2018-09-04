@@ -1,7 +1,6 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
-import { enRoles } from 'interfaces/user';
-import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
+import ContactsIcon from 'mdi-react/ContactsIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
@@ -19,16 +18,16 @@ interface IState {
 export default class AdminModule extends React.PureComponent<{}, IState>  {
   static routes: IAppRoute[] = [
     {
-      path: '/pessoas',
-      sideDrawer: { display: 'Pessoas', order: 1, icon: AccountMultipleIcon },
-      roles: [enRoles.admin],
-      component: UserIndexPage
-    },
-    {
-      path: '/Extra',
+      path: '/extra',
       sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
       roles: [],
       component: ExtraIndexPage
+    },
+    {
+      path: '/usuarios',
+      sideDrawer: { display: 'Usuários', order: 1, icon: ContactsIcon },
+      roles: [],
+      component: UserIndexPage
     },
     {
       path: '/',

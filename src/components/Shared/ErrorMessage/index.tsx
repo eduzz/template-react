@@ -6,7 +6,7 @@ import React, { PureComponent } from 'react';
 
 interface IProps {
   error: any;
-  tryAgain?: Function;
+  tryAgain?: () => void;
   classes?: any;
 }
 
@@ -34,10 +34,11 @@ export default class ErrorMessage extends PureComponent<IProps> {
 
         {tryAgain &&
           <Button
-            onClick={() => tryAgain()}
+            onClick={tryAgain}
             className={classes.button}
             color='secondary'
-            variant='outlined'>
+            variant='outlined'
+          >
             Tentar novamente
           </Button>
         }

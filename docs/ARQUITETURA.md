@@ -11,15 +11,13 @@ ARQUITETURA
 
 ### Scripts do package.json
 
-| Comando         | Descrição                                      | Quem usa                              |
-|-----------------|------------------------------------------------|---------------------------------------|
-| dev             | inicia o react-scripts-ts                      | Docker (dev) / desenvolvedor          |
-| build           | gera os arquivos transpilados                  | Docker (durante build de produção)    |
-| eject           | ejeta os arquivos do webpack (não recomendado) | desenvolvedor                         |
-| docker:release  | build e da push na nova imagem do docker       | devensolvedor                         |
-| docker:build    | build a nova imagem do docker                  | script docker:release / devensolvedor |
-| docker:push     | dá push na nova imagem do docker               | script docker:release / devensolvedor |
-| webpack-analyze | use para verificar o tamanho o bundle final    | devensolvedor                         |
+| Comando         | Descrição                                      | Quem usa                           |
+|-----------------|------------------------------------------------|------------------------------------|
+| dev             | inicia o react-scripts-ts                      | Docker (dev) / desenvolvedor       |
+| build           | gera os arquivos transpilados                  | Docker (durante build de produção) |
+| eject           | ejeta os arquivos do webpack (não recomendado) | desenvolvedor                      |
+| webpack-analyze | use para verificar o tamanho o bundle final    | devensolvedor                      |
+| update-base     | use atualizar a base do app                    | devensolvedor                      |
 
 ### Sistema de pastas
 

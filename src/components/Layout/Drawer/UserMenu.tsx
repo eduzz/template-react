@@ -2,7 +2,7 @@ import { Grid, Typography } from '@material-ui/core';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
-import { IUserToken } from 'interfaces/userToken';
+import { IUserToken } from 'interfaces/tokens/user';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
@@ -33,6 +33,15 @@ interface IProps {
 }))
 export default class AppDrawerUser extends PureComponent<IProps> {
   drawer: IDrawerContext;
+  actions = [{
+    text: 'Trocar senha',
+    icon: KeyVariantIcon,
+    handler: () => this.handleChangePassword
+  }, {
+    text: 'Sair',
+    icon: ExitToAppIcon,
+    handler: () => this.handleLogout
+  }];
 
   constructor(props: IProps) {
     super(props);
@@ -69,19 +78,11 @@ export default class AppDrawerUser extends PureComponent<IProps> {
           <Grid item xs={true} >
             <Typography variant='body2' color='inherit' className={classes.text}>
               <small className={classes.textSmall}>Bem vindo</small>
-              {user.firstName}
+              {user.name}
             </Typography>
           </Grid>
           <Grid item>
-            <DropdownMenu options={[{
-              text: 'Trocar senha',
-              icon: KeyVariantIcon,
-              handler: this.handleChangePassword
-            }, {
-              text: 'Sair',
-              icon: ExitToAppIcon,
-              handler: this.handleLogout
-            }]} />
+            <DropdownMenu options={this.actions} />
           </Grid>
         </Grid>
       </Fragment>

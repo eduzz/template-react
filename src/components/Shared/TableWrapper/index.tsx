@@ -62,7 +62,7 @@ export default class TableWrapper extends PureComponent<IProps, IState> {
 
     return (
       <div className={classes.root}>
-        <div className={`${classes.shadow} ${scrollEnded ? classes.noShadow : ''}`}></div>
+        <div className={`${classes.shadow} ${scrollEnded ? classes.noShadow : ''}`} />
         <div className={classes.scrollable} ref={ref => this.root = ref}>
           <div style={({ minWidth: minWidth || 650 })}>
             {children}

@@ -8,7 +8,7 @@ import {
   TableSortLabel,
 } from '@material-ui/core';
 import { TableCellProps } from '@material-ui/core/TableCell';
-import { TablePaginationProps } from '@material-ui/core/TablePagination';
+import { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { ScrollTopContext } from 'components/Layout/AppWrapper';
 import ErrorMessage from 'components/Shared/ErrorMessage';
@@ -89,7 +89,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     this.handlePaginate(page, pageSize);
   }
 
-  handlePaginate = (page: number, pageSize: number): void => {
+  handlePaginate = (page: number, pageSize: number = this.state.pageSize): void => {
     const { allItems, loading } = this.state;
     if (loading) return;
 
@@ -132,6 +132,10 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   handleTryAgain = () => {
     this.loadData();
   }
+
+  labelDisplayedRows = ({ from, to, count }: LabelDisplayedRowsArgs) => `${from}-${to} de ${count}`;
+  onChangePage = (event: any, page: number) => this.handlePaginate(page);
+  onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.page, Number(event.target.value));
 
   renderSearch = (props: Partial<FieldText['props']> = {}) => {
     const { term } = this.state;
@@ -211,14 +215,14 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
         <TablePagination
           labelRowsPerPage='items'
-          labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          labelDisplayedRows={this.labelDisplayedRows}
           component='div'
           count={total}
           rowsPerPage={pageSize}
           rowsPerPageOptions={[10, 25, 50]}
           page={page}
-          onChangePage={(event, page) => this.handlePaginate(page, pageSize)}
-          onChangeRowsPerPage={(event) => this.handlePaginate(page, Number(event.target.value))}
+          onChangePage={this.onChangePage}
+          onChangeRowsPerPage={this.onChangeRowsPerPage}
           {...props}
         />
       </div>
@@ -236,22 +240,28 @@ interface ITableCellSortableProps extends TableCellProps {
   onChange: (column: any) => void;
 }
 
-export function TableCellSortable(props: ITableCellSortableProps) {
-  const { currentColumn, currentDirection, onChange, column, loading, ...extra } = props;
+export class TableCellSortable extends PureComponent<ITableCellSortableProps> {
+  onChange = () => {
+    this.props.onChange(this.props.column);
+  }
 
-  return (
-    <TableCell
-      {...extra}
-      sortDirection={currentColumn === column ? currentDirection : false}
-    >
-      <TableSortLabel
-        disabled={loading}
-        active={currentColumn === column}
-        direction={currentDirection}
-        onClick={() => onChange(column)}
+  render() {
+    const { currentColumn, currentDirection, children, onChange, column, loading, ...extra } = this.props;
+
+    return (
+      <TableCell
+        {...extra}
+        sortDirection={currentColumn === column ? currentDirection : false}
       >
-        {props.children}
-      </TableSortLabel>
-    </TableCell>
-  );
+        <TableSortLabel
+          disabled={loading}
+          active={currentColumn === column}
+          direction={currentDirection}
+          onClick={this.onChange}
+        >
+          {children}
+        </TableSortLabel>
+      </TableCell>
+    );
+  }
 }

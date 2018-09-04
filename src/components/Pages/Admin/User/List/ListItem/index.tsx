@@ -3,7 +3,7 @@ import ListItemComponent, { IStateListItem } from 'components/Abstract/ListItem'
 import Alert from 'components/Shared/Alert';
 import { IOption } from 'components/Shared/DropdownMenu';
 import Snackbar from 'components/Shared/Snackbar';
-import { IUser } from 'interfaces/user';
+import { IUser } from 'interfaces/models/user';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import EditIcon from 'mdi-react/EditIcon';
 import * as React from 'react';
@@ -44,7 +44,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
   handleDelete = async () => {
     const { user, onDeleteComplete } = this.props;
 
-    const ok = await Alert.confirm(`Deseja excluir o usuário ${user.firstName}?`);
+    const ok = await Alert.confirm(`Deseja excluir o usuário ${user.name}?`);
     if (!ok) return;
 
     this.setState({ loading: true });
@@ -53,7 +53,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(() => {
-      Snackbar.show(`${user.firstName} foi removido`);
+      Snackbar.show(`${user.name} foi removido`);
       this.setState({ loading: false, deleted: true });
       onDeleteComplete();
     }, error => {
@@ -71,7 +71,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
 
     return (
       <TableRow>
-        <TableCell>{user.fullName}</TableCell>
+        <TableCell>{user.name}</TableCell>
         <TableCell>{user.email}</TableCell>
         <TableCell>
           {this.renderSideMenu(this.options)}

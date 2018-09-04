@@ -85,7 +85,8 @@ export default class AppWrapper extends PureComponent<IProps, IState> {
               open={drawerOpened}
               classes={{ paper: classes.drawer }}
               onClose={this.drawerContext.close}
-              ModalProps={{ keepMounted: true }}>
+              ModalProps={{ keepMounted: true }}
+            >
               {items}
             </Drawer>
           </Hidden>
@@ -93,7 +94,8 @@ export default class AppWrapper extends PureComponent<IProps, IState> {
             <Drawer
               variant='permanent'
               open
-              classes={{ paper: classes.drawer }}>
+              classes={{ paper: classes.drawer }}
+            >
               {items}
             </Drawer>
           </Hidden>

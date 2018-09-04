@@ -1,11 +1,12 @@
 import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
 import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import AppRouter, { RouterContext } from 'components/Router';
 import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
-import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
+import { IResetPasswordToken } from 'interfaces/tokens/resetPassword';
 import queryString from 'query-string';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
@@ -24,6 +25,7 @@ interface IState extends IStateForm<{
 
 interface IProps extends RouteComponentProps<{ t: string }, {}> {
   classes?: any;
+  router?: AppRouter;
 }
 
 @WithStyles(theme => ({
@@ -62,9 +64,7 @@ interface IProps extends RouteComponentProps<{ t: string }, {}> {
     justifyContent: 'flex-end'
   }
 }))
-export default class NewPasswordPage extends FormComponent<IProps, IState> {
-  getRouter: () => AppRouter;
-
+class NewPasswordPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -95,7 +95,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
       rxjsOperators.bindComponent(this)
     ).subscribe(() => {
       Snackbar.show('Senha alterada com sucesso!');
-      this.getRouter().navigate('/');
+      this.props.router.navigate('/');
     }, err => {
       Snackbar.error(err);
       this.setState({ loading: false });
@@ -116,12 +116,8 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
       <div className={classes.root}>
         <div className={classes.container}>
 
-          <RouterContext.Consumer>
-            {getRouter => (this.getRouter = getRouter) && null}
-          </RouterContext.Consumer>
-
           <div className={classes.logo}>
-            <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
+            <img src={logoWhite} className={classes.logoImage} />
           </div>
 
           <form onSubmit={this.onSubmit} noValidate>
@@ -167,3 +163,9 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <RouterContext.Consumer>
+    {router => <NewPasswordPage {...props} ref={ref} router={router} />}
+  </RouterContext.Consumer>
+));

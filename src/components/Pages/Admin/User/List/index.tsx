@@ -3,8 +3,8 @@ import { IStateList, ListComponent, TableCellSortable } from 'components/Abstrac
 import Toolbar from 'components/Layout/Toolbar';
 import FabButton from 'components/Shared/FabButton';
 import TableWrapper from 'components/Shared/TableWrapper';
+import { IUser } from 'interfaces/models/user';
 import { IPaginationParams } from 'interfaces/pagination';
-import { IUser } from 'interfaces/user';
 import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment } from 'react';
@@ -20,6 +20,11 @@ interface IState extends IStateList<IUser> {
 }
 
 export default class UserListPage extends ListComponent<{}, IState> {
+  actions = [{
+    icon: AccountPlusIcon,
+    onClick: () => this.handleCreate()
+  }];
+
   constructor(props: {}) {
     super(props, 'fullName');
   }
@@ -38,6 +43,8 @@ export default class UserListPage extends ListComponent<{}, IState> {
       this.setPaginatedData(items);
     }, error => this.setError(error));
   }
+
+  handleRefresh = () => this.loadData();
 
   handleCreate = () => {
     this.setState({ formOpened: true, current: null });
@@ -67,16 +74,14 @@ export default class UserListPage extends ListComponent<{}, IState> {
         <Toolbar title='Usuários' />
 
         <Card>
-          <FabButton actions={[{
-            icon: AccountPlusIcon,
-            onClick: this.handleCreate
-          }]} />
+          <FabButton actions={this.actions} />
 
           <UserFormDialog
             opened={formOpened || false}
             user={current}
             onComplete={this.formCallback}
-            onCancel={this.formCancel} />
+            onCancel={this.formCancel}
+          />
 
           {this.renderLoader()}
 
@@ -99,7 +104,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
                     Email
                   </TableCellSortable>
                   <TableCell>
-                    <IconButton disabled={loading} onClick={() => this.loadData()}>
+                    <IconButton disabled={loading} onClick={this.handleRefresh}>
                       <RefreshIcon />
                     </IconButton>
                   </TableCell>

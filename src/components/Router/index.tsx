@@ -7,17 +7,23 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
+// tslint:disable:jsx-no-lambda
+
 interface IProps {
   routes: IAppRoute[];
 }
 
-export const RouterContext = React.createContext<() => AppRouter>(null);
+export const RouterContext = React.createContext<AppRouter>(null);
 
 export default class AppRouter extends React.PureComponent<IProps> {
-  private listenUnregister: Function;
-  private location$: rxjs.ReplaySubject<Location>;
+
+  get history(): History {
+    return this.browserRouter.history;
+  }
 
   browserRouter: RouteComponentProps<any>;
+  private listenUnregister: Function;
+  private location$: rxjs.ReplaySubject<Location>;
 
   constructor(props: IProps) {
     super(props);
@@ -33,10 +39,6 @@ export default class AppRouter extends React.PureComponent<IProps> {
 
   componentWillUnmount() {
     this.listenUnregister && this.listenUnregister();
-  }
-
-  get history(): History {
-    return this.browserRouter.history;
   }
 
   previousPage = () => {
@@ -73,13 +75,15 @@ export default class AppRouter extends React.PureComponent<IProps> {
     const { routes } = this.props;
 
     return (
-      <BrowserRouter ref={ref => this.browserRouter = ref as any}>
-        <Switch>
-          {routes.map(router => this.renderRoute(router))}
-          <Route path='/reload' exact render={() => <div></div>} />
-          <Route render={() => <Redirect to='/' />} />
-        </Switch>
-      </BrowserRouter>
+      <RouterContext.Provider value={this}>
+        <BrowserRouter ref={ref => this.browserRouter = ref as any}>
+          <Switch>
+            {routes.map(router => this.renderRoute(router))}
+            <Route path='/reload' exact render={() => <div />} />
+            <Route render={() => <Redirect to='/' />} />
+          </Switch>
+        </BrowserRouter>
+      </RouterContext.Provider>
     );
   }
 
@@ -89,7 +93,10 @@ export default class AppRouter extends React.PureComponent<IProps> {
       .replace(/\/$/gi, '') || '/';
 
     return (
-      <Route key={route.path} exact={route.exact} path={path}
+      <Route
+        key={route.path}
+        exact={route.exact}
+        path={path}
         render={props => route.allowAnonymous ?
           <route.component {...props}>
             <Switch>
@@ -103,7 +110,8 @@ export default class AppRouter extends React.PureComponent<IProps> {
               <Route render={() => <Redirect to='/' />} />
             </Switch>
           </AppRouterProtected>
-        } />
+        }
+      />
     );
   }
 

@@ -5,5 +5,6 @@ import { setConfig } from '@react-form-fields/material-ui/config';
 setConfig({
   masks: commonMasks,
   dateLocale: 'pt',
-  validation: validationMessage
+  validation: validationMessage,
+  validationOn: 'onBlur'
 });

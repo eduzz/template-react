@@ -20,11 +20,6 @@ export class AlertGlobalProvider extends PureComponent<{}, IState> {
     this.state = { opened: false };
   }
 
-  componentDidMount() {
-    if (globalAlert) throw new Error('Only one Alert.Global can be initialized');
-    globalAlert = this.show;
-  }
-
   static async  show(params: IAlertShowParams): Promise<boolean> {
     if (!globalAlert) throw new Error('Please, initialize an Alert.Global before');
 
@@ -33,6 +28,11 @@ export class AlertGlobalProvider extends PureComponent<{}, IState> {
       await new Promise(resolve => setTimeout(() => resolve(), 300));
       return globalAlert(params);
     });
+  }
+
+  componentDidMount() {
+    if (globalAlert) throw new Error('Only one Alert.Global can be initialized');
+    globalAlert = this.show;
   }
 
   show = (params: IAlertShowParams): Promise<boolean> => {

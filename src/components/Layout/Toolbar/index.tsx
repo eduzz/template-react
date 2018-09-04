@@ -53,9 +53,11 @@ export default class Toolbar extends PureComponent<IProps> {
         <MuiThemeProvider theme={whiteTheme}>
           <AppBar className={classes.appBar} elevation={1}>
             <CoreToolbar>
-              <IconButton color='inherit'
+              <IconButton
+                color='inherit'
                 onClick={this.openDrawer}
-                className={classes.iconMenu}>
+                className={classes.iconMenu}
+              >
                 <MenuIcon />
               </IconButton>
               {children}

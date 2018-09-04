@@ -7,7 +7,7 @@ const childProcess = require('child_process');
 
 async function init() {
   await awaitWarning();
-  await checkYarn();
+  await checkDeps();
 
   const params = await askParams();
 
@@ -37,9 +37,13 @@ async function awaitWarning() {
   });
 }
 
-async function checkYarn() {
+async function checkDeps() {
   await execCommand('yarn -v').catch(() => {
     throw new Error('Yarn is required')
+  });
+
+  await execCommand('git --version').catch(() => {
+    throw new Error('Git is required')
   });
 }
 
@@ -47,9 +51,8 @@ async function askParams(answers = {}) {
   const params = await inquirer.prompt([{
     name: 'project',
     default: answers.project,
-    message: 'Nome do projeto',
-    validate: i => i.length >= 3 ? true : 'Pelo menos 3 letras',
-    filter: i => lodash.kebabCase(i.endsWith('-front') ? i : `${i}-front`).toLowerCase()
+    message: 'Nome do projeto*',
+    validate: i => i.length >= 3 ? true : 'Pelo menos 3 letras'
   }, {
     name: 'repository',
     default: answers.repository,
@@ -63,6 +66,18 @@ async function askParams(answers = {}) {
     default: answers.endpointProd,
     message: 'Endpoint API(Prod)'
   }, {
+    name: 'dockerImage',
+    default: answers.dockerImage,
+    message: 'Docker Repo (infraeduzz/example)'
+  }, {
+    name: 'dockerCredentials',
+    default: answers.dockerCredentials,
+    message: 'Docker Credentials (UUID/GUID)'
+  }, {
+    name: 'sentryDsn',
+    default: answers.sentryDsn,
+    message: 'Sentry DSN'
+  }, {
     name: 'confirmed',
     type: 'confirm',
     message: 'Confirma as configurações?'
@@ -73,35 +88,55 @@ async function askParams(answers = {}) {
     return askParams(params);
   }
 
+  params.slug = lodash.kebabCase(params.project).toLowerCase();
   return params;
 }
 
 async function cleanup(params) {
-  await replaceContent('./package.json', [{
-    from: 'waproject-base-front',
+  const replacers = [{
+    from: '%PROJECT-NAME%',
     to: params.project
   }, {
-    from: /waproject\/front-base/gi,
-    to: `waproject/${params.project}`
-  }, {
-    from: 'waproject-repository',
-    to: params.repository
-  }]);
-
-  await replaceContent('./docker-compose.yml', [{
-    from: 'waproject-front',
+    from: 'PROJECT-NAME',
     to: params.project
-  }]);
+  }, {
+    from: 'Projeto Base React Eduzz',
+    to: params.project
+  }, {
+    from: '%PROJECT-SLUG%',
+    to: params.slug
+  }, {
+    from: 'PROJECT-SLUG',
+    to: params.slug
+  }, {
+    from: '%PROJECT-REPO%',
+    to: params.repository || '%PROJECT-REPO%'
+  }, {
+    from: '%DEV-ENDPOINT%',
+    to: params.endpointDev || '%DEV-ENDPOINT%'
+  }, {
+    from: '%PROD-ENDPOINT%',
+    to: params.endpointProd || '%PROD-ENDPOINT%'
+  }, {
+    from: '%DOCKER-IMAGE%',
+    to: params.dockerImage || '%DOCKER-IMAGE%'
+  }, {
+    from: '%DOCKER-CREDENTIALS%',
+    to: params.dockerCredentials || '%DOCKER-CREDENTIALS%'
+  }, {
+    from: '%SENTRY-DSN%',
+    to: params.sentryDsn
+  }];
 
-  await replaceContent('./.env.development', [{
-    from: 'waproject-api-endpoint',
-    to: params.endpointDev
-  }]);
-
-  await replaceContent('./.env.production', [{
-    from: 'waproject-api-endpoint',
-    to: params.endpointProd
-  }]);
+  await Promise.all([
+    replaceContent('./Jenkinsfile', replacers),
+    replaceContent('./package.json', replacers),
+    replaceContent('./public/index.html', replacers),
+    replaceContent('./README.md', replacers),
+    replaceContent('./docker-compose.yml', replacers),
+    replaceContent('./.env.development', replacers),
+    replaceContent('./.env.production', replacers)
+  ]);
 }
 
 async function replaceContent(file, replacers) {
@@ -119,15 +154,13 @@ async function replaceContent(file, replacers) {
 }
 
 async function removePackages() {
-  await execCommand(`yarn remove inquirer ora rimraf`);
+  await execCommand(`yarn remove inquirer ora`);
 }
 
 async function resetGit(params) {
-  await new Promise((resolve, reject) =>
-    rimraf('./.git', err => err ? reject(err) : resolve())
-  );
-
-  await execCommand('git init');
+  const originalRepo = await execCommand('git remote get-url origin');
+  await execCommand('git remote remove origin');
+  await execCommand(`git remote add seed ${originalRepo}`);
 
   if (params.repository) {
     await execCommand(`git remote add origin ${params.repository}`);
@@ -143,8 +176,10 @@ async function selfDestruction() {
 }
 
 async function execCommand(command) {
-  await new Promise((resolve, reject) => {
-    childProcess.exec(command, err => err ? reject(err) : resolve());
+  return await new Promise((resolve, reject) => {
+    childProcess.exec(command, (err, stdout) => {
+      err ? reject(err) : resolve((stdout || '').trim());
+    });
   });
 }
 
