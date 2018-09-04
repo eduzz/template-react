@@ -7,15 +7,23 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
+import Snackbar from 'components/Shared/Snackbar';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+import { WithStyles } from 'decorators/withStyles';
 
 export const EditorContext = React.createContext({});
 
 interface IProps {
   classes?: any;
-  default?: any;
+  config?: any;
+  default?: boolean;
+  id?: number;
+  title?: string;
 }
 
 interface IState {
+  id: number;
   title: string;
   selectedItem: number;
   items: any[];
@@ -30,8 +38,14 @@ interface IState {
   image: string;
   setImage: Function;
   html: string;
+  default: boolean;
 }
 
+@WithStyles(theme => ({
+  defaultSwitch: {
+    marginLeft: 8,
+  },
+}))
 export default class Editor extends React.PureComponent<IProps, IState> {
   static defaultProps = {
     default: {},
@@ -57,11 +71,13 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      title: '',
+      id: props.id || null,
+      title: props.title || '',
+      default: props.default || false,
       selectedItem: null,
-      items: (props.default && props.default.items) || [],
+      items: (props.config && props.config.items) || [],
       html: '',
-      image: (props.default && props.default.image) || '',
+      image: (props.config && props.config.image) || '',
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
@@ -137,18 +153,22 @@ export default class Editor extends React.PureComponent<IProps, IState> {
   }
 
   save = () => {
-    const { items, html, image } = this.state;
+    const { id, items, html, image } = this.state;
     const params = {
+      id,
       title: this.state.title,
+      default: this.state.default,
       config: JSON.stringify({ items, image }),
       html,
-      default: false,
     };
 
     certificateService.send(params).pipe(
+      rxjsOperators.loader(),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
-    ).subscribe();
+    ).subscribe(() => {
+      Snackbar.show('Certificado salvo com sucesso');
+    }, err => Snackbar.error(err));
   }
 
   setImage = (image: string) => {
@@ -184,7 +204,15 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     } as any);
   }
 
+  triggerDefault = () => {
+    this.setState({
+      default: !this.state.default,
+    });
+  }
+
   render() {
+    const { classes } = this.props;
+
     return (
       <EditorContext.Provider value={this.state}>
         <CardContent>
@@ -199,6 +227,18 @@ export default class Editor extends React.PureComponent<IProps, IState> {
               />
             </Grid>
             <Grid item>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={this.state.default}
+                    onClick={this.triggerDefault}
+                    name='default'
+                    color='secondary'
+                    className={classes.defaultSwitch}
+                  />
+                }
+                label='Padrão'
+              />
               <Button
                 variant='contained'
                 color='secondary'
