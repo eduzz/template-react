@@ -27,8 +27,8 @@ interface IState {
   remove: Function;
   save: Function;
   setPlacement: Function;
-  backgroundImage: string;
-  setBackgroundImage: Function;
+  image: string;
+  setImage: Function;
   html: string;
 }
 
@@ -61,7 +61,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       selectedItem: null,
       items: (props.default && props.default.items) || [],
       html: '',
-      backgroundImage: (props.default && props.default.backgroundImage) || '',
+      image: (props.default && props.default.image) || '',
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
@@ -70,7 +70,7 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       remove: this.remove,
       save: this.save,
       setPlacement: this.setPlacement,
-      setBackgroundImage: this.setBackgroundImage,
+      setImage: this.setImage,
     };
   }
 
@@ -137,12 +137,12 @@ export default class Editor extends React.PureComponent<IProps, IState> {
   }
 
   save = () => {
-    const { items, html, backgroundImage } = this.state;
+    const { items, html, image } = this.state;
     const params = {
       title: this.state.title,
-      image: 'test',
-      config: JSON.stringify({ items, backgroundImage }),
+      config: JSON.stringify({ items, image }),
       html,
+      default: false,
     };
 
     certificateService.send(params).pipe(
@@ -151,9 +151,9 @@ export default class Editor extends React.PureComponent<IProps, IState> {
     ).subscribe();
   }
 
-  setBackgroundImage = (backgroundImage: string) => {
+  setImage = (image: string) => {
     this.setState({
-      backgroundImage,
+      image,
     });
   }
 

@@ -2,7 +2,6 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ImageIcon from 'mdi-react/ImageIcon';
 import { WithStyles } from 'decorators/withStyles';
-import axios from 'axios';
 
 interface IProps {
   classes?: any;
@@ -42,14 +41,6 @@ export default class ImageUpload extends React.PureComponent<IProps> {
       this.props.onChange(event.target.result);
     };
     reader.readAsDataURL(file);
-
-    const response = await axios.post(process.env.REACT_APP_API_ENDPOINT + '/producer/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
-    });
-
-    console.log(response);
   }
 
   render() {
