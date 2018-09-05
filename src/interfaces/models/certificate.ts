@@ -5,6 +5,7 @@ export interface ICertificate {
   config: any;
   created_at: Date;
   user_id: number;
+  default: boolean;
 }
 
 export interface ICertificateCourse {

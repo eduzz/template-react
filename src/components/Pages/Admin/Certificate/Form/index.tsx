@@ -78,7 +78,10 @@ export default class CertificateFormPage extends PureComponent<IProps, IState> {
 
           {!loading && !error &&
             <Editor
-              default={certificate && certificate.config && JSON.parse(certificate.config)}
+              id={certificate ? certificate.id : null}
+              title={certificate ? certificate.title : ''}
+              default={certificate && certificate.default}
+              config={certificate && certificate.config && JSON.parse(certificate.config)}
             />
           }
         </Card>

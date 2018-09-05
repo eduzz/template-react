@@ -90,7 +90,7 @@ class Panel extends React.Component<IProps, IState> {
         <div className={classes.panel} onClick={context.dismiss} ref={this.panelEl} style={panelStyle}>
           <img
             alt=''
-            src={context.backgroundImage}
+            src={context.image}
             className={classes.backgroundImage}
           />
 

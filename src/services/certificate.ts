@@ -24,6 +24,9 @@ class CertificateService {
   }
 
   public send(params: any) {
+    if (params.id)
+      return apiService.put(`/producer/certificates/${params.id}`, params);
+
     return apiService.post('/producer/certificates', params);
   }
 
