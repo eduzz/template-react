@@ -12,6 +12,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { WithStyles } from 'decorators/withStyles';
 
+const defaultCertificate = require('assets/default_certificate.json');
+
 export const EditorContext = React.createContext({});
 
 interface IProps {
@@ -47,10 +49,6 @@ interface IState {
   },
 }))
 export default class Editor extends React.PureComponent<IProps, IState> {
-  static defaultProps = {
-    default: {},
-  };
-
   private defaultItem = {
     text: 'Texto',
     display: 'flex',
@@ -75,9 +73,9 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       title: props.title || '',
       default: props.default || false,
       selectedItem: null,
-      items: (props.config && props.config.items) || [],
+      items: props.config ? props.config.items : defaultCertificate.items,
       html: '',
-      image: (props.config && props.config.image) || '',
+      image: props.config ? props.config.image : defaultCertificate.image,
       select: this.select,
       dismiss: this.dismiss,
       modify: this.modify,
@@ -168,7 +166,9 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       rxjsOperators.bindComponent(this),
     ).subscribe(() => {
       Snackbar.show('Certificado salvo com sucesso');
-    }, err => Snackbar.error(err));
+    }, err => {
+      Snackbar.error(err);
+    });
   }
 
   setImage = (image: string) => {

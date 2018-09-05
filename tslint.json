@@ -57,7 +57,7 @@
       150
     ],
     "no-default-export": false,
-    "no-require-imports": true,
+    "no-require-imports": false,
     "no-trailing-whitespace": true,
     "semicolon": [
       true,

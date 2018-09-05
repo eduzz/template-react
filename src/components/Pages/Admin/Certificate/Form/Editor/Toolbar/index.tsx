@@ -12,6 +12,7 @@ import VerticalAlignment from './VerticalAlignment';
 import ImageUpload from './ImageUpload';
 import Placeholders from './Placeholders';
 import Grid from '@material-ui/core/Grid';
+import { Typography } from '@material-ui/core';
 
 interface IProps {
   classes?: any;
@@ -33,6 +34,9 @@ interface IProps {
     height: 43,
     border: 'solid 1px black',
     padding: 8,
+  },
+  link: {
+    padding: '16px 0 16px 0',
   },
 }))
 class Toolbar extends React.PureComponent<IProps> {
@@ -90,7 +94,12 @@ class Toolbar extends React.PureComponent<IProps> {
             onClick={context.remove}
           />
         </Grid>
-      </Grid>
+        <Grid item className={classes.link}>
+          <Typography>
+            Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>click aqui</a>
+          </Typography>
+        </Grid>
+      </Grid >
     );
   }
 }
