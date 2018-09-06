@@ -59,7 +59,35 @@ class Panel extends React.Component<IProps, IState> {
   }
 
   handleChange = () => {
-    this.props.onChange(this.panelEl.current.outerHTML);
+    this.props.onChange(`
+      <html>
+        <head>
+            <meta charset='utf-8'>
+            <!-- Custom font: <link href='https://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet'> -->
+            <style>
+                @page {
+                    size: A4 landscape;
+                    margin:0;
+                }
+
+                html, body {
+                    margin: 0;
+                    padding: 0;
+                    width: 3508px;
+                    height: 2479px;
+                    overflow: hidden;
+                }
+
+                body {
+                    zoom: 0.48;
+                }
+            </style>
+        </head>
+        <body>
+            ${this.panelEl.current.outerHTML}
+        </body>
+      </html>
+    `);
   }
 
   handlePlacementChange = (placement: any) => {
