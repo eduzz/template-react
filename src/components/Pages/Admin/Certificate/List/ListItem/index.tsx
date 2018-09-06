@@ -37,6 +37,9 @@ interface IProps {
 @WithStyles({
   buttonHidden: {
     visibility: 'hidden'
+  },
+  defaultCertificate: {
+    fill: '#f5d504',
   }
 })
 class CertificateItem extends PureComponent<IProps, IState> {
@@ -99,7 +102,7 @@ class CertificateItem extends PureComponent<IProps, IState> {
         <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={false}>
-              <CertificateIcon />
+              <CertificateIcon className={certificate.default && classes.defaultCertificate} />
             </Grid>
 
             <Grid item xs={true}>
