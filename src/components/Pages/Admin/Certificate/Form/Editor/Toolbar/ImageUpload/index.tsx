@@ -2,10 +2,15 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import ImageIcon from 'mdi-react/ImageIcon';
 import { WithStyles } from 'decorators/withStyles';
+import ImageSelector from 'components/Shared/ImageSelector';
 
 interface IProps {
   classes?: any;
   onChange?: any;
+}
+
+interface IState {
+  selectorOpened: boolean;
 }
 
 @WithStyles(theme => ({
@@ -17,46 +22,44 @@ interface IProps {
     position: 'absolute',
   },
 }))
-export default class ImageUpload extends React.PureComponent<IProps> {
-  private inputEl: any;
-
+export default class ImageUpload extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.inputEl = React.createRef();
+    this.state = {
+      selectorOpened: false,
+    };
   }
 
   handleClick = () => {
-    this.inputEl.current.click();
+    this.setState({
+      selectorOpened: true,
+    });
   }
 
-  handleChange = async (event: any) => {
-    const reader = new FileReader();
-    const formData = new FormData();
-    const file = event.target.files[0];
+  onSelectorComplete = (image: string) => {
+    this.setState({
+      selectorOpened: false,
+    });
 
-    formData.append('file', file);
-
-    reader.onload = (event: any) => {
-      this.props.onChange(event.target.result);
-    };
-    reader.readAsDataURL(file);
+    this.props.onChange && this.props.onChange(image);
   }
 
   render() {
     const { classes } = this.props;
+    const { selectorOpened } = this.state;
 
     return (
       <div>
+        <ImageSelector
+          opened={selectorOpened}
+          width={3508}
+          height={2479}
+          onComplete={this.onSelectorComplete}
+        />
         <IconButton onClick={this.handleClick}>
           <ImageIcon className={classes.icon} />
         </IconButton>
-        <input
-          type='file'
-          className={classes.input}
-          ref={this.inputEl}
-          onChange={this.handleChange}
-        />
       </div>
     );
   }
