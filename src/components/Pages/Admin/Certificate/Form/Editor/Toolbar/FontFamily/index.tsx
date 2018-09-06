@@ -13,6 +13,7 @@ export default class FontFamily extends React.PureComponent<IProps> {
   private fontFamilyList = [
     'Arial',
     'Arial Black',
+    'Allura',
     'Comic Sans MS',
     'Courier New',
     'Georgia',

@@ -63,7 +63,7 @@ class Panel extends React.Component<IProps, IState> {
       <html>
         <head>
             <meta charset='utf-8'>
-            <!-- Custom font: <link href='https://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet'> -->
+            <link href='https://fonts.googleapis.com/css?family=Allura' rel='stylesheet'>
             <style>
                 @page {
                     size: A4 landscape;
