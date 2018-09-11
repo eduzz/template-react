@@ -1,4 +1,5 @@
-import { Button, CircularProgress } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import IconMessage from 'components/Shared/IconMessage';
 import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';

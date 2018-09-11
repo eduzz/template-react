@@ -1,18 +1,19 @@
-import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
+
 import { EditorContext } from '../';
 import Add from './Add';
 import ColorPicker from './ColorPicker';
 import FontFamily from './FontFamily';
 import FontSize from './FontSize';
 import HorizontalAlignment from './HorizontalAlignment';
+import ImageUpload from './ImageUpload';
+import Placeholders from './Placeholders';
 import Remove from './Remove';
 import TextEdit from './TextEdit';
 import VerticalAlignment from './VerticalAlignment';
-import ImageUpload from './ImageUpload';
-import Placeholders from './Placeholders';
-import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
 
 interface IProps {
   classes?: any;

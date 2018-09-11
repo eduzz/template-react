@@ -1,6 +1,5 @@
-import { withStyles } from '@material-ui/core';
 import { StyleRules, StyleRulesCallback } from '@material-ui/core/styles';
-import { WithStylesOptions } from '@material-ui/core/styles/withStyles';
+import withStyles, { WithStylesOptions } from '@material-ui/core/styles/withStyles';
 import React from 'react';
 
 export function WithStyles(

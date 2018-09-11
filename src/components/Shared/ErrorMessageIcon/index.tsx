@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import Alert from 'components/Shared/Alert';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';

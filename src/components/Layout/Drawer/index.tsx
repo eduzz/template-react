@@ -1,4 +1,4 @@
-import { List } from '@material-ui/core';
+import List from '@material-ui/core/List';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import logoWhite from 'assets/images/logo-white.png';
 import AppRouter, { RouterContext } from 'components/Router';

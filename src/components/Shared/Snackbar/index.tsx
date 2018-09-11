@@ -1,4 +1,5 @@
-import { IconButton, Snackbar as CoreSnackbar } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import CoreSnackbar from '@material-ui/core/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import CloseIcon from 'mdi-react/CloseIcon';

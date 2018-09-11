@@ -2,8 +2,9 @@ import './assets/global.css';
 import './version';
 import 'fieldConfig';
 
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { createGenerateClassName } from '@material-ui/core/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
 import AppRouter from 'components/Router';

@@ -1,4 +1,5 @@
-import { Drawer, Hidden } from '@material-ui/core';
+import Drawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
 import { WithStyles } from 'decorators/withStyles';
 import { IAppRoute } from 'interfaces/route';
 import React, { PureComponent } from 'react';

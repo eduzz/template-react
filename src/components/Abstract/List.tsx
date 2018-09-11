@@ -1,14 +1,10 @@
-import {
-  IconButton,
-  InputAdornment,
-  LinearProgress,
-  TableCell,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-} from '@material-ui/core';
-import { TableCellProps } from '@material-ui/core/TableCell';
-import { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import TableCell, { TableCellProps } from '@material-ui/core/TableCell';
+import TablePagination, { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { ScrollTopContext } from 'components/Layout/AppWrapper';
 import ErrorMessage from 'components/Shared/ErrorMessage';

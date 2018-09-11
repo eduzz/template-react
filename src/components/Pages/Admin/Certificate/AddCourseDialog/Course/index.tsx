@@ -1,7 +1,8 @@
-import { CircularProgress, Typography } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import ErrorMessageIcon from 'components/Shared/ErrorMessageIcon';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificateCourse } from 'interfaces/models/certificate';
