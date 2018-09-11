@@ -1,15 +1,12 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
 import CertificateIcon from 'mdi-react/CertificateIcon';
-import StarIcon from 'mdi-react/StarIcon';
-import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
-import ExtraIndexPage from './Extra';
 
 interface IState {
   routes: IAppRoute[];
@@ -19,7 +16,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
   static routes: IAppRoute[] = [
     {
       path: '/',
-      sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
+      // sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
       exact: true,
       roles: [],
       component: DashboardIndexPage
@@ -29,13 +26,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       sideDrawer: { display: 'Certificados', order: 1, icon: CertificateIcon },
       roles: [],
       component: CertificateIndexPage
-    },
-    {
-      path: '/extra',
-      sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
-      roles: [],
-      component: ExtraIndexPage
-    },
+    }
   ];
 
   constructor(props: {}) {
@@ -52,6 +43,8 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
         this.setState({ routes: [] });
         return;
       }
+
+      console.log(AdminModule.routes);
 
       this.setState({
         routes: AdminModule.routes.filter(route => user.canAccess(...route.roles))

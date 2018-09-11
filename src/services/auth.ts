@@ -25,7 +25,7 @@ export class AuthService {
         const user = tokenService.decode<IUserToken>(token, true);
         if (!user) return null;
 
-        user.fullName = `${user.firstName} ${user.lastName}`;
+        user.firstName = (user.name || '').split(' ')[0];
         user.canAccess = () => {
           return true;
         };

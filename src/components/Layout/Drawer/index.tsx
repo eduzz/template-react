@@ -4,8 +4,10 @@ import logoWhite from 'assets/images/logo-white.png';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
+import { getUrlV2 } from 'helpers/redirectV2';
 import { IAppRoute } from 'interfaces/route';
 import { IUserToken } from 'interfaces/userToken';
+import BullhornIcon from 'mdi-react/BullhornIcon';
 import React, { PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
@@ -56,13 +58,32 @@ export const DrawerContext = React.createContext<IDrawerContext>(null);
 class AppDrawer extends PureComponent<IProps, IState> {
   constructor(props: any) {
     super(props);
-    this.state = { routes: [] };
+    this.state = {
+      routes: []
+    };
   }
 
   static getDerivedStateFromProps(props: IProps, currentState: IState): IState {
     return {
       ...currentState,
-      routes: routeParser(props.routes)
+      routes: [
+        ...routeParser(props.routes),
+        {
+          path: getUrlV2('/'),
+          sideDrawer: {
+            display: 'Cursos',
+            icon: BullhornIcon,
+            order: -5,
+          },
+          subRoutes: [
+            { path: getUrlV2('/cursos'), sideDrawer: { display: 'Meus Cursos' } },
+            { path: getUrlV2('/cursos'), sideDrawer: { display: 'Criar um curso' } }
+          ]
+        }
+      ].sort((a, b) => {
+        return a.sideDrawer.order > b.sideDrawer.order ? 1 :
+          a.sideDrawer.order < b.sideDrawer.order ? -1 : 0;
+      })
     };
   }
 
@@ -73,8 +94,14 @@ class AppDrawer extends PureComponent<IProps, IState> {
     ).subscribe(user => this.setState({ user }));
   }
 
-  toRoute = (route: IAppRoute) => {
+  toRoute = (route: Partial<IAppRoute>) => {
     this.props.drawer.close();
+
+    if (route.path.startsWith('http')) {
+      window.location.href = route.path;
+      return;
+    }
+
     this.props.router.navigate(route.path);
   }
 

@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { darken } from '@material-ui/core/styles/colorManipulator';
+import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
@@ -24,8 +24,8 @@ interface IState {
 
 interface IProps {
   user: DeepReadonly<IUserToken>;
-  route: IAppRouteParsed;
-  onClick: (route: IAppRoute) => void;
+  route: Partial<IAppRouteParsed>;
+  onClick: (route: Partial<IAppRoute>) => void;
   classes?: any;
   router?: AppRouter;
 }
@@ -36,7 +36,7 @@ interface IProps {
     opacity: 0.8,
     '&.active': {
       opacity: 1,
-      background: darken(theme.palette.primary.main, 0.30)
+      background: lighten(theme.palette.primary.main, 0.30)
     }
   },
   icon: {
@@ -53,12 +53,12 @@ interface IProps {
     boxShadow: 'none',
     margin: 0,
     '&.active': {
-      background: darken(theme.palette.primary.main, 0.10)
+      background: lighten(theme.palette.primary.main, 0.10)
     }
   },
   expandableTitle: {
     '&:hover': {
-      background: darken(theme.palette.primary.main, 0.10)
+      background: lighten(theme.palette.primary.main, 0.10)
     }
   },
   expandableDetails: {
@@ -122,7 +122,7 @@ class DrawerListItem extends PureComponent<IProps, IState> {
       <Fragment>
         {
           this.canAccess() && (
-            !route.subRoutes.length ?
+            !route.subRoutes || !route.subRoutes.length ?
               this.renderSingle() :
               this.renderList()
           )
@@ -154,7 +154,7 @@ class DrawerListItem extends PureComponent<IProps, IState> {
 
   renderList = (): React.ReactNode => {
     const { expanded } = this.state;
-    const { route, classes, user } = this.props;
+    const { route, classes, user, router } = this.props;
 
     return (
       <ExpansionPanel
@@ -173,7 +173,7 @@ class DrawerListItem extends PureComponent<IProps, IState> {
         <ExpansionPanelDetails className={classes.expandableDetails}>
           <List className={classes.innerList}>
             {route.subRoutes.map(sub =>
-              <DrawerListItem key={sub.path} user={user} route={sub} onClick={this.handleSubClick} />
+              <DrawerListItem key={sub.path} user={user} route={sub} router={router} onClick={this.handleSubClick} />
             )}
           </List>
         </ExpansionPanelDetails>

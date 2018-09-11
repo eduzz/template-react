@@ -4,9 +4,9 @@ import overrides from './overrides';
 import variables from './variables';
 
 const primary = {
-  light: '#6d6d6d',
-  main: '#424242',
-  dark: '#1b1b1b',
+  light: '#3e566f',
+  main: '#122d44',
+  dark: '#00011d',
   contrastText: '#fff',
 };
 
