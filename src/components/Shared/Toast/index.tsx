@@ -1,12 +1,12 @@
 import IconButton from '@material-ui/core/IconButton';
-import CoreSnackbar from '@material-ui/core/Snackbar';
+import Snackbar from '@material-ui/core/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import CloseIcon from 'mdi-react/CloseIcon';
 import React, { PureComponent } from 'react';
-import { SNACKBAR_DEFAULT_TIMEOUT } from 'settings';
+import { TOAST_DEFAULT_TIMEOUT } from 'settings';
 
-import SnackbarGlobalProvider from './global';
+import ToastGlobalProvider from './global';
 
 interface IState {
   opened: boolean;
@@ -39,8 +39,8 @@ interface IProps {
     height: theme.spacing.unit * 4,
   },
 }))
-export default class Snackbar extends PureComponent<IProps, IState> {
-  static Global = SnackbarGlobalProvider;
+export default class Toast extends PureComponent<IProps, IState> {
+  static Global = ToastGlobalProvider;
 
   constructor(props: IProps) {
     super(props);
@@ -63,11 +63,11 @@ export default class Snackbar extends PureComponent<IProps, IState> {
   }
 
   static show(message: string, timeout?: number) {
-    return SnackbarGlobalProvider.show(message, null, timeout);
+    return ToastGlobalProvider.show(message, null, timeout);
   }
 
   static error(error: any) {
-    return SnackbarGlobalProvider.show(null, error);
+    return ToastGlobalProvider.show(null, error);
   }
 
   handleClose = (event: any, reason: string) => {
@@ -80,10 +80,10 @@ export default class Snackbar extends PureComponent<IProps, IState> {
     const { timeout, classes, onClose } = this.props;
 
     return (
-      <CoreSnackbar
+      <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={opened}
-        autoHideDuration={timeout || SNACKBAR_DEFAULT_TIMEOUT}
+        autoHideDuration={timeout || TOAST_DEFAULT_TIMEOUT}
         onClose={this.handleClose}
         message={<span>{message}</span>}
         className={classes.wrapper}

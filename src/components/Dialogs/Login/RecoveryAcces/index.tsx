@@ -51,9 +51,9 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     //   this.resetForm();
     //   this.props.onComplete();
 
-    //   Snackbar.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
+    //   Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
     // }, err => {
-    //   Snackbar.error(err);
+    //   Toast.error(err);
     //   this.setState({ loading: false });
     // });
   }

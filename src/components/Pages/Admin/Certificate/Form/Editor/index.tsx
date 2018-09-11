@@ -1,16 +1,17 @@
-import React from 'react';
-import Toolbar from './Toolbar';
-import Panel from './Panel';
-import certificateService from 'services/certificate';
-import rxjsOperators from 'rxjs-operators';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
-import Snackbar from 'components/Shared/Snackbar';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
+import TextField from '@material-ui/core/TextField';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import certificateService from 'services/certificate';
+
+import Panel from './Panel';
+import Toolbar from './Toolbar';
 
 const defaultCertificate = require('assets/default_certificate.json');
 
@@ -165,9 +166,9 @@ export default class Editor extends React.PureComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(() => {
-      Snackbar.show('Certificado salvo com sucesso');
+      Toast.show('Certificado salvo com sucesso');
     }, err => {
-      Snackbar.error(err);
+      Toast.error(err);
     });
   }
 

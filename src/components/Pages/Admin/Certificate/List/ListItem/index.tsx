@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import AppRouter, { RouterContext } from 'components/Router';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
-import Snackbar from 'components/Shared/Snackbar';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import { dateFormat } from 'formatters/date';
 import { ICertificate } from 'interfaces/models/certificate';
@@ -82,8 +82,8 @@ class CertificateItem extends PureComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(() => {
-      Snackbar.show('Certificado excluído com sucesso');
-    }, err => Snackbar.error(err));
+      Toast.show('Certificado excluído com sucesso');
+    }, err => Toast.error(err));
   }
 
   setExpanded = (expanded: boolean) => {

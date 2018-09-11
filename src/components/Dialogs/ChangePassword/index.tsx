@@ -67,10 +67,10 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     // ).subscribe(() => {
     //   this.setState({ loading: false });
 
-    //   Snackbar.show('Senha alterada com sucesso!');
+    //   Toast.show('Senha alterada com sucesso!');
     //   authService.closeChangePassword();
     // }, err => {
-    //   Snackbar.error(err);
+    //   Toast.error(err);
     //   this.setState({ loading: false });
     // });
   }
