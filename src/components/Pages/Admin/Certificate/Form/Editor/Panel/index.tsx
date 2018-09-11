@@ -1,8 +1,8 @@
-import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
-import Textbox from './Textbox';
-import { ITextBox } from './Textbox';
+import React from 'react';
+
 import { EditorContext } from '../';
+import Textbox, { ITextBox } from './Textbox';
 
 interface IProps {
   classes?: any;
@@ -80,6 +80,10 @@ class Panel extends React.Component<IProps, IState> {
 
                 body {
                     zoom: 0.48;
+                }
+
+                img {
+                  position: absolute;
                 }
             </style>
         </head>
