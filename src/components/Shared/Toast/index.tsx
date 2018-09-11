@@ -4,7 +4,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import CloseIcon from 'mdi-react/CloseIcon';
 import React, { PureComponent } from 'react';
-import { TOAST_DEFAULT_TIMEOUT } from 'settings';
+import { TOAST_DEFAULT_TIMEOUT, TOAST_ERROR_TIMEOUT } from 'settings';
 
 import ToastGlobalProvider from './global';
 
@@ -63,11 +63,11 @@ export default class Toast extends PureComponent<IProps, IState> {
   }
 
   static show(message: string, timeout?: number) {
-    return ToastGlobalProvider.show(message, null, timeout);
+    return ToastGlobalProvider.show(message, null, timeout || TOAST_DEFAULT_TIMEOUT);
   }
 
   static error(error: any) {
-    return ToastGlobalProvider.show(null, error);
+    return ToastGlobalProvider.show(null, error, TOAST_ERROR_TIMEOUT);
   }
 
   handleClose = (event: any, reason: string) => {
@@ -83,7 +83,7 @@ export default class Toast extends PureComponent<IProps, IState> {
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={opened}
-        autoHideDuration={timeout || TOAST_DEFAULT_TIMEOUT}
+        autoHideDuration={timeout}
         onClose={this.handleClose}
         message={<span>{message}</span>}
         className={classes.wrapper}

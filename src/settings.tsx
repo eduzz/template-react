@@ -7,3 +7,4 @@ export const SENTRY_KEY = (process.env.REACT_APP_SENTRY_KEY || '').trim();
 
 export const IS_DEVELOPMENT = ENV === 'development';
 export const TOAST_DEFAULT_TIMEOUT = 3000;
+export const TOAST_ERROR_TIMEOUT = 15000;
