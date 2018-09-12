@@ -44,8 +44,6 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
         return;
       }
 
-      console.log(AdminModule.routes);
-
       this.setState({
         routes: AdminModule.routes.filter(route => user.canAccess(...route.roles))
       });

@@ -1,3 +1,5 @@
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import logoWhite from 'assets/images/logo-white.png';
@@ -7,18 +9,26 @@ import { DeepReadonly } from 'helpers/immutable';
 import { getUrlV2 } from 'helpers/redirectV2';
 import { IAppRoute } from 'interfaces/route';
 import { IUserToken } from 'interfaces/userToken';
+import AccountGroupIcon from 'mdi-react/AccountGroupIcon';
 import BullhornIcon from 'mdi-react/BullhornIcon';
+import CommentMultipleIcon from 'mdi-react/CommentMultipleIcon';
+import HelpBoxIcon from 'mdi-react/HelpBoxIcon';
+import PowerStandbyIcon from 'mdi-react/PowerStandbyIcon';
+import SettingsIcon from 'mdi-react/SettingsIcon';
+import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
+import WaterIcon from 'mdi-react/WaterIcon';
 import React, { PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
 import DrawerListItem from './ListItem';
-import { IAppRouteParsed, routeParser } from './routeParser';
+import { IDrawerItem, routeParser } from './routeParser';
 import AppDrawerUser from './UserMenu';
 
 interface IState {
   user?: DeepReadonly<IUserToken>;
-  routes: IAppRouteParsed[];
+  items: IDrawerItem[];
+  logoffItem: IDrawerItem;
 }
 
 interface IProps {
@@ -51,39 +61,50 @@ export const DrawerContext = React.createContext<IDrawerContext>(null);
     maxHeight: 100,
     margin: '10px 0'
   },
+  gridList: {
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    width: 'max-content'
+  },
   list: {
-    padding: 0
+    padding: 0,
+    width: theme.variables.drawerWidth
+  },
+  divider: {
+    backgroundColor: '#ffffff36'
   }
 }))
 class AppDrawer extends PureComponent<IProps, IState> {
+
   constructor(props: any) {
     super(props);
     this.state = {
-      routes: []
+      items: [],
+      logoffItem: { display: 'Sair', icon: PowerStandbyIcon }
     };
   }
 
   static getDerivedStateFromProps(props: IProps, currentState: IState): IState {
     return {
       ...currentState,
-      routes: [
-        ...routeParser(props.routes),
+      items: [
         {
-          path: getUrlV2('/'),
-          sideDrawer: {
-            display: 'Cursos',
-            icon: BullhornIcon,
-            order: -5,
-          },
-          subRoutes: [
-            { path: getUrlV2('/cursos'), sideDrawer: { display: 'Meus Cursos' } },
-            { path: getUrlV2('/cursos'), sideDrawer: { display: 'Criar um curso' } }
+          display: 'Cursos', icon: BullhornIcon, route: { path: getUrlV2('/'), },
+          children: [
+            { display: 'Meus Cursos', route: { path: getUrlV2('/cursos') } },
+            { display: 'Criar um curso', route: { path: getUrlV2('/cursos') } },
+            { display: 'Duplicar um curso', route: { path: getUrlV2('/cursos') } },
+            { display: 'Criar categoria', route: { path: getUrlV2('/cursos') } }
           ]
-        }
-      ].sort((a, b) => {
-        return a.sideDrawer.order > b.sideDrawer.order ? 1 :
-          a.sideDrawer.order < b.sideDrawer.order ? -1 : 0;
-      })
+        },
+        { display: 'Pacotes', icon: ViewDashboardIcon, route: { path: getUrlV2('/user/pacotes') } },
+        { display: 'Comentários', icon: CommentMultipleIcon, route: { path: getUrlV2('/comentarios') } },
+        { display: 'Alunos', icon: AccountGroupIcon, route: { path: getUrlV2('/alunos') } },
+        { display: 'Customização', icon: WaterIcon, route: { path: getUrlV2('/user/customizacao') } },
+        { display: 'Controle de Acesso', icon: SettingsIcon, route: { path: getUrlV2('/grupos') } },
+        { display: 'Ajuda', icon: HelpBoxIcon, route: { path: getUrlV2('/ajuda') } },
+        ...routeParser(props.routes),
+      ]
     };
   }
 
@@ -94,7 +115,7 @@ class AppDrawer extends PureComponent<IProps, IState> {
     ).subscribe(user => this.setState({ user }));
   }
 
-  toRoute = (route: Partial<IAppRoute>) => {
+  toRoute = ({ route }: IDrawerItem) => {
     this.props.drawer.close();
 
     if (route.path.startsWith('http')) {
@@ -105,23 +126,37 @@ class AppDrawer extends PureComponent<IProps, IState> {
     this.props.router.navigate(route.path);
   }
 
+  logoff = () => {
+    authService.logout().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe();
+  }
+
   render() {
-    const { routes, user } = this.state;
+    const { items, user, logoffItem } = this.state;
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <div className={classes.header}>
+      <Grid container wrap='nowrap' direction='column' className={classes.root}>
+        <Grid item xs={false} className={classes.header}>
           <img src={logoWhite} className={classes.logo} />
           <AppDrawerUser user={user} />
-        </div>
+        </Grid>
 
-        <List className={classes.list}>
-          {routes.map(route =>
-            <DrawerListItem key={route.path} user={user} route={route} onClick={this.toRoute} />
-          )}
-        </List>
-      </div>
+        <Grid item xs={true} className={classes.gridList}>
+          <List className={classes.list}>
+            {items.map(route =>
+              <DrawerListItem key={route.display} user={user} item={route} onClick={this.toRoute} />
+            )}
+          </List>
+        </Grid>
+
+        <Grid item xs={false}>
+          <Divider className={classes.divider} />
+          <DrawerListItem user={user} item={logoffItem} onClick={this.logoff} />
+        </Grid>
+      </Grid>
     );
   }
 }

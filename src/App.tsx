@@ -1,4 +1,5 @@
 import './assets/global.css';
+import './legacyLogin';
 import './version';
 import 'fieldConfig';
 

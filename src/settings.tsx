@@ -9,4 +9,4 @@ export const IS_DEVELOPMENT = ENV === 'development';
 export const TOAST_DEFAULT_TIMEOUT = 3000;
 export const TOAST_ERROR_TIMEOUT = 15000;
 
-export const BASEURL_V2 = (process.env.REACT_APP_BASEURL_V2 || 'https://app.nutror.com').trim();
+export const BASEURL_V2 = (process.env.REACT_APP_BASEURL_V2 || '').trim();
