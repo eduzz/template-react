@@ -30,9 +30,7 @@ export class TokenService {
   }
 
   public getTokens(): Observable<ITokens> {
-    return this.tokens$.asObservable().pipe(
-      rxjsOperators.tap(d => console.log(d))
-    );
+    return this.tokens$.asObservable();
   }
 
   public setTokens(tokens: Pick<ITokens, Exclude<keyof ITokens, 'legacyLogin'>>, legacyLogin: boolean = false): Observable<ITokens> {
