@@ -3,9 +3,9 @@ import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
+import redirectV2 from 'helpers/redirectV2';
 import { IUserToken } from 'interfaces/userToken';
-import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
-import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
+import AccountIcon from 'mdi-react/AccountIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
@@ -30,18 +30,23 @@ interface IProps {
   textSmall: {
     display: 'block',
     marginBottom: '2px'
+  },
+  gridUser: {
+    maxWidth: 'calc(100% - 50px)'
+  },
+  userName: {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    margin: '0'
   }
 }))
 export default class AppDrawerUser extends PureComponent<IProps> {
   drawer: IDrawerContext;
   actions = [{
-    text: 'Trocar senha',
-    icon: KeyVariantIcon,
-    handler: () => this.handleChangePassword()
-  }, {
-    text: 'Sair',
-    icon: ExitToAppIcon,
-    handler: () => this.handleLogout()
+    text: 'Meus Dados',
+    icon: AccountIcon,
+    handler: () => redirectV2('/user/dados')
   }];
 
   constructor(props: IProps) {
@@ -76,10 +81,10 @@ export default class AppDrawerUser extends PureComponent<IProps> {
         </DrawerContext.Consumer>
 
         <Grid container className={classes.root} wrap='nowrap'>
-          <Grid item xs={true} >
+          <Grid item xs={true} className={classes.gridUser}>
             <Typography variant='body2' color='inherit' className={classes.text}>
               <small className={classes.textSmall}>Bem vindo</small>
-              {user.firstName}
+              <p className={classes.userName}>{user.name}</p>
             </Typography>
           </Grid>
           <Grid item>

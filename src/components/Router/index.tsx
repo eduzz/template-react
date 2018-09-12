@@ -7,8 +7,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
-// tslint:disable:jsx-no-lambda
-
 interface IProps {
   routes: IAppRoute[];
 }
@@ -71,6 +69,9 @@ export default class AppRouter extends React.PureComponent<IProps> {
     window.history.pushState && window.history.pushState(null, null, url);
   }
 
+  renderRedirectToHome = () => <Redirect to='/' />;
+  renderReload = () => <div />;
+
   render(): JSX.Element {
     const { routes } = this.props;
 
@@ -79,8 +80,8 @@ export default class AppRouter extends React.PureComponent<IProps> {
         <BrowserRouter ref={ref => this.browserRouter = ref as any}>
           <Switch>
             {routes.map(router => this.renderRoute(router))}
-            <Route path='/reload' exact render={() => <div />} />
-            <Route render={() => <Redirect to='/' />} />
+            <Route path='/reload' exact render={this.renderReload} />
+            <Route render={this.renderRedirectToHome} />
           </Switch>
         </BrowserRouter>
       </RouterContext.Provider>
@@ -97,6 +98,7 @@ export default class AppRouter extends React.PureComponent<IProps> {
         key={route.path}
         exact={route.exact}
         path={path}
+        // tslint:disable-next-line:jsx-no-lambda
         render={props => route.allowAnonymous ?
           <route.component {...props}>
             <Switch>

@@ -29,7 +29,7 @@ export class LogService {
       return;
     }
 
-    this.bugsnag.setUser(user.id.toString(), user.fullName);
+    this.bugsnag.setUser(user.id.toString(), user.firstName);
   }
 
   public breadcrumb(message: string, category: string = 'manual', data: any = {}): void {

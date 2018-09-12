@@ -5,17 +5,16 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { darken } from '@material-ui/core/styles/colorManipulator';
+import { lighten } from '@material-ui/core/styles/colorManipulator';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { DeepReadonly } from 'helpers/immutable';
-import { IAppRoute } from 'interfaces/route';
 import { IUserToken } from 'interfaces/userToken';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 
-import { IAppRouteParsed } from './routeParser';
+import { IDrawerItem } from './routeParser';
 
 interface IState {
   expanded: boolean;
@@ -24,8 +23,8 @@ interface IState {
 
 interface IProps {
   user: DeepReadonly<IUserToken>;
-  route: IAppRouteParsed;
-  onClick: (route: IAppRoute) => void;
+  item: IDrawerItem;
+  onClick: (item: IDrawerItem) => void;
   classes?: any;
   router?: AppRouter;
 }
@@ -36,7 +35,11 @@ interface IProps {
     opacity: 0.8,
     '&.active': {
       opacity: 1,
-      background: darken(theme.palette.primary.main, 0.30)
+      background: lighten(theme.palette.primary.main, 0.10)
+    },
+    '&:hover:not(.active)': {
+      background: lighten(theme.palette.primary.main, 0.05),
+      opacity: 1,
     }
   },
   icon: {
@@ -53,13 +56,11 @@ interface IProps {
     boxShadow: 'none',
     margin: 0,
     '&.active': {
-      background: darken(theme.palette.primary.main, 0.10)
+      background: lighten(theme.palette.primary.main, 0.10)
     }
   },
   expandableTitle: {
-    '&:hover': {
-      background: darken(theme.palette.primary.main, 0.10)
-    }
+    paddingLeft: 24
   },
   expandableDetails: {
     padding: 0
@@ -81,23 +82,24 @@ class DrawerListItem extends PureComponent<IProps, IState> {
   componentDidMount() {
     this.props.router.observeChange().pipe(
       rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      rxjsOperators.bindComponent(this),
+      rxjsOperators.filter(() => !!this.props.item.route)
     ).subscribe(location => {
-      const { route } = this.props;
+      const { item } = this.props;
 
-      const active = route.exact ?
-        location.pathname === route.path :
-        location.pathname.startsWith(route.path);
+      const active = item.route.exact ?
+        location.pathname === item.route.path :
+        location.pathname.startsWith(item.route.path);
 
       this.setState({ active, expanded: active });
     });
   }
 
   handleClick = () => {
-    this.props.onClick(this.props.route);
+    this.props.onClick(this.props.item);
   }
 
-  handleSubClick = (route: IAppRouteParsed) => {
+  handleSubClick = (route: IDrawerItem) => {
     this.props.onClick(route);
   }
 
@@ -105,27 +107,15 @@ class DrawerListItem extends PureComponent<IProps, IState> {
     this.setState({ expanded });
   }
 
-  canAccess = () => {
-    const { route, user } = this.props;
-
-    if (route.allowAnonymous) return true;
-    if (!user) return false;
-    if (!route.roles) return true;
-
-    return user.canAccess(...route.roles);
-  }
-
   render() {
-    const { route } = this.props;
+    const { item } = this.props;
 
     return (
       <Fragment>
         {
-          this.canAccess() && (
-            !route.subRoutes.length ?
-              this.renderSingle() :
-              this.renderList()
-          )
+          !item.children || !item.children.length ?
+            this.renderSingle() :
+            this.renderList()
         }
       </Fragment>
     );
@@ -133,7 +123,7 @@ class DrawerListItem extends PureComponent<IProps, IState> {
 
   renderSingle = () => {
     const { active } = this.state;
-    const { route, classes } = this.props;
+    const { item, classes } = this.props;
 
     return (
       <ListItem
@@ -142,19 +132,19 @@ class DrawerListItem extends PureComponent<IProps, IState> {
         className={`${classes.item} ${active ? 'active' : ''}`}
         onClick={this.handleClick}
       >
-        {!!route.sideDrawer.icon &&
+        {!!item.icon &&
           <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
-            <route.sideDrawer.icon />
+            <item.icon />
           </ListItemIcon>
         }
-        <ListItemText primary={route.sideDrawer.display} classes={{ primary: classes.text }} />
+        <ListItemText primary={item.display} classes={{ primary: classes.text }} />
       </ListItem>
     );
   }
 
   renderList = (): React.ReactNode => {
     const { expanded } = this.state;
-    const { route, classes, user } = this.props;
+    const { item, classes, user, router } = this.props;
 
     return (
       <ExpansionPanel
@@ -162,18 +152,18 @@ class DrawerListItem extends PureComponent<IProps, IState> {
         onChange={this.handleExandedClick}
         className={`${classes.expandablePanel} ${expanded ? 'active' : ''}`}
       >
-        <ExpansionPanelSummary className={classes.expandableTitle} expandIcon={<ExpandMoreIcon className={classes.icon} />}>
-          {!!route.sideDrawer.icon &&
+        <ExpansionPanelSummary className={`${classes.item} ${classes.expandableTitle}`} expandIcon={<ExpandMoreIcon className={classes.icon} />}>
+          {!!item.icon &&
             <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
-              <route.sideDrawer.icon />
+              <item.icon />
             </ListItemIcon>
           }
-          <ListItemText primary={route.sideDrawer.display} classes={{ primary: classes.text }} />
+          <ListItemText primary={item.display} classes={{ primary: classes.text }} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.expandableDetails}>
           <List className={classes.innerList}>
-            {route.subRoutes.map(sub =>
-              <DrawerListItem key={sub.path} user={user} route={sub} onClick={this.handleSubClick} />
+            {item.children.map(sub =>
+              <DrawerListItem key={sub.display} user={user} item={sub} router={router} onClick={this.handleSubClick} />
             )}
           </List>
         </ExpansionPanelDetails>
