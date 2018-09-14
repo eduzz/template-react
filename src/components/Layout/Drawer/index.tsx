@@ -13,6 +13,7 @@ import AccountGroupIcon from 'mdi-react/AccountGroupIcon';
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
 import BullhornIcon from 'mdi-react/BullhornIcon';
 import CommentMultipleIcon from 'mdi-react/CommentMultipleIcon';
+import EyeIcon from 'mdi-react/EyeIcon';
 import HelpCircleIcon from 'mdi-react/HelpCircleIcon';
 import PowerStandbyIcon from 'mdi-react/PowerStandbyIcon';
 import SettingsIcon from 'mdi-react/SettingsIcon';
@@ -30,6 +31,7 @@ interface IState {
   user?: DeepReadonly<IUserToken>;
   items: IDrawerItem[];
   logoffItem: IDrawerItem;
+  leanerItem: IDrawerItem;
 }
 
 interface IProps {
@@ -81,7 +83,8 @@ class AppDrawer extends PureComponent<IProps, IState> {
     super(props);
     this.state = {
       items: [],
-      logoffItem: { display: 'Sair', icon: PowerStandbyIcon }
+      logoffItem: { display: 'Sair', icon: PowerStandbyIcon },
+      leanerItem: { display: 'Visualizar como aluno', icon: EyeIcon }
     };
   }
 
@@ -120,6 +123,10 @@ class AppDrawer extends PureComponent<IProps, IState> {
     this.props.router.navigate(route.path);
   }
 
+  viewLeaner = () => {
+    window.open(getUrlV2('/cursos?interface=1'));
+  }
+
   logoff = () => {
     authService.logout().pipe(
       rxjsOperators.logError(),
@@ -128,7 +135,7 @@ class AppDrawer extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { items, user, logoffItem } = this.state;
+    const { items, user, logoffItem, leanerItem } = this.state;
     const { classes } = this.props;
 
     return (
@@ -136,6 +143,10 @@ class AppDrawer extends PureComponent<IProps, IState> {
         <Grid item xs={false} className={classes.header}>
           <img src={logoWhite} className={classes.logo} />
           <AppDrawerUser user={user} />
+        </Grid>
+
+        <Grid item xs={false}>
+          <DrawerListItem active={true} user={user} item={leanerItem} onClick={this.viewLeaner} />
         </Grid>
 
         <Grid item xs={true} className={classes.gridList}>

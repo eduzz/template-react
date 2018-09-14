@@ -27,6 +27,7 @@ interface IProps {
   onClick: (item: IDrawerItem) => void;
   classes?: any;
   router?: AppRouter;
+  active?: boolean;
 }
 
 @WithStyles(theme => ({
@@ -76,7 +77,7 @@ interface IProps {
 class DrawerListItem extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { expanded: false, active: false };
+    this.state = { expanded: false, active: this.props.active || false };
   }
 
   componentDidMount() {
@@ -91,7 +92,7 @@ class DrawerListItem extends PureComponent<IProps, IState> {
         location.pathname === item.route.path :
         location.pathname.startsWith(item.route.path);
 
-      this.setState({ active, expanded: active });
+      this.setState({ active, expanded: active || this.props.active });
     });
   }
 
