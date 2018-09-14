@@ -10,9 +10,10 @@ import { getUrlV2 } from 'helpers/redirectV2';
 import { IAppRoute } from 'interfaces/route';
 import { IUserToken } from 'interfaces/userToken';
 import AccountGroupIcon from 'mdi-react/AccountGroupIcon';
+import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
 import BullhornIcon from 'mdi-react/BullhornIcon';
 import CommentMultipleIcon from 'mdi-react/CommentMultipleIcon';
-import HelpBoxIcon from 'mdi-react/HelpBoxIcon';
+import HelpCircleIcon from 'mdi-react/HelpCircleIcon';
 import PowerStandbyIcon from 'mdi-react/PowerStandbyIcon';
 import SettingsIcon from 'mdi-react/SettingsIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
@@ -88,22 +89,15 @@ class AppDrawer extends PureComponent<IProps, IState> {
     return {
       ...currentState,
       items: [
-        {
-          display: 'Cursos', icon: BullhornIcon, route: { path: getUrlV2('/'), },
-          children: [
-            { display: 'Meus Cursos', route: { path: getUrlV2('/cursos') } },
-            { display: 'Criar um curso', route: { path: getUrlV2('/cursos') } },
-            { display: 'Duplicar um curso', route: { path: getUrlV2('/cursos') } },
-            { display: 'Criar categoria', route: { path: getUrlV2('/cursos') } }
-          ]
-        },
+        { display: 'Cursos', icon: BullhornIcon, route: { path: getUrlV2('/'), } },
         { display: 'Pacotes', icon: ViewDashboardIcon, route: { path: getUrlV2('/user/pacotes') } },
         { display: 'Comentários', icon: CommentMultipleIcon, route: { path: getUrlV2('/comentarios') } },
         { display: 'Alunos', icon: AccountGroupIcon, route: { path: getUrlV2('/alunos') } },
         { display: 'Customização', icon: WaterIcon, route: { path: getUrlV2('/user/customizacao') } },
         { display: 'Controle de Acesso', icon: SettingsIcon, route: { path: getUrlV2('/grupos') } },
-        { display: 'Ajuda', icon: HelpBoxIcon, route: { path: getUrlV2('/ajuda') } },
         ...routeParser(props.routes),
+        { display: 'Novidades', icon: AlertCircleIcon, route: { path: getUrlV2('/newzz') } },
+        { display: 'Ajuda', icon: HelpCircleIcon, route: { path: getUrlV2('/ajuda') } },
       ]
     };
   }
