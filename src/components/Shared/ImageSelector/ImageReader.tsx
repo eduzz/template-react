@@ -1,6 +1,7 @@
-import { Button, CircularProgress } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import IconMessage from 'components/Shared/IconMessage';
-import Snackbar from 'components/Shared/Snackbar';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
@@ -94,7 +95,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
     const regexp = new RegExp(`.(${this.extensions.join('|')})$`, 'gi');
 
     if (!regexp.test(file.name)) {
-      Snackbar.show(`Apenas imagens: ${this.extensions.join(', ')}`);
+      Toast.show(`Apenas imagens: ${this.extensions.join(', ')}`);
       return;
     }
 
@@ -102,7 +103,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
 
     reader.onload = (e: any) => this.getImageDimensions(e.target.result);
     reader.onerror = () => {
-      Snackbar.show('Não conseguimos carregar a imagem');
+      Toast.show('Não conseguimos carregar a imagem');
       this.setState({ loading: false });
     };
 
@@ -120,7 +121,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
     };
 
     image.onerror = () => {
-      Snackbar.show('Não conseguimos carregar a imagem');
+      Toast.show('Não conseguimos carregar a imagem');
       this.setState({ loading: false });
     };
 

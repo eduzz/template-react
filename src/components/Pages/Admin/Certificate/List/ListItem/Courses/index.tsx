@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import IconMessage from 'components/Shared/IconMessage';
 import { WithStyles } from 'decorators/withStyles';

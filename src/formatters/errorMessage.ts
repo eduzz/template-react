@@ -8,8 +8,13 @@ export function errorMessageFormatter(err: any): string {
     400: 'Dados inválidos',
     401: 'Sem permissão de acesso',
     403: 'Sem permissão de acesso',
-    422: 'Dados inválidos'
+    422: 'Dados inválidos',
+    411: 'Dados inválidos',
   };
+
+  if (err.reponse && err.response.data && err.response.data && err.response.data.details) {
+    return err.response.data.details;
+  }
 
   switch ((err || {}).message) {
     case 'no-internet':
@@ -20,7 +25,11 @@ export function errorMessageFormatter(err: any): string {
         return 'Não conseguimos se comunicar com o servidor';
       }
 
-      return status[err.status] || 'Algo deu errado...';
+      if (err.data && err.data.details) {
+        return err.data.details;
+      }
+
+      return status[err.status] || 'Algo deu errado no servidor...';
     default:
       return 'Algo deu errado...';
   }

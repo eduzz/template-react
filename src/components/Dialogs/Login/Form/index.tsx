@@ -1,8 +1,11 @@
-import { Button, CardActions, CardContent, CircularProgress } from '@material-ui/core';
-import ValidationContext from '@react-form-fields/core/components/ValidationContext';
+import Button from '@material-ui/core/Button';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { ValidationContext } from '@react-form-fields/material-ui';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import Snackbar from 'components/Shared/Snackbar';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import React, { FormEvent, MouseEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -50,7 +53,7 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
       this.setState({ loading: false });
       this.resetForm();
     }, err => {
-      Snackbar.error(err);
+      Toast.error(err);
       this.setState({ loading: false });
     });
   }

@@ -1,8 +1,10 @@
-import { CircularProgress, Typography } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
 import ErrorMessageIcon from 'components/Shared/ErrorMessageIcon';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificateCourse } from 'interfaces/models/certificate';
 import CheckIcon from 'mdi-react/CheckIcon';
@@ -11,8 +13,6 @@ import TrashIcon from 'mdi-react/TrashIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
-
-import Snackbar from '../../../../../Shared/Snackbar';
 
 interface IState {
   loading: boolean;
@@ -79,14 +79,14 @@ export class AddCourseItemDialog extends PureComponent<IProps, IState> {
       // rxjsOperators.bindComponent(this) removi de proposito
     ).subscribe(() => {
       if (this.unmounted) {
-        Snackbar.show(`${course.title} adicionado`);
+        Toast.show(`${course.title} adicionado`);
         return;
       }
 
       this.setState({ loading: false, has_selected: !has_selected });
     }, error => {
       if (this.unmounted) {
-        Snackbar.error(`Não adicionar o curso ${course.title}`);
+        Toast.error(`Não adicionar o curso ${course.title}`);
         return;
       }
 

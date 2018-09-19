@@ -1,18 +1,70 @@
 {
   "extends": "tslint-react",
   "rules": {
+    "adjacent-overload-signatures": true,
+    "import-blacklist": [
+      true,
+      "@material-ui/core",
+      "mdi-react",
+      "lodash"
+    ],
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "interface-name": [
+      true,
+      "always-prefix"
+    ],
     "jsx-boolean-value": [
       "never"
     ],
     "jsx-no-multiline-js": false,
-    "adjacent-overload-signatures": true,
+    "linebreak-style": [
+      false,
+      "LF"
+    ],
+    "max-file-line-count": [
+      true,
+      300
+    ],
+    "max-line-length": [
+      true,
+      150
+    ],
+    "no-consecutive-blank-lines": [
+      true
+    ],
+    "no-default-export": false,
+    "no-duplicate-variable": true,
+    "no-extra-semi": [
+      true
+    ],
     "no-namespace": [
       true,
       "allow-declarations"
     ],
     "no-reference": true,
+    "no-require-imports": false,
+    "no-trailing-whitespace": true,
+    "no-var-keyword": [
+      true
+    ],
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
+    ],
+    "object-literal-shorthand": true,
     "only-arrow-functions": [
       false
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "semicolon": [
+      true,
+      "always"
     ],
     "typedef-whitespace": [
       true,
@@ -30,52 +82,6 @@
         "property-declaration": "onespace",
         "variable-declaration": "onespace"
       }
-    ],
-    "interface-name": [
-      true,
-      "always-prefix"
-    ],
-    "quotemark": [
-      true,
-      "single"
-    ],
-    "no-duplicate-variable": true,
-    "indent": [
-      true,
-      "spaces"
-    ],
-    "linebreak-style": [
-      false,
-      "LF"
-    ],
-    "max-file-line-count": [
-      true,
-      300
-    ],
-    "max-line-length": [
-      true,
-      150
-    ],
-    "no-default-export": false,
-    "no-require-imports": false,
-    "no-trailing-whitespace": true,
-    "semicolon": [
-      true,
-      "always"
-    ],
-    "no-consecutive-blank-lines": [
-      true
-    ],
-    "object-literal-key-quotes": [
-      true,
-      "as-needed"
-    ],
-    "object-literal-shorthand": true,
-    "no-extra-semi": [
-      true
-    ],
-    "no-var-keyword": [
-      true
     ]
   },
   "rulesDirectory": [

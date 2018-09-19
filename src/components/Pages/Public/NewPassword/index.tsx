@@ -1,6 +1,11 @@
-import { Button, Card, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
-import ValidationContext from '@react-form-fields/core/components/ValidationContext';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import AppRouter, { RouterContext } from 'components/Router';
@@ -91,10 +96,10 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
     //   rxjsOperators.logError(),
     //   rxjsOperators.bindComponent(this)
     // ).subscribe(() => {
-    //   Snackbar.show('Senha alterada com sucesso!');
+    //   Toast.show('Senha alterada com sucesso!');
     //   this.props.router().navigate('/');
     // }, err => {
-    //   Snackbar.error(err);
+    //   Toast.error(err);
     //   this.setState({ loading: false });
     // });
   }

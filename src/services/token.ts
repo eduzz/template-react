@@ -1,9 +1,11 @@
+import redirectV2 from 'helpers/redirectV2';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as rxjsOperators from 'rxjs-operators';
 
 import storageService from './storage';
 
 interface ITokens {
+  legacyLogin: boolean;
   refresh_token: string;
   token: string;
 }
@@ -15,6 +17,7 @@ export class TokenService {
     this.tokens$ = new ReplaySubject(1);
 
     storageService.get('authToken').pipe(
+      rxjsOperators.first(),
       rxjsOperators.logError()
     ).subscribe(token => this.tokens$.next(token));
   }
@@ -30,21 +33,34 @@ export class TokenService {
     return this.tokens$.asObservable();
   }
 
-  public setTokens(tokens: ITokens): Observable<ITokens> {
-    return storageService.set('authToken', tokens).pipe(
-      rxjsOperators.tap(() => this.tokens$.next(tokens))
+  public setTokens(tokens: Pick<ITokens, Exclude<keyof ITokens, 'legacyLogin'>>, legacyLogin: boolean = false): Observable<ITokens> {
+    return storageService.set<ITokens>('authToken', { legacyLogin, ...tokens }).pipe(
+      rxjsOperators.tap(tokens => this.tokens$.next(tokens))
     );
   }
 
   public setAccessToken(token: string): Observable<ITokens> {
     return this.tokens$.pipe(
-      rxjsOperators.switchMap(({ refresh_token }) => {
-        return storageService.set<ITokens>('authToken', { token, refresh_token });
+      rxjsOperators.switchMap(({ legacyLogin, refresh_token }) => {
+        return storageService.set<ITokens>('authToken', { legacyLogin, token, refresh_token });
       })
     );
   }
   public clearToken(): Observable<void> {
-    return this.setTokens(null).pipe(rxjsOperators.map(() => null));
+    let legacyLogin = false;
+
+    return this.tokens$.pipe(
+      rxjsOperators.first(),
+      rxjsOperators.filter(tokens => !!tokens),
+      rxjsOperators.tap(tokens => legacyLogin = tokens.legacyLogin),
+      rxjsOperators.switchMap(() => storageService.set('authToken', null)),
+      rxjsOperators.filter(() => {
+        if (legacyLogin) redirectV2('/user/logout');
+        return !legacyLogin;
+      }),
+      rxjsOperators.tap(() => this.tokens$.next(null)),
+      rxjsOperators.map(() => null)
+    );
   }
 
   public decode<T>(token: string, allowExpirated: boolean = false): T {

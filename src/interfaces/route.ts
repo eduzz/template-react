@@ -1,4 +1,4 @@
-import { MdiReactIconComponentType } from 'mdi-react';
+import MoreHorizIcon from 'mdi-react/MoreHorizIcon';
 import { ComponentType } from 'react';
 
 export interface IAppRoute {
@@ -7,7 +7,7 @@ export interface IAppRoute {
   component: ComponentType & { routes?: IAppRoute[] };
   allowAnonymous?: boolean;
   sideDrawer?: {
-    icon?: MdiReactIconComponentType;
+    icon?: typeof MoreHorizIcon;
     display: string;
     order?: number;
   };

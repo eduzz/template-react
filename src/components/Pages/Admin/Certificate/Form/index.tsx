@@ -1,5 +1,6 @@
-import { CardContent, CircularProgress } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Toolbar from 'components/Layout/Toolbar';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificate } from 'interfaces/models/certificate';

@@ -1,5 +1,9 @@
-import { Button, CardActions, CardContent, LinearProgress, Typography } from '@material-ui/core';
-import ValidationContext from '@react-form-fields/core/components/ValidationContext';
+import Button from '@material-ui/core/Button';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import { ValidationContext } from '@react-form-fields/material-ui';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
@@ -47,9 +51,9 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     //   this.resetForm();
     //   this.props.onComplete();
 
-    //   Snackbar.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
+    //   Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
     // }, err => {
-    //   Snackbar.error(err);
+    //   Toast.error(err);
     //   this.setState({ loading: false });
     // });
   }

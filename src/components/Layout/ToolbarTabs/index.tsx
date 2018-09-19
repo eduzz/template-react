@@ -1,4 +1,5 @@
-import { AppBar, MuiThemeProvider } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';

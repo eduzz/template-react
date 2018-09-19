@@ -1,4 +1,8 @@
-import { AppBar, IconButton, MuiThemeProvider, Toolbar as CoreToolbar, Typography } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import CoreToolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';

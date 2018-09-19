@@ -1,15 +1,17 @@
 import './assets/global.css';
+import './legacyLogin';
 import './version';
 import 'fieldConfig';
 
-import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { createGenerateClassName } from '@material-ui/core/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
 import AppRouter from 'components/Router';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
-import Snackbar from 'components/Shared/Snackbar';
+import Toast from 'components/Shared/Toast';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
 import baseRoutes from 'routes';
@@ -41,7 +43,7 @@ class App extends React.PureComponent {
           <Loader ref={ref => this.loader = ref} />
 
           <Alert.Global />
-          <Snackbar.Global />
+          <Toast.Global />
 
           <AppRouter routes={baseRoutes} />
         </MuiThemeProvider>

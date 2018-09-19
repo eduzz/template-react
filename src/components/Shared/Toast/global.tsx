@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import Snackbar from '.';
+import Toast from '.';
 
 interface IState {
   opened: boolean;
@@ -10,9 +10,9 @@ interface IState {
 }
 
 let lastPromise = Promise.resolve();
-let globalSnackbar: (message: string, error: any, timeout?: number) => Promise<void>;
+let globalToast: (message: string, error: any, timeout?: number) => Promise<void>;
 
-export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
+export default class ToastGlobalProvider extends PureComponent<{}, IState> {
   promiseResolve: () => void;
 
   constructor(props: {}) {
@@ -21,18 +21,18 @@ export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
   }
 
   static async show(message: string, error: any, timeout?: number): Promise<void> {
-    if (!globalSnackbar) throw new Error('Please, initialize an Snackbar.Global before');
+    if (!globalToast) throw new Error('Please, initialize an Toast.Global before');
 
-    //prevent an Snackbar to overhide another
+    //prevent an Toast to overhide another
     return lastPromise = lastPromise.then(async () => {
       await new Promise(resolve => setTimeout(() => resolve(), 500));
-      return globalSnackbar(message, error, timeout);
+      return globalToast(message, error, timeout);
     });
   }
 
   componentDidMount() {
-    if (globalSnackbar) throw new Error('Only one Snackbar.Global can be initialized');
-    globalSnackbar = this.show;
+    if (globalToast) throw new Error('Only one Toast.Global can be initialized');
+    globalToast = this.show;
   }
 
   show = (message: string, error: any, timeout?: number): Promise<void> => {
@@ -53,7 +53,7 @@ export default class SnackbarGlobalProvider extends PureComponent<{}, IState> {
     const { opened, message, error, timeout } = this.state;
 
     return (
-      <Snackbar
+      <Toast
         opened={opened}
         message={message}
         error={error}

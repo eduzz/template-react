@@ -1,13 +1,14 @@
-import { Button, Tooltip } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 import { WithStyles } from 'decorators/withStyles';
-import { MdiReactIconComponentType } from 'mdi-react';
+import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import React, { PureComponent } from 'react';
 
 interface IProps {
   classes?: any;
   hasTabs?: boolean;
   actions: {
-    icon: MdiReactIconComponentType,
+    icon: typeof MoreVertIcon,
     tooltip?: string;
     onClick: () => void;
   }[];
