@@ -44,6 +44,42 @@ interface IState {
   },
 }))
 export default class Upsell extends React.PureComponent<IProps, IState> {
+  private default = [
+    {
+      title: 'A Virada da Chave',
+      children: [
+        {
+          title: 'Modulo 1',
+          children: [
+            {
+              title: 'Aula 1',
+            },
+            {
+              title: 'Aula 2',
+            },
+            {
+              title: 'Aula 3',
+            },
+          ]
+        },
+        {
+          title: 'Modulo 2',
+          children: [
+            {
+              title: 'Aula 1',
+            },
+            {
+              title: 'Aula 2',
+            },
+            {
+              title: 'Aula 3',
+            },
+          ]
+        },
+      ],
+    },
+  ];
+
   handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -77,7 +113,10 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
                       Onde você quer aplicar?
                     </label>
                     <Paper className={classes.treeViewContainer}>
-                      <TreeView onChange={this.handleChange} />
+                      <TreeView
+                        defaultValue={this.default}
+                        onChange={this.handleChange}
+                      />
                     </Paper>
                   </Grid>
                 </Grid>
