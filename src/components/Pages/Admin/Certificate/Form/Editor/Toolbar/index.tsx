@@ -97,7 +97,7 @@ class Toolbar extends React.PureComponent<IProps> {
         </Grid>
         <Grid item className={classes.link}>
           <Typography>
-            Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>click aqui</a>
+            Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
           </Typography>
         </Grid>
       </Grid >
