@@ -91,7 +91,9 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
                     <Form onChange={this.handleChange} />
                   </Grid>
                   <Grid item xs={12} className={classes.section}>
-                    <UpsellConfig />
+                    <UpsellConfig
+                      onChange={this.handleChange}
+                    />
                   </Grid>
                   <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
                     <Grid item xs={12} md={9}>

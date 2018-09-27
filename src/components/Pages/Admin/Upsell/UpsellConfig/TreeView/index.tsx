@@ -2,6 +2,8 @@ import React from 'react';
 import List from '@material-ui/core/List';
 import { WithStyles } from 'decorators/withStyles';
 import CourseItem from './CourseItem';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 interface IProps {
   classes?: any;
@@ -21,6 +23,11 @@ interface IState {
   },
   nested: {
     paddingLeft: theme.spacing.unit * 4,
+  },
+  noCourses: {
+    display: 'flex',
+    justifyContent: 'center',
+    padding: 0,
   },
 }))
 export default class TreeView extends React.PureComponent<IProps, IState> {
@@ -49,17 +56,27 @@ export default class TreeView extends React.PureComponent<IProps, IState> {
   }
 
   render() {
+    const { classes } = this.props;
     const { courses } = this.state;
 
     return (
       <List component='nav'>
-        {courses.map((course: any, index: number) =>
-          <CourseItem
-            key={index}
-            title={course.title}
-            children={course.children}
-          />
-        )}
+        {courses.length ?
+          courses.map((course: any, index: number) =>
+            <CourseItem
+              key={index}
+              title={course.title}
+              children={course.children}
+            />
+          )
+          :
+          <ListItem>
+            <ListItemText
+              className={classes.noCourses}
+              primary='Nenhum curso adicionado!'
+            />
+          </ListItem>
+        }
       </List>
     );
   }
