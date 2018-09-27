@@ -8,6 +8,12 @@ class UpsellService {
       rxjsOperators.map(response => response.data),
     );
   }
+
+  public getCourse(courseId: number): any {
+    return apiService.get('/producer/crosssell/gettreecourse/' + courseId).pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
 }
 
 const upsellService = new UpsellService();

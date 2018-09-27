@@ -5,10 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import { WithStyles } from 'decorators/withStyles';
 import Type from './Type';
 import Form from './Form';
-import TreeView from './TreeView';
 import ImageUploader from './ImageUploader';
 import Actions from './Actions';
-import CourseSelect from './CourseSelect';
+import UpsellConfig from './UpsellConfig';
 
 interface IProps {
   classes?: any;
@@ -32,17 +31,6 @@ interface IState {
   section: {
     paddingBottom: 24,
   },
-  treeViewLabel: {
-    fontSize: 18,
-  },
-  treeViewContainer: {
-    padding: 16,
-    marginTop: 16,
-  },
-  treeViewHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
   actions: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -60,42 +48,6 @@ interface IState {
   },
 }))
 export default class Upsell extends React.PureComponent<IProps, IState> {
-  private default = [
-    {
-      title: 'A Virada da Chave',
-      children: [
-        {
-          title: 'Modulo 1',
-          children: [
-            {
-              title: 'Aula 1',
-            },
-            {
-              title: 'Aula 2',
-            },
-            {
-              title: 'Aula 3',
-            },
-          ]
-        },
-        {
-          title: 'Modulo 2',
-          children: [
-            {
-              title: 'Aula 1',
-            },
-            {
-              title: 'Aula 2',
-            },
-            {
-              title: 'Aula 3',
-            },
-          ]
-        },
-      ],
-    },
-  ];
-
   constructor(props: IProps) {
     super(props);
 
@@ -139,18 +91,7 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
                     <Form onChange={this.handleChange} />
                   </Grid>
                   <Grid item xs={12} className={classes.section}>
-                    <div className={classes.treeViewHeader}>
-                      <label className={classes.treeViewLabel}>
-                        Onde você quer aplicar?
-                      </label>
-                      <CourseSelect />
-                    </div>
-                    <Paper className={classes.treeViewContainer}>
-                      <TreeView
-                        defaultValue={this.default}
-                        onChange={this.handleChange}
-                      />
-                    </Paper>
+                    <UpsellConfig />
                   </Grid>
                   <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
                     <Grid item xs={12} md={9}>

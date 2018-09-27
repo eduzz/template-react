@@ -11,6 +11,7 @@ interface IProps {
 
 interface IState {
   open: boolean;
+  courses: any;
 }
 
 @WithStyles(theme => ({
@@ -28,7 +29,19 @@ export default class TreeView extends React.PureComponent<IProps, IState> {
 
     this.state = {
       open: true,
+      courses: this.props.defaultValue || [],
     };
+  }
+
+  pushCourse = (course: any) => {
+    this.setState(state => ({
+      courses: [
+        ...state.courses,
+        {
+          ...course,
+        },
+      ],
+    }));
   }
 
   handleClick = () => {
@@ -36,11 +49,11 @@ export default class TreeView extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { defaultValue } = this.props;
+    const { courses } = this.state;
 
     return (
       <List component='nav'>
-        {defaultValue.map((course: any, index: number) =>
+        {courses.map((course: any, index: number) =>
           <CourseItem
             key={index}
             title={course.title}

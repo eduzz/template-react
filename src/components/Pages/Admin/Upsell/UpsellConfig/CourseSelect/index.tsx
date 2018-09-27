@@ -10,11 +10,12 @@ import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
+  onAdd?: any;
 }
 
 interface IState {
   courses: any;
-  selectedCourse: string;
+  selectedCourseId: number;
 }
 
 @WithStyles(theme => ({
@@ -37,7 +38,7 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      selectedCourse: '',
+      selectedCourseId: 0,
       courses: [],
     };
   }
@@ -47,7 +48,6 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe((courses: any) => {
-      console.log(courses);
       this.setState({
         courses,
       });
@@ -56,23 +56,32 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
 
   handleChange = (e: any) => {
     this.setState({
-      selectedCourse: e.target.value,
+      selectedCourseId: e.target.value,
+    });
+  }
+
+  handleClick = () => {
+    upsellService.getCourse(this.state.selectedCourseId).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((course: any) => {
+      this.props.onAdd && this.props.onAdd(course);
     });
   }
 
   render() {
     const { classes } = this.props;
-    const { courses, selectedCourse } = this.state;
+    const { courses, selectedCourseId } = this.state;
 
     return (
       <FormControl className={classes.formControl}>
         <Select
           className={classes.select}
-          value={selectedCourse}
+          value={selectedCourseId}
           onChange={this.handleChange}
           displayEmpty
         >
-          <MenuItem value=''>Selecione um Curso</MenuItem>
+          <MenuItem value={0}>Selecione um Curso</MenuItem>
           {courses.map((course: any) =>
             <MenuItem
               key={course.id}
@@ -82,7 +91,11 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
             </MenuItem>
           )}
         </Select>
-        <IconButton color='secondary' className={classes.button}>
+        <IconButton
+          className={classes.button}
+          color='secondary'
+          onClick={this.handleClick}
+        >
           <AddIcon />
         </IconButton>
       </FormControl>
