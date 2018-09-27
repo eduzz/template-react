@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import ImageSelector from 'components/Shared/ImageSelector';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 
 interface IProps {
   classes?: any;
@@ -108,14 +108,14 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
             Imagem formato jpg ou png
           </label>
         </div>
-        <Button
+        {/* <Button
           className={classes.button}
           variant='contained'
           color='primary'
           onClick={this.handleClick}
         >
           Selecionar
-        </Button>
+        </Button> */}
       </Fragment>
     );
   }

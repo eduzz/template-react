@@ -4,7 +4,6 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import ImageUploader from './ImageUploader';
 
 interface IProps {
   classes?: any;
@@ -74,13 +73,13 @@ export default class Form extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, onChange } = this.props;
+    const { classes } = this.props;
     const { title, description } = this.state;
 
     return (
       <Paper className={classes.root}>
         <Grid container spacing={32}>
-          <Grid item xs={12} lg={5}>
+          <Grid item xs={12}>
             <FormControl fullWidth>
               <label className={classes.titleLabel}>
                 Título
@@ -111,29 +110,6 @@ export default class Form extends React.PureComponent<IProps, IState> {
                 }}
               />
             </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6} lg={5}>
-            <label className={classes.imageLabel}>
-              Selecione as Imagens
-            </label>
-            <div className={classes.highlightImageContainer}>
-              <ImageUploader
-                width={1840}
-                height={460}
-                label='highlightImage'
-                onChange={onChange}
-              />
-            </div>
-          </Grid>
-          <Grid item>
-            <div className={classes.imageContainer}>
-              <ImageUploader
-                width={250}
-                height={250}
-                label='image'
-                onChange={onChange}
-              />
-            </div>
           </Grid>
         </Grid>
       </Paper>

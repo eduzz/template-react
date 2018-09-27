@@ -3,10 +3,12 @@ import Toolbar from 'components/Layout/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { WithStyles } from 'decorators/withStyles';
-import Button from '@material-ui/core/Button';
 import Type from './Type';
 import Form from './Form';
 import TreeView from './TreeView';
+import ImageUploader from './ImageUploader';
+import Actions from './Actions';
+import CourseSelect from './CourseSelect';
 
 interface IProps {
   classes?: any;
@@ -14,6 +16,12 @@ interface IProps {
 
 interface IState {
   type: any;
+  published: boolean;
+  featured: boolean;
+  title: string;
+  description: string;
+  image: string;
+  highlightImage: string;
 }
 
 @WithStyles(theme => ({
@@ -31,16 +39,24 @@ interface IState {
     padding: 16,
     marginTop: 16,
   },
+  treeViewHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
   actions: {
     display: 'flex',
     justifyContent: 'flex-end',
     width: '100%',
   },
-  button: {
-    borderRadius: 4,
-    backgroundColor: '#009358',
-    height: 40,
-    width: 120,
+  imageUploadArea: {
+    display: 'flex',
+  },
+  imageContainer: {
+    paddingTop: 27,
+  },
+  highlightImageContainer: {
+    paddingTop: 8,
+    marginRight: 16,
   },
 }))
 export default class Upsell extends React.PureComponent<IProps, IState> {
@@ -80,6 +96,20 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
     },
   ];
 
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      type: 'nutror',
+      published: true,
+      featured: false,
+      title: '',
+      description: '',
+      image: '',
+      highlightImage: '',
+    };
+  }
+
   handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -109,9 +139,12 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
                     <Form onChange={this.handleChange} />
                   </Grid>
                   <Grid item xs={12} className={classes.section}>
-                    <label className={classes.treeViewLabel}>
-                      Onde você quer aplicar?
-                    </label>
+                    <div className={classes.treeViewHeader}>
+                      <label className={classes.treeViewLabel}>
+                        Onde você quer aplicar?
+                      </label>
+                      <CourseSelect />
+                    </div>
                     <Paper className={classes.treeViewContainer}>
                       <TreeView
                         defaultValue={this.default}
@@ -119,16 +152,36 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
                       />
                     </Paper>
                   </Grid>
+                  <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
+                    <Grid item xs={12} md={9}>
+                      <label className={classes.imageLabel}>
+                        Selecione as Imagens
+                      </label>
+                      <div className={classes.highlightImageContainer}>
+                        <ImageUploader
+                          width={1840}
+                          height={460}
+                          label='highlightImage'
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </Grid>
+                    <Grid item md={3}>
+                      <div className={classes.imageContainer}>
+                        <ImageUploader
+                          width={250}
+                          height={250}
+                          label='image'
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <div className={classes.actions}>
-                  <Button
-                    className={classes.button}
-                    variant='contained'
-                    color='primary'
-                    type='submit'
-                  >
-                    Salvar
-                  </Button>
+                  <Actions
+                    onChange={this.handleChange}
+                  />
                 </div>
               </form>
             </Paper>

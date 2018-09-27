@@ -60,6 +60,10 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
           <List component='div' disablePadding>
             <ListItem>
               <Checkbox />
+              <ListItemText primary='Banner de oferta na vitrine' />
+            </ListItem>
+            <ListItem>
+              <Checkbox />
               <ListItemText primary='Listagem de módulos e aulas' />
             </ListItem>
             <ListItem>

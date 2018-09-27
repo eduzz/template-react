@@ -3,8 +3,6 @@ import { WithStyles } from 'decorators/withStyles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 
 interface IProps {
   classes?: any;
@@ -13,7 +11,6 @@ interface IProps {
 
 interface IState {
   value: any;
-  featured: boolean;
 }
 
 @WithStyles(theme => ({
@@ -38,7 +35,6 @@ export default class Type extends React.PureComponent<IProps, IState> {
 
     this.state = {
       value: 'nutror',
-      featured: false,
     };
   }
 
@@ -54,19 +50,9 @@ export default class Type extends React.PureComponent<IProps, IState> {
     this.props.onChange && this.props.onChange({ type: e.target.value });
   }
 
-  toggleFeatured = () => {
-    const featured = !this.state.featured;
-
-    this.setState(state => ({
-      featured,
-    }));
-
-    this.props.onChange && this.props.onChange({ featured });
-  }
-
   render() {
     const { classes } = this.props;
-    const { value, featured } = this.state;
+    const { value } = this.state;
 
     return (
       <div className={classes.root}>
@@ -83,15 +69,6 @@ export default class Type extends React.PureComponent<IProps, IState> {
               <MenuItem value='nutror'>Nutror</MenuItem>
               <MenuItem value='myeduzz'>MyEduzz</MenuItem>
             </Select>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={featured}
-                  onClick={this.toggleFeatured}
-                />
-              }
-              label='Destaque'
-            />
           </div>
         </FormControl>
       </div>
