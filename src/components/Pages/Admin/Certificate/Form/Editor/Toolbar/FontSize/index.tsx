@@ -2,7 +2,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { WithStyles } from 'decorators/withStyles';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { DEFAULT_FONT_SIZE } from '../../config';
 
@@ -18,8 +18,8 @@ interface IProps {
   },
 }))
 export default class FontSize extends React.PureComponent<IProps> {
-  handleChange = (e: any) => {
-    this.props.onChange({ fontSize: e.target.value });
+  handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    this.props.onChange({ fontSize: Number(e.target.value) });
   }
 
   render() {

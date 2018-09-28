@@ -2,7 +2,7 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { WithStyles } from 'decorators/withStyles';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { PLACEHOLDERS } from '../../config';
 
@@ -17,7 +17,7 @@ interface IProps {
   },
 }))
 export default class Placeholders extends React.PureComponent<IProps> {
-  handleChange = (e: any) => {
+  handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange(e.target.value);
   }
 

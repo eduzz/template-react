@@ -1,5 +1,5 @@
 import TextField from '@material-ui/core/TextField';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 interface IProps {
   value: string;
@@ -7,7 +7,7 @@ interface IProps {
 }
 
 export default class TextEdit extends React.PureComponent<IProps> {
-  handleChange = (e: any) => {
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.onChange({ text: e.target.value });
   }
 

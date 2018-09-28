@@ -99,7 +99,7 @@ class Toolbar extends React.PureComponent<IProps> {
   }
 }
 
-export default React.forwardRef((props: IProps, ref: any) => (
+export default React.forwardRef((props, ref) => (
   <EditorContext.Consumer>
     {context => <Toolbar {...props} context={context} {...ref} />}
   </EditorContext.Consumer>

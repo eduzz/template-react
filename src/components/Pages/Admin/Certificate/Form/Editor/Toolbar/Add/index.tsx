@@ -7,7 +7,7 @@ interface IProps {
 }
 
 export default class Remove extends React.PureComponent<IProps> {
-  handleClick = (e: any) => {
+  handleClick = () => {
     this.props.onClick();
   }
 

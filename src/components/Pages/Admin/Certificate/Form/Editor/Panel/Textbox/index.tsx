@@ -67,7 +67,7 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     this.props.onChange(result);
   }
 
-  handleDragStop = (e: any, props: { x: number, y: number }) => {
+  handleDragStop = (e: SyntheticEvent, props: { x: number, y: number }) => {
     const result = { ...this.props.placement, ...{ x: props.x, y: props.y } };
     this.props.onChange(result);
   }

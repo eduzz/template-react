@@ -1,7 +1,7 @@
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { DEFAULT_FONT, FONTS } from '../../config';
 
@@ -12,7 +12,7 @@ interface IProps {
 
 export default class FontFamily extends React.PureComponent<IProps> {
 
-  handleChange = (e: any) => {
+  handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange({ fontFamily: e.target.value });
   }
 

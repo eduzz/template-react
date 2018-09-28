@@ -51,7 +51,7 @@ export default class Editor extends PureComponent<IProps, IState> {
     const { items, selectedItem } = this.state;
 
     this.setState({
-      items: items.map((item: any) => {
+      items: items.map(item => {
         if (item.id === selectedItem) {
           return { ...item, ...value };
         }
@@ -65,7 +65,7 @@ export default class Editor extends PureComponent<IProps, IState> {
     const { items, selectedItem } = this.state;
 
     if (selectedItem) {
-      return items.find((item: any) => item.id === selectedItem)[key];
+      return items.find(item => item.id === selectedItem)[key];
     }
 
     return '';
@@ -84,7 +84,7 @@ export default class Editor extends PureComponent<IProps, IState> {
     const { items, selectedItem } = this.state;
 
     this.setState({
-      items: items.filter((item: any) => item.id !== selectedItem),
+      items: items.filter(item => item.id !== selectedItem),
       selectedItem: null,
     });
   }
@@ -97,7 +97,7 @@ export default class Editor extends PureComponent<IProps, IState> {
     const { items, selectedItem } = this.state;
 
     this.setState({
-      items: items.map((item: any) => {
+      items: items.map(item => {
         if (item.id === selectedItem)
           return {
             ...item,

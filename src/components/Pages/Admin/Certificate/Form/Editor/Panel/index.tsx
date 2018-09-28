@@ -134,7 +134,7 @@ class Panel extends PureComponent<IProps, IState> {
   }
 }
 
-export default React.forwardRef((props: IProps, ref: any) => (
+export default React.forwardRef((props: IProps, ref) => (
   <EditorContext.Consumer>
     {context => <Panel {...props} context={context} {...ref} />}
   </EditorContext.Consumer>
