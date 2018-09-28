@@ -1,12 +1,14 @@
-import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import ImageIcon from 'mdi-react/ImageIcon';
-import { WithStyles } from 'decorators/withStyles';
 import ImageSelector from 'components/Shared/ImageSelector';
+import { WithStyles } from 'decorators/withStyles';
+import ImageIcon from 'mdi-react/ImageIcon';
+import React from 'react';
+
+import { CERTIFICATE_SIZE } from '../../config';
 
 interface IProps {
   classes?: any;
-  onChange?: any;
+  onChange: (image: string) => void;
 }
 
 interface IState {
@@ -25,24 +27,16 @@ interface IState {
 export default class ImageUpload extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      selectorOpened: false,
-    };
+    this.state = { selectorOpened: false };
   }
 
   handleClick = () => {
-    this.setState({
-      selectorOpened: true,
-    });
+    this.setState({ selectorOpened: true });
   }
 
   onSelectorComplete = (image: string) => {
-    this.setState({
-      selectorOpened: false,
-    });
-
-    this.props.onChange && this.props.onChange(image);
+    this.setState({ selectorOpened: false });
+    this.props.onChange(image);
   }
 
   render() {
@@ -53,8 +47,8 @@ export default class ImageUpload extends React.PureComponent<IProps, IState> {
       <div>
         <ImageSelector
           opened={selectorOpened}
-          width={3508}
-          height={2479}
+          width={CERTIFICATE_SIZE.width}
+          height={CERTIFICATE_SIZE.height}
           onComplete={this.onSelectorComplete}
         />
         <IconButton onClick={this.handleClick}>

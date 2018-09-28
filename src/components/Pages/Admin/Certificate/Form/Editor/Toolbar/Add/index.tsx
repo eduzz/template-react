@@ -1,9 +1,9 @@
-import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import FormatTextIcon from 'mdi-react/FormatTextIcon';
+import React from 'react';
 
 interface IProps {
-  onClick?: any;
+  onClick: () => void;
 }
 
 export default class Remove extends React.PureComponent<IProps> {

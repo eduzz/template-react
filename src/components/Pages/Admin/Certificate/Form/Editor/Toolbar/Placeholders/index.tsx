@@ -1,12 +1,14 @@
-import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
+
+import { PLACEHOLDERS } from '../../config';
 
 interface IProps {
-  onChange?: any;
   classes?: any;
+  onChange?: (value: string) => void;
 }
 
 @WithStyles(theme => ({
@@ -24,17 +26,11 @@ export default class Placeholders extends React.PureComponent<IProps> {
 
     return (
       <FormControl className={classes.root}>
-        <Select
-          value=''
-          onChange={this.handleChange}
-          displayEmpty
-        >
+        <Select value='' onChange={this.handleChange} displayEmpty>
           <MenuItem value='' disabled>Máscaras</MenuItem>
-          <MenuItem value='[ALUNO]'>ALUNO</MenuItem>
-          <MenuItem value='[AUTOR]'>AUTOR</MenuItem>
-          <MenuItem value='[DATA]'>DATA</MenuItem>
-          <MenuItem value='[CURSO]'>CURSO</MenuItem>
-          <MenuItem value='[DURACAO]'>DURACAO</MenuItem>
+          {PLACEHOLDERS.map(placeholder =>
+            <MenuItem key={placeholder} value={`[${placeholder}]`}>{placeholder}</MenuItem>
+          )}
         </Select>
       </FormControl>
     );

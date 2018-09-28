@@ -2,7 +2,7 @@ export interface ICertificate {
   id: number;
   title: string;
   image: string;
-  config: any;
+  config: string;
   created_at: Date;
   user_id: number;
   default: boolean;

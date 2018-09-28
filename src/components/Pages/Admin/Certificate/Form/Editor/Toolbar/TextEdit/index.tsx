@@ -2,8 +2,8 @@ import TextField from '@material-ui/core/TextField';
 import React from 'react';
 
 interface IProps {
-  value?: string;
-  onChange?: Function;
+  value: string;
+  onChange: (value: { text: string }) => void;
 }
 
 export default class TextEdit extends React.PureComponent<IProps> {
@@ -18,7 +18,6 @@ export default class TextEdit extends React.PureComponent<IProps> {
       <TextField
         value={value}
         onChange={this.handleChange}
-      // disabled={!value}
       />
     );
   }

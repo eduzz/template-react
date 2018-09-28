@@ -1,38 +1,33 @@
-import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
+import React, { SyntheticEvent } from 'react';
 import { Draggable, Resizable } from 'react-transforming';
 
-export interface ITextBox {
-  id: number;
-  text: string;
-  fontSize?: number;
-}
+import { IEditorItem } from '../../interfaces';
 
 interface IProps {
-  classes?: any;
-  selected?: boolean;
-  onMouseDown?: Function;
-  onChange?: any;
-  id?: number;
-  text?: string;
-  placement: any;
+  selected: boolean;
+  onMouseDown: (id: number) => void;
+  onChange: (value: IEditorItem['placement']) => void;
+  id: number;
+  text: string;
+  placement: IEditorItem['placement'];
+  scale: number;
   style?: any;
-  scale?: any;
+  classes?: any;
 }
 
 interface IState {
   hover: boolean;
-  placement: any;
 }
 
-@WithStyles(theme => ({
+@WithStyles({
   border: {
     border: 'solid 1px transparent',
   },
   selected: {
     borderColor: '#424242',
   },
-}))
+})
 export default class Textbox extends React.PureComponent<IProps, IState> {
   static defaultProps = {
     fontSize: 12,
@@ -43,12 +38,11 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      hover: false,
-      placement: { ...this.props.placement },
+      hover: false
     };
   }
 
-  handleMouseDown = (e: any) => {
+  handleMouseDown = (e: SyntheticEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -56,60 +50,35 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
   }
 
   handleMouseOver = () => {
-    this.setState({
-      hover: true,
-    });
+    this.setState({ hover: true });
   }
 
   handleMouseOut = () => {
-    this.setState({
-      hover: false,
-    });
+    this.setState({ hover: false });
   }
 
-  handleClick = (e: any) => {
+  handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
     e.stopPropagation();
   }
 
-  handleResizeStop = (e: any, size: any) => {
-    const { onChange } = this.props;
-    const { placement } = this.state;
-
-    const result = { ...placement, ...size };
-
-    this.setState({
-      placement: result,
-    });
-
-    onChange && onChange(result);
+  handleResizeStop = (e: SyntheticEvent, size: { width: number; height: number; }) => {
+    const result = { ...this.props.placement, ...size };
+    this.props.onChange(result);
   }
 
-  handleDragStop = (e: any, props: any) => {
-    const { onChange } = this.props;
-    const { placement } = this.state;
-
-    const position = {
-      x: props.x,
-      y: props.y,
-    };
-
-    const result = { ...placement, ...position };
-
-    this.setState({
-      placement: result,
-    });
-
-    onChange && onChange(result);
+  handleDragStop = (e: any, props: { x: number, y: number }) => {
+    const result = { ...this.props.placement, ...{ x: props.x, y: props.y } };
+    this.props.onChange(result);
   }
 
   render() {
-    const { classes, selected, text, style, scale } = this.props;
+    const { classes, selected, text, style, scale, placement } = this.props;
     const { hover } = this.state;
 
     return (
       <Draggable
-        default={this.state.placement}
+        default={placement}
         className={`${classes.border} ${(selected || hover) ? classes.selected : ''}`}
         onMouseDown={this.handleMouseDown}
         onMouseOver={this.handleMouseOver}
@@ -120,7 +89,7 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
       >
         <Resizable
           style={style}
-          default={this.state.placement}
+          default={placement}
           onResizeStop={this.handleResizeStop}
           scale={scale}
         >

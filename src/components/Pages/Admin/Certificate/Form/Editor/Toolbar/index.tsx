@@ -1,9 +1,9 @@
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import React from 'react';
 
-import { EditorContext } from '../';
+import EditorContext from '../context';
+import { IEditorContext, IEditorItem } from '../interfaces';
 import Add from './Add';
 import ColorPicker from './ColorPicker';
 import FontFamily from './FontFamily';
@@ -17,7 +17,7 @@ import VerticalAlignment from './VerticalAlignment';
 
 interface IProps {
   classes?: any;
-  context?: any;
+  context?: IEditorContext;
 }
 
 @WithStyles(theme => ({
@@ -35,13 +35,10 @@ interface IProps {
     height: 43,
     border: 'solid 1px black',
     padding: 8,
-  },
-  link: {
-    padding: '16px 0 16px 0',
-  },
+  }
 }))
 class Toolbar extends React.PureComponent<IProps> {
-  handleChange = (value: any) => {
+  handleChange = (value: IEditorItem) => {
     this.props.context.modify(value);
   }
 
@@ -52,11 +49,11 @@ class Toolbar extends React.PureComponent<IProps> {
       <Grid container className={classes.root}>
         <Grid item>
           <FontSize
-            value={context.current('fontSize')}
+            value={context.getCurrentConfig('fontSize')}
             onChange={this.handleChange}
           />
           <FontFamily
-            value={context.current('fontFamily')}
+            value={context.getCurrentConfig('fontFamily')}
             onChange={this.handleChange}
           />
           <Placeholders
@@ -65,40 +62,37 @@ class Toolbar extends React.PureComponent<IProps> {
         </Grid>
         <Grid item>
           <HorizontalAlignment
-            value={context.current('justifyContent')}
+            value={context.getCurrentConfig('justifyContent')}
             onChange={this.handleChange}
           />
         </Grid>
         <Grid item>
           <VerticalAlignment
-            value={context.current('alignItems')}
+            value={context.getCurrentConfig('alignItems')}
             onChange={this.handleChange}
           />
         </Grid>
         <Grid item>
           <TextEdit
-            value={context.current('text')}
+            value={context.getCurrentConfig('text')}
             onChange={this.handleChange}
           />
         </Grid>
         <ColorPicker
-          value={context.current('color')}
+          value={context.getCurrentConfig('color')}
           onChange={this.handleChange}
         />
-        <ImageUpload
-          onChange={context.setImage}
-        />
+        <Grid item>
+          <ImageUpload
+            onChange={context.setImage}
+          />
+        </Grid>
         <Grid item>
           <Add onClick={context.add} />
           <Remove
             disabled={!context.selectedItem}
             onClick={context.remove}
           />
-        </Grid>
-        <Grid item className={classes.link}>
-          <Typography>
-            Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
-          </Typography>
         </Grid>
       </Grid >
     );

@@ -1,12 +1,14 @@
-import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
+
+import { DEFAULT_FONT_SIZE } from '../../config';
 
 interface IProps {
   value: number;
-  onChange?: any;
+  onChange?: (value: { fontSize: number }) => void;
   classes?: any;
 }
 
@@ -16,8 +18,6 @@ interface IProps {
   },
 }))
 export default class FontSize extends React.PureComponent<IProps> {
-  private defaultValue = 36;
-
   handleChange = (e: any) => {
     this.props.onChange({ fontSize: e.target.value });
   }
@@ -28,7 +28,7 @@ export default class FontSize extends React.PureComponent<IProps> {
     return (
       <FormControl className={classes.root}>
         <Select
-          value={value || this.defaultValue}
+          value={value || DEFAULT_FONT_SIZE}
           onChange={this.handleChange}
           disabled={!value}
           displayEmpty
