@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
   title: string;
-  children?: any;
+  modules?: any;
   classes?: any;
 }
 
@@ -48,7 +48,7 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { title, children } = this.props;
+    const { title, modules } = this.props;
 
     return (
       <Fragment>
@@ -73,15 +73,15 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
             <ListItem button onClick={this.toggleSpecific}>
               <Checkbox />
               <ListItemText primary='Mostrar em aulas específicas' />
-              {children && children.length && (this.state.specific ? <ExpandLess /> : <ExpandMore />)}
+              {modules && modules.length && (this.state.specific ? <ExpandLess /> : <ExpandMore />)}
             </ListItem>
-            {children && children.length &&
+            {modules && modules.length &&
               <Collapse in={this.state.specific} timeout='auto' unmountOnExit>
-                {children.map((module: any, index: number) =>
+                {modules.map((module: any, index: number) =>
                   <ModuleItem
                     key={index}
                     title={module.title}
-                    children={module.children}
+                    lessons={module.lessons}
                   />
                 )}
               </Collapse>

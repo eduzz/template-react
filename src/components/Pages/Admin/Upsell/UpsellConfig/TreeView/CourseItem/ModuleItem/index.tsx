@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
   title: string;
-  children?: any;
+  lessons?: any;
   classes?: any;
 }
 
@@ -40,19 +40,19 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { title, children, classes } = this.props;
+    const { title, lessons, classes } = this.props;
 
     return (
       <div className={classes.nested}>
         <ListItem button onClick={this.handleToggle}>
           <Checkbox />
           <ListItemText primary={title} />
-          {children && children.length && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
+          {lessons && lessons.length && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
         </ListItem>
-        {children && children.length &&
+        {lessons && lessons.length &&
           <Collapse in={this.state.open} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
-              {children.map((lesson: any, index: number) =>
+              {lessons.map((lesson: any, index: number) =>
                 <LessonItem
                   key={index}
                   title={lesson.title}

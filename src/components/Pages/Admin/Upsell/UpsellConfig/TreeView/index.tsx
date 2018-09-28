@@ -66,7 +66,7 @@ export default class TreeView extends React.PureComponent<IProps, IState> {
             <CourseItem
               key={index}
               title={course.title}
-              children={course.children}
+              modules={course.modules}
             />
           )
           :
