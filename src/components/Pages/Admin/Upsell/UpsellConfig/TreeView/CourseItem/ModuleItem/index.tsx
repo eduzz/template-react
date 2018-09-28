@@ -10,9 +10,9 @@ import LessonItem from './LessonItem';
 import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
-  title: string;
-  lessons?: any;
+  module: any;
   classes?: any;
+  onChange?: any;
 }
 
 interface IState {
@@ -39,23 +39,46 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
     }));
   }
 
+  handleLessonChange = (modifiedLesson: any) => {
+    const { onChange, module } = this.props;
+
+    if (onChange) {
+      onChange({
+        ...module,
+        lessons: module.lessons.map((lesson: any) => (lesson.id === modifiedLesson.id ? modifiedLesson : lesson)),
+      });
+    }
+  }
+
+  handleModuleChange = () => {
+
+  }
+
   render() {
-    const { title, lessons, classes } = this.props;
+    const { module, classes } = this.props;
+
+    const allChecked = module.lessons.every((lesson: any) => lesson.checked);
+    const allUnchecked = module.lessons.every((lesson: any) => !lesson.checked);
+    const indeterminate = !(allChecked || allUnchecked);
 
     return (
       <div className={classes.nested}>
         <ListItem button onClick={this.handleToggle}>
-          <Checkbox />
-          <ListItemText primary={title} />
-          {lessons && lessons.length && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
+          <Checkbox
+            checked={allChecked}
+            indeterminate={indeterminate}
+          />
+          <ListItemText primary={module.title} />
+          {module.lessons && module.lessons.length && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
         </ListItem>
-        {lessons && lessons.length &&
+        {module.lessons && module.lessons.length &&
           <Collapse in={this.state.open} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
-              {lessons.map((lesson: any, index: number) =>
+              {module.lessons.map((lesson: any, index: number) =>
                 <LessonItem
                   key={index}
-                  title={lesson.title}
+                  lesson={lesson}
+                  onChange={this.handleLessonChange}
                 />
               )}
             </List>

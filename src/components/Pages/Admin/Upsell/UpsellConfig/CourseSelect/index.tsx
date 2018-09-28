@@ -85,14 +85,17 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe((course: any) => {
-      this.props.onAdd && this.props.onAdd(course);
-    }, (err: any) => {
-      Toast.error('Erro ao adicionar curso!');
-    }, () => {
       this.setState({
         isFetching: false,
         selectedCourseId: 0,
       });
+      this.props.onAdd && this.props.onAdd(course);
+    }, (err: any) => {
+      this.setState({
+        isFetching: false,
+        selectedCourseId: 0,
+      });
+      Toast.error('Erro ao adicionar curso!');
     });
   }
 

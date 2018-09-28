@@ -5,9 +5,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
-  title: string;
-  children?: any;
+  lesson: any;
   classes?: any;
+  onChange?: any;
 }
 
 interface IState {
@@ -20,13 +20,24 @@ interface IState {
   },
 }))
 export default class ModuleItem extends React.PureComponent<IProps, IState> {
+  handleToggle = () => {
+    const { onChange, lesson } = this.props;
+
+    if (onChange) {
+      onChange({
+        ...lesson,
+        checked: !lesson.checked,
+      });
+    }
+  }
+
   render() {
-    const { title, classes } = this.props;
+    const { lesson, classes } = this.props;
 
     return (
       <ListItem button className={classes.nested}>
-        <Checkbox />
-        <ListItemText primary={title} />
+        <Checkbox checked={lesson.checked} onClick={this.handleToggle} />
+        <ListItemText primary={lesson.title} />
       </ListItem>
     );
   }

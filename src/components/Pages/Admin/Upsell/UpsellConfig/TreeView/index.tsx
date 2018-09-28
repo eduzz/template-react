@@ -30,7 +30,7 @@ interface IState {
     padding: 0,
   },
 }))
-export default class TreeView extends React.PureComponent<IProps, IState> {
+export default class TreeView extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -51,13 +51,25 @@ export default class TreeView extends React.PureComponent<IProps, IState> {
     }));
   }
 
+  handleChange = (modifiedCourse: any) => {
+    const { courses } = this.state;
+
+    this.setState({
+      courses: courses.map((course: any) => (course.id === modifiedCourse.id ? modifiedCourse : course)),
+    });
+  }
+
   handleClick = () => {
-    this.setState(state => ({ open: !state.open }));
+    this.setState(state => ({
+      open: !state.open,
+    }));
   }
 
   render() {
     const { classes } = this.props;
     const { courses } = this.state;
+
+    console.log(courses);
 
     return (
       <List component='nav'>
@@ -65,8 +77,8 @@ export default class TreeView extends React.PureComponent<IProps, IState> {
           courses.map((course: any, index: number) =>
             <CourseItem
               key={index}
-              title={course.title}
-              modules={course.modules}
+              course={course}
+              onChange={this.handleChange}
             />
           )
           :

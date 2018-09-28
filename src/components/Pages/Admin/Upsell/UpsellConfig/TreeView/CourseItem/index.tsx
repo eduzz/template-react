@@ -10,14 +10,13 @@ import ModuleItem from './ModuleItem';
 import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
-  title: string;
-  modules?: any;
+  course: any;
   classes?: any;
+  onChange?: any;
 }
 
 interface IState {
   open: boolean;
-  specific: boolean;
 }
 
 @WithStyles(theme => ({
@@ -31,7 +30,6 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
 
     this.state = {
       open: false,
-      specific: false,
     };
   }
 
@@ -41,47 +39,52 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     }));
   }
 
-  toggleSpecific = () => {
-    this.setState(state => ({
-      specific: !state.specific,
-    }));
+  handleModuleChange = (modifiedModule: any) => {
+    const { onChange, course } = this.props;
+
+    if (onChange) {
+      onChange({
+        ...course,
+        modules: course.modules.map((module: any) => (module.id === modifiedModule.id ? modifiedModule : module)),
+      });
+    }
   }
 
   render() {
-    const { title, modules } = this.props;
+    const { course } = this.props;
 
     return (
       <Fragment>
         <ListItem button onClick={this.handleToggle}>
-          <ListItemText primary={title} />
+          <ListItemText primary={course.title} />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
           <List component='div' disablePadding>
             <ListItem>
-              <Checkbox />
+              <Checkbox checked={course.highlight} />
               <ListItemText primary='Banner de oferta na vitrine' />
             </ListItem>
             <ListItem>
-              <Checkbox />
+              <Checkbox checked={course.coursePage} />
               <ListItemText primary='Listagem de módulos e aulas' />
             </ListItem>
             <ListItem>
-              <Checkbox />
+              <Checkbox checked={course.allLessons} />
               <ListItemText primary='Mostrar em todas as aulas' />
             </ListItem>
-            <ListItem button onClick={this.toggleSpecific}>
-              <Checkbox />
+            <ListItem button>
+              <Checkbox checked={course.specificLessons} />
               <ListItemText primary='Mostrar em aulas específicas' />
-              {modules && modules.length && (this.state.specific ? <ExpandLess /> : <ExpandMore />)}
+              {course.modules && course.modules.length && (course.specificLessons ? <ExpandLess /> : <ExpandMore />)}
             </ListItem>
-            {modules && modules.length &&
-              <Collapse in={this.state.specific} timeout='auto' unmountOnExit>
-                {modules.map((module: any, index: number) =>
+            {course.modules && course.modules.length &&
+              <Collapse in={true} timeout='auto' unmountOnExit>
+                {course.modules.map((module: any, index: number) =>
                   <ModuleItem
                     key={index}
-                    title={module.title}
-                    lessons={module.lessons}
+                    module={module}
+                    onChange={this.handleModuleChange}
                   />
                 )}
               </Collapse>
