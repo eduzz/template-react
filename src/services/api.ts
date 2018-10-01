@@ -15,22 +15,45 @@ export class ApiService {
   ) { }
 
   public get<T = any>(url: string, params?: any): rxjs.Observable<IApiResponse<T>> {
-    return this.request('GET', url, params);
+    return this.request<T>('GET', url, params).pipe(
+      rxjsOperators.map(({ response }) => response),
+      rxjsOperators.filter(response => !!response)
+    );
   }
 
   public post<T = any>(url: string, body: any): rxjs.Observable<IApiResponse<T>> {
-    return this.request('POST', url, body);
+    return this.request<T>('POST', url, body).pipe(
+      rxjsOperators.map(({ response }) => response),
+      rxjsOperators.filter(response => !!response)
+    );
   }
 
   public put<T = any>(url: string, body: any): rxjs.Observable<IApiResponse<T>> {
-    return this.request('PUT', url, body);
+    return this.request<T>('PUT', url, body).pipe(
+      rxjsOperators.map(({ response }) => response),
+      rxjsOperators.filter(response => !!response)
+    );
   }
 
   public delete<T = any>(url: string, params?: any): rxjs.Observable<IApiResponse<T>> {
-    return this.request('DELETE', url, params);
+    return this.request<T>('DELETE', url, params).pipe(
+      rxjsOperators.map(({ response }) => response),
+      rxjsOperators.filter(response => !!response)
+    );
   }
 
-  private request<T>(method: string, url: string, data: any = null, retry: boolean = true): rxjs.Observable<IApiResponse<T>> {
+  public upload<T = any>(url: string, data: FormData) {
+    return this.request<T>('POST', url, data);
+  }
+
+  private request<T = any>(
+    method: string,
+    url: string,
+    data: any = null,
+    retry: boolean = true
+  ): rxjs.Observable<{ response: IApiResponse<T>, progress: number }> {
+    const progress$ = new rxjs.BehaviorSubject(0);
+
     return this.tokenService.getTokens().pipe(
       rxjsOperators.first(),
       rxjsOperators.map(tokens => {
@@ -38,7 +61,10 @@ export class ApiService {
 
         return {
           Authorization: `Bearer ${tokens.token}`,
-          RefreshToken: tokens.refresh_token
+          RefreshToken: tokens.refresh_token,
+          'Content-type': data instanceof FormData ?
+            'multipart/form-data' :
+            'application/json'
         };
       }),
       rxjsOperators.switchMap(headers => {
@@ -46,18 +72,30 @@ export class ApiService {
           baseURL: this.apiEndpoint,
           url,
           method,
-          timeout: 30000,
-          headers: {
-            'Content-type': 'application/json',
-            ...headers
-          },
+          headers,
           params: method === 'GET' ? data : null,
-          data: method === 'POST' || method === 'PUT' ? data : null
+          data: method === 'POST' || method === 'PUT' ? data : null,
+          onUploadProgress: (progress: ProgressEvent) => {
+            const result = progress.loaded / progress.total;
+            progress$.next(result * 100);
+          }
         });
       }),
+      rxjsOperators.tap(() => {
+        progress$.next(100);
+        // progress$.complete();
+      }),
       rxjsOperators.switchMap(res => this.checkNewToken(res)),
-      rxjsOperators.map(res => apiResponseFormatter(res.data)),
-      rxjsOperators.catchError(err => this.handleError(err, retry))
+      rxjsOperators.map(res => apiResponseFormatter<IApiResponse<T>>(res.data)),
+      rxjsOperators.startWith(null),
+      rxjsOperators.combineLatest(
+        progress$.pipe(rxjsOperators.distinctUntilChanged()),
+        (response, progress) => ({ response, progress })
+      ),
+      rxjsOperators.catchError(err => {
+        progress$.complete();
+        return this.handleError(err, retry);
+      }),
     );
   }
 
