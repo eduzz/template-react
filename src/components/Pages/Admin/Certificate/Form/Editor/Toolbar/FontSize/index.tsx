@@ -12,11 +12,13 @@ interface IProps {
   classes?: any;
 }
 
-@WithStyles(theme => ({
+@WithStyles({
   root: {
     marginRight: 8,
-  },
-}))
+    width: 80,
+    height: 46
+  }
+})
 export default class FontSize extends React.PureComponent<IProps> {
   handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     this.props.onChange({ fontSize: Number(e.target.value) });

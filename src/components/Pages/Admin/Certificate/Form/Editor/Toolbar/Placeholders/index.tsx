@@ -14,6 +14,8 @@ interface IProps {
 @WithStyles(theme => ({
   root: {
     margin: '0 8px 0 8px',
+    width: 150,
+    height: 46
   },
 }))
 export default class Placeholders extends React.PureComponent<IProps> {
