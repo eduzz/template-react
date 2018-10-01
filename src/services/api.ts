@@ -111,7 +111,7 @@ export class ApiService {
     );
   }
   private handleError(err: AxiosError, retry: boolean) {
-    if (!err.config) return rxjs.throwError(err);
+    if (!err.config || !err.response) return rxjs.throwError(err);
 
     if (err.response.status !== 401 || !retry) {
       return rxjs.throwError(new ApiError(err.config, err.response, err));

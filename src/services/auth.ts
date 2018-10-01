@@ -1,5 +1,5 @@
 import { DeepReadonly } from 'helpers/immutable';
-import { IUserToken } from 'interfaces/userToken';
+import { enUserType, IUserToken } from 'interfaces/userToken';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 import UAParser from 'ua-parser-js';
@@ -23,7 +23,7 @@ export class AuthService {
         if (!token) return null;
 
         const user = tokenService.decode<IUserToken>(token, true);
-        if (!user) return null;
+        if (!user || user.type !== enUserType.PRODUCER) return null;
 
         user.firstName = (user.name || '').split(' ')[0];
         user.canAccess = () => {
@@ -48,9 +48,8 @@ export class AuthService {
   }
 
   public login(username: string, password: string): rxjs.Observable<void> {
-
     return this.getDevideInfo().pipe(
-      rxjsOperators.switchMap(deviceInfo => apiService.post('/oauth/token', { username, password, ...deviceInfo })),
+      rxjsOperators.switchMap(deviceInfo => apiService.post('/oauth/token', { username, password, ...deviceInfo, type: 'producer' })),
       rxjsOperators.tap(() => this.openLogin$.next(false)),
       rxjsOperators.switchMap(response => tokenService.setTokens(response.data)),
       rxjsOperators.map(() => null)
