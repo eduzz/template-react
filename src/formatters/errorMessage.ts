@@ -12,7 +12,7 @@ export function errorMessageFormatter(err: any): string {
     411: 'Dados inválidos',
   };
 
-  if (err.reponse && err.response.data && err.response.data && err.response.data.details) {
+  if (err.reponse && err.response.data && err.response.data && typeof err.response.data.details === 'string') {
     return err.response.data.details;
   }
 
@@ -25,7 +25,7 @@ export function errorMessageFormatter(err: any): string {
         return 'Não conseguimos se comunicar com o servidor';
       }
 
-      if (err.data && err.data.details) {
+      if (err.data && typeof err.data.details === 'string') {
         return err.data.details;
       }
 
