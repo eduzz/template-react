@@ -1,5 +1,5 @@
-import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
 import { Draggable, Resizable } from 'react-transforming';
 
 export interface ITextBox {
@@ -27,10 +27,17 @@ interface IState {
 
 @WithStyles(theme => ({
   border: {
-    border: 'solid 1px transparent',
+    border: 'dashed 2px transparent',
   },
   selected: {
     borderColor: '#424242',
+    '& > span': {
+      width: '24px !important',
+      height: '24px !important',
+      top: 'calc(100% - 14px) !important',
+      left: 'calc(100% - 14px) !important',
+      backgroundColor: '#424242',
+    }
   },
 }))
 export default class Textbox extends React.PureComponent<IProps, IState> {
