@@ -17,6 +17,7 @@ interface IProps {
 
 interface IState {
   open: boolean;
+  openSpecific: boolean;
 }
 
 @WithStyles(theme => ({
@@ -25,17 +26,27 @@ interface IState {
   },
 }))
 export default class CourseItem extends React.PureComponent<IProps, IState> {
+  private allChecked: boolean;
+  private allUnchecked: boolean;
+
   constructor(props: IProps) {
     super(props);
 
     this.state = {
       open: false,
+      openSpecific: false,
     };
   }
 
   handleToggle = () => {
     this.setState(state => ({
       open: !state.open,
+    }));
+  }
+
+  handleToggleSpecific = () => {
+    this.setState(state => ({
+      openSpecific: !state.openSpecific,
     }));
   }
 
@@ -50,8 +61,55 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     }
   }
 
+  handleToggleAll = (e: any) => {
+    e.stopPropagation();
+
+    const { onChange, course } = this.props;
+
+    if (onChange) {
+      onChange({
+        ...course,
+        modules: course.modules.map((module: any) => ({
+          ...module,
+          checked: !this.allChecked,
+          lessons: module.lessons.map((lesson: any) => ({
+            ...lesson,
+            checked: !this.allChecked,
+          })),
+        })),
+      });
+    }
+  }
+
+  handleChangeHighlight = () => {
+    const { onChange, course } = this.props;
+
+    if (onChange) {
+      onChange({
+        ...course,
+        highlight: !course.highlight,
+      });
+    }
+  }
+
+  handleChangeCoursePage = () => {
+    const { onChange, course } = this.props;
+
+    if (onChange) {
+      onChange({
+        ...course,
+        coursePage: !course.coursePage,
+      });
+    }
+  }
+
   render() {
     const { course } = this.props;
+    const { openSpecific } = this.state;
+
+    this.allChecked = course.modules.every((module: any) => module.checked);
+    this.allUnchecked = course.modules.every((module: any) => module.lessons.every((lesson: any) => !lesson.checked));
+    const indeterminate = !(this.allChecked || this.allUnchecked);
 
     return (
       <Fragment>
@@ -62,32 +120,40 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
           <List component='div' disablePadding>
             <ListItem>
-              <Checkbox checked={course.highlight} />
+              <Checkbox
+                checked={course.highlight}
+                onChange={this.handleChangeHighlight}
+              />
               <ListItemText primary='Banner de oferta na vitrine' />
             </ListItem>
             <ListItem>
-              <Checkbox checked={course.coursePage} />
-              <ListItemText primary='Listagem de módulos e aulas' />
+              <Checkbox
+                checked={course.coursePage}
+                onChange={this.handleChangeCoursePage}
+              />
+              <ListItemText primary='Mostrar na tela do curso' />
             </ListItem>
-            <ListItem>
-              <Checkbox checked={course.allLessons} />
-              <ListItemText primary='Mostrar em todas as aulas' />
-            </ListItem>
-            <ListItem button>
-              <Checkbox checked={course.specificLessons} />
-              <ListItemText primary='Mostrar em aulas específicas' />
-              {course.modules && course.modules.length && (course.specificLessons ? <ExpandLess /> : <ExpandMore />)}
-            </ListItem>
-            {course.modules && course.modules.length &&
-              <Collapse in={true} timeout='auto' unmountOnExit>
-                {course.modules.map((module: any, index: number) =>
-                  <ModuleItem
-                    key={index}
-                    module={module}
-                    onChange={this.handleModuleChange}
+            {course.modules && Boolean(course.modules.length) &&
+              <Fragment>
+                <ListItem button onClick={this.handleToggleSpecific}>
+                  <Checkbox
+                    checked={this.allChecked}
+                    indeterminate={indeterminate}
+                    onClick={this.handleToggleAll}
                   />
-                )}
-              </Collapse>
+                  <ListItemText primary='Mostrar nas telas de aula' />
+                  {openSpecific ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={openSpecific} timeout='auto' unmountOnExit>
+                  {course.modules.map((module: any, index: number) =>
+                    <ModuleItem
+                      key={index}
+                      module={module}
+                      onChange={this.handleModuleChange}
+                    />
+                  )}
+                </Collapse>
+              </Fragment>
             }
           </List>
         </Collapse>

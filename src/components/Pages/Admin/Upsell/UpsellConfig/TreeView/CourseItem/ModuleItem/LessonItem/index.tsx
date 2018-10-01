@@ -35,7 +35,7 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
     const { lesson, classes } = this.props;
 
     return (
-      <ListItem button className={classes.nested}>
+      <ListItem className={classes.nested}>
         <Checkbox checked={lesson.checked} onClick={this.handleToggle} />
         <ListItemText primary={lesson.title} />
       </ListItem>

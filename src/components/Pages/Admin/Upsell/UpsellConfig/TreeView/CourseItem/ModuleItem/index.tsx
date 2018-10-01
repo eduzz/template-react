@@ -25,6 +25,9 @@ interface IState {
   },
 }))
 export default class ModuleItem extends React.PureComponent<IProps, IState> {
+  private allChecked: boolean;
+  private allUnchecked: boolean;
+
   constructor(props: IProps) {
     super(props);
 
@@ -41,32 +44,46 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
 
   handleLessonChange = (modifiedLesson: any) => {
     const { onChange, module } = this.props;
+    const lessons = module.lessons.map((lesson: any) => (lesson.id === modifiedLesson.id ? modifiedLesson : lesson));
 
     if (onChange) {
       onChange({
         ...module,
-        lessons: module.lessons.map((lesson: any) => (lesson.id === modifiedLesson.id ? modifiedLesson : lesson)),
+        checked: lessons.every((lesson: any) => lesson.checked),
+        lessons,
       });
     }
   }
 
-  handleModuleChange = () => {
+  handleModuleChange = (e: any) => {
+    e.stopPropagation();
 
+    const { module, onChange } = this.props;
+
+    onChange({
+      ...module,
+      checked: !this.allChecked,
+      lessons: module.lessons.map((lesson: any) => ({
+        ...lesson,
+        checked: !this.allChecked,
+      })),
+    });
   }
 
   render() {
     const { module, classes } = this.props;
 
-    const allChecked = module.lessons.every((lesson: any) => lesson.checked);
-    const allUnchecked = module.lessons.every((lesson: any) => !lesson.checked);
-    const indeterminate = !(allChecked || allUnchecked);
+    this.allChecked = module.lessons.every((lesson: any) => lesson.checked);
+    this.allUnchecked = module.lessons.every((lesson: any) => !lesson.checked);
+    const indeterminate = !(this.allChecked || this.allUnchecked);
 
     return (
       <div className={classes.nested}>
         <ListItem button onClick={this.handleToggle}>
           <Checkbox
-            checked={allChecked}
+            checked={this.allChecked}
             indeterminate={indeterminate}
+            onClick={this.handleModuleChange}
           />
           <ListItemText primary={module.title} />
           {module.lessons && module.lessons.length && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
