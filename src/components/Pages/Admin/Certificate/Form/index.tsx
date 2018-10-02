@@ -50,7 +50,11 @@ interface IProps extends RouteComponentProps<{ id: number }> {
 export default class CertificateFormPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { ...this.state, isEdit: !!this.props.match.params.id, loading: true };
+    this.state = {
+      ...this.state,
+      model: { ...this.state.model, default: false },
+      isEdit: !!this.props.match.params.id, loading: true
+    };
   }
 
   componentDidMount() {

@@ -62,7 +62,7 @@ export class ApiService {
         return {
           Authorization: `Bearer ${tokens.token}`,
           RefreshToken: tokens.refresh_token,
-          'Content-type': data instanceof FormData ?
+          'Content-Type': data instanceof FormData ?
             'multipart/form-data' :
             'application/json'
         };
@@ -83,7 +83,6 @@ export class ApiService {
       }),
       rxjsOperators.tap(() => {
         progress$.next(100);
-        // progress$.complete();
       }),
       rxjsOperators.switchMap(res => this.checkNewToken(res)),
       rxjsOperators.map(res => apiResponseFormatter<IApiResponse<T>>(res.data)),

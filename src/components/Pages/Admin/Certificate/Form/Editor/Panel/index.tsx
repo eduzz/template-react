@@ -1,5 +1,6 @@
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent, RefObject } from 'react';
+import { REACT_APP_CDN } from 'settings';
 
 import { CERTIFICATE_SIZE } from '../config';
 import EditorContext from '../context';
@@ -108,7 +109,7 @@ class Panel extends PureComponent<IProps, IState> {
       <div style={wrapperStyle}>
         <div className={classes.root} style={containerStyle} ref={this.containerEl}>
           <div className={classes.panel} onClick={context.dismiss} ref={this.panelEl} style={this.panelStyle}>
-            <img src={context.image} className={classes.backgroundImage} />
+            <img src={`${REACT_APP_CDN}${context.image}`} className={classes.backgroundImage} />
 
             {context.items.map(item => {
               const { id, text, placement, ...style } = item;
