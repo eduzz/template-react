@@ -32,22 +32,15 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.state = {
-      value: [],
-    };
-
     this.treeView = React.createRef();
   }
 
   handleAdd = (course: any) => {
     this.treeView.current.pushCourse(course);
-
-    this.props.onChange && this.props.onChange(this.state.value);
   }
 
   render() {
     const { classes, onChange } = this.props;
-    const { value } = this.state;
 
     return (
       <Fragment>
@@ -62,7 +55,6 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
         <Paper className={classes.treeViewContainer}>
           <TreeView
             ref={this.treeView}
-            defaultValue={value}
             onChange={onChange}
           />
         </Paper>

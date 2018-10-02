@@ -10,7 +10,7 @@ class UpsellService {
   }
 
   public getCourse(courseId: number): any {
-    return apiService.get('/producer/crosssell/gettreecourse/' + courseId).pipe(
+    return apiService.get('/producer/upsell/gettreecourse/' + courseId).pipe(
       rxjsOperators.map(response => response.data),
     );
   }

@@ -16,11 +16,11 @@ interface IProps {
 interface IState {
   type: any;
   published: boolean;
-  featured: boolean;
+  highlight: boolean;
   title: string;
   description: string;
-  image: string;
-  highlightImage: string;
+  smallImage: string | null;
+  highlightImage: string | null;
 }
 
 @WithStyles(theme => ({
@@ -54,18 +54,18 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
     this.state = {
       type: 'nutror',
       published: true,
-      featured: false,
+      highlight: false,
       title: '',
       description: '',
-      image: '',
-      highlightImage: '',
+      smallImage: null,
+      highlightImage: null,
     };
   }
 
   handleSubmit = (e: any) => {
     e.preventDefault();
 
-    console.log(this.state);
+    console.log(JSON.stringify(this.state));
   }
 
   handleChange = (state: any) => {
@@ -114,7 +114,7 @@ export default class Upsell extends React.PureComponent<IProps, IState> {
                         <ImageUploader
                           width={250}
                           height={250}
-                          label='image'
+                          label='smallImage'
                           onChange={this.handleChange}
                         />
                       </div>

@@ -41,6 +41,8 @@ export default class TreeView extends React.Component<IProps, IState> {
   }
 
   pushCourse = (course: any) => {
+    const { onChange } = this.props;
+
     this.setState(state => ({
       courses: [
         ...state.courses,
@@ -49,14 +51,24 @@ export default class TreeView extends React.Component<IProps, IState> {
         },
       ],
     }));
+
+    if (onChange) {
+      onChange(this.state);
+    }
   }
 
   handleChange = (modifiedCourse: any) => {
+    const { onChange } = this.props;
     const { courses } = this.state;
-
-    this.setState({
+    const state = {
       courses: courses.map((course: any) => (course.id === modifiedCourse.id ? modifiedCourse : course)),
-    });
+    };
+
+    this.setState(state);
+
+    if (onChange) {
+      onChange(state);
+    }
   }
 
   handleClick = () => {
@@ -68,8 +80,6 @@ export default class TreeView extends React.Component<IProps, IState> {
   render() {
     const { classes } = this.props;
     const { courses } = this.state;
-
-    console.log(courses);
 
     return (
       <List component='nav'>

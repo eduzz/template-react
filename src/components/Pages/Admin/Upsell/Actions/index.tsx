@@ -11,6 +11,7 @@ interface IProps {
 
 interface IState {
   published: boolean;
+  highlight: boolean;
 }
 
 @WithStyles(theme => ({
@@ -27,29 +28,42 @@ export default class Actions extends React.PureComponent<IProps, IState> {
 
     this.state = {
       published: true,
+      highlight: false,
     };
   }
 
-  handleToggle = () => {
-    const state = {
-      published: !this.state.published,
-    };
+  handleToggle = (stateLabel: string) =>
+    () => {
+      const state = {
+        [stateLabel]: !this.state[stateLabel],
+      } as any;
 
-    this.setState(state);
+      this.setState(state);
 
-    this.props.onChange && this.props.onChange(state);
-  }
+      this.props.onChange && this.props.onChange(state);
+    }
 
   render() {
     const { classes } = this.props;
+    const { highlight, published } = this.state;
 
     return (
       <Fragment>
         <FormControlLabel
           control={
             <Switch
-              checked={this.state.published}
-              onClick={this.handleToggle}
+              checked={highlight}
+              onClick={this.handleToggle('highlight')}
+              color='secondary'
+            />
+          }
+          label='Destaque'
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={published}
+              onClick={this.handleToggle('published')}
               color='secondary'
             />
           }

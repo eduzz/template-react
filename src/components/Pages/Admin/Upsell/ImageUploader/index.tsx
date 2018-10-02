@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import ImageSelector from 'components/Shared/ImageSelector';
+import CloudUploadIcon from 'mdi-react/CloudUploadIcon';
 // import Button from '@material-ui/core/Button';
 
 interface IProps {
@@ -21,6 +22,7 @@ interface IState {
     marginBottom: 8,
   },
   imageArea: {
+    position: 'relative',
     width: '100%',
     height: 155,
     border: 'solid 1px #c4c4c4',
@@ -31,8 +33,10 @@ interface IState {
     transition: `padding-left 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,
     border-color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms,border-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms`,
     alignItems: 'center',
+    color: '#cbcbcb',
     '&:hover': {
       borderColor: '#000',
+      color: '#000',
     },
   },
   content: {
@@ -41,6 +45,7 @@ interface IState {
   image: {
     maxHeight: '100%',
     maxWidth: '100%',
+    zIndex: 1,
   },
   button: {
     borderRadius: 4,
@@ -51,7 +56,12 @@ interface IState {
   info: {
     marginTop: 4,
     fontSize: 12,
-  }
+  },
+  icon: {
+    position: 'absolute',
+    color: 'inherit',
+    transition: `color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms`,
+  },
 }))
 export default class ImageUploader extends React.PureComponent<IProps, IState> {
   static defaultProps = {
@@ -102,6 +112,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
         />
         <div className={classes.content}>
           <div className={classes.imageArea} onClick={this.handleClick}>
+            <CloudUploadIcon className={classes.icon} />
             <img alt='' src={image} className={classes.image} />
           </div>
           <label className={classes.info}>

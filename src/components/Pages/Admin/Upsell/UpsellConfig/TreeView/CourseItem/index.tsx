@@ -81,17 +81,6 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     }
   }
 
-  handleChangeHighlight = () => {
-    const { onChange, course } = this.props;
-
-    if (onChange) {
-      onChange({
-        ...course,
-        highlight: !course.highlight,
-      });
-    }
-  }
-
   handleChangeCoursePage = () => {
     const { onChange, course } = this.props;
 
@@ -119,13 +108,6 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
           <List component='div' disablePadding>
-            <ListItem>
-              <Checkbox
-                checked={course.highlight}
-                onChange={this.handleChangeHighlight}
-              />
-              <ListItemText primary='Banner de oferta na vitrine' />
-            </ListItem>
             <ListItem>
               <Checkbox
                 checked={course.coursePage}
