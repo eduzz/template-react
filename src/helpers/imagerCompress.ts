@@ -1,5 +1,5 @@
 export default function imageCompress(imageBase64: string, width: number, height: number) {
-  return new Promise<string>(resolve => {
+  return new Promise<Blob>(resolve => {
     const img = new Image();
 
     img.onload = () => {
@@ -16,7 +16,7 @@ export default function imageCompress(imageBase64: string, width: number, height
       insideContext.drawImage(img, 0, 0, insideCanvas.width, insideCanvas.height);
       context.drawImage(insideCanvas, 0, 0, insideCanvas.width, insideCanvas.height, 0, 0, canvas.width, canvas.height);
 
-      resolve(canvas.toDataURL());
+      canvas.toBlob(result => resolve(result));
     };
 
     img.src = imageBase64;
