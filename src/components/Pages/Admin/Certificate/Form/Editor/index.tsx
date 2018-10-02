@@ -26,6 +26,7 @@ export default class Editor extends PureComponent<IProps, IState> {
 
     this.state = {
       selectedItem: null,
+      openedEditText: false,
       items: props.value ? props.value.items : DEFAULT_CERTIFICATE.items,
       image: props.value ? props.value.image : DEFAULT_CERTIFICATE.image,
       select: this.select,
@@ -34,6 +35,7 @@ export default class Editor extends PureComponent<IProps, IState> {
       getCurrentConfig: this.getCurrentConfig,
       add: this.add,
       remove: this.remove,
+      editText: this.editText,
       setPlacement: this.setPlacement,
       setImage: this.setImage,
     };
@@ -51,6 +53,7 @@ export default class Editor extends PureComponent<IProps, IState> {
     const { items, selectedItem } = this.state;
 
     this.setState({
+      openedEditText: false,
       items: items.map(item => {
         if (item.id === selectedItem) {
           return { ...item, ...value };
@@ -87,6 +90,10 @@ export default class Editor extends PureComponent<IProps, IState> {
       items: items.filter(item => item.id !== selectedItem),
       selectedItem: null,
     });
+  }
+
+  editText = () => {
+    this.setState({ openedEditText: true });
   }
 
   setImage = (image: string) => {

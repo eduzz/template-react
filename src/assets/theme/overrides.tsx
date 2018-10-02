@@ -36,6 +36,9 @@ const overrides: Overrides = {
       '&:before': {
         display: 'none'
       }
+    },
+    inputMultiline: {
+      height: 100
     }
   },
   MuiTablePagination: {

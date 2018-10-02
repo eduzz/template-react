@@ -1,6 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import { WithStyles } from 'decorators/withStyles';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import EditorContext from '../context';
 import { IEditorContext, IEditorItem } from '../interfaces';
@@ -12,7 +12,7 @@ import HorizontalAlignment from './HorizontalAlignment';
 import ImageUpload from './ImageUpload';
 import Placeholders from './Placeholders';
 import Remove from './Remove';
-import TextEdit from './TextEdit';
+import TextDialog from './TextDialog';
 import VerticalAlignment from './VerticalAlignment';
 
 interface IProps {
@@ -46,55 +46,64 @@ class Toolbar extends React.PureComponent<IProps> {
     const { classes, context } = this.props;
 
     return (
-      <Grid container className={classes.root}>
-        <Grid item>
-          <FontSize
-            value={context.getCurrentConfig('fontSize')}
-            onChange={this.handleChange}
-          />
-          <FontFamily
-            value={context.getCurrentConfig('fontFamily')}
-            onChange={this.handleChange}
-          />
-          <Placeholders
-            onChange={context.add}
-          />
-        </Grid>
-        <Grid item>
-          <HorizontalAlignment
-            value={context.getCurrentConfig('justifyContent')}
-            onChange={this.handleChange}
-          />
-        </Grid>
-        <Grid item>
-          <VerticalAlignment
-            value={context.getCurrentConfig('alignItems')}
-            onChange={this.handleChange}
-          />
-        </Grid>
-        <Grid item>
+      <Fragment>
+        <TextDialog
+          opened={context.openedEditText}
+          value={context.getCurrentConfig('text')}
+          onChange={this.handleChange}
+        />
+
+        <Grid container className={classes.root}>
+          <Grid item>
+            <FontSize
+              value={context.getCurrentConfig('fontSize')}
+              onChange={this.handleChange}
+            />
+            <FontFamily
+              value={context.getCurrentConfig('fontFamily')}
+              onChange={this.handleChange}
+            />
+            <Placeholders
+              onChange={context.add}
+            />
+          </Grid>
+          <Grid item>
+            <HorizontalAlignment
+              value={context.getCurrentConfig('justifyContent')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <VerticalAlignment
+              value={context.getCurrentConfig('alignItems')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          {/* <Grid item>
           <TextEdit
             value={context.getCurrentConfig('text')}
             onChange={this.handleChange}
           />
-        </Grid>
-        <ColorPicker
-          value={context.getCurrentConfig('color')}
-          onChange={this.handleChange}
-        />
-        <Grid item>
-          <ImageUpload
-            onChange={context.setImage}
+        </Grid> */}
+          <ColorPicker
+            value={context.getCurrentConfig('color')}
+            onChange={this.handleChange}
           />
-        </Grid>
-        <Grid item>
-          <Add onClick={context.add} />
-          <Remove
-            disabled={!context.selectedItem}
-            onClick={context.remove}
-          />
-        </Grid>
-      </Grid >
+          <Grid item>
+            <ImageUpload
+              onChange={context.setImage}
+            />
+          </Grid>
+          <Grid item>
+            <Add onClick={context.add} />
+            <Remove
+              disabled={!context.selectedItem}
+              onClick={context.remove}
+            />
+          </Grid>
+        </Grid >
+
+      </Fragment>
     );
   }
 }

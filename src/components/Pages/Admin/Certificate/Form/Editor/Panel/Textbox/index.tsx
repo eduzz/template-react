@@ -7,6 +7,7 @@ import { IEditorItem } from '../../interfaces';
 interface IProps {
   selected: boolean;
   onMouseDown: (id: number) => void;
+  onDoubleClick: (id: number) => void;
   onChange: (value: IEditorItem['placement']) => void;
   id: number;
   text: string;
@@ -62,6 +63,13 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     e.stopPropagation();
   }
 
+  handleDoubleClick = (e: SyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.props.onDoubleClick(this.props.id);
+  }
+
   handleResizeStop = (e: SyntheticEvent, size: { width: number; height: number; }) => {
     const result = { ...this.props.placement, ...size };
     this.props.onChange(result);
@@ -77,25 +85,27 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
     const { hover } = this.state;
 
     return (
-      <Draggable
-        default={placement}
-        className={`${classes.border} ${(selected || hover) ? classes.selected : ''}`}
-        onMouseDown={this.handleMouseDown}
-        onMouseOver={this.handleMouseOver}
-        onMouseOut={this.handleMouseOut}
-        onDragStop={this.handleDragStop}
-        onClick={this.handleClick}
-        scale={scale}
-      >
-        <Resizable
-          style={style}
+      <div onDoubleClick={this.handleDoubleClick}>
+        <Draggable
           default={placement}
-          onResizeStop={this.handleResizeStop}
+          className={`${classes.border} ${(selected || hover) ? classes.selected : ''}`}
+          onMouseDown={this.handleMouseDown}
+          onMouseOver={this.handleMouseOver}
+          onMouseOut={this.handleMouseOut}
+          onDragStop={this.handleDragStop}
+          onClick={this.handleClick}
           scale={scale}
         >
-          <span>{text}</span>
-        </Resizable>
-      </Draggable>
+          <Resizable
+            style={style}
+            default={placement}
+            onResizeStop={this.handleResizeStop}
+            scale={scale}
+          >
+            <span dangerouslySetInnerHTML={{ __html: text}} />
+          </Resizable>
+        </Draggable>
+      </div>
     );
   }
 }

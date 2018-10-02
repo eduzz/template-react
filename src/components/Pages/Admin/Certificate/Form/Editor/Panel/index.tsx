@@ -101,6 +101,11 @@ class Panel extends PureComponent<IProps, IState> {
     this.handleChange();
   }
 
+  handleDoubleClick = (id: number) => {
+    this.props.context.select(id);
+    this.props.context.editText();
+  }
+
   render() {
     const { classes, context } = this.props;
     const { containerStyle, wrapperStyle, scale } = this.state;
@@ -125,6 +130,7 @@ class Panel extends PureComponent<IProps, IState> {
                   onChange={this.handlePlacementChange}
                   selected={context.selectedItem === id}
                   onMouseDown={context.select}
+                  onDoubleClick={this.handleDoubleClick}
                 />
               );
             })}
