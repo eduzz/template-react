@@ -23,10 +23,17 @@ interface IState {
 
 @WithStyles({
   border: {
-    border: 'solid 1px transparent',
+    border: 'dashed 2px transparent',
   },
   selected: {
     borderColor: '#424242',
+    '& > span': {
+      width: '24px !important',
+      height: '24px !important',
+      top: 'calc(100% - 14px) !important',
+      left: 'calc(100% - 14px) !important',
+      backgroundColor: '#424242',
+    }
   },
 })
 export default class Textbox extends React.PureComponent<IProps, IState> {
@@ -102,7 +109,7 @@ export default class Textbox extends React.PureComponent<IProps, IState> {
             onResizeStop={this.handleResizeStop}
             scale={scale}
           >
-            <span dangerouslySetInnerHTML={{ __html: text}} />
+            <span dangerouslySetInnerHTML={{ __html: text }} />
           </Resizable>
         </Draggable>
       </div>
