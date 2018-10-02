@@ -3,6 +3,10 @@ import { WithStyles } from 'decorators/withStyles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import upsellService from 'services/upsell';
+import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
@@ -10,7 +14,9 @@ interface IProps {
 }
 
 interface IState {
-  value: any;
+  type: number;
+  products: any;
+  selectedProductId: number;
 }
 
 @WithStyles(theme => ({
@@ -34,40 +40,95 @@ export default class Type extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      value: 'nutror',
+      type: 1,
+      products: [],
+      selectedProductId: 0,
     };
   }
 
-  componentDidMount() {
-    this.props.onChange && this.props.onChange({ type: this.state.value });
+  componentWillMount() {
+    upsellService.getProducts(this.state.type).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((products: any) => {
+      this.setState({
+        products,
+      });
+    });
   }
 
+  handleClick = (value: number) =>
+    () => {
+      this.setState({
+        type: value,
+      });
+
+      upsellService.getProducts(value).pipe(
+        rxjsOperators.logError(),
+        rxjsOperators.bindComponent(this),
+      ).subscribe((products: any) => {
+        this.setState({
+          products,
+        });
+      });
+    }
+
   handleChange = (e: any) => {
+    const { onChange } = this.props;
+
     this.setState({
-      value: e.target.value,
+      selectedProductId: e.target.value,
     });
 
-    this.props.onChange && this.props.onChange({ type: e.target.value });
+    if (onChange) {
+      onChange({
+        product: e.target.value,
+      });
+    }
   }
 
   render() {
     const { classes } = this.props;
-    const { value } = this.state;
+    const { type, products } = this.state;
 
     return (
       <div className={classes.root}>
         <FormControl fullWidth>
           <label className={classes.title}>
-            Escolha um produto MyEduzz
+            Escolha um produto
           </label>
           <div className={classes.content}>
+            <FormControlLabel
+              control={
+                <Radio
+                  checked={type === 1}
+                  onClick={this.handleClick(1)}
+                />
+              }
+              label='Eduzz'
+            />
+            <FormControlLabel
+              control={
+                <Radio
+                  checked={type === 2}
+                  onClick={this.handleClick(2)}
+                />
+              }
+              label='Nutror'
+            />
             <Select
               className={classes.select}
-              value={value}
+              value={type}
               onChange={this.handleChange}
             >
-              <MenuItem value='nutror'>Nutror</MenuItem>
-              <MenuItem value='myeduzz'>MyEduzz</MenuItem>
+              {products.map((product: any) =>
+                <MenuItem
+                  key={product.id}
+                  value={product.id}
+                >
+                  {product.title}
+                </MenuItem>
+              )}
             </Select>
           </div>
         </FormControl>

@@ -14,6 +14,12 @@ class UpsellService {
       rxjsOperators.map(response => response.data),
     );
   }
+
+  public getProducts(type: number): any {
+    return apiService.get('/producer/upsell/products/' + type).pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
 }
 
 const upsellService = new UpsellService();
