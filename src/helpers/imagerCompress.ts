@@ -16,7 +16,7 @@ export default function imageCompress(imageBase64: string, width: number, height
       insideContext.drawImage(img, 0, 0, insideCanvas.width, insideCanvas.height);
       context.drawImage(insideCanvas, 0, 0, insideCanvas.width, insideCanvas.height, 0, 0, canvas.width, canvas.height);
 
-      canvas.toBlob(result => resolve(result));
+      canvas.toBlob((blob) => resolve(blob));
     };
 
     img.src = imageBase64;

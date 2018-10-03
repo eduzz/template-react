@@ -1,21 +1,27 @@
 import { WithStyles } from 'decorators/withStyles';
-import React from 'react';
+import React, { PureComponent, RefObject } from 'react';
+import { REACT_APP_CDN } from 'settings';
 
-import { EditorContext } from '../';
-import Textbox, { ITextBox } from './Textbox';
-
-interface IProps {
-  classes?: any;
-  onChange?: any;
-  context?: any;
-}
+import { CERTIFICATE_SIZE } from '../config';
+import EditorContext from '../context';
+import { IEditorContext, IEditorItem } from '../interfaces';
+import generateOutputHTML from './helper';
+import Textbox from './Textbox';
 
 interface IState {
-  selectedItem: number | null;
-  items: Array<ITextBox>;
+  scale: number;
+  wrapperStyle: any;
+  containerStyle: any;
+  outputHtml: string;
 }
 
-@WithStyles(theme => ({
+interface IProps {
+  onChange: (html: string) => void;
+  classes?: any;
+  context?: IEditorContext;
+}
+
+@WithStyles({
   root: {
     position: 'relative',
     marginBottom: 16,
@@ -32,124 +38,110 @@ interface IState {
     width: '100%',
     height: '100%',
   },
-}))
-class Panel extends React.Component<IProps, IState> {
-  private panelEl: any;
-  private containerEl: any;
+})
+class Panel extends PureComponent<IProps, IState> {
+  private panelEl: RefObject<HTMLDivElement>;
+  private containerEl: RefObject<HTMLDivElement>;
+  private panelStyle = { ...CERTIFICATE_SIZE };
 
   constructor(props: IProps) {
     super(props);
 
     this.panelEl = React.createRef();
     this.containerEl = React.createRef();
+
+    this.state = {
+      scale: 1,
+      outputHtml: '',
+      wrapperStyle: {},
+      containerStyle: {
+        transform: `scale(1)`,
+        transformOrigin: 'top left'
+      }
+    };
   }
 
   componentDidMount = () => {
     this.handleChange();
+
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
   }
 
   componentDidUpdate() {
     this.handleChange();
   }
 
-  handleDismiss = (e: any) => {
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    const scale = this.containerEl.current.offsetWidth / this.panelEl.current.offsetWidth;
+
+    if (scale === this.state.scale) return;
+
     this.setState({
-      selectedItem: null,
+      scale,
+      containerStyle: { ...this.state.containerStyle, transform: `scale(${scale})` },
+      wrapperStyle: { height: this.panelStyle.height * scale }
     });
   }
 
   handleChange = () => {
-    this.props.onChange(`
-      <html>
-        <head>
-            <meta charset='utf-8'>
-            <link href='https://fonts.googleapis.com/css?family=Allura' rel='stylesheet'>
-            <style>
-                @page {
-                    size: A4 landscape;
-                    margin:0;
-                }
+    const outputHtml = generateOutputHTML(this.panelEl.current.outerHTML);
+    if (outputHtml === this.state.outputHtml) return;
 
-                html, body {
-                    margin: 0;
-                    padding: 0;
-                    width: 3508px;
-                    height: 2479px;
-                    overflow: hidden;
-                }
-
-                body {
-                    zoom: 0.48;
-                }
-
-                img {
-                  position: absolute;
-                }
-            </style>
-        </head>
-        <body>
-            ${this.panelEl.current.outerHTML}
-        </body>
-      </html>
-    `);
+    this.setState({ outputHtml });
+    this.props.onChange(outputHtml);
   }
 
-  handlePlacementChange = (placement: any) => {
+  handlePlacementChange = (placement: IEditorItem['placement']) => {
     this.props.context.setPlacement(placement);
-
     this.handleChange();
+  }
+
+  handleDoubleClick = (id: number) => {
+    this.props.context.select(id);
+    this.props.context.editText();
   }
 
   render() {
     const { classes, context } = this.props;
-    const panelStyle = {
-      width: 3508,
-      height: 2480,
-    };
-    let scale = 1;
-    let containerStyle;
-
-    if (this.containerEl.current) {
-      scale = this.containerEl.current.offsetWidth / this.panelEl.current.offsetWidth;
-      containerStyle = {
-        transform: `scale(${scale})`,
-        transformOrigin: 'top left',
-      };
-    }
+    const { containerStyle, wrapperStyle, scale } = this.state;
 
     return (
-      <div className={classes.root} style={containerStyle} ref={this.containerEl}>
-        <div className={classes.panel} onClick={context.dismiss} ref={this.panelEl} style={panelStyle}>
-          <img
-            alt=''
-            src={context.image}
-            className={classes.backgroundImage}
-          />
+      <div style={wrapperStyle}>
+        <div className={classes.root} style={containerStyle} ref={this.containerEl}>
+          <div className={classes.panel} onClick={context.dismiss} ref={this.panelEl} style={this.panelStyle}>
+            <img src={`${REACT_APP_CDN}${context.image}`} className={classes.backgroundImage} />
 
-          {context.items.map((item: any) => {
-            const { id, text, placement, ...style } = item;
+            {context.items.map(item => {
+              const { id, text, placement, ...style } = item;
 
-            return (
-              <Textbox
-                key={id}
-                id={id}
-                text={text}
-                style={style}
-                scale={scale}
-                placement={placement}
-                onChange={this.handlePlacementChange}
-                selected={context.selectedItem === id}
-                onMouseDown={context.select}
-              />
-            );
-          })}
+              return (
+                <Textbox
+                  key={id}
+                  id={id}
+                  text={text}
+                  style={style}
+                  scale={scale}
+                  placement={placement}
+                  onChange={this.handlePlacementChange}
+                  selected={context.selectedItem === id}
+                  onMouseDown={context.select}
+                  onDoubleClick={this.handleDoubleClick}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
 
-export default React.forwardRef((props: IProps, ref: any) => (
+export default React.forwardRef((props: IProps, ref) => (
   <EditorContext.Consumer>
     {context => <Panel {...props} context={context} {...ref} />}
   </EditorContext.Consumer>

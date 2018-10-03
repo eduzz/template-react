@@ -1,10 +1,10 @@
-import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from 'mdi-react/DeleteIcon';
+import React from 'react';
 
 interface IProps {
-  onClick?: any;
-  disabled?: boolean;
+  onClick: () => void;
+  disabled: boolean;
 }
 
 export default class Remove extends React.PureComponent<IProps> {
