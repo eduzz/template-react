@@ -10,3 +10,4 @@ export const TOAST_DEFAULT_TIMEOUT = 3000;
 export const TOAST_ERROR_TIMEOUT = 15000;
 
 export const BASEURL_V2 = (process.env.REACT_APP_BASEURL_V2 || '').trim();
+export const REACT_APP_CDN = (process.env.REACT_APP_CDN || '').trim();

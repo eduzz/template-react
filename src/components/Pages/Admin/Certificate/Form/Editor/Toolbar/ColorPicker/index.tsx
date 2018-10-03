@@ -1,26 +1,22 @@
-import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
+import React, { ChangeEvent } from 'react';
 
 interface IProps {
   classes?: any;
-  value?: string;
-  onChange?: Function;
-}
-
-interface IState {
   value: string;
+  onChange: (value: { color: string }) => void;
 }
 
-@WithStyles(theme => ({
+@WithStyles({
   root: {
     display: 'flex',
     alignItems: 'center',
     height: 45,
     margin: '0 8px 0 16px',
-  },
-}))
-export default class ColorPicker extends React.PureComponent<IProps, IState> {
-  handleChange = (e: any) => {
+  }
+})
+export default class ColorPicker extends React.PureComponent<IProps> {
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.onChange({ color: e.target.value });
   }
 

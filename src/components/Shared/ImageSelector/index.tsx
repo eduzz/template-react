@@ -81,8 +81,8 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
   handleSave = async () => {
     const { width, height } = this.props;
 
-    const image = await imageCompress(this.cropper.crop(), width, height);
     this.setState({ saving: true, progress: 0 });
+    const image = await imageCompress(this.cropper.crop(), width, height);
 
     this.uploadSubscription && this.uploadSubscription.unsubscribe();
     this.uploadSubscription = uploadService.saveImage(image).pipe(

@@ -1,44 +1,41 @@
-import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import { WithStyles } from 'decorators/withStyles';
+import React, { ChangeEvent } from 'react';
+
+import { DEFAULT_FONT, FONTS } from '../../config';
 
 interface IProps {
-  onChange?: any;
-  value?: string;
+  value: string;
+  onChange: (value: { fontFamily: string }) => void;
+  classes?: any;
 }
 
+@WithStyles({
+  root: {
+    width: 150,
+    height: 46
+  }
+})
 export default class FontFamily extends React.PureComponent<IProps> {
-  private defaultValue = 'Arial';
-  private fontFamilyList = [
-    'Arial',
-    'Arial Black',
-    'Allura',
-    'Comic Sans MS',
-    'Courier New',
-    'Georgia',
-    'Impact',
-    'Times New Roman',
-    'Trebuchet',
-    'Verdana',
-  ];
 
-  handleChange = (e: any) => {
-    this.props.onChange && this.props.onChange({ fontFamily: e.target.value });
+  handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    this.props.onChange({ fontFamily: e.target.value });
   }
 
   render() {
-    const { value } = this.props;
+    const { value, classes } = this.props;
 
     return (
-      <FormControl>
+      <FormControl className={classes.root}>
         <Select
-          value={value || this.defaultValue}
+          value={value || DEFAULT_FONT}
           onChange={this.handleChange}
           disabled={!value}
           displayEmpty
         >
-          {this.fontFamilyList.map((fontFamily: string, index: number) =>
+          {FONTS.map((fontFamily: string, index: number) =>
             <MenuItem key={index} value={fontFamily}>
               <span style={{ fontFamily }}>{fontFamily}</span>
             </MenuItem>

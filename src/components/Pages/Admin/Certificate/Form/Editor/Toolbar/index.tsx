@@ -1,9 +1,9 @@
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import { EditorContext } from '../';
+import EditorContext from '../context';
+import { IEditorContext, IEditorItem } from '../interfaces';
 import Add from './Add';
 import ColorPicker from './ColorPicker';
 import FontFamily from './FontFamily';
@@ -12,12 +12,12 @@ import HorizontalAlignment from './HorizontalAlignment';
 import ImageUpload from './ImageUpload';
 import Placeholders from './Placeholders';
 import Remove from './Remove';
-import TextEdit from './TextEdit';
+import TextDialog from './TextDialog';
 import VerticalAlignment from './VerticalAlignment';
 
 interface IProps {
   classes?: any;
-  context?: any;
+  context?: IEditorContext;
 }
 
 @WithStyles(theme => ({
@@ -35,13 +35,10 @@ interface IProps {
     height: 43,
     border: 'solid 1px black',
     padding: 8,
-  },
-  link: {
-    padding: '16px 0 16px 0',
-  },
+  }
 }))
 class Toolbar extends React.PureComponent<IProps> {
-  handleChange = (value: any) => {
+  handleChange = (value: IEditorItem) => {
     this.props.context.modify(value);
   }
 
@@ -49,63 +46,69 @@ class Toolbar extends React.PureComponent<IProps> {
     const { classes, context } = this.props;
 
     return (
-      <Grid container className={classes.root}>
-        <Grid item>
-          <FontSize
-            value={context.current('fontSize')}
-            onChange={this.handleChange}
-          />
-          <FontFamily
-            value={context.current('fontFamily')}
-            onChange={this.handleChange}
-          />
-          <Placeholders
-            onChange={context.add}
-          />
-        </Grid>
-        <Grid item>
-          <HorizontalAlignment
-            value={context.current('justifyContent')}
-            onChange={this.handleChange}
-          />
-        </Grid>
-        <Grid item>
-          <VerticalAlignment
-            value={context.current('alignItems')}
-            onChange={this.handleChange}
-          />
-        </Grid>
-        <Grid item>
-          <TextEdit
-            value={context.current('text')}
-            onChange={this.handleChange}
-          />
-        </Grid>
-        <ColorPicker
-          value={context.current('color')}
+      <Fragment>
+        <TextDialog
+          opened={context.openedEditText}
+          value={context.getCurrentConfig('text')}
           onChange={this.handleChange}
         />
-        <ImageUpload
-          onChange={context.setImage}
-        />
-        <Grid item>
-          <Add onClick={context.add} />
-          <Remove
-            disabled={!context.selectedItem}
-            onClick={context.remove}
+
+        <Grid container className={classes.root}>
+          <Grid item>
+            <FontSize
+              value={context.getCurrentConfig('fontSize')}
+              onChange={this.handleChange}
+            />
+            <FontFamily
+              value={context.getCurrentConfig('fontFamily')}
+              onChange={this.handleChange}
+            />
+            <Placeholders
+              onChange={context.add}
+            />
+          </Grid>
+          <Grid item>
+            <HorizontalAlignment
+              value={context.getCurrentConfig('justifyContent')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          <Grid item>
+            <VerticalAlignment
+              value={context.getCurrentConfig('alignItems')}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          {/* <Grid item>
+          <TextEdit
+            value={context.getCurrentConfig('text')}
+            onChange={this.handleChange}
           />
-        </Grid>
-        <Grid item className={classes.link}>
-          <Typography>
-            Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
-          </Typography>
-        </Grid>
-      </Grid >
+        </Grid> */}
+          <ColorPicker
+            value={context.getCurrentConfig('color')}
+            onChange={this.handleChange}
+          />
+          <Grid item>
+            <ImageUpload
+              onChange={context.setImage}
+            />
+          </Grid>
+          <Grid item>
+            <Add onClick={context.add} />
+            <Remove
+              disabled={!context.selectedItem}
+              onClick={context.remove}
+            />
+          </Grid>
+        </Grid >
+
+      </Fragment>
     );
   }
 }
 
-export default React.forwardRef((props: IProps, ref: any) => (
+export default React.forwardRef((props, ref) => (
   <EditorContext.Consumer>
     {context => <Toolbar {...props} context={context} {...ref} />}
   </EditorContext.Consumer>
