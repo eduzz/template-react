@@ -65,6 +65,10 @@ export default class AppRouter extends React.PureComponent<IProps> {
     this.history.push(path);
   }
 
+  replace = (path: string): void => {
+    this.history.replace(path);
+  }
+
   changeUrl = (url: string) => {
     window.history.pushState && window.history.pushState(null, null, url);
   }
