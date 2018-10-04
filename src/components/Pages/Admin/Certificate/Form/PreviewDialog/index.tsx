@@ -69,7 +69,7 @@ export default class CertificatePreviewDialog extends FormComponent<IProps, ISta
               <Typography>
                 Forneça as informações para o preview do certificado, é necessário salvar para poder
                 visualizar as altereções feitas, uma vez gerado o link do preview ele ficará disponível
-                por 15 minutos e as alterações feitas serão sinconizadas.
+                por 15 minutos e as alterações feitas serão sincronizadas.
               </Typography>
 
               {PLACEHOLDERS.map(placeholder =>
