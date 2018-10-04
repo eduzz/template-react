@@ -3,24 +3,28 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import { FieldSwitch } from '@react-form-fields/material-ui';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
+import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
+import getCertificatePreviewUrl from 'helpers/certificateUrl';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
+import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
 import React, { Fragment, SyntheticEvent } from 'react';
 import { RouteComponentProps } from 'react-router';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
-import AppRouter, { RouterContext } from '../../../../Router';
 import Editor from './Editor';
 import { IEditorItem } from './Editor/interfaces';
+import CertificatePreviewDialog from './PreviewDialog';
 
 interface IState extends IStateForm<{
   id: number;
@@ -32,6 +36,7 @@ interface IState extends IStateForm<{
 }> {
   isEdit: boolean;
   loading: boolean;
+  previewOpened: boolean;
   error?: any;
 }
 
@@ -55,7 +60,8 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     this.state = {
       ...this.state,
       model: { ...this.state.model, default: false },
-      isEdit: !!this.props.match.params.id, loading: true
+      isEdit: !!this.props.match.params.id, loading: true,
+      previewOpened: false
     };
   }
 
@@ -87,26 +93,32 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     }, error => this.setState({ error, loading: false }));
   }
 
-  handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
+  handleSubmit = async (e?: SyntheticEvent) => {
+    e && e.preventDefault();
 
     if (!this.isFormValid()) {
-      return;
+      return null;
     }
 
     const { model } = this.state;
     const params = { ...model, config: JSON.stringify(model.config) };
 
-    certificateService.save(params).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
-    ).subscribe(certificateId => {
-      Toast.show('Certificado salvo com sucesso');
+    return new Promise<number>(resolve => {
+      certificateService.save(params).pipe(
+        rxjsOperators.loader(),
+        rxjsOperators.logError(),
+        rxjsOperators.bindComponent(this),
+      ).subscribe(certificateId => {
+        Toast.show('Certificado salvo com sucesso');
+        resolve(certificateId);
 
-      if (certificateId === model.id) return;
-      this.props.router.replace(`/certificados/${certificateId}/editar`);
-    }, err => Toast.error(err));
+        if (certificateId === model.id) return;
+        this.props.router.replace(`/certificados/${certificateId}/editar`);
+      }, err => {
+        resolve(null);
+        Toast.error(err);
+      });
+    });
   }
 
   handleChangeEditor = (value: { image: string; html: string; items: IEditorItem[] }) => {
@@ -114,12 +126,32 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     this.setState({ model: { ...this.state.model, config, html } });
   }
 
+  handleOpenPreview = () => {
+    this.setState({ previewOpened: true });
+  }
+
+  handleClosePreview = async (placeholders?: { [key: string]: string }) => {
+    this.setState({ previewOpened: false });
+    if (!placeholders) return;
+
+    const certificateId = await this.handleSubmit();
+    if (!certificateId) return;
+
+    window.open(getCertificatePreviewUrl(certificateId, placeholders));
+  }
+
   render() {
-    const { model, loading, error, isEdit } = this.state;
+    const { model, loading, error, isEdit, previewOpened } = this.state;
     const { classes } = this.props;
 
     return (
       <Fragment>
+        <CertificatePreviewDialog
+          opened={previewOpened}
+          onCancel={this.handleClosePreview}
+          onComplete={this.handleClosePreview}
+        />
+
         <form noValidate onSubmit={this.handleSubmit}>
           <ValidationContext ref={this.bindValidationContext}>
             <Toolbar>
@@ -131,9 +163,16 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
                 </Grid>
 
                 <Grid item xs={false}>
-                  <Button type='submit' color='secondary' disabled={loading || error}>
+                  <Button disabled={loading || error} onClick={this.handleOpenPreview}>
+                    <OpenInNewIcon />
+                    <Hidden implementation='css' xsDown>Preview</Hidden>
+                  </Button>
+                </Grid>
+
+                <Grid item xs={false}>
+                  <Button type='submit' color='secondary' variant='raised' disabled={loading || error}>
                     <ContentSaveIcon />
-                    Salvar
+                    <Hidden implementation='css' xsDown>Salvar</Hidden>
                   </Button>
                 </Grid>
               </Grid>
