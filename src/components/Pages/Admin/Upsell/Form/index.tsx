@@ -1,56 +1,50 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import FormControl from '@material-ui/core/FormControl';
+import React, { Fragment } from 'react';
+import Toolbar from 'components/Layout/Toolbar';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { WithStyles } from 'decorators/withStyles';
+import Type from './Type';
+import Info from './Info';
+import ImageUploader from './ImageUploader';
+import Actions from './Actions';
+import UpsellConfig from './UpsellConfig';
 
 interface IProps {
   classes?: any;
-  onChange?: any;
 }
 
 interface IState {
+  type: any;
+  published: boolean;
+  highlight: boolean;
   title: string;
   description: string;
-  isSelectorOpen: boolean;
+  smallImage: string | null;
+  highlightImage: string | null;
 }
 
 @WithStyles(theme => ({
-  root: {
+  container: {
     padding: 16,
+    // maxWidth: 1000,
   },
-  titleLabel: {
-    marginBottom: 8,
+  section: {
+    paddingBottom: 24,
   },
-  descriptionLabel: {
-    margin: '16px 0 8px 0',
+  actions: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
   },
-  imageLabel: {
-    marginBottom: 8,
+  imageUploadArea: {
+    display: 'flex',
   },
   imageContainer: {
     paddingTop: 27,
   },
-  imageArea: {
-    width: 'fit-content',
-    minWidth: 231,
-    height: 155,
-    border: 'solid 1px #c4c4c4',
-    borderRadius: 4,
-    marginBottom: 16,
-  },
-  image: {
-    height: '100%',
-  },
   highlightImageContainer: {
     paddingTop: 8,
-  },
-  button: {
-    borderRadius: 4,
-    backgroundColor: '#009358',
-    height: 40,
-    width: 155,
+    marginRight: 16,
   },
 }))
 export default class Form extends React.PureComponent<IProps, IState> {
@@ -58,61 +52,85 @@ export default class Form extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
+      type: 'nutror',
+      published: true,
+      highlight: false,
       title: '',
       description: '',
-      isSelectorOpen: false,
+      smallImage: null,
+      highlightImage: null,
     };
   }
 
-  handleChange = (e: any) => {
-    const state = { [e.target.name]: e.target.value } as any;
+  handleSubmit = (e: any) => {
+    e.preventDefault();
 
+    console.log(JSON.stringify(this.state));
+  }
+
+  handleChange = (state: any) => {
     this.setState(state);
-
-    this.props.onChange && this.props.onChange(state);
   }
 
   render() {
     const { classes } = this.props;
-    const { title, description } = this.state;
 
     return (
-      <Paper className={classes.root}>
-        <Grid container spacing={32}>
-          <Grid item xs={12}>
-            <FormControl fullWidth>
-              <label className={classes.titleLabel}>
-                Título
-              </label>
-              <TextField
-                value={title}
-                name='title'
-                onChange={this.handleChange}
-                variant='outlined'
-                fullWidth
-              />
-            </FormControl>
-            <FormControl fullWidth>
-              <label className={classes.descriptionLabel}>
-                Descrição
-              </label>
-              <TextField
-                value={description}
-                name='description'
-                placeholder='130 Caracteres'
-                onChange={this.handleChange}
-                variant='outlined'
-                fullWidth
-                multiline
-                rows={4}
-                inputProps={{
-                  maxLength: 130,
-                }}
-              />
-            </FormControl>
+      <Fragment>
+        <Toolbar title='Upsell' />
+
+        <Grid container justify='center'>
+          <Grid item xs={12} lg={10}>
+            <Paper className={classes.container}>
+              <form onSubmit={this.handleSubmit}>
+                <Grid container>
+                  <Grid item xs={12} className={classes.section}>
+                    <Type onChange={this.handleChange} />
+                  </Grid>
+                  <Grid item xs={12} className={classes.section}>
+                    <Info onChange={this.handleChange} />
+                  </Grid>
+                  <Grid item xs={12} className={classes.section}>
+                    <UpsellConfig
+                      onChange={this.handleChange}
+                    />
+                  </Grid>
+                  <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
+                    <Grid item xs={12} md={9}>
+                      <label className={classes.imageLabel}>
+                        Selecione as Imagens
+                      </label>
+                      <div className={classes.highlightImageContainer}>
+                        <ImageUploader
+                          width={1840}
+                          height={460}
+                          label='highlightImage'
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </Grid>
+                    <Grid item md={3}>
+                      <div className={classes.imageContainer}>
+                        <ImageUploader
+                          width={250}
+                          height={250}
+                          label='smallImage'
+                          onChange={this.handleChange}
+                        />
+                      </div>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <div className={classes.actions}>
+                  <Actions
+                    onChange={this.handleChange}
+                  />
+                </div>
+              </form>
+            </Paper>
           </Grid>
         </Grid>
-      </Paper>
+      </Fragment>
     );
   }
 }
