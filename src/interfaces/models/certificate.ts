@@ -1,11 +1,12 @@
 export interface ICertificate {
-  id: number;
+  id?: number;
   title: string;
   image: string;
   config: string;
-  created_at: Date;
-  user_id: number;
+  user_id?: number;
   default: boolean;
+
+  created_at?: Date;
 }
 
 export interface ICertificateCourse {
