@@ -168,6 +168,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                           label='highlight_image'
                           onChange={this.handleChange}
                           image={highlight_image}
+                          disabled={!highlight}
                         />
                       </div>
                     </Grid>

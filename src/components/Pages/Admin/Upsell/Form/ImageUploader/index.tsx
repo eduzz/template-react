@@ -12,6 +12,7 @@ interface IProps {
   width: number;
   height: number;
   image?: any;
+  disabled?: boolean;
 }
 
 interface IState {
@@ -75,6 +76,14 @@ interface IState {
       color: '#000',
     },
   },
+  disabled: {
+    background: '#f3f3f3',
+    cursor: 'not-allowed',
+    '&:hover': {
+      border: 'solid 1px #c4c4c4',
+      color: '#cbcbcb',
+    },
+  },
 }))
 export default class ImageUploader extends React.PureComponent<IProps, IState> {
   static defaultProps = {
@@ -127,7 +136,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, width, height } = this.props;
+    const { classes, width, height, disabled } = this.props;
     const { image, isSelectorOpen } = this.state;
 
     return (
@@ -139,7 +148,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
           onComplete={this.handleSelectorComplete}
         />
         <div className={classes.content}>
-          <div className={classes.imageArea} onClick={this.handleClick}>
+          <div className={`${classes.imageArea} ${disabled && classes.disabled}`} onClick={!disabled ? this.handleClick : null}>
             <CloudUploadIcon className={classes.uploadIcon} />
             {image &&
               <div
