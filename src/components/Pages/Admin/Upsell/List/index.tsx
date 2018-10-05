@@ -10,20 +10,21 @@ import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import FabButton from 'components/Shared/FabButton';
 import { WithStyles } from 'decorators/withStyles';
-import { ICertificate } from 'interfaces/models/certificate';
+import { IUpsell } from 'interfaces/models/upsell';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
 import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
 import PlusIcon from 'mdi-react/PlusIcon';
 import SortVariantIcon from 'mdi-react/SortVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
+import List from '@material-ui/core/List';
 import rxjsOperators from 'rxjs-operators';
-import certificateService from 'services/certificate';
+import upsellService from 'services/upsell';
 
-import CertificateItem from './ListItem';
+import UpsellItem from './ListItem';
 
 interface IState {
   error?: any;
-  certificates?: ICertificate[];
+  upsells?: IUpsell[];
   orderBy: string;
   orderDirection: 'asc' | 'desc';
 }
@@ -34,16 +35,14 @@ interface IProps {
 }
 
 @WithStyles(theme => ({
-  title: {
-  },
   loader: {
-    textAlign: 'center'
+    textAlign: 'center',
   }
 }))
 class UpsellListPage extends PureComponent<IProps, IState> {
   actions = [{
     icon: PlusIcon,
-    onClick: () => this.props.router.navigate('/certificados/novo')
+    onClick: () => this.props.router.navigate('/upsell/novo')
   }];
 
   constructor(props: IProps) {
@@ -59,16 +58,16 @@ class UpsellListPage extends PureComponent<IProps, IState> {
   }
 
   loadData = () => {
-    this.setState({ error: null, certificates: null });
+    this.setState({ error: null, upsells: null });
     const { orderBy, orderDirection } = this.state;
 
-    certificateService.list(orderBy, orderDirection).pipe(
+    upsellService.list(orderBy, orderDirection).pipe(
       rxjsOperators.delay(1000),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
-    ).subscribe(certificates => {
-      this.setState({ certificates });
-    }, error => this.setState({ error }));
+    ).subscribe((upsells: any) => {
+      this.setState({ upsells });
+    }, (error: any) => this.setState({ error }));
   }
 
   handleChangeOrderBy = (orderBy: string) => {
@@ -81,11 +80,11 @@ class UpsellListPage extends PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { certificates, error, orderBy, orderDirection } = this.state;
+    const { upsells, error, orderBy, orderDirection } = this.state;
 
     return (
       <Fragment>
-        <Toolbar title='Certificados' />
+        <Toolbar title='Upsell' />
 
         <FabButton actions={this.actions} />
 
@@ -93,8 +92,8 @@ class UpsellListPage extends PureComponent<IProps, IState> {
           <CardContent>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography className={classes.title} variant='subheading'>
-                  Cursos que foram atribuídos ao certificado
+                <Typography variant='subheading'>
+                  Listagem de Upsell
                 </Typography>
               </Grid>
 
@@ -104,14 +103,14 @@ class UpsellListPage extends PureComponent<IProps, IState> {
                   options={[{ value: 'title', label: 'Título' }, { value: 'created_at', label: 'Data de criação' }]}
                   onChange={this.handleChangeOrderBy}
                   fullWidth={false}
-                  disabled={!error && !certificates}
+                  disabled={!error && !upsells}
                   margin='none'
                 />
               </Grid>
 
               <Grid item xs={false}>
                 <IconButton
-                  disabled={!error && !certificates}
+                  disabled={!error && !upsells}
                   onClick={this.toggleOrderDirection}
                 >
                   {orderDirection === 'asc' ? <ArrowDownIcon /> : <ArrowUpIcon />}
@@ -122,7 +121,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
             </Grid>
           </CardContent>
 
-          {!error && !certificates &&
+          {!error && !upsells &&
             <CardContent className={classes.loader}>
               <CircularProgress color='secondary' />
             </CardContent>
@@ -134,9 +133,13 @@ class UpsellListPage extends PureComponent<IProps, IState> {
             </CardContent>
           }
 
-          {!!certificates && certificates.map(certificate => (
-            <CertificateItem key={certificate.id} certificate={certificate} />
-          ))}
+          {!!upsells &&
+            <List disablePadding>
+              {upsells.map(upsell => (
+                <UpsellItem key={upsell.id} upsell={upsell} />
+              ))}
+            </List>
+          }
         </Card>
       </Fragment>
     );

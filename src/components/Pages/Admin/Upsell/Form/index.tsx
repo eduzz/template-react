@@ -8,21 +8,27 @@ import Info from './Info';
 import ImageUploader from './ImageUploader';
 import Actions from './Actions';
 import UpsellConfig from './UpsellConfig';
+import { WithRouter } from 'decorators/withRouter';
+import upsellService from 'services/upsell';
+import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
+  match?: any;
 }
 
 interface IState {
-  type: any;
+  type: number;
+  content: string;
   published: boolean;
   highlight: boolean;
   title: string;
   description: string;
-  smallImage: string | null;
-  highlightImage: string | null;
+  small_image: string | null;
+  highlight_image: string | null;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   container: {
     padding: 16,
@@ -52,14 +58,30 @@ export default class Form extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      type: 'nutror',
+      type: 1,
+      content: '',
       published: true,
       highlight: false,
       title: '',
       description: '',
-      smallImage: null,
-      highlightImage: null,
+      small_image: null,
+      highlight_image: null,
     };
+  }
+
+  componentWillMount() {
+    const { id } = this.props.match.params;
+
+    if (id) {
+      upsellService.getUpsell(id).pipe(
+        rxjsOperators.logError(),
+        rxjsOperators.bindComponent(this),
+      ).subscribe((upsell: any) => {
+        this.setState({
+          ...upsell,
+        });
+      });
+    }
   }
 
   handleSubmit = (e: any) => {

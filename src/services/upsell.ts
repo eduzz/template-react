@@ -20,6 +20,18 @@ class UpsellService {
       rxjsOperators.map(response => response.data),
     );
   }
+
+  public getUpsell(code: number): any {
+    return apiService.get('/producer/upsell/' + code).pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
+
+  public list(orderBy: string, orderDirection: string): any {
+    return apiService.get('/producer/upsell', { orderby: orderBy, order: orderDirection }).pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
 }
 
 const upsellService = new UpsellService();
