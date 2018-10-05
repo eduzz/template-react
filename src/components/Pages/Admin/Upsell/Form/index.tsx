@@ -9,9 +9,9 @@ import ImageUploader from './ImageUploader';
 import Actions from './Actions';
 import UpsellConfig from './UpsellConfig';
 import { WithRouter } from 'decorators/withRouter';
-// import Toast from 'components/Shared/Toast';
-// import upsellService from 'services/upsell';
-// import rxjsOperators from 'rxjs-operators';
+import Toast from 'components/Shared/Toast';
+import upsellService from 'services/upsell';
+import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
@@ -72,7 +72,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
       highlight_image: null,
     };
 
-    const { id } = this.props.match.params;
+    const { id } = props.match.params;
 
     if (id) {
       // upsellService.getUpsell(id).pipe(
@@ -156,6 +156,29 @@ export default class Form extends React.PureComponent<IProps, IState> {
     e.preventDefault();
 
     console.log(JSON.stringify(this.state));
+
+    if (this.props.match.params.id) {
+      upsellService.edit({ ...this.state }).pipe(
+        rxjsOperators.loader(),
+        rxjsOperators.logError(),
+        rxjsOperators.bindComponent(this),
+      ).subscribe(() => {
+        Toast.error('Upsell editado com sucesso!');
+      }, (error: any) => {
+        Toast.error(error);
+      });
+    } else {
+      upsellService.save({ ...this.state }).pipe(
+        rxjsOperators.loader(),
+        rxjsOperators.logError(),
+        rxjsOperators.bindComponent(this),
+      ).subscribe(() => {
+        Toast.error('Upsell criado com sucesso!');
+        this.props.history.push('/upsell');
+      }, (error: any) => {
+        Toast.error(error);
+      });
+    }
   }
 
   handleChange = (state: any) => {

@@ -32,6 +32,14 @@ class UpsellService {
       rxjsOperators.map(response => response.data),
     );
   }
+
+  public save(upsell: any): any {
+    return apiService.post(`/producer/upsell`, upsell);
+  }
+
+  public edit(upsell: any): any {
+    return apiService.put(`/producer/upsell`, upsell);
+  }
 }
 
 const upsellService = new UpsellService();
