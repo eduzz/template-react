@@ -63,14 +63,12 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = { image: null, saving: false, progress: 0 };
+
+    window.removeEventListener('resize', this.reCalculateRegion);
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.reCalculateRegion);
-  }
-
-  componentWillMount() {
-    window.removeEventListener('resize', this.reCalculateRegion);
   }
 
   onExited = () => {

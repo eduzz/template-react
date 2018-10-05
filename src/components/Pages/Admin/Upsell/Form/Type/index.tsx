@@ -48,6 +48,15 @@ export default class Type extends React.PureComponent<IProps, IState> {
       products: [],
       selectedProductId: 0,
     };
+
+    upsellService.getProducts(this.state.type).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((products: any) => {
+      this.setState({
+        products,
+      });
+    });
   }
 
   static getDerivedStateFromProps(props: IProps, state: IState) {
@@ -58,17 +67,6 @@ export default class Type extends React.PureComponent<IProps, IState> {
       };
 
     return null;
-  }
-
-  componentWillMount() {
-    upsellService.getProducts(this.state.type).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
-    ).subscribe((products: any) => {
-      this.setState({
-        products,
-      });
-    });
   }
 
   handleClick = (value: number) =>

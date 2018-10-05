@@ -71,9 +71,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
       small_image: null,
       highlight_image: null,
     };
-  }
 
-  componentWillMount() {
     const { id } = this.props.match.params;
 
     if (id) {
@@ -166,7 +164,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { type, content, title, description, highlight_image, small_image, published, highlight } = this.state;
+    const { type, content, title, description, courses, highlight_image, small_image, published, highlight } = this.state;
 
     return (
       <Fragment>
@@ -194,7 +192,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                   <Grid item xs={12} className={classes.section}>
                     <UpsellConfig
                       onChange={this.handleChange}
-                      upsell={this.state}
+                      courses={courses}
                     />
                   </Grid>
                   <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>

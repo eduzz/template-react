@@ -57,9 +57,7 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
       courses: [],
       isFetching: false,
     };
-  }
 
-  componentWillMount() {
     upsellService.getCourses().pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
