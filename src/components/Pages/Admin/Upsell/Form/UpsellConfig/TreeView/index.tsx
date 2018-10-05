@@ -36,12 +36,12 @@ export default class TreeView extends React.Component<IProps, IState> {
 
     this.state = {
       open: true,
-      courses: this.props.courses || [],
+      courses: [],
     };
   }
 
   static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.courses !== state.courses)
+    if (props.courses.length > state.courses.length)
       return {
         courses: props.courses,
       };

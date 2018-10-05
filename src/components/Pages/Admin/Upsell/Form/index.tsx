@@ -75,95 +75,33 @@ export default class Form extends React.PureComponent<IProps, IState> {
     const { id } = props.match.params;
 
     if (id) {
-      // upsellService.getUpsell(id).pipe(
-      //   rxjsOperators.loader(),
-      //   rxjsOperators.logError(),
-      //   rxjsOperators.bindComponent(this),
-      // ).subscribe((upsell: any) => {
-      //   this.setState({
-      //     ...upsell,
-      //   });
-      // }, (error: any) => {
-      //   Toast.error(error);
-      //   this.props.history.push('/upsell');
-      // });
-
-      setTimeout(() => {
-        this.setState(
-          {
-            id: 7,
-            type: 2,
-            content: 'dasdasdddsa',
-            description: 'sdfasdfasdfasdfasdf',
-            title: 'teste',
-            highlight_image: 'https://offers.yext.com/hs-fs/hubfs/Googleheader.png?t=1536871620751&width=1840&name=Googleheader.png',
-            small_image: 'https://doomwiki.org/w/images/thumb/4/46/Doom2016OSTCover.jpg/250px-Doom2016OSTCover.jpg',
-            highlight: true,
-            published: true,
-            user_id: 141100,
-            created_at: '2018-10-03 09:52:43.0000000',
-            courses: [
-              {
-                id: 7300,
-                title: 'Cruso para testar OnClickBy Nutror',
-                course_page: true,
-                upc_cod: 6,
-                modules: [
-                  {
-                    id: 32738,
-                    title: 'Modulo 1',
-                    course_id: 7300,
-                    lessons: [
-                      {
-                        id: 74081,
-                        title: 'Aula 1',
-                        module_id: 32738,
-                        checked: true
-                      },
-                      {
-                        id: 74082,
-                        title: 'Aula 2',
-                        module_id: 32738,
-                        checked: true
-                      }
-                    ],
-                    checked: true
-                  },
-                  {
-                    id: 32739,
-                    title: 'Modulo 2',
-                    course_id: 7300,
-                    lessons: [
-                      {
-                        id: 74083,
-                        title: 'Aula 3',
-                        module_id: 32739,
-                        checked: false
-                      }
-                    ],
-                    checked: false
-                  }
-                ]
-              }
-            ]
-          } as any
-        );
-      }, 1000);
+      upsellService.getUpsell(id).pipe(
+        rxjsOperators.loader(),
+        rxjsOperators.logError(),
+        rxjsOperators.bindComponent(this),
+      ).subscribe((upsell: any) => {
+        this.setState({
+          ...upsell,
+        });
+      }, (error: any) => {
+        Toast.error(error);
+        this.props.history.push('/upsell');
+      });
     }
   }
 
   handleSubmit = (e: any) => {
     e.preventDefault();
 
-    console.log(JSON.stringify(this.state));
+    const { id } = this.props.match.params;
 
-    if (this.props.match.params.id) {
-      upsellService.edit({ ...this.state }).pipe(
+    if (id) {
+      upsellService.edit(id, { ...this.state }).pipe(
         rxjsOperators.loader(),
         rxjsOperators.logError(),
         rxjsOperators.bindComponent(this),
       ).subscribe(() => {
-        Toast.error('Upsell editado com sucesso!');
+        Toast.show('Upsell editado com sucesso!');
       }, (error: any) => {
         Toast.error(error);
       });
@@ -173,7 +111,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
         rxjsOperators.logError(),
         rxjsOperators.bindComponent(this),
       ).subscribe(() => {
-        Toast.error('Upsell criado com sucesso!');
+        Toast.show('Upsell criado com sucesso!');
         this.props.history.push('/upsell');
       }, (error: any) => {
         Toast.error(error);
@@ -227,7 +165,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                         <ImageUploader
                           width={1840}
                           height={460}
-                          label='highlightImage'
+                          label='highlight_image'
                           onChange={this.handleChange}
                           image={highlight_image}
                         />
@@ -238,7 +176,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                         <ImageUploader
                           width={250}
                           height={250}
-                          label='smallImage'
+                          label='small_image'
                           onChange={this.handleChange}
                           image={small_image}
                         />

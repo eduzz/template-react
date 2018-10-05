@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import ImageSelector from 'components/Shared/ImageSelector';
 import CloudUploadIcon from 'mdi-react/CloudUploadIcon';
+import DeleteIcon from 'mdi-react/DeleteIcon';
 // import Button from '@material-ui/core/Button';
 
 interface IProps {
@@ -58,10 +59,21 @@ interface IState {
     marginTop: 4,
     fontSize: 12,
   },
-  icon: {
+  uploadIcon: {
     position: 'absolute',
     color: 'inherit',
     transition: `color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms`,
+  },
+  deleteIcon: {
+    position: 'absolute',
+    color: '#c4c4c4',
+    transition: `color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms`,
+    zIndex: 2,
+    top: 3,
+    left: 'calc(100% - 27px)',
+    '&:hover': {
+      color: '#000',
+    },
   },
 }))
 export default class ImageUploader extends React.PureComponent<IProps, IState> {
@@ -88,12 +100,12 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
   }
 
   handleSelectorComplete = (image: string) => {
-    this.setState({
+    this.setState(state => ({
       isSelectorOpen: false,
-      image,
-    });
+      image: image || state.image,
+    }));
 
-    this.props.onChange && this.props.onChange({ [this.props.label]: image });
+    image && this.props.onChange && this.props.onChange({ [this.props.label]: image });
   }
 
   handleOpenSelector = () => {
@@ -106,6 +118,12 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
     this.setState({
       isSelectorOpen: true,
     });
+  }
+
+  onRemoveImage = (e: any) => {
+    e.stopPropagation();
+
+    this.props.onChange && this.props.onChange({ [this.props.label]: null });
   }
 
   render() {
@@ -122,8 +140,16 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
         />
         <div className={classes.content}>
           <div className={classes.imageArea} onClick={this.handleClick}>
-            <CloudUploadIcon className={classes.icon} />
-            <img alt='' src={image} className={classes.image} />
+            <CloudUploadIcon className={classes.uploadIcon} />
+            {image &&
+              <div
+                className={classes.deleteIcon}
+                onClick={this.onRemoveImage}
+              >
+                <DeleteIcon />
+              </div>
+            }
+            <img alt='' src={image ? process.env.REACT_APP_CDN_URL + image : null} className={classes.image} />
           </div>
           <label className={classes.info}>
             Imagem formato jpg ou png

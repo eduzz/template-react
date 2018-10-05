@@ -78,6 +78,12 @@ class UpsellListPage extends PureComponent<IProps, IState> {
     this.setState({ orderDirection: this.state.orderDirection === 'asc' ? 'desc' : 'asc' }, () => this.loadData());
   }
 
+  handleDelete = (id: number | string) => {
+    this.setState(state => ({
+      upsells: state.upsells.filter((upsell: any) => upsell.id !== id),
+    }));
+  }
+
   render() {
     const { classes } = this.props;
     const { upsells, error, orderBy, orderDirection } = this.state;
@@ -136,7 +142,11 @@ class UpsellListPage extends PureComponent<IProps, IState> {
           {!!upsells &&
             <List disablePadding>
               {upsells.map(upsell => (
-                <UpsellItem key={upsell.id} upsell={upsell} />
+                <UpsellItem
+                  key={upsell.id}
+                  upsell={upsell}
+                  onDelete={this.handleDelete}
+                />
               ))}
             </List>
           }

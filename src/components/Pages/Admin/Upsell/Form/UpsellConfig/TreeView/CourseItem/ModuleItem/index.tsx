@@ -86,9 +86,9 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
             onClick={this.handleModuleChange}
           />
           <ListItemText primary={module.title} />
-          {module.lessons && module.lessons.length && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
+          {module.lessons && Boolean(module.lessons.length) && (this.state.open ? <ExpandLess /> : <ExpandMore />)}
         </ListItem>
-        {module.lessons && module.lessons.length &&
+        {module.lessons && Boolean(module.lessons.length) &&
           <Collapse in={this.state.open} timeout='auto' unmountOnExit>
             <List component='div' disablePadding>
               {module.lessons.map((lesson: any, index: number) =>

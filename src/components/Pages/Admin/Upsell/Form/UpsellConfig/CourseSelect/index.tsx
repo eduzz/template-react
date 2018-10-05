@@ -60,6 +60,7 @@ export default class CourseSelect extends React.PureComponent<IProps, IState> {
 
     upsellService.getCourses().pipe(
       rxjsOperators.logError(),
+      rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
     ).subscribe((courses: any) => {
       this.setState({

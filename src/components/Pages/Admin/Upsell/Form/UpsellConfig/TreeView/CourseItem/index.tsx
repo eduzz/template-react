@@ -87,7 +87,7 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     if (onChange) {
       onChange({
         ...course,
-        coursePage: !course.coursePage,
+        course_page: !course.course_page,
       });
     }
   }

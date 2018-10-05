@@ -10,11 +10,16 @@ import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import { IUpsell } from 'interfaces/models/upsell';
+import Confirm from 'components/Shared/Confirm';
+import upsellService from 'services/upsell';
+import rxjsOperators from 'rxjs-operators';
+import Toast from 'components/Shared/Toast';
 
 interface IProps {
   classes?: any;
   upsell: IUpsell;
   router?: AppRouter;
+  onDelete?: any;
 }
 
 @WithStyles({
@@ -22,7 +27,7 @@ interface IProps {
     borderTop: 'solid 1px #d5d5d5',
   }
 })
-class CertificateItem extends PureComponent<IProps> {
+class UpsellItem extends PureComponent<IProps> {
   actions = [{
     text: 'Editar',
     icon: SquareEditOutlineIcon,
@@ -34,18 +39,20 @@ class CertificateItem extends PureComponent<IProps> {
   }];
 
   handleDelete = async () => {
-    // const { certificate } = this.props;
+    const { upsell, onDelete } = this.props;
 
-    // const confirm = await Confirm.show(`Deseja excluir o certificado ${certificate.title}?`);
-    // if (!confirm) return;
+    const confirm = await Confirm.show(`Deseja excluir o certificado ${upsell.title}?`);
+    if (!confirm) return;
 
-    // certificateService.delete(certificate.id).pipe(
-    //   rxjsOperators.loader(),
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this)
-    // ).subscribe(() => {
-    //   Toast.show('Certificado excluído com sucesso');
-    // }, err => Toast.error(err));
+    upsellService.delete(upsell.id).pipe(
+      rxjsOperators.loader(),
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this)
+    ).subscribe(() => {
+      Toast.show('Certificado excluído com sucesso');
+
+      onDelete && onDelete(upsell.id);
+    }, (err: any) => Toast.error(err));
   }
 
   render() {
@@ -78,6 +85,6 @@ class CertificateItem extends PureComponent<IProps> {
 
 export default React.forwardRef((props: IProps, ref: any) => (
   <RouterContext.Consumer>
-    {router => <CertificateItem {...props} {...ref} router={router} />}
+    {router => <UpsellItem {...props} {...ref} router={router} />}
   </RouterContext.Consumer>
 ));

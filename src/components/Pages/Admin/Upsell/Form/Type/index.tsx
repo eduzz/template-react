@@ -7,6 +7,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import upsellService from 'services/upsell';
 import rxjsOperators from 'rxjs-operators';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 interface IProps {
   classes?: any;
@@ -16,10 +17,7 @@ interface IProps {
 }
 
 interface IState {
-  type: number;
-  content: string;
   products: any;
-  selectedProductId: number;
 }
 
 @WithStyles(theme => ({
@@ -32,25 +30,42 @@ interface IState {
   },
   select: {
     width: 200,
-    marginRight: 16,
+  },
+  selectContainer: {
+    display: 'flex',
   },
   content: {
     marginTop: 8,
+    display: 'flex',
   },
+  progressContainer: {
+    position: 'relative',
+    width: 48,
+    height: 48,
+    marginLeft: 8,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  progress: {
+    position: 'absolute',
+  },
+  menuItem: {
+    display: 'flex',
+    justifyContent: 'center',
+  }
 }))
 export default class Type extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
     this.state = {
-      type: 1,
-      content: '',
       products: [],
-      selectedProductId: 0,
     };
 
-    upsellService.getProducts(this.state.type).pipe(
+    upsellService.getProducts(this.props.type).pipe(
       rxjsOperators.logError(),
+      rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
     ).subscribe((products: any) => {
       this.setState({
@@ -59,21 +74,20 @@ export default class Type extends React.PureComponent<IProps, IState> {
     });
   }
 
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.type !== state.type || props.content !== state.content)
-      return {
-        type: props.type,
-        content: props.content,
-      };
-
-    return null;
-  }
-
   handleClick = (value: number) =>
     () => {
       this.setState({
-        type: value,
+        products: [],
       });
+
+      const { onChange } = this.props;
+
+      if (onChange) {
+        onChange({
+          type: value,
+          content: '',
+        });
+      }
 
       upsellService.getProducts(value).pipe(
         rxjsOperators.logError(),
@@ -88,20 +102,16 @@ export default class Type extends React.PureComponent<IProps, IState> {
   handleChange = (e: any) => {
     const { onChange } = this.props;
 
-    this.setState({
-      selectedProductId: e.target.value,
-    });
-
     if (onChange) {
       onChange({
-        product: e.target.value,
+        content: e.target.value,
       });
     }
   }
 
   render() {
-    const { classes } = this.props;
-    const { type, products } = this.state;
+    const { classes, type, content } = this.props;
+    const { products } = this.state;
 
     return (
       <div className={classes.root}>
@@ -128,20 +138,37 @@ export default class Type extends React.PureComponent<IProps, IState> {
               }
               label='Nutror'
             />
-            <Select
-              className={classes.select}
-              value={type}
-              onChange={this.handleChange}
-            >
-              {products.map((product: any) =>
-                <MenuItem
-                  key={product.id}
-                  value={product.id}
-                >
-                  {product.title}
+            <div className={classes.selectContainer}>
+              <Select
+                className={classes.select}
+                value={content}
+                onChange={this.handleChange}
+                displayEmpty
+              >
+                <MenuItem value=''>
+                  Selecione um Produto
                 </MenuItem>
-              )}
-            </Select>
+                {products.map((product: any, index: number) =>
+                  <MenuItem
+                    key={index}
+                    value={product.hash}
+                  >
+                    {product.title}
+                  </MenuItem>
+                )}
+                {!products.length &&
+                  <MenuItem className={classes.menuItem}>
+                    <div className={classes.progressContainer}>
+                      <CircularProgress
+                        size={25}
+                        color='secondary'
+                        className={classes.progress}
+                      />
+                    </div>
+                  </MenuItem>
+                }
+              </Select>
+            </div>
           </div>
         </FormControl>
       </div>

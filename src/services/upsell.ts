@@ -1,8 +1,11 @@
 import rxjsOperators from 'rxjs-operators';
+import * as rxjs from 'rxjs';
 
 import apiService from './api';
 
 class UpsellService {
+  private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
+
   public getCourses(): any {
     return apiService.get('producer/courses/my').pipe(
       rxjsOperators.map(response => response.data),
@@ -37,8 +40,14 @@ class UpsellService {
     return apiService.post(`/producer/upsell`, upsell);
   }
 
-  public edit(upsell: any): any {
-    return apiService.put(`/producer/upsell`, upsell);
+  public edit(id: number, upsell: any): any {
+    return apiService.put(`/producer/upsell/${id}`, upsell);
+  }
+
+  public delete(id: number): any {
+    return apiService.delete(`producer/upsell/${id}`).pipe(
+      rxjsOperators.map(() => this.deleted$.next([...this.deleted$.value, id]))
+    );
   }
 }
 
