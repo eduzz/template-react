@@ -18,6 +18,7 @@ import { RouteComponentProps } from 'react-router';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
+import AppRouter, { RouterContext } from '../../../../Router';
 import Editor from './Editor';
 import { IEditorItem } from './Editor/interfaces';
 
@@ -36,6 +37,7 @@ interface IState extends IStateForm<{
 
 interface IProps extends RouteComponentProps<{ id: number }> {
   classes?: any;
+  router?: AppRouter;
 }
 
 @WithStyles({
@@ -47,7 +49,7 @@ interface IProps extends RouteComponentProps<{ id: number }> {
     marginTop: 30
   }
 })
-export default class CertificateFormPage extends FormComponent<IProps, IState> {
+class CertificateFormPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -95,15 +97,16 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
     const { model } = this.state;
     const params = { ...model, config: JSON.stringify(model.config) };
 
-    certificateService.send(params).pipe(
+    certificateService.save(params).pipe(
       rxjsOperators.loader(),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
-    ).subscribe(() => {
+    ).subscribe(certificateId => {
       Toast.show('Certificado salvo com sucesso');
-    }, err => {
-      Toast.error(err);
-    });
+
+      if (certificateId === model.id) return;
+      this.props.router.replace(`/certificados/${certificateId}/editar`);
+    }, err => Toast.error(err));
   }
 
   handleChangeEditor = (value: { image: string; html: string; items: IEditorItem[] }) => {
@@ -182,3 +185,9 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
     );
   }
 }
+
+export default React.forwardRef((props: IProps, ref: any) => (
+  <RouterContext.Consumer>
+    {router => <CertificateFormPage {...props} {...ref} router={router} />}
+  </RouterContext.Consumer>
+));
