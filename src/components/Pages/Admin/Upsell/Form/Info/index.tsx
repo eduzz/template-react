@@ -8,6 +8,8 @@ import Grid from '@material-ui/core/Grid';
 interface IProps {
   classes?: any;
   onChange?: any;
+  title?: string;
+  description?: string;
 }
 
 interface IState {
@@ -62,6 +64,16 @@ export default class Info extends React.PureComponent<IProps, IState> {
       description: '',
       isSelectorOpen: false,
     };
+  }
+
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.title !== state.title || props.description !== state.description)
+      return {
+        title: props.title,
+        description: props.description,
+      };
+
+    return null;
   }
 
   handleChange = (e: any) => {

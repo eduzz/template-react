@@ -110,7 +110,7 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
           <List component='div' disablePadding>
             <ListItem>
               <Checkbox
-                checked={course.coursePage}
+                checked={course.course_page}
                 onChange={this.handleChangeCoursePage}
               />
               <ListItemText primary='Mostrar na tela do curso' />

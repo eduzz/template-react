@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 interface IProps {
   classes?: any;
   onChange?: any;
-  defaultValue?: any;
+  courses?: any;
 }
 
 interface IState {
@@ -36,8 +36,17 @@ export default class TreeView extends React.Component<IProps, IState> {
 
     this.state = {
       open: true,
-      courses: this.props.defaultValue || [],
+      courses: this.props.courses || [],
     };
+  }
+
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.courses !== state.courses)
+      return {
+        courses: props.courses,
+      };
+
+    return null;
   }
 
   pushCourse = (course: any) => {

@@ -7,6 +7,8 @@ import { WithStyles } from 'decorators/withStyles';
 interface IProps {
   classes?: any;
   onChange?: any;
+  published?: boolean;
+  highlight?: boolean;
 }
 
 interface IState {
@@ -30,6 +32,16 @@ export default class Actions extends React.PureComponent<IProps, IState> {
       published: true,
       highlight: false,
     };
+  }
+
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.published !== state.published || props.highlight !== state.highlight)
+      return {
+        published: props.published,
+        highlight: props.highlight,
+      };
+
+    return null;
   }
 
   handleToggle = (stateLabel: string) =>

@@ -10,6 +10,7 @@ interface IProps {
   label?: string;
   width: number;
   height: number;
+  image?: any;
 }
 
 interface IState {
@@ -75,6 +76,15 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
       image: '',
       isSelectorOpen: false,
     };
+  }
+
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.image !== state.image)
+      return {
+        image: props.image,
+      };
+
+    return null;
   }
 
   handleSelectorComplete = (image: string) => {

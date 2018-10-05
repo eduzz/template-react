@@ -11,10 +11,13 @@ import rxjsOperators from 'rxjs-operators';
 interface IProps {
   classes?: any;
   onChange?: any;
+  type?: number;
+  content?: string;
 }
 
 interface IState {
   type: number;
+  content: string;
   products: any;
   selectedProductId: number;
 }
@@ -41,9 +44,20 @@ export default class Type extends React.PureComponent<IProps, IState> {
 
     this.state = {
       type: 1,
+      content: '',
       products: [],
       selectedProductId: 0,
     };
+  }
+
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.type !== state.type || props.content !== state.content)
+      return {
+        type: props.type,
+        content: props.content,
+      };
+
+    return null;
   }
 
   componentWillMount() {

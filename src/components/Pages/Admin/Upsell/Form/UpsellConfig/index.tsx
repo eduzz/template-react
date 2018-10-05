@@ -7,6 +7,7 @@ import Paper from '@material-ui/core/Paper';
 interface IProps {
   classes?: any;
   onChange?: any;
+  upsell?: any;
 }
 
 interface IState {
@@ -40,7 +41,7 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, onChange } = this.props;
+    const { classes, onChange, upsell } = this.props;
 
     return (
       <Fragment>
@@ -56,6 +57,7 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
           <TreeView
             ref={this.treeView}
             onChange={onChange}
+            courses={upsell.courses}
           />
         </Paper>
       </Fragment>
