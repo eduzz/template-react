@@ -220,11 +220,6 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.116.tgz#5ccf215653e3e8c786a58390751033a9adca0eb9"
   integrity sha512-lRnAtKnxMXcYYXqOiotTmJd74uawNWuPnsnPrrO7HiFuE3npE2iQhfABatbYDyxTNqZNuXzcKGhw37R7RjBFLg==
 
-"@types/luxon@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-1.4.0.tgz#4ecebf681a99ccd5d352ebc9d6e275375e56069b"
-  integrity sha512-jECW+lbzPICLGqN/dBdX6Lwn5s84okwM2EVjcYim7hkh5+Ebej8kjxY7InBlsORNjGe8v7lPpd/88a0qkoEcuA==
-
 "@types/node@*", "@types/node@10.11.4":
   version "10.11.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.11.4.tgz#e8bd933c3f78795d580ae41d86590bfc1f4f389d"
@@ -2770,7 +2765,7 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.1.0"
     whatwg-url "^7.0.0"
 
-date-fns@>=2.0.0-alpha.16:
+date-fns@2.0.0-alpha.21, date-fns@>=2.0.0-alpha.16:
   version "2.0.0-alpha.21"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.21.tgz#d928c3d595d9e607701d2b3682bd70f03f2efec0"
   integrity sha512-QL6ZzDhQVAGzYElbGcMCCwDhobclw5jIJG9oD9n0kA8+PLNqtP/V76vkzUXvOiXm421aAXjLFgo3o3cq33cdew==
@@ -6238,11 +6233,6 @@ lru-cache@^4.0.1, lru-cache@^4.1.1:
   dependencies:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
-
-luxon@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.4.3.tgz#84614abdeae688af115f2188504f0d890ebb3d7e"
-  integrity sha512-hujVJ+Q2RnaIiHKAupwusgpHXYICxzXJNoPkqkGIfmP+lLZWFTD6gEP+URRs/vh5gI1KwfMimVrzM9309RE0tA==
 
 make-dir@^1.0.0:
   version "1.3.0"

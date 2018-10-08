@@ -22,8 +22,8 @@
     "@material-ui/icons": "3.0.1",
     "@react-form-fields/material-ui": "1.9.2",
     "axios": "0.18.0",
+    "date-fns": "2.0.0-alpha.21",
     "lodash": "4.17.11",
-    "luxon": "1.4.3",
     "mdi-react": "4.4.0",
     "query-string": "6.2.0",
     "raven-js": "3.27.0",
@@ -45,7 +45,6 @@
   "devDependencies": {
     "@types/jest": "23.3.4",
     "@types/lodash": "4.14.116",
-    "@types/luxon": "1.4.0",
     "@types/node": "10.11.4",
     "@types/query-string": "6.1.0",
     "@types/react": "16.4.16",
