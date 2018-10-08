@@ -4,8 +4,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import { FieldSwitch } from '@react-form-fields/material-ui';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
@@ -13,7 +13,7 @@ import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
-import React, { Fragment, SyntheticEvent } from 'react';
+import React, { Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
@@ -34,7 +34,7 @@ interface IState extends IStateForm<{
   error?: any;
 }
 
-interface IProps extends RouteComponentProps<{ id: number }> {
+interface IProps extends RouteComponentProps<{ id: string }> {
   classes?: any;
 }
 
@@ -62,7 +62,7 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
   }
 
   loadData = () => {
-    const id = this.props.match.params.id;
+    const id = Number(this.props.match.params.id);
 
     if (!id) {
       this.setState({ loading: false });
@@ -85,10 +85,8 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
     }, error => this.setState({ error, loading: false }));
   }
 
-  handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-
-    if (!this.isFormValid()) {
+  handleSubmit = (isValid: boolean) => {
+    if (!isValid) {
       return;
     }
 
@@ -117,67 +115,65 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
 
     return (
       <Fragment>
-        <form noValidate onSubmit={this.handleSubmit}>
-          <ValidationContext ref={this.bindValidationContext}>
-            <Toolbar>
-              <Grid container spacing={16} alignItems='center'>
-                <Grid item xs={true}>
-                  <Typography variant='title' color='inherit' noWrap>
-                    {`${isEdit ? 'Editar' : 'Novo'} certificado`}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={false}>
-                  <Button type='submit' color='secondary' disabled={loading || error}>
-                    <ContentSaveIcon />
-                    Salvar
-                  </Button>
-                </Grid>
+        <FormValidation onSubmit={this.handleSubmit}>
+          <Toolbar>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item xs={true}>
+                <Typography variant='title' color='inherit' noWrap>
+                  {`${isEdit ? 'Editar' : 'Novo'} certificado`}
+                </Typography>
               </Grid>
-            </Toolbar>
 
-            <Card>
+              <Grid item xs={false}>
+                <Button type='submit' color='secondary' disabled={loading || error}>
+                  <ContentSaveIcon />
+                  Salvar
+                  </Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
 
-              {loading &&
-                <CardContent className={classes.loader}>
-                  <CircularProgress color='secondary' />
-                </CardContent>
-              }
+          <Card>
 
-              {!!error &&
-                <CardContent >
-                  <ErrorMessage error={error} tryAgain={this.loadData} />
-                </CardContent>
-              }
+            {loading &&
+              <CardContent className={classes.loader}>
+                <CircularProgress color='secondary' />
+              </CardContent>
+            }
 
-              {!loading && !error &&
-                <CardContent>
-                  <FieldText
-                    label='Título'
-                    placeholder='Digite o título do certificado'
-                    value={model.title}
-                    onChange={this.updateModel((m, v) => m.title = v)}
-                    validation='required|max:50'
-                  />
+            {!!error &&
+              <CardContent >
+                <ErrorMessage error={error} tryAgain={this.loadData} />
+              </CardContent>
+            }
 
-                  <FieldSwitch
-                    checked={model.default}
-                    label='Certificado Padrão'
-                    helperText='Todos os cursos que não possuem certificado usarão esse como padrão'
-                    onChange={this.updateModel((m, v) => m.default = v)}
-                  />
+            {!loading && !error &&
+              <CardContent>
+                <FieldText
+                  label='Título'
+                  placeholder='Digite o título do certificado'
+                  value={model.title}
+                  onChange={this.updateModel((m, v) => m.title = v)}
+                  validation='required|max:50'
+                />
 
-                  <Typography className={classes.link}>
-                    Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
-                  </Typography>
+                <FieldSwitch
+                  checked={model.default}
+                  label='Certificado Padrão'
+                  helperText='Todos os cursos que não possuem certificado usarão esse como padrão'
+                  onChange={this.updateModel((m, v) => m.default = v)}
+                />
 
-                  <Editor value={model.config} onChange={this.handleChangeEditor} />
-                </CardContent>
-              }
-            </Card>
+                <Typography className={classes.link}>
+                  Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
+                </Typography>
 
-          </ValidationContext>
-        </form>
+                <Editor value={model.config} onChange={this.handleChangeEditor} />
+              </CardContent>
+            }
+          </Card>
+
+        </FormValidation>
       </Fragment>
     );
   }

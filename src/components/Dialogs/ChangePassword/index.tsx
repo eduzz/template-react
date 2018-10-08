@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
-import { ValidationContext } from '@react-form-fields/material-ui';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
@@ -51,12 +51,7 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     authService.closeChangePassword();
   }
 
-  onSubmit = async (event: React.FormEvent) => {
-    // const { model } = this.state;
-
-    event.preventDefault();
-
-    const isValid = await this.isFormValid();
+  onSubmit = async (isValid: boolean) => {
     if (!isValid) return;
 
     this.setState({ loading: true });
@@ -90,47 +85,45 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
 
         {loading && <LinearProgress color='secondary' />}
 
-        <form onSubmit={this.onSubmit} noValidate>
-          <ValidationContext ref={this.bindValidationContext}>
-            <DialogTitle>Trocar Senha</DialogTitle>
+        <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
+          <DialogTitle>Trocar Senha</DialogTitle>
 
-            <DialogContent className={classes.content}>
-              <FieldText
-                label='Senha Atual'
-                type='password'
-                disabled={loading}
-                value={model.currentPassword}
-                validation='required'
-                onChange={this.updateModel((model, v) => model.currentPassword = v)}
-              />
+          <DialogContent className={classes.content}>
+            <FieldText
+              label='Senha Atual'
+              type='password'
+              disabled={loading}
+              value={model.currentPassword}
+              validation='required'
+              onChange={this.updateModel((model, v) => model.currentPassword = v)}
+            />
 
-              <FieldText
-                label='Nova senha'
-                type='password'
-                disabled={loading}
-                value={model.newPassword}
-                validation='required|min:5'
-                onChange={this.updateModel((model, v) => model.newPassword = v)}
-              />
+            <FieldText
+              label='Nova senha'
+              type='password'
+              disabled={loading}
+              value={model.newPassword}
+              validation='required|min:5'
+              onChange={this.updateModel((model, v) => model.newPassword = v)}
+            />
 
-              <FieldText
-                label='Repita a senha'
-                type='password'
-                disabled={loading}
-                value={model.confirmPassword}
-                validation='required|same:nova senha'
-                validationContext={{ 'nova senha': model.newPassword }}
-                onChange={this.updateModel((model, v) => model.confirmPassword = v)}
-              />
-            </DialogContent>
+            <FieldText
+              label='Repita a senha'
+              type='password'
+              disabled={loading}
+              value={model.confirmPassword}
+              validation='required|same:nova senha'
+              validationContext={{ 'nova senha': model.newPassword }}
+              onChange={this.updateModel((model, v) => model.confirmPassword = v)}
+            />
+          </DialogContent>
 
-            <DialogActions>
-              <Button disabled={loading} onClick={this.onCancel}>Cancelar</Button>
-              <Button color='secondary' type='submit' disabled={loading}>Salvar</Button>
-            </DialogActions>
+          <DialogActions>
+            <Button disabled={loading} onClick={this.onCancel}>Cancelar</Button>
+            <Button color='secondary' type='submit' disabled={loading}>Salvar</Button>
+          </DialogActions>
 
-          </ValidationContext>
-        </form>
+        </FormValidation>
       </Dialog>
     );
   }

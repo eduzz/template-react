@@ -2,12 +2,12 @@ import Button from '@material-ui/core/Button';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ValidationContext } from '@react-form-fields/material-ui';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
@@ -35,14 +35,9 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     this.state = { ...this.state, opened: false, loading: false };
   }
 
-  onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  onSubmit = async (isValid: boolean) => {
     const { model, loading } = this.state;
-
-    if (loading) return;
-
-    const isValid = await this.isFormValid();
-    if (!isValid) return;
+    if (!isValid || loading) return;
 
     this.setState({ loading: true });
 
@@ -63,42 +58,39 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     const { classes, onRecoveryAccess } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit} noValidate>
-        <ValidationContext ref={this.bindValidationContext}>
+      <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
 
-          <CardContent>
+        <CardContent>
+          <FieldText
+            label='Email'
+            type='email'
+            disabled={loading}
+            value={model.username}
+            validation='required|email'
+            onChange={this.updateModel((model, v) => model.username = v)}
+            margin='dense'
+          />
 
-            <FieldText
-              label='Email'
-              type='email'
-              disabled={loading}
-              value={model.username}
-              validation='required|email'
-              onChange={this.updateModel((model, v) => model.username = v)}
-              margin='dense'
-            />
+          <FieldText
+            label='Senha'
+            type='password'
+            disabled={loading}
+            value={model.password}
+            validation='required'
+            onChange={this.updateModel((model, v) => model.password = v)}
+          />
 
-            <FieldText
-              label='Senha'
-              type='password'
-              disabled={loading}
-              value={model.password}
-              validation='required'
-              onChange={this.updateModel((model, v) => model.password = v)}
-            />
+        </CardContent>
 
-          </CardContent>
+        <CardActions className={classes.buttons}>
+          <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
+          <Button variant='raised' color='secondary' type='submit'>
+            {!loading && 'Entrar'}
+            {loading && <CircularProgress color='inherit' size={20} />}
+          </Button>
+        </CardActions>
 
-          <CardActions className={classes.buttons}>
-            <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
-            <Button variant='raised' color='secondary' type='submit'>
-              {!loading && 'Entrar'}
-              {loading && <CircularProgress color='inherit' size={20} />}
-            </Button>
-          </CardActions>
-
-        </ValidationContext>
-      </form>
+      </FormValidation>
     );
   }
 }
