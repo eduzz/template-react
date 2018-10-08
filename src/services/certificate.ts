@@ -23,11 +23,14 @@ class CertificateService {
     );
   }
 
-  public send(params: any) {
-    if (params.id)
-      return apiService.put(`/producer/certificates/${params.id}`, params);
+  public save(params: Partial<ICertificate & { html: String }>) {
+    const stream$ = !params.id ?
+      apiService.post<number>('/producer/certificates', params) :
+      apiService.put<number>(`/producer/certificates/${params.id}`, params);
 
-    return apiService.post('/producer/certificates', params);
+    return stream$.pipe(
+      rxjsOperators.map(response => response.data || params.id)
+    );
   }
 
   public searchCourses(certificateId: number, search: string): rxjs.Observable<ICertificateCourse[]> {

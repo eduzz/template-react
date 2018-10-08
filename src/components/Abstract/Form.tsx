@@ -24,6 +24,10 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
     this.formValidation = formValidation;
   }
 
+  public isFormValid = () => {
+    return this.formValidation.isValid();
+  }
+
   public resetForm = () => {
     this.setState({ model: {}, formSubmitted: false });
     this.formValidation.reset();
