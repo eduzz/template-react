@@ -8,6 +8,7 @@ import Radio from '@material-ui/core/Radio';
 import upsellService from 'services/upsell';
 import rxjsOperators from 'rxjs-operators';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import ArrowDropDownIcon from 'mdi-react/ArrowDropDownIcon';
 
 interface IProps {
   classes?: any;
@@ -33,16 +34,16 @@ interface IState {
   },
   selectContainer: {
     display: 'flex',
+    justifyContent: 'flex-end',
   },
   content: {
     marginTop: 8,
     display: 'flex',
   },
   progressContainer: {
-    position: 'relative',
+    position: 'absolute',
     width: 48,
     height: 48,
-    marginLeft: 8,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -62,10 +63,17 @@ export default class Type extends React.PureComponent<IProps, IState> {
     this.state = {
       products: [],
     };
+  }
 
-    upsellService.getProducts(this.props.type).pipe(
+  componentDidUpdate(prevProps: IProps, prevState: IState) {
+    if (prevProps.type !== this.props.type) {
+      this.loadData(this.props.type);
+    }
+  }
+
+  loadData = (type: number) => {
+    upsellService.getProducts(type).pipe(
       rxjsOperators.logError(),
-      rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
     ).subscribe((products: any) => {
       this.setState({
@@ -141,9 +149,11 @@ export default class Type extends React.PureComponent<IProps, IState> {
             <div className={classes.selectContainer}>
               <Select
                 className={classes.select}
-                value={content}
+                value={products.length ? content : ''}
                 onChange={this.handleChange}
                 displayEmpty
+                IconComponent={products.length ? ArrowDropDownIcon : 'none'}
+                disabled={!products.length}
               >
                 <MenuItem value=''>
                   Selecione um Produto
@@ -156,18 +166,16 @@ export default class Type extends React.PureComponent<IProps, IState> {
                     {product.title}
                   </MenuItem>
                 )}
-                {!products.length &&
-                  <MenuItem className={classes.menuItem}>
-                    <div className={classes.progressContainer}>
-                      <CircularProgress
-                        size={25}
-                        color='secondary'
-                        className={classes.progress}
-                      />
-                    </div>
-                  </MenuItem>
-                }
               </Select>
+              {!products.length &&
+                <div className={classes.progressContainer}>
+                  <CircularProgress
+                    size={25}
+                    color='secondary'
+                    className={classes.progress}
+                  />
+                </div>
+              }
             </div>
           </div>
         </FormControl>
