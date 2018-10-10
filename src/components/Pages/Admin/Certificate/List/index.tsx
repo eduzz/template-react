@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -8,12 +9,10 @@ import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
-import FabButton from 'components/Shared/FabButton';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificate } from 'interfaces/models/certificate';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
 import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
-import PlusIcon from 'mdi-react/PlusIcon';
 import SortVariantIcon from 'mdi-react/SortVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -41,11 +40,6 @@ interface IProps {
   }
 }))
 class CertificateListPage extends PureComponent<IProps, IState> {
-  actions = [{
-    icon: PlusIcon,
-    onClick: () => this.props.router.navigate('/certificados/novo')
-  }];
-
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -79,6 +73,8 @@ class CertificateListPage extends PureComponent<IProps, IState> {
     this.setState({ orderDirection: this.state.orderDirection === 'asc' ? 'desc' : 'asc' }, () => this.loadData());
   }
 
+  handleNew = () => this.props.router.navigate('/certificados/novo');
+
   render() {
     const { classes } = this.props;
     const { certificates, error, orderBy, orderDirection } = this.state;
@@ -87,7 +83,13 @@ class CertificateListPage extends PureComponent<IProps, IState> {
       <Fragment>
         <Toolbar title='Certificados' />
 
-        <FabButton actions={this.actions} />
+        <CardContent>
+          <Grid container spacing={16} justify='flex-end'>
+            <Grid item xs={true} style={{ textAlign: 'right' }}>
+              <Button variant='contained' color='secondary' onClick={this.handleNew}>Novo certificado</Button>
+            </Grid>
+          </Grid>
+        </CardContent>
 
         <Card>
           <CardContent>
