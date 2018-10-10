@@ -29,6 +29,7 @@ interface IState {
   description: string;
   small_image: string | null;
   highlight_image: string | null;
+  isValid: boolean;
 }
 
 @WithRouter()
@@ -70,6 +71,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
       description: '',
       small_image: null,
       highlight_image: null,
+      isValid: true,
     };
 
     const { id } = props.match.params;
@@ -129,7 +131,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { type, content, title, description, courses, highlight_image, small_image, published, highlight } = this.state;
+    const { type, content, title, description, courses, highlight_image, small_image, published, highlight, isValid } = this.state;
 
     return (
       <Fragment>
@@ -145,6 +147,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                       type={type}
                       content={content}
                       onChange={this.handleChange}
+                      error={isValid}
                     />
                   </Grid>
                   <Grid item xs={12} className={classes.section}>

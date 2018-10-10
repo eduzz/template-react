@@ -10,7 +10,7 @@ import rxjsOperators from 'rxjs-operators';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ArrowDropDownIcon from 'mdi-react/ArrowDropDownIcon';
 import { WithRouter } from 'decorators/withRouter';
-// import FormHelperText from '@material-ui/core/FormHelperText';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 interface IProps {
   classes?: any;
@@ -18,6 +18,7 @@ interface IProps {
   type?: number;
   content?: string;
   match?: any;
+  error?: boolean;
 }
 
 interface IState {
@@ -74,7 +75,8 @@ export default class Type extends React.PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    this.loadData(this.props.type);
+    if (!this.props.match.params.id)
+      this.loadData(this.props.type);
   }
 
   componentDidUpdate(prevProps: IProps, prevState: IState) {
@@ -84,15 +86,6 @@ export default class Type extends React.PureComponent<IProps, IState> {
   }
 
   loadData = (type: number) => {
-    const { onChange } = this.props;
-
-    if (onChange) {
-      onChange({
-        type,
-        content: '',
-      });
-    }
-
     upsellService.getProducts(type).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
@@ -109,6 +102,15 @@ export default class Type extends React.PureComponent<IProps, IState> {
         products: [],
       });
 
+      const { onChange } = this.props;
+
+      if (onChange) {
+        onChange({
+          type: value,
+          content: '',
+        });
+      }
+
       this.loadData(value);
     }
 
@@ -123,12 +125,12 @@ export default class Type extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, type, content } = this.props;
+    const { classes, type, content, error } = this.props;
     const { products } = this.state;
 
     return (
       <div className={classes.root}>
-        <FormControl fullWidth error={false}>
+        <FormControl fullWidth error={error}>
           <label className={classes.title}>
             Escolha um produto
           </label>
@@ -138,6 +140,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
                 <Radio
                   checked={type === 1}
                   onClick={this.handleClick(1)}
+                  disabled={!products.length}
                 />
               }
               label='Eduzz'
@@ -147,6 +150,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
                 <Radio
                   checked={type === 2}
                   onClick={this.handleClick(2)}
+                  disabled={!products.length}
                 />
               }
               label='Nutror'
@@ -172,7 +176,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
                   </MenuItem>
                 )}
               </Select>
-              {/* <FormHelperText className={classes.errorLabel}>Error</FormHelperText> */}
+              <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>
               {!products.length &&
                 <div className={classes.progressContainer}>
                   <CircularProgress
