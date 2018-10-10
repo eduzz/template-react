@@ -10,7 +10,7 @@ import rxjsOperators from 'rxjs-operators';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ArrowDropDownIcon from 'mdi-react/ArrowDropDownIcon';
 import { WithRouter } from 'decorators/withRouter';
-import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormHelperText from '@material-ui/core/FormHelperText';
 
 interface IProps {
   classes?: any;
@@ -135,7 +135,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
 
     return (
       <div className={classes.root}>
-        <FormControl fullWidth error>
+        <FormControl fullWidth error={false}>
           <label className={classes.title}>
             Escolha um produto
           </label>
@@ -179,7 +179,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
                   </MenuItem>
                 )}
               </Select>
-              <FormHelperText className={classes.errorLabel}>Error</FormHelperText>
+              {/* <FormHelperText className={classes.errorLabel}>Error</FormHelperText> */}
               {!products.length &&
                 <div className={classes.progressContainer}>
                   <CircularProgress
