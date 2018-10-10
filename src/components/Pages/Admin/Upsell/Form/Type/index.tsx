@@ -84,6 +84,15 @@ export default class Type extends React.PureComponent<IProps, IState> {
   }
 
   loadData = (type: number) => {
+    const { onChange } = this.props;
+
+    if (onChange) {
+      onChange({
+        type,
+        content: '',
+      });
+    }
+
     upsellService.getProducts(type).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
@@ -100,23 +109,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
         products: [],
       });
 
-      const { onChange } = this.props;
-
-      if (onChange) {
-        onChange({
-          type: value,
-          content: '',
-        });
-      }
-
-      upsellService.getProducts(value).pipe(
-        rxjsOperators.logError(),
-        rxjsOperators.bindComponent(this),
-      ).subscribe((products: any) => {
-        this.setState({
-          products,
-        });
-      });
+      this.loadData(value);
     }
 
   handleChange = (e: any) => {
