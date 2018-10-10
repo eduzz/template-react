@@ -14,6 +14,7 @@ interface IProps {
   height: number;
   image?: any;
   disabled?: boolean;
+  error?: boolean;
 }
 
 interface IState {
@@ -85,6 +86,10 @@ interface IState {
       color: '#cbcbcb',
     },
   },
+  error: {
+    borderColor: '#eb442c',
+    color: '#eb442c',
+  },
 }))
 export default class ImageUploader extends React.PureComponent<IProps, IState> {
   static defaultProps = {
@@ -137,7 +142,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, width, height, disabled } = this.props;
+    const { classes, width, height, disabled, error } = this.props;
     const { image, isSelectorOpen } = this.state;
 
     return (
@@ -149,7 +154,10 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
           onComplete={this.handleSelectorComplete}
         />
         <div className={classes.content}>
-          <div className={`${classes.imageArea} ${disabled && classes.disabled}`} onClick={!disabled ? this.handleClick : null}>
+          <div
+            className={`${classes.imageArea} ${disabled && classes.disabled} ${error && !image && classes.error}`}
+            onClick={!disabled ? this.handleClick : null}
+          >
             <CloudUploadIcon className={classes.uploadIcon} />
             {image &&
               <div
@@ -161,9 +169,15 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
             }
             <img alt='' src={image ? CDN_URL + image : null} className={classes.image} />
           </div>
-          <label className={classes.info}>
-            Imagem formato jpg ou png
-          </label>
+          {error && !image ?
+            <label className={`${classes.info} ${classes.error}`}>
+              Campo obrigatório
+            </label>
+            :
+            <label className={classes.info}>
+              Imagem formato jpg ou png
+            </label>
+          }
         </div>
         {/* <Button
           className={classes.button}

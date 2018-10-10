@@ -4,12 +4,14 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 interface IProps {
   classes?: any;
   onChange?: any;
   title?: string;
   description?: string;
+  error?: boolean;
 }
 
 interface IState {
@@ -85,14 +87,14 @@ export default class Info extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, error } = this.props;
     const { title, description } = this.state;
 
     return (
       <Paper className={classes.root}>
         <Grid container spacing={32}>
           <Grid item xs={12}>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={error && !title}>
               <label className={classes.titleLabel}>
                 Título
               </label>
@@ -102,9 +104,11 @@ export default class Info extends React.PureComponent<IProps, IState> {
                 onChange={this.handleChange}
                 variant='outlined'
                 fullWidth
+                error={error && !title}
               />
+              {error && !title && <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>}
             </FormControl>
-            <FormControl fullWidth>
+            <FormControl fullWidth error={error && !description}>
               <label className={classes.descriptionLabel}>
                 Descrição
               </label>
@@ -120,7 +124,9 @@ export default class Info extends React.PureComponent<IProps, IState> {
                 inputProps={{
                   maxLength: 130,
                 }}
+                error={error && !description}
               />
+              {error && !description && <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>}
             </FormControl>
           </Grid>
         </Grid>

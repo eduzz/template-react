@@ -168,6 +168,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                       title={title}
                       description={description}
                       onChange={this.handleChange}
+                      error={!isValid}
                     />
                   </Grid>
                   <Grid item xs={12} className={classes.section}>
@@ -189,6 +190,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                           onChange={this.handleChange}
                           image={highlight_image}
                           disabled={!highlight}
+                          error={highlight && !isValid}
                         />
                       </div>
                     </Grid>
@@ -200,6 +202,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                           label='small_image'
                           onChange={this.handleChange}
                           image={small_image}
+                          error={!isValid}
                         />
                       </div>
                     </Grid>
