@@ -9,18 +9,21 @@ import upsellService from 'services/upsell';
 import rxjsOperators from 'rxjs-operators';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ArrowDropDownIcon from 'mdi-react/ArrowDropDownIcon';
+import { WithRouter } from 'decorators/withRouter';
 
 interface IProps {
   classes?: any;
   onChange?: any;
   type?: number;
   content?: string;
+  match?: any;
 }
 
 interface IState {
   products: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   root: {
     display: 'flex',
@@ -63,6 +66,10 @@ export default class Type extends React.PureComponent<IProps, IState> {
     this.state = {
       products: [],
     };
+  }
+
+  componentDidMount() {
+    this.loadData(this.props.type);
   }
 
   componentDidUpdate(prevProps: IProps, prevState: IState) {
