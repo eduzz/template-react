@@ -4,6 +4,7 @@ import ImageSelector from 'components/Shared/ImageSelector';
 import CloudUploadIcon from 'mdi-react/CloudUploadIcon';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 // import Button from '@material-ui/core/Button';
+import { CDN_URL } from 'settings';
 
 interface IProps {
   classes?: any;
@@ -158,7 +159,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
                 <DeleteIcon />
               </div>
             }
-            <img alt='' src={image ? process.env.REACT_APP_CDN_URL + image : null} className={classes.image} />
+            <img alt='' src={image ? CDN_URL + image : null} className={classes.image} />
           </div>
           <label className={classes.info}>
             Imagem formato jpg ou png
