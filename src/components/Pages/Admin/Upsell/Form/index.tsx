@@ -94,9 +94,13 @@ export default class Form extends React.PureComponent<IProps, IState> {
     e.preventDefault();
 
     const { id } = this.props.match.params;
+    const params = {
+      ...this.state,
+      content: this.state.content.toString(),
+    };
 
     if (id) {
-      upsellService.edit(id, { ...this.state }).pipe(
+      upsellService.edit(id, params).pipe(
         rxjsOperators.loader(),
         rxjsOperators.logError(),
         rxjsOperators.bindComponent(this),
@@ -106,7 +110,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
         Toast.error(error);
       });
     } else {
-      upsellService.save({ ...this.state }).pipe(
+      upsellService.save(params).pipe(
         rxjsOperators.loader(),
         rxjsOperators.logError(),
         rxjsOperators.bindComponent(this),
