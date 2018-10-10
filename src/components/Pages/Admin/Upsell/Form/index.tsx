@@ -92,8 +92,21 @@ export default class Form extends React.PureComponent<IProps, IState> {
     }
   }
 
+  getValidStatus = () => {
+    const { content, title, description, small_image, highlight, highlight_image } = this.state;
+    const status = Boolean(content && title && description && small_image && (!highlight || highlight_image));
+
+    this.setState({
+      isValid: status,
+    });
+
+    return status;
+  }
+
   handleSubmit = (e: any) => {
     e.preventDefault();
+
+    if (!this.getValidStatus()) return;
 
     const { id } = this.props.match.params;
     const params = {
@@ -147,7 +160,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                       type={type}
                       content={content}
                       onChange={this.handleChange}
-                      error={isValid}
+                      error={!isValid}
                     />
                   </Grid>
                   <Grid item xs={12} className={classes.section}>

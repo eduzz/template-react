@@ -75,7 +75,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    if (!this.props.match.params.id)
+    if (!this.props.match.params.id || this.props.type === 1)
       this.loadData(this.props.type);
   }
 
@@ -130,7 +130,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
 
     return (
       <div className={classes.root}>
-        <FormControl fullWidth error={error}>
+        <FormControl fullWidth error={error && !content}>
           <label className={classes.title}>
             Escolha um produto
           </label>
@@ -176,7 +176,7 @@ export default class Type extends React.PureComponent<IProps, IState> {
                   </MenuItem>
                 )}
               </Select>
-              <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>
+              {error && !content && <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>}
               {!products.length &&
                 <div className={classes.progressContainer}>
                   <CircularProgress
