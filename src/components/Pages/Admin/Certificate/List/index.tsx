@@ -13,6 +13,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { ICertificate } from 'interfaces/models/certificate';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
 import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
+import PlusIcon from 'mdi-react/PlusIcon';
 import SortVariantIcon from 'mdi-react/SortVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -81,15 +82,17 @@ class CertificateListPage extends PureComponent<IProps, IState> {
 
     return (
       <Fragment>
-        <Toolbar title='Certificados' />
+        <Toolbar>
+          <Grid container spacing={16} alignItems='center'>
+            <Grid item xs={true}>
+              <Typography variant='title' color='inherit' noWrap>Certificados</Typography>
+            </Grid>
 
-        <CardContent>
-          <Grid container spacing={16} justify='flex-end'>
-            <Grid item xs={true} style={{ textAlign: 'right' }}>
-              <Button variant='contained' color='secondary' onClick={this.handleNew}>Novo certificado</Button>
+            <Grid item xs={false}>
+              <Button variant='contained' color='secondary' onClick={this.handleNew}><PlusIcon /> Novo</Button>
             </Grid>
           </Grid>
-        </CardContent>
+        </Toolbar>
 
         <Card>
           <CardContent>
