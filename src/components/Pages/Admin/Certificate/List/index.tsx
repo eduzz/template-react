@@ -89,7 +89,7 @@ class CertificateListPage extends PureComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={false}>
-              <Button variant='contained' color='secondary' onClick={this.handleNew}><PlusIcon /> Novo</Button>
+              <Button variant='contained' color='secondary' onClick={this.handleNew}><PlusIcon /> Criar novo certificado</Button>
             </Grid>
           </Grid>
         </Toolbar>
