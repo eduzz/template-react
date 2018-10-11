@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -8,7 +9,6 @@ import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
-import FabButton from 'components/Shared/FabButton';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificate } from 'interfaces/models/certificate';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
@@ -41,11 +41,6 @@ interface IProps {
   }
 }))
 class CertificateListPage extends PureComponent<IProps, IState> {
-  actions = [{
-    icon: PlusIcon,
-    onClick: () => this.props.router.navigate('/certificados/novo')
-  }];
-
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -79,15 +74,25 @@ class CertificateListPage extends PureComponent<IProps, IState> {
     this.setState({ orderDirection: this.state.orderDirection === 'asc' ? 'desc' : 'asc' }, () => this.loadData());
   }
 
+  handleNew = () => this.props.router.navigate('/certificados/novo');
+
   render() {
     const { classes } = this.props;
     const { certificates, error, orderBy, orderDirection } = this.state;
 
     return (
       <Fragment>
-        <Toolbar title='Certificados' />
+        <Toolbar>
+          <Grid container spacing={16} alignItems='center'>
+            <Grid item xs={true}>
+              <Typography variant='title' color='inherit' noWrap>Certificados</Typography>
+            </Grid>
 
-        <FabButton actions={this.actions} />
+            <Grid item xs={false}>
+              <Button variant='contained' color='secondary' onClick={this.handleNew}><PlusIcon /> Novo</Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
 
         <Card>
           <CardContent>
