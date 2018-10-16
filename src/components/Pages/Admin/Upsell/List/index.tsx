@@ -1,14 +1,15 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
-import FabButton from 'components/Shared/FabButton';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsell } from 'interfaces/models/upsell';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
@@ -16,7 +17,6 @@ import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
 import PlusIcon from 'mdi-react/PlusIcon';
 import SortVariantIcon from 'mdi-react/SortVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
-import List from '@material-ui/core/List';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
 
@@ -40,11 +40,6 @@ interface IProps {
   }
 }))
 class UpsellListPage extends PureComponent<IProps, IState> {
-  actions = [{
-    icon: PlusIcon,
-    onClick: () => this.props.router.navigate('/upsell/novo')
-  }];
-
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -84,15 +79,25 @@ class UpsellListPage extends PureComponent<IProps, IState> {
     }));
   }
 
+  handleNew = () => this.props.router.navigate('/upsell/novo');
+
   render() {
     const { classes } = this.props;
     const { upsells, error, orderBy, orderDirection } = this.state;
 
     return (
       <Fragment>
-        <Toolbar title='Upsell' />
+        <Toolbar>
+          <Grid container spacing={16} alignItems='center'>
+            <Grid item xs={true}>
+              <Typography variant='title' color='inherit' noWrap>Upsell</Typography>
+            </Grid>
 
-        <FabButton actions={this.actions} />
+            <Grid item xs={false}>
+              <Button variant='contained' color='secondary' onClick={this.handleNew}><PlusIcon /> Criar novo upsell</Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
 
         <Card>
           <CardContent>
