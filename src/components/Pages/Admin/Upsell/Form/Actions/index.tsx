@@ -1,19 +1,21 @@
-import React, { Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { WithStyles } from 'decorators/withStyles';
+import React, { Fragment } from 'react';
 
 interface IProps {
   classes?: any;
   onChange?: any;
   published?: boolean;
   highlight?: boolean;
+  shelf?: boolean;
 }
 
 interface IState {
   published: boolean;
   highlight: boolean;
+  shelf: boolean;
 }
 
 @WithStyles(theme => ({
@@ -31,6 +33,7 @@ export default class Actions extends React.PureComponent<IProps, IState> {
     this.state = {
       published: true,
       highlight: false,
+      shelf: false,
     };
   }
 
@@ -39,6 +42,7 @@ export default class Actions extends React.PureComponent<IProps, IState> {
       return {
         published: props.published,
         highlight: props.highlight,
+        shelf: props.shelf,
       };
 
     return null;
@@ -57,7 +61,7 @@ export default class Actions extends React.PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { highlight, published } = this.state;
+    const { highlight, shelf, published } = this.state;
 
     return (
       <Fragment>
@@ -70,6 +74,16 @@ export default class Actions extends React.PureComponent<IProps, IState> {
             />
           }
           label='Destaque'
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={shelf}
+              onClick={this.handleToggle('shelf')}
+              color='secondary'
+            />
+          }
+          label='Mostrar na Vitrine'
         />
         <FormControlLabel
           control={
