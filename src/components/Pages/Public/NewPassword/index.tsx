@@ -4,8 +4,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
-import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import AppRouter, { RouterContext } from 'components/Router';
@@ -81,12 +81,9 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
     };
   }
 
-  onSubmit = async (event: React.FormEvent) => {
+  onSubmit = async (isValid: boolean) => {
     // const { model, token, tokenData } = this.state;
 
-    event.preventDefault();
-
-    const isValid = await this.isFormValid();
     if (!isValid) return;
 
     this.setState({ loading: true });
@@ -122,43 +119,41 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
             <img src={logoWhite} className={classes.logoImage} />
           </div>
 
-          <form onSubmit={this.onSubmit} noValidate>
-            <ValidationContext ref={this.bindValidationContext}>
+          <FormValidation onSubmit={this.onSubmit}>
 
-              <Card>
-                <CardContent>
-                  <Typography>Olá {tokenData.firstName}, informe sua nova senha:</Typography>
+            <Card>
+              <CardContent>
+                <Typography>Olá {tokenData.firstName}, informe sua nova senha:</Typography>
 
-                  <FieldText
-                    label='Nova senha'
-                    type='password'
-                    disabled={loading}
-                    value={model.password}
-                    validation='required|min:5'
-                    onChange={this.updateModel((model, v) => model.password = v)}
-                  />
+                <FieldText
+                  label='Nova senha'
+                  type='password'
+                  disabled={loading}
+                  value={model.password}
+                  validation='required|min:5'
+                  onChange={this.updateModel((model, v) => model.password = v)}
+                />
 
-                  <FieldText
-                    label='Repita a senha'
-                    type='password'
-                    disabled={loading}
-                    value={model.confirmPassword}
-                    validation='required|same:nova senha'
-                    validationContext={{ 'nova senha': model.password }}
-                    onChange={this.updateModel((model, v) => model.confirmPassword = v)}
-                  />
+                <FieldText
+                  label='Repita a senha'
+                  type='password'
+                  disabled={loading}
+                  value={model.confirmPassword}
+                  validation='required|same:nova senha'
+                  validationContext={{ 'nova senha': model.password }}
+                  onChange={this.updateModel((model, v) => model.confirmPassword = v)}
+                />
 
-                </CardContent>
+              </CardContent>
 
-                <CardActions className={classes.buttons}>
-                  <Button disabled={loading} color='secondary' type='submit'>Salvar</Button>
-                </CardActions>
+              <CardActions className={classes.buttons}>
+                <Button disabled={loading} color='secondary' type='submit'>Salvar</Button>
+              </CardActions>
 
-                {loading && <LinearProgress color='secondary' />}
-              </Card>
+              {loading && <LinearProgress color='secondary' />}
+            </Card>
 
-            </ValidationContext>
-          </form>
+          </FormValidation>
 
         </div>
       </div>

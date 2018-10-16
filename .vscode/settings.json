@@ -27,4 +27,6 @@
   "tslint.autoFixOnSave": true,
   "typescriptHero.imports.organizeOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.autoClosingTags": false,
+  "html.autoClosingTags": false,
 }

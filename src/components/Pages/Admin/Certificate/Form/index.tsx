@@ -5,8 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import ValidationContext from '@react-form-fields/core/components/ValidationContext';
 import { FieldSwitch } from '@react-form-fields/material-ui';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
@@ -17,7 +17,7 @@ import { WithStyles } from 'decorators/withStyles';
 import getCertificatePreviewUrl from 'helpers/certificateUrl';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
-import React, { Fragment, SyntheticEvent } from 'react';
+import React, { Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 import rxjsOperators from 'rxjs-operators';
 import certificateService from 'services/certificate';
@@ -40,7 +40,7 @@ interface IState extends IStateForm<{
   error?: any;
 }
 
-interface IProps extends RouteComponentProps<{ id: number }> {
+interface IProps extends RouteComponentProps<{ id: string }> {
   classes?: any;
   router?: AppRouter;
 }
@@ -70,7 +70,7 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
   }
 
   loadData = () => {
-    const id = this.props.match.params.id;
+    const id = Number(this.props.match.params.id);
 
     if (!id) {
       this.setState({ loading: false });
@@ -93,12 +93,8 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     }, error => this.setState({ error, loading: false }));
   }
 
-  handleSubmit = async (e?: SyntheticEvent) => {
-    e && e.preventDefault();
-
-    if (!this.isFormValid()) {
-      return null;
-    }
+  handleSubmit = async (isValid: boolean) => {
+    if (!isValid) return null;
 
     const { model } = this.state;
     const params = { ...model, config: JSON.stringify(model.config) };
@@ -134,7 +130,7 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     this.setState({ previewOpened: false });
     if (!placeholders) return;
 
-    const certificateId = await this.handleSubmit();
+    const certificateId = await this.handleSubmit(this.isFormValid());
     if (!certificateId) return;
 
     window.open(getCertificatePreviewUrl(certificateId, placeholders));
@@ -145,81 +141,79 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     const { classes } = this.props;
 
     return (
-      <Fragment>
+      <Fragment>;
         <CertificatePreviewDialog
           opened={previewOpened}
           onCancel={this.handleClosePreview}
           onComplete={this.handleClosePreview}
         />
 
-        <form noValidate onSubmit={this.handleSubmit}>
-          <ValidationContext ref={this.bindValidationContext}>
-            <Toolbar>
-              <Grid container spacing={16} alignItems='center'>
-                <Grid item xs={true}>
-                  <Typography variant='title' color='inherit' noWrap>
-                    {`${isEdit ? 'Editar' : 'Novo'} certificado`}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={false}>
-                  <Button disabled={loading || error} onClick={this.handleOpenPreview}>
-                    <OpenInNewIcon />
-                    <Hidden implementation='css' xsDown>Preview</Hidden>
-                  </Button>
-                </Grid>
-
-                <Grid item xs={false}>
-                  <Button type='submit' color='secondary' variant='raised' disabled={loading || error}>
-                    <ContentSaveIcon />
-                    <Hidden implementation='css' xsDown>Salvar</Hidden>
-                  </Button>
-                </Grid>
+        <FormValidation onSubmit={this.handleSubmit} ref={this.bindForm}>
+          <Toolbar>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item xs={true}>
+                <Typography variant='title' color='inherit' noWrap>
+                  {`${isEdit ? 'Editar' : 'Novo'} certificado`}
+                </Typography>
               </Grid>
-            </Toolbar>
 
-            <Card>
+              <Grid item xs={false}>
+                <Button disabled={loading || error} onClick={this.handleOpenPreview}>
+                  <OpenInNewIcon />
+                  <Hidden implementation='css' xsDown>Preview</Hidden>
+                </Button>
+              </Grid>
 
-              {loading &&
-                <CardContent className={classes.loader}>
-                  <CircularProgress color='secondary' />
-                </CardContent>
-              }
+              <Grid item xs={false}>
+                <Button type='submit' color='secondary' variant='raised' disabled={loading || error}>
+                  <ContentSaveIcon />
+                  <Hidden implementation='css' xsDown>Salvar</Hidden>
+                </Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
 
-              {!!error &&
-                <CardContent >
-                  <ErrorMessage error={error} tryAgain={this.loadData} />
-                </CardContent>
-              }
+          <Card>
 
-              {!loading && !error &&
-                <CardContent>
-                  <FieldText
-                    label='Título'
-                    placeholder='Digite o título do certificado'
-                    value={model.title}
-                    onChange={this.updateModel((m, v) => m.title = v)}
-                    validation='required|max:50'
-                  />
+            {loading &&
+              <CardContent className={classes.loader}>
+                <CircularProgress color='secondary' />
+              </CardContent>
+            }
 
-                  <FieldSwitch
-                    checked={model.default}
-                    label='Certificado Padrão'
-                    helperText='Todos os cursos que não possuem certificado usarão esse como padrão'
-                    onChange={this.updateModel((m, v) => m.default = v)}
-                  />
+            {!!error &&
+              <CardContent >
+                <ErrorMessage error={error} tryAgain={this.loadData} />
+              </CardContent>
+            }
 
-                  <Typography className={classes.link}>
-                    Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
-                  </Typography>
+            {!loading && !error &&
+              <CardContent>
+                <FieldText
+                  label='Título'
+                  placeholder='Digite o título do certificado'
+                  value={model.title}
+                  onChange={this.updateModel((m, v) => m.title = v)}
+                  validation='required|max:50'
+                />
 
-                  <Editor value={model.config} onChange={this.handleChangeEditor} />
-                </CardContent>
-              }
-            </Card>
+                <FieldSwitch
+                  checked={model.default}
+                  label='Certificado Padrão'
+                  helperText='Todos os cursos que não possuem certificado usarão esse como padrão'
+                  onChange={this.updateModel((m, v) => m.default = v)}
+                />
 
-          </ValidationContext>
-        </form>
+                <Typography className={classes.link}>
+                  Para baixar um modelo de certificado <a href='https://cdn.nutror.com/certificado_default_nutror.psd'>clique aqui</a>
+                </Typography>
+
+                <Editor value={model.config} onChange={this.handleChangeEditor} />
+              </CardContent>
+            }
+          </Card>
+
+        </FormValidation>
       </Fragment>
     );
   }

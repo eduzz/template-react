@@ -3,11 +3,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
-import { ValidationContext } from '@react-form-fields/material-ui';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 interface IState extends IStateForm<{
   email: string;
@@ -33,12 +33,7 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     this.state = { ...this.state, opened: false, loading: false };
   }
 
-  onSubmit = async (event: FormEvent) => {
-    // const { model } = this.state;
-
-    event.preventDefault();
-
-    const isValid = await this.isFormValid();
+  onSubmit = async (isValid: boolean) => {
     if (!isValid) return;
 
     this.setState({ loading: true });
@@ -63,32 +58,30 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     const { classes, onCancel } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit} noValidate>
-        <ValidationContext ref={this.bindValidationContext}>
+      <FormValidation onSubmit={this.onSubmit}>
 
-          <CardContent>
-            <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
+        <CardContent>
+          <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
 
-            <FieldText
-              label='Email'
-              type='email'
-              disabled={loading}
-              value={model.email}
-              validation='required|email'
-              onChange={this.updateModel((model, v) => model.email = v)}
-            />
+          <FieldText
+            label='Email'
+            type='email'
+            disabled={loading}
+            value={model.email}
+            validation='required|email'
+            onChange={this.updateModel((model, v) => model.email = v)}
+          />
 
-          </CardContent>
+        </CardContent>
 
-          <CardActions className={classes.buttons}>
-            <Button disabled={loading} size='small' onClick={onCancel}>Voltar</Button>
-            <Button disabled={loading} color='secondary' type='submit'>Enviar</Button>
-          </CardActions>
+        <CardActions className={classes.buttons}>
+          <Button disabled={loading} size='small' onClick={onCancel}>Voltar</Button>
+          <Button disabled={loading} color='secondary' type='submit'>Enviar</Button>
+        </CardActions>
 
-          {loading && <LinearProgress color='secondary' />}
+        {loading && <LinearProgress color='secondary' />}
 
-        </ValidationContext>
-      </form>
+      </FormValidation>
     );
   }
 }

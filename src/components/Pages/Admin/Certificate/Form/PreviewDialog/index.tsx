@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
-import { ValidationContext } from '@react-form-fields/material-ui';
+import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
@@ -36,13 +36,8 @@ export default class CertificatePreviewDialog extends FormComponent<IProps, ISta
     this.state = { ...this.state };
   }
 
-  onSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const isValid = await this.isFormValid();
+  onSubmit = async (isValid: boolean) => {
     if (!isValid) return;
-
     this.props.onComplete(this.state.model);
   }
 
@@ -61,35 +56,33 @@ export default class CertificatePreviewDialog extends FormComponent<IProps, ISta
         open={opened}
         TransitionComponent={Transition}
       >
-        <form onSubmit={this.onSubmit} noValidate>
-          <ValidationContext ref={this.bindValidationContext}>
-            <DialogTitle>Preview</DialogTitle>
+        <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
+          <DialogTitle>Preview</DialogTitle>
 
-            <DialogContent className={classes.content}>
-              <Typography>
-                Forneça as informações para o preview do certificado, é necessário salvar para poder
-                visualizar as altereções feitas, uma vez gerado o link do preview ele ficará disponível
-                por 15 minutos e as alterações feitas serão sincronizadas.
+          <DialogContent className={classes.content}>
+            <Typography>
+              Forneça as informações para o preview do certificado, é necessário salvar para poder
+              visualizar as altereções feitas, uma vez gerado o link do preview ele ficará disponível
+              por 15 minutos e as alterações feitas serão sincronizadas.
               </Typography>
 
-              {PLACEHOLDERS.map(placeholder =>
-                <FieldText
-                  key={placeholder}
-                  label={placeholder}
-                  value={model[placeholder]}
-                  onChange={this.updateModel((model, v) => model[placeholder] = v)}
-                />
-              )}
+            {PLACEHOLDERS.map(placeholder =>
+              <FieldText
+                key={placeholder}
+                label={placeholder}
+                value={model[placeholder]}
+                onChange={this.updateModel((model, v) => model[placeholder] = v)}
+              />
+            )}
 
-            </DialogContent>
+          </DialogContent>
 
-            <DialogActions>
-              <Button onClick={this.onCancel}>Cancelar</Button>
-              <Button color='secondary' type='submit'>Salvar e Abrir</Button>
-            </DialogActions>
+          <DialogActions>
+            <Button onClick={this.onCancel}>Cancelar</Button>
+            <Button color='secondary' type='submit'>Salvar e Abrir</Button>
+          </DialogActions>
 
-          </ValidationContext>
-        </form>
+        </FormValidation>
       </Dialog>
     );
   }
