@@ -90,7 +90,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
         <Toolbar>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={true}>
-              <Typography variant='title' color='inherit' noWrap>Upsell</Typography>
+              <Typography variant='h6' color='inherit' noWrap>Upsell</Typography>
             </Grid>
 
             <Grid item xs={false}>
@@ -103,7 +103,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
           <CardContent>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='subheading'>
+                <Typography variant='subtitle1'>
                   Listagem de Upsell
                 </Typography>
               </Grid>

@@ -1,19 +1,19 @@
 import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import AppRouter, { RouterContext } from 'components/Router';
+import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import { dateFormat } from 'formatters/date';
+import { IUpsell } from 'interfaces/models/upsell';
 import BullhornIcon from 'mdi-react/BullhornIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import { IUpsell } from 'interfaces/models/upsell';
-import Confirm from 'components/Shared/Confirm';
-import upsellService from 'services/upsell';
 import rxjsOperators from 'rxjs-operators';
-import Toast from 'components/Shared/Toast';
+import upsellService from 'services/upsell';
 
 interface IProps {
   classes?: any;
@@ -66,7 +66,7 @@ class UpsellItem extends PureComponent<IProps> {
           </Grid>
 
           <Grid item xs={true}>
-            <Typography variant='subheading'>{upsell.title}</Typography>
+            <Typography variant='subtitle1'>{upsell.title}</Typography>
           </Grid>
 
           <Grid item xs={false}>

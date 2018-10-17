@@ -164,7 +164,7 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
             <Grid container spacing={24} alignContent='center'>
               <Grid item xs={true}>
                 Selecionar Imagem
-                <Typography variant='body1'>
+                <Typography variant='body2'>
                   <strong>Tamanho sugerido:</strong> {height}px de altura {width}px de largura
                 </Typography>
               </Grid>

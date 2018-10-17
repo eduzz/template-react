@@ -9,13 +9,13 @@ interface IProps {
   onChange?: any;
   published?: boolean;
   highlight?: boolean;
-  shelf?: boolean;
+  offer_shelf?: boolean;
 }
 
 interface IState {
   published: boolean;
   highlight: boolean;
-  shelf: boolean;
+  offer_shelf: boolean;
 }
 
 @WithStyles(theme => ({
@@ -33,16 +33,16 @@ export default class Actions extends React.PureComponent<IProps, IState> {
     this.state = {
       published: true,
       highlight: false,
-      shelf: false,
+      offer_shelf: false,
     };
   }
 
   static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.published !== state.published || props.highlight !== state.highlight)
+    if (props.published !== state.published || props.highlight !== state.highlight || props.offer_shelf !== state.offer_shelf)
       return {
         published: props.published,
         highlight: props.highlight,
-        shelf: props.shelf,
+        offer_shelf: props.offer_shelf,
       };
 
     return null;
@@ -61,7 +61,7 @@ export default class Actions extends React.PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { highlight, shelf, published } = this.state;
+    const { highlight, offer_shelf, published } = this.state;
 
     return (
       <Fragment>
@@ -78,8 +78,8 @@ export default class Actions extends React.PureComponent<IProps, IState> {
         <FormControlLabel
           control={
             <Switch
-              checked={shelf}
-              onClick={this.handleToggle('shelf')}
+              checked={offer_shelf}
+              onClick={this.handleToggle('offer_shelf')}
               color='secondary'
             />
           }

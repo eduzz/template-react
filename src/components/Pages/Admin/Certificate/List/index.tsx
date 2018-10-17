@@ -85,7 +85,7 @@ class CertificateListPage extends PureComponent<IProps, IState> {
         <Toolbar>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={true}>
-              <Typography variant='title' color='inherit' noWrap>Certificados</Typography>
+              <Typography variant='h6' color='inherit' noWrap>Certificados</Typography>
             </Grid>
 
             <Grid item xs={false}>
@@ -98,7 +98,7 @@ class CertificateListPage extends PureComponent<IProps, IState> {
           <CardContent>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography className={classes.title} variant='subheading'>
+                <Typography className={classes.title} variant='subtitle1'>
                   Cursos que foram atribuídos ao certificado
                 </Typography>
               </Grid>

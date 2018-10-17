@@ -84,7 +84,7 @@ export default class AppDrawerUser extends PureComponent<IProps> {
           <Grid item xs={true} className={classes.gridUser}>
             <Typography variant='body2' color='inherit' className={classes.text}>
               <small className={classes.textSmall}>Bem vindo</small>
-              <p className={classes.userName}>{user.name}</p>
+              <span className={classes.userName}>{user.name}</span>
             </Typography>
           </Grid>
           <Grid item>

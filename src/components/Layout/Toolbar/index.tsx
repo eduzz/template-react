@@ -66,7 +66,7 @@ export default class Toolbar extends PureComponent<IProps> {
               </IconButton>
               {children}
               {!children &&
-                <Typography variant='title' color='inherit' noWrap>
+                <Typography variant='h6' color='inherit' noWrap>
                   {title || 'App'}
                 </Typography>
               }
