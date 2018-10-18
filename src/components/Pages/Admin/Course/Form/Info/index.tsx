@@ -1,24 +1,17 @@
 import React, { Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
-import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import { CourseFormContext } from '../';
+// import Switch from '@material-ui/core/Switch';
+import FieldText from '@react-form-fields/material-ui/components/Text';
+import { IForm } from '../';
+import Switch from '@react-form-fields/material-ui/components/Switch';
 
 interface IProps {
   classes?: any;
-  context?: any;
+  form: IForm;
 }
 
-interface IState {
-  title: string;
-  description: string;
-  isSelectorOpen: boolean;
-}
-
-@WithStyles(theme => ({
+@WithStyles({
   titleLabel: {
     marginBottom: 8,
   },
@@ -28,47 +21,42 @@ interface IState {
   publishedSwitch: {
     marginLeft: 8,
   },
-}))
-class Info extends React.PureComponent<IProps, IState> {
+  switchLabel: {
+    marginLeft: -16,
+  },
+})
+export default class Info extends React.PureComponent<IProps> {
   render() {
-    const { classes, context } = this.props;
+    const { classes, form } = this.props;
 
     return (
       <Fragment>
-        <FormControl fullWidth error={context.error && !context.title}>
-          <label className={classes.titleLabel}>
-            Título
+        <label className={classes.titleLabel}>
+          Título
           </label>
-          <div className={classes.content}>
-            <TextField
-              value={context.title}
-              name='title'
-              onChange={context.handleChange}
-              variant='outlined'
-              fullWidth
-              error={context.error && !context.title}
-            />
-            <FormControlLabel
-              className={classes.publishedSwitch}
-              control={
-                <Switch
-                  checked={context.published}
-                  // onClick={this.handleToggle('published')}
-                  color='secondary'
-                />
-              }
-              label='Publicar'
-            />
-          </div>
-          {context.error && !context.title && <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>}
-        </FormControl>
+        <div className={classes.content}>
+          <FieldText
+            value={form.model.title}
+            name='title'
+            validation='required'
+            onChange={form.updateModel((model, v) => model.title = v)}
+            margin='dense'
+          />
+          <FormControlLabel
+            className={classes.publishedSwitch}
+            classes={{
+              label: classes.switchLabel,
+            }}
+            control={
+              <Switch
+                checked={form.model.published}
+                onChange={form.updateModel((model, v) => model.published = v)}
+              />
+            }
+            label='Publicar'
+          />
+        </div>
       </Fragment>
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref) => (
-  <CourseFormContext.Consumer>
-    {context => <Info {...props} context={context} {...ref} />}
-  </CourseFormContext.Consumer>
-));
