@@ -5,6 +5,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
+import BasicInfo from './BasicInfo';
+import { IForm } from '..';
 
 function TabContainer({ children, dir }: any) {
   return (
@@ -17,15 +19,15 @@ function TabContainer({ children, dir }: any) {
 interface IProps {
   classes?: any;
   theme?: any;
+  form: IForm;
 }
 
 @WithStyles(theme => ({
   root: {
     marginTop: 16,
-    // backgroundColor: theme.palette.background.paper,
   },
 }), { withTheme: true })
-export default class FullWidthTabs extends React.Component<IProps> {
+export default class Content extends React.Component<IProps> {
   state = {
     value: 0,
   };
@@ -39,17 +41,20 @@ export default class FullWidthTabs extends React.Component<IProps> {
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, form } = this.props;
 
     return (
       <div className={classes.root}>
-        <AppBar position='static' color='default'>
+        <AppBar
+          position='static'
+          color='default'
+          elevation={0}
+        >
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
             indicatorColor='primary'
             textColor='primary'
-            fullWidth
           >
             <Tab label='Informações Básicas' />
             <Tab label='Configurações Avançadas' />
@@ -61,7 +66,9 @@ export default class FullWidthTabs extends React.Component<IProps> {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>Informações Basicas</TabContainer>
+          <TabContainer dir={theme.direction}>
+            <BasicInfo form={form} />
+          </TabContainer>
           <TabContainer dir={theme.direction}>Configurações Avançadas</TabContainer>
           <TabContainer dir={theme.direction}>Personalizações</TabContainer>
         </SwipeableViews>
