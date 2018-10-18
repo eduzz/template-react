@@ -11,6 +11,7 @@ import AuthorIndexPage from './Author';
 import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
 import UpsellIndexPage from './Upsell';
+import CourseIndexPage from './Course';
 
 interface IState {
   routes: IAppRoute[];
@@ -42,7 +43,13 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
       roles: [],
       component: UpsellIndexPage,
-    }
+    },
+    {
+      path: '/curso',
+      // sideDrawer: { display: 'Upsell', order: 2, icon: BullhornIcon },
+      roles: [],
+      component: CourseIndexPage,
+    },
   ];
 
   constructor(props: {}) {
