@@ -22,7 +22,7 @@ interface IProps {
 interface IState extends IStateForm<{
   title: string;
   published: boolean;
-  category: string | number;
+  category: number | string;
   description: string;
   accessType: number;
 }> { }
@@ -43,14 +43,23 @@ export default class Form extends FormComponent<IProps, IState> {
 
     this.state = {
       ...this.state,
+      model: {
+        title: '',
+        description: '',
+        published: true,
+        category: '',
+        accessType: 1,
+      },
     };
   }
 
   handleSubmit = (isValid: boolean) => {
 
+    console.log('before validation -> ', this.state);
+
     if (!isValid) return;
 
-    console.log(this.state);
+    console.log('after validation -> ', this.state);
   }
 
   handleChange = (label: string, value: any) => {
