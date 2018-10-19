@@ -46,7 +46,7 @@ export default class Form extends FormComponent<IProps, IState> {
       model: {
         title: '',
         description: '',
-        published: true,
+        published: false,
         category: '',
         accessType: 1,
       },
