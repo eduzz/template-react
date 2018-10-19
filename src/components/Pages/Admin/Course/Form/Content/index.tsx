@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import BasicInfo from './BasicInfo';
+import Advanced from './Advanced';
 import { IForm } from '..';
 
 function TabContainer({ children, dir }: any) {
@@ -69,7 +70,9 @@ export default class Content extends React.Component<IProps> {
           <TabContainer dir={theme.direction}>
             <BasicInfo form={form} />
           </TabContainer>
-          <TabContainer dir={theme.direction}>Configurações Avançadas</TabContainer>
+          <TabContainer dir={theme.direction}>
+            <Advanced form={form} />
+          </TabContainer>
           <TabContainer dir={theme.direction}>Personalizações</TabContainer>
         </SwipeableViews>
       </div>
