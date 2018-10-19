@@ -27,41 +27,20 @@ interface IState {
   },
 }))
 export default class Actions extends React.PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      published: true,
-      highlight: false,
-      offer_shelf: false,
-    };
-  }
-
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.published !== state.published || props.highlight !== state.highlight || props.offer_shelf !== state.offer_shelf)
-      return {
-        published: props.published,
-        highlight: props.highlight,
-        offer_shelf: props.offer_shelf,
-      };
-
-    return null;
-  }
-
   handleToggle = (stateLabel: string) =>
     () => {
-      const state = {
-        [stateLabel]: !this.state[stateLabel],
+      const props = {
+        ...this.props,
+        [stateLabel]: !this.props[stateLabel],
       } as any;
 
-      this.setState(state);
+      this.setState(props);
 
-      this.props.onChange && this.props.onChange(state);
+      this.props.onChange && this.props.onChange(props);
     }
 
   render() {
-    const { classes } = this.props;
-    const { highlight, offer_shelf, published } = this.state;
+    const { classes, highlight, offer_shelf, published } = this.props;
 
     return (
       <Fragment>
