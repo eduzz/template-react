@@ -152,7 +152,7 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
           <Toolbar>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='title' color='inherit' noWrap>
+                <Typography variant='h6' color='inherit' noWrap>
                   {`${isEdit ? 'Editar' : 'Novo'} certificado`}
                 </Typography>
               </Grid>

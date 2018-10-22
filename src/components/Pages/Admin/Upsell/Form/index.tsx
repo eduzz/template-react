@@ -1,17 +1,18 @@
-import React, { Fragment } from 'react';
-import Toolbar from 'components/Layout/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import { WithStyles } from 'decorators/withStyles';
-import Type from './Type';
-import Info from './Info';
-import ImageUploader from './ImageUploader';
-import Actions from './Actions';
-import UpsellConfig from './UpsellConfig';
-import { WithRouter } from 'decorators/withRouter';
+import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
-import upsellService from 'services/upsell';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import React, { Fragment } from 'react';
 import rxjsOperators from 'rxjs-operators';
+import upsellService from 'services/upsell';
+
+import Actions from './Actions';
+import ImageUploader from './ImageUploader';
+import Info from './Info';
+import Type from './Type';
+import UpsellConfig from './UpsellConfig';
 
 interface IProps {
   classes?: any;
@@ -24,6 +25,7 @@ interface IState {
   content: string;
   published: boolean;
   highlight: boolean;
+  offer_shelf: boolean;
   title: string;
   courses: any;
   description: string;
@@ -66,6 +68,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
       content: '',
       published: true,
       highlight: false,
+      offer_shelf: false,
       title: '',
       courses: [],
       description: '',
@@ -144,7 +147,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { type, content, title, description, courses, highlight_image, small_image, published, highlight, isValid } = this.state;
+    const { type, content, title, description, courses, highlight_image, small_image, published, highlight, offer_shelf, isValid } = this.state;
 
     return (
       <Fragment>
@@ -213,6 +216,7 @@ export default class Form extends React.PureComponent<IProps, IState> {
                     onChange={this.handleChange}
                     published={published}
                     highlight={highlight}
+                    offer_shelf={offer_shelf}
                   />
                 </div>
               </form>
