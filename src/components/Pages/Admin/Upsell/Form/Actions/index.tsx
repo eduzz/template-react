@@ -1,19 +1,21 @@
-import React, { Fragment } from 'react';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { WithStyles } from 'decorators/withStyles';
+import React, { Fragment } from 'react';
 
 interface IProps {
   classes?: any;
   onChange?: any;
   published?: boolean;
   highlight?: boolean;
+  offer_shelf?: boolean;
 }
 
 interface IState {
   published: boolean;
   highlight: boolean;
+  offer_shelf: boolean;
 }
 
 @WithStyles(theme => ({
@@ -25,39 +27,20 @@ interface IState {
   },
 }))
 export default class Actions extends React.PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      published: true,
-      highlight: false,
-    };
-  }
-
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.published !== state.published || props.highlight !== state.highlight)
-      return {
-        published: props.published,
-        highlight: props.highlight,
-      };
-
-    return null;
-  }
-
   handleToggle = (stateLabel: string) =>
     () => {
-      const state = {
-        [stateLabel]: !this.state[stateLabel],
+      const props = {
+        ...this.props,
+        [stateLabel]: !this.props[stateLabel],
       } as any;
 
-      this.setState(state);
+      this.setState(props);
 
-      this.props.onChange && this.props.onChange(state);
+      this.props.onChange && this.props.onChange(props);
     }
 
   render() {
-    const { classes } = this.props;
-    const { highlight, published } = this.state;
+    const { classes, highlight, offer_shelf, published } = this.props;
 
     return (
       <Fragment>
@@ -70,6 +53,16 @@ export default class Actions extends React.PureComponent<IProps, IState> {
             />
           }
           label='Destaque'
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={offer_shelf}
+              onClick={this.handleToggle('offer_shelf')}
+              color='secondary'
+            />
+          }
+          label='Mostrar na Vitrine'
         />
         <FormControlLabel
           control={

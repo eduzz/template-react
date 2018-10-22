@@ -106,7 +106,7 @@ class CertificateItem extends PureComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={true}>
-              <Typography variant='subheading'>{certificate.title}</Typography>
+              <Typography variant='subtitle1'>{certificate.title}</Typography>
             </Grid>
 
             <Grid item xs={false}>

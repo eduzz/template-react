@@ -31,7 +31,7 @@ export default class IconMessage extends PureComponent<IProps> {
     return (
       <div className={classes.root}>
         <this.props.icon size={50} className={classes.icon} />
-        <Typography variant='body1' className={classes.text}>{message}</Typography>
+        <Typography variant='body2' className={classes.text}>{message}</Typography>
       </div>
     );
   }
