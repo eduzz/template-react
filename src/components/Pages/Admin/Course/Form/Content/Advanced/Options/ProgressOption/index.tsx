@@ -39,8 +39,8 @@ export default class ProgressOption extends React.PureComponent<IProps> {
           control={
             <Switch
               value={2}
-              onChange={form.updateModel((model, v) => model.accessType = v)}
-              checked={form.model.accessType === 2}
+              onChange={form.updateModel((model, v) => model.progress_bar = !model.progress_bar)}
+              checked={form.model.progress_bar}
             />
           }
           label='Progresso'

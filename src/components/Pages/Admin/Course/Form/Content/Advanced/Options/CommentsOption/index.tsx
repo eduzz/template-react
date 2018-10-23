@@ -38,9 +38,8 @@ export default class CommentsOption extends React.PureComponent<IProps> {
           }}
           control={
             <Switch
-              value={1}
-              onChange={form.updateModel((model, v) => model.accessType = v)}
-              checked={form.model.accessType === 1}
+              onChange={form.updateModel((model, v) => model.disable_comments = !model.disable_comments)}
+              checked={!form.model.disable_comments}
             />
           }
           label='Comentários'

@@ -56,9 +56,8 @@ export default class LayoutOption extends React.PureComponent<IProps> {
             }}
             control={
               <Switch
-                value={3}
-                onChange={form.updateModel((model, v) => model.accessType = v)}
-                checked={form.model.accessType === 3}
+                onChange={form.updateModel((model, v) => model.new_layout = !model.new_layout)}
+                checked={form.model.new_layout}
               />
             }
             label='Novo Layout'
@@ -73,11 +72,12 @@ export default class LayoutOption extends React.PureComponent<IProps> {
               root: classes.radio,
               label: classes.radioLabel,
             }}
+            disabled={!form.model.new_layout}
             control={
               <Radio
-                value='white'
-                onChange={form.updateModel((model, v) => model.accessType = v)}
-                checked={form.model.accessType === 1}
+                value={1}
+                onChange={form.updateModel((model, v) => model.theme = v)}
+                checked={form.model.theme === 1}
               />
             }
             label='White'
@@ -87,11 +87,12 @@ export default class LayoutOption extends React.PureComponent<IProps> {
               root: classes.radio,
               label: classes.radioLabel,
             }}
+            disabled={!form.model.new_layout}
             control={
               <Radio
-                value='dark'
-                onChange={form.updateModel((model, v) => model.accessType = v)}
-                checked={form.model.accessType === 1}
+                value={2}
+                onChange={form.updateModel((model, v) => model.theme = v)}
+                checked={form.model.theme === 2}
               />
             }
             label='Dark'

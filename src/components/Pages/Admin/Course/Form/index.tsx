@@ -9,6 +9,7 @@ import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import Tooltip from '@material-ui/core/Tooltip';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import format from 'date-fns/format';
 
 export interface IForm {
   model: Form['state']['model'];
@@ -24,7 +25,15 @@ interface IState extends IStateForm<{
   published: boolean;
   category: number | string;
   description: string;
-  accessType: number;
+  access_type: number;
+  disable_comments: boolean;
+  progress_bar: boolean;
+  allow_manual_watch: boolean;
+  new_layout: boolean;
+  theme: number;
+  hasterms: boolean;
+  terms_content: string;
+  release_at: string;
 }> { }
 
 @WithStyles(theme => ({
@@ -48,7 +57,15 @@ export default class Form extends FormComponent<IProps, IState> {
         description: '',
         published: false,
         category: '',
-        accessType: 1,
+        access_type: 1,
+        disable_comments: false,
+        progress_bar: true,
+        allow_manual_watch: false,
+        new_layout: true,
+        theme: 1,
+        hasterms: false,
+        terms_content: '',
+        release_at: format(new Date(), 'YYYY-MM-dd'),
       },
     };
   }
