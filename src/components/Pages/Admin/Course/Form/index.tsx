@@ -34,6 +34,9 @@ interface IState extends IStateForm<{
   hasterms: boolean;
   terms_content: string;
   release_at: string;
+  days_available: number | null;
+  duration: string;
+  certificate_progress: number;
 }> { }
 
 @WithStyles(theme => ({
@@ -66,6 +69,9 @@ export default class Form extends FormComponent<IProps, IState> {
         hasterms: false,
         terms_content: '',
         release_at: format(new Date(), 'YYYY-MM-dd'),
+        days_available: null,
+        duration: '',
+        certificate_progress: 100,
       },
     };
   }

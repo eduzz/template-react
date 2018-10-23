@@ -13,7 +13,7 @@ interface IProps {
 @WithStyles(theme => ({
   divider: {
     margin: '32px 0 24px 0',
-  }
+  },
 }))
 export default class BasicInfo extends React.PureComponent<IProps> {
   render() {

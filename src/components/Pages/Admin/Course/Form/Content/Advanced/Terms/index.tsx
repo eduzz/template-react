@@ -71,9 +71,9 @@ export default class Terms extends React.PureComponent<IProps> {
             }
             label='Exibir Termos e Condições'
           />
-          {/* <label className={classes.optionDescription}>
+          <label className={classes.optionDescription}>
             Solicitar que os alunos aceitem os termos e condições antes de acessar o curso.
-          </label> */}
+          </label>
         </div>
       </div>
     );
