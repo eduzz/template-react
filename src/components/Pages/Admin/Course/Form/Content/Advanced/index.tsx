@@ -3,6 +3,7 @@ import Divider from '@material-ui/core/Divider';
 import { WithStyles } from 'decorators/withStyles';
 import Options from './Options';
 import { IForm } from '../..';
+import Terms from './Terms';
 
 interface IProps {
   classes?: any;
@@ -22,6 +23,7 @@ export default class BasicInfo extends React.PureComponent<IProps> {
       <Fragment>
         <Options form={form} />
         <Divider className={classes.divider} />
+        <Terms form={form} />
       </Fragment>
     );
   }

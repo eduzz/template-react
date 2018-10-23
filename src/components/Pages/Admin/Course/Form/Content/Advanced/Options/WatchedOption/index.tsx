@@ -39,8 +39,8 @@ export default class WatchedOption extends React.PureComponent<IProps> {
           control={
             <Switch
               value={3}
-              onChange={form.updateModel((model, v) => model.accessType = v)}
-              checked={form.model.accessType === 3}
+              onChange={form.updateModel((model, v) => model.allow_manual_watch = !model.allow_manual_watch)}
+              checked={form.model.allow_manual_watch}
             />
           }
           label='Marcar como assistida'

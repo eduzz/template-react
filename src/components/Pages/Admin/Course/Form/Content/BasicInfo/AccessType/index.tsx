@@ -28,7 +28,7 @@ interface IProps {
     marginLeft: 35,
   },
 }))
-export default class AccessType extends React.PureComponent<IProps> {
+export default class access_type extends React.PureComponent<IProps> {
   render() {
     const { classes, form } = this.props;
 
@@ -43,8 +43,8 @@ export default class AccessType extends React.PureComponent<IProps> {
               control={
                 <Radio
                   value={1}
-                  onChange={form.updateModel((model, v) => model.accessType = v)}
-                  checked={form.model.accessType === 1}
+                  onChange={form.updateModel((model, v) => model.access_type = v)}
+                  checked={form.model.access_type === 1}
                 />
               }
               label='Pago'
@@ -58,8 +58,8 @@ export default class AccessType extends React.PureComponent<IProps> {
               control={
                 <Radio
                   value={2}
-                  onChange={form.updateModel((model, v) => model.accessType = v)}
-                  checked={form.model.accessType === 2}
+                  onChange={form.updateModel((model, v) => model.access_type = v)}
+                  checked={form.model.access_type === 2}
                 />
               }
               label='Gratuito Restrito'
@@ -73,8 +73,8 @@ export default class AccessType extends React.PureComponent<IProps> {
               control={
                 <Radio
                   value={3}
-                  onChange={form.updateModel((model, v) => model.accessType = v)}
-                  checked={form.model.accessType === 3}
+                  onChange={form.updateModel((model, v) => model.access_type = v)}
+                  checked={form.model.access_type === 3}
                 />
               }
               label='Público'

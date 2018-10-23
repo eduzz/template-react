@@ -30,7 +30,7 @@ interface IProps {
 }), { withTheme: true })
 export default class Content extends React.Component<IProps> {
   state = {
-    value: 0,
+    value: 1,
   };
 
   handleChange = (event: any, value: any) => {

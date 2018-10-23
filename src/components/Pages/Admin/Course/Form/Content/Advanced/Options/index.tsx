@@ -6,7 +6,7 @@ import CommentsOption from './CommentsOption';
 import ProgressOption from './ProgressOption';
 import WatchedOption from './WatchedOption';
 import LayoutOption from './LayoutOption';
-import TermsOption from './TermsOption';
+import ReleaseAtOption from './ReleaseAtOption';
 
 interface IProps {
   classes?: any;
@@ -14,12 +14,16 @@ interface IProps {
 }
 
 @WithStyles(theme => ({
+  title: {
+    fontSize: 18,
+    fontWeight: 500,
+  },
   content: {
     display: 'flex',
   },
   optionControl: {
-    marginTop: 8,
-    marginRight: 32,
+    marginTop: 16,
+    marginRight: 16,
   },
 }))
 export default class Options extends React.PureComponent<IProps> {
@@ -28,6 +32,9 @@ export default class Options extends React.PureComponent<IProps> {
 
     return (
       <Fragment>
+        <label className={classes.title}>
+          Configurações
+        </label>
         <Grid container className={classes.content}>
           <Grid item className={classes.optionControl}>
             <CommentsOption form={form} />
@@ -42,7 +49,7 @@ export default class Options extends React.PureComponent<IProps> {
             <LayoutOption form={form} />
           </Grid>
           <Grid item className={classes.optionControl}>
-            <TermsOption form={form} />
+            <ReleaseAtOption form={form} />
           </Grid>
         </Grid>
       </Fragment>
