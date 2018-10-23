@@ -59,6 +59,7 @@ export default class Content extends React.Component<IProps> {
           >
             <Tab label='Informações Básicas' />
             <Tab label='Configurações Avançadas' />
+            <Tab label='Modulos e Aulas' />
             <Tab label='Personalizações' />
           </Tabs>
         </AppBar>
@@ -73,6 +74,7 @@ export default class Content extends React.Component<IProps> {
           <TabContainer dir={theme.direction}>
             <Advanced form={form} />
           </TabContainer>
+          <TabContainer dir={theme.direction}>Modulos e Aulas</TabContainer>
           <TabContainer dir={theme.direction}>Personalizações</TabContainer>
         </SwipeableViews>
       </div>
