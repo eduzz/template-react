@@ -1,6 +1,5 @@
 import IconButton from '@material-ui/core/IconButton';
 import ImageSelector from 'components/Shared/ImageSelector';
-import { WithStyles } from 'decorators/withStyles';
 import ImageIcon from 'mdi-react/ImageIcon';
 import React from 'react';
 
@@ -15,15 +14,6 @@ interface IState {
   selectorOpened: boolean;
 }
 
-@WithStyles(theme => ({
-  input: {
-    position: 'absolute',
-    visibility: 'hidden',
-  },
-  icon: {
-    position: 'absolute',
-  },
-}))
 export default class ImageUpload extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -36,11 +26,12 @@ export default class ImageUpload extends React.PureComponent<IProps, IState> {
 
   onSelectorComplete = (image: string) => {
     this.setState({ selectorOpened: false });
+
+    if (!image) return;
     this.props.onChange(image);
   }
 
   render() {
-    const { classes } = this.props;
     const { selectorOpened } = this.state;
 
     return (
@@ -52,7 +43,7 @@ export default class ImageUpload extends React.PureComponent<IProps, IState> {
           onComplete={this.onSelectorComplete}
         />
         <IconButton onClick={this.handleClick}>
-          <ImageIcon className={classes.icon} />
+          <ImageIcon />
         </IconButton>
       </div>
     );
