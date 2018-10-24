@@ -42,9 +42,9 @@ export default class access_type extends React.PureComponent<IProps> {
             <FormControlLabel
               control={
                 <Radio
-                  value={1}
+                  value={0}
                   onChange={form.updateModel((model, v) => model.access_type = v)}
-                  checked={form.model.access_type === 1}
+                  checked={form.model.access_type === 0}
                 />
               }
               label='Pago'
@@ -57,15 +57,15 @@ export default class access_type extends React.PureComponent<IProps> {
             <FormControlLabel
               control={
                 <Radio
-                  value={2}
+                  value={1}
                   onChange={form.updateModel((model, v) => model.access_type = v)}
-                  checked={form.model.access_type === 2}
+                  checked={form.model.access_type === 1}
                 />
               }
-              label='Gratuito Restrito'
+              label='Público'
             />
             <label className={classes.optionDescription}>
-              Com o acesso restrito qualquer pessoa pode acessar o curso e <strong>é necessário o cadastro.</strong>
+              Com o acesso público qualquer pessoa pode acessar o curso sem a necessidade de um cadastro.
             </label>
           </Grid>
           <Grid item className={classes.optionControl}>
@@ -77,10 +77,10 @@ export default class access_type extends React.PureComponent<IProps> {
                   checked={form.model.access_type === 3}
                 />
               }
-              label='Público'
+              label='Gratuito Restrito'
             />
             <label className={classes.optionDescription}>
-              Com o acesso público qualquer pessoa pode acessar o curso sem a necessidade de um cadastro.
+              Com o acesso restrito qualquer pessoa pode acessar o curso e <strong>é necessário o cadastro.</strong>
             </label>
           </Grid>
         </Grid>

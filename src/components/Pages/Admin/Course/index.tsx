@@ -9,9 +9,6 @@ export default class CourseIndexPage extends React.PureComponent {
   }, {
     path: '/:id/editar',
     component: CourseFormPage,
-  }, {
-    path: '/',
-    component: CourseFormPage,
   }];
 
   render() {

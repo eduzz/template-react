@@ -10,6 +10,9 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import format from 'date-fns/format';
+import courseService from 'services/course';
+import rxjsOperators from 'rxjs-operators';
+import { WithRouter } from 'decorators/withRouter';
 
 export interface IForm {
   model: Form['state']['model'];
@@ -18,6 +21,7 @@ export interface IForm {
 
 interface IProps {
   classes?: any;
+  match?: any;
 }
 
 interface IState extends IStateForm<{
@@ -29,14 +33,17 @@ interface IState extends IStateForm<{
   disable_comments: boolean;
   progress_bar: boolean;
   allow_manual_watch: boolean;
-  new_layout: boolean;
-  theme: number;
+  customization: {
+    layout: boolean;
+    theme: number;
+  };
   hasterms: boolean;
   terms_content: string;
   release_at: string;
   days_available: number | null;
   duration: string;
   certificate_progress: number;
+  author: any;
 }> { }
 
 @WithStyles(theme => ({
@@ -49,6 +56,7 @@ interface IState extends IStateForm<{
     right: theme.spacing.unit * 2,
   },
 }))
+@WithRouter()
 export default class Form extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -60,20 +68,41 @@ export default class Form extends FormComponent<IProps, IState> {
         description: '',
         published: false,
         category: '',
-        access_type: 1,
+        access_type: 0,
         disable_comments: false,
         progress_bar: true,
         allow_manual_watch: false,
-        new_layout: true,
-        theme: 1,
+        customization: {
+          layout: true,
+          theme: 1,
+        },
         hasterms: false,
         terms_content: '',
         release_at: format(new Date(), 'YYYY-MM-dd'),
         days_available: null,
         duration: '',
         certificate_progress: 100,
+        author: {},
       },
     };
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = () => {
+    const { id } = this.props.match.params;
+
+    courseService.getCourse(id).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.loader(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((course: any) => {
+      this.setState({
+        model: { ...course, },
+      });
+    });
   }
 
   handleSubmit = (isValid: boolean) => {

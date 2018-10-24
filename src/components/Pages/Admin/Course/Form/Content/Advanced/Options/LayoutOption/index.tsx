@@ -56,8 +56,8 @@ export default class LayoutOption extends React.PureComponent<IProps> {
             }}
             control={
               <Switch
-                onChange={form.updateModel((model, v) => model.new_layout = !model.new_layout)}
-                checked={form.model.new_layout}
+                onChange={form.updateModel((model, v) => model.customization.layout = !model.customization.layout)}
+                checked={form.model.customization.layout}
               />
             }
             label='Novo Layout'
@@ -72,12 +72,12 @@ export default class LayoutOption extends React.PureComponent<IProps> {
               root: classes.radio,
               label: classes.radioLabel,
             }}
-            disabled={!form.model.new_layout}
+            disabled={!form.model.customization.layout}
             control={
               <Radio
                 value={1}
-                onChange={form.updateModel((model, v) => model.theme = v)}
-                checked={form.model.theme === 1}
+                onChange={form.updateModel((model, v) => model.customization.theme = v)}
+                checked={form.model.customization.theme === 1}
               />
             }
             label='White'
@@ -87,12 +87,12 @@ export default class LayoutOption extends React.PureComponent<IProps> {
               root: classes.radio,
               label: classes.radioLabel,
             }}
-            disabled={!form.model.new_layout}
+            disabled={!form.model.customization.layout}
             control={
               <Radio
                 value={2}
-                onChange={form.updateModel((model, v) => model.theme = v)}
-                checked={form.model.theme === 2}
+                onChange={form.updateModel((model, v) => model.customization.theme = v)}
+                checked={form.model.customization.theme === 2}
               />
             }
             label='Dark'

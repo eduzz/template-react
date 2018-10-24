@@ -3,8 +3,9 @@ import Divider from '@material-ui/core/Divider';
 import AccessType from './AccessType';
 import Description from './Description';
 import { WithStyles } from 'decorators/withStyles';
-import Category from './Category';
 import { IForm } from '../..';
+import Category from './Category';
+import Author from './Author';
 
 interface IProps {
   classes?: any;
@@ -23,6 +24,8 @@ export default class BasicInfo extends React.PureComponent<IProps> {
     return (
       <Fragment>
         <Category form={form} />
+        <Divider className={classes.divider} />
+        <Author form={form} />
         <Divider className={classes.divider} />
         <Description form={form} />
         <Divider className={classes.divider} />
