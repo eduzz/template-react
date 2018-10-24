@@ -40,7 +40,7 @@ export const DEFAULT_ITEM: IEditorItem = {
 };
 
 export const DEFAULT_CERTIFICATE = {
-  image: 'certificado_default_nutror.png',
+  image: '/certificado_default_nutror.png',
   items: [
     {
       id: 1,
