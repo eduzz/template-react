@@ -79,12 +79,6 @@ class Toolbar extends React.PureComponent<IProps> {
               onChange={this.handleChange}
             />
           </Grid>
-          {/* <Grid item>
-          <TextEdit
-            value={context.getCurrentConfig('text')}
-            onChange={this.handleChange}
-          />
-        </Grid> */}
           <ColorPicker
             value={context.getCurrentConfig('color')}
             onChange={this.handleChange}
