@@ -104,7 +104,7 @@ export default class Alert extends React.Component<IProps, IState> {
               Cancelar
             </Button>
           }
-          <Button autoFocus={!confirmation} onClick={this.handleOk} color='primary'>
+          <Button autoFocus={!confirmation} onClick={this.handleOk} color='secondary'>
             OK
           </Button>
         </DialogActions>
