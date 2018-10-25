@@ -1,11 +1,13 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
+import AccountCircleIcon from 'mdi-react/AccountCircleIcon';
 import BullhornIcon from 'mdi-react/BullhornIcon';
 import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
 
+import AuthorIndexPage from './Author';
 import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
 import UpsellIndexPage from './Upsell';
@@ -22,6 +24,12 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       exact: true,
       roles: [],
       component: DashboardIndexPage
+    },
+    {
+      path: '/autores',
+      sideDrawer: { display: 'Autores', order: 1, icon: AccountCircleIcon },
+      roles: [],
+      component: AuthorIndexPage
     },
     {
       path: '/certificados',
