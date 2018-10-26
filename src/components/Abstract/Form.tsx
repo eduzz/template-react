@@ -1,4 +1,5 @@
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import { Component } from 'react';
 
 export interface IStateForm<T = any> {
@@ -7,6 +8,7 @@ export interface IStateForm<T = any> {
 }
 
 export abstract class FormComponent<P, S extends IStateForm> extends Component<P, S> {
+  protected validationContext: ValidationContext;
   protected formValidation: FormValidation;
   protected scrollTop: Function;
 
@@ -18,6 +20,10 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   public bindScrollTop = (scrollTop: Function): React.ReactNode => {
     this.scrollTop = scrollTop;
     return null;
+  }
+
+  public bindValidationContext = (validationContext: ValidationContext): void => {
+    this.validationContext = validationContext;
   }
 
   public bindForm = (formValidation: FormValidation): void => {

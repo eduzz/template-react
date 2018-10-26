@@ -9,7 +9,6 @@ import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
-import ModalCustom from 'components/Shared/ModalCustom';
 import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/models/author';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
@@ -20,9 +19,9 @@ import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authorService from 'services/author';
 
-import AuthorForm from './Form';
 import AuthorItem from './ListItem';
 
+/* import AuthorForm from 'components/Dialogs/Author'; */
 interface IState {
   authors?: IAuthor[];
   error?: any;
@@ -149,9 +148,9 @@ class AuthorIndexPage extends PureComponent<IProps, IState> {
             </CardContent>
           }
 
-          <ModalCustom open={this.state.formModal} modalTitle='Autor' modalContent={<AuthorForm />}>
+          {/* <ModalCustom open={this.state.formModal} modalTitle='Autor' modalContent={<AuthorForm />}>
             <Button onClick={this.handleModal} color='secondary'>Fechar</Button>
-          </ModalCustom>
+          </ModalCustom> */}
         </Card>
       </Fragment>
     );
