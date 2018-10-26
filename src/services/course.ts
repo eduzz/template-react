@@ -8,6 +8,14 @@ class CourseService {
       rxjsOperators.map(response => response.data),
     );
   }
+
+  public save(course: any): any {
+    return apiService.post(`/producer/courses`, course);
+  }
+
+  public edit(id: number, course: any): any {
+    return apiService.put(`/producer/courses/${id}`, course);
+  }
 }
 
 const courseService = new CourseService();

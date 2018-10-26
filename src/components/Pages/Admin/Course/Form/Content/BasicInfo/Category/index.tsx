@@ -2,14 +2,22 @@ import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@react-form-fields/material-ui/components/Select';
 import { IForm } from '../../..';
+import categoryService from 'services/category';
+import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
   form: IForm;
+}
+
+interface IState {
+  categories: any;
+  error: any;
+  orderBy: string;
+  orderDirection: string;
 }
 
 @WithStyles(theme => ({
@@ -29,23 +37,37 @@ interface IProps {
     flexDirection: 'column',
   },
 }))
-export default class Category extends React.PureComponent<IProps> {
+export default class Category extends React.PureComponent<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      categories: [],
+      error: null,
+      orderBy: 'title',
+      orderDirection: 'asc'
+    };
+  }
+
+  componentDidMount() {
+    const { orderBy, orderDirection } = this.state;
+
+    this.setState({
+      error: null,
+    });
+
+    categoryService.getCategories(orderBy, orderDirection).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.loader(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((categories: any) => {
+      this.setState({ categories });
+    }, (error: any) => this.setState({ error }));
+  }
+
   render() {
     const { classes, form } = this.props;
-    const categories = [
-      {
-        id: 1,
-        title: 'Categoria 1',
-      },
-      {
-        id: 2,
-        title: 'Categoria 2',
-      },
-      {
-        id: 3,
-        title: 'Categoria 3',
-      },
-    ];
+    const { categories, error } = this.state;
 
     return (
       <FormControl fullWidth>
@@ -57,8 +79,8 @@ export default class Category extends React.PureComponent<IProps> {
             <div className={classes.selectContainer}>
               <Select
                 className={classes.select}
-                value={categories.length ? form.model.category : ''}
-                onChange={form.updateModel((model, v) => model.category = v)}
+                value={categories.length ? form.model.category.id : ''}
+                onChange={form.updateModel((model, v) => model.category = { ...model.category, id: v })}
                 disabled={!categories.length}
                 validation='required'
               >
@@ -70,18 +92,16 @@ export default class Category extends React.PureComponent<IProps> {
                     key={index}
                     value={category.id}
                   >
-                    {category.title}
+                    {category.name}
                   </MenuItem>
                 )}
               </Select>
-              {!categories.length &&
-                <div className={classes.progressContainer}>
-                  <CircularProgress
-                    size={25}
-                    color='secondary'
-                    className={classes.progress}
-                  />
-                </div>
+              {error &&
+                <MenuItem className={classes.errorContainer}>
+                  <label className={classes.errorLabel}>
+                    Ops... Algo errado não está certo ;(
+                    </label>
+                </MenuItem>
               }
             </div>
           </Grid>
