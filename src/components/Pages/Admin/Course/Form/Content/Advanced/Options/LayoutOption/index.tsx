@@ -75,9 +75,9 @@ export default class LayoutOption extends React.PureComponent<IProps> {
             disabled={!form.model.customization.layout}
             control={
               <Radio
-                value={1}
+                value={0}
                 onChange={form.updateModel((model, v) => model.customization.theme = v)}
-                checked={form.model.customization.theme === 1}
+                checked={form.model.customization.theme === 0}
               />
             }
             label='White'
@@ -90,9 +90,9 @@ export default class LayoutOption extends React.PureComponent<IProps> {
             disabled={!form.model.customization.layout}
             control={
               <Radio
-                value={2}
+                value={1}
                 onChange={form.updateModel((model, v) => model.customization.theme = v)}
-                checked={form.model.customization.theme === 2}
+                checked={form.model.customization.theme === 1}
               />
             }
             label='Dark'

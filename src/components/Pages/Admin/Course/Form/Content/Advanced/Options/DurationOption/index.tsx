@@ -33,8 +33,25 @@ interface IProps {
   }
 }))
 export default class DurationOption extends React.PureComponent<IProps> {
+  formatDuration = (duration: number) => {
+    return `${Math.trunc(duration / 60)}:${duration % 60}`;
+  }
+
+  parseDuration = (duration: string) => {
+    const [hours, minutes] = duration.split(':');
+
+    console.log(hours, minutes);
+
+    if (!minutes)
+      return parseInt(hours);
+
+    return (parseInt(hours) / 60) + parseInt(minutes);
+  }
+
   render() {
     const { classes, form } = this.props;
+
+    const formatedDuration = form.model.duration && this.formatDuration(form.model.duration);
 
     return (
       <div className={classes.root}>
@@ -44,10 +61,10 @@ export default class DurationOption extends React.PureComponent<IProps> {
         <div className={classes.content}>
           <FieldText
             type='text'
-            value={form.model.duration}
+            value={formatedDuration}
             placeholder='Ex: 120:30'
             className={classes.textField}
-            onChange={form.updateModel((model, v) => model.duration = v)}
+            onChange={form.updateModel((model, v) => model.duration = this.parseDuration(v))}
             InputLabelProps={{
               shrink: true,
             }}

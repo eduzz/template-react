@@ -72,9 +72,9 @@ export default class access_type extends React.PureComponent<IProps> {
             <FormControlLabel
               control={
                 <Radio
-                  value={3}
+                  value={2}
                   onChange={form.updateModel((model, v) => model.access_type = v)}
-                  checked={form.model.access_type === 3}
+                  checked={form.model.access_type === 2}
                 />
               }
               label='Gratuito Restrito'

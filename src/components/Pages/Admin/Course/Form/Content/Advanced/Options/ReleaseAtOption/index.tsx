@@ -31,6 +31,8 @@ export default class ReleaseAtOption extends React.PureComponent<IProps> {
   render() {
     const { classes, form } = this.props;
 
+    console.log(form.model.release_at);
+
     return (
       <div className={classes.root}>
         <label className={classes.title}>

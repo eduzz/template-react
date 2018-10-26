@@ -2,7 +2,6 @@ import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@react-form-fields/material-ui/components/Select';
 import { IForm } from '../../..';
@@ -80,7 +79,7 @@ export default class Author extends React.PureComponent<IProps, IState> {
     };
   }
 
-  handleClick = () => {
+  componentDidMount() {
     const { orderBy, orderDirection } = this.state;
 
     this.setState({
@@ -89,6 +88,7 @@ export default class Author extends React.PureComponent<IProps, IState> {
 
     authorService.getAuthors(orderBy, orderDirection).pipe(
       rxjsOperators.logError(),
+      rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
     ).subscribe((authors: any) => {
       this.setState({ authors });
@@ -109,9 +109,8 @@ export default class Author extends React.PureComponent<IProps, IState> {
             <div className={classes.selectContainer}>
               <Select
                 className={classes.select}
-                value={authors.length ? form.model.author.id : ''}
-                onChange={form.updateModel((model, v) => model.author = { id: v })}
-                onClick={this.handleClick}
+                value={form.model.author.id}
+                onChange={form.updateModel((model, v) => model.author = { ...model.author, id: v })}
                 validation='required'
               >
                 <MenuItem value=''>
@@ -135,15 +134,6 @@ export default class Author extends React.PureComponent<IProps, IState> {
                     </div>
                   </MenuItem>
                 )}
-                {!error && !authors.length &&
-                  <MenuItem className={classes.progressContainer}>
-                    <CircularProgress
-                      size={25}
-                      color='secondary'
-                      className={classes.progress}
-                    />
-                  </MenuItem>
-                }
                 {error &&
                   <MenuItem className={classes.errorContainer}>
                     <label className={classes.errorLabel}>
