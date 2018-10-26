@@ -1,0 +1,32 @@
+@import 'src/assets/css/_variables.scss';
+@import 'src/assets/css/_mixins.scss';
+.modal-root {
+  justify-content: center;
+  align-items: center;
+
+  .modal-content {
+    line-height: 150%;
+
+    overflow: auto;
+    background-color: #fff;  }
+
+  h2, p {
+    margin: 0 0 20px;
+    &:last-child { margin: 0; }
+  }
+
+  h2 {
+    @include fontsize(22);
+    line-height: 150%;
+    text-transform: uppercase;
+  }
+
+  p { @include fontsize(16); }
+
+  .btnPrimary {
+    background-color: $primary-brand;
+    color: #fff;
+
+    &:hover { background-color: lighten($primary-brand, 10); }
+  }
+}
