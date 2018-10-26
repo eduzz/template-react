@@ -1,0 +1,22 @@
+.modal-root {
+  justify-content: center;
+  align-items: center; }
+  .modal-root .modal-content {
+    line-height: 150%;
+    overflow: auto;
+    background-color: #fff; }
+  .modal-root h2, .modal-root p {
+    margin: 0 0 20px; }
+    .modal-root h2:last-child, .modal-root p:last-child {
+      margin: 0; }
+  .modal-root h2 {
+    font-size: 1.375rem;
+    line-height: 150%;
+    text-transform: uppercase; }
+  .modal-root p {
+    font-size: 1rem; }
+  .modal-root .btnPrimary {
+    background-color: #27921A;
+    color: #fff; }
+    .modal-root .btnPrimary:hover {
+      background-color: #33bd22; }
