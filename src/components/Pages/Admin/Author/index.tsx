@@ -1,33 +1,35 @@
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
-import FieldSelect from '@react-form-fields/material-ui/components/Select';
+import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
-import ErrorMessage from 'components/Shared/ErrorMessage';
+import TableWrapper from 'components/Shared/TableWrapper';
 import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/models/author';
-import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
-import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
+import { IPaginationParams } from 'interfaces/pagination';
 import PlusIcon from 'mdi-react/PlusIcon';
-import SortVariantIcon from 'mdi-react/SortVariantIcon';
-import React, { Fragment, PureComponent } from 'react';
+import RefreshIcon from 'mdi-react/RefreshIcon';
+import React, { Fragment } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authorService from 'services/author';
 
-import AuthorItem from './ListItem';
+import AuthorFormDialog from './Dialog';
+import ListItem from './ListItem';
 
-/* import AuthorForm from 'components/Dialogs/Author'; */
-interface IState {
+interface IState extends IStateList {
   authors?: IAuthor[];
+  current?: IAuthor;
   error?: any;
-  orderBy: string;
-  orderDirection: 'asc' | 'desc';
-  formModal: boolean;
+  formOpened: boolean;
 }
 
 interface IProps {
@@ -40,48 +42,45 @@ interface IProps {
     textAlign: 'center'
   }
 })
-class AuthorIndexPage extends PureComponent<IProps, IState> {
+class AuthorIndexPage extends ListComponent<IProps, IState> {
   constructor(props: IProps) {
-    super(props);
-    this.state = {
-      orderBy: 'title',
-      orderDirection: 'asc',
-      formModal: false,
-    };
+    super(props, 'title', 'asc');
   }
 
   componentDidMount() {
     this.loadData();
   }
 
-  loadData = () => {
-    this.setState({ error: null, authors: null });
-    const { orderBy, orderDirection } = this.state;
+  loadData = (params: Partial<IPaginationParams> = {}) => {
+    this.setState({ error: null, authors: null, loading: true });
 
-    authorService.list(orderBy, orderDirection).pipe(
-      rxjsOperators.delay(1000),
+    authorService.list(this.mergeParams(params)).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(authors => {
-      this.setState({ authors });
-    }, error => this.setState({ error }));
+      this.setPaginatedData(authors);
+    }, error => this.setError(error));
   }
 
-  handleChangeOrderBy = (orderBy: string) => {
-    this.setState({ orderBy }, () => this.loadData());
+  handleCreate = () => {
+    this.setState({ formOpened: true, current: null });
   }
 
-  toggleOrderDirection = () => {
-    this.setState({ orderDirection: this.state.orderDirection === 'asc' ? 'desc' : 'asc' }, () => this.loadData());
+  handleEdit = (current: IAuthor) => {
+    this.setState({ formOpened: true, current });
   }
 
-  handleModal = () => {
-    return this.setState({ formModal: !this.state.formModal, });
+  handleFormCallback = () => {
+    this.setState({ formOpened: false });
+    this.loadData();
+  }
+
+  handleFormCancel = () => {
+    this.setState({ formOpened: false });
   }
 
   render() {
-    const { classes } = this.props;
-    const { authors, error, orderBy, orderDirection } = this.state;
+    const { formOpened, loading, items, current } = this.state;
 
     return (
       <Fragment>
@@ -92,65 +91,60 @@ class AuthorIndexPage extends PureComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={false}>
-              <Button variant='contained' color='secondary' onClick={this.handleModal}><PlusIcon /> Criar novo autor</Button>
+              <Button variant='contained' color='secondary' onClick={this.handleCreate}><PlusIcon /> Criar novo autor</Button>
             </Grid>
           </Grid>
         </Toolbar>
 
+        <AuthorFormDialog
+          opened={formOpened}
+          author={current}
+          onComplete={this.handleFormCallback}
+          onCancel={this.handleFormCancel}
+        />
+
         <Card>
+          {this.renderLoader()}
+
           <CardContent>
-            <Grid container spacing={16} alignItems='center'>
-              <Grid item xs={true}>
-                <Typography variant='subtitle1'>Listagem de autores</Typography>
+            <Grid container>
+              <Grid item xs={12} sm={6} lg={4}>
+                {this.renderSearch()}
               </Grid>
-
-              <Grid item xs={false}>
-                <FieldSelect
-                  value={orderBy}
-                  options={[{ value: 'title', label: 'Nome' }, { value: 'created_at', label: 'Data de criação' }]}
-                  onChange={this.handleChangeOrderBy}
-                  fullWidth={false}
-                  disabled={!error && !authors}
-                  margin='none'
-                />
-              </Grid>
-
-              <Grid item xs={false}>
-                <IconButton
-                  disabled={!error && !authors}
-                  onClick={this.toggleOrderDirection}
-                >
-                  {orderDirection === 'asc' ? <ArrowDownIcon /> : <ArrowUpIcon />}
-                  <SortVariantIcon />
-                </IconButton>
-              </Grid>
-
             </Grid>
           </CardContent>
 
-          {!error && !authors &&
-            <CardContent className={classes.loader}>
-              <CircularProgress color='secondary' />
-            </CardContent>
-          }
-
-          {!!error &&
-            <CardContent>
-              <ErrorMessage error={error} tryAgain={this.loadData} />
-            </CardContent>
-          }
-
-          {!!authors &&
-            <CardContent>
-              {authors.map(author => (
-                <AuthorItem key={author.id} author={author} />
-              ))}
-            </CardContent>
-          }
-
-          {/* <ModalCustom open={this.state.formModal} modalTitle='Autor' modalContent={<AuthorForm />}>
-            <Button onClick={this.handleModal} color='secondary'>Fechar</Button>
-          </ModalCustom> */}
+          <TableWrapper minWidth={500}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ width: 50 }} />
+                  <TableCellSortable {...this.sortableProps} column='title'>
+                    Nome
+                  </TableCellSortable>
+                  <TableCellSortable {...this.sortableProps} column='created_at'>
+                    Data de criação
+                  </TableCellSortable>
+                  <TableCell>
+                    <IconButton disabled={loading} onClick={this.handleRefresh}>
+                      <RefreshIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.renderEmptyAndErrorMessages(4)}
+                {items.map(author =>
+                  <ListItem
+                    key={author.id}
+                    author={author}
+                    onEdit={this.handleEdit}
+                  />
+                )}
+              </TableBody>
+            </Table>
+          </TableWrapper>
+          {this.renderTablePagination()}
         </Card>
       </Fragment>
     );
