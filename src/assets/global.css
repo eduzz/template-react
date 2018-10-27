@@ -2,6 +2,10 @@ body {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
+:focus {
+  outline: none !important;
+}
+
 strong,
 b {
   font-weight: 500 !important;

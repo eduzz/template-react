@@ -1,4 +1,5 @@
 import { IAuthor } from 'interfaces/models/author';
+import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
@@ -7,11 +8,15 @@ import apiService from './api';
 class AuthorService {
   private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
 
-  public list(orderBy: string, orderDirection: string): rxjs.Observable<IAuthor[]> {
-    return apiService.get<IAuthor[]>('/producer/authors', { orderby: orderBy, order: orderDirection }).pipe(
-      rxjsOperators.map(response => response.data),
+  public list(params: IPaginationParams): rxjs.Observable<IPaginationResponse<IAuthor>> {
+    return apiService.get<IAuthor[]>('/producer/authors', params).pipe(
       rxjsOperators.combineLatest(this.deleted$),
-      rxjsOperators.map(([authors, deleted]) => authors.filter(c => !deleted.includes(c.id))),
+      rxjsOperators.map(([result, deleted]) => {
+        return {
+          ...result,
+          data: result.data.filter(c => !deleted.includes(c.id))
+        };
+      }),
     );
   }
 
@@ -21,13 +26,13 @@ class AuthorService {
     );
   }
 
-  public save(params: Partial<IAuthor & { html: String }>) {
+  public save(params: Partial<IAuthor>) {
     const stream$ = !params.id ?
-      apiService.post<number>('/producer/authors', params) :
-      apiService.put<number>(`/producer/authors/${params.id}`, params);
+      apiService.post<IAuthor>('/producer/authors', params) :
+      apiService.put<IAuthor>(`/producer/authors/${params.id}`, params);
 
     return stream$.pipe(
-      rxjsOperators.map(response => response.data || params.id)
+      rxjsOperators.map(response => response.data)
     );
   }
 
