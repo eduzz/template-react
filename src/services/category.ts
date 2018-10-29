@@ -8,6 +8,12 @@ class CategoryService {
       rxjsOperators.map(response => response.data),
     );
   }
+
+  public addCategory(category: string): any {
+    return apiService.post('producer/categories', { category }).pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
 }
 
 const categoryService = new CategoryService();
