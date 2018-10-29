@@ -36,6 +36,15 @@ interface IState {
     display: 'flex',
     flexDirection: 'column',
   },
+  errorContainer: {
+    padding: 16,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  errorLabel: {
+    color: '#f44336',
+  },
 }))
 export default class Category extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -81,7 +90,6 @@ export default class Category extends React.PureComponent<IProps, IState> {
                 className={classes.select}
                 value={categories.length ? form.model.category.id : ''}
                 onChange={form.updateModel((model, v) => model.category = { ...model.category, id: v })}
-                disabled={!categories.length}
                 validation='required'
               >
                 <MenuItem value=''>
@@ -95,14 +103,14 @@ export default class Category extends React.PureComponent<IProps, IState> {
                     {category.name}
                   </MenuItem>
                 )}
-              </Select>
-              {error &&
-                <MenuItem className={classes.errorContainer}>
-                  <label className={classes.errorLabel}>
-                    Ops... Algo errado não está certo ;(
+                {error &&
+                  <MenuItem className={classes.errorContainer}>
+                    <label className={classes.errorLabel}>
+                      Ops... Algo errado não está certo ;(
                     </label>
-                </MenuItem>
-              }
+                  </MenuItem>
+                }
+              </Select>
             </div>
           </Grid>
         </Grid>
