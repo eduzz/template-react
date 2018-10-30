@@ -10,10 +10,11 @@ import CategoryItem from './ListItem';
 import categoryService from 'services/category';
 import rxjsOperators from 'rxjs-operators';
 import { WithStyles } from 'decorators/withStyles';
+import { ICategory } from 'interfaces/models/category';
 
 interface IState {
   error?: any;
-  categories?: any;
+  categories?: ICategory[];
 }
 
 interface IProps {
@@ -82,7 +83,7 @@ export default class CategoriesList extends React.PureComponent<IProps, IState> 
 
         {!!categories &&
           <List disablePadding>
-            {categories.map((category: any) => (
+            {categories.map(category => (
               <CategoryItem
                 key={category.id}
                 category={category}

@@ -7,6 +7,7 @@ import Select from '@react-form-fields/material-ui/components/Select';
 import { IForm } from '../../..';
 import categoryService from 'services/category';
 import rxjsOperators from 'rxjs-operators';
+import { ICategory } from 'interfaces/models/category';
 
 interface IProps {
   classes?: any;
@@ -14,7 +15,7 @@ interface IProps {
 }
 
 interface IState {
-  categories: any;
+  categories: ICategory[];
   error: any;
 }
 
@@ -89,7 +90,7 @@ export default class Category extends React.PureComponent<IProps, IState> {
                 <MenuItem value=''>
                   Selecione uma categoria
                 </MenuItem>
-                {categories.map((category: any, index: number) =>
+                {categories.map((category, index) =>
                   <MenuItem
                     key={index}
                     value={category.id}
