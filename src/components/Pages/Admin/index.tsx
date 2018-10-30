@@ -53,7 +53,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/categorias',
-      // sideDrawer: { display: 'Categorias', order: 3, icon: BullhornIcon },
+      // sideDrawer: { display: 'Categorias', order: 3, icon: TagTextOutlineIcon },
       roles: [],
       component: CategoriesIndexPage,
     },
