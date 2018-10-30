@@ -16,8 +16,6 @@ interface IProps {
 interface IState {
   categories: any;
   error: any;
-  orderBy: string;
-  orderDirection: string;
 }
 
 @WithStyles(theme => ({
@@ -53,19 +51,15 @@ export default class Category extends React.PureComponent<IProps, IState> {
     this.state = {
       categories: [],
       error: null,
-      orderBy: 'title',
-      orderDirection: 'asc'
     };
   }
 
   componentDidMount() {
-    const { orderBy, orderDirection } = this.state;
-
     this.setState({
       error: null,
     });
 
-    categoryService.getCategories(orderBy, orderDirection).pipe(
+    categoryService.getCategories().pipe(
       rxjsOperators.logError(),
       rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
