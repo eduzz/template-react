@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { CDN_URL } from 'settings';
 import authorService from 'services/author';
 import rxjsOperators from 'rxjs-operators';
+import { IAuthor } from 'interfaces/models/author';
 
 interface IProps {
   classes?: any;
@@ -16,10 +17,10 @@ interface IProps {
 }
 
 interface IState {
-  authors: any;
+  authors: IAuthor[];
   error: any;
-  orderBy: string;
-  orderDirection: string;
+  orderby: string;
+  order: 'asc' | 'desc';
 }
 
 @WithStyles(theme => ({
@@ -74,22 +75,23 @@ export default class Author extends React.PureComponent<IProps, IState> {
     this.state = {
       authors: [],
       error: null,
-      orderBy: 'title',
-      orderDirection: 'asc'
+      orderby: 'title',
+      order: 'asc'
     };
   }
 
   componentDidMount() {
-    const { orderBy, orderDirection } = this.state;
+    const { orderby, order } = this.state;
 
     this.setState({
       error: null,
     });
 
-    authorService.getAuthors(orderBy, orderDirection).pipe(
+    authorService.list({ orderby, order, page: 1, size: 50 }).pipe(
       rxjsOperators.logError(),
       rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
+      rxjsOperators.map(authors => authors.data),
     ).subscribe((authors: any) => {
       this.setState({ authors });
     }, (error: any) => this.setState({ error }));
