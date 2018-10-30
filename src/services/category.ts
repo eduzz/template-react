@@ -1,18 +1,17 @@
 import rxjsOperators from 'rxjs-operators';
 
 import apiService from './api';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import tokenService from './token';
 
 class CategoryService {
 
-  private category$ = new ReplaySubject(1);
+  private categories$ = new BehaviorSubject([]);
 
   constructor() {
     tokenService.getTokens().pipe(
       rxjsOperators.filter(token => !!token),
     ).subscribe(() => {
-      this.category$.next([]);
       this.loadCategories();
     });
   }
@@ -21,12 +20,12 @@ class CategoryService {
     apiService.get('producer/categories').pipe(
       rxjsOperators.map(response => response.data),
     ).subscribe(categories => {
-      this.category$.next(categories);
+      this.categories$.next(categories);
     });
   }
 
   public getCategories(): any {
-    return this.category$.asObservable();
+    return this.categories$.asObservable();
   }
 
   public addCategory(category: string): any {
