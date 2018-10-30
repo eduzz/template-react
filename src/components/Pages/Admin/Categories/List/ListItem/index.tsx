@@ -6,10 +6,11 @@ import TagTextOutlineIcon from 'mdi-react/TagTextOutlineIcon';
 import React, { PureComponent } from 'react';
 import ListItem from '@material-ui/core/ListItem';
 import { RouterContext } from 'components/Router';
+import { ICategory } from 'interfaces/models/category';
 
 interface IProps {
   classes?: any;
-  category: any;
+  category: ICategory;
 }
 
 @WithStyles({
