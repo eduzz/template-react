@@ -6,17 +6,11 @@ import rxjsOperators from 'rxjs-operators';
 import apiService from './api';
 
 class AuthorService {
-  private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
+  private update$ = new rxjs.BehaviorSubject<boolean>(true);
 
   public list(params: IPaginationParams): rxjs.Observable<IPaginationResponse<IAuthor>> {
-    return apiService.get<IAuthor[]>('/producer/authors', params).pipe(
-      rxjsOperators.combineLatest(this.deleted$),
-      rxjsOperators.map(([result, deleted]) => {
-        return {
-          ...result,
-          data: result.data.filter(c => !deleted.includes(c.id))
-        };
-      }),
+    return this.update$.pipe(
+      rxjsOperators.switchMap(() => apiService.get<IAuthor[]>('/producer/authors', params)),
     );
   }
 
@@ -32,13 +26,14 @@ class AuthorService {
       apiService.put<IAuthor>(`/producer/authors/${params.id}`, params);
 
     return stream$.pipe(
-      rxjsOperators.map(response => response.data)
+      rxjsOperators.tap(() => this.update$.next(true)),
+      rxjsOperators.map(result => result.data)
     );
   }
 
   public delete(id: number): rxjs.Observable<void> {
     return apiService.delete(`/producer/authors/${id}`).pipe(
-      rxjsOperators.map(() => this.deleted$.next([...this.deleted$.value, id]))
+      rxjsOperators.map(() => this.update$.next(true))
     );
   }
 }
