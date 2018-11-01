@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { WithStyles } from 'decorators/withStyles';
 
-export default class ModulesLessons extends React.PureComponent {
+interface IProps {
+  classes?: any;
+}
+
+@WithStyles({
+
+})
+export default class ModulesLessons extends React.PureComponent<IProps> {
   render() {
+    // const { classes } = this.props;
+
     return (
-      <div>
+      <Fragment>
         Modulos e Aulas
-      </div>
+      </Fragment>
     );
   }
 }

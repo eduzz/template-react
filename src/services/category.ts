@@ -4,19 +4,22 @@ import apiService from './api';
 import { BehaviorSubject } from 'rxjs';
 
 class CategoryService {
-  private categories$ = new BehaviorSubject([]);
+  private categories$ = new BehaviorSubject(null);
 
   public loadCategories(): void {
-    if (!this.categories$.value.length) {
-      apiService.get('producer/categories').pipe(
-        rxjsOperators.map(response => response.data),
-      ).subscribe(categories => {
-        this.categories$.next(categories);
-      });
-    }
+    apiService.get('producer/categories').pipe(
+      rxjsOperators.map(response => response.data),
+    ).subscribe(categories => {
+      this.categories$.next(categories);
+    }, error => {
+      this.categories$.error(error);
+    });
   }
 
   public getCategories(): any {
+    if (!this.categories$.value)
+      this.loadCategories();
+
     return this.categories$.asObservable();
   }
 

@@ -6,7 +6,7 @@ import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
-
+// import TagTextOutlineIcon from 'mdi-react/TagTextOutlineIcon';
 import AuthorIndexPage from './Author';
 import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
@@ -47,7 +47,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/curso',
-      // sideDrawer: { display: 'Upsell', order: 2, icon: BullhornIcon },
+      // sideDrawer: { display: 'Curso', order: 2, icon: BullhornIcon },
       roles: [],
       component: CourseIndexPage,
     },

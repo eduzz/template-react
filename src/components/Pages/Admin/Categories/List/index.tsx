@@ -31,14 +31,13 @@ export default class CategoriesList extends React.PureComponent<IProps, IState> 
     super(props);
 
     this.state = {
-      categories: [],
+      categories: null,
       error: null,
     };
   }
 
   componentDidMount() {
     this.loadData();
-    categoryService.loadCategories();
   }
 
   loadData = () => {
