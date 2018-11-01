@@ -1,194 +1,98 @@
-import CircularProgress from '@material-ui/core/CircularProgress';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import MenuItem from '@material-ui/core/MenuItem';
-import Radio from '@material-ui/core/Radio';
-import Select from '@material-ui/core/Select';
-import { WithRouter } from 'decorators/withRouter';
-import { WithStyles } from 'decorators/withStyles';
-import ArrowDropDownIcon from 'mdi-react/ArrowDropDownIcon';
-import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import FieldRadio from '@react-form-fields/material-ui/components/Radio';
+import FieldSelect from '@react-form-fields/material-ui/components/Select';
+import Toast from 'components/Shared/Toast';
+import React, { PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
 
 interface IProps {
-  classes?: any;
-  onChange?: any;
-  type?: number;
-  content?: string;
   match?: any;
-  error?: boolean;
+
+  model: { type?: number; content?: string; };
+  onChange: (value: IProps['model']) => void;
 }
 
 interface IState {
-  products: any;
+  currentType?: number;
+  products: { value: string, label: string; }[];
 }
 
-@WithRouter()
-@WithStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  title: {
-    fontSize: 18,
-  },
-  select: {
-    width: 200,
-  },
-  selectContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-  },
-  content: {
-    marginTop: 8,
-    display: 'flex',
-  },
-  progressContainer: {
-    position: 'absolute',
-    width: 48,
-    height: 48,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  progress: {
-    position: 'absolute',
-  },
-  menuItem: {
-    display: 'flex',
-    justifyContent: 'center',
-  },
-  errorLabel: {
-    marginRight: 'auto',
-  },
-}))
-export default class Type extends React.PureComponent<IProps, IState> {
+export default class Type extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      products: [],
-    };
+    this.state = { products: [] };
   }
 
-  componentDidMount() {
-    if (!this.props.match.params.id || this.props.type === 1)
-      this.loadData(this.props.type);
+  handleChange(model: IProps['model']) {
+    this.props.onChange({ ...this.props.model, ...model });
   }
 
-  componentDidUpdate(prevProps: IProps, prevState: IState) {
-    if (prevProps.type !== this.props.type) {
-      this.loadData(this.props.type);
+  handleChangeType = (type: number) => this.handleChange({ type, content: null });
+  handleChangeContent = (content: any) => this.handleChange({ content: (content || '').toString() });
+
+  componentDidUpdate(prevProps: IProps) {
+    if (prevProps.model.type === this.state.currentType) return;
+
+    if (!prevProps.model.type) {
+      this.setState({ products: [] });
+      return;
     }
-  }
 
-  loadData = (type: number) => {
-    upsellService.getProducts(type).pipe(
+    this.setState({ products: null });
+
+    upsellService.getProducts(prevProps.model.type).pipe(
       rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
-    ).subscribe((products: any) => {
+      rxjsOperators.bindComponent(this)
+    ).subscribe(products => {
       this.setState({
-        products,
+        currentType: prevProps.model.type,
+        products: products.map(p => ({ value: (p.hash || p.id).toString(), label: p.title }))
       });
-    });
-  }
-
-  handleClick = (value: number) =>
-    () => {
-      this.setState({
-        products: [],
-      });
-
-      const { onChange } = this.props;
-
-      if (onChange) {
-        onChange({
-          type: value,
-          content: '',
-        });
-      }
-
-      this.loadData(value);
-    }
-
-  handleChange = (e: any) => {
-    const { onChange } = this.props;
-
-    if (onChange) {
-      onChange({
-        content: e.target.value,
-      });
-    }
+    }, err => Toast.error(err));
   }
 
   render() {
-    const { classes, type, content, error } = this.props;
+    const { model } = this.props;
     const { products } = this.state;
 
     return (
-      <div className={classes.root}>
-        <FormControl fullWidth error={error && !content}>
-          <label className={classes.title}>
-            Escolha um produto
-          </label>
-          <div className={classes.content}>
-            <FormControlLabel
-              control={
-                <Radio
-                  checked={type === 1}
-                  onClick={this.handleClick(1)}
-                  disabled={!products.length}
-                />
-              }
-              label='Eduzz'
+      <div>
+        <Typography variant='subtitle1'>Qual produto deseja vincular?</Typography>
+
+        <Grid container alignItems='center' spacing={16}>
+          <Grid item xs={false}>
+            <FieldRadio
+              value={1}
+              checked={model.type === 1}
+              label='Produto Eduzz'
+              onChange={this.handleChangeType}
             />
-            <FormControlLabel
-              control={
-                <Radio
-                  checked={type === 2}
-                  onClick={this.handleClick(2)}
-                  disabled={!products.length}
-                />
-              }
-              label='Nutror'
+          </Grid>
+
+          <Grid item xs={false}>
+            <FieldRadio
+              value={2}
+              checked={model.type === 2}
+              label='Curso do Nutror'
+              onChange={this.handleChangeType}
             />
-            <div className={classes.selectContainer}>
-              <Select
-                className={classes.select}
-                value={products.length ? content : ''}
-                onChange={this.handleChange}
-                displayEmpty
-                IconComponent={products.length ? ArrowDropDownIcon : 'none'}
-                disabled={!products.length}
-              >
-                <MenuItem value=''>
-                  Selecione um Produto
-                </MenuItem>
-                {products.map((product: any, index: number) =>
-                  <MenuItem
-                    key={index}
-                    value={product.hash}
-                  >
-                    {product.title}
-                  </MenuItem>
-                )}
-              </Select>
-              {error && !content && <FormHelperText className={classes.errorLabel}>Campo obrigatório</FormHelperText>}
-              {!products.length &&
-                <div className={classes.progressContainer}>
-                  <CircularProgress
-                    size={25}
-                    color='secondary'
-                    className={classes.progress}
-                  />
-                </div>
-              }
-            </div>
-          </div>
-        </FormControl>
+          </Grid>
+
+          <Grid item xs={true} sm={6}>
+            <FieldSelect
+              value={(model.content || '').toString()}
+              margin='none'
+              validation='required'
+              onChange={this.handleChangeContent}
+              options={products}
+              loading={!products}
+              disabled={!model.type}
+            />
+          </Grid>
+        </Grid>
+
       </div>
     );
   }

@@ -18,18 +18,21 @@ const secondary = {
 };
 
 export const theme = createMuiTheme({
+  typography: { useNextVariants: true },
   palette: { primary, secondary },
   variables,
   overrides
 });
 
 export const reverseTheme = createMuiTheme({
+  typography: { useNextVariants: true },
   palette: { primary: secondary, secondary: primary },
   variables,
   overrides
 });
 
 export const whiteTheme = createMuiTheme({
+  typography: { useNextVariants: true },
   palette: {
     primary: {
       light: '#ffffff',

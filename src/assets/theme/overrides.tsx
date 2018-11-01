@@ -1,7 +1,9 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Overrides } from '@material-ui/core/styles/overrides';
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createMuiTheme({
+  typography: { useNextVariants: true },
+});
 
 const overrides: Overrides = {
   MuiButton: {

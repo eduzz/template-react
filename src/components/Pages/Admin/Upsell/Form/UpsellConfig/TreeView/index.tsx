@@ -1,19 +1,22 @@
-import React from 'react';
+import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import { WithStyles } from 'decorators/withStyles';
-import CourseItem from './CourseItem';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsell } from 'interfaces/models/upsell';
+import React, { Fragment } from 'react';
+
+import CourseItem from './CourseItem';
 
 interface IProps {
   classes?: any;
-  onChange?: any;
-  courses?: any;
+  courses: IUpsell['courses'];
+  onChange: (courses: IUpsell['courses']) => void;
 }
 
 interface IState {
   open: boolean;
-  courses: any;
+  courses: IUpsell['courses'];
 }
 
 @WithStyles(theme => ({
@@ -33,57 +36,40 @@ interface IState {
 export default class TreeView extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      open: true,
-      courses: [],
-    };
+    this.state = { open: true, courses: [] };
   }
 
   static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.courses.length > state.courses.length)
-      return {
-        courses: props.courses,
-      };
+    if (props.courses.length > state.courses.length) {
+      return { courses: props.courses, };
+    }
 
     return null;
   }
 
-  pushCourse = (course: any) => {
-    const { onChange } = this.props;
-
+  pushCourse = (course: IUpsell['courses'][0]) => {
     this.setState(state => ({
       courses: [
         ...state.courses,
-        {
-          ...course,
-        },
+        { ...course, }
       ],
     }));
 
-    if (onChange) {
-      onChange(this.state);
-    }
+    this.props.onChange(this.state.courses);
   }
 
   handleChange = (modifiedCourse: any) => {
-    const { onChange } = this.props;
     const { courses } = this.state;
     const state = {
       courses: courses.map((course: any) => (course.id === modifiedCourse.id ? modifiedCourse : course)),
     };
 
     this.setState(state);
-
-    if (onChange) {
-      onChange(state);
-    }
+    this.props.onChange(state.courses);
   }
 
   handleClick = () => {
-    this.setState(state => ({
-      open: !state.open,
-    }));
+    this.setState(state => ({ open: !state.open }));
   }
 
   render() {
@@ -93,18 +79,20 @@ export default class TreeView extends React.Component<IProps, IState> {
     return (
       <List component='nav'>
         {courses.length ?
-          courses.map((course: any, index: number) =>
-            <CourseItem
-              key={index}
-              course={course}
-              onChange={this.handleChange}
-            />
+          courses.map((course, index) =>
+            <Fragment key={index}>
+              <CourseItem
+                course={course}
+                onChange={this.handleChange}
+              />
+              <Divider />
+            </Fragment>
           )
           :
           <ListItem>
             <ListItemText
               className={classes.noCourses}
-              primary='Nenhum curso adicionado!'
+              primary='Nenhum curso adicionado'
             />
           </ListItem>
         }
