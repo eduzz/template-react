@@ -60,6 +60,8 @@ export default class Category extends React.PureComponent<IProps, IState> {
       error: null,
     });
 
+    categoryService.loadCategories();
+
     categoryService.getCategories().pipe(
       rxjsOperators.logError(),
       rxjsOperators.loader(),

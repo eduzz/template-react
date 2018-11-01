@@ -2,26 +2,18 @@ import rxjsOperators from 'rxjs-operators';
 
 import apiService from './api';
 import { BehaviorSubject } from 'rxjs';
-import tokenService from './token';
 
 class CategoryService {
-
   private categories$ = new BehaviorSubject([]);
 
-  constructor() {
-    tokenService.getTokens().pipe(
-      rxjsOperators.filter(token => !!token),
-    ).subscribe(() => {
-      this.loadCategories();
-    });
-  }
-
   public loadCategories(): void {
-    apiService.get('producer/categories').pipe(
-      rxjsOperators.map(response => response.data),
-    ).subscribe(categories => {
-      this.categories$.next(categories);
-    });
+    if (!this.categories$.value.length) {
+      apiService.get('producer/categories').pipe(
+        rxjsOperators.map(response => response.data),
+      ).subscribe(categories => {
+        this.categories$.next(categories);
+      });
+    }
   }
 
   public getCategories(): any {

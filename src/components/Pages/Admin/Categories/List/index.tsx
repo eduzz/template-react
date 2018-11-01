@@ -38,6 +38,7 @@ export default class CategoriesList extends React.PureComponent<IProps, IState> 
 
   componentDidMount() {
     this.loadData();
+    categoryService.loadCategories();
   }
 
   loadData = () => {
