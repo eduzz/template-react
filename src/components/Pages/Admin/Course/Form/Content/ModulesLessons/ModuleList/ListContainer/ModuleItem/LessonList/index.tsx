@@ -4,19 +4,32 @@ import List from '@material-ui/core/List';
 import { WithStyles } from 'decorators/withStyles';
 import LessonItem from './LessonItem';
 import { ILesson } from 'interfaces/models/lesson';
+import ListItem from '@material-ui/core/ListItem';
+import Button from '@material-ui/core/Button';
+import AddIcon from 'mdi-react/AddIcon';
 
 interface IProps {
   lessons: ILesson[];
   classes?: any;
 }
 
-@WithStyles({
-  root: {
+@WithStyles(theme => ({
+  addItem: {
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-})
+  button: {
+    margin: theme.spacing.unit,
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit,
+  },
+}))
 class LessonList extends PureComponent<IProps> {
   render() {
-    const { lessons } = this.props;
+    const { lessons, classes } = this.props;
 
     return (
       <List component='div' disablePadding>
@@ -27,6 +40,17 @@ class LessonList extends PureComponent<IProps> {
             lesson={lesson}
           />
         )}
+        <ListItem className={classes.addItem}>
+          <Button
+            className={classes.button}
+            color='secondary'
+            variant='extendedFab'
+            aria-label='Nova Aula'
+          >
+            <AddIcon className={classes.extendedIcon} />
+            Criar Nova Aula
+          </Button>
+        </ListItem>
       </List>
     );
   }

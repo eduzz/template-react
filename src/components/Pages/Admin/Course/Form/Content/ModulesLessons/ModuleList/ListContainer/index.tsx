@@ -4,8 +4,6 @@ import List from '@material-ui/core/List';
 import { IModule } from 'interfaces/models/module';
 import ModuleItem from './ModuleItem';
 import { WithStyles } from 'decorators/withStyles';
-import ListItem from '@material-ui/core/ListItem';
-import AddForm from './AddForm';
 
 interface IProps {
   modules: IModule[];
@@ -16,10 +14,11 @@ interface IProps {
 
 @WithStyles({
   root: {
+    padding: 8,
+    backgroundColor: '#fff',
   },
   addForm: {
-    borderTop: 'solid 1px #d5d5d5',
-    paddingTop: 20,
+    paddingTop: 8,
   },
 })
 class ListContainer extends PureComponent<IProps> {
@@ -36,11 +35,6 @@ class ListContainer extends PureComponent<IProps> {
             onLessonSort={onLessonSort}
           />
         ))}
-        <ListItem className={classes.addForm}>
-          <AddForm
-            onAdd={this.props.onAddModule}
-          />
-        </ListItem>
       </List>
     );
   }

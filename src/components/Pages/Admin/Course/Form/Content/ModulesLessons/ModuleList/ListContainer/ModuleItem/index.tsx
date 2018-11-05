@@ -3,13 +3,14 @@ import { WithStyles } from 'decorators/withStyles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import { SortableElement, SortEnd } from 'react-sortable-hoc';
 import { IModule } from 'interfaces/models/module';
 import DragHandle from '../../DragHandle';
 import LessonList from './LessonList';
 import { arrayMove } from 'react-sortable-hoc';
+import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
+import TrashCanIcon from 'mdi-react/TrashCanIcon';
+import DropdownMenu from 'components/Shared/DropdownMenu';
 
 interface IProps {
   classes?: any;
@@ -24,10 +25,22 @@ interface IState {
 
 @WithStyles(theme => ({
   root: {
-    borderTop: 'solid 1px #d5d5d5',
+    border: 'solid 1px #d5d5d5',
+    backgroundColor: '#fff',
+    marginBottom: 8,
   },
 }))
 class ModuleItem extends PureComponent<IProps, IState> {
+  private actions = [{
+    text: 'Editar',
+    icon: SquareEditOutlineIcon,
+    handler: () => { },
+  }, {
+    text: 'Excluir',
+    icon: TrashCanIcon,
+    handler: () => { },
+  }];
+
   constructor(props: IProps) {
     super(props);
 
@@ -56,7 +69,8 @@ class ModuleItem extends PureComponent<IProps, IState> {
         <ListItem onClick={this.handleClick}>
           <DragHandle />
           <ListItemText inset primary={module.name} />
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          {/* {this.state.open ? <ExpandLess /> : <ExpandMore />} */}
+          <DropdownMenu options={this.actions} />
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
           <LessonList

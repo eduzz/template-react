@@ -5,6 +5,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { ILesson } from 'interfaces/models/lesson';
 import { SortableElement } from 'react-sortable-hoc';
 import DragHandle from '../../../../DragHandle';
+import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
+import TrashCanIcon from 'mdi-react/TrashCanIcon';
+import DropdownMenu from 'components/Shared/DropdownMenu';
 
 interface IProps {
   classes?: any;
@@ -12,20 +15,36 @@ interface IProps {
 }
 
 @WithStyles(theme => ({
+  root: {
+    padding: '8px 8px 0 8px',
+  },
   nested: {
-    paddingLeft: theme.spacing.unit * 6,
-    borderTop: 'solid 1px #d5d5d5',
+    border: 'solid 1px #d5d5d5',
+    backgroundColor: '#fff',
   },
 }))
 class LessonItem extends PureComponent<IProps> {
+  private actions = [{
+    text: 'Editar',
+    icon: SquareEditOutlineIcon,
+    handler: () => { },
+  }, {
+    text: 'Excluir',
+    icon: TrashCanIcon,
+    handler: () => { },
+  }];
+
   render() {
     const { classes, lesson } = this.props;
 
     return (
-      <ListItem className={classes.nested}>
-        <DragHandle />
-        <ListItemText inset primary={lesson.name} />
-      </ListItem>
+      <div className={classes.root}>
+        <ListItem className={classes.nested}>
+          <DragHandle />
+          <ListItemText inset primary={lesson.name} />
+          <DropdownMenu options={this.actions} />
+        </ListItem>
+      </div>
     );
   }
 }

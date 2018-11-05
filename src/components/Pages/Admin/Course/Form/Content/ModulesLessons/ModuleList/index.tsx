@@ -11,6 +11,9 @@ import { IModule } from 'interfaces/models/module';
 import { SortEnd } from 'react-sortable-hoc';
 import ListContainer from './ListContainer';
 import { ILesson } from 'interfaces/models/lesson';
+import Button from '@material-ui/core/Button';
+import AddIcon from 'mdi-react/AddIcon';
+import ModuleDialog from './ModuleDialog';
 
 interface IState {
   error?: any;
@@ -27,6 +30,8 @@ interface IProps {
   },
 })
 export default class ModuleList extends React.PureComponent<IProps, IState> {
+  private moduleDialogRef: any;
+
   constructor(props: IProps) {
     super(props);
 
@@ -34,6 +39,8 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
       modules: null,
       error: null,
     };
+
+    this.moduleDialogRef = React.createRef();
   }
 
   componentDidMount() {
@@ -46,6 +53,11 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
         {
           id: 0,
           name: 'Módulo 1',
+          free_module: true,
+          hidden_module: true,
+          module_validity: 30,
+          module_scheduling: 120,
+          release_at: '2018-12-25',
           lessons: [
             {
               id: 0,
@@ -64,26 +76,51 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
         {
           id: 1,
           name: 'Módulo 2',
+          free_module: true,
+          hidden_module: true,
+          module_validity: 30,
+          module_scheduling: 120,
+          release_at: '2018-12-25',
           lessons: [],
         },
         {
           id: 2,
           name: 'Módulo 3',
+          free_module: true,
+          hidden_module: true,
+          module_validity: 30,
+          module_scheduling: 120,
+          release_at: '2018-12-25',
           lessons: [],
         },
         {
           id: 3,
           name: 'Módulo 4',
+          free_module: true,
+          hidden_module: true,
+          module_validity: 30,
+          module_scheduling: 120,
+          release_at: '2018-12-25',
           lessons: [],
         },
         {
           id: 4,
           name: 'Módulo 5',
+          free_module: true,
+          hidden_module: true,
+          module_validity: 30,
+          module_scheduling: 120,
+          release_at: '2018-12-25',
           lessons: [],
         },
         {
           id: 5,
           name: 'Módulo 6',
+          free_module: true,
+          hidden_module: true,
+          module_validity: 30,
+          module_scheduling: 120,
+          release_at: '2018-12-25',
           lessons: [],
         },
       ]
@@ -130,6 +167,10 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
     });
   }
 
+  handleNewModule = () => {
+    this.moduleDialogRef.current.newModule();
+  }
+
   render() {
     const { classes } = this.props;
     const { modules, error } = this.state;
@@ -142,6 +183,18 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
               <Typography variant='subheading'>
                 Listagem de Módulos e Aulas
               </Typography>
+            </Grid>
+            <Grid item xs={false}>
+              <Button
+                className={classes.button}
+                color='secondary'
+                variant='extendedFab'
+                aria-label='Adicionar Módulo'
+                onClick={this.handleNewModule}
+              >
+                <AddIcon className={classes.extendedIcon} />
+                Adicionar Módulo
+              </Button>
             </Grid>
 
           </Grid>
@@ -171,6 +224,8 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
             useDragHandle
           />
         }
+
+        <ModuleDialog ref={this.moduleDialogRef} />
       </Card>
     );
   }

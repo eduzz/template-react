@@ -1,6 +1,6 @@
 import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
-import { IForm } from '../../../..';
+import { IForm, IModel } from '../';
 import { FieldText } from '@react-form-fields/material-ui';
 
 interface IProps {
@@ -10,12 +10,12 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    width: 300,
+    width: 250,
     display: 'flex',
     flexDirection: 'column',
   },
   title: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 500,
   },
   textField: {
@@ -24,10 +24,10 @@ interface IProps {
     marginBottom: 8,
   },
   description: {
-    fontSize: 14,
+    fontSize: 12,
   },
 }))
-export default class ReleaseAtOption extends React.PureComponent<IProps> {
+export default class ReleaseAt extends React.PureComponent<IProps> {
   render() {
     const { classes, form } = this.props;
 
@@ -41,13 +41,13 @@ export default class ReleaseAtOption extends React.PureComponent<IProps> {
           type='date'
           value={form.model.release_at}
           className={classes.textField}
-          onChange={form.updateModel((model, v) => model.release_at = v)}
+          onChange={form.updateModel((model: IModel, v: any) => model.release_at = v)}
           InputLabelProps={{
             shrink: true,
           }}
         />
         <label className={classes.description}>
-          Selecione a data a partir da qual o curso estará <strong>disponível.</strong>
+          Selecione a data a partir da qual o módulo estará <strong>disponível.</strong>
         </label>
       </div>
     );
