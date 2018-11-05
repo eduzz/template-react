@@ -44,45 +44,45 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
     this.setState({
       modules: [
         {
-          id: 1,
+          id: 0,
           name: 'Módulo 1',
           lessons: [
             {
-              id: 1,
+              id: 0,
               name: 'Aula 1',
             },
             {
-              id: 2,
+              id: 1,
               name: 'Aula 2',
             },
             {
-              id: 3,
+              id: 2,
               name: 'Aula 3',
             },
           ],
         },
         {
-          id: 2,
+          id: 1,
           name: 'Módulo 2',
           lessons: [],
         },
         {
-          id: 3,
+          id: 2,
           name: 'Módulo 3',
           lessons: [],
         },
         {
-          id: 4,
+          id: 3,
           name: 'Módulo 4',
           lessons: [],
         },
         {
-          id: 5,
+          id: 4,
           name: 'Módulo 5',
           lessons: [],
         },
         {
-          id: 6,
+          id: 5,
           name: 'Módulo 6',
           lessons: [],
         },
@@ -108,6 +108,25 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
           };
         return module;
       }),
+    });
+  }
+
+  handleAddModule = (name: string) => {
+    // API Fetch...
+
+    // Mock
+    const { modules } = this.state;
+
+    const newModule = {
+      id: modules.length,
+      name,
+    } as IModule;
+
+    this.setState({
+      modules: [
+        ...modules,
+        newModule,
+      ]
     });
   }
 
@@ -148,6 +167,7 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
             modules={modules}
             onSortEnd={this.onSortEnd}
             onLessonSort={this.handleLessonSort}
+            onAddModule={this.handleAddModule}
             useDragHandle
           />
         }
