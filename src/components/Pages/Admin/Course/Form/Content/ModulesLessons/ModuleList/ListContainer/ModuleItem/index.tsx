@@ -17,6 +17,7 @@ interface IProps {
   module: IModule;
   index?: number;
   onLessonSort: Function;
+  editModule: Function;
 }
 
 interface IState {
@@ -34,7 +35,11 @@ class ModuleItem extends PureComponent<IProps, IState> {
   private actions = [{
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => { },
+    handler: () => {
+      const { editModule, module } = this.props;
+
+      editModule(module);
+    },
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
@@ -69,7 +74,6 @@ class ModuleItem extends PureComponent<IProps, IState> {
         <ListItem onClick={this.handleClick}>
           <DragHandle />
           <ListItemText inset primary={module.name} />
-          {/* {this.state.open ? <ExpandLess /> : <ExpandMore />} */}
           <DropdownMenu options={this.actions} />
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>

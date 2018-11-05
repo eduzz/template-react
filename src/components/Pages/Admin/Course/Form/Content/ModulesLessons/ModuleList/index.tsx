@@ -13,7 +13,7 @@ import ListContainer from './ListContainer';
 import { ILesson } from 'interfaces/models/lesson';
 import Button from '@material-ui/core/Button';
 import AddIcon from 'mdi-react/AddIcon';
-import ModuleDialog from './ModuleDialog';
+import ModuleDialog, { IModel } from './ModuleDialog';
 
 interface IState {
   error?: any;
@@ -171,6 +171,10 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
     this.moduleDialogRef.current.newModule();
   }
 
+  handleEditModule = (module: IModel) => {
+    this.moduleDialogRef.current.editModule(module);
+  }
+
   render() {
     const { classes } = this.props;
     const { modules, error } = this.state;
@@ -221,6 +225,7 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
             onSortEnd={this.onSortEnd}
             onLessonSort={this.handleLessonSort}
             onAddModule={this.handleAddModule}
+            editModule={this.handleEditModule}
             useDragHandle
           />
         }

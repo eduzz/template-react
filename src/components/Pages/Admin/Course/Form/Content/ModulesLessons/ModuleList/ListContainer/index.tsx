@@ -10,6 +10,7 @@ interface IProps {
   classes?: any;
   onLessonSort: Function;
   onAddModule: Function;
+  editModule: Function;
 }
 
 @WithStyles({
@@ -23,7 +24,7 @@ interface IProps {
 })
 class ListContainer extends PureComponent<IProps> {
   render() {
-    const { modules, classes, onLessonSort } = this.props;
+    const { modules, classes, onLessonSort, editModule } = this.props;
 
     return (
       <List className={classes.root}>
@@ -33,6 +34,7 @@ class ListContainer extends PureComponent<IProps> {
             key={`item-${module.id}`}
             index={index}
             onLessonSort={onLessonSort}
+            editModule={editModule}
           />
         ))}
       </List>
