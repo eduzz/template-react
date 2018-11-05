@@ -5,15 +5,16 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
-import List from '@material-ui/core/List';
-import ModuleItem from './ModuleItem';
-// import categoryService from 'services/category';
-// import rxjsOperators from 'rxjs-operators';
 import { WithStyles } from 'decorators/withStyles';
+import { arrayMove } from 'react-sortable-hoc';
+import { IModule } from 'interfaces/models/module';
+import { SortEnd } from 'react-sortable-hoc';
+import ListContainer from './ListContainer';
+import { ILesson } from 'interfaces/models/lesson';
 
 interface IState {
   error?: any;
-  modules?: any;
+  modules?: IModule[];
 }
 
 interface IProps {
@@ -40,15 +41,74 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
   }
 
   loadData = () => {
-    // this.setState({ error: null, categories: null });
+    this.setState({
+      modules: [
+        {
+          id: 1,
+          name: 'Módulo 1',
+          lessons: [
+            {
+              id: 1,
+              name: 'Aula 1',
+            },
+            {
+              id: 2,
+              name: 'Aula 2',
+            },
+            {
+              id: 3,
+              name: 'Aula 3',
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: 'Módulo 2',
+          lessons: [],
+        },
+        {
+          id: 3,
+          name: 'Módulo 3',
+          lessons: [],
+        },
+        {
+          id: 4,
+          name: 'Módulo 4',
+          lessons: [],
+        },
+        {
+          id: 5,
+          name: 'Módulo 5',
+          lessons: [],
+        },
+        {
+          id: 6,
+          name: 'Módulo 6',
+          lessons: [],
+        },
+      ]
+    });
+  }
 
-    // categoryService.getCategories().pipe(
-    //   rxjsOperators.delay(1000),
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this),
-    // ).subscribe((categories: any) => {
-    //   this.setState({ categories });
-    // }, (error: any) => this.setState({ error }));
+  onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
+    this.setState({
+      modules: arrayMove(this.state.modules, oldIndex, newIndex),
+    });
+  }
+
+  handleLessonSort = (moduleId: number, lessons: ILesson[]) => {
+    const { modules } = this.state;
+
+    this.setState({
+      modules: modules.map(module => {
+        if (module.id === moduleId)
+          return {
+            ...module,
+            lessons,
+          };
+        return module;
+      }),
+    });
   }
 
   render() {
@@ -76,19 +136,20 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
 
         {!!error &&
           <CardContent>
-            <ErrorMessage error={error} tryAgain={this.loadData} />
+            <ErrorMessage
+              error={error}
+              tryAgain={this.loadData}
+            />
           </CardContent>
         }
 
         {!!modules &&
-          <List disablePadding>
-            {modules.map((module: any) => (
-              <ModuleItem
-                key={module.id}
-                module={module}
-              />
-            ))}
-          </List>
+          <ListContainer
+            modules={modules}
+            onSortEnd={this.onSortEnd}
+            onLessonSort={this.handleLessonSort}
+            useDragHandle
+          />
         }
       </Card>
     );
