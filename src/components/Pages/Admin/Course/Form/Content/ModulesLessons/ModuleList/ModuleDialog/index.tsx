@@ -63,6 +63,15 @@ interface IState extends IStateForm<IModel> {
   },
 })
 export default class ModuleDialog extends FormComponent<IProps, IState> {
+  private initialModel: IModel = {
+    name: '',
+    free_module: false,
+    hidden_module: false,
+    module_validity: null,
+    module_scheduling: null,
+    release_at: format(new Date(), 'yyyy-MM-dd'),
+  };
+
   constructor(props: IProps) {
     super(props);
 
@@ -70,12 +79,7 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
       open: false,
       moduleId: null,
       model: {
-        name: '',
-        free_module: false,
-        hidden_module: false,
-        module_validity: null,
-        module_scheduling: null,
-        release_at: format(new Date(), 'yyyy-MM-dd'),
+        ...this.initialModel,
       },
     };
   }
@@ -90,13 +94,18 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
   public newModule = () => {
     this.setState({
       open: true,
+      model: {
+        ...this.initialModel
+      },
     });
   }
 
-  public editModule = (moduleId: number) => {
+  public editModule = (module: IModel) => {
     this.setState({
       open: true,
-      moduleId,
+      model: {
+        ...module
+      },
     });
   }
 
