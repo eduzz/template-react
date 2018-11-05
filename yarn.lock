@@ -243,6 +243,13 @@
   resolved "https://registry.yarnpkg.com/@types/query-string/-/query-string-6.1.0.tgz#5f721f9503bdf517d474c66cf4423da5dd2d5698"
   integrity sha512-6QxF7V3SkdyBRJ81GheWL9Nzr7uDrCZH0hkxdorNcXeBOeAPN5AUf1n9dpecaBOzxJAckWP4nIOeY1YxlhuMTQ==
 
+"@types/react-beautiful-dnd@^7.1.2":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@types/react-beautiful-dnd/-/react-beautiful-dnd-7.1.2.tgz#98a5bc1dca5dadfe462ba73180e8c66b5a275dcf"
+  integrity sha512-SY+1maGYsCAQEurbnVEca8u97hwhN+/jGitsXG9aXNaySEFJInBgx1HknhtMxJDdcqKAkNMRRVlWyfBC1fwe3A==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@16.0.8":
   version "16.0.8"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.8.tgz#6e1366ed629cadf55860cbfcc25db533f5d2fa7d"
