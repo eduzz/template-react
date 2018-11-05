@@ -7,7 +7,7 @@ import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import { dateFormat } from 'formatters/date';
-import { IUpsell } from 'interfaces/models/upsell';
+import { IUpsellList } from 'interfaces/models/upsell';
 import BullhornIcon from 'mdi-react/BullhornIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
@@ -17,7 +17,7 @@ import upsellService from 'services/upsell';
 
 interface IProps {
   classes?: any;
-  upsell: IUpsell;
+  upsell: IUpsellList;
   router?: AppRouter;
   onDelete?: any;
 }

@@ -29,4 +29,8 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.autoClosingTags": false,
   "html.autoClosingTags": false,
+  "typescriptHero.imports.ignoredFromRemoval": [
+    "react",
+    "settings"
+  ],
 }

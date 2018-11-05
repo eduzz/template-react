@@ -84,7 +84,7 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
 
         <CardActions className={classes.buttons}>
           <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
-          <Button variant='raised' color='secondary' type='submit'>
+          <Button variant='contained' color='secondary' type='submit'>
             {!loading && 'Entrar'}
             {loading && <CircularProgress color='inherit' size={20} />}
           </Button>
