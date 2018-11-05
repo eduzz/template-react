@@ -16,7 +16,6 @@ interface IProps {
 
 interface IState {
   open: boolean;
-  courses: IUpsell['courses'];
 }
 
 @WithStyles(theme => ({
@@ -36,54 +35,41 @@ interface IState {
 export default class TreeView extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { open: true, courses: [] };
-  }
-
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.courses.length > state.courses.length) {
-      return { courses: props.courses, };
-    }
-
-    return null;
+    this.state = { open: true };
   }
 
   pushCourse = (course: IUpsell['courses'][0]) => {
-    this.setState(state => ({
-      courses: [
-        ...state.courses,
-        { ...course, }
-      ],
-    }));
-
-    this.props.onChange(this.state.courses);
+    this.props.onChange([
+      ...this.props.courses,
+      { ...course }
+    ]);
   }
 
-  handleChange = (modifiedCourse: any) => {
-    const { courses } = this.state;
-    const state = {
-      courses: courses.map((course: any) => (course.id === modifiedCourse.id ? modifiedCourse : course)),
-    };
-
-    this.setState(state);
-    this.props.onChange(state.courses);
+  handleChange = (modifiedCourse: IUpsell['courses'][0]) => {
+    const { courses } = this.props;
+    this.props.onChange(courses.map(course => (course.id === modifiedCourse.id ? modifiedCourse : course)));
   }
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
   }
 
+  handleDelete = (course: IUpsell['courses'][0]) => {
+    this.props.onChange(this.props.courses.filter(c => c.id !== course.id));
+  }
+
   render() {
-    const { classes } = this.props;
-    const { courses } = this.state;
+    const { classes, courses } = this.props;
 
     return (
       <List component='nav'>
         {courses.length ?
-          courses.map((course, index) =>
-            <Fragment key={index}>
+          courses.map(course =>
+            <Fragment key={course.id}>
               <CourseItem
                 course={course}
                 onChange={this.handleChange}
+                onDelete={this.handleDelete}
               />
               <Divider />
             </Fragment>
