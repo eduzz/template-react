@@ -163,7 +163,13 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
       modules: [
         ...modules,
         newModule,
-      ]
+      ],
+    });
+  }
+
+  handleDeleteModule = (moduleId: number) => {
+    this.setState({
+      modules: this.state.modules.filter(module => module.id !== moduleId),
     });
   }
 
@@ -224,7 +230,7 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
             modules={modules}
             onSortEnd={this.onSortEnd}
             onLessonSort={this.handleLessonSort}
-            onAddModule={this.handleAddModule}
+            onDeleteModule={this.handleDeleteModule}
             editModule={this.handleEditModule}
             useDragHandle
           />

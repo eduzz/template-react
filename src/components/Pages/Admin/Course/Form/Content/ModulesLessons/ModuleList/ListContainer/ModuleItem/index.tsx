@@ -18,6 +18,7 @@ interface IProps {
   index?: number;
   onLessonSort: Function;
   editModule: Function;
+  onDeleteModule: Function;
 }
 
 interface IState {
@@ -43,7 +44,11 @@ class ModuleItem extends PureComponent<IProps, IState> {
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
-    handler: () => { },
+    handler: () => {
+      const { onDeleteModule, module: { id } } = this.props;
+
+      onDeleteModule(id);
+    },
   }];
 
   constructor(props: IProps) {
