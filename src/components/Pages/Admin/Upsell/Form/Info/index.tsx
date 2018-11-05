@@ -33,9 +33,9 @@ export default class Info extends React.PureComponent<IProps, IState> {
       <div >
         <FieldText
           label='Titulo'
-          value={model.title}
-          validation='required|max:30'
-          helperText={`${(model.title || '').length}/30 caracteres`}
+          value={(model.title || '').toString()}
+          validation='required|max:50'
+          helperText={`${(model.title || '').length}/50 caracteres`}
           onChange={this.handleChangeTitle}
         />
 
