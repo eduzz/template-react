@@ -1,6 +1,6 @@
 import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
-import { IForm, IModel } from '../';
+import { IForm } from '../';
 import { FieldText } from '@react-form-fields/material-ui';
 
 interface IProps {
@@ -41,7 +41,7 @@ export default class ReleaseAt extends React.PureComponent<IProps> {
           type='date'
           value={form.model.release_at}
           className={classes.textField}
-          onChange={form.updateModel((model: IModel, v: any) => model.release_at = v)}
+          onChange={form.updateModel((model, v) => model.release_at = v)}
           InputLabelProps={{
             shrink: true,
           }}

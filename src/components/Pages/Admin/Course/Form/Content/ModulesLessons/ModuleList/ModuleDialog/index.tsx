@@ -32,7 +32,7 @@ export interface IModel {
 
 export interface IForm {
   model: IModel;
-  updateModel: any;
+  updateModel: (handler: (model: IModel, value: any) => void) => any;
 }
 
 interface IProps {
@@ -90,6 +90,7 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
   componentDidMount() {
     moduleService.getModuleInfo().pipe(
       rxjsOperators.bindComponent(this),
+      rxjsOperators.logError(),
     ).subscribe((module = this.initialModel as IModule) => {
       this.setState({
         open: true,

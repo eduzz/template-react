@@ -1,6 +1,6 @@
 import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
-import { IForm, IModel } from '../';
+import { IForm } from '../';
 import { FieldText } from '@react-form-fields/material-ui';
 
 interface IProps {
@@ -46,7 +46,7 @@ export default class ModuleValidity extends React.PureComponent<IProps> {
             type='number'
             value={form.model.module_validity}
             className={classes.textField}
-            onChange={form.updateModel((model: IModel, v: string) => model.module_validity = parseInt(v))}
+            onChange={form.updateModel((model, v) => model.module_validity = parseInt(v))}
             placeholder='Ex. 30'
             InputLabelProps={{
               shrink: true,
