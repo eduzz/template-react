@@ -41,7 +41,7 @@ class UpsellItem extends PureComponent<IProps> {
   handleDelete = async () => {
     const { upsell, onDelete } = this.props;
 
-    const confirm = await Confirm.show(`Deseja excluir o certificado ${upsell.title}?`);
+    const confirm = await Confirm.show(`Deseja excluir o upsell ${upsell.title}?`);
     if (!confirm) return;
 
     upsellService.delete(upsell.id).pipe(
@@ -49,7 +49,7 @@ class UpsellItem extends PureComponent<IProps> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(() => {
-      Toast.show('Certificado excluído com sucesso');
+      Toast.show('Upsell excluído com sucesso');
 
       onDelete && onDelete(upsell.id);
     }, (err: any) => Toast.error(err));
