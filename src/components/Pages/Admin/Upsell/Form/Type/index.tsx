@@ -40,14 +40,13 @@ export default class Type extends PureComponent<IProps, IState> {
       return;
     }
 
-    this.setState({ products: null });
+    this.setState({ currentType: prevProps.model.type, products: null });
 
     upsellService.getProducts(prevProps.model.type).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(products => {
       this.setState({
-        currentType: prevProps.model.type,
         products: products.map(p => ({ value: (p.hash || p.id).toString(), label: p.title }))
       });
     }, err => Toast.error(err));
