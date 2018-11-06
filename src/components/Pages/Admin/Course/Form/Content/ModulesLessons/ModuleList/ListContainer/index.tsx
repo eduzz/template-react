@@ -8,7 +8,6 @@ import { WithStyles } from 'decorators/withStyles';
 interface IProps {
   modules: IModule[];
   classes?: any;
-  onLessonSort: Function;
 }
 
 @WithStyles({
@@ -22,7 +21,7 @@ interface IProps {
 })
 class ListContainer extends PureComponent<IProps> {
   render() {
-    const { modules, classes, onLessonSort } = this.props;
+    const { modules, classes } = this.props;
 
     return (
       <List className={classes.root}>
@@ -31,7 +30,6 @@ class ListContainer extends PureComponent<IProps> {
             module={module}
             key={`item-${module.id}`}
             index={index}
-            onLessonSort={onLessonSort}
           />
         ))}
       </List>

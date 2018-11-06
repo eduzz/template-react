@@ -1,5 +1,6 @@
 import * as Rx from 'rxjs';
 import { IModule } from 'interfaces/models/module';
+import { ILesson } from 'interfaces/models/lesson';
 
 // import apiService from './api';
 
@@ -113,6 +114,17 @@ class ModuleService {
         return {
           ...module,
           lessons: module.lessons.filter(lesson => lesson.id !== lessonId),
+        };
+      return module;
+    }));
+  }
+
+  public sortLessons(moduleId: number, lessons: ILesson[]): void {
+    this.modules$.next(this.modules$.value.map(module => {
+      if (module.id === moduleId)
+        return {
+          ...module,
+          lessons,
         };
       return module;
     }));

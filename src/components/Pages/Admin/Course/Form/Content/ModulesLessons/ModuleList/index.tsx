@@ -126,7 +126,6 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
           <ListContainer
             modules={modules}
             onSortEnd={this.onSortEnd}
-            onLessonSort={this.handleLessonSort}
             useDragHandle
           />
         }
