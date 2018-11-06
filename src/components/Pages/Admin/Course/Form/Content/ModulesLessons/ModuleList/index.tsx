@@ -13,7 +13,9 @@ import ListContainer from './ListContainer';
 import { ILesson } from 'interfaces/models/lesson';
 import Button from '@material-ui/core/Button';
 import AddIcon from 'mdi-react/AddIcon';
-import ModuleDialog, { IModel } from './ModuleDialog';
+import ModuleDialog from './ModuleDialog';
+import moduleService from 'services/module';
+import rxjsOperators from 'rxjs-operators';
 
 interface IState {
   error?: any;
@@ -30,8 +32,6 @@ interface IProps {
   },
 })
 export default class ModuleList extends React.PureComponent<IProps, IState> {
-  private moduleDialogRef: any;
-
   constructor(props: IProps) {
     super(props);
 
@@ -39,8 +39,6 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
       modules: null,
       error: null,
     };
-
-    this.moduleDialogRef = React.createRef();
   }
 
   componentDidMount() {
@@ -48,89 +46,17 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
   }
 
   loadData = () => {
-    this.setState({
-      modules: [
-        {
-          id: 0,
-          name: 'Módulo 1',
-          free_module: true,
-          hidden_module: true,
-          module_validity: 30,
-          module_scheduling: 120,
-          release_at: '2018-12-25',
-          lessons: [
-            {
-              id: 0,
-              name: 'Aula 1',
-            },
-            {
-              id: 1,
-              name: 'Aula 2',
-            },
-            {
-              id: 2,
-              name: 'Aula 3',
-            },
-          ],
-        },
-        {
-          id: 1,
-          name: 'Módulo 2',
-          free_module: true,
-          hidden_module: true,
-          module_validity: 30,
-          module_scheduling: 120,
-          release_at: '2018-12-25',
-          lessons: [],
-        },
-        {
-          id: 2,
-          name: 'Módulo 3',
-          free_module: true,
-          hidden_module: true,
-          module_validity: 30,
-          module_scheduling: 120,
-          release_at: '2018-12-25',
-          lessons: [],
-        },
-        {
-          id: 3,
-          name: 'Módulo 4',
-          free_module: true,
-          hidden_module: true,
-          module_validity: 30,
-          module_scheduling: 120,
-          release_at: '2018-12-25',
-          lessons: [],
-        },
-        {
-          id: 4,
-          name: 'Módulo 5',
-          free_module: true,
-          hidden_module: true,
-          module_validity: 30,
-          module_scheduling: 120,
-          release_at: '2018-12-25',
-          lessons: [],
-        },
-        {
-          id: 5,
-          name: 'Módulo 6',
-          free_module: true,
-          hidden_module: true,
-          module_validity: 30,
-          module_scheduling: 120,
-          release_at: '2018-12-25',
-          lessons: [],
-        },
-      ]
+    moduleService.list().pipe(
+      rxjsOperators.bindComponent(this),
+    ).subscribe(modules => {
+      this.setState({
+        modules,
+      });
     });
   }
 
   onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
-    this.setState({
-      modules: arrayMove(this.state.modules, oldIndex, newIndex),
-    });
+    moduleService.setModules(arrayMove(this.state.modules, oldIndex, newIndex));
   }
 
   handleLessonSort = (moduleId: number, lessons: ILesson[]) => {
@@ -148,37 +74,8 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
     });
   }
 
-  handleAddModule = (name: string) => {
-    // API Fetch...
-
-    // Mock
-    const { modules } = this.state;
-
-    const newModule = {
-      id: modules.length,
-      name,
-    } as IModule;
-
-    this.setState({
-      modules: [
-        ...modules,
-        newModule,
-      ],
-    });
-  }
-
-  handleDeleteModule = (moduleId: number) => {
-    this.setState({
-      modules: this.state.modules.filter(module => module.id !== moduleId),
-    });
-  }
-
   handleNewModule = () => {
-    this.moduleDialogRef.current.newModule();
-  }
-
-  handleEditModule = (module: IModel) => {
-    this.moduleDialogRef.current.editModule(module);
+    moduleService.newModule();
   }
 
   render() {
@@ -230,13 +127,11 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
             modules={modules}
             onSortEnd={this.onSortEnd}
             onLessonSort={this.handleLessonSort}
-            onDeleteModule={this.handleDeleteModule}
-            editModule={this.handleEditModule}
             useDragHandle
           />
         }
 
-        <ModuleDialog ref={this.moduleDialogRef} />
+        <ModuleDialog />
       </Card>
     );
   }

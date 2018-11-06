@@ -7,11 +7,14 @@ import { SortableElement } from 'react-sortable-hoc';
 import DragHandle from '../../../../DragHandle';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import DropdownMenu from 'components/Shared/DropdownMenu';
+import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
+import moduleService from 'services/module';
+import Confirm from 'components/Shared/Confirm';
 
 interface IProps {
   classes?: any;
   lesson: ILesson;
+  moduleId: number;
 }
 
 @WithStyles(theme => ({
@@ -20,19 +23,34 @@ interface IProps {
   },
   nested: {
     border: 'solid 1px #d5d5d5',
-    backgroundColor: '#fff',
+    backgroundColor: '#f3f3f3',
   },
 }))
 class LessonItem extends PureComponent<IProps> {
-  private actions = [{
-    text: 'Editar',
-    icon: SquareEditOutlineIcon,
-    handler: () => { },
-  }, {
-    text: 'Excluir',
-    icon: TrashCanIcon,
-    handler: () => { },
-  }];
+  private readonly options: IOption[];
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.options = [{
+      text: 'Editar',
+      icon: SquareEditOutlineIcon,
+      handler: () => { },
+    }, {
+      text: 'Excluir',
+      icon: TrashCanIcon,
+      handler: this.handleDelete,
+    }];
+  }
+
+  handleDelete = async () => {
+    const confirm = await Confirm.show(`Deseja excluir a aula?`);
+    if (!confirm) return;
+
+    const { moduleId, lesson } = this.props;
+
+    moduleService.deleteLesson(moduleId, lesson.id);
+  }
 
   render() {
     const { classes, lesson } = this.props;
@@ -42,7 +60,7 @@ class LessonItem extends PureComponent<IProps> {
         <ListItem className={classes.nested}>
           <DragHandle />
           <ListItemText inset primary={lesson.name} />
-          <DropdownMenu options={this.actions} />
+          <DropdownMenu options={this.options} />
         </ListItem>
       </div>
     );

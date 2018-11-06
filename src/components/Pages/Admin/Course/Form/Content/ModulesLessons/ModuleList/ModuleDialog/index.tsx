@@ -17,6 +17,9 @@ import Divider from '@material-ui/core/Divider';
 import ModuleScheduling from './ModuleScheduling';
 import { format } from 'date-fns';
 import ReleaseAt from './ReleaseAt';
+import moduleService from 'services/module';
+import rxjsOperators from 'rxjs-operators';
+import { IModule } from 'interfaces/models/module';
 
 export interface IModel {
   name: string;
@@ -84,28 +87,23 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
     };
   }
 
+  componentDidMount() {
+    moduleService.getModuleInfo().pipe(
+      rxjsOperators.bindComponent(this),
+    ).subscribe((module = this.initialModel as IModule) => {
+      this.setState({
+        open: true,
+        model: {
+          ...module,
+        },
+      });
+    });
+  }
+
   private handleClose = () => {
     this.setState({
       open: false,
       moduleId: null,
-    });
-  }
-
-  public newModule = () => {
-    this.setState({
-      open: true,
-      model: {
-        ...this.initialModel
-      },
-    });
-  }
-
-  public editModule = (module: IModel) => {
-    this.setState({
-      open: true,
-      model: {
-        ...module
-      },
     });
   }
 
