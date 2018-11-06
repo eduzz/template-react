@@ -10,15 +10,15 @@ import LessonList from './LessonList';
 import { arrayMove } from 'react-sortable-hoc';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import DropdownMenu from 'components/Shared/DropdownMenu';
+import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
+import moduleService from 'services/module';
+import Confirm from 'components/Shared/Confirm';
 
 interface IProps {
   classes?: any;
   module: IModule;
   index?: number;
   onLessonSort: Function;
-  editModule: Function;
-  onDeleteModule: Function;
 }
 
 interface IState {
@@ -33,23 +33,7 @@ interface IState {
   },
 }))
 class ModuleItem extends PureComponent<IProps, IState> {
-  private actions = [{
-    text: 'Editar',
-    icon: SquareEditOutlineIcon,
-    handler: () => {
-      const { editModule, module } = this.props;
-
-      editModule(module);
-    },
-  }, {
-    text: 'Excluir',
-    icon: TrashCanIcon,
-    handler: () => {
-      const { onDeleteModule, module: { id } } = this.props;
-
-      onDeleteModule(id);
-    },
-  }];
+  private readonly options: IOption[];
 
   constructor(props: IProps) {
     super(props);
@@ -57,6 +41,30 @@ class ModuleItem extends PureComponent<IProps, IState> {
     this.state = {
       open: false,
     };
+
+    this.options = [
+      {
+        text: 'Editar',
+        icon: SquareEditOutlineIcon,
+        handler: this.handleEdit,
+      },
+      {
+        text: 'Excluir',
+        icon: TrashCanIcon,
+        handler: this.handleDelete,
+      }
+    ];
+  }
+
+  handleEdit = () => {
+    moduleService.editModule(this.props.module);
+  }
+
+  handleDelete = async () => {
+    const confirm = await Confirm.show('Deseja excluir este módulo?');
+    if (!confirm) return;
+
+    moduleService.deleteModule(this.props.module.id);
   }
 
   handleClick = () => {
@@ -79,11 +87,12 @@ class ModuleItem extends PureComponent<IProps, IState> {
         <ListItem onClick={this.handleClick}>
           <DragHandle />
           <ListItemText inset primary={module.name} />
-          <DropdownMenu options={this.actions} />
+          <DropdownMenu options={this.options} />
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
           <LessonList
             lessons={module.lessons}
+            module={module}
             onSortEnd={this.onSortEnd}
             useDragHandle
           />
