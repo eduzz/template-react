@@ -18,7 +18,6 @@ interface IProps {
   classes?: any;
   module: IModule;
   index?: number;
-  onLessonSort: Function;
 }
 
 interface IState {
@@ -74,9 +73,9 @@ class ModuleItem extends PureComponent<IProps, IState> {
   }
 
   onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
-    const { onLessonSort, module } = this.props;
+    const { module } = this.props;
 
-    onLessonSort(module.id, arrayMove(module.lessons, oldIndex, newIndex));
+    moduleService.sortLessons(module.id, arrayMove(module.lessons, oldIndex, newIndex));
   }
 
   render() {
