@@ -36,7 +36,7 @@ export default class Type extends PureComponent<IProps, IState> {
     if (prevProps.model.type === this.state.currentType) return;
 
     if (!prevProps.model.type) {
-      this.setState({ products: [] });
+      (this.state.products || []).length && this.setState({ products: [] });
       return;
     }
 
