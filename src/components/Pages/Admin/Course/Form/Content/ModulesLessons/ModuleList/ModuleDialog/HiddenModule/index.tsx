@@ -2,7 +2,7 @@ import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@react-form-fields/material-ui/components/Switch';
-import { IForm, IModel } from '../';
+import { IForm } from '../';
 
 interface IProps {
   classes?: any;
@@ -39,7 +39,7 @@ export default class HiddenModule extends React.PureComponent<IProps> {
           }}
           control={
             <Switch
-              onChange={form.updateModel((model: IModel, v: any) => model.hidden_module = !model.hidden_module)}
+              onChange={form.updateModel((model, v) => model.hidden_module = !model.hidden_module)}
               checked={form.model.hidden_module}
             />
           }
