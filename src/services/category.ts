@@ -1,7 +1,9 @@
+import * as Rx from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
 import apiService from './api';
 import { BehaviorSubject } from 'rxjs';
+import { ICategory } from 'interfaces/models/category';
 
 class CategoryService {
   private categories$ = new BehaviorSubject(null);
@@ -16,14 +18,14 @@ class CategoryService {
     });
   }
 
-  public getCategories(): any {
+  public getCategories(): Rx.Observable<ICategory[]> {
     if (!this.categories$.value)
       this.loadCategories();
 
     return this.categories$.asObservable();
   }
 
-  public addCategory(category: string): any {
+  public addCategory(category: string): Rx.Observable<ICategory> {
     return apiService.post('producer/categories', { name: category }).pipe(
       rxjsOperators.map(response => response.data),
       rxjsOperators.tap(() => this.loadCategories())
