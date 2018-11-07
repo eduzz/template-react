@@ -10,6 +10,7 @@ import { WithRouter } from 'decorators/withRouter';
 import { FieldText } from '@react-form-fields/material-ui';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import LessonType from './LessonType';
+import Typography from '@material-ui/core/Typography';
 
 export interface IForm {
   model: Partial<IModel>;
@@ -18,6 +19,11 @@ export interface IForm {
 
 export interface IModel {
   title: string;
+  drm_active: boolean;
+  content: string;
+  lesson_type: {
+    id: number;
+  };
 }
 
 interface IProps {
@@ -34,9 +40,6 @@ interface IState extends IStateForm<IModel> { }
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
-  titleField: {
-    marginBottom: 16,
-  },
 }))
 export default class Form extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -45,6 +48,11 @@ export default class Form extends FormComponent<IProps, IState> {
     this.state = {
       model: {
         title: '',
+        drm_active: true,
+        content: '',
+        lesson_type: {
+          id: 1,
+        },
       },
     };
   }
@@ -62,20 +70,21 @@ export default class Form extends FormComponent<IProps, IState> {
       updateModel: this.updateModel,
     } as IForm;
 
+    console.log(model);
+
     return (
       <FormValidation onSubmit={this.handleSubmit}>
         <Toolbar title={params.id ? 'Editar Aula' : 'Nova Aula'} />
 
-        <Grid container>
+        <Grid container spacing={16}>
           <Grid item xs={12}>
+            <Typography variant='subtitle1' color='inherit' noWrap>Título</Typography>
             <FieldText
               value={model.title}
-              className={classes.titleField}
               name='title'
               validation='required'
               onChange={this.updateModel((model, v) => model.title = v)}
               margin='dense'
-              label='Título'
               placeholder='Título da Aula'
               fullWidth
               InputLabelProps={{
