@@ -10,6 +10,8 @@ import YoutubeVimeo from './YoutubeVimeo';
 import { IForm } from '..';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Embed from './Embed';
+import Text from './Text';
 
 interface IProps {
   classes?: any;
@@ -53,13 +55,13 @@ export default class LessonType extends PureComponent<IProps, IState> {
             <Tab icon={<CodeTagsIcon />} label='Embed' />
             <Tab style={{ display: 'none' }} />
             <Tab icon={<TextIcon />} label='Texto' />
-            <Tab icon={<AudioIcon />} label='Áudio' />
+            <Tab icon={<AudioIcon />} label='Áudio' disabled />
           </Tabs>
           <div className={classes.content}>
             {form.model.lesson_type.id === 1 && <YoutubeVimeo form={form} />}
-            {form.model.lesson_type.id === 2 && <YoutubeVimeo form={form} />}
-            {form.model.lesson_type.id === 4 && <YoutubeVimeo form={form} />}
-            {form.model.lesson_type.id === 5 && <YoutubeVimeo form={form} />}
+            {form.model.lesson_type.id === 2 && <Embed form={form} />}
+            {form.model.lesson_type.id === 4 && <Text form={form} />}
+            {form.model.lesson_type.id === 5 && <div />}
           </div>
         </Paper>
       </Fragment>
