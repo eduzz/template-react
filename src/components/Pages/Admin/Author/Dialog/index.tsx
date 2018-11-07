@@ -9,6 +9,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import ImageSelector from 'components/Shared/ImageSelector';
@@ -141,44 +142,46 @@ export default class AuthorFormDialog extends FormComponent<IProps, IState> {
                   Imagem de perfil<br />
                   <small>200x200</small>
                 </Typography>
+
+                <FieldHidden value={model.avatar} validation='required'  />
               </Grid>
             </Grid>
 
-            <FieldText
-              type='text'
-              label='Nome'
-              tabIndex={1}
-              validation='required|max:120'
-              disabled={isSaving}
-              value={model.name}
-              onChange={this.updateModel((m, v) => m.name = v)}
-            />
+              <FieldText
+                type='text'
+                label='Nome'
+                tabIndex={1}
+                validation='required|max:120'
+                disabled={isSaving}
+                value={model.name}
+                onChange={this.updateModel((m, v) => m.name = v)}
+              />
 
-            <FieldText
-              multiline
-              rows={100}
-              className='textarea'
-              type='text'
-              label='Resumo'
-              tabIndex={2}
-              validation='required|max:300'
-              helperText={`${(model.description || '').length}/300 caracteres`}
-              disabled={isSaving}
-              value={model.description}
-              onChange={this.updateModel((m, v) => m.description = v)}
-            />
+              <FieldText
+                multiline
+                rows={100}
+                className='textarea'
+                type='text'
+                label='Resumo'
+                tabIndex={2}
+                validation='required|max:300'
+                helperText={`${(model.description || '').length}/300 caracteres`}
+                disabled={isSaving}
+                value={model.description}
+                onChange={this.updateModel((m, v) => m.description = v)}
+              />
           </DialogContent>
 
-          <DialogActions>
-            <Button disabled={isSaving} onClick={this.onCancel}>Cancelar</Button>
-            <Button color='secondary' type='submit' disabled={isSaving}>Salvar</Button>
-          </DialogActions>
+            <DialogActions>
+              <Button disabled={isSaving} onClick={this.onCancel}>Cancelar</Button>
+              <Button color='secondary' type='submit' disabled={isSaving}>Salvar</Button>
+            </DialogActions>
 
         </FormValidation>
       </Dialog>
-    );
-  }
-}
+        );
+      }
+    }
 
 function Transition(props: any) {
   return <Slide direction='up' {...props} />;
