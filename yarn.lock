@@ -117,6 +117,18 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@ckeditor/ckeditor5-build-classic@^11.1.1":
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-classic/-/ckeditor5-build-classic-11.1.1.tgz#2eb3706bc83640bdc5f6d50e3a060aa70cf495aa"
+  integrity sha512-YfXokhH3Z82zdu4KCfYj2/7I0KyQav5QhNBDKnliXVGgNDuFa529xWr6x+tMx57vu+iiiih7Nmxd86A7tvsh/w==
+
+"@ckeditor/ckeditor5-react@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-react/-/ckeditor5-react-1.0.0.tgz#747ba193035000ff9eeaba683006a87cacc39a40"
+  integrity sha512-OGzPaMxK3t2uio1ByGS9waIwVtGX4Z6Fz5mUBgGo72sLLq3c+ZPGzsyGaAkL/DxeiFbtHbxT2sHoaMbFKpzpoA==
+  dependencies:
+    prop-types "^15.6.1"
+
 "@material-ui/core@3.2.0":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.2.0.tgz#81e1a4dc66ea666d58da784a4e0addfbef1c3d80"

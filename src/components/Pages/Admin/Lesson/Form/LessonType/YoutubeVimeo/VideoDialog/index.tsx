@@ -48,7 +48,13 @@ export default class VideoDialog extends PureComponent<IProps, IState> {
           onClose={this.handleClose}
           fullWidth
         >
-          <DialogContent dangerouslySetInnerHTML={{ __html: content }} />
+          <DialogContent>
+            <iframe
+              src={content}
+              allowFullScreen
+              allow='geolocation; microphone; camera'
+            />
+          </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
               Fechar
