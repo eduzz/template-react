@@ -3,7 +3,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import AppRouter from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
@@ -11,10 +10,12 @@ import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import AddIcon from 'mdi-react/AddIcon';
 import React, { Fragment, PureComponent } from 'react';
+import { arrayMove, SortEnd } from 'react-sortable-hoc';
 import rxjsOperators from 'rxjs-operators';
 import bannerService from 'services/banner';
 
-import BannerItem from './ListItem';
+import BannerDialog from './BannerDialog';
+import ListContainer from './ListContainer';
 
 interface IState {
   error?: any;
@@ -63,8 +64,12 @@ export default class BannerList extends PureComponent<IProps, IState> {
     }));
   }
 
-  handleNewModule = () => {
+  handleNewBanner = () => {
+    bannerService.newBanner();
+  }
 
+  onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
+    bannerService.setBanners(arrayMove(this.state.banners, oldIndex, newIndex));
   }
 
   render() {
@@ -87,7 +92,7 @@ export default class BannerList extends PureComponent<IProps, IState> {
                   color='secondary'
                   variant='extendedFab'
                   aria-label='Adicionar Anúncio'
-                //onClick={this.handleNewBanner}
+                  onClick={this.handleNewBanner}
                 >
                   <AddIcon className={classes.extendedIcon} />
                   Adicionar Anúncio
@@ -109,17 +114,15 @@ export default class BannerList extends PureComponent<IProps, IState> {
           }
 
           {!!banners &&
-            <List disablePadding>
-              {banners.map(banner => (
-                <BannerItem
-                  key={banner.id}
-                  banner={banner}
-                  onDelete={this.handleDelete}
-                />
-              ))}
-            </List>
+            <ListContainer
+              banners={banners}
+              onSortEnd={this.onSortEnd}
+              useDragHandle
+            />
           }
         </Card>
+
+        <BannerDialog />
       </Fragment>
     );
   }

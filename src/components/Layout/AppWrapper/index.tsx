@@ -31,7 +31,7 @@ export const ScrollTopContext = React.createContext<Function>((() => { }));
     [theme.breakpoints.up('md')]: {
       width: theme.variables.drawerWidth,
       position: 'relative',
-      height: '100vh'
+      height: '100vh',
     }
   },
   content: {
