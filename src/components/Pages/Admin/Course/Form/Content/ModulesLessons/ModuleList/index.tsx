@@ -1,4 +1,4 @@
-import React from 'react';
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -6,16 +6,16 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithStyles } from 'decorators/withStyles';
-import { arrayMove } from 'react-sortable-hoc';
-import { IModule } from 'interfaces/models/module';
-import { SortEnd } from 'react-sortable-hoc';
-import ListContainer from './ListContainer';
 import { ILesson } from 'interfaces/models/lesson';
-import Button from '@material-ui/core/Button';
+import { IModule } from 'interfaces/models/module';
 import AddIcon from 'mdi-react/AddIcon';
-import ModuleDialog from './ModuleDialog';
-import moduleService from 'services/module';
+import React from 'react';
+import { arrayMove, SortEnd } from 'react-sortable-hoc';
 import rxjsOperators from 'rxjs-operators';
+import moduleService from 'services/module';
+
+import ListContainer from './ListContainer';
+import ModuleDialog from './ModuleDialog';
 
 interface IState {
   error?: any;
