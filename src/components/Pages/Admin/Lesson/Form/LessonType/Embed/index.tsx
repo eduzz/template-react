@@ -9,14 +9,15 @@ interface IProps {
 export default class Embed extends PureComponent<IProps> {
   render() {
     const { form } = this.props;
+    const content = form.model.content[form.model.lesson_type.id];
 
     return (
       <Fragment>
         <Typography variant='subtitle2' color='inherit' noWrap>Embed</Typography>
         <FieldText
-          value={form.model.content}
+          value={content}
           name='content'
-          onChange={form.updateModel((model, v) => model.content = v)}
+          onChange={form.updateModel((model, v) => model.content[model.lesson_type.id] = v)}
           variant='outlined'
           validation='required'
           helperText='Cole o código gerado pelo parceiro'

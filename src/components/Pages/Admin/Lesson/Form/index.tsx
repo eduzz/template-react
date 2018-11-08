@@ -7,10 +7,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import { WithRouter } from 'decorators/withRouter';
-import { FieldText } from '@react-form-fields/material-ui';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import LessonType from './LessonType';
-import Typography from '@material-ui/core/Typography';
+import Title from './Title';
+import ShortDescription from './ShortDescription';
+import Description from './Description';
 
 export interface IForm {
   model: Partial<IModel>;
@@ -20,10 +21,18 @@ export interface IForm {
 export interface IModel {
   title: string;
   drm_active: boolean;
-  content: string;
+  content: {
+    1: string;
+    2: string;
+    4: string;
+    5: string;
+  };
   lesson_type: {
     id: number;
   };
+  short_description: string;
+  description: string;
+  description_type: 'Descricao' | 'Iframe';
 }
 
 interface IProps {
@@ -49,10 +58,18 @@ export default class Form extends FormComponent<IProps, IState> {
       model: {
         title: '',
         drm_active: true,
-        content: '',
+        content: {
+          1: '',
+          2: '',
+          4: '',
+          5: '',
+        },
         lesson_type: {
           id: 1,
         },
+        short_description: '',
+        description: '',
+        description_type: 'Descricao',
       },
     };
   }
@@ -78,22 +95,16 @@ export default class Form extends FormComponent<IProps, IState> {
 
         <Grid container spacing={16}>
           <Grid item xs={12}>
-            <Typography variant='subtitle1' color='inherit' noWrap>Título</Typography>
-            <FieldText
-              value={model.title}
-              name='title'
-              validation='required'
-              onChange={this.updateModel((model, v) => model.title = v)}
-              margin='dense'
-              placeholder='Título da Aula'
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
+            <Title form={form} />
           </Grid>
           <Grid item xs={12}>
             <LessonType form={form} />
+          </Grid>
+          <Grid item xs={12}>
+            <ShortDescription form={form} />
+          </Grid>
+          <Grid item xs={12}>
+            <Description form={form} />
           </Grid>
         </Grid>
 

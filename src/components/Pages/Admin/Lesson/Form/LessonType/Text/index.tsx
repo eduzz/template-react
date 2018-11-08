@@ -19,11 +19,12 @@ export default class Text extends PureComponent<IProps> {
   handleChange = (event: any, editor: any) => {
     const data = editor.getData();
 
-    this.props.form.updateModel((model, v) => model.content = data)();
+    this.props.form.updateModel((model, v) => model.content[model.lesson_type.id] = data)();
   }
 
   render() {
     const { classes, form } = this.props;
+    const content = form.model.content[form.model.lesson_type.id];
 
     return (
       <Fragment>
@@ -31,7 +32,7 @@ export default class Text extends PureComponent<IProps> {
         <CKEditor
           className={classes.ckeditor}
           editor={ClassicEditor}
-          data={form.model.content}
+          data={content}
           onChange={this.handleChange}
         />
       </Fragment>
