@@ -8,13 +8,16 @@ import ListItem from '@material-ui/core/ListItem';
 import Button from '@material-ui/core/Button';
 import AddIcon from 'mdi-react/AddIcon';
 import { IModule } from 'interfaces/models/module';
+import { WithRouter } from 'decorators/withRouter';
 
 interface IProps {
   lessons: ILesson[];
   module: IModule;
   classes?: any;
+  history?: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   addItem: {
     display: 'flex',
@@ -30,6 +33,10 @@ interface IProps {
   },
 }))
 class LessonList extends PureComponent<IProps> {
+  handleAddLesson = () => {
+    this.props.history.push('/aula/novo');
+  }
+
   render() {
     const { lessons, module, classes } = this.props;
 
@@ -49,6 +56,7 @@ class LessonList extends PureComponent<IProps> {
             color='secondary'
             variant='extendedFab'
             aria-label='Nova Aula'
+            onClick={this.handleAddLesson}
           >
             <AddIcon className={classes.extendedIcon} />
             Criar Nova Aula

@@ -10,13 +10,16 @@ import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
 import moduleService from 'services/module';
 import Confirm from 'components/Shared/Confirm';
+import { WithRouter } from 'decorators/withRouter';
 
 interface IProps {
   classes?: any;
   lesson: ILesson;
   moduleId: number;
+  history?: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   root: {
     padding: '8px 8px 0 8px',
@@ -35,7 +38,9 @@ class LessonItem extends PureComponent<IProps> {
     this.options = [{
       text: 'Editar',
       icon: SquareEditOutlineIcon,
-      handler: () => { },
+      handler: () => {
+        this.props.history.push(`/aula/${this.props.lesson.id}/editar`);
+      },
     }, {
       text: 'Excluir',
       icon: TrashCanIcon,

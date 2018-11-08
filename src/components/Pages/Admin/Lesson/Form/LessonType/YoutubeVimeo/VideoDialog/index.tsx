@@ -5,7 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 
 interface IProps {
-  content: string;
+  embed: JSX.Element;
 }
 
 interface IState {
@@ -30,7 +30,7 @@ export default class VideoDialog extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { content } = this.props;
+    const { embed } = this.props;
 
     return (
       <Fragment>
@@ -38,7 +38,7 @@ export default class VideoDialog extends PureComponent<IProps, IState> {
           <Button
             variant='outlined'
             onClick={this.handleClickOpen}
-            disabled={!content}
+            disabled={!embed}
           >
             Ver Vídeo
           </Button>
@@ -49,11 +49,7 @@ export default class VideoDialog extends PureComponent<IProps, IState> {
           fullWidth
         >
           <DialogContent>
-            <iframe
-              src={content}
-              allowFullScreen
-              allow='geolocation; microphone; camera'
-            />
+            {embed}
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color='primary'>
