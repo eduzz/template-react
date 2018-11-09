@@ -16,7 +16,7 @@ interface IProps {
   classes?: any;
 }
 
-@WithStyles({
+@WithStyles(theme => ({
   title: {
     marginBottom: 8,
   },
@@ -28,7 +28,13 @@ interface IProps {
   divider: {
     margin: '32px 0 24px 0',
   },
-})
+  container: {
+    border: 'solid 1px #d5d5d5',
+    borderRadius: 4,
+    padding: theme.spacing.unit * 2,
+    backgroundColor: '#fff',
+  },
+}))
 export default class Options extends PureComponent<IProps> {
   render() {
     const { classes, form } = this.props;
@@ -36,34 +42,36 @@ export default class Options extends PureComponent<IProps> {
     return (
       <Fragment>
         <Typography className={classes.title} variant='subtitle1' color='inherit' noWrap>Configurações</Typography>
-        <Grid container spacing={16}>
-          <Grid item>
-            <FreeLesson form={form} />
+        <div className={classes.container}>
+          <Grid container spacing={16}>
+            <Grid item>
+              <FreeLesson form={form} />
+            </Grid>
+            <Grid item>
+              <HiddenLesson form={form} />
+            </Grid>
+            <Grid item>
+              <Author
+                form={form as any}
+                classes={{
+                  title: classes.authorTitle,
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item>
-            <HiddenLesson form={form} />
+          <Divider className={classes.divider} />
+          <Grid container spacing={16}>
+            <Grid item>
+              <LessonValidity form={form} />
+            </Grid>
+            <Grid item>
+              <LessonScheduling form={form} />
+            </Grid>
+            <Grid item>
+              <ReleaseAt form={form} />
+            </Grid>
           </Grid>
-          <Grid item>
-            <Author
-              form={form as any}
-              classes={{
-                title: classes.authorTitle,
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Divider className={classes.divider} />
-        <Grid container spacing={16}>
-          <Grid item>
-            <LessonValidity form={form} />
-          </Grid>
-          <Grid item>
-            <LessonScheduling form={form} />
-          </Grid>
-          <Grid item>
-            <ReleaseAt form={form} />
-          </Grid>
-        </Grid>
+        </div>
       </Fragment>
     );
   }
