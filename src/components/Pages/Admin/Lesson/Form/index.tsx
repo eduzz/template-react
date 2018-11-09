@@ -1,9 +1,7 @@
 import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from 'components/Layout/Toolbar';
-import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import { WithRouter } from 'decorators/withRouter';
@@ -12,6 +10,8 @@ import LessonType from './LessonType';
 import Title from './Title';
 import ShortDescription from './ShortDescription';
 import Description from './Description';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
 
 export interface IForm {
   model: Partial<IModel>;
@@ -33,6 +33,8 @@ export interface IModel {
   short_description: string;
   description: string;
   description_type: 'Descricao' | 'Iframe';
+  iframe_url: string;
+  iframe_config: string;
 }
 
 interface IProps {
@@ -43,13 +45,6 @@ interface IProps {
 interface IState extends IStateForm<IModel> { }
 
 @WithRouter()
-@WithStyles(theme => ({
-  saveButton: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
-  },
-}))
 export default class Form extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -79,7 +74,7 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, match: { params } } = this.props;
+    const { match: { params } } = this.props;
     const { model } = this.state;
 
     const form = {
@@ -91,7 +86,22 @@ export default class Form extends FormComponent<IProps, IState> {
 
     return (
       <FormValidation onSubmit={this.handleSubmit}>
-        <Toolbar title={params.id ? 'Editar Aula' : 'Nova Aula'} />
+        <Toolbar>
+          <Grid container spacing={16} alignItems='center'>
+            <Grid item xs={true}>
+              <Typography variant='h6' color='inherit' noWrap>
+                {`${params.id ? 'Editar' : 'Nova'} Aula`}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={false}>
+              <Button type='submit' color='secondary' variant='raised' disabled={false}>
+                <ContentSaveIcon />
+                <Hidden implementation='css' xsDown>Salvar</Hidden>
+              </Button>
+            </Grid>
+          </Grid>
+        </Toolbar>
 
         <Grid container spacing={16}>
           <Grid item xs={12}>
@@ -107,17 +117,6 @@ export default class Form extends FormComponent<IProps, IState> {
             <Description form={form} />
           </Grid>
         </Grid>
-
-        <Tooltip title='Salvar'>
-          <Button
-            className={classes.saveButton}
-            type='submit'
-            color='secondary'
-            variant='fab'
-          >
-            <ContentSaveIcon />
-          </Button>
-        </Tooltip>
       </FormValidation>
     );
   }
