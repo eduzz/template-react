@@ -15,10 +15,6 @@ class BannerService {
     );
   }
 
-  public save(banner: any): any {
-    return apiService.post(`/producer/banner`, banner);
-  }
-
   public edit(id: number, banner: any): any {
     return apiService.put(`/producer/banner/${id}`, banner);
   }
@@ -43,10 +39,13 @@ class BannerService {
     return this.bannerInfo$.asObservable();
   }
 
-  /*
-  public setBanners(banners: IBanner[]): void {
-    this.banners$.next(banners);
-  }*/
+  public save(courseID: number, banner: IBanner): any {
+    return apiService.post(`/producer/courses/${courseID}/banners`, banner);
+  }
+
+  /* public setBanners(banners: IBanner[]): void {
+    this.bannerInfo$.next(banners);
+  } */
 }
 
 const bannerService = new BannerService();

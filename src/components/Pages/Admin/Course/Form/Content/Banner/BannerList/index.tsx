@@ -15,8 +15,6 @@ import bannerService from 'services/banner';
 
 import ListContainer from './ListContainer';
 
-//import ErrorMessage from 'components/Shared/ErrorMessage';
-//import { arrayMove, SortEnd } from 'react-sortable-hoc';
 interface IState {
   error?: any;
   banners?: IBanner[];
@@ -79,9 +77,7 @@ export default class BannerList extends PureComponent<IProps, IState> {
           <CardContent>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='subheading'>
-                  Listagem de Anúncio
-              </Typography>
+                <Typography variant='subheading'>Listagem de Anúncio</Typography>
               </Grid>
               <Grid item xs={false}>
                 <Button
@@ -91,8 +87,7 @@ export default class BannerList extends PureComponent<IProps, IState> {
                   aria-label='Adicionar Anúncio'
                   onClick={this.handleNewBanner}
                 >
-                  <AddIcon className={classes.extendedIcon} />
-                  Adicionar Anúncio
+                  <AddIcon className={classes.extendedIcon} /> Adicionar Anúncio
                 </Button>
               </Grid>
             </Grid>
@@ -105,9 +100,9 @@ export default class BannerList extends PureComponent<IProps, IState> {
           }
 
           {!!error &&
-            {/* <CardContent>
-              <ErrorMessage error={error} tryAgain={this.loadData} />
-            </CardContent> */}
+            <CardContent>
+              {/* <ErrorMessage error={error} tryAgain={this.loadData} /> */}
+            </CardContent>
           }
 
           {!!banners &&

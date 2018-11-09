@@ -9,6 +9,8 @@ import { FieldText } from '@react-form-fields/material-ui';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import Toast from 'components/Shared/Toast';
+import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import React from 'react';
@@ -24,6 +26,7 @@ export interface IForm {
 
 interface IProps {
   classes?: any;
+  match?: any;
 }
 
 interface IState extends IStateForm<IBanner> {
@@ -60,6 +63,7 @@ interface IState extends IStateForm<IBanner> {
     marginRight: 16,
   },
 })
+@WithRouter()
 export default class BannerDialog extends FormComponent<IProps, IState> {
   private initialModel: IBanner = {
     id: 0,
@@ -95,18 +99,25 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
     });
   }
 
-  private handleClose = () => {
+  handleClose = () => {
     this.setState({
       open: false,
       bannerId: null,
     });
-
-    this.resetForm();
   }
 
   handleSubmit = (isValid: boolean) => {
     if (!isValid) return;
-    this.handleClose();
+    bannerService.save(this.props.match.params.id, this.state.model as IBanner).pipe(
+      rxjsOperators.loader(),
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe(() => {
+      Toast.show('Anúncio salvo com sucesso!');
+      this.handleClose();
+    }, (error: any) => {
+      Toast.error(error);
+    });
   }
 
   handleChange = (state: any) => {
@@ -126,7 +137,7 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
         fullWidth
       >
         <FormValidation onSubmit={this.handleSubmit}>
-          <DialogTitle> Configurações do Anúncio </DialogTitle>
+          <DialogTitle> Configurações do Anúncio</DialogTitle>
           <DialogContent>
             <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
               <Grid item xs={12} md={4}>
