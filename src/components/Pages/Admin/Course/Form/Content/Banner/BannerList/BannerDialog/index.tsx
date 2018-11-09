@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
 import { FieldText } from '@react-form-fields/material-ui';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
@@ -103,23 +104,8 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
     this.resetForm();
   }
 
-  getValidStatus = () => {
-    const { model } = this.state;
-    const status = Boolean(model.img);
-
-    this.setState({
-      isValid: status,
-    });
-
-    return status;
-  }
-
-  handleSubmit = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!this.getValidStatus()) return;
-
+  handleSubmit = (isValid: boolean) => {
+    if (!isValid) return;
     this.handleClose();
   }
 
@@ -132,14 +118,14 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
     const { model, isValid } = this.state;
 
     return (
-      <FormValidation onSubmit={this.handleSubmit}>
-        <Dialog
-          open={this.state.open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={this.handleClose}
-          fullWidth
-        >
+      <Dialog
+        open={this.state.open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={this.handleClose}
+        fullWidth
+      >
+        <FormValidation onSubmit={this.handleSubmit}>
           <DialogTitle> Configurações do Anúncio </DialogTitle>
           <DialogContent>
             <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
@@ -149,11 +135,12 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
                   <ImageUploader
                     width={250}
                     height={250}
-                    label='img'
-                    onChange={this.handleChange}
+                    onChange={this.updateModel((model, v) => model.img = v)}
                     image={model.img}
                     error={!isValid}
                   />
+
+                  <FieldHidden value={model.img} validation='required' />
                 </div>
               </Grid>
 
@@ -177,8 +164,8 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
             <Button onClick={this.handleClose} color='primary'>Cancelar</Button>
             <Button type='submit' color='primary'>Salvar</Button>
           </DialogActions>
-        </Dialog>
-      </FormValidation>
+        </FormValidation>
+      </Dialog>
     );
   }
 }

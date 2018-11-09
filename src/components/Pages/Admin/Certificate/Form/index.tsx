@@ -141,7 +141,7 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     const { classes } = this.props;
 
     return (
-      <Fragment>;
+      <Fragment>
         <CertificatePreviewDialog
           opened={previewOpened}
           onCancel={this.handleClosePreview}
@@ -165,7 +165,7 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
               </Grid>
 
               <Grid item xs={false}>
-                <Button type='submit' color='secondary' variant='raised' disabled={loading || error}>
+                <Button type='submit' color='secondary' variant='contained' disabled={loading || error}>
                   <ContentSaveIcon />
                   <Hidden implementation='css' xsDown>Salvar</Hidden>
                 </Button>

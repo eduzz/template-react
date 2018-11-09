@@ -1,28 +1,27 @@
-import React, { Fragment } from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import { FieldHidden } from '@react-form-fields/material-ui';
 import ImageSelector from 'components/Shared/ImageSelector';
+import { WithStyles } from 'decorators/withStyles';
 import CloudUploadIcon from 'mdi-react/CloudUploadIcon';
 import DeleteIcon from 'mdi-react/DeleteIcon';
-// import Button from '@material-ui/core/Button';
+import React, { Fragment, SyntheticEvent } from 'react';
 import { CDN_URL } from 'settings';
 
 interface IProps {
   classes?: any;
-  onChange?: any;
   label?: string;
   width: number;
   height: number;
-  image?: any;
   disabled?: boolean;
-  error?: boolean;
+
+  value: string;
+  onChange: (image: string) => void;
 }
 
 interface IState {
-  image: string;
   isSelectorOpen: boolean;
 }
 
-@WithStyles(theme => ({
+@WithStyles({
   imageLabel: {
     marginBottom: 8,
   },
@@ -86,11 +85,7 @@ interface IState {
       color: '#cbcbcb',
     },
   },
-  error: {
-    borderColor: '#eb442c',
-    color: '#eb442c',
-  },
-}))
+})
 export default class ImageUploader extends React.PureComponent<IProps, IState> {
   static defaultProps = {
     label: 'image',
@@ -98,52 +93,28 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      image: '',
-      isSelectorOpen: false,
-    };
+    this.state = { isSelectorOpen: false };
   }
 
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.image !== state.image)
-      return {
-        image: props.image,
-      };
-
-    return null;
+  openSelector = () => {
+    this.setState({ isSelectorOpen: true });
   }
 
   handleSelectorComplete = (image: string) => {
-    this.setState(state => ({
-      isSelectorOpen: false,
-      image: image || state.image,
-    }));
+    this.setState({ isSelectorOpen: false });
 
-    image && this.props.onChange && this.props.onChange({ [this.props.label]: image });
+    if (!image) return;
+    image && this.props.onChange && this.props.onChange(image);
   }
 
-  handleOpenSelector = () => {
-    this.setState({
-      isSelectorOpen: true,
-    });
-  }
-
-  handleClick = () => {
-    this.setState({
-      isSelectorOpen: true,
-    });
-  }
-
-  onRemoveImage = (e: any) => {
+  onRemoveImage = (e: SyntheticEvent) => {
     e.stopPropagation();
-
-    this.props.onChange && this.props.onChange({ [this.props.label]: null });
+    this.props.onChange(null);
   }
 
   render() {
-    const { classes, width, height, disabled, error } = this.props;
-    const { image, isSelectorOpen } = this.state;
+    const { classes, width, height, disabled, value } = this.props;
+    const { isSelectorOpen } = this.state;
 
     return (
       <Fragment>
@@ -153,40 +124,27 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
           height={height}
           onComplete={this.handleSelectorComplete}
         />
+
         <div className={classes.content}>
           <div
-            className={`${classes.imageArea} ${disabled && classes.disabled} ${error && !image && classes.error}`}
-            onClick={!disabled ? this.handleClick : null}
+            className={`${classes.imageArea} ${disabled && classes.disabled}`}
+            onClick={!disabled ? this.openSelector : null}
           >
-            <CloudUploadIcon className={classes.uploadIcon} />
-            {image &&
-              <div
-                className={classes.deleteIcon}
-                onClick={this.onRemoveImage}
-              >
+            <CloudUploadIcon size={50} className={classes.uploadIcon} />
+
+            {value &&
+              <div className={classes.deleteIcon} onClick={this.onRemoveImage}>
                 <DeleteIcon />
               </div>
             }
-            <img alt='' src={image ? CDN_URL + image : null} className={classes.image} />
+            <img src={value ? CDN_URL + value : null} className={classes.image} />
           </div>
-          {error && !image ?
-            <label className={`${classes.info} ${classes.error}`}>
-              Campo obrigatório
-            </label>
-            :
-            <label className={classes.info}>
-              Imagem formato jpg ou png
-            </label>
-          }
+
+          <FieldHidden
+            value={value}
+            validation={disabled ? '' : 'required'}
+          />
         </div>
-        {/* <Button
-          className={classes.button}
-          variant='contained'
-          color='primary'
-          onClick={this.handleClick}
-        >
-          Selecionar
-        </Button> */}
       </Fragment>
     );
   }

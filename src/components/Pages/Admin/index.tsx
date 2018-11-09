@@ -6,13 +6,14 @@ import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
+
 import AuthorIndexPage from './Author';
-import CertificateIndexPage from './Certificate';
-import DashboardIndexPage from './Dashboard';
-import UpsellIndexPage from './Upsell';
-import CourseIndexPage from './Course';
-import LessonIndexPage from './Lesson';
 import CategoriesIndexPage from './Categories';
+import CertificateIndexPage from './Certificate';
+import CourseIndexPage from './Course';
+import DashboardIndexPage from './Dashboard';
+import LessonIndexPage from './Lesson';
+import UpsellIndexPage from './Upsell';
 
 interface IState {
   routes: IAppRoute[];
@@ -41,7 +42,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/upsell',
-      sideDrawer: { display: 'Upsell', order: 2, icon: BullhornIcon },
+      sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
       roles: [],
       component: UpsellIndexPage,
     },

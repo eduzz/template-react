@@ -1,18 +1,20 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import Collapse from '@material-ui/core/Collapse';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsell } from 'interfaces/models/upsell';
+import React from 'react';
+
 import LessonItem from './LessonItem';
-import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
-  module: any;
   classes?: any;
-  onChange?: any;
+  module: IUpsell['courses'][0]['modules'][0];
+  onChange: (module: IUpsell['courses'][0]['modules'][0]) => void;
 }
 
 interface IState {
@@ -37,19 +39,17 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
   }
 
   handleToggle = () => {
-    this.setState(state => ({
-      open: !state.open,
-    }));
+    this.setState(state => ({ open: !state.open }));
   }
 
-  handleLessonChange = (modifiedLesson: any) => {
+  handleLessonChange = (modifiedLesson: IUpsell['courses'][0]['modules'][0]['lessons'][0]) => {
     const { onChange, module } = this.props;
-    const lessons = module.lessons.map((lesson: any) => (lesson.id === modifiedLesson.id ? modifiedLesson : lesson));
+    const lessons = module.lessons.map(lesson => (lesson.id === modifiedLesson.id ? modifiedLesson : lesson));
 
     if (onChange) {
       onChange({
         ...module,
-        checked: lessons.every((lesson: any) => lesson.checked),
+        checked: lessons.every(lesson => lesson.checked),
         lessons,
       });
     }

@@ -1,13 +1,14 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsell } from 'interfaces/models/upsell';
+import React from 'react';
 
 interface IProps {
-  lesson: any;
   classes?: any;
-  onChange?: any;
+  lesson: IUpsell['courses'][0]['modules'][0]['lessons'][0];
+  onChange: (lesson: IUpsell['courses'][0]['modules'][0]['lessons'][0]) => void;
 }
 
 interface IState {

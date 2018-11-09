@@ -13,7 +13,6 @@ import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import bannerService from 'services/banner';
 
-import BannerDialog from './BannerDialog';
 import ListContainer from './ListContainer';
 
 //import ErrorMessage from 'components/Shared/ErrorMessage';
@@ -120,7 +119,6 @@ export default class BannerList extends PureComponent<IProps, IState> {
           }
         </Card>
 
-        <BannerDialog />
       </Fragment>
     );
   }

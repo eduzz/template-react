@@ -1,18 +1,24 @@
-import React, { Fragment } from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import Checkbox from '@material-ui/core/Checkbox';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import List from '@material-ui/core/List';
-import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import Confirm from 'components/Shared/Confirm';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsell } from 'interfaces/models/upsell';
+import TrashIcon from 'mdi-react/TrashIcon';
+import React, { Fragment, SyntheticEvent } from 'react';
+
 import ModuleItem from './ModuleItem';
-import Checkbox from '@material-ui/core/Checkbox';
 
 interface IProps {
-  course: any;
   classes?: any;
-  onChange?: any;
+  course: IUpsell['courses'][0];
+  onChange: (course: IUpsell['courses'][0]) => void;
+  onDelete: (course: IUpsell['courses'][0]) => void;
 }
 
 interface IState {
@@ -26,9 +32,6 @@ interface IState {
   },
 }))
 export default class CourseItem extends React.PureComponent<IProps, IState> {
-  private allChecked: boolean;
-  private allUnchecked: boolean;
-
   constructor(props: IProps) {
     super(props);
 
@@ -38,16 +41,15 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     };
   }
 
+  get allChecked(): boolean { return this.props.course.modules.every(m => m.checked); }
+  get allUnchecked(): boolean { return this.props.course.modules.every(m => m.lessons.every(l => !l.checked)); }
+
   handleToggle = () => {
-    this.setState(state => ({
-      open: !state.open,
-    }));
+    this.setState(state => ({ open: !state.open }));
   }
 
   handleToggleSpecific = () => {
-    this.setState(state => ({
-      openSpecific: !state.openSpecific,
-    }));
+    this.setState(state => ({ openSpecific: !state.openSpecific }));
   }
 
   handleModuleChange = (modifiedModule: any) => {
@@ -69,10 +71,10 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     if (onChange) {
       onChange({
         ...course,
-        modules: course.modules.map((module: any) => ({
+        modules: course.modules.map(module => ({
           ...module,
           checked: !this.allChecked,
-          lessons: module.lessons.map((lesson: any) => ({
+          lessons: module.lessons.map(lesson => ({
             ...lesson,
             checked: !this.allChecked,
           })),
@@ -92,18 +94,29 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     }
   }
 
+  handleDelete = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const confirm = await Confirm.show(`Deseja remover o curso ${this.props.course.title}?`);
+    if (!confirm) return;
+
+    this.props.onDelete(this.props.course);
+  }
+
   render() {
     const { course } = this.props;
     const { openSpecific } = this.state;
 
-    this.allChecked = course.modules.every((module: any) => module.checked);
-    this.allUnchecked = course.modules.every((module: any) => module.lessons.every((lesson: any) => !lesson.checked));
     const indeterminate = !(this.allChecked || this.allUnchecked);
 
     return (
       <Fragment>
         <ListItem button onClick={this.handleToggle}>
           <ListItemText primary={course.title} />
+          <IconButton onClick={this.handleDelete}>
+            <TrashIcon />
+          </IconButton>
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
@@ -127,7 +140,7 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
                   {openSpecific ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={openSpecific} timeout='auto' unmountOnExit>
-                  {course.modules.map((module: any, index: number) =>
+                  {course.modules.map((module, index) =>
                     <ModuleItem
                       key={index}
                       module={module}

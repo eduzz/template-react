@@ -3,15 +3,15 @@ import { WithStyles } from 'decorators/withStyles';
 import CloudUploadIcon from 'mdi-react/CloudUploadIcon';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import React, { Fragment } from 'react';
+import { CDN_URL } from 'settings';
 
 // import Button from '@material-ui/core/Button';
 interface IProps {
   classes?: any;
-  onChange: any;
-  label?: string;
   width: number;
   height: number;
   image: string;
+  onChange: (image: string) => void;
   disabled?: boolean;
   error?: boolean;
 }
@@ -104,7 +104,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
     this.setState({ isSelectorOpen: false });
 
     if (!image) return;
-    this.props.onChange({ [this.props.label]: image });
+    this.props.onChange(image);
   }
 
   handleOpenSelector = () => {
@@ -119,7 +119,7 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
 
   onRemoveImage = (e: any) => {
     e.stopPropagation();
-    this.props.onChange({ [this.props.label]: null });
+    this.props.onChange(null);
   }
 
   render() {

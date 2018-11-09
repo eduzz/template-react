@@ -2,7 +2,7 @@ import { FormValidation } from '@react-form-fields/material-ui/components/FormVa
 import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import { Component } from 'react';
 
-export interface IStateForm<T = any> {
+export interface IStateForm<T extends Object = any> {
   model?: Partial<T>;
   formSubmitted?: boolean;
 }

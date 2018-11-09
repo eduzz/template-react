@@ -9,11 +9,12 @@ import format from 'date-fns/format';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
-import React from 'react';
+import React, { Fragment } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import courseService from 'services/course';
 
 import Content from './Content';
+import BannerDialog from './Content/Banner/BannerList/BannerDialog';
 import Info from './Info';
 
 export interface IForm {
@@ -197,29 +198,33 @@ export default class Form extends FormComponent<IProps, IState> {
     };
 
     return (
-      <FormValidation onSubmit={this.handleSubmit}>
-        <Toolbar title='Curso' />
+      <Fragment>
+        <FormValidation onSubmit={this.handleSubmit}>
+          <Toolbar title='Curso' />
 
-        <Grid container>
-          <Grid item xs={12}>
-            <Info form={form} />
+          <Grid container>
+            <Grid item xs={12}>
+              <Info form={form} />
+            </Grid>
+            <Grid item xs={12}>
+              <Content form={form} />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Content form={form} />
-          </Grid>
-        </Grid>
 
-        <Tooltip title='Salvar'>
-          <Button
-            className={classes.saveButton}
-            type='submit'
-            color='secondary'
-            variant='fab'
-          >
-            <ContentSaveIcon />
-          </Button>
-        </Tooltip>
-      </FormValidation>
+          <Tooltip title='Salvar'>
+            <Button
+              className={classes.saveButton}
+              type='submit'
+              color='secondary'
+              variant='fab'
+            >
+              <ContentSaveIcon />
+            </Button>
+          </Tooltip>
+        </FormValidation>
+
+        <BannerDialog />
+      </Fragment>
     );
   }
 }
