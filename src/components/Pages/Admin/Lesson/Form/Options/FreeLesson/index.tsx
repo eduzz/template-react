@@ -2,8 +2,7 @@ import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@react-form-fields/material-ui/components/Switch';
-import { IForm } from '../../../';
-import Typography from '@material-ui/core/Typography';
+import { IForm } from '../../';
 
 interface IProps {
   classes?: any;
@@ -12,9 +11,13 @@ interface IProps {
 
 @WithStyles({
   root: {
-    width: 300,
+    width: 250,
     display: 'flex',
     flexDirection: 'column',
+  },
+  optionDescription: {
+    marginLeft: 48,
+    fontSize: 12,
   },
   switch: {
     margin: 0,
@@ -22,11 +25,8 @@ interface IProps {
   switchLabel: {
     marginLeft: -16,
   },
-  caption: {
-    marginLeft: 48,
-  },
 })
-export default class DRMOption extends React.PureComponent<IProps> {
+export default class FreeLesson extends React.PureComponent<IProps> {
   render() {
     const { classes, form } = this.props;
 
@@ -39,15 +39,15 @@ export default class DRMOption extends React.PureComponent<IProps> {
           }}
           control={
             <Switch
-              onChange={form.updateModel((model, v) => model.drm = !model.drm)}
-              checked={form.model.drm}
+              onChange={form.updateModel((model, v) => model.is_free = !model.is_free)}
+              checked={form.model.is_free}
             />
           }
-          label='Ativar DRM'
+          label='Aula Grátis'
         />
-        <Typography className={classes.caption} variant='caption' color='inherit'>
-          Exibe uma layer com o nome e o CPF do aluno durante a exibição do video.
-        </Typography>
+        <label className={classes.optionDescription}>
+          Disponibiliza a aula de maneira gratuita.
+        </label>
       </div>
     );
   }

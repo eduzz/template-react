@@ -12,6 +12,9 @@ import ShortDescription from './ShortDescription';
 import Description from './Description';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
+import Options from './Options';
+import { format } from 'date-fns';
+import Chats from './Chats';
 
 export interface IForm {
   model: Partial<IModel>;
@@ -19,22 +22,54 @@ export interface IForm {
 }
 
 export interface IModel {
+  id?: number;
+  module_id?: number;
   title: string;
-  drm_active: boolean;
+  description: string;
+  lesson_type: {
+    id: number;
+  };
   content: {
     1: string;
     2: string;
     4: string;
     5: string;
   };
-  lesson_type: {
-    id: number;
+  author: {
+    id?: number;
   };
-  short_description: string;
-  description: string;
+  release_at: string;
+  available_days: number;
+  days_locked: number;
+  image: string;
+  sequence: number;
+  slug: string;
+  is_free: boolean;
+  is_draft: boolean;
+  download_enabled: boolean;
+  chats: {
+    hasjivochat: boolean;
+    jivochat: string;
+    haszopimchat: boolean;
+    zopimchat: string;
+    hastawktochat: boolean;
+    tawktochat: string;
+    haszendeskchat: boolean;
+    zendeskchat: string;
+    haslivechat: boolean;
+    livechat: string;
+    haschatroll: boolean;
+    chatroll: string;
+    chatroll_tipo: number;
+    hasintercom: boolean;
+    intercom: string;
+  };
   description_type: 'Descricao' | 'Iframe';
   iframe_url: string;
   iframe_config: string;
+  created_at: string;
+  drm: boolean;
+  shortdescription: string;
 }
 
 interface IProps {
@@ -46,25 +81,59 @@ interface IState extends IStateForm<IModel> { }
 
 @WithRouter()
 export default class Form extends FormComponent<IProps, IState> {
+  private initialState: IModel = {
+    title: '',
+    description: '',
+    lesson_type: {
+      id: 1,
+    },
+    content: {
+      1: '',
+      2: '',
+      4: '',
+      5: '',
+    },
+    author: {},
+    release_at: format(new Date(), 'yyyy-MM-dd'),
+    available_days: null,
+    days_locked: null,
+    image: '',
+    sequence: null,
+    slug: '',
+    is_free: false,
+    is_draft: false,
+    download_enabled: false,
+    chats: {
+      hasjivochat: false,
+      jivochat: '',
+      haszopimchat: false,
+      zopimchat: '',
+      hastawktochat: false,
+      tawktochat: '',
+      haszendeskchat: false,
+      zendeskchat: '',
+      haslivechat: false,
+      livechat: '',
+      haschatroll: false,
+      chatroll: '',
+      chatroll_tipo: 0,
+      hasintercom: false,
+      intercom: '',
+    },
+    iframe_url: '',
+    iframe_config: '',
+    created_at: '',
+    drm: false,
+    shortdescription: '',
+    description_type: 'Descricao',
+  };
+
   constructor(props: IProps) {
     super(props);
 
     this.state = {
       model: {
-        title: '',
-        drm_active: true,
-        content: {
-          1: '',
-          2: '',
-          4: '',
-          5: '',
-        },
-        lesson_type: {
-          id: 1,
-        },
-        short_description: '',
-        description: '',
-        description_type: 'Descricao',
+        ...this.initialState,
       },
     };
   }
@@ -115,6 +184,12 @@ export default class Form extends FormComponent<IProps, IState> {
           </Grid>
           <Grid item xs={12}>
             <Description form={form} />
+          </Grid>
+          <Grid item xs={12}>
+            <Options form={form} />
+          </Grid>
+          <Grid item xs={12}>
+            <Chats form={form} />
           </Grid>
         </Grid>
       </FormValidation>
