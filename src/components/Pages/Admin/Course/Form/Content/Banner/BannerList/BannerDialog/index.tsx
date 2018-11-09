@@ -3,18 +3,23 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
 import { FieldText } from '@react-form-fields/material-ui';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
-import { IBanner } from 'interfaces/models/banner';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
-import bannerService from 'services/banner';
+
+import ImageUploader from './ImageUploader';
+
+//import { IBanner } from 'interfaces/models/banner';
+/* import rxjsOperators from 'rxjs-operators';
+import bannerService from 'services/banner'; */
 
 export interface IModel {
   courseId: number;
+  id: number;
   img: string;
   sequence: number;
   title: string;
@@ -33,6 +38,7 @@ interface IProps {
 interface IState extends IStateForm<IModel> {
   open: boolean;
   bannerId: number;
+  isValid: boolean;
 }
 
 @WithStyles({
@@ -55,10 +61,18 @@ interface IState extends IStateForm<IModel> {
   textField: {
     marginBottom: 16,
   },
+  imageUploadArea: {
+    display: 'flex',
+  },
+  highlightImageContainer: {
+    paddingTop: 8,
+    marginRight: 16,
+  },
 })
 export default class BannerDialog extends FormComponent<IProps, IState> {
   private initialModel: IModel = {
     courseId: 0,
+    id: 0,
     img: '',
     sequence: 0,
     title: '',
@@ -71,6 +85,7 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
     this.state = {
       open: false,
       bannerId: null,
+      isValid: true,
       model: {
         ...this.initialModel,
       },
@@ -78,7 +93,7 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    bannerService.getBannerInfo().pipe(
+    /* bannerService.getBannerInfo().pipe(
       rxjsOperators.bindComponent(this),
       rxjsOperators.logError(),
     ).subscribe((banner = this.initialModel as IBanner) => {
@@ -88,7 +103,7 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
           ...banner,
         },
       });
-    });
+    }); */
   }
 
   private handleClose = () => {
@@ -98,16 +113,33 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
     });
   }
 
+  getValidStatus = () => {
+    const { model } = this.state;
+    const status = Boolean(model.img);
+
+    this.setState({
+      isValid: status,
+    });
+
+    return status;
+  }
+
   handleSubmit = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!this.getValidStatus()) return;
+
     this.handleClose();
+  }
+
+  handleChange = (state: any) => {
+    this.setState(state);
   }
 
   render() {
     const { classes } = this.props;
-    const { model } = this.state;
+    const { model, isValid } = this.state;
 
     return (
       <FormValidation onSubmit={this.handleSubmit}>
@@ -120,27 +152,45 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
         >
           <DialogTitle> Configurações do Anúncio </DialogTitle>
           <DialogContent>
-            <label className={classes.titleLabel}>Título</label>
-            <FieldText
-              value={model.title}
-              className={classes.textField}
-              name='title'
-              validation='required'
-              onChange={this.updateModel((model, v) => model.title = v)}
-              margin='dense'
-              placeholder='Título do Anúncio'
-            />
+            <Grid container className={`${classes.section} ${classes.imageUploadArea}`}>
+              <Grid item xs={12} md={4}>
+                <label className={classes.imageLabel}>Selecione a Imagem</label>
+                <div className={classes.highlightImageContainer}>
+                  <ImageUploader
+                    width={300}
+                    height={300}
+                    label='img'
+                    onChange={this.handleChange}
+                    image={model.img}
+                    error={!isValid}
+                  />
+                </div>
+              </Grid>
 
-            <label className={classes.titleLabel}>URL do Anúncio</label>
-            <FieldText
-              value={model.urm}
-              className={classes.textField}
-              name='urm'
-              validation='required'
-              onChange={this.updateModel((model, v) => model.urm = v)}
-              margin='dense'
-              placeholder='URL do Anúncio'
-            />
+              <Grid item xs={12} md={8}>
+                <label className={classes.titleLabel}>Título</label>
+                <FieldText
+                  value={model.title}
+                  className={classes.textField}
+                  name='title'
+                  validation='required'
+                  onChange={this.updateModel((model, v) => model.title = v)}
+                  margin='dense'
+                  placeholder='Título do Anúncio'
+                />
+
+                <label className={classes.titleLabel}>URL do Anúncio</label>
+                <FieldText
+                  value={model.urm}
+                  className={classes.textField}
+                  name='urm'
+                  validation='required'
+                  onChange={this.updateModel((model, v) => model.urm = v)}
+                  margin='dense'
+                  placeholder='URL do Anúncio'
+                />
+              </Grid>
+            </Grid>
           </DialogContent>
 
           <DialogActions>

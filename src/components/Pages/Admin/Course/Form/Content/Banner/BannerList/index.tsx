@@ -5,28 +5,27 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AppRouter from 'components/Router';
-import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import AddIcon from 'mdi-react/AddIcon';
 import React, { Fragment, PureComponent } from 'react';
-import { arrayMove, SortEnd } from 'react-sortable-hoc';
 import rxjsOperators from 'rxjs-operators';
 import bannerService from 'services/banner';
 
 import BannerDialog from './BannerDialog';
 import ListContainer from './ListContainer';
 
+//import ErrorMessage from 'components/Shared/ErrorMessage';
+//import { arrayMove, SortEnd } from 'react-sortable-hoc';
 interface IState {
   error?: any;
   banners?: IBanner[];
-  orderBy: string;
-  orderDirection: 'asc' | 'desc';
 }
 
 interface IProps {
   classes?: any;
   router?: AppRouter;
+  match?: any;
 }
 
 @WithStyles(theme => ({
@@ -37,19 +36,16 @@ interface IProps {
 export default class BannerList extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      orderBy: 'title',
-      orderDirection: 'asc'
-    };
+    this.state = { error: null, banners: null };
   }
   componentDidMount() {
-    this.loadData();
+    debugger;
+    const { id } = this.props.match.params;
+    this.loadData(id || 0);
   }
 
-  loadData = () => {
-    this.setState({ error: null, banners: null });
-
-    bannerService.list().pipe(
+  loadData = (courseID: number) => {
+    bannerService.getBannerlist(courseID).pipe(
       rxjsOperators.delay(1000),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
@@ -65,17 +61,17 @@ export default class BannerList extends PureComponent<IProps, IState> {
   }
 
   handleNewBanner = () => {
-    bannerService.newBanner();
+    //bannerService.newBanner();
   }
 
-  onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
+  /* onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {
     bannerService.setBanners(arrayMove(this.state.banners, oldIndex, newIndex));
-  }
+  } */
 
   render() {
     const { classes } = this.props;
-    const { banners, error, orderBy, orderDirection } = this.state;
-    console.log(orderBy, orderDirection);
+    const { banners, error } = this.state;
+
     return (
       <Fragment>
         <Card>
@@ -108,15 +104,15 @@ export default class BannerList extends PureComponent<IProps, IState> {
           }
 
           {!!error &&
-            <CardContent>
+            {/* <CardContent>
               <ErrorMessage error={error} tryAgain={this.loadData} />
-            </CardContent>
+            </CardContent> */}
           }
 
           {!!banners &&
             <ListContainer
               banners={banners}
-              onSortEnd={this.onSortEnd}
+              //onSortEnd={this.onSortEnd}
               useDragHandle
             />
           }
