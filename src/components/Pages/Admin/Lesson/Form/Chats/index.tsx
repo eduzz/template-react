@@ -122,7 +122,7 @@ export default class Chats extends PureComponent<IProps> {
                 onClick: form.updateModel(model => model.chats.haschatroll = !model.chats.haschatroll),
               }}
               options={
-                <Fragment>
+                <div>
                   <FormControlLabel
                     checked={form.model.chats.chatroll_tipo == 0}
                     control={<Radio color='secondary' onClick={form.updateModel(model => model.chats.chatroll_tipo = 0)} />}
@@ -133,7 +133,7 @@ export default class Chats extends PureComponent<IProps> {
                     control={<Radio color='secondary' onClick={form.updateModel(model => model.chats.chatroll_tipo = 1)} />}
                     label='Ao vivo'
                   />
-                </Fragment>
+                </div>
               }
             />
           </Grid>

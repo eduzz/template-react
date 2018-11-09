@@ -26,6 +26,11 @@ interface IProps {
   switch: {
     marginLeft: -16,
   },
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 })
 export default class BaseChat extends PureComponent<IProps> {
   render() {
@@ -33,8 +38,9 @@ export default class BaseChat extends PureComponent<IProps> {
 
     return (
       <Grid container>
-        <Grid item xs={12} direction='row'>
-          <Typography variant='subtitle2' color='inherit'>{title} {options}</Typography>
+        <Grid item xs={12} className={classes.header}>
+          <Typography variant='subtitle2' color='inherit'>{title}</Typography>
+          {options}
         </Grid>
         <Grid item xs={12} className={classes.content}>
           <Switch
