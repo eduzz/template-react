@@ -15,6 +15,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Options from './Options';
 import { format } from 'date-fns';
 import Chats from './Chats';
+import LessonImageUpload from './LessonImageUpload';
 
 export interface IForm {
   model: Partial<IModel>;
@@ -190,6 +191,9 @@ export default class Form extends FormComponent<IProps, IState> {
           </Grid>
           <Grid item xs={12}>
             <Chats form={form} />
+          </Grid>
+          <Grid item xs={12}>
+            <LessonImageUpload />
           </Grid>
         </Grid>
       </FormValidation>
