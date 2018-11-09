@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AppRouter from 'components/Router';
+import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import AddIcon from 'mdi-react/AddIcon';
@@ -28,6 +29,7 @@ interface IProps {
   match?: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   loader: {
     textAlign: 'center',
@@ -38,8 +40,8 @@ export default class BannerList extends PureComponent<IProps, IState> {
     super(props);
     this.state = { error: null, banners: null };
   }
+
   componentDidMount() {
-    debugger;
     const { id } = this.props.match.params;
     this.loadData(id || 0);
   }
@@ -61,7 +63,7 @@ export default class BannerList extends PureComponent<IProps, IState> {
   }
 
   handleNewBanner = () => {
-    //bannerService.newBanner();
+    bannerService.newBanner();
   }
 
   /* onSortEnd = ({ oldIndex, newIndex }: SortEnd) => {

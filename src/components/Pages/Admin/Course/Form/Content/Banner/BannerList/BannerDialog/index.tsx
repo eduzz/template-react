@@ -9,33 +9,23 @@ import { FieldText } from '@react-form-fields/material-ui';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
+import { IBanner } from 'interfaces/models/banner';
 import React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import bannerService from 'services/banner';
 
 import ImageUploader from './ImageUploader';
 
-//import { IBanner } from 'interfaces/models/banner';
-/* import rxjsOperators from 'rxjs-operators';
-import bannerService from 'services/banner'; */
-
-export interface IModel {
-  courseId: number;
-  id: number;
-  img: string;
-  sequence: number;
-  title: string;
-  urm: string;
-}
-
 export interface IForm {
-  model: IModel;
-  updateModel: (handler: (model: IModel, value: any) => void) => any;
+  model: IBanner;
+  updateModel: (handler: (model: IBanner, value: any) => void) => any;
 }
 
 interface IProps {
   classes?: any;
 }
 
-interface IState extends IStateForm<IModel> {
+interface IState extends IStateForm<IBanner> {
   open: boolean;
   bannerId: number;
   isValid: boolean;
@@ -70,13 +60,11 @@ interface IState extends IStateForm<IModel> {
   },
 })
 export default class BannerDialog extends FormComponent<IProps, IState> {
-  private initialModel: IModel = {
-    courseId: 0,
+  private initialModel: IBanner = {
     id: 0,
     img: '',
     sequence: 0,
-    title: '',
-    urm: '',
+    url: '',
   };
 
   constructor(props: IProps) {
@@ -93,7 +81,7 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    /* bannerService.getBannerInfo().pipe(
+    bannerService.getBannerInfo().pipe(
       rxjsOperators.bindComponent(this),
       rxjsOperators.logError(),
     ).subscribe((banner = this.initialModel as IBanner) => {
@@ -103,7 +91,7 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
           ...banner,
         },
       });
-    }); */
+    });
   }
 
   private handleClose = () => {
@@ -111,6 +99,8 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
       open: false,
       bannerId: null,
     });
+
+    this.resetForm();
   }
 
   getValidStatus = () => {
@@ -157,8 +147,8 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
                 <label className={classes.imageLabel}>Selecione a Imagem</label>
                 <div className={classes.highlightImageContainer}>
                   <ImageUploader
-                    width={300}
-                    height={300}
+                    width={250}
+                    height={250}
                     label='img'
                     onChange={this.handleChange}
                     image={model.img}
@@ -168,24 +158,14 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
               </Grid>
 
               <Grid item xs={12} md={8}>
-                <label className={classes.titleLabel}>Título</label>
                 <FieldText
-                  value={model.title}
+                  value={model.url}
                   className={classes.textField}
-                  name='title'
-                  validation='required'
-                  onChange={this.updateModel((model, v) => model.title = v)}
-                  margin='dense'
-                  placeholder='Título do Anúncio'
-                />
-
-                <label className={classes.titleLabel}>URL do Anúncio</label>
-                <FieldText
-                  value={model.urm}
-                  className={classes.textField}
-                  name='urm'
-                  validation='required'
-                  onChange={this.updateModel((model, v) => model.urm = v)}
+                  name='url'
+                  label='URL do Anúncio'
+                  validation='required|url|max:250'
+                  helperText='Ex.: http://google.com'
+                  onChange={this.updateModel((model, v) => model.url = v)}
                   margin='dense'
                   placeholder='URL do Anúncio'
                 />

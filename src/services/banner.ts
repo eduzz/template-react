@@ -1,10 +1,12 @@
-//import { IBanner } from 'interfaces/models/banner';
+import { IBanner } from 'interfaces/models/banner';
+import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
 import apiService from './api';
 
-//import * as rxjs from 'rxjs';
 class BannerService {
+  private bannerInfo$: rxjs.Subject<IBanner> = new rxjs.Subject();
+
   /* private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
 
   public list(): any {
@@ -28,22 +30,23 @@ class BannerService {
   } */
 
   public getBannerlist(courseID: number): any {
-    return apiService.get(`/producer/course/${courseID}/banners/`).pipe(
+    return apiService.get(`/producer/courses/${courseID}/banners`).pipe(
       rxjsOperators.map(response => response.data),
     );
   }
 
-  /* public newBanner(): void {
+  public newBanner(): void {
     this.bannerInfo$.next();
-  }
-
-  public setBanners(banners: IBanner[]): void {
-    this.banners$.next(banners);
   }
 
   public getBannerInfo(): rxjs.Observable<IBanner> {
     return this.bannerInfo$.asObservable();
-  } */
+  }
+
+  /*
+  public setBanners(banners: IBanner[]): void {
+    this.banners$.next(banners);
+  }*/
 }
 
 const bannerService = new BannerService();

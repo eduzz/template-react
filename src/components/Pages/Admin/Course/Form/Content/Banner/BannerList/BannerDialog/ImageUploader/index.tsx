@@ -1,24 +1,22 @@
-import React, { Fragment } from 'react';
-import { WithStyles } from 'decorators/withStyles';
 import ImageSelector from 'components/Shared/ImageSelector';
+import { WithStyles } from 'decorators/withStyles';
 import CloudUploadIcon from 'mdi-react/CloudUploadIcon';
 import DeleteIcon from 'mdi-react/DeleteIcon';
-// import Button from '@material-ui/core/Button';
-import { CDN_URL } from 'settings';
+import React, { Fragment } from 'react';
 
+// import Button from '@material-ui/core/Button';
 interface IProps {
   classes?: any;
-  onChange?: any;
+  onChange: any;
   label?: string;
   width: number;
   height: number;
-  image?: any;
+  image: string;
   disabled?: boolean;
   error?: boolean;
 }
 
 interface IState {
-  image: string;
   isSelectorOpen: boolean;
 }
 
@@ -99,34 +97,18 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.state = {
-      image: '',
-      isSelectorOpen: false,
-    };
-  }
-
-  static getDerivedStateFromProps(props: IProps, state: IState) {
-    if (props.image !== state.image)
-      return {
-        image: props.image,
-      };
-
-    return null;
+    this.state = { isSelectorOpen: false };
   }
 
   handleSelectorComplete = (image: string) => {
-    this.setState(state => ({
-      isSelectorOpen: false,
-      image: image || state.image,
-    }));
+    this.setState({ isSelectorOpen: false });
 
-    image && this.props.onChange && this.props.onChange({ [this.props.label]: image });
+    if (!image) return;
+    this.props.onChange({ [this.props.label]: image });
   }
 
   handleOpenSelector = () => {
-    this.setState({
-      isSelectorOpen: true,
-    });
+    this.setState({ isSelectorOpen: true });
   }
 
   handleClick = () => {
@@ -137,13 +119,12 @@ export default class ImageUploader extends React.PureComponent<IProps, IState> {
 
   onRemoveImage = (e: any) => {
     e.stopPropagation();
-
-    this.props.onChange && this.props.onChange({ [this.props.label]: null });
+    this.props.onChange({ [this.props.label]: null });
   }
 
   render() {
-    const { classes, width, height, disabled, error } = this.props;
-    const { image, isSelectorOpen } = this.state;
+    const { classes, width, height, disabled, error, image } = this.props;
+    const { isSelectorOpen } = this.state;
 
     return (
       <Fragment>

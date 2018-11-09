@@ -1,6 +1,5 @@
 import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
@@ -8,6 +7,7 @@ import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent } from 'react';
 import { SortableElement } from 'react-sortable-hoc';
+import { CDN_URL } from 'settings';
 
 import DragHandle from '../../DragHandle';
 
@@ -20,6 +20,10 @@ interface IProps {
 @WithStyles({
   root: {
     borderTop: 'solid 1px #d5d5d5',
+  },
+  imgThumb: {
+    maxWidth: 100,
+    maxHeight: 100,
   }
 })
 class BannerItem extends PureComponent<IProps> {
@@ -61,7 +65,7 @@ class BannerItem extends PureComponent<IProps> {
           </Grid>
 
           <Grid item xs={true}>
-            <Typography variant='subtitle1'>{banner.title}</Typography>
+            <img className={classes.imgThumb} src={CDN_URL + banner.img} />
           </Grid>
 
           <Grid item xs={false}>
