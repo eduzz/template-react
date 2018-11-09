@@ -2,9 +2,11 @@ import React, { PureComponent, Fragment } from 'react';
 import ImageUploader from 'components/Pages/Admin/Upsell/Form/ImageUploader';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
+import { IForm } from '..';
 
 interface IProps {
   classes?: any;
+  form: IForm;
 }
 
 @WithStyles({
@@ -14,7 +16,7 @@ interface IProps {
 })
 export default class LessonImageUpload extends PureComponent<IProps> {
   render() {
-    const { classes } = this.props;
+    const { classes, form } = this.props;
 
     return (
       <Fragment>
@@ -22,6 +24,10 @@ export default class LessonImageUpload extends PureComponent<IProps> {
         <ImageUploader
           width={160}
           height={120}
+          classes={classes.ImageUploader}
+          image={form.model.image}
+          label='image'
+          onChange={form.updateModel((model, v) => model.image = v.image)}
         />
       </Fragment>
     );

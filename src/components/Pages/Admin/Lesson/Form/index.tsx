@@ -193,7 +193,7 @@ export default class Form extends FormComponent<IProps, IState> {
             <Chats form={form} />
           </Grid>
           <Grid item xs={12}>
-            <LessonImageUpload />
+            <LessonImageUpload form={form} />
           </Grid>
         </Grid>
       </FormValidation>
