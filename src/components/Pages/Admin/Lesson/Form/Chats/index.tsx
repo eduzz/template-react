@@ -134,11 +134,13 @@ export default class Chats extends PureComponent<IProps> {
                       checked={form.model.chats.chatroll_tipo == 0}
                       control={<Radio color='secondary' onClick={form.updateModel(model => model.chats.chatroll_tipo = 0)} />}
                       label='Padrão'
+                      disabled={!form.model.chats.haschatroll}
                     />
                     <FormControlLabel
                       checked={form.model.chats.chatroll_tipo == 1}
                       control={<Radio color='secondary' onClick={form.updateModel(model => model.chats.chatroll_tipo = 1)} />}
                       label='Ao vivo'
+                      disabled={!form.model.chats.haschatroll}
                     />
                   </div>
                 }
