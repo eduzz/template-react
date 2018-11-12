@@ -10,6 +10,7 @@ import Advanced from './Advanced';
 import { IForm } from '..';
 import ModulesLessons from './ModulesLessons';
 import Personalizations from './Personalizations';
+import Email from './Email';
 
 function TabContainer({ children, dir }: any) {
   return (
@@ -63,6 +64,7 @@ export default class Content extends React.Component<IProps> {
             <Tab label='Configurações Avançadas' />
             <Tab label='Modulos e Aulas' />
             <Tab label='Personalizações' />
+            <Tab label='Opções de Email' />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -81,6 +83,9 @@ export default class Content extends React.Component<IProps> {
           </TabContainer>
           <TabContainer dir={theme.direction}>
             <Personalizations form={form} />
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            <Email form={form} />
           </TabContainer>
         </SwipeableViews>
       </div>
