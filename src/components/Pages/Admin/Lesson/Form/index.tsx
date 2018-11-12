@@ -16,6 +16,9 @@ import Options from './Options';
 import { format } from 'date-fns';
 import Chats from './Chats';
 import LessonImageUpload from './LessonImageUpload';
+import lessonService from 'services/lesson';
+import rxjsOperators from 'rxjs-operators';
+import Toast from 'components/Shared/Toast';
 
 export interface IForm {
   model: Partial<IModel>;
@@ -137,6 +140,30 @@ export default class Form extends FormComponent<IProps, IState> {
         ...this.initialState,
       },
     };
+  }
+
+  componentDidMount() {
+    const { id } = this.props.match.params;
+
+    if (id)
+      this.loadData();
+  }
+
+  loadData = () => {
+    const { id } = this.props.match.params;
+
+    lessonService.getLesson(id).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.loader(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((lesson: any) => {
+      this.setState({
+        model: {
+          ...lesson,
+          release_at: format(new Date(lesson.release_at), 'yyyy-MM-dd'),
+        },
+      });
+    }, (error: any) => Toast.error(error));
   }
 
   handleSubmit = (e: any) => {
