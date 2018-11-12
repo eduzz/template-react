@@ -7,6 +7,7 @@ import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent } from 'react';
 import { SortableElement } from 'react-sortable-hoc';
+import bannerService from 'services/banner';
 import { CDN_URL } from 'settings';
 
 import DragHandle from '../../DragHandle';
@@ -30,12 +31,16 @@ class BannerItem extends PureComponent<IProps> {
   actions = [{
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => console.log(1),
+    handler: () => this.handleEdit(),
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
     handler: () => this.handleDelete(),
   }];
+
+  handleEdit = () => {
+    bannerService.editBanner(this.props.banner);
+  }
 
   handleDelete = async () => {
     /* const { banner, onDelete } = this.props;

@@ -40,7 +40,15 @@ class BannerService {
   }
 
   public save(courseID: number, banner: IBanner): any {
-    return apiService.post(`/producer/courses/${courseID}/banners`, banner);
+
+    if (!!banner.id)
+      return apiService.post(`/producer/courses/${courseID}/banners`, banner);
+
+    return apiService.put(`/producer/courses/${courseID}/banners/${banner.id}`, banner);
+  }
+
+  public editBanner(banner: IBanner): void {
+    this.bannerInfo$.next(banner);
   }
 
   /* public setBanners(banners: IBanner[]): void {
