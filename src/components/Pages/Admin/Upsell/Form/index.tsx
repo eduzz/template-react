@@ -46,6 +46,7 @@ export default class Form extends FormComponent<IProps, IState> {
         title: '',
         highlight_image: '',
         small_image: '',
+        externalUrl: '',
         highlight: false,
         offer_shelf: false,
         published: false,
