@@ -84,7 +84,7 @@ export default class Type extends PureComponent<IProps, IState> {
 
     return (
       <div>
-        <Typography variant='subtitle1'>Qual produto deseja vincular?</Typography>
+        <Typography variant='subtitle1'>Qual produto vamos vender?</Typography>
 
         <Grid container alignItems='center' spacing={16}>
           <Grid item xs={false}>

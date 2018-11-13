@@ -1,9 +1,7 @@
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
@@ -12,16 +10,16 @@ import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { History } from 'history';
 import { IUpsell } from 'interfaces/models/upsell';
-import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
-
 import Actions from './Actions';
 import ImageUploader from './ImageUploader';
 import Info from './Info';
 import Type from './Type';
 import Config from './UpsellConfig';
+import { FieldSwitch } from '@react-form-fields/material-ui';
+import Save from './Save';
 
 interface IProps {
   classes?: any;
@@ -69,6 +67,8 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   handleSubmit = (isValid: boolean) => {
+    console.log(this.state.model);
+
     if (!isValid) return;
 
     upsellService.save(this.state.model as IUpsell).pipe(
@@ -95,26 +95,18 @@ export default class Form extends FormComponent<IProps, IState> {
                 {`${model.id ? 'Editar' : 'Novo'} Upsell`}
               </Typography>
             </Grid>
-
             <Grid item xs={false}>
-              <Button type='submit' color='secondary' variant='contained'>
-                <ContentSaveIcon />
-                <Hidden implementation='css' xsDown>Salvar</Hidden>
-              </Button>
+              <FieldSwitch
+                label='Publicado'
+                checked={model.published}
+                onChange={this.updateModel((m, v) => m.published = v)}
+                helperText='Status da oferta'
+              />
             </Grid>
           </Grid>
         </Toolbar>
 
         <Card>
-
-          <CardContent>
-            <Actions
-              model={model}
-              onChange={this.updateModel((m, v) => Object.assign(m, v))}
-            />
-          </CardContent>
-
-          <Divider />
 
           <CardContent>
             <Type
@@ -126,6 +118,47 @@ export default class Form extends FormComponent<IProps, IState> {
           <Divider />
 
           <CardContent>
+            <Actions
+              model={model}
+              onChange={this.updateModel((m, v) => Object.assign(m, v))}
+            />
+          </CardContent>
+
+          <Divider />
+
+          <CardContent>
+            <Typography variant='subtitle1'>Dados da oferta</Typography>
+
+            <Grid container spacing={16}>
+              <Grid item xs={3}>
+                <Typography variant='caption'>
+                  Imagem
+                  <small>&nbsp;tamanho: 250x250</small>
+                </Typography>
+
+                <ImageUploader
+                  width={250}
+                  height={250}
+                  onChange={this.updateModel((m, v) => m.small_image = v)}
+                  value={model.small_image}
+                />
+              </Grid>
+              <Grid item xs={12} sm={9}>
+                <Typography variant='caption'>
+                  Imagem de Destaque
+                  <small>&nbsp;tamanho: 1840x460</small>
+                </Typography>
+
+                <ImageUploader
+                  width={1840}
+                  height={460}
+                  onChange={this.updateModel((m, v) => m.highlight_image = v)}
+                  value={model.highlight_image}
+                  disabled={!model.highlight}
+                />
+              </Grid>
+            </Grid>
+
             <Info
               model={model}
               onChange={this.updateModel((m, v) => Object.assign(m, v))}
@@ -141,40 +174,9 @@ export default class Form extends FormComponent<IProps, IState> {
             />
           </CardContent>
 
-          <Divider />
-
           <CardContent>
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Typography variant='subtitle1'>
-                  Imagem
-                  <small>&nbsp;tamanho: 250x250</small>
-                </Typography>
-
-                <ImageUploader
-                  width={250}
-                  height={250}
-                  onChange={this.updateModel((m, v) => m.small_image = v)}
-                  value={model.small_image}
-                />
-              </Grid>
-              <Grid item xs={12} sm={9}>
-                <Typography variant='subtitle1'>
-                  Imagem de Destaque
-                  <small>&nbsp;tamanho: 1840x460</small>
-                </Typography>
-
-                <ImageUploader
-                  width={1840}
-                  height={460}
-                  onChange={this.updateModel((m, v) => m.highlight_image = v)}
-                  value={model.highlight_image}
-                  disabled={!model.highlight}
-                />
-              </Grid>
-            </Grid>
+            <Save updateModel={this.updateModel} />
           </CardContent>
-
         </Card>
 
       </FormValidation>
