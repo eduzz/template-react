@@ -1,13 +1,14 @@
-import React, { Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
+import { IUpsell } from 'interfaces/models/upsell';
+import React, { Fragment } from 'react';
+
 import CourseSelect from './CourseSelect';
 import TreeView from './TreeView';
-import Paper from '@material-ui/core/Paper';
 
 interface IProps {
   classes?: any;
-  onChange?: any;
-  courses?: any;
+  courses: IUpsell['courses'];
+  onChange: (courses: IUpsell['courses']) => void;
 }
 
 interface IState {
@@ -15,20 +16,20 @@ interface IState {
 }
 
 @WithStyles(theme => ({
-  treeViewLabel: {
-    fontSize: 18,
-  },
-  treeViewContainer: {
-    padding: 16,
-    marginTop: 16,
-  },
-  treeViewHeader: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
+  treeView: {
+    border: '1px solid ' + theme.palette.divider,
+    marginTop: 20,
+    borderRadius: theme.shape.borderRadius,
+    '& nav': {
+      padding: 0
+    },
+    '& nav hr:last-child': {
+      display: 'none'
+    }
+  }
 }))
 export default class UpsellConfig extends React.PureComponent<IProps, IState> {
-  private treeView: any;
+  private treeView: React.RefObject<TreeView>;
 
   constructor(props: IProps) {
     super(props);
@@ -36,7 +37,7 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
     this.treeView = React.createRef();
   }
 
-  handleAdd = (course: any) => {
+  handleAdd = (course: IUpsell['courses'][0]) => {
     this.treeView.current.pushCourse(course);
   }
 
@@ -45,21 +46,15 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
 
     return (
       <Fragment>
-        <div className={classes.treeViewHeader}>
-          <label className={classes.treeViewLabel}>
-            Onde você quer aplicar?
-          </label>
-          <CourseSelect
-            onAdd={this.handleAdd}
-          />
-        </div>
-        <Paper className={classes.treeViewContainer}>
+        <CourseSelect onAdd={this.handleAdd} />
+
+        <div className={classes.treeView}>
           <TreeView
             ref={this.treeView}
             onChange={onChange}
             courses={courses}
           />
-        </Paper>
+        </div>
       </Fragment>
     );
   }

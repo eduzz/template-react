@@ -41,7 +41,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/upsell',
-      sideDrawer: { display: 'Upsell', order: 2, icon: BullhornIcon },
+      sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
       roles: [],
       component: UpsellIndexPage,
     },

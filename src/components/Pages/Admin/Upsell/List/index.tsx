@@ -11,7 +11,7 @@ import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithStyles } from 'decorators/withStyles';
-import { IUpsell } from 'interfaces/models/upsell';
+import { IUpsellList } from 'interfaces/models/upsell';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
 import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
 import PlusIcon from 'mdi-react/PlusIcon';
@@ -24,7 +24,7 @@ import UpsellItem from './ListItem';
 
 interface IState {
   error?: any;
-  upsells?: IUpsell[];
+  upsells?: IUpsellList[];
   orderBy: string;
   orderDirection: 'asc' | 'desc';
 }
