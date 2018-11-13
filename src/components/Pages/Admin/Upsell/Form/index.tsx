@@ -41,6 +41,7 @@ export default class Form extends FormComponent<IProps, IState> {
         type: null,
         content: '',
         description: '',
+        label_text: 'Saiba mais',
         title: '',
         highlight_image: '',
         small_image: '',
@@ -81,6 +82,10 @@ export default class Form extends FormComponent<IProps, IState> {
     }, (error: any) => {
       Toast.error(error);
     });
+  }
+
+  getFormStatus = () => {
+    return this.isFormValid();
   }
 
   render() {
@@ -175,7 +180,10 @@ export default class Form extends FormComponent<IProps, IState> {
           </CardContent>
 
           <CardContent>
-            <Save updateModel={this.updateModel} />
+            <Save
+              label={model.label_text}
+              updateModel={this.updateModel}
+            />
           </CardContent>
         </Card>
 
