@@ -42,7 +42,7 @@ export default class Type extends PureComponent<IProps, IState> {
 
   handleChangeType = (type: number) => this.handleChange({ type, content: null });
   handleChangeContent = (content: any) => this.handleChange({ content: (content || '').toString() });
-  handleChangeExternalUrl = (url: string) => this.handleChange({ external_url: (url || '').toString() });
+  handleChangeExternalUrl = (url: string | null) => this.handleChange({ external_url: (url || null).toString() });
 
   componentDidMount() {
     authService.getUser().subscribe(model => {
@@ -130,6 +130,10 @@ export default class Type extends PureComponent<IProps, IState> {
                   label='Abrir uma URL Externa'
                 />
               </Grid>
+
+              {!this.state.urlIsChecked || !model.external_url &&
+                this.handleChangeExternalUrl(null)
+              }
 
               {!!this.state.urlIsChecked || !!model.external_url &&
                 <Grid item sm={true}>
