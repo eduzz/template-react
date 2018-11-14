@@ -123,7 +123,7 @@ export default class Type extends PureComponent<IProps, IState> {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.urlIsChecked}
+                      checked={this.state.urlIsChecked || !!model.external_url}
                       onClick={this.handleCheck}
                     />
                   }
