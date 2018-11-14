@@ -15,7 +15,7 @@ import upsellService from 'services/upsell';
 interface IProps {
   match?: any;
 
-  model: { type?: number; content?: string; externalUrl?: string; };
+  model: { type?: number; content?: string; external_url?: string; };
   onChange: (value: IProps['model']) => void;
 }
 
@@ -42,7 +42,7 @@ export default class Type extends PureComponent<IProps, IState> {
 
   handleChangeType = (type: number) => this.handleChange({ type, content: null });
   handleChangeContent = (content: any) => this.handleChange({ content: (content || '').toString() });
-  handleChangeExternalUrl = (url: string) => this.handleChange({ externalUrl: (url || '').toString() });
+  handleChangeExternalUrl = (url: string) => this.handleChange({ external_url: (url || '').toString() });
 
   componentDidMount() {
     authService.getUser().subscribe(model => {
@@ -117,13 +117,13 @@ export default class Type extends PureComponent<IProps, IState> {
             />
           </Grid>
 
-          {model.type === 1 && this.state.userId === 60385 &&
+          {model.type === 1 && (this.state.userId === 60385 || this.state.userId === 167490) &&
             <Fragment>
               <Grid item>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={this.state.urlIsChecked}
+                      checked={this.state.urlIsChecked || !!model.external_url}
                       onClick={this.handleCheck}
                     />
                   }
@@ -131,11 +131,11 @@ export default class Type extends PureComponent<IProps, IState> {
                 />
               </Grid>
 
-              {!!this.state.urlIsChecked &&
+              {(!!this.state.urlIsChecked || !!model.external_url) &&
                 <Grid item sm={true}>
                   <FormControl fullWidth>
                     <FieldText
-                      value={model.externalUrl}
+                      value={model.external_url}
                       name='url'
                       variant='outlined'
                       onChange={this.handleChangeExternalUrl}
