@@ -1,14 +1,18 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
+import AccountCircleIcon from 'mdi-react/AccountCircleIcon';
 import BullhornIcon from 'mdi-react/BullhornIcon';
 import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
-
+import AuthorIndexPage from './Author';
 import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
 import UpsellIndexPage from './Upsell';
+import CourseIndexPage from './Course';
+import LessonIndexPage from './Lesson';
+import CategoriesIndexPage from './Categories';
 
 interface IState {
   routes: IAppRoute[];
@@ -24,6 +28,12 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       component: DashboardIndexPage
     },
     {
+      path: '/autores',
+      sideDrawer: { display: 'Autores', order: 1, icon: AccountCircleIcon },
+      roles: [],
+      component: AuthorIndexPage
+    },
+    {
       path: '/certificados',
       sideDrawer: { display: 'Certificados', order: 1, icon: CertificateIcon },
       roles: [],
@@ -34,7 +44,25 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
       roles: [],
       component: UpsellIndexPage,
-    }
+    },
+    {
+      path: '/curso',
+      // sideDrawer: { display: 'Curso', order: 2, icon: BullhornIcon },
+      roles: [],
+      component: CourseIndexPage,
+    },
+    {
+      path: '/modulos',
+      // sideDrawer: { display: 'Aula', order: 3, icon: AnimationPlayIcon },
+      roles: [],
+      component: LessonIndexPage,
+    },
+    {
+      path: '/categorias',
+      // sideDrawer: { display: 'Categorias', order: 4, icon: TagTextOutlineIcon },
+      roles: [],
+      component: CategoriesIndexPage,
+    },
   ];
 
   constructor(props: {}) {

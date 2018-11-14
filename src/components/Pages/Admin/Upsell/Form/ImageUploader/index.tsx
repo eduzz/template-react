@@ -12,7 +12,7 @@ interface IProps {
   width: number;
   height: number;
   disabled?: boolean;
-
+  image?: string;
   value: string;
   onChange: (image: string) => void;
 }

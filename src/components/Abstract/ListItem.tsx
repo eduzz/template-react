@@ -17,6 +17,10 @@ export default abstract class ListItemComponent<P = {}, S extends IStateListItem
     } as Readonly<S>;
   }
 
+  setError = (error: any) => {
+    this.setState({ error, loading: false });
+  }
+
   handleDismisError = () => {
     this.setState({ error: null });
   }

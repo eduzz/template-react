@@ -1,10 +1,10 @@
 import Grid from '@material-ui/core/Grid';
 import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
-import React from 'react';
+import React, { Fragment } from 'react';
+import Typography from '@material-ui/core/Typography';
 
 interface IProps {
   model: {
-    published?: boolean;
     highlight?: boolean;
     offer_shelf?: boolean;
   };
@@ -12,7 +12,6 @@ interface IProps {
 }
 
 interface IState {
-  published: boolean;
   highlight: boolean;
   offer_shelf: boolean;
 }
@@ -23,7 +22,6 @@ export default class Actions extends React.PureComponent<IProps, IState> {
     this.props.onChange({ ...this.props.model, ...model });
   }
 
-  handleChangePublished = (published: boolean) => this.handleChange({ published });
   handleChangeHighlight = (highlight: boolean) => this.handleChange({ highlight });
   handleChangeOfferShelf = (offer_shelf: boolean) => this.handleChange({ offer_shelf });
 
@@ -31,35 +29,31 @@ export default class Actions extends React.PureComponent<IProps, IState> {
     const { model } = this.props;
 
     return (
-      <Grid container spacing={16} alignItems='center' justify='space-between'>
+      <Fragment>
+        <Typography variant='subtitle1'>Onde vamos exibir a oferta?</Typography>
 
-        <Grid item>
-          <FieldSwitch
-            label='Destaque'
-            helperText='Anuncio na parte superior da tela'
-            checked={model.highlight}
-            onChange={this.handleChangeHighlight}
-          />
+        <Grid container spacing={16} alignItems='center'>
+
+          <Grid item>
+            <FieldSwitch
+              label='Destaque'
+              helperText='Anuncio na parte superior da tela'
+              checked={model.highlight}
+              onChange={this.handleChangeHighlight}
+            />
+          </Grid>
+
+          <Grid item>
+            <FieldSwitch
+              label='Mostrar na Vitrine'
+              helperText='Seção Conheça Também na vitrine'
+              checked={model.offer_shelf}
+              onChange={this.handleChangeOfferShelf}
+            />
+          </Grid>
+
         </Grid>
-
-        <Grid item>
-          <FieldSwitch
-            label='Mostrar na Vitrine'
-            helperText='Seção Conheça Também na vitrine'
-            checked={model.offer_shelf}
-            onChange={this.handleChangeOfferShelf}
-          />
-        </Grid>
-
-        <Grid item>
-          <FieldSwitch
-            label='Publicar'
-            checked={model.published}
-            onChange={this.handleChangePublished}
-          />
-        </Grid>
-
-      </Grid>
+      </Fragment>
     );
   }
 }

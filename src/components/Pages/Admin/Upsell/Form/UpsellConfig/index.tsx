@@ -4,6 +4,7 @@ import React, { Fragment } from 'react';
 
 import CourseSelect from './CourseSelect';
 import TreeView from './TreeView';
+import Typography from '@material-ui/core/Typography';
 
 interface IProps {
   classes?: any;
@@ -25,8 +26,11 @@ interface IState {
     },
     '& nav hr:last-child': {
       display: 'none'
-    }
-  }
+    },
+  },
+  title: {
+    marginBottom: 8,
+  },
 }))
 export default class UpsellConfig extends React.PureComponent<IProps, IState> {
   private treeView: React.RefObject<TreeView>;
@@ -46,6 +50,8 @@ export default class UpsellConfig extends React.PureComponent<IProps, IState> {
 
     return (
       <Fragment>
+        <Typography className={classes.title} variant='subtitle1'>Em quais cursos deseja exibir a promoção</Typography>
+
         <CourseSelect onAdd={this.handleAdd} />
 
         <div className={classes.treeView}>

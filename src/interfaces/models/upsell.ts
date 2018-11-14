@@ -22,6 +22,7 @@ export interface IUpsell {
   content: string;
   description: string;
   title: string;
+  label_text: string;
   highlight_image?: any;
   small_image: string;
   highlight: boolean;
@@ -29,6 +30,7 @@ export interface IUpsell {
   published: boolean;
   user_id: number;
   created_at: string;
+  externalUrl: string;
   courses: {
     id: number;
     title: string;

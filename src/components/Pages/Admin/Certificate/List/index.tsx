@@ -33,13 +33,11 @@ interface IProps {
   router?: AppRouter;
 }
 
-@WithStyles(theme => ({
-  title: {
-  },
+@WithStyles({
   loader: {
     textAlign: 'center'
   }
-}))
+})
 class CertificateListPage extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -98,9 +96,7 @@ class CertificateListPage extends PureComponent<IProps, IState> {
           <CardContent>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography className={classes.title} variant='subtitle1'>
-                  Cursos que foram atribuídos ao certificado
-                </Typography>
+                <Typography variant='subtitle1'>Cursos que foram atribuídos ao certificado</Typography>
               </Grid>
 
               <Grid item xs={false}>

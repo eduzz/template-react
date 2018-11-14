@@ -17,8 +17,7 @@ import { Fragment, PureComponent } from 'react';
 
 export interface IStateList<T = any> extends IPaginationParams {
   items: T[];
-  term?: string;
-  allItems: T[];
+  search?: string;
   total_rows: number;
   total_pages: number;
   error?: any;
@@ -28,29 +27,29 @@ export interface IStateList<T = any> extends IPaginationParams {
 export abstract class ListComponent<P = {}, S extends IStateList = IStateList<any>> extends PureComponent<P, S> {
   scrollTop: Function;
   timeoutTerm: any;
-  isPaginatedData: boolean = false;
 
   abstract loadData: (params?: Partial<IPaginationParams>) => void;
 
-  constructor(props: P, orderBy: string = null, orderDirection: string = 'asc') {
+  constructor(props: P, orderby: string = null, order: string = 'asc') {
     super(props);
     this.state = {
-      page: 0,
+      page: 1,
       size: 10,
+      order,
+      orderby,
       items: [],
-      allItems: [],
       total_rows: 0,
-      loading: true
+      loading: false
     } as Readonly<S>;
   }
 
   get sortableProps() {
-    const { loading } = this.state;
+    const { loading, order, orderby } = this.state;
 
     return {
       loading,
-      currentColumn: '',
-      currentDirection: 'asc',
+      currentColumn: orderby,
+      currentDirection: order,
       onChange: this.handleSort
     };
   }
@@ -60,22 +59,20 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
-    const { page, size } = this.state;
-    return { page, size, ...params };
+    const { page, size, order, orderby, search } = this.state;
+    return { page, size, order, orderby, search, ...params };
   }
 
   setError = (error: any) => {
-    this.setState({ error, items: [], allItems: [], loading: false });
+    this.setState({ error, items: [], loading: false });
   }
 
-  setPaginatedData = (data: IPaginationResponse<S['items'][0]>) => {
-    const { results, ...others } = data;
-    this.isPaginatedData = true;
+  setPaginatedData = (response: IPaginationResponse<S['items'][0]>) => {
+    const { data, paginator } = response;
 
     this.setState({
-      ...others,
-      items: results,
-      allItems: results,
+      ...paginator,
+      items: data,
       loading: false
     });
   }
@@ -90,23 +87,23 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   handleSort = (column: string) => {
-    // const { orderBy, orderDirection, size } = this.state;
+    const { orderby, order, size } = this.state;
 
-    // this.setState({
-    //   orderBy: column,
-    //   orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
-    // }, () => this.handlePaginate(0, size));
+    this.setState({
+      orderby: column,
+      order: column === orderby && order === 'asc' ? 'desc' : 'asc'
+    }, () => this.handlePaginate(1, size));
   }
 
-  handleChangeTerm = (term: string) => {
-    // if (this.state.loading) return;
+  handleChangeTerm = (search: string) => {
+    if (this.state.loading) return;
 
-    // this.setState({ term });
-    // clearTimeout(this.timeoutTerm);
+    this.setState({ search });
+    clearTimeout(this.timeoutTerm);
 
-    // if (term && term.length < 3) return;
+    if (search && search.length < 5) return;
 
-    // this.timeoutTerm = setTimeout(() => this.loadData(), 500);
+    this.timeoutTerm = setTimeout(() => this.loadData(), 1000);
   }
 
   handleTryAgain = () => {
@@ -114,19 +111,19 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   labelDisplayedRows = ({ from, to, count }: LabelDisplayedRowsArgs) => `${from}-${to} de ${count}`;
-  onChangePage = (event: any, page: number) => this.handlePaginate(page);
+  onChangePage = (event: any, page: number) => this.handlePaginate(page + 1);
   onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.page, Number(event.target.value));
 
   renderSearch = (props: Partial<FieldText['props']> = {}) => {
-    const { term } = this.state;
+    const { search } = this.state;
 
     return (
       <FieldText
         label='Pesquisar'
-        value={term}
+        value={search}
         onChange={this.handleChangeTerm}
         margin='none'
-        placeholder='Digite ao menos 3 caracteres...'
+        placeholder='Digite ao menos 5 caracteres...'
         InputLabelProps={{
           shrink: true
         }}
@@ -200,7 +197,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
           count={total_rows}
           rowsPerPage={size}
           rowsPerPageOptions={[10, 25, 50]}
-          page={page}
+          page={page - 1}
           onChangePage={this.onChangePage}
           onChangeRowsPerPage={this.onChangeRowsPerPage}
           {...props}
