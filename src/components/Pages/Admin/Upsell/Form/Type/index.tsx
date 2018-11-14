@@ -53,16 +53,18 @@ export default class Type extends PureComponent<IProps, IState> {
   }
 
   componentDidUpdate(prevProps: IProps) {
-    if (prevProps.model.type === this.state.currentType) return;
+    const { model } = this.props;
 
-    if (!prevProps.model.type) {
+    if (model.type === this.state.currentType) return;
+
+    if (!model.type) {
       (this.state.products || []).length && this.setState({ products: [] });
       return;
     }
 
-    this.setState({ currentType: prevProps.model.type, products: null });
+    this.setState({ currentType: model.type, products: null });
 
-    upsellService.getProducts(prevProps.model.type).pipe(
+    upsellService.getProducts(model.type).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
     ).subscribe(products => {
@@ -113,7 +115,7 @@ export default class Type extends PureComponent<IProps, IState> {
               onChange={this.handleChangeContent}
               options={products}
               loading={!products}
-              disabled={!model.type}
+              disabled={!model.type || !products}
             />
           </Grid>
 
