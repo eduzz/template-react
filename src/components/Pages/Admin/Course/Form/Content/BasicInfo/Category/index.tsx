@@ -50,7 +50,7 @@ export default class Category extends React.PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      categories: [],
+      categories: null,
       error: null,
     };
   }
@@ -83,14 +83,14 @@ export default class Category extends React.PureComponent<IProps, IState> {
             <div className={classes.selectContainer}>
               <Select
                 className={classes.select}
-                value={categories.length ? form.model.category.id : ''}
+                value={categories && categories.length ? form.model.category.id : ''}
                 onChange={form.updateModel((model, v) => model.category = { ...model.category, id: v })}
                 validation='required'
               >
                 <MenuItem value=''>
                   Selecione uma categoria
                 </MenuItem>
-                {categories.map((category, index) =>
+                {categories && categories.map((category, index) =>
                   <MenuItem
                     key={index}
                     value={category.id}

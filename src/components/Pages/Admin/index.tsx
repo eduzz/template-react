@@ -6,12 +6,12 @@ import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import authService from 'services/auth';
-
 import AuthorIndexPage from './Author';
 import CertificateIndexPage from './Certificate';
 import DashboardIndexPage from './Dashboard';
 import UpsellIndexPage from './Upsell';
 import CourseIndexPage from './Course';
+import LessonIndexPage from './Lesson';
 import CategoriesIndexPage from './Categories';
 
 interface IState {
@@ -47,13 +47,19 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/curso',
-      // sideDrawer: { display: 'Upsell', order: 2, icon: BullhornIcon },
+      // sideDrawer: { display: 'Curso', order: 2, icon: BullhornIcon },
       roles: [],
       component: CourseIndexPage,
     },
     {
+      path: '/modulos',
+      // sideDrawer: { display: 'Aula', order: 3, icon: AnimationPlayIcon },
+      roles: [],
+      component: LessonIndexPage,
+    },
+    {
       path: '/categorias',
-      // sideDrawer: { display: 'Categorias', order: 3, icon: TagTextOutlineIcon },
+      // sideDrawer: { display: 'Categorias', order: 4, icon: TagTextOutlineIcon },
       roles: [],
       component: CategoriesIndexPage,
     },

@@ -33,7 +33,7 @@ export default class Info extends React.PureComponent<IProps> {
       <Fragment>
         <label className={classes.titleLabel}>
           Título
-          </label>
+        </label>
         <div className={classes.content}>
           <FieldText
             value={form.model.title}

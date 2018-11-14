@@ -18,9 +18,12 @@
     }
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^11.1.1",
+    "@ckeditor/ckeditor5-react": "^1.0.0",
     "@material-ui/core": "3.2.0",
     "@material-ui/icons": "3.0.1",
     "@react-form-fields/material-ui": "1.9.2",
+    "@types/react-sortable-hoc": "^0.6.4",
     "axios": "0.18.0",
     "date-fns": "2.0.0-alpha.21",
     "lodash": "4.17.11",
@@ -34,6 +37,7 @@
     "react-rnd": "9.0.2",
     "react-router-dom": "4.3.1",
     "react-scripts-ts": "3.1.0",
+    "react-sortable-hoc": "^0.8.3",
     "react-swipeable-views": "0.13.0",
     "react-transforming": "1.0.3",
     "recharts": "1.3.2",

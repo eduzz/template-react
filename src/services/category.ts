@@ -1,34 +1,31 @@
+import * as Rx from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
 import apiService from './api';
 import { BehaviorSubject } from 'rxjs';
-import tokenService from './token';
+import { ICategory } from 'interfaces/models/category';
 
 class CategoryService {
-
-  private categories$ = new BehaviorSubject([]);
-
-  constructor() {
-    tokenService.getTokens().pipe(
-      rxjsOperators.filter(token => !!token),
-    ).subscribe(() => {
-      this.loadCategories();
-    });
-  }
+  private categories$ = new BehaviorSubject(null);
 
   public loadCategories(): void {
     apiService.get('producer/categories').pipe(
       rxjsOperators.map(response => response.data),
     ).subscribe(categories => {
       this.categories$.next(categories);
+    }, error => {
+      this.categories$.error(error);
     });
   }
 
-  public getCategories(): any {
+  public getCategories(): Rx.Observable<ICategory[]> {
+    if (!this.categories$.value)
+      this.loadCategories();
+
     return this.categories$.asObservable();
   }
 
-  public addCategory(category: string): any {
+  public addCategory(category: string): Rx.Observable<ICategory> {
     return apiService.post('producer/categories', { name: category }).pipe(
       rxjsOperators.map(response => response.data),
       rxjsOperators.tap(() => this.loadCategories())

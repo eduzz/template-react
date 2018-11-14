@@ -29,7 +29,6 @@ interface IState {
     fontWeight: 500,
   },
   content: {
-    marginTop: 8,
     display: 'flex',
   },
   select: {
