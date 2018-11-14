@@ -143,16 +143,14 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    const { id } = this.props.match.params;
+    const { lessonId } = this.props.match.params;
 
-    if (id)
-      this.loadData();
+    if (lessonId)
+      this.loadData(lessonId);
   }
 
-  loadData = () => {
-    const { id } = this.props.match.params;
-
-    lessonService.getLesson(id).pipe(
+  loadData = (lessonId: number) => {
+    lessonService.getLesson(lessonId).pipe(
       rxjsOperators.logError(),
       rxjsOperators.loader(),
       rxjsOperators.bindComponent(this),
@@ -167,7 +165,15 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   handleSubmit = (e: any) => {
-    e.preventDefault();
+    const { model } = this.state;
+
+    lessonService.save(model).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.loader(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe((lesson: any) => {
+      console.log(lesson);
+    }, (error: any) => Toast.error(error));
   }
 
   render() {

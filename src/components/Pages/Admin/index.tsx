@@ -52,7 +52,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       component: CourseIndexPage,
     },
     {
-      path: '/aula',
+      path: '/modulos',
       // sideDrawer: { display: 'Aula', order: 3, icon: AnimationPlayIcon },
       roles: [],
       component: LessonIndexPage,
