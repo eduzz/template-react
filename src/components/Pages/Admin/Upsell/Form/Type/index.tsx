@@ -117,7 +117,7 @@ export default class Type extends PureComponent<IProps, IState> {
             />
           </Grid>
 
-          {model.type === 1 && this.state.userId === 60385 &&
+          {model.type === 1 && (this.state.userId === 60385 || this.state.userId === 167490) &&
             <Fragment>
               <Grid item>
                 <FormControlLabel
