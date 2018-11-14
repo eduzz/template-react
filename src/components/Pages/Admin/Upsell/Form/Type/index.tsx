@@ -131,7 +131,7 @@ export default class Type extends PureComponent<IProps, IState> {
                 />
               </Grid>
 
-              {!!this.state.urlIsChecked || !!model.external_url &&
+              {(!!this.state.urlIsChecked || !!model.external_url) &&
                 <Grid item sm={true}>
                   <FormControl fullWidth>
                     <FieldText
