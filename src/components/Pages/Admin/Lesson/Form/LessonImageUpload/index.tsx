@@ -25,9 +25,8 @@ export default class LessonImageUpload extends PureComponent<IProps> {
           width={160}
           height={120}
           classes={classes.ImageUploader}
-          image={form.model.image}
-          label='image'
-          onChange={form.updateModel((model, v) => model.image = v.image)}
+          value={form.model.image}
+          onChange={form.updateModel((model, v) => model.image = v)}
         />
       </Fragment>
     );

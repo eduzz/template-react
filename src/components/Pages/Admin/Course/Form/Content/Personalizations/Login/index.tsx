@@ -32,9 +32,8 @@ export default class Course extends PureComponent<IProps> {
               width={140}
               height={40}
               classes={classes.ImageUploader}
-              image={form.model.customization.customizationData.logo_login}
-              label='image'
-              onChange={form.updateModel((model, v) => model.customization.customizationData.logo_login = v.image)}
+              value={form.model.customization.customizationData.logo_login}
+              onChange={form.updateModel((model, v) => model.customization.customizationData.logo_login = v)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -43,9 +42,8 @@ export default class Course extends PureComponent<IProps> {
               width={1750}
               height={1400}
               classes={classes.ImageUploader}
-              image={form.model.customization.customizationData.login_background_image}
-              label='image'
-              onChange={form.updateModel((model, v) => model.customization.customizationData.login_background_image = v.image)}
+              value={form.model.customization.customizationData.login_background_image}
+              onChange={form.updateModel((model, v) => model.customization.customizationData.login_background_image = v)}
             />
           </Grid>
         </Grid>

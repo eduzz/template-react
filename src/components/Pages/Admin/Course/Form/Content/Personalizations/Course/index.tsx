@@ -34,9 +34,8 @@ export default class Course extends PureComponent<IProps> {
               width={120}
               height={40}
               classes={classes.ImageUploader}
-              image={form.model.logo}
-              label='image'
-              onChange={form.updateModel((model, v) => model.logo = v.image)}
+              value={form.model.logo}
+              onChange={form.updateModel((model, v) => model.logo = v)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -45,9 +44,8 @@ export default class Course extends PureComponent<IProps> {
               width={300}
               height={300}
               classes={classes.ImageUploader}
-              image={form.model.customization.avatar}
-              label='image'
-              onChange={form.updateModel((model, v) => model.customization.avatar = v.image)}
+              value={form.model.customization.avatar}
+              onChange={form.updateModel((model, v) => model.customization.avatar = v)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -56,9 +54,8 @@ export default class Course extends PureComponent<IProps> {
               width={1920}
               height={400}
               classes={classes.ImageUploader}
-              image={form.model.customization.image_cover}
-              label='image'
-              onChange={form.updateModel((model, v) => model.customization.image_cover = v.image)}
+              value={form.model.customization.image_cover}
+              onChange={form.updateModel((model, v) => model.customization.image_cover = v)}
             />
           </Grid>
         </Grid>
