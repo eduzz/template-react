@@ -30,7 +30,7 @@ export interface IUpsell {
   published: boolean;
   user_id: number;
   created_at: string;
-  externalUrl: string;
+  external_url: string;
   courses: {
     id: number;
     title: string;

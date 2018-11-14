@@ -3,6 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { FieldSwitch } from '@react-form-fields/material-ui';
 import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
@@ -13,13 +14,13 @@ import { IUpsell } from 'interfaces/models/upsell';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
+
 import Actions from './Actions';
 import ImageUploader from './ImageUploader';
 import Info from './Info';
+import Save from './Save';
 import Type from './Type';
 import Config from './UpsellConfig';
-import { FieldSwitch } from '@react-form-fields/material-ui';
-import Save from './Save';
 
 interface IProps {
   classes?: any;
@@ -45,7 +46,7 @@ export default class Form extends FormComponent<IProps, IState> {
         title: '',
         highlight_image: '',
         small_image: '',
-        externalUrl: '',
+        external_url: '',
         highlight: false,
         offer_shelf: false,
         published: false,
