@@ -1,8 +1,10 @@
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import React from 'react';
+import FieldSelect from '@react-form-fields/material-ui/components/Select';
+import Grid from '@material-ui/core/Grid';
 
 interface IProps {
-  model: { title?: string; description?: string; };
+  model: { title?: string; description?: string; label_text?: string };
   onChange: (value: IProps['model']) => void;
 }
 
@@ -11,6 +13,25 @@ interface IState {
 }
 
 export default class Info extends React.PureComponent<IProps, IState> {
+  private labelOptions: any = [
+    {
+      label: 'Compre agora',
+      value: 'Compre agora',
+    },
+    {
+      label: 'Adquira já',
+      value: 'Adquira já',
+    },
+    {
+      label: 'Saiba mais',
+      value: 'Saiba mais',
+    },
+    {
+      label: 'Comprar',
+      value: 'Comprar',
+    },
+  ];
+
   constructor(props: IProps) {
     super(props);
 
@@ -25,12 +46,13 @@ export default class Info extends React.PureComponent<IProps, IState> {
 
   handleChangeTitle = (title: string) => this.handleChange({ title });
   handleChangeDescription = (description: any) => this.handleChange({ description });
+  handleChangeLabelText = (label_text: any) => this.handleChange({ label_text });
 
   render() {
     const { model } = this.props;
 
     return (
-      <div >
+      <div>
         <FieldText
           label='Titulo'
           value={(model.title || '').toString()}
@@ -47,6 +69,18 @@ export default class Info extends React.PureComponent<IProps, IState> {
           multiline
           onChange={this.handleChangeDescription}
         />
+
+        <Grid container>
+          <Grid item xs={4}>
+            <FieldSelect
+              value={(model.label_text || '').toString()}
+              validation='required'
+              onChange={this.handleChangeLabelText}
+              options={this.labelOptions}
+              label='Texto do botão de ação da oferta'
+            />
+          </Grid>
+        </Grid>
 
       </div>
     );
