@@ -87,7 +87,7 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
         <Toolbar>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={true}>
-              <Typography variant='h6' color='inherit' noWrap>Autores</Typography>
+              <Typography variant='h6' noWrap>Autores</Typography>
             </Grid>
 
             <Grid item xs={false}>

@@ -8,14 +8,13 @@ const defaultTheme = createMuiTheme({
 const overrides: Overrides = {
   MuiButton: {
     root: {
-      borderRadius: 30,
-      paddingLeft: 20,
-      paddingRight: 20
+      paddingLeft: 32,
+      paddingRight: 32,
     },
     sizeSmall: {
-      paddingLeft: 15,
-      paddingRight: 15
-    }
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
   },
   MuiFormLabel: {
     root: {
@@ -67,6 +66,13 @@ const overrides: Overrides = {
     root: {
       display: 'block'
     }
+  },
+  MuiCard: {
+    root: {
+      border: '1px solid #E8E8E8',
+      minHeight: 'calc(100% - 56px)',
+      boxShadow: 'none',
+    },
   }
 };
 
