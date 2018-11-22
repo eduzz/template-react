@@ -17,12 +17,7 @@ import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import CardContent from '@material-ui/core/CardContent';
 import ProductType from './ProductType';
 
-export interface IUpsellFormContext {
-  model?: Partial<IUpsell>;
-  updateModel?: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
-}
-
-export const FormContext: React.Context<IUpsellFormContext> = React.createContext({});
+import { UpsellFormContext } from './Context';
 
 interface IProps {
   classes?: any;
@@ -103,9 +98,11 @@ export default class Form extends FormComponent<IProps, IState> {
   render() {
     const { classes } = this.props;
 
+    console.log(this.state.model);
+
     return (
       <FormValidation onSubmit={this.handleSubmit}>
-        <FormContext.Provider value={this.state}>
+        <UpsellFormContext.Provider value={this.state}>
           <div className={classes.root}>
             <Toolbar>
               <Grid container spacing={8} alignItems='center'>
@@ -127,7 +124,7 @@ export default class Form extends FormComponent<IProps, IState> {
               </CardContent>
             </Card>
           </div>
-        </FormContext.Provider>
+        </UpsellFormContext.Provider>
       </FormValidation>
     );
   }

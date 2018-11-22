@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import Button from '@material-ui/core/Button';
-import { FormContext } from '..';
 import { IUpsell } from 'interfaces/models/upsell';
+
+import { UpsellFormContext } from '../Context';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -31,7 +32,7 @@ interface IProps {
   typeItem: {
     transition: 'all 0.3s ease',
     border: '1px solid',
-    borderColor: theme.variables.contentBorderColor,
+    borderColor: '#D8D8D8',
     borderRadius: 4,
     cursor: 'pointer',
     padding: theme.spacing.unit * 4,
@@ -46,7 +47,7 @@ interface IProps {
   },
   selectedType: {
     border: '2px solid',
-    borderColor: theme.palette.secondary.main,
+    borderColor: '#009358',
     padding: (theme.spacing.unit * 4) - 1,
   },
   typeSvg: {
@@ -63,8 +64,8 @@ interface IProps {
     paddingRight: theme.spacing.unit * 5,
   },
 }))
-export default class ProductType extends Component<IProps> {
-  static contextType: typeof FormContext = FormContext;
+export default class ProductType extends PureComponent<IProps> {
+  static contextType: typeof UpsellFormContext = UpsellFormContext;
 
   private types: IType[] = [
     {
@@ -80,20 +81,20 @@ export default class ProductType extends Component<IProps> {
       svg: nutrorLogo,
     },
     {
-      value: 2,
+      value: 3,
       title: 'Produto Físico',
       description: 'Livros, Peças, brindes, camisetas, tenis',
       svg: nutrorLogo,
     },
     {
-      value: 3,
+      value: 4,
       title: 'Serviço',
       description: 'Serviços que podem ser prestados através da plataforma Jobzz',
       svg: nutrorLogo,
     },
   ];
 
-  handleSelectType = (index: number) => () => this.context.updateModel((model: IUpsell) => model.type = index);
+  handleSelectType = (index: number) => () => this.context.updateModel((model: IUpsell) => model.type = index)();
 
   render() {
     const { classes } = this.props;
@@ -101,49 +102,41 @@ export default class ProductType extends Component<IProps> {
     let { model } = this.context;
 
     return (
-      <FormContext.Consumer>
-        {(context: any) => {
-          console.log(context);
-
-          return (
-            <div className={classes.root}>
-              <Grid container spacing={8} alignItems='center' direction='column'>
-                <Grid item>
-                  <Typography variant='h4' align='center'>
-                    Oba! Vamos escolher qual produto vamos vender!
-                  </Typography>
+      <div className={classes.root}>
+        <Grid container spacing={8} alignItems='center' direction='column'>
+          <Grid item>
+            <Typography variant='h4' align='center'>
+              Oba! Vamos escolher qual produto vamos vender!
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
+              Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Grid container spacing={16} justify='center'>
+              {this.types.map(type =>
+                <Grid item key={type.value}>
+                  <div
+                    className={`${classes.typeItem} ${model.type === type.value && classes.selectedType}`}
+                    onClick={this.handleSelectType(type.value)}
+                  >
+                    <img className={classes.typeSvg} alt='' src={type.svg} />
+                    <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
+                    <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
+                  </div>
                 </Grid>
-                <Grid item>
-                  <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-                    Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
-                  </Typography>
-                </Grid>
-                <Grid item>
-                  <Grid container spacing={16} justify='center'>
-                    {this.types.map(type =>
-                      <Grid item key={type.value}>
-                        <div
-                          className={`${classes.typeItem} ${model.type === type.value && classes.selectedType}`}
-                          onClick={this.handleSelectType(type.value)}
-                        >
-                          <img className={classes.typeSvg} alt='' src={type.svg} />
-                          <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
-                          <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
-                        </div>
-                      </Grid>
-                    )}
-                  </Grid>
-                </Grid>
-                <Grid item>
-                  <Button variant='contained' color='secondary' className={classes.button}>
-                    Iniciar Oferta
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          );
-        }}
-      </FormContext.Consumer>
+              )}
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Button variant='contained' color='secondary' className={classes.button}>
+              Iniciar Oferta
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }
