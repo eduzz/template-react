@@ -26,7 +26,8 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    border: '1px solid #D8D8D8',
+    border: '1px solid',
+    borderColor: theme.variables.contentBorderColor,
     borderRadius: 4,
     padding: theme.spacing.unit,
     marginBottom: theme.spacing.unit,

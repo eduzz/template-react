@@ -1,5 +1,6 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Overrides } from '@material-ui/core/styles/overrides';
+import variables from './variables';
 
 const defaultTheme = createMuiTheme({
   typography: { useNextVariants: true },
@@ -69,11 +70,35 @@ const overrides: Overrides = {
   },
   MuiCard: {
     root: {
-      border: '1px solid #E8E8E8',
+      border: '1px solid',
+      borderColor: variables.contentBorderColor,
       minHeight: 'calc(100% - 56px)',
       boxShadow: 'none',
     },
-  }
+  },
+  MuiAppBar: {
+    root: {
+      boxShadow: '0 1px 2px 0 rgba(0,0,0,0.08)',
+    },
+  },
+  MuiTabs: {
+    indicator: {
+      height: 4,
+      backgroundColor: '#FABB0A',
+    },
+  },
+  MuiTab: {
+    root: {
+      textTransform: 'none',
+    },
+    textColorInherit: {
+      color: '#192542',
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: 'bold',
+    },
+  },
 };
 
 export default overrides;
