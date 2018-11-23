@@ -1,7 +1,7 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
 import AccountCircleIcon from 'mdi-react/AccountCircleIcon';
-import BullhornIcon from 'mdi-react/BullhornIcon';
+//import BullhornIcon from 'mdi-react/BullhornIcon';
 import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -41,7 +41,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/upsell',
-      sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
+      //sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
       roles: [],
       component: UpsellIndexPage,
     },
