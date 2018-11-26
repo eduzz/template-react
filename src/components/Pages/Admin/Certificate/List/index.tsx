@@ -36,7 +36,10 @@ interface IProps {
 @WithStyles({
   loader: {
     textAlign: 'center'
-  }
+  },
+  card: {
+    minHeight: 'fit-content',
+  },
 })
 class CertificateListPage extends PureComponent<IProps, IState> {
   constructor(props: IProps) {

@@ -40,7 +40,10 @@ interface IProps {
 @WithStyles({
   loader: {
     textAlign: 'center'
-  }
+  },
+  card: {
+    minHeight: 'fit-content',
+  },
 })
 class AuthorIndexPage extends ListComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -81,6 +84,7 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
 
   render() {
     const { formOpened, loading, items, current } = this.state;
+    const { classes } = this.props;
 
     return (
       <Fragment>
@@ -103,7 +107,7 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
           onCancel={this.handleFormCancel}
         />
 
-        <Card>
+        <Card className={classes.card}>
           {this.renderLoader()}
 
           <CardContent>

@@ -7,7 +7,7 @@ import Slide from '@material-ui/core/Slide';
 import { FieldText } from '@react-form-fields/material-ui';
 import { WithStyles } from 'decorators/withStyles';
 import Button from '@material-ui/core/Button';
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Grid from '@material-ui/core/Grid';
 import FreeModule from './FreeModule';

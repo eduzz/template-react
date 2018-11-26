@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from 'components/Layout/Toolbar';
 import Button from '@material-ui/core/Button';

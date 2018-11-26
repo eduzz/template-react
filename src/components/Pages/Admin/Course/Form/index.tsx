@@ -7,7 +7,7 @@ import Content from './Content';
 import Button from '@material-ui/core/Button';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import Tooltip from '@material-ui/core/Tooltip';
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import format from 'date-fns/format';
 import courseService from 'services/course';

@@ -5,7 +5,7 @@ import { WithStyles } from 'decorators/withStyles';
 import Button from '@material-ui/core/Button';
 import { IUpsell } from 'interfaces/models/upsell';
 
-import { UpsellFormContext } from '../Context';
+import { UpsellFormContext, IUpsellFormContext } from '../Context';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -66,6 +66,8 @@ interface IProps {
 }))
 export default class ProductType extends PureComponent<IProps> {
   static contextType: typeof UpsellFormContext = UpsellFormContext;
+
+  context: IUpsellFormContext;
 
   private types: IType[] = [
     {
