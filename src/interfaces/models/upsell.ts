@@ -1,7 +1,9 @@
 export interface IUpsellList {
   id: number;
   title: string;
-  created_at: Date;
+  small_image?: string;
+  total_view?: number;
+  total_click?: number;
 }
 
 export interface IUpsellCourses {

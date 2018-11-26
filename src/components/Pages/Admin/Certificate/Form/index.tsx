@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { FieldSwitch } from '@react-form-fields/material-ui';
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
@@ -152,7 +152,7 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
           <Toolbar>
             <Grid container spacing={16} alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='h6' color='inherit' noWrap>
+                <Typography variant='h6' noWrap>
                   {`${isEdit ? 'Editar' : 'Novo'} certificado`}
                 </Typography>
               </Grid>

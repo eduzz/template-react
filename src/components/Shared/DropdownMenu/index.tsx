@@ -1,13 +1,13 @@
 import IconButton from '@material-ui/core/IconButton';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
-import MoreVertIcon from 'mdi-react/MoreVertIcon';
+import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 import * as React from 'react';
 
 import OptionItem from './OptionItem';
 
 export interface IOption {
   text: string;
-  icon?: typeof MoreVertIcon;
+  icon?: typeof DotsHorizontalIcon;
   handler: () => void;
 }
 
@@ -47,7 +47,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
     return (
       <div>
         <IconButton onClick={this.handleOpen} color='inherit'>
-          <MoreVertIcon />
+          <DotsHorizontalIcon />
         </IconButton>
 
         <Menu
