@@ -40,7 +40,10 @@ interface IProps {
 @WithStyles({
   loader: {
     textAlign: 'center'
-  }
+  },
+  card: {
+    minHeight: 'fit-content',
+  },
 })
 class AuthorIndexPage extends ListComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -81,13 +84,14 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
 
   render() {
     const { formOpened, loading, items, current } = this.state;
+    const { classes } = this.props;
 
     return (
       <Fragment>
         <Toolbar>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={true}>
-              <Typography variant='h6' color='inherit' noWrap>Autores</Typography>
+              <Typography variant='h6' noWrap>Autores</Typography>
             </Grid>
 
             <Grid item xs={false}>
@@ -103,7 +107,7 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
           onCancel={this.handleFormCancel}
         />
 
-        <Card>
+        <Card className={classes.card}>
           {this.renderLoader()}
 
           <CardContent>

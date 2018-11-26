@@ -1,5 +1,6 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Overrides } from '@material-ui/core/styles/overrides';
+import variables from './variables';
 
 const defaultTheme = createMuiTheme({
   typography: { useNextVariants: true },
@@ -8,14 +9,13 @@ const defaultTheme = createMuiTheme({
 const overrides: Overrides = {
   MuiButton: {
     root: {
-      borderRadius: 30,
-      paddingLeft: 20,
-      paddingRight: 20
+      paddingLeft: 32,
+      paddingRight: 32,
     },
     sizeSmall: {
-      paddingLeft: 15,
-      paddingRight: 15
-    }
+      paddingLeft: 16,
+      paddingRight: 16,
+    },
   },
   MuiFormLabel: {
     root: {
@@ -67,7 +67,39 @@ const overrides: Overrides = {
     root: {
       display: 'block'
     }
-  }
+  },
+  MuiCard: {
+    root: {
+      border: '1px solid',
+      borderColor: variables.contentBorderColor,
+      minHeight: 'calc(100% - 56px)',
+      boxShadow: 'none',
+    },
+  },
+  MuiAppBar: {
+    root: {
+      boxShadow: '0 1px 2px 0 rgba(0,0,0,0.08)',
+      marginBottom: 2,
+    },
+  },
+  MuiTabs: {
+    indicator: {
+      height: 4,
+      backgroundColor: '#FABB0A',
+    },
+  },
+  MuiTab: {
+    root: {
+      textTransform: 'none',
+    },
+    textColorInherit: {
+      color: '#192542',
+    },
+    label: {
+      fontSize: 14,
+      fontWeight: 'bold',
+    },
+  },
 };
 
 export default overrides;

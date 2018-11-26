@@ -29,7 +29,9 @@ interface IProps {
     marginLeft: theme.variables.drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${theme.variables.drawerWidth}px)`
-    }
+    },
+    backgroundColor: '#FFFFFF',
+    boxShadow: '0 1px 2px 0 rgba(0,0,0,0.08)',
   },
   iconMenu: {
     marginLeft: '-15px',
@@ -55,7 +57,7 @@ export default class Toolbar extends PureComponent<IProps> {
         </DrawerContext.Consumer>
 
         <MuiThemeProvider theme={whiteTheme}>
-          <AppBar className={classes.appBar} elevation={1}>
+          <AppBar className={classes.appBar}>
             <CoreToolbar>
               <IconButton
                 color='inherit'

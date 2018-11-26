@@ -36,7 +36,10 @@ interface IProps {
 @WithStyles({
   loader: {
     textAlign: 'center'
-  }
+  },
+  card: {
+    minHeight: 'fit-content',
+  },
 })
 class CertificateListPage extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -83,7 +86,7 @@ class CertificateListPage extends PureComponent<IProps, IState> {
         <Toolbar>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={true}>
-              <Typography variant='h6' color='inherit' noWrap>Certificados</Typography>
+              <Typography variant='h6' noWrap>Certificados</Typography>
             </Grid>
 
             <Grid item xs={false}>

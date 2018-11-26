@@ -1,10 +1,9 @@
 import MoreHorizIcon from 'mdi-react/MoreHorizIcon';
-import { ComponentType } from 'react';
 
 export interface IAppRoute {
   path: string;
   exact?: boolean;
-  component: ComponentType & { routes?: IAppRoute[] };
+  component: any;
   allowAnonymous?: boolean;
   sideDrawer?: {
     icon?: typeof MoreHorizIcon;

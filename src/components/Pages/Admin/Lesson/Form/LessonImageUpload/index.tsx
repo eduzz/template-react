@@ -1,5 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
-import ImageUploader from 'components/Pages/Admin/Upsell/Form/ImageUploader';
+import ImageUploader from 'components/Pages/Admin/Upsell/FormLegacy/ImageUploader';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import { IForm } from '..';

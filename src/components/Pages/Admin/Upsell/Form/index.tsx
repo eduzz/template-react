@@ -1,10 +1,7 @@
 import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { FieldSwitch } from '@react-form-fields/material-ui';
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
@@ -14,13 +11,11 @@ import { IUpsell } from 'interfaces/models/upsell';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
+import Content from './Content';
+import { WithStyles } from 'decorators/withStyles';
+import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 
-import Actions from './Actions';
-import ImageUploader from './ImageUploader';
-import Info from './Info';
-import Save from './Save';
-import Type from './Type';
-import Config from './UpsellConfig';
+import { UpsellFormContext } from './Context';
 
 interface IProps {
   classes?: any;
@@ -29,9 +24,17 @@ interface IProps {
 }
 
 interface IState extends IStateForm<IUpsell> {
-  isValid: boolean;
+  updateModel: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
 }
 
+@WithStyles(theme => ({
+  root: {
+    height: 'calc(100vh - 48px)',
+  },
+  icon: {
+    fill: theme.palette.text.primary,
+  },
+}))
 @WithRouter()
 export default class Form extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -51,7 +54,8 @@ export default class Form extends FormComponent<IProps, IState> {
         offer_shelf: false,
         published: false,
         courses: []
-      }
+      },
+      updateModel: this.updateModel,
     };
   }
 
@@ -90,104 +94,30 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   render() {
-    const { model } = this.state;
+    const { classes } = this.props;
+
+    console.log(this.state.model);
 
     return (
       <FormValidation onSubmit={this.handleSubmit}>
-        <Toolbar>
-          <Grid container spacing={16} alignItems='center'>
-            <Grid item xs={true}>
-              <Typography variant='h6' color='inherit' noWrap>
-                {`${model.id ? 'Editar' : 'Novo'} Upsell`}
-              </Typography>
-            </Grid>
-            <Grid item xs={false}>
-              <FieldSwitch
-                label='Publicado'
-                checked={model.published}
-                onChange={this.updateModel((m, v) => m.published = v)}
-                helperText='Status da oferta'
-              />
-            </Grid>
-          </Grid>
-        </Toolbar>
-
-        <Card>
-
-          <CardContent>
-            <Type
-              model={model}
-              onChange={this.updateModel((m, v) => Object.assign(m, v))}
-            />
-          </CardContent>
-
-          <Divider />
-
-          <CardContent>
-            <Actions
-              model={model}
-              onChange={this.updateModel((m, v) => Object.assign(m, v))}
-            />
-          </CardContent>
-
-          <Divider />
-
-          <CardContent>
-            <Typography variant='subtitle1'>Dados da oferta</Typography>
-
-            <Grid container spacing={16}>
-              <Grid item xs={3}>
-                <Typography variant='caption'>
-                  Imagem
-                  <small>&nbsp;tamanho: 250x250</small>
-                </Typography>
-
-                <ImageUploader
-                  width={250}
-                  height={250}
-                  onChange={this.updateModel((m, v) => m.small_image = v)}
-                  value={model.small_image}
-                />
+        <UpsellFormContext.Provider value={this.state}>
+          <div className={classes.root}>
+            <Toolbar>
+              <Grid container spacing={8} alignItems='center'>
+                <Grid item>
+                  <FileDocumentIcon className={classes.icon} />
+                </Grid>
+                <Grid item>
+                  <Typography variant='h6'>Ofertas</Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={12} sm={9}>
-                <Typography variant='caption'>
-                  Imagem de Destaque
-                  <small>&nbsp;tamanho: 1840x460</small>
-                </Typography>
+            </Toolbar>
 
-                <ImageUploader
-                  width={1840}
-                  height={460}
-                  onChange={this.updateModel((m, v) => m.highlight_image = v)}
-                  value={model.highlight_image}
-                  disabled={!model.highlight}
-                />
-              </Grid>
-            </Grid>
-
-            <Info
-              model={model}
-              onChange={this.updateModel((m, v) => Object.assign(m, v))}
-            />
-          </CardContent>
-
-          <Divider />
-
-          <CardContent>
-            <Config
-              courses={model.courses || []}
-              onChange={this.updateModel((m, v) => m.courses = v)}
-            />
-          </CardContent>
-
-          <CardContent>
-            <Save
-              label={model.label_text}
-              updateModel={this.updateModel}
-            />
-          </CardContent>
-        </Card>
-
+            <Card>
+              <Content />
+            </Card>
+          </div>
+        </UpsellFormContext.Provider>
       </FormValidation>
     );
   }

@@ -29,7 +29,7 @@
       300
     ],
     "max-line-length": [
-      true,
+      false,
       150
     ],
     "no-consecutive-blank-lines": [

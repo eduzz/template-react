@@ -7,7 +7,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsell } from 'interfaces/models/upsell';
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 
 import LessonItem from './LessonItem';
 
@@ -55,7 +55,7 @@ export default class ModuleItem extends React.PureComponent<IProps, IState> {
     }
   }
 
-  handleModuleChange = (e: any) => {
+  handleModuleChange = (e: SyntheticEvent) => {
     e.stopPropagation();
 
     const { module, onChange } = this.props;
