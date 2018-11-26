@@ -92,6 +92,7 @@ class AppDrawer extends PureComponent<IProps, IState> {
     return {
       ...currentState,
       items: [
+        { display: 'Venda Mais', icon: BullhornIcon, route: { path: '/upsell', } },
         { display: 'Cursos', icon: BullhornIcon, route: { path: getUrlV2('/'), } },
         { display: 'Pacotes', icon: ViewDashboardIcon, route: { path: getUrlV2('/user/pacotes') } },
         { display: 'Comentários', icon: CommentMultipleIcon, route: { path: getUrlV2('/comentarios') } },
