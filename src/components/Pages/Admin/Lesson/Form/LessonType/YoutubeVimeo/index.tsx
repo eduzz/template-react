@@ -70,7 +70,7 @@ export default class YoutubeVimeo extends PureComponent<IProps> {
   }
 
   handleChange = (e: any) => {
-    this.props.form.updateModel((model, v) => model.content[model.lesson_type.id] = e.target.value)();
+    this.props.form.updateModel((model, v) => model.content[model.lesson_type.id] = e.currentTarget.value)();
   }
 
   render() {

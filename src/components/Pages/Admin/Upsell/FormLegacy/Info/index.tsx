@@ -30,6 +30,18 @@ export default class Info extends React.PureComponent<IProps, IState> {
       label: 'Comprar',
       value: 'Comprar',
     },
+    {
+      label: 'Inscreva-se',
+      value: 'Inscreva-se',
+    },
+    {
+      label: 'Matricule-se Já',
+      value: 'Matricule-se Já',
+    },
+    {
+      label: 'Faça aqui sua matricula',
+      value: 'Faça aqui sua matricula',
+    },
   ];
 
   constructor(props: IProps) {

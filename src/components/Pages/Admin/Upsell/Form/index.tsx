@@ -14,8 +14,6 @@ import upsellService from 'services/upsell';
 import Content from './Content';
 import { WithStyles } from 'decorators/withStyles';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
-import CardContent from '@material-ui/core/CardContent';
-import ProductType from './ProductType';
 
 import { UpsellFormContext } from './Context';
 
@@ -116,12 +114,7 @@ export default class Form extends FormComponent<IProps, IState> {
             </Toolbar>
 
             <Card>
-              <Content>
-                <span />
-              </Content>
-              <CardContent>
-                <ProductType />
-              </CardContent>
+              <Content />
             </Card>
           </div>
         </UpsellFormContext.Provider>

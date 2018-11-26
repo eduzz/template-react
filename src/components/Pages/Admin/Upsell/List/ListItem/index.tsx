@@ -9,13 +9,16 @@ import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, SyntheticEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
 import EyeIcon from 'mdi-react/EyeIcon';
 import CursorDefaultIcon from 'mdi-react/CursorDefaultIcon';
-import ChartPieIcon from 'mdi-react/ChartPieIcon';
-import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
+// import ChartPieIcon from 'mdi-react/ChartPieIcon';
+// import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
+import { CDN_URL } from 'settings';
+
+const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
 interface IProps {
   classes?: any;
@@ -33,6 +36,8 @@ interface IProps {
     marginBottom: theme.spacing.unit,
   },
   avatar: {
+    width: 44,
+    height: 44,
     borderRadius: 2,
   },
   icon: {
@@ -75,15 +80,11 @@ class UpsellItem extends PureComponent<IProps> {
     }, (err: any) => Toast.error(err));
   }
 
-  handleImageError = (e: any) => {
-    e.target.src = this.getRandomImage();
+  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = nutrorLogo;
   }
 
   randomizeInt = (max: number) => Math.floor(Math.random() * Math.floor(max));
-
-  getRandomImage = (): string => {
-    return `http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/${this.randomizeInt(1447)}.png`;
-  }
 
   render() {
     const { upsell, classes } = this.props;
@@ -96,7 +97,7 @@ class UpsellItem extends PureComponent<IProps> {
               <img
                 alt=''
                 className={classes.avatar}
-                src={this.getRandomImage()}
+                src={CDN_URL + upsell.small_image}
                 onError={this.handleImageError}
                 height={44}
               />
@@ -108,9 +109,9 @@ class UpsellItem extends PureComponent<IProps> {
           </Grid>
 
           <Grid item xs={true}>
-            <Typography variant='subtitle1' noWrap>
+            {/* <Typography variant='subtitle1' noWrap>
               R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
-            </Typography>
+            </Typography> */}
           </Grid>
 
           <Grid item xs={false}>
@@ -121,7 +122,7 @@ class UpsellItem extends PureComponent<IProps> {
                 </Grid>
               </Grid>
               <Grid item>
-                <Typography variant='subtitle1'>{this.randomizeInt(9999)}</Typography>
+                <Typography variant='subtitle1'>{upsell.total_view}</Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -134,12 +135,12 @@ class UpsellItem extends PureComponent<IProps> {
                 </Grid>
               </Grid>
               <Grid item>
-                <Typography variant='subtitle1'>{this.randomizeInt(9999)} ({this.randomizeInt(100)}%)</Typography>
+                <Typography variant='subtitle1'>{upsell.total_click} ({Math.floor(((upsell.total_click / upsell.total_view) || 0) * 100)}%)</Typography>
               </Grid>
             </Grid>
           </Grid>
 
-          <Grid item xs={false}>
+          {/* <Grid item xs={false}>
             <Grid container alignItems='center'>
               <Grid item>
                 <Grid container>
@@ -163,7 +164,7 @@ class UpsellItem extends PureComponent<IProps> {
                 </Typography>
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={false}>
             <DropdownMenu options={this.actions} />

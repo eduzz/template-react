@@ -19,6 +19,7 @@ const secondary = {
 
 const background = {
   default: '#f3f3f3',
+  white: '#fff',
 };
 
 const text = {

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { WithStyles } from 'decorators/withStyles';
+import Product from './Product';
+import ProductType from './ProductType';
+import { UpsellFormContext, IUpsellFormContext } from '../Context';
+import Fade from '@material-ui/core/Fade';
 
 interface IProps {
   classes?: any;
@@ -20,11 +24,18 @@ interface IState {
   },
 }), { withTheme: true })
 export default class Content extends React.Component<IProps, IState> {
-  state = {
-    value: 0,
-  };
+  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  context: IUpsellFormContext;
 
-  handleChange = (event: any, value: number) => {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      value: 0,
+    };
+  }
+
+  handleChange = (event: SyntheticEvent, value: number) => {
     this.setState({ value });
   }
 
@@ -33,7 +44,8 @@ export default class Content extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { classes, theme, children } = this.props;
+    const { classes, theme } = this.props;
+    const { model } = this.context;
 
     return (
       <div className={classes.root}>
@@ -48,13 +60,18 @@ export default class Content extends React.Component<IProps, IState> {
             <Tab label='Comportamentos' />
           </Tabs>
         </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          {children}
-        </SwipeableViews>
+
+        <ProductType />
+
+        <Fade in={!!model.type}>
+          <SwipeableViews
+            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+            index={this.state.value}
+            onChangeIndex={this.handleChangeIndex}
+          >
+            <Product />
+          </SwipeableViews>
+        </Fade>
       </div>
     );
   }

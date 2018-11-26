@@ -108,10 +108,7 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
     });
   }
 
-  handleSubmit = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-
+  handleSubmit = () => {
     this.handleClose();
   }
 

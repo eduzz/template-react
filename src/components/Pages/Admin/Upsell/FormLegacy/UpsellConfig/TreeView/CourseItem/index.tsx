@@ -63,7 +63,7 @@ export default class CourseItem extends React.PureComponent<IProps, IState> {
     }
   }
 
-  handleToggleAll = (e: any) => {
+  handleToggleAll = (e: SyntheticEvent) => {
     e.stopPropagation();
 
     const { onChange, course } = this.props;
