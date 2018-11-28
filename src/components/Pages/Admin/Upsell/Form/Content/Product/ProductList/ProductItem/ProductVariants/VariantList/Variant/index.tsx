@@ -1,8 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, SyntheticEvent } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import { IVariant } from 'interfaces/models/product';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { UpsellFormContext, IUpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
+import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 
 interface IProps {
   classes?: any;
@@ -10,6 +12,12 @@ interface IProps {
 }
 
 @WithStyles(theme => ({
+  root: {
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      transform: 'scale(1.05)',
+    },
+  },
   content: {
     backgroundColor: theme.palette.background.default,
     padding: 8,
@@ -26,15 +34,52 @@ interface IProps {
   price: {
     color: theme.palette.secondary.light,
   },
+  imageContainer: {
+    position: 'relative',
+    '&:before': {
+      content: '""',
+      width: 13,
+      height: 13,
+      position: 'absolute',
+      backgroundColor: theme.palette.primary.contrastText,
+      top: 11,
+      left: 11,
+    },
+  },
+  checkbox: {
+    transition: 'all 0.3s ease',
+    position: 'absolute',
+    fill: '#D9D9D9',
+    margin: theme.spacing.unit - 2,
+  },
+  selected: {
+    fill: '#009358',
+  },
 }))
 export default class Variant extends PureComponent<IProps> {
+  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  context: IUpsellFormContext;
+
+  handleClick = (e: SyntheticEvent) => {
+    e.stopPropagation();
+
+    const { variant } = this.props;
+    const { updateModel } = this.context;
+
+    updateModel(model => model.content = (model.content !== variant.content ? variant.content : ''))();
+  }
+
   render() {
     const { classes, variant } = this.props;
+    const { model } = this.context;
 
     return (
-      <Grid container wrap='nowrap'>
+      <Grid container wrap='nowrap' className={classes.root} onClick={this.handleClick}>
         <Grid item>
-          <Grid container>
+          <Grid container className={classes.imageContainer}>
+            <CheckCircleIcon
+              className={`${classes.checkbox} ${variant.content === model.content && classes.selected}`}
+            />
             <img alt='' src={variant.image} className={classes.image} />
           </Grid>
         </Grid>

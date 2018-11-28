@@ -80,7 +80,6 @@ interface IState {
 }))
 export default class ProductType extends PureComponent<IProps, IState> {
   static contextType: typeof UpsellFormContext = UpsellFormContext;
-
   context: IUpsellFormContext;
 
   private types: IType[] = [
