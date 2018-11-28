@@ -13,6 +13,7 @@ interface IProps {
   content: {
     backgroundColor: theme.palette.background.default,
     padding: 8,
+    maxWidth: 180,
   },
   image: {
     width: 150,
