@@ -6,6 +6,7 @@ import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import ProductList from './ProductList';
+import Button from '@material-ui/core/Button';
 
 interface IProps {
   classes?: any;
@@ -15,6 +16,11 @@ interface IProps {
   changeLink: {
     color: theme.palette.secondary.light,
     textDecoration: 'none',
+  },
+  button: {
+    float: 'right',
+    paddingLeft: theme.spacing.unit * 5,
+    paddingRight: theme.spacing.unit * 5,
   },
 }))
 export default class Product extends PureComponent<IProps> {
@@ -32,7 +38,7 @@ export default class Product extends PureComponent<IProps> {
 
     return (
       <CardContent>
-        <Grid container direction='column' spacing={24}>
+        <Grid container direction='column' spacing={24} wrap='nowrap'>
           <Grid item>
             <Typography variant='subtitle1'>
               <strong>Tipo Selecionado:</strong> Infoproduto <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
@@ -44,7 +50,7 @@ export default class Product extends PureComponent<IProps> {
             </Typography>
             <Typography variant='caption'>Selecione um produto para ofertar</Typography>
           </Grid>
-          <Grid item>
+          <Grid item xs={true}>
             <Grid container direction='column' spacing={8}>
               <Grid item>
                 <TextField
@@ -56,6 +62,11 @@ export default class Product extends PureComponent<IProps> {
                 <ProductList />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={false}>
+            <Button variant='contained' color='secondary' className={classes.button}>
+              Selecionar Produto
+            </Button>
           </Grid>
         </Grid>
       </CardContent>
