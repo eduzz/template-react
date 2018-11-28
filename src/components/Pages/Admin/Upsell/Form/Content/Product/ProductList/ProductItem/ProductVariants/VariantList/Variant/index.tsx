@@ -14,10 +14,14 @@ interface IProps {
     backgroundColor: theme.palette.background.default,
     padding: 8,
     maxWidth: 180,
+    borderTopRightRadius: 2,
+    borderBottomRightRadius: 2,
   },
   image: {
     width: 150,
     height: 150,
+    borderTopLeftRadius: 2,
+    borderBottomLeftRadius: 2,
   },
   price: {
     color: theme.palette.secondary.light,
