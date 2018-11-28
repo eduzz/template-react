@@ -27,9 +27,16 @@ interface IState {
 
 @WithStyles(theme => ({
   root: {
+    position: 'relative',
+  },
+  content: {
     paddingTop: theme.spacing.unit * 6,
     background: '#fff',
     position: 'absolute',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    left: 0,
+    right: 0,
   },
   messageDescription: {
     maxWidth: 470,
@@ -127,43 +134,45 @@ export default class ProductType extends PureComponent<IProps, IState> {
     const { model } = this.context;
 
     return (
-      <Fade in={!model.type}>
-        <CardContent className={classes.root}>
-          <Grid container spacing={8} alignItems='center' direction='column'>
-            <Grid item>
-              <Typography variant='h4' align='center'>
-                Oba! Vamos escolher qual produto vamos vender!
-            </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-                Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
-            </Typography>
-            </Grid>
-            <Grid item>
-              <Grid container spacing={16} justify='center'>
-                {this.types.map(type =>
-                  <Grid item key={type.value}>
-                    <div
-                      className={`${classes.typeItem} ${selected === type.value && classes.selectedType}`}
-                      onClick={this.handleSelectType(type.value)}
-                    >
-                      <img className={classes.typeSvg} alt='' src={type.svg} />
-                      <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
-                      <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
-                    </div>
-                  </Grid>
-                )}
+      <div className={classes.root}>
+        <Fade in={!model.type}>
+          <CardContent className={classes.content}>
+            <Grid container spacing={8} alignItems='center' direction='column'>
+              <Grid item>
+                <Typography variant='h4' align='center'>
+                  Oba! Vamos escolher qual produto vamos vender!
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
+                  Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Grid container spacing={16} justify='center'>
+                  {this.types.map(type =>
+                    <Grid item key={type.value}>
+                      <div
+                        className={`${classes.typeItem} ${selected === type.value && classes.selectedType}`}
+                        onClick={this.handleSelectType(type.value)}
+                      >
+                        <img className={classes.typeSvg} alt='' src={type.svg} />
+                        <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
+                        <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
+                      </div>
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitSelectType}>
+                  Iniciar Oferta
+                </Button>
               </Grid>
             </Grid>
-            <Grid item>
-              <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitSelectType}>
-                Iniciar Oferta
-            </Button>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Fade>
+          </CardContent>
+        </Fade>
+      </div>
     );
   }
 }

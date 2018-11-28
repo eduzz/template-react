@@ -8,6 +8,7 @@ import Product from './Product';
 import ProductType from './ProductType';
 import { UpsellFormContext, IUpsellFormContext } from '../Context';
 import Fade from '@material-ui/core/Fade';
+import Informations from './Informations';
 
 interface IProps {
   classes?: any;
@@ -15,7 +16,7 @@ interface IProps {
 }
 
 interface IState {
-  value?: number;
+  value: number;
 }
 
 @WithStyles(theme => ({
@@ -45,13 +46,14 @@ export default class Content extends React.Component<IProps, IState> {
 
   render() {
     const { classes, theme } = this.props;
+    const { value } = this.state;
     const { model } = this.context;
 
     return (
       <div className={classes.root}>
         <AppBar position='static' color='inherit' elevation={0}>
           <Tabs
-            value={this.state.value}
+            value={value}
             onChange={this.handleChange}
           >
             <Tab label='Produto' />
@@ -63,13 +65,14 @@ export default class Content extends React.Component<IProps, IState> {
 
         <ProductType />
 
-        <Fade in={!!model.type}>
+        <Fade in={!!model.type} unmountOnExit>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
             onChangeIndex={this.handleChangeIndex}
           >
             <Product />
+            <Informations />
           </SwipeableViews>
         </Fade>
       </div>
