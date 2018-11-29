@@ -9,6 +9,7 @@ import ProductType from './ProductType';
 import { UpsellFormContext, IUpsellFormContext } from '../Context';
 import Fade from '@material-ui/core/Fade';
 import Informations from './Informations';
+import SelectedProduct from './SelectedProduct';
 
 interface IProps {
   classes?: any;
@@ -64,8 +65,9 @@ export default class Content extends React.Component<IProps, IState> {
         </AppBar>
 
         <ProductType />
+        <SelectedProduct />
 
-        <Fade in={!!model.type} unmountOnExit>
+        <Fade in={!!model.type && !model.content} unmountOnExit>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
