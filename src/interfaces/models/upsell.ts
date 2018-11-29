@@ -12,10 +12,23 @@ export interface IUpsellCourses {
   hash: string;
 }
 
-export interface IUpsellProducts {
+export interface IUpsellProduct {
   id: number;
+  hash?: string;
   title: string;
-  hash: string;
+  image: string;
+  price: number;
+  content: string;
+  variants?: IUpsellProductVariant[];
+}
+
+export interface IUpsellProductVariant {
+  id: number;
+  hash?: string;
+  title: string;
+  image: string;
+  price: number;
+  content: string;
 }
 
 export interface IUpsell {

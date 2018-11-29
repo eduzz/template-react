@@ -3,12 +3,12 @@ import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import { IVariant } from 'interfaces/models/product';
+import { IUpsellProductVariant } from 'interfaces/models/upsell';
 import VariantList from './VariantList';
 
 interface IProps {
   classes?: any;
-  variants: IVariant[];
+  variants: IUpsellProductVariant[];
 }
 
 @WithStyles(theme => ({

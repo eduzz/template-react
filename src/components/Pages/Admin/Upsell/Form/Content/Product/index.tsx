@@ -24,7 +24,7 @@ interface IProps {
   },
 }))
 export default class Product extends PureComponent<IProps> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
   handleCleanType = (e: SyntheticEvent) => {

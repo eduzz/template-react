@@ -1,7 +1,7 @@
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import Grid from '@material-ui/core/Grid';
-import { IProduct } from 'interfaces/models/product';
+import { IUpsellProduct } from 'interfaces/models/upsell';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
@@ -10,7 +10,7 @@ const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
 interface IProps {
   classes?: any;
-  product: IProduct;
+  product: IUpsellProduct;
 }
 
 @WithStyles(theme => ({
@@ -41,7 +41,7 @@ interface IProps {
   },
 }))
 export default class Product extends PureComponent<IProps> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {

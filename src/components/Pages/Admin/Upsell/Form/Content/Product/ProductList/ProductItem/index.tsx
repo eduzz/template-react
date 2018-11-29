@@ -2,7 +2,7 @@ import React, { PureComponent, SyntheticEvent, Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import { IProduct } from 'interfaces/models/product';
+import { IUpsellProduct } from 'interfaces/models/upsell';
 import Typography from '@material-ui/core/Typography';
 import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import ChevronUpIcon from 'mdi-react/ChevronUpIcon';
@@ -17,7 +17,7 @@ const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
 interface IProps {
   classes?: any;
-  product: IProduct;
+  product: IUpsellProduct;
 }
 
 interface IState {
@@ -69,7 +69,7 @@ interface IState {
   },
 }))
 export default class ProductItem extends PureComponent<IProps, IState> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
   constructor(props: IProps) {

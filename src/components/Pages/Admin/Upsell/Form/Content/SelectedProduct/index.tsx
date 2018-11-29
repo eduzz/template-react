@@ -6,8 +6,10 @@ import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Product from './Product';
-import { IProduct } from 'interfaces/models/product';
+// import { IUpsellProduct } from 'interfaces/models/upsell';
 import Button from '@material-ui/core/Button';
+
+import { products } from 'services/upsell';
 
 interface IProps {
   classes?: any;
@@ -36,20 +38,16 @@ interface IProps {
   },
 }))
 export default class SelectedProduct extends PureComponent<IProps> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  static contextType = UpsellFormContext;
   context: IUpsellFormContext;
-
-  private product: IProduct = {
-    id: 2,
-    title: '09987 - Design Sprint Google Ventures',
-    image: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/2.png',
-    price: 46,
-    content: 'b',
-  }; // MOCK
 
   render() {
     const { classes } = this.props;
     const { model } = this.context;
+
+    const selectedProduct = products
+      .reduce((acc, item) => [...acc, { ...item }, ...(item.variants || [])], [])
+      .find(p => p.content === model.content);
 
     return (
       <div className={classes.root}>
@@ -62,7 +60,7 @@ export default class SelectedProduct extends PureComponent<IProps> {
                 </Typography>
               </Grid>
               <Grid item>
-                <Product product={this.product} />
+                {!!selectedProduct && <Product product={selectedProduct} />}
               </Grid>
               <Grid item>
                 <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>

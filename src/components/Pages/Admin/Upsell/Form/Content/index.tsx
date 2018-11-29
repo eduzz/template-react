@@ -26,7 +26,7 @@ interface IState {
   },
 }), { withTheme: true })
 export default class Content extends React.Component<IProps, IState> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
   constructor(props: IProps) {

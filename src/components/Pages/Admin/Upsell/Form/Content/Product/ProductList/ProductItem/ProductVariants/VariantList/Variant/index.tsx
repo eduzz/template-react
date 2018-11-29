@@ -1,6 +1,6 @@
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { WithStyles } from 'decorators/withStyles';
-import { IVariant } from 'interfaces/models/product';
+import { IUpsellProductVariant } from 'interfaces/models/upsell';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { UpsellFormContext, IUpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
@@ -8,7 +8,7 @@ import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 
 interface IProps {
   classes?: any;
-  variant: IVariant;
+  variant: IUpsellProductVariant;
 }
 
 @WithStyles(theme => ({
@@ -57,7 +57,7 @@ interface IProps {
   },
 }))
 export default class Variant extends PureComponent<IProps> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
+  static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
   handleClick = (e: SyntheticEvent) => {

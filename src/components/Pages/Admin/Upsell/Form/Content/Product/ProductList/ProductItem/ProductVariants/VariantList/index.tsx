@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { IVariant } from 'interfaces/models/product';
+import { IUpsellProductVariant } from 'interfaces/models/upsell';
 import Variant from './Variant';
 
 interface IProps {
-  variants: IVariant[];
+  variants: IUpsellProductVariant[];
 }
 
 export default class VariantList extends PureComponent<IProps> {
