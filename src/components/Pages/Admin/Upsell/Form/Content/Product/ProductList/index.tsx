@@ -6,6 +6,7 @@ import rxjsOperators from 'rxjs-operators';
 import Toast from 'components/Shared/Toast';
 import { IUpsellProduct } from 'interfaces/models/upsell';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
+import Loading from 'components/Shared/Loading';
 
 interface IProps {
 
@@ -23,13 +24,12 @@ export default class ProductList extends PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      products: [],
+      products: null,
     };
   }
 
   componentDidMount() {
     upsellService.getProducts(this.context.model.type).pipe(
-      rxjsOperators.loader(),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(products => {
@@ -39,6 +39,9 @@ export default class ProductList extends PureComponent<IProps, IState> {
 
   render() {
     const { products } = this.state;
+
+    if (!products)
+      return <Loading />;
 
     return (
       <Fragment>

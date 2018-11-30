@@ -19,7 +19,7 @@ export interface IUpsellProduct {
   image: string;
   price: number;
   content: string;
-  variants?: IUpsellProductVariant[];
+  children?: IUpsellProductVariant[];
 }
 
 export interface IUpsellProductVariant {
@@ -34,7 +34,8 @@ export interface IUpsellProductVariant {
 export interface IUpsell {
   id: number;
   type: number;
-  content: string;
+  content_id: string;
+  pre_content: string;
   description: string;
   title: string;
   label_text: string;

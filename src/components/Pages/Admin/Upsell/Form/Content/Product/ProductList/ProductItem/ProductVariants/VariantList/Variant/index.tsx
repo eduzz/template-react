@@ -66,7 +66,7 @@ export default class Variant extends PureComponent<IProps> {
     const { variant } = this.props;
     const { updateModel } = this.context;
 
-    updateModel(model => model.content = (model.content !== variant.content ? variant.content : ''))();
+    updateModel(model => model.pre_content = (model.pre_content !== variant.content ? variant.content : ''))();
   }
 
   render() {
@@ -78,7 +78,7 @@ export default class Variant extends PureComponent<IProps> {
         <Grid item>
           <Grid container className={classes.imageContainer}>
             <CheckCircleIcon
-              className={`${classes.checkbox} ${variant.content === model.content && classes.selected}`}
+              className={`${classes.checkbox} ${variant.content === model.pre_content && classes.selected}`}
             />
             <img alt='' src={variant.image} className={classes.image} />
           </Grid>

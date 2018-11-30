@@ -80,22 +80,35 @@ export default class ProductItem extends PureComponent<IProps, IState> {
     };
   }
 
-  handleSelectProduct = (content: string) => () => this.context.updateModel(model => model.content = content)();
+  componentDidMount() {
+    if (this.isSomeVariantSelected())
+      this.setState({
+        isVariantsOpen: true,
+      });
+  }
+
+  handleSelectProduct = (content: string) => () => this.context.updateModel(model => model.pre_content = content)();
 
   handleClick = () => {
     const { product } = this.props;
     const { updateModel } = this.context;
 
-    if (!!product.variants && product.variants.length)
+    if (!!product.children && product.children.length)
       this.setState(state => ({
         isVariantsOpen: !state.isVariantsOpen,
       }));
     else
-      updateModel(model => model.content = (model.content !== product.content ? product.content : ''))();
+      updateModel(model => model.pre_content = (model.pre_content !== product.content ? product.content : ''))();
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = nutrorLogo;
+  }
+
+  isSomeVariantSelected = () => {
+    const { product } = this.props;
+
+    return !!product.children && product.children.some(variant => variant.content === this.context.model.pre_content);
   }
 
   render() {
@@ -112,13 +125,13 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                 <Grid item>
                   <Grid container alignItems='center'>
                     <Grid item className={classes.checkboxContainer}>
-                      {!!product.variants && product.variants.some(variant => variant.content === model.content) ?
+                      {this.isSomeVariantSelected() ?
                         <MinusCircleIcon
                           className={`${classes.checkbox} ${classes.selected}`}
                         />
                         :
                         <CheckCircleIcon
-                          className={`${classes.checkbox} ${product.content === model.content && classes.selected}`}
+                          className={`${classes.checkbox} ${product.content === model.pre_content && classes.selected}`}
                         />
                       }
                     </Grid>
@@ -143,15 +156,15 @@ export default class ProductItem extends PureComponent<IProps, IState> {
 
                 <Grid item xs={true}>
                   <Typography variant='subtitle1' noWrap className={classes.price}>
-                    {!!product.variants && product.variants.length ?
-                      `De R$ ${Math.min(...product.variants.map(variant => variant.price))} até R$ ${Math.max(...product.variants.map(variant => variant.price))}`
+                    {!!product.children && product.children.length ?
+                      `De R$ ${Math.min(...product.children.map(variant => variant.price))} até R$ ${Math.max(...product.children.map(variant => variant.price))}`
                       :
                       `R$ ${product.price}`
                     }
                   </Typography>
                 </Grid>
 
-                {!!product.variants &&
+                {!!product.children &&
                   <Grid item xs={false}>
                     <Grid container>
                       <IconButton>
@@ -162,10 +175,10 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                 }
               </Grid>
             </Grid>
-            {!!product.variants &&
+            {!!product.children &&
               <Grid item>
                 <Collapse in={isVariantsOpen}>
-                  <ProductVariants variants={product.variants} />
+                  <ProductVariants variants={product.children} />
                 </Collapse>
               </Grid>
             }

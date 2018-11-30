@@ -67,7 +67,7 @@ export default class Content extends React.Component<IProps, IState> {
         <ProductType />
         <SelectedProduct />
 
-        <Fade in={!!model.type && !model.content} unmountOnExit>
+        <Fade in={!!model.type && !model.content_id} unmountOnExit>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}

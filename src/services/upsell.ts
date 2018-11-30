@@ -11,7 +11,7 @@ export const products: IUpsellProduct[] = [
     image: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/1.png',
     price: 46,
     content: 'a',
-    variants: [
+    children: [
       {
         id: 1,
         title: 'Design Sprint Promoção para Assinantes',
@@ -48,7 +48,7 @@ export const products: IUpsellProduct[] = [
     image: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/3.png',
     price: 46,
     content: 'c',
-    variants: [
+    children: [
       {
         id: 1,
         title: 'Design Sprint Promoção para Assinantes',
@@ -76,6 +76,7 @@ export const products: IUpsellProduct[] = [
 
 class UpsellService {
   private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
+  private products$ = new rxjs.BehaviorSubject<IUpsellProduct[]>(null);
 
   public getCourses() {
     return apiService.get<IUpsellCourses[]>('producer/courses/my').pipe(
@@ -89,11 +90,22 @@ class UpsellService {
     );
   }
 
-  public getProducts(type: number) {
-    return apiService.get<IUpsellProduct[]>('/producer/upsell/products/' + type).pipe(
+  public loadProducts(type: number): void {
+    apiService.get<IUpsellProduct[]>('/producer/upsell/products/' + type).pipe(
       // rxjsOperators.map(response => response.data),
       rxjsOperators.map(response => products), // MOCK
-    );
+    ).subscribe(products => {
+      this.products$.next(products);
+    }, error => {
+      this.products$.error(products);
+    });
+  }
+
+  public getProducts(type: number): rxjs.Observable<IUpsellProduct[]> {
+    if (!this.products$.value)
+      this.loadProducts(type);
+
+    return this.products$.asObservable();
   }
 
   public getUpsell(code: number) {

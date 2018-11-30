@@ -46,12 +46,12 @@ export default class SelectedProduct extends PureComponent<IProps> {
     const { model } = this.context;
 
     const selectedProduct = products
-      .reduce((acc, item) => [...acc, { ...item }, ...(item.variants || [])], [])
-      .find(p => p.content === model.content);
+      .reduce((acc, item) => [...acc, { ...item }, ...(item.children || [])], [])
+      .find(p => p.content === model.content_id);
 
     return (
       <div className={classes.root}>
-        <Fade in={!!model.content}>
+        <Fade in={!!model.content_id} unmountOnExit>
           <CardContent className={classes.content}>
             <Grid container direction='column' spacing={16}>
               <Grid item>
@@ -60,7 +60,7 @@ export default class SelectedProduct extends PureComponent<IProps> {
                 </Typography>
               </Grid>
               <Grid item>
-                {!!selectedProduct && <Product product={selectedProduct} />}
+                <Product product={selectedProduct} />
               </Grid>
               <Grid item>
                 <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>
@@ -72,7 +72,7 @@ export default class SelectedProduct extends PureComponent<IProps> {
                   <Grid item>
                     <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
                       Estamos prontos para inserir os dados e preparar a oferta
-                  </Typography>
+                    </Typography>
                   </Grid>
                   <Grid item>
                     <Button variant='contained' color='secondary' className={classes.messageButton}>

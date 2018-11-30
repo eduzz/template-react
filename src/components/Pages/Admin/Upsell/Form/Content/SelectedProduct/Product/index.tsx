@@ -13,6 +13,10 @@ interface IProps {
   product: IUpsellProduct;
 }
 
+interface IState {
+  product: IUpsellProduct;
+}
+
 @WithStyles(theme => ({
   root: {
     border: '1px solid',
@@ -40,20 +44,40 @@ interface IProps {
     },
   },
 }))
-export default class Product extends PureComponent<IProps> {
+export default class Product extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      product: {
+        ...props.product,
+        title: '',
+        image: '',
+        price: 0,
+      },
+    };
+  }
+
+  static getDerivedStateFromProps(props: IProps, state: IState) {
+    if (props.product && props.product !== state.product)
+      return { ...props };
+    return null;
+  }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = nutrorLogo;
   }
 
   handleClick = () => {
-    this.context.updateModel(model => model.content = '')();
+    this.context.updateModel(model => model.content_id = '')();
   }
 
   render() {
-    const { classes, product } = this.props;
+    const { classes } = this.props;
+    const { product } = this.state;
 
     return (
       <Grid container className={classes.root} alignItems='center' spacing={16}>

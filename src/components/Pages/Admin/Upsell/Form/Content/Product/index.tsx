@@ -33,6 +33,10 @@ export default class Product extends PureComponent<IProps> {
     this.context.updateModel(model => model.type = null)();
   }
 
+  handleSubmitContent = () => {
+    this.context.updateModel(model => model.content_id = model.pre_content)();
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -64,7 +68,7 @@ export default class Product extends PureComponent<IProps> {
             </Grid>
           </Grid>
           <Grid item xs={false}>
-            <Button variant='contained' color='secondary' className={classes.button}>
+            <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitContent}>
               Selecionar Produto
             </Button>
           </Grid>

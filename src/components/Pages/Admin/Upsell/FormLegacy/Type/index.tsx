@@ -15,7 +15,7 @@ import upsellService from 'services/upsell';
 interface IProps {
   match?: any;
 
-  model: { type?: number; content?: string; external_url?: string; };
+  model: { type?: number; content_id?: string; external_url?: string; };
   onChange: (value: IProps['model']) => void;
 }
 
@@ -40,8 +40,8 @@ export default class Type extends PureComponent<IProps, IState> {
     this.props.onChange({ ...this.props.model, ...model });
   }
 
-  handleChangeType = (type: number) => this.handleChange({ type, content: null });
-  handleChangeContent = (content: any) => this.handleChange({ content: (content || '').toString() });
+  handleChangeType = (type: number) => this.handleChange({ type, content_id: null });
+  handleChangeContent = (content: any) => this.handleChange({ content_id: (content || '').toString() });
   handleChangeExternalUrl = (url: string) => this.handleChange({ external_url: (url || '').toString() });
 
   componentDidMount() {
@@ -109,7 +109,7 @@ export default class Type extends PureComponent<IProps, IState> {
 
           <Grid item xs={true} sm={4}>
             <FieldSelect
-              value={(model.content || '').toString()}
+              value={(model.content_id || '').toString()}
               margin='none'
               validation='required'
               onChange={this.handleChangeContent}

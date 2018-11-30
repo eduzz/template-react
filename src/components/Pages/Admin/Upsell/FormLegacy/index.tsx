@@ -40,7 +40,7 @@ export default class Form extends FormComponent<IProps, IState> {
       ...this.state,
       model: {
         type: null,
-        content: '',
+        content_id: '',
         description: '',
         label_text: 'Saiba mais',
         title: '',
@@ -64,7 +64,7 @@ export default class Form extends FormComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(model => {
-      this.setState({ model: { ...this.state.model, ...model, content: model.content.toString() } });
+      this.setState({ model: { ...this.state.model, ...model, content: model.content_id.toString() } });
     }, error => Toast.error(error));
   }
 
