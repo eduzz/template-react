@@ -21,7 +21,7 @@ interface IProps {
   content: {
     backgroundColor: theme.palette.background.default,
     padding: 8,
-    maxWidth: 180,
+    width: 180,
     borderTopRightRadius: 2,
     borderBottomRightRadius: 2,
   },
@@ -66,7 +66,7 @@ export default class Variant extends PureComponent<IProps> {
     const { variant } = this.props;
     const { updateModel } = this.context;
 
-    updateModel(model => model.pre_content = (model.pre_content !== variant.content ? variant.content : ''))();
+    updateModel(model => model.pre_content_id = (model.pre_content_id !== variant.content_id ? variant.content_id : null))();
   }
 
   render() {
@@ -78,14 +78,14 @@ export default class Variant extends PureComponent<IProps> {
         <Grid item>
           <Grid container className={classes.imageContainer}>
             <CheckCircleIcon
-              className={`${classes.checkbox} ${variant.content === model.pre_content && classes.selected}`}
+              className={`${classes.checkbox} ${variant.content_id === model.pre_content_id && classes.selected}`}
             />
             <img alt='' src={variant.image} className={classes.image} />
           </Grid>
         </Grid>
         <Grid item className={classes.content}>
           <Typography variant='caption'>{variant.title}</Typography>
-          <Typography variant='subtitle2' className={classes.price}>R$ {variant.price}</Typography>
+          {/* <Typography variant='subtitle2' className={classes.price}>R$ {variant.price}</Typography> */}
         </Grid>
       </Grid>
     );

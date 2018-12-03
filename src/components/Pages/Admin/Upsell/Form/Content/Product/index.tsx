@@ -34,7 +34,7 @@ export default class Product extends PureComponent<IProps> {
   }
 
   handleSubmitContent = () => {
-    this.context.updateModel(model => model.content_id = model.pre_content)();
+    this.context.updateModel(model => model.content_id = model.pre_content_id)();
   }
 
   render() {

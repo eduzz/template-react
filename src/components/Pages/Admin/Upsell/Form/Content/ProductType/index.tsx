@@ -7,8 +7,10 @@ import Button from '@material-ui/core/Button';
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import CardContent from '@material-ui/core/CardContent';
 import Fade from '@material-ui/core/Fade';
+import upsellService from 'services/upsell';
 
-const nutrorLogo = require('assets/svg/nutror-logo.svg');
+const infoProduto = require('assets/images/info-produto.png');
+const produtoFisico = require('assets/images/produto-fisico.png');
 
 interface IType {
   value: number;
@@ -65,8 +67,7 @@ interface IState {
     padding: (theme.spacing.unit * 4) - 1,
   },
   typeSvg: {
-    width: 62,
-    height: 62,
+    width: 63,
     marginBottom: theme.spacing.unit * 5,
   },
   typeDescription: {
@@ -85,27 +86,15 @@ export default class ProductType extends PureComponent<IProps, IState> {
   private types: IType[] = [
     {
       value: 1,
-      title: 'Curso do Nutror',
-      description: 'Cursos dentro da plataforma nutror que deseja ofertar.',
-      svg: nutrorLogo,
+      title: 'Infoproduto',
+      description: 'Apostilas, planilhas, e-books, seus produtos digitais',
+      svg: infoProduto,
     },
     {
       value: 2,
-      title: 'Infoproduto',
-      description: 'Apostilas, planilhas, e-books, seus produtos digitais',
-      svg: nutrorLogo,
-    },
-    {
-      value: 3,
       title: 'Produto Físico',
       description: 'Livros, Peças, brindes, camisetas, tenis',
-      svg: nutrorLogo,
-    },
-    {
-      value: 4,
-      title: 'Serviço',
-      description: 'Serviços que podem ser prestados através da plataforma Jobzz',
-      svg: nutrorLogo,
+      svg: produtoFisico,
     },
   ];
 
@@ -125,7 +114,13 @@ export default class ProductType extends PureComponent<IProps, IState> {
 
   handleSelectType = (type: number) => () => this.setState({ selected: type });
 
-  handleSubmitSelectType = () => this.context.updateModel(model => model.type = this.state.selected)();
+  handleSubmitSelectType = () => {
+    const { selected } = this.state;
+
+    upsellService.loadProducts(selected);
+
+    this.context.updateModel(model => model.type = selected)();
+  }
 
   render() {
     const { classes } = this.props;

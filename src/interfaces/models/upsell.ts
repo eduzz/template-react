@@ -13,29 +13,31 @@ export interface IUpsellCourses {
 }
 
 export interface IUpsellProduct {
-  id: number;
-  hash?: string;
-  title: string;
+  biling_type: string;
+  content_id: number;
+  content_type_id: number;
+  has_children: boolean;
   image: string;
-  price: number;
-  content: string;
+  producer_id: number;
+  title: string;
   children?: IUpsellProductVariant[];
 }
 
 export interface IUpsellProductVariant {
-  id: number;
-  hash?: string;
-  title: string;
+  biling_type: string;
+  content_id: number;
+  content_type_id: number;
+  has_children: boolean;
   image: string;
-  price: number;
-  content: string;
+  producer_id: number;
+  title: string;
 }
 
 export interface IUpsell {
   id: number;
   type: number;
-  content_id: string;
-  pre_content: string;
+  content_id: number;
+  pre_content_id: number;
   description: string;
   title: string;
   label_text: string;

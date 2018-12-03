@@ -56,7 +56,6 @@ export default class Product extends PureComponent<IProps, IState> {
         ...props.product,
         title: '',
         image: '',
-        price: 0,
       },
     };
   }
@@ -72,7 +71,7 @@ export default class Product extends PureComponent<IProps, IState> {
   }
 
   handleClick = () => {
-    this.context.updateModel(model => model.content_id = '')();
+    this.context.updateModel(model => model.content_id = null)();
   }
 
   render() {
@@ -95,7 +94,7 @@ export default class Product extends PureComponent<IProps, IState> {
         </Grid>
         <Grid item xs={true}>
           <Typography variant='subtitle1'>{product.title}</Typography>
-          <Typography variant='subtitle1' noWrap className={classes.price}>R$ {product.price}</Typography>
+          {/* <Typography variant='subtitle1' noWrap className={classes.price}>R$ {product.price}</Typography> */}
         </Grid>
         <Grid item xs={false}>
           <Button variant='contained' className={classes.button} onClick={this.handleClick}>

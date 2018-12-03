@@ -87,7 +87,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
       });
   }
 
-  handleSelectProduct = (content: string) => () => this.context.updateModel(model => model.pre_content = content)();
+  handleSelectProduct = (content_id: number) => () => this.context.updateModel(model => model.pre_content_id = content_id)();
 
   handleClick = () => {
     const { product } = this.props;
@@ -98,7 +98,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
         isVariantsOpen: !state.isVariantsOpen,
       }));
     else
-      updateModel(model => model.pre_content = (model.pre_content !== product.content ? product.content : ''))();
+      updateModel(model => model.pre_content_id = (model.pre_content_id !== product.content_id ? product.content_id : null))();
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
@@ -108,7 +108,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
   isSomeVariantSelected = () => {
     const { product } = this.props;
 
-    return !!product.children && product.children.some(variant => variant.content === this.context.model.pre_content);
+    return !!product.children && product.children.some(variant => variant.content_id === this.context.model.pre_content_id);
   }
 
   render() {
@@ -131,7 +131,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                         />
                         :
                         <CheckCircleIcon
-                          className={`${classes.checkbox} ${product.content === model.pre_content && classes.selected}`}
+                          className={`${classes.checkbox} ${product.content_id === model.pre_content_id && classes.selected}`}
                         />
                       }
                     </Grid>
@@ -155,16 +155,16 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                 </Grid>
 
                 <Grid item xs={true}>
-                  <Typography variant='subtitle1' noWrap className={classes.price}>
+                  {/* <Typography variant='subtitle1' noWrap className={classes.price}>
                     {!!product.children && product.children.length ?
                       `De R$ ${Math.min(...product.children.map(variant => variant.price))} até R$ ${Math.max(...product.children.map(variant => variant.price))}`
                       :
                       `R$ ${product.price}`
                     }
-                  </Typography>
+                  </Typography> */}
                 </Grid>
 
-                {!!product.children &&
+                {!!product.children.length &&
                   <Grid item xs={false}>
                     <Grid container>
                       <IconButton>
@@ -175,7 +175,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                 }
               </Grid>
             </Grid>
-            {!!product.children &&
+            {!!product.children.length &&
               <Grid item>
                 <Collapse in={isVariantsOpen}>
                   <ProductVariants variants={product.children} />

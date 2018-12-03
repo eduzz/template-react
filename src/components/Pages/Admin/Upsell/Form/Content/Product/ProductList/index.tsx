@@ -7,15 +7,23 @@ import Toast from 'components/Shared/Toast';
 import { IUpsellProduct } from 'interfaces/models/upsell';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
 import Loading from 'components/Shared/Loading';
+import Typography from '@material-ui/core/Typography';
+import { WithStyles } from 'decorators/withStyles';
 
 interface IProps {
-
+  classes?: any;
 }
 
 interface IState {
   products: IUpsellProduct[];
 }
 
+@WithStyles(theme => ({
+  notFoundMessage: {
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: (theme.spacing.unit * 2) + 4,
+  },
+}))
 export default class ProductList extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
@@ -38,17 +46,21 @@ export default class ProductList extends PureComponent<IProps, IState> {
   }
 
   render() {
+    const { classes } = this.props;
     const { products } = this.state;
 
     if (!products)
       return <Loading />;
 
+    if (!products.length)
+      return <Typography align='center' variant='subtitle1' className={classes.notFoundMessage}>Nenhum produto encontrado!</Typography>;
+
     return (
       <Fragment>
         <List disablePadding>
-          {products.map(product => (
+          {products.map((product, index) => (
             <ProductItem
-              key={product.id}
+              key={index}
               product={product}
             />
           ))}

@@ -6,13 +6,18 @@ import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Product from './Product';
-// import { IUpsellProduct } from 'interfaces/models/upsell';
 import Button from '@material-ui/core/Button';
-
-import { products } from 'services/upsell';
+import { IUpsellProduct } from 'interfaces/models/upsell';
+import upsellService from 'services/upsell';
+import Toast from 'components/Shared/Toast';
+import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
+}
+
+interface IState {
+  selectedProduct: IUpsellProduct;
 }
 
 @WithStyles(theme => ({
@@ -37,17 +42,40 @@ interface IProps {
     marginTop: theme.spacing.unit,
   },
 }))
-export default class SelectedProduct extends PureComponent<IProps> {
+export default class SelectedProduct extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
-  render() {
-    const { classes } = this.props;
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      selectedProduct: null,
+    };
+  }
+
+  componentDidMount() {
     const { model } = this.context;
 
-    const selectedProduct = products
-      .reduce((acc, item) => [...acc, { ...item }, ...(item.children || [])], [])
-      .find(p => p.content === model.content_id);
+    if (model.type)
+      upsellService.getProducts(model.type).pipe(
+        rxjsOperators.bindComponent(this),
+        rxjsOperators.logError(),
+      ).subscribe(products => {
+        this.setState({
+          selectedProduct: products
+            .reduce((acc, item) => [...acc, { ...item }, ...(item.children || [])], [])
+            .find(p => p.content === model.content_id),
+        });
+      }, error => {
+        Toast.error(error);
+      });
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { selectedProduct } = this.state;
+    const { model } = this.context;
 
     return (
       <div className={classes.root}>

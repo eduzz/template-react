@@ -42,10 +42,10 @@ export default class Form extends FormComponent<IProps, IState> {
     this.state = {
       ...this.state,
       model: {
-        // type: null,
-        type: 2, // MOCK
-        content_id: '',
-        pre_content: '',
+        type: null,
+        // type: 2, // MOCK
+        content_id: null,
+        pre_content_id: null,
         description: '',
         label_text: 'Saiba mais',
         title: '',

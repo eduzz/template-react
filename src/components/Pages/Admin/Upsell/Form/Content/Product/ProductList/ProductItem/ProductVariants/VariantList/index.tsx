@@ -13,8 +13,8 @@ export default class VariantList extends PureComponent<IProps> {
 
     return (
       <Grid container spacing={16}>
-        {variants.map(variant =>
-          <Grid item key={variant.id}>
+        {variants.map((variant, index) =>
+          <Grid item key={index}>
             <Variant variant={variant} />
           </Grid>
         )}
