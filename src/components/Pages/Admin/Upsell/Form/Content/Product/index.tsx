@@ -55,7 +55,12 @@ export default class Product extends PureComponent<IProps> {
             <ProductList />
           </Grid>
           <Grid item xs={false}>
-            <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitContent}>
+            <Button
+              className={classes.button}
+              onClick={this.handleSubmitContent}
+              variant='contained'
+              color='secondary'
+            >
               Selecionar Produto
             </Button>
           </Grid>

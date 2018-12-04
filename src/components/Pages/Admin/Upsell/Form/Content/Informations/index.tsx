@@ -22,20 +22,20 @@ export default class Informations extends PureComponent<IProps> {
 
   private labelOptions: any = [
     {
-      label: 'Compre agora',
-      value: 'Compre agora',
-    },
-    {
       label: 'Adquira já',
       value: 'Adquira já',
     },
     {
-      label: 'Saiba mais',
-      value: 'Saiba mais',
-    },
-    {
       label: 'Comprar',
       value: 'Comprar',
+    },
+    {
+      label: 'Compre agora',
+      value: 'Compre agora',
+    },
+    {
+      label: 'Faça aqui sua matricula',
+      value: 'Faça aqui sua matricula',
     },
     {
       label: 'Inscreva-se',
@@ -46,8 +46,8 @@ export default class Informations extends PureComponent<IProps> {
       value: 'Matricule-se Já',
     },
     {
-      label: 'Faça aqui sua matricula',
-      value: 'Faça aqui sua matricula',
+      label: 'Saiba mais',
+      value: 'Saiba mais',
     },
   ];
 
@@ -89,6 +89,9 @@ export default class Informations extends PureComponent<IProps> {
                 options={this.labelOptions}
                 label='Texto do botão de ação da oferta'
               />
+            </Grid>
+            <Grid item>
+              <Typography variant='subtitle1'>Mídias</Typography>
             </Grid>
           </Grid>
         </CardContent>

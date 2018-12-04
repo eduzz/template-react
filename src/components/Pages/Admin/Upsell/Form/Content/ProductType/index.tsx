@@ -29,11 +29,6 @@ interface IState {
   root: {
     paddingTop: theme.spacing.unit * 6,
     background: '#fff',
-    position: 'absolute',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    left: 0,
-    right: 0,
   },
   messageDescription: {
     maxWidth: 470,
@@ -154,9 +149,14 @@ export default class ProductType extends PureComponent<IProps, IState> {
             </Grid>
           </Grid>
           <Grid item>
-            <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitSelectType}>
+            <Button
+              className={classes.button}
+              onClick={this.handleSubmitSelectType}
+              variant='contained'
+              color='secondary'
+            >
               Iniciar Oferta
-                </Button>
+            </Button>
           </Grid>
         </Grid>
       </CardContent>
