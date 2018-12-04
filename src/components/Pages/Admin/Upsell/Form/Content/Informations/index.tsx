@@ -111,7 +111,7 @@ export default class Informations extends PureComponent<IProps> {
                   <Typography variant='subtitle1' gutterBottom>Mídias</Typography>
                   <ImageUploader
                     resolution={{
-                      large: { width: 1840, height: 1000 },
+                      large: { width: 1840, height: 460 },
                       medium: { width: 768, height: 280 },
                       small: { width: 480, height: 280 },
                     }}

@@ -42,6 +42,8 @@ interface IState {
   };
 }
 
+const MAX_WIDTH = 600;
+
 @WithStyles(theme => ({
   miniatureContainer: {
     width: 170,
@@ -50,13 +52,12 @@ interface IState {
     width: 111,
   },
   imageContainer: {
-    width: 600,
+    maxWidth: MAX_WIDTH,
   },
   imagePlaceholder: {
     borderRadius: 4,
     backgroundColor: '#EEEEEE',
     maxWidth: '100%',
-    height: 'auto',
   },
   responsiveContainer: {
     width: 'fit-content',
@@ -133,6 +134,11 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
     const { classes, miniature, helperText, resolution } = this.props;
     const { selectedResolution, isSelectorOpen, images } = this.state;
 
+    let imagePlaceholderHeight = resolution[selectedResolution].height;
+
+    if (resolution[selectedResolution].width > resolution[selectedResolution].height && resolution[selectedResolution].width > MAX_WIDTH)
+      imagePlaceholderHeight = (resolution[selectedResolution].height / resolution[selectedResolution].width) * MAX_WIDTH;
+
     return (
       <Grid container spacing={16}>
         <Grid item className={classes.miniatureContainer}>
@@ -155,9 +161,10 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
           <div className={classes.imageContainer}>
             <img
               alt=''
-              src={images[selectedResolution] ? CDN_URL + images[selectedResolution] : null}
+              src={!!images[selectedResolution] ? CDN_URL + images[selectedResolution] : null}
               className={classes.imagePlaceholder}
-              style={{ ...resolution[selectedResolution] }}
+              width={resolution[selectedResolution].width}
+              height={!images[selectedResolution] ? imagePlaceholderHeight : 'auto'}
             />
           </div>
           {!!helperText && <FormHelperText>{helperText}</FormHelperText>}
