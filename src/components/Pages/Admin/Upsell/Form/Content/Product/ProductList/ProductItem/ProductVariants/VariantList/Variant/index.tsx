@@ -58,7 +58,7 @@ interface IProps {
 }))
 export default class Variant extends PureComponent<IProps> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   handleClick = (e: SyntheticEvent) => {
     e.stopPropagation();

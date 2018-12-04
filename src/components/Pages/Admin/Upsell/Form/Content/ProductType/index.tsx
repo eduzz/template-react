@@ -3,10 +3,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import Button from '@material-ui/core/Button';
-
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import CardContent from '@material-ui/core/CardContent';
-import Fade from '@material-ui/core/Fade';
 import upsellService from 'services/upsell';
 
 const infoProduto = require('assets/images/info-produto.png');
@@ -24,14 +22,11 @@ interface IProps {
 }
 
 interface IState {
-  selected: number;
+  selectedType: number;
 }
 
 @WithStyles(theme => ({
   root: {
-    position: 'relative',
-  },
-  content: {
     paddingTop: theme.spacing.unit * 6,
     background: '#fff',
     position: 'absolute',
@@ -81,7 +76,7 @@ interface IState {
 }))
 export default class ProductType extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   private types: IType[] = [
     {
@@ -102,71 +97,69 @@ export default class ProductType extends PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      selected: null,
+      selectedType: null,
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      selected: this.context.model.type,
-    });
+  componentDidUpdate() {
+    const { type } = this.context.model;
+
+    if (type && type !== this.state.selectedType)
+      this.setState({
+        selectedType: type,
+      });
   }
 
-  handleSelectType = (type: number) => () => this.setState({ selected: type });
+  handleSelectType = (type: number) => () => this.setState({ selectedType: type });
 
   handleSubmitSelectType = () => {
-    const { selected } = this.state;
+    const { selectedType } = this.state;
 
-    upsellService.loadProducts(selected);
+    upsellService.loadProducts(selectedType);
 
-    this.context.updateModel(model => model.type = selected)();
+    this.context.updateModel(model => model.type = selectedType)();
   }
 
   render() {
     const { classes } = this.props;
-    const { selected } = this.state;
-    const { model } = this.context;
+    const { selectedType } = this.state;
 
     return (
-      <div className={classes.root}>
-        <Fade in={!model.type}>
-          <CardContent className={classes.content}>
-            <Grid container spacing={8} alignItems='center' direction='column'>
-              <Grid item>
-                <Typography variant='h4' align='center'>
-                  Oba! Vamos escolher qual produto vamos vender!
+      <CardContent className={classes.root}>
+        <Grid container spacing={8} alignItems='center' direction='column'>
+          <Grid item>
+            <Typography variant='h4' align='center'>
+              Oba! Vamos escolher qual produto vamos vender!
                 </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-                  Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
+              Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
                 </Typography>
-              </Grid>
-              <Grid item>
-                <Grid container spacing={16} justify='center'>
-                  {this.types.map(type =>
-                    <Grid item key={type.value}>
-                      <div
-                        className={`${classes.typeItem} ${selected === type.value && classes.selectedType}`}
-                        onClick={this.handleSelectType(type.value)}
-                      >
-                        <img className={classes.typeSvg} alt='' src={type.svg} />
-                        <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
-                        <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
-                      </div>
-                    </Grid>
-                  )}
+          </Grid>
+          <Grid item>
+            <Grid container spacing={16} justify='center'>
+              {this.types.map(type =>
+                <Grid item key={type.value}>
+                  <div
+                    className={`${classes.typeItem} ${selectedType === type.value && classes.selectedType}`}
+                    onClick={this.handleSelectType(type.value)}
+                  >
+                    <img className={classes.typeSvg} alt='' src={type.svg} />
+                    <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
+                    <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
+                  </div>
                 </Grid>
-              </Grid>
-              <Grid item>
-                <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitSelectType}>
-                  Iniciar Oferta
-                </Button>
-              </Grid>
+              )}
             </Grid>
-          </CardContent>
-        </Fade>
-      </div>
+          </Grid>
+          <Grid item>
+            <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitSelectType}>
+              Iniciar Oferta
+                </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
     );
   }
 }

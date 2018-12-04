@@ -70,7 +70,7 @@ interface IState {
 }))
 export default class ProductItem extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   constructor(props: IProps) {
     super(props);

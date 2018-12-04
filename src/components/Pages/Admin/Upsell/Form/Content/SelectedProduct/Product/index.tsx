@@ -5,6 +5,7 @@ import { IUpsellProduct } from 'interfaces/models/upsell';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
+import Loading from 'components/Shared/Loading';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -23,6 +24,8 @@ interface IState {
     borderColor: theme.variables.contentBorderColor,
     borderRadius: 4,
     padding: theme.spacing.unit,
+    margin: 0,
+    width: '100%',
   },
   avatar: {
     width: 73,
@@ -46,7 +49,7 @@ interface IState {
 }))
 export default class Product extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   constructor(props: IProps) {
     super(props);
@@ -82,14 +85,18 @@ export default class Product extends PureComponent<IProps, IState> {
       <Grid container className={classes.root} alignItems='center' spacing={16}>
         <Grid item>
           <Grid container>
-            <img
-              alt=''
-              className={classes.avatar}
-              src={product.image}
-              // src={CDN_URL + upsell.small_image}
-              onError={this.handleImageError}
-              height={44}
-            />
+            {product.image ?
+              <img
+                alt=''
+                className={classes.avatar}
+                src={product.image}
+                // src={CDN_URL + upsell.small_image}
+                onError={this.handleImageError}
+                height={44}
+              />
+              :
+              <Loading />
+            }
           </Grid>
         </Grid>
         <Grid item xs={true}>

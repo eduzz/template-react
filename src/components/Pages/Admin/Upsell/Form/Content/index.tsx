@@ -7,9 +7,9 @@ import { WithStyles } from 'decorators/withStyles';
 import Product from './Product';
 import ProductType from './ProductType';
 import { UpsellFormContext, IUpsellFormContext } from '../Context';
-import Fade from '@material-ui/core/Fade';
 import Informations from './Informations';
 import SelectedProduct from './SelectedProduct';
+import Fade from 'components/Shared/Fade';
 
 interface IProps {
   classes?: any;
@@ -24,10 +24,13 @@ interface IState {
   root: {
     backgroundColor: '#fff',
   },
+  container: {
+    position: 'relative',
+  },
 }), { withTheme: true })
 export default class Content extends React.Component<IProps, IState> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   constructor(props: IProps) {
     super(props);
@@ -64,8 +67,13 @@ export default class Content extends React.Component<IProps, IState> {
           </Tabs>
         </AppBar>
 
-        <ProductType />
-        <SelectedProduct />
+        <Fade in={!model.type} absolute>
+          <ProductType />
+        </Fade>
+
+        <Fade in={!!model.content_id} absolute unmountOnExit>
+          <SelectedProduct />
+        </Fade>
 
         <Fade in={!!model.type && !model.content_id} unmountOnExit>
           <SwipeableViews

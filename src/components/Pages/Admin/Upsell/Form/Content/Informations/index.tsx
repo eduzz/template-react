@@ -18,7 +18,7 @@ interface IProps {
 })
 export default class Informations extends PureComponent<IProps> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   private labelOptions: any = [
     {

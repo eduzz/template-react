@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import Fade from '@material-ui/core/Fade';
 import CardContent from '@material-ui/core/CardContent';
 import { WithStyles } from 'decorators/withStyles';
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
@@ -22,15 +21,7 @@ interface IState {
 
 @WithStyles(theme => ({
   root: {
-    position: 'relative',
-  },
-  content: {
     background: '#fff',
-    position: 'absolute',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    left: 0,
-    right: 0,
   },
   messageContainer: {
     paddingTop: 125,
@@ -44,7 +35,7 @@ interface IState {
 }))
 export default class SelectedProduct extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
-  context: IUpsellFormContext;
+  public context: IUpsellFormContext;
 
   constructor(props: IProps) {
     super(props);
@@ -57,62 +48,57 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
   componentDidMount() {
     const { model } = this.context;
 
-    if (model.type)
-      upsellService.getProducts(model.type).pipe(
-        rxjsOperators.bindComponent(this),
-        rxjsOperators.logError(),
-      ).subscribe(products => {
+    upsellService.getProducts(model.type).pipe(
+      rxjsOperators.bindComponent(this),
+      rxjsOperators.logError(),
+    ).subscribe(products => {
+      if (products)
         this.setState({
           selectedProduct: products
             .reduce((acc, item) => [...acc, { ...item }, ...(item.children || [])], [])
-            .find(p => p.content === model.content_id),
+            .find(p => p.content_id === model.content_id),
         });
-      }, error => {
-        Toast.error(error);
-      });
+    }, error => {
+      Toast.error(error);
+    });
   }
 
   render() {
     const { classes } = this.props;
     const { selectedProduct } = this.state;
-    const { model } = this.context;
 
     return (
-      <div className={classes.root}>
-        <Fade in={!!model.content_id} unmountOnExit>
-          <CardContent className={classes.content}>
-            <Grid container direction='column' spacing={16}>
+      <CardContent className={classes.root}>
+        <Grid container direction='column' spacing={16}>
+          <Grid item>
+            <Typography variant='subtitle1'>
+              <strong>Produto Selecionado:</strong>
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Product product={selectedProduct} />
+          </Grid>
+          <Grid item>
+            <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>
               <Grid item>
-                <Typography variant='subtitle1'>
-                  <strong>Produto Selecionado:</strong>
+                <Typography variant='subtitle1' align='center' gutterBottom>
+                  <strong>Muito Bem! Escolhemos nosso produto</strong>
                 </Typography>
               </Grid>
               <Grid item>
-                <Product product={selectedProduct} />
+                <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
+                  Estamos prontos para inserir os dados e preparar a oferta
+                </Typography>
               </Grid>
               <Grid item>
-                <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>
-                  <Grid item>
-                    <Typography variant='subtitle1' align='center' gutterBottom>
-                      <strong>Muito Bem! Escolhemos nosso produto</strong>
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-                      Estamos prontos para inserir os dados e preparar a oferta
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button variant='contained' color='secondary' className={classes.messageButton}>
-                      Ir para Informações
-                    </Button>
-                  </Grid>
-                </Grid>
+                <Button variant='contained' color='secondary' className={classes.messageButton}>
+                  Ir para Informações
+                </Button>
               </Grid>
             </Grid>
-          </CardContent>
-        </Fade>
-      </div>
+          </Grid>
+        </Grid>
+      </CardContent>
     );
   }
 }

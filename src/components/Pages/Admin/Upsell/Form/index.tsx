@@ -70,8 +70,17 @@ export default class Form extends FormComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(model => {
-      this.setState({ model: { ...this.state.model, ...model, content: model.content_id.toString() } });
-    }, error => Toast.error(error));
+      this.setState({
+        model: {
+          ...this.state.model,
+          ...model,
+          pre_content_id: model.content_id,
+        },
+      });
+    }, error => {
+      this.props.history.push('/upsell');
+      Toast.error(error);
+    });
   }
 
   handleSubmit = (isValid: boolean) => {
