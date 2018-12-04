@@ -29,6 +29,11 @@ interface IState {
     paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 3,
   },
+  list: {
+    height: 'calc(100vh - 458px)',
+    overflow: 'auto',
+    paddingRight: theme.spacing.unit,
+  },
 }))
 export default class ProductList extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
@@ -78,7 +83,7 @@ export default class ProductList extends PureComponent<IProps, IState> {
           />
         </Grid>
         <Grid item>
-          <List disablePadding>
+          <List className={classes.list} disablePadding>
             {products
               .filter(product => product.title.toLowerCase().includes(search.trim().toLowerCase()))
               .map((product, index) => (
