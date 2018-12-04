@@ -61,9 +61,9 @@ export default class Content extends React.Component<IProps, IState> {
             onChange={this.handleChange}
           >
             <Tab label='Produto' />
-            <Tab label='Informações' />
-            <Tab label='Audiência' />
-            <Tab label='Comportamentos' />
+            <Tab disabled={!model.content_id} label='Informações' />
+            <Tab disabled={!model.content_id} label='Audiência' />
+            <Tab disabled={!model.content_id} label='Comportamentos' />
           </Tabs>
         </AppBar>
 
@@ -71,17 +71,19 @@ export default class Content extends React.Component<IProps, IState> {
           <ProductType />
         </Fade>
 
-        <Fade in={!!model.content_id} absolute unmountOnExit>
-          <SelectedProduct />
+        <Fade in={!!model.type && !model.content_id} absolute unmountOnExit>
+          <Product />
         </Fade>
 
-        <Fade in={!!model.type && !model.content_id} unmountOnExit>
+        <Fade in={!!model.content_id} unmountOnExit>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={this.state.value}
             onChangeIndex={this.handleChangeIndex}
           >
-            <Product />
+            <SelectedProduct
+              onFinish={this.handleChangeIndex}
+            />
             <Informations />
           </SwipeableViews>
         </Fade>

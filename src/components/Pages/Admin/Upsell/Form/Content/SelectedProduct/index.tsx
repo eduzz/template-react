@@ -13,6 +13,7 @@ import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
+  onFinish: Function;
 }
 
 interface IState {
@@ -63,6 +64,10 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
     });
   }
 
+  handleInformations = () => {
+    this.props.onFinish(1);
+  }
+
   render() {
     const { classes } = this.props;
     const { selectedProduct } = this.state;
@@ -91,7 +96,7 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
                 </Typography>
               </Grid>
               <Grid item>
-                <Button variant='contained' color='secondary' className={classes.messageButton}>
+                <Button variant='contained' color='secondary' className={classes.messageButton} onClick={this.handleInformations}>
                   Ir para Informações
                 </Button>
               </Grid>
