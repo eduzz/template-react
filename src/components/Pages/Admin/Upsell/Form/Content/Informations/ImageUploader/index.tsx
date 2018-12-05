@@ -52,12 +52,16 @@ const MAX_WIDTH = 600;
     width: 111,
   },
   imageContainer: {
-    maxWidth: MAX_WIDTH,
+    width: MAX_WIDTH,
   },
   imagePlaceholder: {
     borderRadius: 4,
     backgroundColor: '#EEEEEE',
     maxWidth: '100%',
+  },
+  image: {
+    borderRadius: 4,
+    width: MAX_WIDTH,
   },
   responsiveContainer: {
     width: 'fit-content',
@@ -114,6 +118,15 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
     });
   }
 
+  handleRemoveImage = () => {
+    this.setState(state => ({
+      images: {
+        ...state.images,
+        [state.selectedResolution]: '',
+      },
+    }));
+  }
+
   handleSelectorComplete = (image: string) => {
     this.setState(state => ({
       images: {
@@ -159,15 +172,23 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
         </Grid>
         <Grid item xs={true}>
           <div className={classes.imageContainer}>
-            <img
-              alt=''
-              src={!!images[selectedResolution] ? CDN_URL + images[selectedResolution] : null}
-              className={classes.imagePlaceholder}
-              width={resolution[selectedResolution].width}
-              height={!images[selectedResolution] ? imagePlaceholderHeight : 'auto'}
-            />
+            {!images[selectedResolution] ?
+              <div
+                className={classes.imagePlaceholder}
+                style={{
+                  width: resolution[selectedResolution].width,
+                  height: imagePlaceholderHeight,
+                }}
+              />
+              :
+              <img
+                alt=''
+                src={!!images[selectedResolution] ? CDN_URL + images[selectedResolution] : null}
+                className={classes.image}
+              />
+            }
           </div>
-          {!!helperText && <FormHelperText>{helperText}</FormHelperText>}
+          {!!helperText && <FormHelperText margin='dense'>{helperText}</FormHelperText>}
         </Grid>
         <Grid item xs={false}>
           <Grid container direction='column' spacing={16}>
@@ -203,7 +224,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
               </Button>
             </Grid>
             <Grid item>
-              <Button variant='outlined' color='primary' className={classes.button}>
+              <Button variant='outlined' color='primary' className={classes.button} onClick={this.handleRemoveImage}>
                 Remover Imagem
               </Button>
             </Grid>
