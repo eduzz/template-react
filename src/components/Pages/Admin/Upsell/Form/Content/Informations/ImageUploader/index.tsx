@@ -70,6 +70,7 @@ const MAX_WIDTH = 600;
     borderColor: theme.palette.text.primary,
   },
   responsiveOption: {
+    position: 'relative',
     transition: 'all 0.3s ease',
     cursor: 'pointer',
     padding: theme.spacing.unit,
@@ -95,6 +96,18 @@ const MAX_WIDTH = 600;
   },
   info: {
     width: 250,
+  },
+  warningIcon: {
+    position: 'absolute',
+    color: theme.palette.primary.contrastText,
+    top: -10,
+    left: 'calc(100% - 15px)',
+    backgroundColor: '#FABB0A',
+    borderRadius: '50%',
+    height: 24,
+    width: 24,
+    paddingTop: 2,
+    zIndex: 10,
   },
 }))
 export default class ImageUploader extends PureComponent<IProps, IState> {
@@ -202,11 +215,21 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
                   {!!resolution.medium &&
                     <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'medium' && classes.selectedOption}`} onClick={this.handleSelectResolution('medium')}>
                       <CellphoneIcon className={classes.icon} />
+                      {!images['medium'] &&
+                        <div className={classes.warningIcon}>
+                          <Typography variant='subtitle2' align='center' color='inherit'>!</Typography>
+                        </div>
+                      }
                     </Grid>
                   }
                   {!!resolution.small &&
                     <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'small' && classes.selectedOption}`} onClick={this.handleSelectResolution('small')}>
                       <CellphoneIcon size={20} className={classes.icon} />
+                      {!images['small'] &&
+                        <div className={classes.warningIcon}>
+                          <Typography variant='subtitle2' align='center' color='inherit'>!</Typography>
+                        </div>
+                      }
                     </Grid>
                   }
                 </Grid>
