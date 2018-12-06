@@ -49,7 +49,12 @@ export default class Form extends FormComponent<IProps, IState> {
         description: '',
         label_text: 'Saiba mais',
         title: '',
-        highlight_image: '',
+        show_type: 0,
+        highlight_images: {
+          large: null,
+          medium: null,
+          small: null,
+        },
         small_image: '',
         external_url: '',
         highlight: false,

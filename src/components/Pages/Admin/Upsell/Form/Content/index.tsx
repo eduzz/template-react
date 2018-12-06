@@ -4,12 +4,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { WithStyles } from 'decorators/withStyles';
-// import Product from './Product';
-// import ProductType from './ProductType';
+import Product from './Product';
+import ProductType from './ProductType';
 import { UpsellFormContext, IUpsellFormContext } from '../Context';
 import Informations from './Informations';
-// import SelectedProduct from './SelectedProduct';
-// import Fade from 'components/Shared/Fade';
+import SelectedProduct from './SelectedProduct';
+import Fade from 'components/Shared/Fade';
 
 interface IProps {
   classes?: any;
@@ -67,7 +67,7 @@ export default class Content extends React.Component<IProps, IState> {
           </Tabs>
         </AppBar>
 
-        {/* <Fade in={!model.type} absolute>
+        <Fade in={!model.type} absolute>
           <ProductType />
         </Fade>
 
@@ -86,15 +86,7 @@ export default class Content extends React.Component<IProps, IState> {
             />
             <Informations />
           </SwipeableViews>
-        </Fade> */}
-
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <Informations />
-        </SwipeableViews>
+        </Fade>
       </div>
     );
   }

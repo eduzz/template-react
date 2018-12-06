@@ -8,6 +8,7 @@ import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import { WithStyles } from 'decorators/withStyles';
 import ImageUploader from './ImageUploader';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 const destaqueVitrine = require('assets/images/destaque-vitrine.png');
 const cardVitrine = require('assets/images/card-vitrine.png');
@@ -66,6 +67,22 @@ export default class Informations extends PureComponent<IProps> {
     },
   ];
 
+  handleUploadedHighlight = (image: any) => {
+    this.context.updateModel(model => model.highlight_images = { ...model.highlight_images, ...image })();
+  }
+
+  handleRemovedHighlight = (label: string) => {
+    this.context.updateModel(model => model.highlight_images[label] = null)();
+  }
+
+  handleUploadedSmallImage = (image: any) => {
+    this.context.updateModel(model => model.small_image = image.large)();
+  }
+
+  handleRemovedSmallImage = () => {
+    this.context.updateModel(model => model.small_image = null)();
+  }
+
   render() {
     const { classes } = this.props;
     const { model, updateModel } = this.context;
@@ -111,10 +128,12 @@ export default class Informations extends PureComponent<IProps> {
                   <Typography variant='subtitle1' gutterBottom>Mídias</Typography>
                   <ImageUploader
                     resolution={{
-                      large: { width: 1840, height: 460 },
-                      medium: { width: 768, height: 280 },
-                      small: { width: 480, height: 280 },
+                      large: { width: 1840, height: 460, image: model.highlight_images.large },
+                      medium: { width: 768, height: 280, image: model.highlight_images.medium },
+                      small: { width: 480, height: 280, image: model.highlight_images.small },
                     }}
+                    onUploaded={this.handleUploadedHighlight}
+                    onRemoved={this.handleRemovedHighlight}
                     helperText='prévia exibida em tamanhos em escala proporcional, não remete ao tamanho real da exibição.'
                     miniature={[
                       { title: 'Destaque da Vitrine', image: destaqueVitrine },
@@ -127,14 +146,25 @@ export default class Informations extends PureComponent<IProps> {
                 <Grid item>
                   <ImageUploader
                     resolution={{
-                      large: { width: 250, height: 250 },
+                      large: { width: 250, height: 250, image: model.small_image },
                     }}
+                    onUploaded={this.handleUploadedSmallImage}
+                    onRemoved={this.handleRemovedSmallImage}
                     miniature={[
                       { title: 'Card da Vitrine', image: cardVitrine },
                       { title: 'Miniatura na tela de Curso', image: curso },
                       { title: 'Miniatura na tela de Aula', image: aula },
                     ]}
                   />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Grid container justify='flex-end'>
+                <Grid item>
+                  <Button variant='contained' type='submit' color='secondary' className={classes.button}>
+                    Salvar
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>

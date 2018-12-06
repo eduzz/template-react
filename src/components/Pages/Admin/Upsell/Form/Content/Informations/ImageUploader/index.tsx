@@ -17,6 +17,7 @@ export interface IMiniature {
 interface ISize {
   width: number;
   height: number;
+  image: string;
 }
 
 export interface IResolution {
@@ -30,16 +31,13 @@ interface IProps {
   miniature?: IMiniature[];
   resolution?: IResolution;
   helperText?: string;
+  onUploaded?: any;
+  onRemoved?: (label: string) => void;
 }
 
 interface IState {
   selectedResolution: 'large' | 'medium' | 'small';
   isSelectorOpen: boolean;
-  images: {
-    large: string;
-    medium: string;
-    small: string;
-  };
 }
 
 const MAX_WIDTH = 600;
@@ -61,7 +59,7 @@ const MAX_WIDTH = 600;
   },
   image: {
     borderRadius: 4,
-    width: MAX_WIDTH,
+    maxWidth: MAX_WIDTH,
   },
   responsiveContainer: {
     width: 'fit-content',
@@ -117,11 +115,6 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
     this.state = {
       selectedResolution: 'large',
       isSelectorOpen: false,
-      images: {
-        large: '',
-        medium: '',
-        small: '',
-      },
     };
   }
 
@@ -132,22 +125,15 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
   }
 
   handleRemoveImage = () => {
-    this.setState(state => ({
-      images: {
-        ...state.images,
-        [state.selectedResolution]: '',
-      },
-    }));
+    this.props.onRemoved(this.state.selectedResolution);
   }
 
   handleSelectorComplete = (image: string) => {
-    this.setState(state => ({
-      images: {
-        ...state.images,
-        [state.selectedResolution]: image,
-      },
+    this.setState({
       isSelectorOpen: false,
-    }));
+    });
+
+    this.props.onUploaded({ [this.state.selectedResolution]: image });
   }
 
   handleOpenSelector = () => {
@@ -158,7 +144,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
 
   render() {
     const { classes, miniature, helperText, resolution } = this.props;
-    const { selectedResolution, isSelectorOpen, images } = this.state;
+    const { selectedResolution, isSelectorOpen } = this.state;
 
     let imagePlaceholderHeight = resolution[selectedResolution].height;
 
@@ -185,7 +171,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
         </Grid>
         <Grid item xs={true}>
           <div className={classes.imageContainer}>
-            {!images[selectedResolution] ?
+            {!resolution[selectedResolution].image ?
               <div
                 className={classes.imagePlaceholder}
                 style={{
@@ -196,7 +182,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
               :
               <img
                 alt=''
-                src={!!images[selectedResolution] ? CDN_URL + images[selectedResolution] : null}
+                src={!!resolution[selectedResolution].image ? CDN_URL + resolution[selectedResolution].image : null}
                 className={classes.image}
               />
             }
@@ -215,7 +201,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
                   {!!resolution.medium &&
                     <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'medium' && classes.selectedOption}`} onClick={this.handleSelectResolution('medium')}>
                       <CellphoneIcon className={classes.icon} />
-                      {!images['medium'] &&
+                      {!resolution['medium'].image &&
                         <div className={classes.warningIcon}>
                           <Typography variant='subtitle2' align='center' color='inherit'>!</Typography>
                         </div>
@@ -225,7 +211,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
                   {!!resolution.small &&
                     <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'small' && classes.selectedOption}`} onClick={this.handleSelectResolution('small')}>
                       <CellphoneIcon size={20} className={classes.icon} />
-                      {!images['small'] &&
+                      {!resolution['small'].image &&
                         <div className={classes.warningIcon}>
                           <Typography variant='subtitle2' align='center' color='inherit'>!</Typography>
                         </div>

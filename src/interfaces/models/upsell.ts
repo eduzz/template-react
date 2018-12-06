@@ -41,7 +41,12 @@ export interface IUpsell {
   description: string;
   title: string;
   label_text: string;
-  highlight_image?: any;
+  show_type: number;
+  highlight_images: {
+    large: string;
+    medium: string;
+    small: string;
+  };
   small_image: string;
   highlight: boolean;
   offer_shelf: boolean;
