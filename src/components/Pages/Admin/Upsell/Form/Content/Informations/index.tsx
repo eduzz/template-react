@@ -8,7 +8,6 @@ import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import { WithStyles } from 'decorators/withStyles';
 import ImageUploader from './ImageUploader';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 
 const destaqueVitrine = require('assets/images/destaque-vitrine.png');
 const cardVitrine = require('assets/images/card-vitrine.png');
@@ -157,18 +156,6 @@ export default class Informations extends PureComponent<IProps> {
                     { title: 'Miniatura na tela de Aula', image: aula },
                   ]}
                 />
-              </Grid>
-              <Grid item>
-                <Divider />
-              </Grid>
-              <Grid item>
-                <Grid container justify='flex-end'>
-                  <Grid item>
-                    <Button variant='contained' type='submit' color='secondary' className={classes.button}>
-                      Salvar
-                  </Button>
-                  </Grid>
-                </Grid>
               </Grid>
             </Grid>
           </Grid>

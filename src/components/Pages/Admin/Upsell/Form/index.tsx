@@ -83,7 +83,6 @@ export default class Form extends FormComponent<IProps, IState> {
           ...model,
           content_id: model.content_id.toString(),
           pre_content_id: model.content_id.toString(),
-          show_type: 1,
         },
       });
     }, error => {
