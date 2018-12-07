@@ -15,8 +15,27 @@ const vendaNutror = require('assets/images/venda-nutror.png');
 const checkout = require('assets/images/checkout.png');
 const landing = require('assets/images/landing.png');
 
+interface IBeta {
+  content: string;
+}
+
+interface IUser {
+  id: number;
+  name: string;
+  email: string;
+  type: number;
+  cpfcnpj: string;
+  id_leg: number;
+  clicodeduzz: string;
+  beta: IBeta[];
+}
+
 interface IProps {
   classes?: any;
+}
+
+interface IState {
+  user: IUser;
 }
 
 @WithStyles(theme => ({
@@ -65,18 +84,28 @@ interface IProps {
     fill: '#009358',
   },
 }))
-export default class Behavior extends PureComponent<IProps> {
+export default class Behavior extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      user: null,
+    };
+  }
+
   componentDidMount() {
-    authService.getUser().subscribe(user => {
-      console.log(user);
+    authService.getUserInfo().subscribe(user => {
+      this.setState({
+        user,
+      });
     });
   }
 
-  handleChange = () => {
-
+  handleChange = (url: string) => {
+    this.context.updateModel(model => model.external_url = url)();
   }
 
   handleClick = (type: number) => () => this.context.updateModel(model => model.show_type = type)();
@@ -84,6 +113,7 @@ export default class Behavior extends PureComponent<IProps> {
   render() {
     const { classes } = this.props;
     const { model } = this.context;
+    const { user } = this.state;
 
     return (
       <CardContent>
@@ -124,35 +154,34 @@ export default class Behavior extends PureComponent<IProps> {
                   </Grid>
                 </Grid>
               </ListItem>
-              <ListItem className={classes.item} onClick={this.handleClick(3)}>
-                <Grid container spacing={16} wrap='nowrap'>
-                  <Grid item className={classes.checkboxContainer}>
-                    <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />
-                  </Grid>
-                  <Grid item>
-                    <img alt='' src={landing} />
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Typography variant='subtitle1'><strong>Landing Page Externa</strong></Typography>
-                    <Typography variant='caption'>Se você tem uma página de vendas com link da Eduzz pode utilizar para definir o fluxo da venda.</Typography>
-                  </Grid>
-                  <Grid item xs={true}>
-                    <Grid container alignItems='flex-end' wrap='nowrap'>
-                      <Grid item>
-                        <Typography variant='caption' className={classes.externalLabel}>Link da página</Typography>
-                        <FieldText
-                          className={classes.externalField}
-                          value='abc'
-                          onChange={this.handleChange}
-                        />
-                      </Grid>
-                      <Grid item>
-                        <Button variant='contained' fullWidth className={classes.button}>ok</Button>
+              {!!user && user.beta.some(b => b.content === 'upsell') &&
+                <ListItem className={classes.item} onClick={this.handleClick(3)}>
+                  <Grid container spacing={16} wrap='nowrap'>
+                    <Grid item className={classes.checkboxContainer}>
+                      <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />
+                    </Grid>
+                    <Grid item>
+                      <img alt='' src={landing} />
+                    </Grid>
+                    <Grid item xs={5}>
+                      <Typography variant='subtitle1'><strong>Landing Page Externa</strong></Typography>
+                      <Typography variant='caption'>Se você tem uma página de vendas com link da Eduzz pode utilizar para definir o fluxo da venda.</Typography>
+                    </Grid>
+                    <Grid item xs={true}>
+                      <Grid container alignItems='flex-end' wrap='nowrap'>
+                        <Grid item>
+                          <Typography variant='caption' className={classes.externalLabel}>Link da página</Typography>
+                          <FieldText
+                            className={classes.externalField}
+                            value={model.external_url}
+                            onChange={this.handleChange}
+                          />
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </ListItem>
+                </ListItem>
+              }
             </List>
           </Grid>
           <Grid item>
