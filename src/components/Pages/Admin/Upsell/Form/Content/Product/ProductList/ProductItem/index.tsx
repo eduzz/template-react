@@ -1,4 +1,4 @@
-import React, { PureComponent, SyntheticEvent, Fragment } from 'react';
+import React, { PureComponent, SyntheticEvent } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
@@ -87,7 +87,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
       });
   }
 
-  handleSelectProduct = (content_id: number) => () => this.context.updateModel(model => model.pre_content_id = content_id)();
+  handleSelectProduct = (content_id: string) => () => this.context.updateModel(model => model.pre_content_id = content_id)();
 
   handleClick = () => {
     const { product } = this.props;
@@ -117,74 +117,72 @@ export default class ProductItem extends PureComponent<IProps, IState> {
     const { model } = this.context;
 
     return (
-      <Fragment>
-        <ListItem className={classes.root} onClick={this.handleClick}>
-          <Grid container direction='column'>
-            <Grid item>
-              <Grid container spacing={16} alignItems='center'>
-                <Grid item>
-                  <Grid container alignItems='center'>
-                    <Grid item className={classes.checkboxContainer}>
-                      {this.isSomeVariantSelected() ?
-                        <MinusCircleIcon
-                          className={`${classes.checkbox} ${classes.selected}`}
-                        />
-                        :
-                        <CheckCircleIcon
-                          className={`${classes.checkbox} ${product.content_id === model.pre_content_id && classes.selected}`}
-                        />
-                      }
-                    </Grid>
-                    <Grid item>
-                      <Grid container>
-                        <img
-                          alt=''
-                          className={classes.avatar}
-                          src={product.image}
-                          // src={CDN_URL + upsell.small_image}
-                          onError={this.handleImageError}
-                          height={44}
-                        />
-                      </Grid>
+      <ListItem className={classes.root} onClick={this.handleClick}>
+        <Grid container direction='column'>
+          <Grid item>
+            <Grid container spacing={16} alignItems='center'>
+              <Grid item>
+                <Grid container alignItems='center'>
+                  <Grid item className={classes.checkboxContainer}>
+                    {this.isSomeVariantSelected() ?
+                      <MinusCircleIcon
+                        className={`${classes.checkbox} ${classes.selected}`}
+                      />
+                      :
+                      <CheckCircleIcon
+                        className={`${classes.checkbox} ${product.content_id === model.pre_content_id && classes.selected}`}
+                      />
+                    }
+                  </Grid>
+                  <Grid item>
+                    <Grid container>
+                      <img
+                        alt=''
+                        className={classes.avatar}
+                        src={product.image}
+                        // src={CDN_URL + upsell.small_image}
+                        onError={this.handleImageError}
+                        height={44}
+                      />
                     </Grid>
                   </Grid>
                 </Grid>
+              </Grid>
 
-                <Grid item xs={5}>
-                  <Typography variant='subtitle2' className={classes.title} noWrap>{product.title}</Typography>
-                </Grid>
+              <Grid item xs={5}>
+                <Typography variant='subtitle2' className={classes.title} noWrap>{product.title}</Typography>
+              </Grid>
 
-                <Grid item xs={true}>
-                  {/* <Typography variant='subtitle1' noWrap className={classes.price}>
+              <Grid item xs={true}>
+                {/* <Typography variant='subtitle1' noWrap className={classes.price}>
                     {!!product.children && product.children.length ?
                       `De R$ ${Math.min(...product.children.map(variant => variant.price))} até R$ ${Math.max(...product.children.map(variant => variant.price))}`
                       :
                       `R$ ${product.price}`
                     }
                   </Typography> */}
-                </Grid>
+              </Grid>
 
-                {!!product.children.length &&
-                  <Grid item xs={false}>
-                    <Grid container>
-                      <IconButton>
-                        {isVariantsOpen ? <ChevronUpIcon className={classes.icon} /> : <ChevronDownIcon className={classes.icon} />}
-                      </IconButton>
-                    </Grid>
+              {!!product.children.length &&
+                <Grid item xs={false}>
+                  <Grid container>
+                    <IconButton>
+                      {isVariantsOpen ? <ChevronUpIcon className={classes.icon} /> : <ChevronDownIcon className={classes.icon} />}
+                    </IconButton>
                   </Grid>
-                }
-              </Grid>
+                </Grid>
+              }
             </Grid>
-            {!!product.children.length &&
-              <Grid item>
-                <Collapse in={isVariantsOpen}>
-                  <ProductVariants variants={product.children} />
-                </Collapse>
-              </Grid>
-            }
           </Grid>
-        </ListItem>
-      </Fragment>
+          {!!product.children.length &&
+            <Grid item>
+              <Collapse in={isVariantsOpen}>
+                <ProductVariants variants={product.children} />
+              </Collapse>
+            </Grid>
+          }
+        </Grid>
+      </ListItem>
     );
   }
 }

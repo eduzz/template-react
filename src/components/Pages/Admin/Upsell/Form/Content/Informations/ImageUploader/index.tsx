@@ -33,6 +33,7 @@ interface IProps {
   helperText?: string;
   onUploaded?: any;
   onRemoved?: (label: string) => void;
+  error?: boolean;
 }
 
 interface IState {
@@ -60,6 +61,12 @@ const MAX_WIDTH = 600;
   image: {
     borderRadius: 4,
     maxWidth: MAX_WIDTH,
+  },
+  imageError: {
+    border: '1px solid #eb442c',
+  },
+  textError: {
+    color: '#eb442c',
   },
   responsiveContainer: {
     width: 'fit-content',
@@ -143,7 +150,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, miniature, helperText, resolution } = this.props;
+    const { classes, miniature, helperText, resolution, error } = this.props;
     const { selectedResolution, isSelectorOpen } = this.state;
 
     let imagePlaceholderHeight = resolution[selectedResolution].height;
@@ -173,7 +180,7 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
           <div className={classes.imageContainer}>
             {!resolution[selectedResolution].image ?
               <div
-                className={classes.imagePlaceholder}
+                className={`${classes.imagePlaceholder} ${!!error && classes.imageError}`}
                 style={{
                   width: resolution[selectedResolution].width,
                   height: imagePlaceholderHeight,
@@ -187,7 +194,8 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
               />
             }
           </div>
-          {!!helperText && <FormHelperText margin='dense'>{helperText}</FormHelperText>}
+          {(!!helperText && !error) && <FormHelperText margin='dense'>{helperText}</FormHelperText>}
+          {!!error && <FormHelperText className={classes.textError} margin='dense'>Obrigatório</FormHelperText>}
         </Grid>
         <Grid item xs={false}>
           <Grid container direction='column' spacing={16}>

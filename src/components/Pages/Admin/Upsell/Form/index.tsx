@@ -25,6 +25,7 @@ interface IProps {
 
 interface IState extends IStateForm<IUpsell> {
   updateModel: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
+  isFormValid: boolean;
 }
 
 @WithStyles(theme => ({
@@ -63,6 +64,7 @@ export default class Form extends FormComponent<IProps, IState> {
         courses: [],
       },
       updateModel: this.updateModel,
+      isFormValid: true,
     };
   }
 
@@ -79,7 +81,9 @@ export default class Form extends FormComponent<IProps, IState> {
         model: {
           ...this.state.model,
           ...model,
-          pre_content_id: model.content_id,
+          content_id: model.content_id.toString(),
+          pre_content_id: model.content_id.toString(),
+          show_type: 1,
         },
       });
     }, error => {
@@ -91,7 +95,16 @@ export default class Form extends FormComponent<IProps, IState> {
   handleSubmit = (isValid: boolean) => {
     console.log(this.state.model);
 
-    if (!isValid) return;
+    const { highlight_images, small_image } = this.state.model;
+
+    const isFormValid = isValid && !!highlight_images.large && !!small_image;
+
+    this.setState({
+      isFormValid,
+    });
+
+    if (!isFormValid)
+      return;
 
     upsellService.save(this.state.model as IUpsell).pipe(
       rxjsOperators.loader(),
@@ -99,7 +112,6 @@ export default class Form extends FormComponent<IProps, IState> {
       rxjsOperators.bindComponent(this),
     ).subscribe(() => {
       Toast.show('Upsell salvo com sucesso!');
-      this.props.history.push('/upsell');
     }, (error: any) => {
       Toast.error(error);
     });
@@ -115,7 +127,7 @@ export default class Form extends FormComponent<IProps, IState> {
     console.log(this.state.model);
 
     return (
-      <FormValidation onSubmit={this.handleSubmit}>
+      <FormValidation onSubmit={this.handleSubmit} ref={this.bindForm}>
         <UpsellFormContext.Provider value={this.state}>
           <div className={classes.root}>
             <Toolbar>

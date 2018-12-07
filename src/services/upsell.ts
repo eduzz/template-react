@@ -1,4 +1,4 @@
-import { IUpsell, IUpsellCourse, IUpsellCourses, IUpsellList, IUpsellProduct } from 'interfaces/models/upsell';
+import { IUpsell, IUpsellCourse, IUpsellList, IUpsellProduct } from 'interfaces/models/upsell';
 import * as rxjs from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
 
@@ -9,7 +9,7 @@ class UpsellService {
   private products$ = new rxjs.BehaviorSubject<IUpsellProduct[]>(null);
 
   public getCourses() {
-    return apiService.get<IUpsellCourses[]>('producer/courses/my').pipe(
+    return apiService.get<IUpsellCourse[]>('producer/courses/my').pipe(
       rxjsOperators.map(response => response.data),
     );
   }

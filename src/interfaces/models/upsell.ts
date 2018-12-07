@@ -6,15 +6,9 @@ export interface IUpsellList {
   total_click?: number;
 }
 
-export interface IUpsellCourses {
-  id: number;
-  title: string;
-  hash: string;
-}
-
 export interface IUpsellProduct {
   biling_type: string;
-  content_id: number;
+  content_id: string;
   content_type_id: number;
   has_children: boolean;
   image: string;
@@ -25,7 +19,7 @@ export interface IUpsellProduct {
 
 export interface IUpsellProductVariant {
   biling_type: string;
-  content_id: number;
+  content_id: string;
   content_type_id: number;
   has_children: boolean;
   image: string;
@@ -36,8 +30,8 @@ export interface IUpsellProductVariant {
 export interface IUpsell {
   id: number;
   type: number;
-  content_id: number;
-  pre_content_id: number;
+  content_id: string;
+  pre_content_id: string;
   description: string;
   title: string;
   label_text: string;
@@ -77,6 +71,9 @@ export interface IUpsell {
 export interface IUpsellCourse {
   id: number;
   title: string;
+  customizations: {
+    avatar: string;
+  };
   course_page: boolean;
   modules: {
     id: number;

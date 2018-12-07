@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import { UpsellFormContext, IUpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
 import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 
+const nutrorLogo = require('assets/svg/nutror-logo.svg');
+
 interface IProps {
   classes?: any;
   variant: IUpsellProductVariant;
@@ -69,6 +71,10 @@ export default class Variant extends PureComponent<IProps> {
     updateModel(model => model.pre_content_id = (model.pre_content_id !== variant.content_id ? variant.content_id : null))();
   }
 
+  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = nutrorLogo;
+  }
+
   render() {
     const { classes, variant } = this.props;
     const { model } = this.context;
@@ -80,7 +86,7 @@ export default class Variant extends PureComponent<IProps> {
             <CheckCircleIcon
               className={`${classes.checkbox} ${variant.content_id === model.pre_content_id && classes.selected}`}
             />
-            <img alt='' src={variant.image} className={classes.image} />
+            <img alt='' onError={this.handleImageError} src={variant.image} className={classes.image} />
           </Grid>
         </Grid>
         <Grid item className={classes.content}>
