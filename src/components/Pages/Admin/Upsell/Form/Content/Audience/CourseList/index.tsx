@@ -64,7 +64,7 @@ export default class CourseList extends PureComponent<IProps, IState> {
         </CardContent>
       );
 
-    if (!courses)
+    if (!courses.length)
       return <Loading />;
 
     return (

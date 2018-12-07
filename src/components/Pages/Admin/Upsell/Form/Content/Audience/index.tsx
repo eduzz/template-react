@@ -5,21 +5,32 @@ import Grid from '@material-ui/core/Grid';
 import SelectPlaces from './SelectPlaces';
 import CourseList from './CourseList';
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
+import { WithStyles } from 'decorators/withStyles';
 
 interface IProps {
   classes?: any;
 }
 
+@WithStyles({
+  list: {
+    transition: 'all 0.3s ease',
+  },
+  disabled: {
+    opacity: 0.5,
+    pointerEvents: 'none',
+  },
+})
 export default class Audience extends PureComponent<IProps> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
   render() {
     const { model } = this.context;
+    const { classes } = this.props;
 
     return (
       <CardContent>
-        <Grid container direction='column' spacing={32}>
+        <Grid container direction='column' spacing={32} wrap='nowrap'>
           <Grid item>
             <Typography variant='subtitle1'>
               <strong>Audiência</strong>
@@ -29,16 +40,14 @@ export default class Audience extends PureComponent<IProps> {
           <Grid item>
             <SelectPlaces />
           </Grid>
-          {(model.has_selected_courses || model.has_selected_lessons) &&
-            <Grid item>
-              <Typography variant='subtitle1'>
-                <strong>Aulas a exibir</strong>
-              </Typography>
-              <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
+          <Grid item className={`${classes.list} ${(!model.has_selected_courses && !model.has_selected_lessons) && classes.disabled}`}>
+            <Typography variant='subtitle1'>
+              <strong>Aulas a exibir</strong>
+            </Typography>
+            <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
 
-              <CourseList />
-            </Grid>
-          }
+            <CourseList />
+          </Grid>
         </Grid>
       </CardContent>
     );

@@ -118,7 +118,17 @@ export default class Form extends FormComponent<IProps, IState> {
       return;
     }
 
-    upsellService.save(this.state.model as IUpsell).pipe(
+    const model = {
+      ...this.state.model,
+      courses: this.state.model.has_selected_courses || this.state.model.has_selected_lessons ?
+        this.state.model.courses
+          .filter(course => course.course_page || course.modules
+            .some(module => module.checked || module.lessons
+              .some(lesson => lesson.checked)))
+        : [],
+    };
+
+    upsellService.save(model as IUpsell).pipe(
       rxjsOperators.loader(),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),

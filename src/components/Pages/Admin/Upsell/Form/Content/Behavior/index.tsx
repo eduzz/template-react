@@ -9,6 +9,7 @@ import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 import Button from '@material-ui/core/Button';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
+import authService from 'services/auth';
 
 const vendaNutror = require('assets/images/venda-nutror.png');
 const checkout = require('assets/images/checkout.png');
@@ -67,6 +68,12 @@ interface IProps {
 export default class Behavior extends PureComponent<IProps> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
+
+  componentDidMount() {
+    authService.getUser().subscribe(user => {
+      console.log(user);
+    });
+  }
 
   handleChange = () => {
 
