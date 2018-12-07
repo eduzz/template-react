@@ -5,7 +5,6 @@ import { WithStyles } from 'decorators/withStyles';
 import Button from '@material-ui/core/Button';
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import CardContent from '@material-ui/core/CardContent';
-import upsellService from 'services/upsell';
 
 const infoProduto = require('assets/images/info-produto.png');
 const produtoFisico = require('assets/images/produto-fisico.png');
@@ -110,7 +109,8 @@ export default class ProductType extends PureComponent<IProps, IState> {
   handleSubmitSelectType = () => {
     const { selectedType } = this.state;
 
-    upsellService.loadProducts(selectedType);
+    // if (upsellService.getCurrentProductType() !== selectedType)
+    //   upsellService.loadProducts(selectedType);
 
     this.context.updateModel(model => model.type = selectedType)();
   }

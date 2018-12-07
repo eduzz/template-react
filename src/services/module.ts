@@ -7,7 +7,7 @@ import { ILesson } from 'interfaces/models/lesson';
 const mock: IModule[] = [
   {
     id: 0,
-    name: 'Módulo 1',
+    title: 'Módulo 1',
     free_module: true,
     hidden_module: true,
     module_validity: 30,
@@ -16,21 +16,21 @@ const mock: IModule[] = [
     lessons: [
       {
         id: 0,
-        name: 'Aula 1',
+        title: 'Aula 1',
       },
       {
         id: 1,
-        name: 'Aula 2',
+        title: 'Aula 2',
       },
       {
         id: 2,
-        name: 'Aula 3',
+        title: 'Aula 3',
       },
     ],
   },
   {
     id: 1,
-    name: 'Módulo 2',
+    title: 'Módulo 2',
     free_module: true,
     hidden_module: true,
     module_validity: 30,
@@ -40,7 +40,7 @@ const mock: IModule[] = [
   },
   {
     id: 2,
-    name: 'Módulo 3',
+    title: 'Módulo 3',
     free_module: true,
     hidden_module: true,
     module_validity: 30,
@@ -50,7 +50,7 @@ const mock: IModule[] = [
   },
   {
     id: 3,
-    name: 'Módulo 4',
+    title: 'Módulo 4',
     free_module: true,
     hidden_module: true,
     module_validity: 30,
@@ -60,7 +60,7 @@ const mock: IModule[] = [
   },
   {
     id: 4,
-    name: 'Módulo 5',
+    title: 'Módulo 5',
     free_module: true,
     hidden_module: true,
     module_validity: 30,
@@ -70,7 +70,7 @@ const mock: IModule[] = [
   },
   {
     id: 5,
-    name: 'Módulo 6',
+    title: 'Módulo 6',
     free_module: true,
     hidden_module: true,
     module_validity: 30,

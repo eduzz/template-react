@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
+import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
 
 const destaqueVitrine = require('assets/images/destaque-vitrine.png');
 const cardVitrine = require('assets/images/card-vitrine.png');
@@ -13,14 +14,12 @@ interface IPlace {
   title: string;
   description: string;
   image: string;
+  selectedLabel: string;
+  handleClick?: () => void;
 }
 
 interface IProps {
   classes?: any;
-}
-
-interface IState {
-  selectedPlace: number;
 }
 
 @WithStyles(theme => ({
@@ -65,7 +64,9 @@ interface IState {
     maxWidth: 170,
   },
 }))
-export default class ProductType extends PureComponent<IProps, IState> {
+export default class ProductType extends PureComponent<IProps> {
+  static contextType = UpsellFormContext;
+  context: IUpsellFormContext;
 
   private places: IPlace[] = [
     {
@@ -73,48 +74,54 @@ export default class ProductType extends PureComponent<IProps, IState> {
       title: 'Destaque da Vitrine',
       description: 'É exibido na página inicial da sua área de membros.',
       image: destaqueVitrine,
+      selectedLabel: 'highlight',
+      handleClick: () => {
+        this.context.updateModel(model => model.highlight = !model.highlight)();
+      },
     },
     {
       value: 2,
       title: 'Card da Vitrine',
       description: 'Será exibida na prateleira de ofertas na página inicial da sua área de membros.',
       image: cardVitrine,
+      selectedLabel: 'offer_shelf',
+      handleClick: () => {
+        this.context.updateModel(model => model.offer_shelf = !model.offer_shelf)();
+      },
     },
     {
       value: 3,
       title: 'Miniatura na tela de Curso',
       description: 'Exibe no card de oferta na página de curso.',
       image: curso,
+      selectedLabel: 'has_selected_courses',
+      handleClick: () => {
+        this.context.updateModel(model => model.has_selected_courses = !model.has_selected_courses)();
+      },
     },
     {
       value: 4,
       title: 'Miniatura na tela de Aula',
       description: 'Serviços que podem ser prestados através da plataforma Jobzz',
       image: aula,
+      selectedLabel: 'has_selected_lessons',
+      handleClick: () => {
+        this.context.updateModel(model => model.has_selected_lessons = !model.has_selected_lessons)();
+      },
     },
   ];
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      selectedPlace: null,
-    };
-  }
-
-  handleSelectPlace = (place: number) => () => this.setState({ selectedPlace: place });
-
   render() {
     const { classes } = this.props;
-    const { selectedPlace } = this.state;
+    const { model } = this.context;
 
     return (
       <Grid container spacing={16}>
         {this.places.map(place =>
           <Grid item key={place.value}>
             <div
-              className={`${classes.item} ${selectedPlace === place.value && classes.selectedPlace}`}
-              onClick={this.handleSelectPlace(place.value)}
+              className={`${classes.item} ${!!model[place.selectedLabel] && classes.selectedPlace}`}
+              onClick={place.handleClick}
             >
               <img className={classes.image} alt='' src={place.image} />
               <Typography align='center' variant='subtitle1' gutterBottom><strong>{place.title}</strong></Typography>

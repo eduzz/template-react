@@ -22,7 +22,8 @@ import rxjsOperators from 'rxjs-operators';
 import { IModule } from 'interfaces/models/module';
 
 export interface IModel {
-  name: string;
+  name?: string;
+  title?: string;
   free_module: boolean;
   hidden_module: boolean;
   module_validity: number;

@@ -1,4 +1,6 @@
 export interface ILesson {
   id?: number;
-  name: string;
+  title: string;
+  module_id?: number;
+  checked?: boolean;
 }

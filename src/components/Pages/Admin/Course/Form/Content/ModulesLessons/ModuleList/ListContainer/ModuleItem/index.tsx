@@ -85,7 +85,7 @@ class ModuleItem extends PureComponent<IProps, IState> {
       <div className={classes.root}>
         <ListItem onClick={this.handleClick}>
           <DragHandle />
-          <ListItemText inset primary={module.name} />
+          <ListItemText inset primary={module.title} />
           <DropdownMenu options={this.options} />
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>

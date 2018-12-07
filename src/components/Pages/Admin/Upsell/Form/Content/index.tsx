@@ -16,10 +16,7 @@ import Behavior from './Behavior';
 interface IProps {
   classes?: any;
   theme?: any;
-}
-
-interface IState {
-  value: number;
+  step: number;
 }
 
 @WithStyles(theme => ({
@@ -30,36 +27,23 @@ interface IState {
     position: 'relative',
   },
 }), { withTheme: true })
-export default class Content extends React.Component<IProps, IState> {
+export default class Content extends React.Component<IProps> {
   static contextType = UpsellFormContext;
   public context: IUpsellFormContext;
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      value: 0,
-    };
-  }
-
-  handleChange = (event: SyntheticEvent, value: number) => {
-    this.setState({ value });
-  }
-
-  handleChangeIndex = (index: number) => {
-    this.setState({ value: index });
+  handleChange = (event: SyntheticEvent, step: number) => {
+    this.context.updateFlowStep(step);
   }
 
   render() {
-    const { classes, theme } = this.props;
-    const { value } = this.state;
-    const { model } = this.context;
+    const { classes, theme, step } = this.props;
+    const { model, updateFlowStep } = this.context;
 
     return (
       <div className={classes.root}>
         <AppBar position='static' color='inherit' elevation={0}>
           <Tabs
-            value={value}
+            value={step}
             onChange={this.handleChange}
           >
             <Tab label='Produto' />
@@ -80,12 +64,10 @@ export default class Content extends React.Component<IProps, IState> {
         <Fade in={!!model.content_id} unmountOnExit>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={this.state.value}
-            onChangeIndex={this.handleChangeIndex}
+            index={step}
+            onChangeIndex={updateFlowStep}
           >
-            <SelectedProduct
-              onFinish={this.handleChangeIndex}
-            />
+            <SelectedProduct />
             <Informations />
             <Audience />
             <Behavior />

@@ -26,6 +26,8 @@ interface IProps {
 interface IState extends IStateForm<IUpsell> {
   updateModel: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
   isFormValid: boolean;
+  flowStep: number;
+  updateFlowStep: (flowStep: number) => void;
 }
 
 @WithStyles(theme => ({
@@ -65,6 +67,8 @@ export default class Form extends FormComponent<IProps, IState> {
       },
       updateModel: this.updateModel,
       isFormValid: true,
+      flowStep: 0,
+      updateFlowStep: this.updateFlowStep,
     };
   }
 
@@ -91,6 +95,12 @@ export default class Form extends FormComponent<IProps, IState> {
     });
   }
 
+  updateFlowStep = (flowStep: number) => {
+    this.setState({
+      flowStep
+    });
+  }
+
   handleSubmit = (isValid: boolean) => {
     console.log(this.state.model);
 
@@ -102,8 +112,11 @@ export default class Form extends FormComponent<IProps, IState> {
       isFormValid,
     });
 
-    if (!isFormValid)
+    if (!isFormValid) {
+      Toast.error('Ops... Você esqueceu algumas informações necessárias');
+      this.updateFlowStep(1);
       return;
+    }
 
     upsellService.save(this.state.model as IUpsell).pipe(
       rxjsOperators.loader(),
@@ -122,6 +135,7 @@ export default class Form extends FormComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
+    const { flowStep } = this.state;
 
     console.log(this.state.model);
 
@@ -141,7 +155,7 @@ export default class Form extends FormComponent<IProps, IState> {
             </Toolbar>
 
             <Card>
-              <Content />
+              <Content step={flowStep} />
             </Card>
           </div>
         </UpsellFormContext.Provider>

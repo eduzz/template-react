@@ -1,3 +1,5 @@
+import { IModule } from './module';
+
 export interface IUpsellList {
   id: number;
   title: string;
@@ -36,6 +38,8 @@ export interface IUpsell {
   title: string;
   label_text: string;
   show_type: number;
+  has_selected_lessons: boolean;
+  has_selected_courses: boolean;
   highlight_images: {
     large: string;
     medium: string;
@@ -48,42 +52,16 @@ export interface IUpsell {
   user_id: number;
   created_at: string;
   external_url: string;
-  courses: {
-    id: number;
-    title: string;
-    course_page: boolean;
-    upc_cod: number;
-    modules: {
-      id: number;
-      title: string;
-      course_id: number;
-      lessons: {
-        id: number;
-        title: string;
-        module_id: number;
-        checked: boolean;
-      }[];
-      checked: boolean;
-    }[];
-  }[];
+  courses: IUpsellCourse[];
 }
 
 export interface IUpsellCourse {
   id: number;
   title: string;
+  course_page: boolean;
+  upc_cod: number;
   customizations: {
     avatar: string;
   };
-  course_page: boolean;
-  modules: {
-    id: number;
-    title: string;
-    lessons: {
-      id: number;
-      title: string;
-      module_id: number;
-      checked: boolean;
-    }[];
-    checked: boolean;
-  }[];
+  modules: IModule[];
 }

@@ -13,7 +13,6 @@ import rxjsOperators from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
-  onFinish: Function;
 }
 
 interface IState {
@@ -57,7 +56,7 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
         this.setState({
           selectedProduct: products
             .reduce((acc, item) => [...acc, { ...item }, ...(item.children || [])], [])
-            .find(p => p.content_id === model.content_id),
+            .find(p => p.content_id == model.content_id),
         });
     }, error => {
       Toast.error(error);
@@ -65,7 +64,7 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
   }
 
   handleInformations = () => {
-    this.props.onFinish(1);
+    this.context.updateFlowStep(1);
   }
 
   render() {

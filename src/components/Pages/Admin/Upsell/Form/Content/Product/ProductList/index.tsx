@@ -3,7 +3,6 @@ import ProductItem from './ProductItem';
 import List from '@material-ui/core/List';
 import upsellService from 'services/upsell';
 import rxjsOperators from 'rxjs-operators';
-import Toast from 'components/Shared/Toast';
 import { IUpsellProduct } from 'interfaces/models/upsell';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
 import Loading from 'components/Shared/Loading';
@@ -11,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import CardContent from '@material-ui/core/CardContent';
+import ErrorMessage from 'components/Shared/ErrorMessage';
 
 interface IProps {
   classes?: any;
@@ -19,6 +20,7 @@ interface IProps {
 interface IState {
   products: IUpsellProduct[];
   search: string;
+  error?: any;
 }
 
 @WithStyles(theme => ({
@@ -45,6 +47,7 @@ export default class ProductList extends PureComponent<IProps, IState> {
     this.state = {
       products: null,
       search: '',
+      error: null,
     };
   }
 
@@ -54,18 +57,33 @@ export default class ProductList extends PureComponent<IProps, IState> {
     });
   }
 
-  componentDidMount() {
+  loadData = () => {
+    this.setState({
+      error: null,
+    });
+
     upsellService.getProducts(this.context.model.type).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(products => {
       this.setState({ products });
-    }, error => Toast.error(error));
+    }, error => this.setState({ error }));
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 
   render() {
     const { classes } = this.props;
-    const { products, search } = this.state;
+    const { products, search, error } = this.state;
+
+    if (error)
+      return (
+        <CardContent>
+          <ErrorMessage error={error} tryAgain={this.loadData} />
+        </CardContent>
+      );
 
     if (!products)
       return <Loading />;

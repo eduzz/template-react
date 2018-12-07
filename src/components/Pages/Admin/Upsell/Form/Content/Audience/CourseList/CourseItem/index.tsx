@@ -9,6 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import { IUpsellCourse } from 'interfaces/models/upsell';
 import { CDN_URL } from 'settings';
+import ModuleItem from './ModuleItem';
+import List from '@material-ui/core/List';
+import { UpsellFormContext, IUpsellFormContext } from '../../../../Context';
+import IconButton from '@material-ui/core/IconButton';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -46,7 +50,6 @@ interface IState {
     color: '#8C9198',
   },
   checkboxContainer: {
-    padding: theme.spacing.unit,
     '&:before': {
       content: '""',
       width: 13,
@@ -61,11 +64,17 @@ interface IState {
     transition: 'all 0.3s ease',
     fill: '#D9D9D9',
   },
+  checkboxPlaceholder: {
+    width: theme.spacing.unit,
+  },
   selected: {
     fill: '#009358',
   },
 }))
 export default class CoruseItem extends PureComponent<IProps, IState> {
+  static contextType = UpsellFormContext;
+  context: IUpsellFormContext;
+
   constructor(props: IProps) {
     super(props);
 
@@ -80,6 +89,21 @@ export default class CoruseItem extends PureComponent<IProps, IState> {
     }));
   }
 
+  handleCourseSelect = (e: SyntheticEvent) => {
+    e.stopPropagation();
+
+    this.context.updateModel(model =>
+      model.courses = model.courses.map(course => {
+        if (course.id === this.props.course.id)
+          return {
+            ...course,
+            course_page: !course.course_page,
+          };
+        return course;
+      })
+    )();
+  }
+
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = nutrorLogo;
   }
@@ -87,21 +111,28 @@ export default class CoruseItem extends PureComponent<IProps, IState> {
   render() {
     const { classes, course } = this.props;
     const { isOpen } = this.state;
+    const { model } = this.context;
 
     return (
-      <ListItem className={classes.root} onClick={this.handleClick}>
+      <ListItem className={classes.root} onClick={model.has_selected_lessons && !!(course.modules || []).length ? this.handleClick : null}>
         <Grid container direction='column' wrap='nowrap'>
           <Grid item>
             <Grid container spacing={16} alignItems='center'>
               <Grid item>
                 <Grid container alignItems='center'>
-                  <Grid item className={classes.checkboxContainer}>
-                    <Grid container>
-                      <CheckCircleIcon
-                        className={`${classes.checkbox}`}
-                      />
+                  {model.has_selected_courses ?
+                    <Grid item className={classes.checkboxContainer}>
+                      <Grid container>
+                        <IconButton onClick={this.handleCourseSelect}>
+                          <CheckCircleIcon
+                            className={`${classes.checkbox} ${course.course_page && classes.selected}`}
+                          />
+                        </IconButton>
+                      </Grid>
                     </Grid>
-                  </Grid>
+                    :
+                    <Grid item className={classes.checkboxPlaceholder} />
+                  }
                   <Grid item>
                     <Grid container>
                       <img
@@ -119,18 +150,26 @@ export default class CoruseItem extends PureComponent<IProps, IState> {
                 <Typography variant='subtitle2' className={classes.title} noWrap>{course.title}</Typography>
               </Grid>
 
-              <Grid item xs={false}>
-                <Grid container>
-                  {isOpen ? <ChevronUpIcon className={classes.icon} /> : <ChevronDownIcon className={classes.icon} />}
+              {model.has_selected_lessons && !!(course.modules || []).length &&
+                <Grid item xs={false}>
+                  <Grid container>
+                    {isOpen ? <ChevronUpIcon className={classes.icon} /> : <ChevronDownIcon className={classes.icon} />}
+                  </Grid>
                 </Grid>
-              </Grid>
+              }
             </Grid>
           </Grid>
-          <Grid item>
-            <Collapse in={isOpen}>
-              modules and lessons
-            </Collapse>
-          </Grid>
+          {model.has_selected_lessons && !!(course.modules || []).length &&
+            <Grid item>
+              <Collapse in={isOpen}>
+                <List>
+                  {(course.modules || []).map((module, index) =>
+                    <ModuleItem key={index} module={module} />
+                  )}
+                </List>
+              </Collapse>
+            </Grid>
+          }
         </Grid>
       </ListItem>
     );

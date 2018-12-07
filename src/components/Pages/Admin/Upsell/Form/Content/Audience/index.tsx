@@ -2,21 +2,20 @@ import React, { PureComponent } from 'react';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { WithStyles } from 'decorators/withStyles';
 import SelectPlaces from './SelectPlaces';
 import CourseList from './CourseList';
+import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 
 interface IProps {
   classes?: any;
 }
 
-@WithStyles({
-
-})
-export default class Informations extends PureComponent<IProps> {
+export default class Audience extends PureComponent<IProps> {
+  static contextType = UpsellFormContext;
+  context: IUpsellFormContext;
 
   render() {
-    // const { classes } = this.props;
+    const { model } = this.context;
 
     return (
       <CardContent>
@@ -30,14 +29,16 @@ export default class Informations extends PureComponent<IProps> {
           <Grid item>
             <SelectPlaces />
           </Grid>
-          <Grid item>
-            <Typography variant='subtitle1'>
-              <strong>Aulas a exibir</strong>
-            </Typography>
-            <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
+          {(model.has_selected_courses || model.has_selected_lessons) &&
+            <Grid item>
+              <Typography variant='subtitle1'>
+                <strong>Aulas a exibir</strong>
+              </Typography>
+              <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
 
-            <CourseList />
-          </Grid>
+              <CourseList />
+            </Grid>
+          }
         </Grid>
       </CardContent>
     );
