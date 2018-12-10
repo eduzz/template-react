@@ -80,7 +80,7 @@ export default class ProductType extends PureComponent<IProps, IState> {
       svg: infoProduto,
     },
     {
-      value: 2,
+      value: 3,
       title: 'Produto Físico',
       description: 'Livros, Peças, brindes, camisetas, tenis',
       svg: produtoFisico,
