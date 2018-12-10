@@ -61,7 +61,7 @@ export default class Form extends FormComponent<IProps, IState> {
         external_url: '',
         highlight: false,
         offer_shelf: false,
-        published: false,
+        published: true,
         courses: [],
       },
       updateModel: this.updateModel,
