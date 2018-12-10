@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import SelectPlaces from './SelectPlaces';
-import CourseList from './CourseList';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
+import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
+import React, { PureComponent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
+import CourseList from './CourseList';
+import SelectPlaces from './SelectPlaces';
 
 interface IProps {
   classes?: any;

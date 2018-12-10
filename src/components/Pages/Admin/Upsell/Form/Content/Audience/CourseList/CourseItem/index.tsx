@@ -1,18 +1,19 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import { WithStyles } from 'decorators/withStyles';
-import Grid from '@material-ui/core/Grid';
-import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
-import ChevronUpIcon from 'mdi-react/ChevronUpIcon';
-import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
-import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
-import { IUpsellCourse } from 'interfaces/models/upsell';
-import { CDN_URL } from 'settings';
-import ModuleItem from './ModuleItem';
-import List from '@material-ui/core/List';
-import { UpsellFormContext, IUpsellFormContext } from '../../../../Context';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsellCourse } from 'interfaces/models/upsell';
+import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
+import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
+import ChevronUpIcon from 'mdi-react/ChevronUpIcon';
+import React, { PureComponent, SyntheticEvent } from 'react';
+import { BASEURL_V2 } from 'settings';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../../../Context';
+import ModuleItem from './ModuleItem';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -138,7 +139,7 @@ export default class CoruseItem extends PureComponent<IProps, IState> {
                       <img
                         alt=''
                         className={classes.avatar}
-                        src={(course.customizations && course.customizations.avatar) ? CDN_URL + course.customizations.avatar : nutrorLogo}
+                        src={(course.customizations && course.customizations.avatar) ? BASEURL_V2 + course.customizations.avatar : nutrorLogo}
                         onError={this.handleImageError}
                       />
                     </Grid>
