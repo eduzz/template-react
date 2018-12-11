@@ -13,6 +13,9 @@ interface IProps {
 }
 
 @WithStyles({
+  root: {
+    height: 'calc(100vh - 148px)',
+  },
   list: {
     transition: 'all 0.3s ease',
   },
@@ -30,7 +33,7 @@ export default class Audience extends PureComponent<IProps> {
     const { classes } = this.props;
 
     return (
-      <CardContent>
+      <CardContent className={classes.root}>
         <Grid container direction='column' spacing={32} wrap='nowrap'>
           <Grid item>
             <Typography variant='subtitle1'>

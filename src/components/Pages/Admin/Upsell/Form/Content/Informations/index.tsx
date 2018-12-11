@@ -19,6 +19,9 @@ interface IProps {
 }
 
 @WithStyles({
+  root: {
+    height: 'calc(100vh - 148px)',
+  },
   labelTextSelect: {
     maxWidth: 266,
   },
@@ -87,7 +90,7 @@ export default class Informations extends PureComponent<IProps> {
     const { model, updateModel, isFormValid } = this.context;
 
     return (
-      <CardContent>
+      <CardContent className={classes.root}>
         <Grid container direction='column' spacing={16}>
           <Grid item>
             <Typography variant='subtitle1'>
