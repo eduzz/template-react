@@ -11,7 +11,6 @@ import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import ChevronUpIcon from 'mdi-react/ChevronUpIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { BASEURL_V2 } from 'settings';
-
 import { IUpsellFormContext, UpsellFormContext } from '../../../../Context';
 import ModuleItem from './ModuleItem';
 
@@ -71,8 +70,12 @@ interface IState {
   selected: {
     fill: '#009358',
   },
+  disabled: {
+    opacity: 0.5,
+    cursor: 'not-allowed',
+  },
 }))
-export default class CoruseItem extends PureComponent<IProps, IState> {
+export default class CourseItem extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
 
@@ -121,19 +124,15 @@ export default class CoruseItem extends PureComponent<IProps, IState> {
             <Grid container spacing={16} alignItems='center'>
               <Grid item>
                 <Grid container alignItems='center'>
-                  {model.has_selected_courses ?
-                    <Grid item className={classes.checkboxContainer}>
-                      <Grid container>
-                        <IconButton onClick={this.handleCourseSelect}>
-                          <CheckCircleIcon
-                            className={`${classes.checkbox} ${course.course_page && classes.selected}`}
-                          />
-                        </IconButton>
-                      </Grid>
+                  <Grid item className={classes.checkboxContainer}>
+                    <Grid container>
+                      <IconButton onClick={this.handleCourseSelect}>
+                        <CheckCircleIcon
+                          className={`${classes.checkbox} ${model.has_selected_courses ? course.course_page && classes.selected : classes.disabled}`}
+                        />
+                      </IconButton>
                     </Grid>
-                    :
-                    <Grid item className={classes.checkboxPlaceholder} />
-                  }
+                  </Grid>
                   <Grid item>
                     <Grid container>
                       <img
@@ -162,7 +161,7 @@ export default class CoruseItem extends PureComponent<IProps, IState> {
           </Grid>
           {model.has_selected_lessons && !!(course.modules || []).length &&
             <Grid item>
-              <Collapse in={isOpen}>
+              <Collapse in={isOpen} unmountOnExit>
                 <List>
                   {(course.modules || []).map((module, index) =>
                     <ModuleItem key={index} module={module} />

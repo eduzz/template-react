@@ -132,7 +132,7 @@ export default class Form extends FormComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(() => {
-      Toast.show('Upsell salvo com sucesso!');
+      this.props.history.push('/upsell/sucesso');
     }, (error: any) => {
       Toast.error(error);
     });

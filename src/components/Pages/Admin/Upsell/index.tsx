@@ -12,7 +12,7 @@ export default class UpsellIndexPage extends PureComponent {
     path: '/:id/editar',
     component: UpsellFormPage
   }, {
-    path: '/',
+    path: '/:success?',
     component: UpsellListPage
   }];
 

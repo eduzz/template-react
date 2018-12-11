@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import List from '@material-ui/core/List';
 import CourseItem from './CourseItem';
 import upsellService from 'services/upsell';
 import rxjsOperators from 'rxjs-operators';
@@ -8,9 +7,12 @@ import { WithRouter } from 'decorators/withRouter';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
 import CardContent from '@material-ui/core/CardContent';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import { WithStyles } from 'decorators/withStyles';
+import List from '@material-ui/core/List';
 
 interface IProps {
   match?: any;
+  classes?: any;
 }
 
 interface IState {
@@ -18,6 +20,11 @@ interface IState {
 }
 
 @WithRouter()
+@WithStyles({
+  root: {
+    height: 300,
+  },
+})
 export default class CourseList extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
   context: IUpsellFormContext;
