@@ -1,7 +1,7 @@
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
-import { darken } from '@material-ui/core/styles/colorManipulator';
+import { darken, lighten } from '@material-ui/core/styles/colorManipulator';
 import logoWhite from 'assets/images/logo-white.png';
 import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
@@ -66,9 +66,16 @@ export const DrawerContext = React.createContext<IDrawerContext>(null);
     margin: '10px 0'
   },
   gridList: {
+    marginTop: 10,
     overflowY: 'auto',
     overflowX: 'hidden',
-    width: 'max-content'
+    width: 'max-content',
+    '&::-webkit-scrollbar-track': { backgroundColor: theme.palette.primary.dark },
+    '&::-webkit-scrollbar': {
+      width: 6,
+      backgroundColor: theme.palette.primary.dark,
+    },
+    '&::-webkit-scrollbar-thumb': { backgroundColor: lighten(theme.palette.primary.light, 0.5), }
   },
   list: {
     padding: 0,
