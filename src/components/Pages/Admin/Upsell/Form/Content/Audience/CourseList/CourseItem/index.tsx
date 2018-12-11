@@ -96,16 +96,17 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   handleCourseSelect = (e: SyntheticEvent) => {
     e.stopPropagation();
 
-    this.context.updateModel(model =>
-      model.courses = model.courses.map(course => {
-        if (course.id === this.props.course.id)
-          return {
-            ...course,
-            course_page: !course.course_page,
-          };
-        return course;
-      })
-    )();
+    if (this.context.model.has_selected_courses)
+      this.context.updateModel(model =>
+        model.courses = model.courses.map(course => {
+          if (course.id === this.props.course.id)
+            return {
+              ...course,
+              course_page: !course.course_page,
+            };
+          return course;
+        })
+      )();
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
@@ -126,7 +127,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 <Grid container alignItems='center'>
                   <Grid item className={classes.checkboxContainer}>
                     <Grid container>
-                      <IconButton onClick={this.handleCourseSelect}>
+                      <IconButton onClick={this.handleCourseSelect} disableRipple={!model.has_selected_courses}>
                         <CheckCircleIcon
                           className={`${classes.checkbox} ${model.has_selected_courses ? course.course_page && classes.selected : classes.disabled}`}
                         />
