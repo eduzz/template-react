@@ -7,17 +7,17 @@ import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
+import CursorDefaultIcon from 'mdi-react/CursorDefaultIcon';
+import EyeIcon from 'mdi-react/EyeIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
-import EyeIcon from 'mdi-react/EyeIcon';
-import CursorDefaultIcon from 'mdi-react/CursorDefaultIcon';
-// import ChartPieIcon from 'mdi-react/ChartPieIcon';
-// import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
 import { CDN_URL } from 'settings';
 
+// import ChartPieIcon from 'mdi-react/ChartPieIcon';
+// import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
 interface IProps {
@@ -135,7 +135,7 @@ class UpsellItem extends PureComponent<IProps> {
                 </Grid>
               </Grid>
               <Grid item>
-                <Typography variant='subtitle1'>{upsell.total_click} ({Math.floor(((upsell.total_click / upsell.total_view) || 0) * 100)}%)</Typography>
+                <Typography variant='subtitle1'>{upsell.total_click} ({((((upsell.total_click / upsell.total_view) || 0) * 100).toFixed(2)).replace('.', ',')}%)</Typography>
               </Grid>
             </Grid>
           </Grid>
