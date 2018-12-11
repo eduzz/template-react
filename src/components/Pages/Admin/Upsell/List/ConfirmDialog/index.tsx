@@ -70,8 +70,8 @@ export default class ConfirmDialog extends PureComponent<IProps, IState> {
             <Grid item className={classes.description}>
               <Typography variant='subtitle1' align='center'>
                 A oferta foi criada com sucesso!
-                Ela ja esta sendo exibida para os seus clientes.<br />
-                Agora voce deve acompanhar os resultados de conversão e otimizar as ofertas.
+                Ela já esta sendo exibida para os seus clientes.<br />
+                Agora você deve acompanhar os resultados de conversão e otimizar as ofertas.
               </Typography>
             </Grid>
             <Grid item>
