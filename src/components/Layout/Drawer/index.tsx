@@ -75,7 +75,10 @@ export const DrawerContext = React.createContext<IDrawerContext>(null);
       width: 6,
       backgroundColor: theme.palette.primary.dark,
     },
-    '&::-webkit-scrollbar-thumb': { backgroundColor: lighten(theme.palette.primary.light, 0.5), }
+    '&::-webkit-scrollbar-thumb': {
+      borderRadius: 5,
+      backgroundColor: lighten(theme.palette.primary.light, 0.5),
+    }
   },
   list: {
     padding: 0,

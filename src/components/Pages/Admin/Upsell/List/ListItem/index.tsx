@@ -111,7 +111,7 @@ class UpsellItem extends PureComponent<IProps> {
             </Grid>
           </Hidden>
 
-          <Hidden xsDown>
+          <Hidden smDown>
             <Grid item xs={true}>
               {/* <Typography variant='subtitle1' noWrap>
                 R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
