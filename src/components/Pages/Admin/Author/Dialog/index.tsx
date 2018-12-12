@@ -40,6 +40,12 @@ interface IProps {
     width: 400,
     maxWidth: 'calc(95vw - 50px)'
   },
+  avatarContainer: {
+    [theme.breakpoints.down('xs')]: {
+      flexDirection: 'column',
+      textAlign: 'center',
+    },
+  },
   avatar: {
     width: 60,
     height: 60,
@@ -47,7 +53,11 @@ interface IProps {
     transition: '0.3s',
     '&:hover': {
       boxShadow: theme.shadows[4]
-    }
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: 150,
+      height: 150,
+    },
   }
 }))
 export default class AuthorFormDialog extends FormComponent<IProps, IState> {
@@ -130,7 +140,7 @@ export default class AuthorFormDialog extends FormComponent<IProps, IState> {
           <DialogTitle>{this.isEdit ? 'Editar' : 'Novo'} Autor</DialogTitle>
 
           <DialogContent className={classes.content}>
-            <Grid container spacing={16} alignItems='center'>
+            <Grid container spacing={16} alignItems='center' className={classes.avatarContainer}>
               <Grid item xs={false}>
                 {model.avatar ?
                   <Avatar onClick={this.handleOpenAvatar} className={classes.avatar} src={CDN_URL + model.avatar} /> :
