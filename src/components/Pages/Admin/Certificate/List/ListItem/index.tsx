@@ -4,7 +4,9 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
+import { theme } from 'assets/theme';
 import AppRouter, { RouterContext } from 'components/Router';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
@@ -40,6 +42,16 @@ interface IProps {
   },
   defaultCertificate: {
     fill: '#f5d504',
+  },
+  dropMenu: {
+    [theme.breakpoints.only('xs')]: {
+      marginLeft: 42,
+    },
+  },
+  chevron: {
+    [theme.breakpoints.only('xs')]: {
+      marginTop: 70,
+    },
   }
 })
 class CertificateItem extends PureComponent<IProps, IState> {
@@ -101,20 +113,28 @@ class CertificateItem extends PureComponent<IProps, IState> {
       <ExpansionPanel expanded={expanded} onChange={this.handleChange}>
         <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
           <Grid container spacing={16} alignItems='center'>
-            <Grid item xs={false}>
+            <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 2}>
               <CertificateIcon className={certificate.default && classes.defaultCertificate} />
             </Grid>
 
-            <Grid item xs={true}>
+            <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? true : 7}>
               <Typography variant='subtitle1'>{certificate.title}</Typography>
             </Grid>
 
-            <Grid item xs={false}>
+            <Hidden smUp>
+              <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 3}>
+                <div className={classes.dropMenu}>
+                  <DropdownMenu options={this.actions} />
+                </div>
+              </Grid>
+            </Hidden>
+
+            <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 6}>
               <Typography variant='caption'>Criado em</Typography>
               <Typography variant='caption'>{dateFormat(certificate.created_at, 'dd/MM/yyyy')}</Typography>
             </Grid>
 
-            <Grid item xs={false}>
+            <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 6}>
               <Button
                 className={expanded ? null : classes.buttonHidden}
                 onClick={this.handleAddCourse}
@@ -125,9 +145,11 @@ class CertificateItem extends PureComponent<IProps, IState> {
               </Button>
             </Grid>
 
-            <Grid item xs={false}>
-              <DropdownMenu options={this.actions} />
-            </Grid>
+            <Hidden xsDown>
+              <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 4}>
+                <DropdownMenu options={this.actions} />
+              </Grid>
+            </Hidden>
           </Grid>
 
         </ExpansionPanelSummary>
