@@ -163,7 +163,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                   </Typography> */}
               </Grid>
 
-              {!!product.children.length &&
+              {!!product.children && !!product.children.length &&
                 <Grid item xs={false}>
                   <Grid container>
                     <IconButton>
@@ -174,7 +174,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
               }
             </Grid>
           </Grid>
-          {!!product.children.length &&
+          {!!product.children && !!product.children.length &&
             <Grid item>
               <Collapse in={isVariantsOpen}>
                 <ProductVariants variants={product.children} />
