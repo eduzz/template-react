@@ -1,6 +1,7 @@
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import { theme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import React, { ChangeEvent } from 'react';
 
@@ -15,7 +16,10 @@ interface IProps {
 @WithStyles({
   root: {
     width: 150,
-    height: 46
+    height: 46,
+    [theme.breakpoints.only('xs')]: {
+      width: 'calc(100% - 90px)',
+    },
   }
 })
 export default class FontFamily extends React.PureComponent<IProps> {
