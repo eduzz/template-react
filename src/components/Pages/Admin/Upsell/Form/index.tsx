@@ -14,6 +14,7 @@ import upsellService from 'services/upsell';
 import Content from './Content';
 import { WithStyles } from 'decorators/withStyles';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
 import { UpsellFormContext } from './Context';
 
@@ -59,6 +60,7 @@ export default class Form extends FormComponent<IProps, IState> {
         },
         small_image: '',
         external_url: '',
+        course_hash: '',
         highlight: false,
         offer_shelf: false,
         published: true,
@@ -103,13 +105,17 @@ export default class Form extends FormComponent<IProps, IState> {
   handleSubmit = (isValid: boolean) => {
     console.log(this.state.model);
 
-    const { highlight_images, small_image } = this.state.model;
+    const { highlight_images, small_image, external_url, show_type, course_hash } = this.state.model;
 
     const isFormValid = isValid && !!highlight_images.large && !!small_image;
 
     this.setState({
       isFormValid,
     });
+
+    if (show_type === 2 && !course_hash) return;
+
+    if (show_type === 3 && !external_url) return;
 
     if (!isFormValid) {
       Toast.error('Ops... Você esqueceu algumas informações necessárias');
@@ -144,7 +150,7 @@ export default class Form extends FormComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { flowStep } = this.state;
+    const { flowStep, model, updateModel } = this.state;
 
     console.log(this.state.model);
 
@@ -157,8 +163,15 @@ export default class Form extends FormComponent<IProps, IState> {
                 <Grid item>
                   <FileDocumentIcon className={classes.icon} />
                 </Grid>
-                <Grid item>
+                <Grid item xs={true}>
                   <Typography variant='h6'>Ofertas</Typography>
+                </Grid>
+                <Grid item xs={false}>
+                  <FieldSwitch
+                    checked={model.published}
+                    onChange={updateModel((model, v) => model.published = v)}
+                    label='Publicado'
+                  />
                 </Grid>
               </Grid>
             </Toolbar>

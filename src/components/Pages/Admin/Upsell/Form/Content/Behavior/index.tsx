@@ -10,6 +10,10 @@ import Button from '@material-ui/core/Button';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import authService from 'services/auth';
+import FieldSelect from '@react-form-fields/material-ui/components/Select';
+import upsellService from 'services/upsell';
+import rxjsOperators from 'rxjs-operators';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const vendaNutror = require('assets/images/venda-nutror.png');
 const checkout = require('assets/images/checkout.png');
@@ -36,6 +40,7 @@ interface IProps {
 
 interface IState {
   user: IUser;
+  courses: any;
 }
 
 @WithStyles(theme => ({
@@ -83,6 +88,16 @@ interface IState {
   selected: {
     fill: '#009358',
   },
+  fieldSelectContainer: {
+    position: 'relative',
+  },
+  fieldSelectLoading: {
+    position: 'absolute',
+    width: '100%',
+    top: 76,
+    zIndex: 10,
+    borderRadius: '0 0 4px 4px',
+  },
 }))
 export default class Behavior extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
@@ -93,13 +108,32 @@ export default class Behavior extends PureComponent<IProps, IState> {
 
     this.state = {
       user: null,
+      courses: [],
     };
   }
 
   componentDidMount() {
-    authService.getUserInfo().subscribe(user => {
+    authService.getUserInfo().pipe(
+      rxjsOperators.bindComponent(this),
+      rxjsOperators.logError(),
+    ).subscribe(user => {
       this.setState({
         user,
+      });
+    });
+
+    upsellService.getCourses().pipe(
+      rxjsOperators.bindComponent(this),
+      rxjsOperators.logError(),
+      rxjsOperators.map(courses =>
+        (courses || []).map(course => ({
+          label: course.title,
+          value: course.hash,
+        }))
+      ),
+    ).subscribe(courses => {
+      this.setState({
+        courses,
       });
     });
   }
@@ -112,8 +146,8 @@ export default class Behavior extends PureComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
-    const { model } = this.context;
-    const { user } = this.state;
+    const { model, updateModel } = this.context;
+    const { user, courses } = this.state;
 
     return (
       <CardContent>
@@ -148,9 +182,25 @@ export default class Behavior extends PureComponent<IProps, IState> {
                   <Grid item>
                     <img alt='' src={checkout} />
                   </Grid>
-                  <Grid item>
+                  <Grid item xs={5}>
                     <Typography variant='subtitle1'><strong>Página de Venda Nutror </strong></Typography>
                     <Typography variant='caption'>Na página de Venda do Nutror é exibido o curso em detalhes</Typography>
+                  </Grid>
+                  <Grid item xs={true}>
+                    <Grid container alignItems='flex-end' wrap='nowrap'>
+                      <Grid item className={classes.fieldSelectContainer}>
+                        <Typography variant='caption' className={classes.externalLabel}>Curso a ser exibido</Typography>
+                        {!courses.length && <LinearProgress color='secondary' className={classes.fieldSelectLoading} />}
+                        <FieldSelect
+                          className={classes.externalField}
+                          value={model.course_hash}
+                          validation={model.show_type === 2 ? 'required' : null}
+                          onChange={updateModel((model, v) => model.course_hash = v)}
+                          options={courses}
+                          disabled={!courses.length}
+                        />
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </ListItem>
@@ -175,6 +225,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                             className={classes.externalField}
                             value={model.external_url}
                             onChange={this.handleChange}
+                            validation={model.show_type === 3 ? 'required' : null}
                           />
                         </Grid>
                       </Grid>

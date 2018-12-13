@@ -15,8 +15,8 @@ class UpsellService {
     );
   }
 
-  public getCourse(courseId: number) {
-    return apiService.get<IUpsellCourse>('/producer/upsell/gettreecourse/' + courseId).pipe(
+  public getCourses() {
+    return apiService.get<IUpsellCourse[]>('producer/courses/my').pipe(
       rxjsOperators.map(response => response.data),
     );
   }

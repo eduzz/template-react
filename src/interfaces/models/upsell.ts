@@ -52,11 +52,13 @@ export interface IUpsell {
   user_id: number;
   created_at: string;
   external_url: string;
+  course_hash: string;
   courses: IUpsellCourse[];
 }
 
 export interface IUpsellCourse {
   id: number;
+  hash?: string;
   title: string;
   course_page: boolean;
   upc_cod: number;
