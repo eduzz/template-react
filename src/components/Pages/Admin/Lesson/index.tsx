@@ -1,5 +1,6 @@
 import { IAppRoute } from 'interfaces/route';
 import React, { Fragment } from 'react';
+
 import LessonFormPage from './Form';
 
 export default class LessonIndexPage extends React.PureComponent {

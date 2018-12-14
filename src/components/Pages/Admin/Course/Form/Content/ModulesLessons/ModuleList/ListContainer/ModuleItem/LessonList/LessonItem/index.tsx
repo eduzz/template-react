@@ -64,7 +64,7 @@ class LessonItem extends PureComponent<IProps> {
       <div className={classes.root}>
         <ListItem className={classes.nested}>
           <DragHandle />
-          <ListItemText inset primary={lesson.name} />
+          <ListItemText inset primary={lesson.title} />
           <DropdownMenu options={this.options} />
         </ListItem>
       </div>

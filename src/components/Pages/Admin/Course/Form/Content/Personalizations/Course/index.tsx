@@ -5,8 +5,8 @@ import { IForm } from '../../../';
 import { WithStyles } from 'decorators/withStyles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import ImageUploader from 'components/Pages/Admin/Upsell/FormLegacy/ImageUploader';
 import ColorPicker from '../ColorPicker';
+import ImageUploader from '../../../ImageUploader';
 
 interface IProps {
   classes?: any;

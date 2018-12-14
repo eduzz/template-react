@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
-import { IForm } from '../..';
-import Typography from '@material-ui/core/Typography';
-import DRMOption from './DRMOption';
 import Grid from '@material-ui/core/Grid';
-import VideoDialog from './VideoDialog';
-import { WithStyles } from 'decorators/withStyles';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { WithStyles } from 'decorators/withStyles';
+import React, { PureComponent } from 'react';
+
+import { IForm } from '../..';
+import DRMOption from './DRMOption';
+import VideoDialog from './VideoDialog';
 
 interface IProps {
   form: IForm;

@@ -1,8 +1,8 @@
 import React, { PureComponent, Fragment } from 'react';
-import ImageUploader from 'components/Pages/Admin/Upsell/FormLegacy/ImageUploader';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import { IForm } from '..';
+import ImageUploader from 'components/Pages/Admin/Course/Form/ImageUploader';
 
 interface IProps {
   classes?: any;

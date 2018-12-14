@@ -1,16 +1,18 @@
-import React from 'react';
-import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import BasicInfo from './BasicInfo';
-import Advanced from './Advanced';
+import React from 'react';
+import SwipeableViews from 'react-swipeable-views';
+
 import { IForm } from '..';
+import Advanced from './Advanced';
+import Banner from './Banner';
+import BasicInfo from './BasicInfo';
+import Email from './Email';
 import ModulesLessons from './ModulesLessons';
 import Personalizations from './Personalizations';
-import Email from './Email';
 
 function TabContainer({ children, dir }: any) {
   return (
@@ -65,6 +67,9 @@ export default class Content extends React.Component<IProps> {
             <Tab label='Modulos e Aulas' />
             <Tab label='Personalizações' />
             <Tab label='Opções de Email' />
+            {!!form.model.id &&
+              <Tab label='Anúncios' />
+            }
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -87,6 +92,11 @@ export default class Content extends React.Component<IProps> {
           <TabContainer dir={theme.direction}>
             <Email form={form} />
           </TabContainer>
+          {!!form.model.id &&
+            <TabContainer dir={theme.direction}>
+              <Banner />
+            </TabContainer>
+          }
         </SwipeableViews>
       </div>
     );

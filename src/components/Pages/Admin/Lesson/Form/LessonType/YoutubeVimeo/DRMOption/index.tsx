@@ -1,9 +1,10 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@react-form-fields/material-ui/components/Switch';
-import { IForm } from '../../../';
 import Typography from '@material-ui/core/Typography';
+import Switch from '@react-form-fields/material-ui/components/Switch';
+import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
+
+import { IForm } from '../../../';
 
 interface IProps {
   classes?: any;

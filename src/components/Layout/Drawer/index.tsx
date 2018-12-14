@@ -68,7 +68,20 @@ export const DrawerContext = React.createContext<IDrawerContext>(null);
   gridList: {
     overflowY: 'auto',
     overflowX: 'hidden',
-    width: 'max-content'
+    width: 'max-content',
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: '#F4F4F4',
+      borderRadius: 10,
+    },
+    '&::-webkit-scrollbar': {
+      width: 6,
+      backgroundColor: '#F4F4F4',
+      borderRadius: 10,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#aaa',
+      borderRadius: 10,
+    }
   },
   list: {
     padding: 0,

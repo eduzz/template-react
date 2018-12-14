@@ -1,24 +1,25 @@
-import React from 'react';
-import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from 'components/Layout/Toolbar';
 import Button from '@material-ui/core/Button';
-import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
-import { WithRouter } from 'decorators/withRouter';
-import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import LessonType from './LessonType';
-import Title from './Title';
-import ShortDescription from './ShortDescription';
-import Description from './Description';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
-import Options from './Options';
-import { format } from 'date-fns';
-import Chats from './Chats';
-import LessonImageUpload from './LessonImageUpload';
-import lessonService from 'services/lesson';
-import rxjsOperators from 'rxjs-operators';
+import Typography from '@material-ui/core/Typography';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
+import { format } from 'date-fns';
+import { WithRouter } from 'decorators/withRouter';
+import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
+import React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import lessonService from 'services/lesson';
+
+import Chats from './Chats';
+import Description from './Description';
+import LessonImageUpload from './LessonImageUpload';
+import LessonType from './LessonType';
+import Options from './Options';
+import ShortDescription from './ShortDescription';
+import Title from './Title';
 
 export interface IForm {
   model: Partial<IModel>;

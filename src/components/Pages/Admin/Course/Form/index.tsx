@@ -1,19 +1,21 @@
-import React from 'react';
-import Toolbar from 'components/Layout/Toolbar';
-import Grid from '@material-ui/core/Grid';
-import { WithStyles } from 'decorators/withStyles';
-import Info from './Info';
-import Content from './Content';
 import Button from '@material-ui/core/Button';
-import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
+import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import format from 'date-fns/format';
-import courseService from 'services/course';
-import rxjsOperators from 'rxjs-operators';
-import { WithRouter } from 'decorators/withRouter';
+import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
+import format from 'date-fns/format';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
+import React, { Fragment } from 'react';
+import rxjsOperators from 'rxjs-operators';
+import courseService from 'services/course';
+
+import Content from './Content';
+import BannerDialog from './Content/Banner/BannerList/BannerDialog';
+import Info from './Info';
 
 export interface IForm {
   model: Form['state']['model'];
@@ -26,6 +28,7 @@ interface IProps {
 }
 
 interface IState extends IStateForm<{
+  id?: number;
   title: string;
   published: boolean;
   description: string;
@@ -221,29 +224,33 @@ export default class Form extends FormComponent<IProps, IState> {
     console.log(this.state.model);
 
     return (
-      <FormValidation onSubmit={this.handleSubmit}>
-        <Toolbar title='Curso' />
+      <Fragment>
+        <FormValidation onSubmit={this.handleSubmit}>
+          <Toolbar title='Curso' />
 
-        <Grid container>
-          <Grid item xs={12}>
-            <Info form={form} />
+          <Grid container>
+            <Grid item xs={12}>
+              <Info form={form} />
+            </Grid>
+            <Grid item xs={12}>
+              <Content form={form} />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Content form={form} />
-          </Grid>
-        </Grid>
 
-        <Tooltip title='Salvar'>
-          <Button
-            className={classes.saveButton}
-            type='submit'
-            color='secondary'
-            variant='fab'
-          >
-            <ContentSaveIcon />
-          </Button>
-        </Tooltip>
-      </FormValidation>
+          <Tooltip title='Salvar'>
+            <Button
+              className={classes.saveButton}
+              type='submit'
+              color='secondary'
+              variant='fab'
+            >
+              <ContentSaveIcon />
+            </Button>
+          </Tooltip>
+        </FormValidation>
+
+        <BannerDialog />
+      </Fragment>
     );
   }
 }

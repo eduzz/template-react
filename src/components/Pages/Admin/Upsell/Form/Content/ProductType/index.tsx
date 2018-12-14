@@ -3,12 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import Button from '@material-ui/core/Button';
-
 import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import CardContent from '@material-ui/core/CardContent';
-import Fade from '@material-ui/core/Fade';
 
-const nutrorLogo = require('assets/svg/nutror-logo.svg');
+const infoProduto = require('assets/images/info-produto.png');
+const produtoFisico = require('assets/images/produto-fisico.png');
 
 interface IType {
   value: number;
@@ -22,14 +21,13 @@ interface IProps {
 }
 
 interface IState {
-  selected: number;
+  selectedType: number;
 }
 
 @WithStyles(theme => ({
   root: {
     paddingTop: theme.spacing.unit * 6,
     background: '#fff',
-    position: 'absolute',
   },
   messageDescription: {
     maxWidth: 470,
@@ -58,8 +56,7 @@ interface IState {
     padding: (theme.spacing.unit * 4) - 1,
   },
   typeSvg: {
-    width: 62,
-    height: 62,
+    width: 63,
     marginBottom: theme.spacing.unit * 5,
   },
   typeDescription: {
@@ -72,34 +69,21 @@ interface IState {
   },
 }))
 export default class ProductType extends PureComponent<IProps, IState> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
-
-  context: IUpsellFormContext;
+  static contextType = UpsellFormContext;
+  public context: IUpsellFormContext;
 
   private types: IType[] = [
     {
       value: 1,
-      title: 'Curso do Nutror',
-      description: 'Cursos dentro da plataforma nutror que deseja ofertar.',
-      svg: nutrorLogo,
-    },
-    {
-      value: 2,
       title: 'Infoproduto',
       description: 'Apostilas, planilhas, e-books, seus produtos digitais',
-      svg: nutrorLogo,
+      svg: infoProduto,
     },
     {
       value: 3,
       title: 'Produto Físico',
       description: 'Livros, Peças, brindes, camisetas, tenis',
-      svg: nutrorLogo,
-    },
-    {
-      value: 4,
-      title: 'Serviço',
-      description: 'Serviços que podem ser prestados através da plataforma Jobzz',
-      svg: nutrorLogo,
+      svg: produtoFisico,
     },
   ];
 
@@ -107,63 +91,75 @@ export default class ProductType extends PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      selected: null,
+      selectedType: null,
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      selected: this.context.model.type,
-    });
+  componentDidUpdate() {
+    const { type } = this.context.model;
+
+    if (type && type !== this.state.selectedType)
+      this.setState({
+        selectedType: type,
+      });
   }
 
-  handleSelectType = (type: number) => () => this.setState({ selected: type });
+  handleSelectType = (type: number) => () => this.setState({ selectedType: type });
 
-  handleSubmitSelectType = () => this.context.updateModel(model => model.type = this.state.selected)();
+  handleSubmitSelectType = () => {
+    const { selectedType } = this.state;
+
+    // if (upsellService.getCurrentProductType() !== selectedType)
+    //   upsellService.loadProducts(selectedType);
+
+    this.context.updateModel(model => model.type = selectedType)();
+  }
 
   render() {
     const { classes } = this.props;
-    const { selected } = this.state;
-    const { model } = this.context;
+    const { selectedType } = this.state;
 
     return (
-      <Fade in={!model.type}>
-        <CardContent className={classes.root}>
-          <Grid container spacing={8} alignItems='center' direction='column'>
-            <Grid item>
-              <Typography variant='h4' align='center'>
-                Oba! Vamos escolher qual produto vamos vender!
-            </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-                Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
-            </Typography>
-            </Grid>
-            <Grid item>
-              <Grid container spacing={16} justify='center'>
-                {this.types.map(type =>
-                  <Grid item key={type.value}>
-                    <div
-                      className={`${classes.typeItem} ${selected === type.value && classes.selectedType}`}
-                      onClick={this.handleSelectType(type.value)}
-                    >
-                      <img className={classes.typeSvg} alt='' src={type.svg} />
-                      <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
-                      <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
-                    </div>
-                  </Grid>
-                )}
-              </Grid>
-            </Grid>
-            <Grid item>
-              <Button variant='contained' color='secondary' className={classes.button} onClick={this.handleSubmitSelectType}>
-                Iniciar Oferta
-            </Button>
+      <CardContent className={classes.root}>
+        <Grid container spacing={8} alignItems='center' direction='column'>
+          <Grid item>
+            <Typography variant='h4' align='center'>
+              Oba! Vamos escolher qual produto vamos vender!
+                </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
+              Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
+                </Typography>
+          </Grid>
+          <Grid item>
+            <Grid container spacing={16} justify='center'>
+              {this.types.map(type =>
+                <Grid item key={type.value}>
+                  <div
+                    className={`${classes.typeItem} ${selectedType === type.value && classes.selectedType}`}
+                    onClick={this.handleSelectType(type.value)}
+                  >
+                    <img className={classes.typeSvg} alt='' src={type.svg} />
+                    <Typography align='center' variant='h6' gutterBottom>{type.title}</Typography>
+                    <Typography align='center' variant='subtitle1' className={classes.typeDescription}>{type.description}</Typography>
+                  </div>
+                </Grid>
+              )}
             </Grid>
           </Grid>
-        </CardContent>
-      </Fade>
+          <Grid item>
+            <Button
+              className={classes.button}
+              onClick={this.handleSubmitSelectType}
+              variant='contained'
+              color='secondary'
+            >
+              Iniciar Oferta
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
     );
   }
 }

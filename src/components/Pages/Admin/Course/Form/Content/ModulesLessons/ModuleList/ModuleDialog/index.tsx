@@ -1,28 +1,30 @@
-import React from 'react';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
 import { FieldText } from '@react-form-fields/material-ui';
-import { WithStyles } from 'decorators/withStyles';
-import Button from '@material-ui/core/Button';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import Grid from '@material-ui/core/Grid';
+import { format } from 'date-fns';
+import { WithStyles } from 'decorators/withStyles';
+import { IModule } from 'interfaces/models/module';
+import React from 'react';
+import rxjsOperators from 'rxjs-operators';
+import moduleService from 'services/module';
+
 import FreeModule from './FreeModule';
 import HiddenModule from './HiddenModule';
-import ModuleValidity from './ModuleValidity';
-import Divider from '@material-ui/core/Divider';
 import ModuleScheduling from './ModuleScheduling';
-import { format } from 'date-fns';
+import ModuleValidity from './ModuleValidity';
 import ReleaseAt from './ReleaseAt';
-import moduleService from 'services/module';
-import rxjsOperators from 'rxjs-operators';
-import { IModule } from 'interfaces/models/module';
 
 export interface IModel {
-  name: string;
+  name?: string;
+  title?: string;
   free_module: boolean;
   hidden_module: boolean;
   module_validity: number;
