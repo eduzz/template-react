@@ -33,6 +33,7 @@ export const DEFAULT_ITEM: IEditorItem = {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  textAlign: 'left',
   fontSize: 100,
   fontFamily: 'Arial',
   color: '#000',

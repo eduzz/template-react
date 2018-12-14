@@ -19,6 +19,7 @@ export interface IEditorItem {
   text: string;
   display: string;
   justifyContent: string;
+  textAlign: string;
   alignItems: string;
   fontSize: number;
   fontFamily: string;
