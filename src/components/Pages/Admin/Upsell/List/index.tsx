@@ -181,7 +181,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
             </CardContent>
           }
 
-          {!!upsells && upsells.length && upsells.length < 3 &&
+          {!!upsells && !!upsells.length && upsells.length < 3 &&
             <CardContent className={classes.messageContainer}>
               <Grid container spacing={8} alignItems='center' direction='column'>
                 <Grid item>
