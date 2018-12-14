@@ -7,7 +7,7 @@ import React from 'react';
 
 interface IProps {
   value: string;
-  onChange?: (value: { justifyContent: string }) => void;
+  onChange?: (value: { justifyContent: string, textAlign: string }) => void;
   classes?: any;
 }
 
@@ -18,15 +18,15 @@ interface IProps {
 })
 export default class HorizontalAlignment extends React.PureComponent<IProps> {
   handleCenter = () => {
-    this.props.onChange({ justifyContent: 'center' });
+    this.props.onChange({ justifyContent: 'center', textAlign: 'center' });
   }
 
   handleLeft = () => {
-    this.props.onChange({ justifyContent: 'flex-start' });
+    this.props.onChange({ justifyContent: 'flex-start', textAlign: 'left' });
   }
 
   handleRight = () => {
-    this.props.onChange({ justifyContent: 'flex-end' });
+    this.props.onChange({ justifyContent: 'flex-end', textAlign: 'right' });
   }
 
   render() {
