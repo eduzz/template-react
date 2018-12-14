@@ -97,6 +97,12 @@ export class AuthService {
       })
     );
   }
+
+  public getUserInfo() {
+    return apiService.get('user/profile').pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
 }
 
 const authService = new AuthService();

@@ -7,69 +7,70 @@ import { WithStyles } from 'decorators/withStyles';
 import Product from './Product';
 import ProductType from './ProductType';
 import { UpsellFormContext, IUpsellFormContext } from '../Context';
-import Fade from '@material-ui/core/Fade';
+import Informations from './Informations';
+import SelectedProduct from './SelectedProduct';
+import Fade from 'components/Shared/Fade';
+import Audience from './Audience';
+import Behavior from './Behavior';
 
 interface IProps {
   classes?: any;
   theme?: any;
-}
-
-interface IState {
-  value?: number;
+  step: number;
 }
 
 @WithStyles(theme => ({
   root: {
     backgroundColor: '#fff',
   },
+  container: {
+    position: 'relative',
+  },
 }), { withTheme: true })
-export default class Content extends React.Component<IProps, IState> {
-  static contextType: typeof UpsellFormContext = UpsellFormContext;
-  context: IUpsellFormContext;
+export default class Content extends React.Component<IProps> {
+  static contextType = UpsellFormContext;
+  public context: IUpsellFormContext;
 
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      value: 0,
-    };
-  }
-
-  handleChange = (event: SyntheticEvent, value: number) => {
-    this.setState({ value });
-  }
-
-  handleChangeIndex = (index: number) => {
-    this.setState({ value: index });
+  handleChange = (event: SyntheticEvent, step: number) => {
+    this.context.updateFlowStep(step);
   }
 
   render() {
-    const { classes, theme } = this.props;
-    const { model } = this.context;
+    const { classes, theme, step } = this.props;
+    const { model, updateFlowStep } = this.context;
 
     return (
       <div className={classes.root}>
         <AppBar position='static' color='inherit' elevation={0}>
           <Tabs
-            value={this.state.value}
+            value={step}
             onChange={this.handleChange}
           >
             <Tab label='Produto' />
-            <Tab label='Informações' />
-            <Tab label='Audiência' />
-            <Tab label='Comportamentos' />
+            <Tab disabled={!model.content_id} label='Informações' />
+            <Tab disabled={!model.content_id} label='Audiência' />
+            <Tab disabled={!model.content_id} label='Comportamentos' />
           </Tabs>
         </AppBar>
 
-        <ProductType />
+        <Fade in={!model.type} absolute>
+          <ProductType />
+        </Fade>
 
-        <Fade in={!!model.type}>
+        <Fade in={!!model.type && !model.content_id} absolute unmountOnExit>
+          <Product />
+        </Fade>
+
+        <Fade in={!!model.content_id} unmountOnExit>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={this.state.value}
-            onChangeIndex={this.handleChangeIndex}
+            index={step}
+            onChangeIndex={updateFlowStep}
           >
-            <Product />
+            <SelectedProduct />
+            <Informations />
+            <Audience />
+            <Behavior />
           </SwipeableViews>
         </Fade>
       </div>

@@ -1,6 +1,7 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Overrides } from '@material-ui/core/styles/overrides';
 import variables from './variables';
+import { palette } from './palette';
 
 const defaultTheme = createMuiTheme({
   typography: { useNextVariants: true },
@@ -37,11 +38,20 @@ const overrides: Overrides = {
       },
       '&:before': {
         display: 'none'
-      }
+      },
+    },
+    formControl: {
+      marginTop: '24px !important',
     },
     inputMultiline: {
       height: 100
-    }
+    },
+  },
+  MuiInputLabel: {
+    root: {
+      fontSize: 16,
+      color: palette.text.primary,
+    },
   },
   MuiTablePagination: {
     input: {

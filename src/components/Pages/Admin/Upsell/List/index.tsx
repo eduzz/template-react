@@ -15,6 +15,7 @@ import upsellService from 'services/upsell';
 import UpsellItem from './ListItem';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import Button from '@material-ui/core/Button';
+import ConfirmDialog from './ConfirmDialog';
 
 interface IState {
   error?: any;
@@ -209,6 +210,8 @@ class UpsellListPage extends PureComponent<IProps, IState> {
             </CardContent>
           }
         </Card>
+
+        <ConfirmDialog />
       </Fragment>
     );
   }

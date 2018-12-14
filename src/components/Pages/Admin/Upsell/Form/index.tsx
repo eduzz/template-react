@@ -14,6 +14,7 @@ import upsellService from 'services/upsell';
 import Content from './Content';
 import { WithStyles } from 'decorators/withStyles';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
 import { UpsellFormContext } from './Context';
 
@@ -25,6 +26,9 @@ interface IProps {
 
 interface IState extends IStateForm<IUpsell> {
   updateModel: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
+  isFormValid: boolean;
+  flowStep: number;
+  updateFlowStep: (flowStep: number) => void;
 }
 
 @WithStyles(theme => ({
@@ -43,19 +47,29 @@ export default class Form extends FormComponent<IProps, IState> {
       ...this.state,
       model: {
         type: null,
-        content: '',
+        content_id: null,
+        pre_content_id: null,
         description: '',
         label_text: 'Saiba mais',
         title: '',
-        highlight_image: '',
+        show_type: 1,
+        highlight_images: {
+          large: null,
+          medium: null,
+          small: null,
+        },
         small_image: '',
         external_url: '',
+        course_hash: '',
         highlight: false,
         offer_shelf: false,
-        published: false,
-        courses: []
+        published: true,
+        courses: [],
       },
       updateModel: this.updateModel,
+      isFormValid: true,
+      flowStep: 0,
+      updateFlowStep: this.updateFlowStep,
     };
   }
 
@@ -68,22 +82,63 @@ export default class Form extends FormComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(model => {
-      this.setState({ model: { ...this.state.model, ...model, content: model.content.toString() } });
-    }, error => Toast.error(error));
+      this.setState({
+        model: {
+          ...this.state.model,
+          ...model,
+          content_id: model.content_id.toString(),
+          pre_content_id: model.content_id.toString(),
+        },
+      });
+    }, error => {
+      this.props.history.push('/upsell');
+      Toast.error(error);
+    });
+  }
+
+  updateFlowStep = (flowStep: number) => {
+    this.setState({
+      flowStep
+    });
   }
 
   handleSubmit = (isValid: boolean) => {
     console.log(this.state.model);
 
-    if (!isValid) return;
+    const { highlight_images, small_image, external_url, show_type, course_hash } = this.state.model;
 
-    upsellService.save(this.state.model as IUpsell).pipe(
+    const isFormValid = isValid && !!highlight_images.large && !!small_image;
+
+    this.setState({
+      isFormValid,
+    });
+
+    if (show_type === 2 && !course_hash) return;
+
+    if (show_type === 3 && !external_url) return;
+
+    if (!isFormValid) {
+      Toast.error('Ops... Você esqueceu algumas informações necessárias');
+      this.updateFlowStep(1);
+      return;
+    }
+
+    const model = {
+      ...this.state.model,
+      courses: this.state.model.has_selected_courses || this.state.model.has_selected_lessons ?
+        this.state.model.courses
+          .filter(course => course.course_page || course.modules
+            .some(module => module.checked || module.lessons
+              .some(lesson => lesson.checked)))
+        : [],
+    };
+
+    upsellService.save(model as IUpsell).pipe(
       rxjsOperators.loader(),
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(() => {
-      Toast.show('Upsell salvo com sucesso!');
-      this.props.history.push('/upsell');
+      this.props.history.push('/upsell/sucesso');
     }, (error: any) => {
       Toast.error(error);
     });
@@ -95,11 +150,12 @@ export default class Form extends FormComponent<IProps, IState> {
 
   render() {
     const { classes } = this.props;
+    const { flowStep, model, updateModel } = this.state;
 
     console.log(this.state.model);
 
     return (
-      <FormValidation onSubmit={this.handleSubmit}>
+      <FormValidation onSubmit={this.handleSubmit} ref={this.bindForm}>
         <UpsellFormContext.Provider value={this.state}>
           <div className={classes.root}>
             <Toolbar>
@@ -107,14 +163,21 @@ export default class Form extends FormComponent<IProps, IState> {
                 <Grid item>
                   <FileDocumentIcon className={classes.icon} />
                 </Grid>
-                <Grid item>
+                <Grid item xs={true}>
                   <Typography variant='h6'>Ofertas</Typography>
+                </Grid>
+                <Grid item xs={false}>
+                  <FieldSwitch
+                    checked={model.published}
+                    onChange={updateModel((model, v) => model.published = v)}
+                    label='Publicado'
+                  />
                 </Grid>
               </Grid>
             </Toolbar>
 
             <Card>
-              <Content />
+              <Content step={flowStep} />
             </Card>
           </div>
         </UpsellFormContext.Provider>

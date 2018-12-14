@@ -1,7 +1,7 @@
 import { IAppRoute } from 'interfaces/route';
 import React, { Fragment, PureComponent } from 'react';
 
-import UpsellFormPage from './FormLegacy';
+import UpsellFormPage from './Form';
 import UpsellListPage from './List';
 
 export default class UpsellIndexPage extends PureComponent {
@@ -12,7 +12,7 @@ export default class UpsellIndexPage extends PureComponent {
     path: '/:id/editar',
     component: UpsellFormPage
   }, {
-    path: '/',
+    path: '/:success?',
     component: UpsellListPage
   }];
 

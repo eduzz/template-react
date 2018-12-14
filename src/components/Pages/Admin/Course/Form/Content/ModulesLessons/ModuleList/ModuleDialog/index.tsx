@@ -23,7 +23,8 @@ import ModuleValidity from './ModuleValidity';
 import ReleaseAt from './ReleaseAt';
 
 export interface IModel {
-  name: string;
+  name?: string;
+  title?: string;
   free_module: boolean;
   hidden_module: boolean;
   module_validity: number;

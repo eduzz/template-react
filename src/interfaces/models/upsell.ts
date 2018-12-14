@@ -1,3 +1,5 @@
+import { IModule } from './module';
+
 export interface IUpsellList {
   id: number;
   title: string;
@@ -6,26 +8,43 @@ export interface IUpsellList {
   total_click?: number;
 }
 
-export interface IUpsellCourses {
-  id: number;
+export interface IUpsellProduct {
+  biling_type: string;
+  content_id: string;
+  content_type_id: number;
+  has_children: boolean;
+  image: string;
+  producer_id: number;
   title: string;
-  hash: string;
+  children?: IUpsellProductVariant[];
 }
 
-export interface IUpsellProducts {
-  id: number;
+export interface IUpsellProductVariant {
+  biling_type: string;
+  content_id: string;
+  content_type_id: number;
+  has_children: boolean;
+  image: string;
+  producer_id: number;
   title: string;
-  hash: string;
 }
 
 export interface IUpsell {
   id: number;
   type: number;
-  content: string;
+  content_id: string;
+  pre_content_id: string;
   description: string;
   title: string;
   label_text: string;
-  highlight_image?: any;
+  show_type: number;
+  has_selected_lessons: boolean;
+  has_selected_courses: boolean;
+  highlight_images: {
+    large: string;
+    medium: string;
+    small: string;
+  };
   small_image: string;
   highlight: boolean;
   offer_shelf: boolean;
@@ -33,39 +52,18 @@ export interface IUpsell {
   user_id: number;
   created_at: string;
   external_url: string;
-  courses: {
-    id: number;
-    title: string;
-    course_page: boolean;
-    upc_cod: number;
-    modules: {
-      id: number;
-      title: string;
-      course_id: number;
-      lessons: {
-        id: number;
-        title: string;
-        module_id: number;
-        checked: boolean;
-      }[];
-      checked: boolean;
-    }[];
-  }[];
+  course_hash: string;
+  courses: IUpsellCourse[];
 }
 
 export interface IUpsellCourse {
   id: number;
+  hash?: string;
   title: string;
   course_page: boolean;
-  modules: {
-    id: number;
-    title: string;
-    lessons: {
-      id: number;
-      title: string;
-      module_id: number;
-      checked: boolean;
-    }[];
-    checked: boolean;
-  }[];
+  upc_cod: number;
+  customizations: {
+    avatar: string;
+  };
+  modules: IModule[];
 }
