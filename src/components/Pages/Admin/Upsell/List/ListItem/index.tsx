@@ -66,7 +66,7 @@ class UpsellItem extends PureComponent<IProps> {
   handleDelete = async () => {
     const { upsell, onDelete } = this.props;
 
-    const confirm = await Confirm.show(`Deseja excluir o upsell ${upsell.title}?`);
+    const confirm = await Confirm.show(`Deseja excluir a oferta ${upsell.title}?`);
     if (!confirm) return;
 
     upsellService.delete(upsell.id).pipe(
