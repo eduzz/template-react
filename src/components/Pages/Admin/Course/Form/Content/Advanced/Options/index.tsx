@@ -5,7 +5,6 @@ import { IForm } from '../../..';
 import CommentsOption from './CommentsOption';
 import ProgressOption from './ProgressOption';
 import WatchedOption from './WatchedOption';
-import LayoutOption from './LayoutOption';
 import ReleaseAtOption from './ReleaseAtOption';
 import DaysAvailableOption from './DaysAvailableOption';
 import DurationOption from './DurationOption';
@@ -51,9 +50,6 @@ export default class Options extends React.PureComponent<IProps> {
           </Grid>
           <Grid item className={classes.optionControl}>
             <WatchedOption form={form} />
-          </Grid>
-          <Grid item className={classes.optionControl}>
-            <LayoutOption form={form} />
           </Grid>
         </Grid>
         <Divider className={classes.divider} />

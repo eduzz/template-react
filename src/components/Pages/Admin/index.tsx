@@ -1,7 +1,5 @@
 import AppWrapper from 'components/Layout/AppWrapper';
 import { IAppRoute } from 'interfaces/route';
-import AccountCircleIcon from 'mdi-react/AccountCircleIcon';
-import BullhornIcon from 'mdi-react/BullhornIcon';
 import CertificateIcon from 'mdi-react/CertificateIcon';
 import * as React from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -15,6 +13,8 @@ import DashboardIndexPage from './Dashboard';
 import LessonIndexPage from './Lesson';
 import UpsellIndexPage from './Upsell';
 
+//import AccountCircleIcon from 'mdi-react/AccountCircleIcon';
+//import BullhornIcon from 'mdi-react/BullhornIcon';
 interface IState {
   routes: IAppRoute[];
 }
@@ -30,7 +30,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/autores',
-      sideDrawer: { display: 'Autores', order: 1, icon: AccountCircleIcon },
+      //sideDrawer: { display: 'Autores', order: 1, icon: AccountCircleIcon },
       roles: [],
       component: AuthorIndexPage
     },
@@ -42,7 +42,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
     },
     {
       path: '/upsell',
-      sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
+      //sideDrawer: { display: 'Venda Mais', order: 2, icon: BullhornIcon },
       roles: [],
       component: UpsellIndexPage,
     },
@@ -53,7 +53,7 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       component: CourseIndexPage,
     },
     {
-      path: '/aula',
+      path: '/modulos',
       // sideDrawer: { display: 'Aula', order: 3, icon: AnimationPlayIcon },
       roles: [],
       component: LessonIndexPage,

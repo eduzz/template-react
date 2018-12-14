@@ -106,13 +106,13 @@ export default class AppRouter extends React.PureComponent<IProps> {
         render={props => route.allowAnonymous ?
           <route.component {...props}>
             <Switch>
-              {(route.component.routes || []).map(child => this.renderRoute(child, path))}
+              {(route.component.routes || []).map((child: IAppRoute) => this.renderRoute(child, path))}
               <Route render={() => <Redirect to='/' />} />
             </Switch>
           </route.component> :
           <AppRouterProtected route={route} routeProps={props}>
             <Switch>
-              {(route.component.routes || []).map(child => this.renderRoute(child, path))}
+              {(route.component.routes || []).map((child: IAppRoute) => this.renderRoute(child, path))}
               <Route render={() => <Redirect to='/' />} />
             </Switch>
           </AppRouterProtected>

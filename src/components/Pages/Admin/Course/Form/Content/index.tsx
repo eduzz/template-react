@@ -10,7 +10,9 @@ import { IForm } from '..';
 import Advanced from './Advanced';
 import Banner from './Banner';
 import BasicInfo from './BasicInfo';
+import Email from './Email';
 import ModulesLessons from './ModulesLessons';
+import Personalizations from './Personalizations';
 
 function TabContainer({ children, dir }: any) {
   return (
@@ -64,6 +66,7 @@ export default class Content extends React.Component<IProps> {
             <Tab label='Configurações Avançadas' />
             <Tab label='Modulos e Aulas' />
             <Tab label='Personalizações' />
+            <Tab label='Opções de Email' />
             {!!form.model.id &&
               <Tab label='Anúncios' />
             }
@@ -83,7 +86,12 @@ export default class Content extends React.Component<IProps> {
           <TabContainer dir={theme.direction}>
             <ModulesLessons />
           </TabContainer>
-          <TabContainer dir={theme.direction}>Personalizações</TabContainer>
+          <TabContainer dir={theme.direction}>
+            <Personalizations form={form} />
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            <Email form={form} />
+          </TabContainer>
           {!!form.model.id &&
             <TabContainer dir={theme.direction}>
               <Banner />

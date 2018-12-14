@@ -11,7 +11,8 @@ const variables: ThemeVariables = {
   colors: {
     success: '#009358',
     error: '#dc3f53',
-  }
+  },
+  contentBorderColor: '#D8D8D8',
 };
 
 export default variables;

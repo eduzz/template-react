@@ -1,9 +1,10 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@react-form-fields/material-ui/components/Switch';
-import { IForm } from '../../../';
 import Typography from '@material-ui/core/Typography';
+import Switch from '@react-form-fields/material-ui/components/Switch';
+import { WithStyles } from 'decorators/withStyles';
+import React from 'react';
+
+import { IForm } from '../../../';
 
 interface IProps {
   classes?: any;
@@ -39,8 +40,8 @@ export default class DRMOption extends React.PureComponent<IProps> {
           }}
           control={
             <Switch
-              onChange={form.updateModel((model, v) => model.drm_active = !model.drm_active)}
-              checked={!form.model.drm_active}
+              onChange={form.updateModel((model, v) => model.drm = !model.drm)}
+              checked={form.model.drm}
             />
           }
           label='Ativar DRM'

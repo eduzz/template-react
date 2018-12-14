@@ -1,8 +1,9 @@
-import React, { PureComponent, Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { FieldText } from '@react-form-fields/material-ui';
-import { IForm } from '..';
 import { WithStyles } from 'decorators/withStyles';
+import React, { Fragment, PureComponent } from 'react';
+
+import { IForm } from '..';
 
 interface IProps {
   form: IForm;
@@ -22,11 +23,11 @@ export default class Title extends PureComponent<IProps> {
       <Fragment>
         <Typography variant='subtitle1' color='inherit' noWrap>Descrição Curta</Typography>
         <FieldText
-          value={form.model.short_description}
-          name='short_description'
-          onChange={form.updateModel((model, v) => model.short_description = v)}
+          value={form.model.shortdescription}
+          name='shortdescription'
+          onChange={form.updateModel((model, v) => model.shortdescription = v)}
           variant='outlined'
-          helperText={`Digitados ${form.model.short_description.length} de 150`}
+          helperText={`Digitados ${form.model.shortdescription.length} de 150`}
           fullWidth
           multiline
           rows={3}

@@ -6,14 +6,19 @@ import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
-import { dateFormat } from 'formatters/date';
 import { IUpsellList } from 'interfaces/models/upsell';
-import BullhornIcon from 'mdi-react/BullhornIcon';
+import CursorDefaultIcon from 'mdi-react/CursorDefaultIcon';
+import EyeIcon from 'mdi-react/EyeIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, SyntheticEvent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
+import { CDN_URL } from 'settings';
+
+// import ChartPieIcon from 'mdi-react/ChartPieIcon';
+// import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
+const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
 interface IProps {
   classes?: any;
@@ -22,11 +27,31 @@ interface IProps {
   onDelete?: any;
 }
 
-@WithStyles({
+@WithStyles(theme => ({
   root: {
-    borderTop: 'solid 1px #d5d5d5',
-  }
-})
+    border: '1px solid',
+    borderColor: theme.variables.contentBorderColor,
+    borderRadius: 4,
+    padding: theme.spacing.unit,
+    marginBottom: theme.spacing.unit,
+  },
+  avatar: {
+    width: 44,
+    height: 44,
+    borderRadius: 2,
+  },
+  icon: {
+    fill: '#596375',
+    marginRight: 4,
+    width: 20,
+  },
+  greenIcon: {
+    fill: '#009358',
+  },
+  title: {
+    color: '#8C9198',
+  },
+}))
 class UpsellItem extends PureComponent<IProps> {
   actions = [{
     text: 'Editar',
@@ -55,24 +80,91 @@ class UpsellItem extends PureComponent<IProps> {
     }, (err: any) => Toast.error(err));
   }
 
+  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = nutrorLogo;
+  }
+
+  randomizeInt = (max: number) => Math.floor(Math.random() * Math.floor(max));
+
   render() {
     const { upsell, classes } = this.props;
 
     return (
       <ListItem className={classes.root}>
         <Grid container spacing={16} alignItems='center'>
-          <Grid item xs={false}>
-            <BullhornIcon />
+          <Grid item>
+            <Grid container>
+              <img
+                alt=''
+                className={classes.avatar}
+                src={CDN_URL + upsell.small_image}
+                onError={this.handleImageError}
+                height={44}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid item xs={4}>
+            <Typography variant='subtitle2' className={classes.title} noWrap>{upsell.title}</Typography>
           </Grid>
 
           <Grid item xs={true}>
-            <Typography variant='subtitle1'>{upsell.title}</Typography>
+            {/* <Typography variant='subtitle1' noWrap>
+              R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
+            </Typography> */}
           </Grid>
 
           <Grid item xs={false}>
-            <Typography variant='caption'>Criado em</Typography>
-            <Typography variant='caption'>{dateFormat(upsell.created_at, 'dd/MM/yyyy')}</Typography>
+            <Grid container alignItems='center'>
+              <Grid item>
+                <Grid container>
+                  <EyeIcon className={classes.icon} />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Typography variant='subtitle1'>{upsell.total_view}</Typography>
+              </Grid>
+            </Grid>
           </Grid>
+
+          <Grid item xs={false}>
+            <Grid container alignItems='center'>
+              <Grid item>
+                <Grid container>
+                  <CursorDefaultIcon className={classes.icon} />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Typography variant='subtitle1'>{upsell.total_click} ({((((upsell.total_click / upsell.total_view) || 0) * 100).toFixed(2)).replace('.', ',')}%)</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {/* <Grid item xs={false}>
+            <Grid container alignItems='center'>
+              <Grid item>
+                <Grid container>
+                  <ChartPieIcon className={classes.icon} />
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Typography variant='subtitle1'>{this.randomizeInt(100)}%</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={false}>
+            <Grid container alignItems='center'>
+              <Grid item>
+                <ArrowUpIcon className={`${classes.icon} ${classes.greenIcon}`} />
+              </Grid>
+              <Grid item>
+                <Typography variant='subtitle1' color='secondary'>
+                  R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid> */}
 
           <Grid item xs={false}>
             <DropdownMenu options={this.actions} />

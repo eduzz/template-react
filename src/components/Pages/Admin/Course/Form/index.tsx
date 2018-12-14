@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
@@ -39,6 +39,18 @@ interface IState extends IStateForm<{
   customization: {
     layout: boolean;
     theme: number;
+    avatar: string;
+    image_cover: string;
+    customizationData: {
+      header_background_color: string;
+      cover_background_color: string;
+      title_color: string;
+      header_link_color: string;
+      course_description_color: string;
+      logo_login: string;
+      login_background_image: string;
+      login_background_color: string;
+    };
   };
   hasterms: boolean;
   terms_content: string;
@@ -95,6 +107,18 @@ export default class Form extends FormComponent<IProps, IState> {
         customization: {
           layout: true,
           theme: 0,
+          avatar: null,
+          image_cover: null,
+          customizationData: {
+            header_background_color: null,
+            cover_background_color: null,
+            title_color: null,
+            header_link_color: null,
+            course_description_color: null,
+            logo_login: null,
+            login_background_image: null,
+            login_background_color: null,
+          },
         },
         hasterms: false,
         terms_content: '',
@@ -196,6 +220,8 @@ export default class Form extends FormComponent<IProps, IState> {
       model: this.state.model,
       updateModel: this.updateModel,
     };
+
+    console.log(this.state.model);
 
     return (
       <Fragment>

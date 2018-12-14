@@ -1,4 +1,4 @@
-import { FormValidation } from '@react-form-fields/material-ui/components/FormValidation';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import ValidationContext from '@react-form-fields/material-ui/components/ValidationContext';
 import { Component } from 'react';
 

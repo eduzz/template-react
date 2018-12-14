@@ -1,13 +1,14 @@
 import { IAppRoute } from 'interfaces/route';
 import React, { Fragment } from 'react';
+
 import LessonFormPage from './Form';
 
 export default class LessonIndexPage extends React.PureComponent {
   public static routes: IAppRoute[] = [{
-    path: '/novo',
+    path: '/:moduleId/aulas/novo',
     component: LessonFormPage,
   }, {
-    path: '/:id/editar',
+    path: '/:moduleId/aulas/:lessonId/editar',
     component: LessonFormPage,
   }];
 

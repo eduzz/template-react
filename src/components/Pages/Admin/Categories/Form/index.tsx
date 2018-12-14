@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { WithStyles } from 'decorators/withStyles';
 import IconButton from '@material-ui/core/IconButton';
@@ -33,7 +33,7 @@ export default class CategoriesForm extends React.PureComponent<IProps, IState> 
     };
   }
 
-  handleSubmit = (e: any) => {
+  handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
 
     categoryService.addCategory(this.state.value).pipe(

@@ -12,7 +12,8 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     colors: {
       success: string;
       error: string;
-    }
+    },
+    contentBorderColor: string;
   }
 
   interface Theme {

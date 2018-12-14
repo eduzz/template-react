@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { WithStyles } from 'decorators/withStyles';
 import List from './List';
+import Typography from '@material-ui/core/Typography';
 
 interface IProps {
   classes?: any;
@@ -21,7 +22,13 @@ export default class CategoriesIndexPage extends React.PureComponent<IProps> {
 
     return (
       <React.Fragment>
-        <Toolbar title='Categorias' />
+        <Toolbar>
+          <Grid container spacing={8} alignItems='center'>
+            <Grid item>
+              <Typography variant='h6'>Categorias</Typography>
+            </Grid>
+          </Grid>
+        </Toolbar>
 
         <Grid container justify='center'>
           <Grid item xs={12} lg={10}>
