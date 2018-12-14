@@ -199,21 +199,21 @@
   dependencies:
     "@babel/runtime" "7.1.2"
 
-"@react-form-fields/core@>=1.1.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/core/-/core-1.2.0.tgz#020b8ecc9096ee6c7a2eea658f6473e457078ed3"
-  integrity sha512-+rGeH6f+qSuGUFlzQ5TkR5AeVVUHTXZwVtqkp3fva1rFg4z1I7ymS+WLJCdh8viyqtc3T44Tiep0+b+miOJyUA==
+"@react-form-fields/core@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/core/-/core-1.3.0.tgz#0a7f6ff0c0944d7108e4699ff70e224c6e9776ed"
+  integrity sha512-FufDEN2nIqmwwMKcpFWtAyK/iftAsaEcsgPWepQuRpsbFWWASXKHcQt+ViCfvM1OR+mBHxroZFvMrW8fiB28FQ==
   dependencies:
     react ">=16.3.0"
     tslib ">=1.9.0"
     validatorjs ">=3.0.0"
 
-"@react-form-fields/material-ui@1.10.3":
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.10.3.tgz#e84776788a3fc21ce6512f290fd2edf13611d3a0"
-  integrity sha512-eWbRjxcumo+e9Rl2/kRK2g1pjQxLVa+pEkYlVe0b9BeQiQGATK0cFu0BfoT+tnS45sBtuhArKk6oT2gHBScFDw==
+"@react-form-fields/material-ui@1.10.5":
+  version "1.10.5"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.10.5.tgz#b977d9930c9fcc965a045274eecdb95d67b2b271"
+  integrity sha512-lcMK87eIy+qvvvrGzFBJRH3s7UtBy7fJ0l9Uil4OW7H2XZgQ+Xsx5qpFrJQ16niJ7BQJQszIwQltoqchEQ4Sig==
   dependencies:
-    "@react-form-fields/core" ">=1.1.0"
+    "@react-form-fields/core" "1.3.0"
     autosuggest-highlight ">=3.0.0"
     date-fns ">=2.0.0-alpha.16"
     material-ui-pickers "1.0.0-rc.13"
