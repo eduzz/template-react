@@ -12,6 +12,7 @@ import CourseIndexPage from './Course';
 import DashboardIndexPage from './Dashboard';
 import LessonIndexPage from './Lesson';
 import UpsellIndexPage from './Upsell';
+import StudentsIndexPage from './Students';
 
 //import AccountCircleIcon from 'mdi-react/AccountCircleIcon';
 //import BullhornIcon from 'mdi-react/BullhornIcon';
@@ -63,6 +64,12 @@ export default class AdminModule extends React.PureComponent<{}, IState>  {
       // sideDrawer: { display: 'Categorias', order: 4, icon: TagTextOutlineIcon },
       roles: [],
       component: CategoriesIndexPage,
+    },
+    {
+      path: '/alunos',
+      // sideDrawer: { display: 'Categorias', order: 4, icon: TagTextOutlineIcon },
+      roles: [],
+      component: StudentsIndexPage,
     },
   ];
 
