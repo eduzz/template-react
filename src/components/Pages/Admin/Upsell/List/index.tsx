@@ -62,7 +62,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
     super(props);
     this.state = {
       orderBy: 'title',
-      orderDirection: 'asc'
+      orderDirection: 'asc',
     };
   }
 
