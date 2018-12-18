@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react';
 import List from '@material-ui/core/List';
 import { IStudent } from 'interfaces/models/student';
 import StudentItem from './StudentItem';
+import studentService from 'services/student';
+import rxjsOperators from 'rxjs-operators';
+import Loading from 'components/Shared/Loading';
 
 interface IProps {
 
@@ -9,6 +12,7 @@ interface IProps {
 
 interface IState {
   students: IStudent[];
+  error?: any;
 }
 
 export default class StudentList extends PureComponent<IProps, IState> {
@@ -21,32 +25,25 @@ export default class StudentList extends PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    this.setState({
-      students: [
-        {
-          id: 1,
-          name: 'Johnny Taylor',
-          email: 'deanwallace@gmail.com',
-          avatar: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/1112.png',
-        },
-        {
-          id: 2,
-          name: 'Maggie Butler',
-          email: 'oliviaford@gmail.com',
-          avatar: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/1112.png',
-        },
-        {
-          id: 3,
-          name: 'Earl Kennedy',
-          email: 'earl@gmail.com',
-          avatar: 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/1112.png',
-        },
-      ],
+    studentService.list(studentService.getFilters()).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe(students => {
+      this.setState({
+        students,
+      });
+    }, error => {
+      this.setState({
+        error,
+      });
     });
   }
 
   render() {
     const { students } = this.state;
+
+    if (!students.length)
+      return <Loading />;
 
     return (
       <List disablePadding>
