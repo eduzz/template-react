@@ -197,7 +197,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
                 </Grid>
                 <Grid item>
                   <Typography variant='caption' align='center' className={classes.messageDescription}>
-                    Experimente pubicar mais ofertas na sua área de membros,
+                    Experimente publicar mais ofertas na sua área de membros,
                     nossa plataforma está otimizada para mostrar as melhores ofertas que você publicar.
                 </Typography>
                 </Grid>
