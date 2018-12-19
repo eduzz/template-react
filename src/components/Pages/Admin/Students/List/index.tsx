@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Filters from './Filters';
 import StudentList from './StudentList';
+import Divider from '@material-ui/core/Divider';
 
 interface IProps {
   classes?: any;
@@ -45,6 +46,9 @@ export default class List extends PureComponent<IProps> {
               </Grid>
               <Grid item>
                 <Filters />
+              </Grid>
+              <Grid item>
+                <Divider />
               </Grid>
               <Grid item>
                 <StudentList />

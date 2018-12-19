@@ -1,53 +1,85 @@
 import React, { PureComponent } from 'react';
-import { IFiltersModel } from '../';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Typography from '@material-ui/core/Typography';
+import { IFiltersModel } from 'interfaces/models/student';
+import studentService from 'services/student';
+import rxjsOperators from 'rxjs-operators';
+import Toast from 'components/Shared/Toast';
 
 interface IProps {
-  model: IFiltersModel;
-  onDelete: (identifierLabel: string) => (event: any) => void;
+
 }
 
-export default class Chips extends PureComponent<IProps> {
-  public refresh = () => {
-    this.forceUpdate();
+interface IState {
+  filters: IFiltersModel;
+}
+
+export default class Chips extends PureComponent<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      filters: studentService.getInitialFilters(),
+    };
+  }
+
+  componentDidMount() {
+    studentService.getFilters().pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe(filters => {
+      this.setState({
+        filters,
+      });
+    }, error => {
+      Toast.error(error);
+    });
+  }
+
+  handleDelete = (identifierLabel: string) => () => {
+    studentService.setFilters({
+      ...this.state.filters,
+      [identifierLabel]: '',
+    });
   }
 
   render() {
-    const { model, onDelete } = this.props;
+    const { filters } = this.state;
+
+    console.log('chips -> ', filters);
 
     return (
       <Grid container spacing={8}>
-        {!!model.name &&
+        {!!filters.name &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>Nome: {model.name}</Typography>}
-              onDelete={onDelete('name')}
+              label={<Typography variant='subtitle2'>Nome: {filters.name}</Typography>}
+              onDelete={this.handleDelete('name')}
             />
           </Grid>
         }
-        {!!model.email &&
+        {!!filters.email &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>E-mail: {model.email}</Typography>}
-              onDelete={onDelete('email')}
+              label={<Typography variant='subtitle2'>E-mail: {filters.email}</Typography>}
+              onDelete={this.handleDelete('email')}
             />
           </Grid>
         }
-        {!!model.last_used_at_start &&
+        {!!filters.last_used_at_start &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>Data Inicial: {model.last_used_at_start}</Typography>}
-              onDelete={onDelete('last_used_at_start')}
+              label={<Typography variant='subtitle2'>Data Inicial: {filters.last_used_at_start}</Typography>}
+              onDelete={this.handleDelete('last_used_at_start')}
             />
           </Grid>
         }
-        {!!model.last_used_at_end &&
+        {!!filters.last_used_at_end &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>Data final: {model.last_used_at_end}</Typography>}
-              onDelete={onDelete('last_used_at_end')}
+              label={<Typography variant='subtitle2'>Data final: {filters.last_used_at_end}</Typography>}
+              onDelete={this.handleDelete('last_used_at_end')}
             />
           </Grid>
         }

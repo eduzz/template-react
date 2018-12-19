@@ -5,7 +5,8 @@ import { IStudent } from 'interfaces/models/student';
 import { WithStyles } from 'decorators/withStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import { differenceInDays } from 'date-fns/esm';
+import { differenceInDays, formatDistance } from 'date-fns/esm';
+import ptLocate from 'date-fns/esm/locale/pt-BR';
 
 interface IProps {
   classes?: any;
@@ -47,18 +48,18 @@ export default class StudentItem extends PureComponent<IProps> {
 
     return (
       <ListItem className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`} button>
-        <Grid container alignItems='center' spacing={16}>
-          <Grid item>
+        <Grid container alignItems='center' spacing={16} wrap='nowrap'>
+          <Grid item xs='auto'>
             <Avatar alt={student.name} src={student.avatar} onError={this.handleImageError}>{student.name.substring(0, 1)}</Avatar>
           </Grid>
           <Grid item xs={5}>
-            <Typography variant='subtitle2' color='inherit'>{student.name}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap>{student.name}</Typography>
           </Grid>
-          <Grid item xs={true}>
-            <Typography variant='subtitle2' color='inherit'>{student.email}</Typography>
+          <Grid item xs={4}>
+            <Typography variant='subtitle2' color='inherit' noWrap>{student.email}</Typography>
           </Grid>
-          <Grid item xs={false}>
-            <Typography variant='subtitle2' color='inherit'>2 horas atrás</Typography>
+          <Grid item xs='auto'>
+            <Typography variant='subtitle2' color='inherit' noWrap>{formatDistance(new Date(), new Date(student.last_used_at), { locale: ptLocate })}</Typography>
           </Grid>
         </Grid>
       </ListItem>
