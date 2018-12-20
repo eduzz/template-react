@@ -144,6 +144,8 @@ export default class Behavior extends PureComponent<IProps, IState> {
 
   handleClick = (type: number) => () => this.context.updateModel(model => model.show_type = type)();
 
+  handleBack = () => this.context.updateFlowStep(this.context.flowStep - 1);
+
   render() {
     const { classes } = this.props;
     const { model, updateModel } = this.context;
@@ -236,7 +238,12 @@ export default class Behavior extends PureComponent<IProps, IState> {
             </List>
           </Grid>
           <Grid item>
-            <Grid container justify='flex-end'>
+            <Grid container>
+              <Grid item xs={true}>
+                <Button variant='outlined' color='secondary' onClick={this.handleBack}>
+                  Voltar
+                </Button>
+              </Grid>
               <Grid item>
                 <Button variant='contained' type='submit' color='secondary'>
                   Salvar
