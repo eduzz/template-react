@@ -106,7 +106,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 <Typography variant='subtitle2' color='inherit' noWrap>{course.title}</Typography>
               </Grid>
               <Grid item sm={true}>
-                <Typography variant='subtitle2' color='inherit' noWrap>{format(new Date(course.created_at), 'MM/DD/YYYY')}</Typography>
+                <Typography variant='subtitle2' color='inherit' noWrap>{format(new Date(course.created_at), 'dd/MM/YYYY')}</Typography>
               </Grid>
               <Grid item xs='auto'>
                 <Grid container alignItems='center' spacing={8}>

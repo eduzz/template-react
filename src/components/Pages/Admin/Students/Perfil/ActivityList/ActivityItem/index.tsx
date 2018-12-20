@@ -32,7 +32,7 @@ export default class CourseItem extends PureComponent<IProps> {
       <ListItem className={classes.root}>
         <Grid container alignItems='center' spacing={40}>
           <Grid item xs='auto'>
-            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(new Date(activity.created_at), 'MM/DD/YYYY')}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(new Date(activity.created_at), 'dd/MM/YYYY')}</Typography>
             <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(new Date(activity.created_at), 'HH:mm')}</Typography>
           </Grid>
           <Grid item xs={true}>
