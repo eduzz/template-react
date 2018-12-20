@@ -30,7 +30,7 @@ interface IState {
   header: {
     paddingRight: 49,
     paddingLeft: 0,
-    paddingBottom: 0,
+    paddingBottom: 4,
   },
   headerCourse: {
     marginRight: 51,

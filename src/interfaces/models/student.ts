@@ -20,3 +20,9 @@ export interface IStudentCourse {
   created_at: string;
   type: number;
 }
+
+export interface IStudentActivity {
+  id?: number;
+  title: string;
+  created_at: string;
+}

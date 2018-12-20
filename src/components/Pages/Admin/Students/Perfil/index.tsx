@@ -9,6 +9,8 @@ import Toolbar from 'components/Layout/Toolbar';
 import Info from './Info';
 import Divider from '@material-ui/core/Divider';
 import CourseList from './CourseList';
+import ActivityList from './ActivityList';
+import Button from '@material-ui/core/Button';
 
 interface IProps {
   classes?: any;
@@ -38,20 +40,47 @@ export default class Perfil extends PureComponent<IProps> {
           </Grid>
         </Toolbar>
 
-        <Card className={classes.card}>
-          <CardContent>
-            <Info />
-          </CardContent>
-          <CardContent>
-            <Divider />
-          </CardContent>
-          <CardContent>
-            <Typography variant='subtitle1'>
-              <strong>Cursos Matriculados</strong>
-            </Typography>
-            <CourseList />
-          </CardContent>
-        </Card>
+        <Grid container direction='column' wrap='nowrap' spacing={24}>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardContent>
+                <Info />
+              </CardContent>
+              <CardContent>
+                <Divider />
+              </CardContent>
+              <CardContent>
+                <Typography variant='h6'>
+                  <strong>Cursos Matriculados</strong>
+                </Typography>
+                <CourseList />
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card className={classes.card}>
+              <CardContent>
+                <Grid container spacing={16} direction='column'>
+                  <Grid item>
+                    <Grid container>
+                      <Grid item xs={true}>
+                        <Typography variant='h6'>
+                          <strong>Histórico de Atividades</strong>
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Button variant='contained' color='secondary'>Exportar Resultados</Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item>
+                    <ActivityList />
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
       </Fragment>
     );
   }
