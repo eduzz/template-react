@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { FieldSwitch } from '@react-form-fields/material-ui';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import { theme } from 'assets/theme';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import AppRouter, { RouterContext } from 'components/Router';
@@ -52,6 +53,13 @@ interface IProps extends RouteComponentProps<{ id: string }> {
   link: {
     textAlign: 'right',
     marginTop: 30
+  },
+  toolbarBtn: {
+    '& > span > svg': {
+      [theme.breakpoints.only('xs')]: {
+        marginRight: '0 !important',
+      },
+    }
   }
 })
 class CertificateFormPage extends FormComponent<IProps, IState> {
@@ -158,14 +166,14 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
               </Grid>
 
               <Grid item xs={false}>
-                <Button disabled={loading || error} onClick={this.handleOpenPreview}>
+                <Button className={classes.toolbarBtn} size='small' disabled={loading || error} onClick={this.handleOpenPreview}>
                   <OpenInNewIcon />
                   <Hidden implementation='css' xsDown>Preview</Hidden>
                 </Button>
               </Grid>
 
               <Grid item xs={false}>
-                <Button type='submit' color='secondary' variant='contained' disabled={loading || error}>
+                <Button className={classes.toolbarBtn} size='small' type='submit' color='secondary' variant='contained' disabled={loading || error}>
                   <ContentSaveIcon />
                   <Hidden implementation='css' xsDown>Salvar</Hidden>
                 </Button>

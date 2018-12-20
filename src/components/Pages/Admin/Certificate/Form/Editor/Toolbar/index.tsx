@@ -54,7 +54,7 @@ class Toolbar extends React.PureComponent<IProps> {
         />
 
         <Grid container className={classes.root}>
-          <Grid item>
+          <Grid item xs={12}>
             <FontSize
               value={context.getCurrentConfig('fontSize')}
               onChange={this.handleChange}

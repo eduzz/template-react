@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,13 +10,13 @@ import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
+import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React, { Fragment, PureComponent } from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
-import UpsellItem from './ListItem';
-import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
-import Button from '@material-ui/core/Button';
+
 import ConfirmDialog from './ConfirmDialog';
+import UpsellItem from './ListItem';
 
 interface IState {
   error?: any;
@@ -39,6 +40,9 @@ interface IProps {
   newOfferButton: {
     paddingLeft: theme.spacing.unit * 6,
     paddingRight: theme.spacing.unit * 6,
+    [theme.breakpoints.only('xs')]: {
+      marginTop: 20,
+    },
   },
   messageContainer: {
     paddingTop: theme.spacing.unit * 6,
@@ -58,7 +62,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
     super(props);
     this.state = {
       orderBy: 'title',
-      orderDirection: 'asc'
+      orderDirection: 'asc',
     };
   }
 
@@ -115,16 +119,12 @@ class UpsellListPage extends PureComponent<IProps, IState> {
         <Card>
           <CardContent>
             <Grid container alignItems='center'>
-              <Grid item xs={true}>
-                <Typography variant='subtitle2'>
-                  Lista de Ofertas
-                </Typography>
-                <Typography variant='caption'>
-                  Selecione um produto para ofertar
-                </Typography>
+              <Grid item sm={true}>
+                <Typography variant='subtitle2'>Lista de Ofertas</Typography>
+                <Typography variant='caption'>Selecione um produto para ofertar</Typography>
               </Grid>
 
-              <Grid item xs={false}>
+              <Grid item sm={false}>
                 <Button variant='contained' size='small' color='secondary' className={classes.newOfferButton} onClick={this.handleNew}>
                   Nova Oferta
                 </Button>

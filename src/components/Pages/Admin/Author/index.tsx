@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -95,7 +96,10 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={false}>
-              <Button variant='contained' color='secondary' onClick={this.handleCreate}><PlusIcon /> Criar novo autor</Button>
+              <Button variant='contained' size='small' color='secondary' onClick={this.handleCreate}><PlusIcon />
+                <Hidden xsDown>Criar novo autor</Hidden>
+                <Hidden smUp>Criar autor</Hidden>
+              </Button>
             </Grid>
           </Grid>
         </Toolbar>
