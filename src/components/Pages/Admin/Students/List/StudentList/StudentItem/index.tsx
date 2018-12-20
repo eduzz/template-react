@@ -7,12 +7,16 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { differenceInDays, formatDistance } from 'date-fns/esm';
 import ptLocate from 'date-fns/esm/locale/pt-BR';
+import { CDN_URL } from 'settings';
+import { WithRouter } from 'decorators/withRouter';
 
 interface IProps {
   classes?: any;
   student: IStudent;
+  history?: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   root: {
     border: '1px solid',
@@ -39,18 +43,24 @@ interface IProps {
   }
 }))
 export default class StudentItem extends PureComponent<IProps> {
+  handleClick = () => {
+    this.props.history.push(`alunos/${this.props.student.id}`);
+  }
+
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = '';
+    e.currentTarget.src = null;
   }
 
   render() {
     const { classes, student } = this.props;
 
     return (
-      <ListItem className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`} button>
+      <ListItem className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`} button onClick={this.handleClick}>
         <Grid container alignItems='center' spacing={16} wrap='nowrap'>
           <Grid item xs='auto'>
-            <Avatar alt={student.name} src={student.avatar} onError={this.handleImageError}>{student.name.substring(0, 1)}</Avatar>
+            <Grid container>
+              <Avatar alt='' src={student.avatar && CDN_URL + student.avatar} onError={this.handleImageError}>{student.name.substring(0, 1)}</Avatar>
+            </Grid>
           </Grid>
           <Grid item xs={5}>
             <Typography variant='subtitle2' color='inherit' noWrap>{student.name}</Typography>

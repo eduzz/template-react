@@ -19,6 +19,7 @@ interface IProps {
 interface IState {
   students: IStudent[];
   error?: any;
+  isFetching: boolean;
 }
 
 export default class StudentList extends PureComponent<IProps, IState> {
@@ -27,6 +28,7 @@ export default class StudentList extends PureComponent<IProps, IState> {
 
     this.state = {
       students: null,
+      isFetching: false,
     };
   }
 
@@ -43,24 +45,29 @@ export default class StudentList extends PureComponent<IProps, IState> {
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this),
     ).subscribe(students => {
-      console.log(students);
       this.setState({
         students,
         error: null,
+        isFetching: false,
       });
     }, error => {
       this.setState({
         error,
+        isFetching: false,
       });
     });
   }
 
   handleLoadMore = () => {
+    this.setState({
+      isFetching: true,
+    });
+
     studentService.loadMoreStudents();
   }
 
   render() {
-    const { students, error } = this.state;
+    const { students, error, isFetching } = this.state;
 
     if (!!error)
       return (
@@ -85,7 +92,11 @@ export default class StudentList extends PureComponent<IProps, IState> {
         <ListItem>
           <Grid container justify='center'>
             <Grid item>
-              <Button variant='outlined' onClick={this.handleLoadMore}>Mostrar mais alunos</Button>
+              {isFetching ?
+                <Loading />
+                :
+                studentService.hasMoreStudents() && <Button variant='outlined' onClick={this.handleLoadMore}>Mostrar mais alunos</Button>
+              }
             </Grid>
           </Grid>
         </ListItem>

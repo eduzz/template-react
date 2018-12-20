@@ -87,6 +87,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   placeholder='Filtrar por nome de aluno'
                   fullWidth
                   label='Nome'
+                  validation='min:3'
                   onChange={this.updateModel((model, value) => model.name = value)}
                 />
               </Grid>

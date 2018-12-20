@@ -1,9 +1,9 @@
 export interface IStudent {
-  id: number;
+  id?: number;
   name: string;
   email: string;
   avatar: string;
-  last_used_at: string;
+  last_used_at?: string;
 }
 
 export interface IFiltersModel {
@@ -11,4 +11,12 @@ export interface IFiltersModel {
   email: string;
   last_used_at_start: string;
   last_used_at_end: string;
+}
+
+export interface IStudentCourse {
+  id?: number;
+  title: string;
+  avatar: string;
+  created_at: string;
+  type: number;
 }
