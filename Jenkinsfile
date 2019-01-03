@@ -6,15 +6,15 @@ node {
     def date = new Date()
 
     stage ('Clone Repository') {
-         checkout scm
+        checkout scm
     }
 
     stage ('Set Env') {
-        sh "sh ./scripts/build-set-env.sh"
+        sh "sh ./scripts/set-env.sh"
     }
 
     stage ('Build container') {
-        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f ./docker/prod/Dockerfile .")
+        app = docker.build("infraeduzz/nutror-v3-front-producer", "-f docker/prod/Dockerfile .")
     }
 
      stage('Publish to DockerHub') {
@@ -23,6 +23,14 @@ node {
                  app.push("front-producer-${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
                  app.push("front-producer-${env.BRANCH_NAME}")
              }
+
          }
      }
+
+     stage('Deploy to PROD'){
+        if (env.BRANCH_NAME ==~ /(master)/) {
+            sh "ecs-deploy -c nutrorv3 -n service-nutror-front-producer -t 500 -i infraeduzz/nutror-v3-front-producer:${env.BRANCH_NAME}"
+            cleanWs()
+        }
+    }
 }
