@@ -34,6 +34,11 @@ export class TokenService {
   }
 
   public setTokens(tokens: Pick<ITokens, Exclude<keyof ITokens, 'legacyLogin'>>, legacyLogin: boolean = false): Observable<ITokens> {
+
+    const date = new Date();
+    date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
+    document.cookie = `userSession=${JSON.stringify(tokens)}; domain=.nutror.com; expires=${date.toUTCString()}`;
+
     return storageService.set<ITokens>('authToken', { legacyLogin, ...tokens }).pipe(
       rxjsOperators.tap(tokens => this.tokens$.next(tokens))
     );

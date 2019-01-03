@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 export default class DashboardIndexPage extends PureComponent {
   render() {
     return (
-      <Redirect to='/certificados' />
+      <Redirect to='/upsell' />
     );
   }
 }

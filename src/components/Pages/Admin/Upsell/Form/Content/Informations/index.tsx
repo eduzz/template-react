@@ -8,6 +8,7 @@ import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import { WithStyles } from 'decorators/withStyles';
 import ImageUploader from './ImageUploader';
 import Divider from '@material-ui/core/Divider';
+import ActionButtons from '../ActionButtons';
 
 const destaqueVitrine = require('assets/images/destaque-vitrine.png');
 const cardVitrine = require('assets/images/card-vitrine.png');
@@ -18,14 +19,14 @@ interface IProps {
   classes?: any;
 }
 
-@WithStyles({
+@WithStyles(theme => ({
   root: {
     height: 'calc(100vh - 148px)',
   },
   labelTextSelect: {
     maxWidth: 266,
   },
-})
+}))
 export default class Informations extends PureComponent<IProps> {
   static contextType = UpsellFormContext;
   public context: IUpsellFormContext;
@@ -161,6 +162,12 @@ export default class Informations extends PureComponent<IProps> {
                 />
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item>
+            <Divider />
+          </Grid>
+          <Grid item>
+            <ActionButtons />
           </Grid>
         </Grid>
       </CardContent>

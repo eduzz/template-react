@@ -3,10 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
-
 import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 import CourseList from './CourseList';
 import SelectPlaces from './SelectPlaces';
+import ActionButtons from '../ActionButtons';
 
 interface IProps {
   classes?: any;
@@ -51,6 +51,9 @@ export default class Audience extends PureComponent<IProps> {
             <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
 
             <CourseList />
+          </Grid>
+          <Grid item>
+            <ActionButtons />
           </Grid>
         </Grid>
       </CardContent>

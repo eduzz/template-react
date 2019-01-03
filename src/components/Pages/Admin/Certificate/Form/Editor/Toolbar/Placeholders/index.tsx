@@ -15,7 +15,12 @@ interface IProps {
   root: {
     margin: '0 8px 0 8px',
     width: 150,
-    height: 46
+    height: 46,
+    [theme.breakpoints.only('xs')]: {
+      width: '100%',
+      margin: 0,
+      marginTop: 5,
+    },
   },
 }))
 export default class Placeholders extends React.PureComponent<IProps> {
