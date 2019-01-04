@@ -1,21 +1,15 @@
-import { IAppRoute } from 'interfaces/route';
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+
 import CourseFormPage from './Form';
 
 export default class CourseIndexPage extends React.PureComponent {
-  public static routes: IAppRoute[] = [{
-    path: '/novo',
-    component: CourseFormPage,
-  }, {
-    path: '/:id/editar',
-    component: CourseFormPage,
-  }];
-
   render() {
     return (
-      <Fragment>
-        {this.props.children}
-      </Fragment>
+      <Switch>
+        <Route path='*/novo' exact component={CourseFormPage} />
+        <Route path='*/:id/editar' exact component={CourseFormPage} />
+      </Switch>
     );
   }
 }

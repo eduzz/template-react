@@ -8,7 +8,6 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
 import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
 import queryString from 'query-string';
@@ -27,7 +26,6 @@ interface IState extends IStateForm<{
 
 interface IProps extends RouteComponentProps<{ t: string }, {}> {
   classes?: any;
-  router?: AppRouter;
 }
 
 @WithStyles(theme => ({
@@ -66,7 +64,7 @@ interface IProps extends RouteComponentProps<{ t: string }, {}> {
     justifyContent: 'flex-end'
   }
 }))
-class NewPasswordPage extends FormComponent<IProps, IState> {
+export default class NewPasswordPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -160,9 +158,3 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <NewPasswordPage {...props} ref={ref} router={router} />}
-  </RouterContext.Consumer>
-));

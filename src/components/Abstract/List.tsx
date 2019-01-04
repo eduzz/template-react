@@ -6,7 +6,7 @@ import TablePagination, { LabelDisplayedRowsArgs, TablePaginationProps } from '@
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import FieldText from '@react-form-fields/material-ui/components/Text';
-import { ScrollTopContext } from 'components/Layout/AppWrapper';
+import { ScrollTopContext } from 'components/Pages/Admin';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import IconMessage from 'components/Shared/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';

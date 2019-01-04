@@ -2,20 +2,20 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
 import { History } from 'history';
 import { IUpsell } from 'interfaces/models/upsell';
+import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
-import Content from './Content';
-import { WithStyles } from 'decorators/withStyles';
-import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
-import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
+import Content from './Content';
 import { UpsellFormContext } from './Context';
 
 interface IProps {
@@ -31,6 +31,7 @@ interface IState extends IStateForm<IUpsell> {
   updateFlowStep: (flowStep: number) => void;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   root: {
     height: 'calc(100vh - 48px)',
@@ -39,7 +40,6 @@ interface IState extends IStateForm<IUpsell> {
     fill: theme.palette.text.primary,
   },
 }))
-@WithRouter()
 export default class Form extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);

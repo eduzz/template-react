@@ -6,8 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from 'components/Layout/Toolbar';
-import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
@@ -25,11 +25,11 @@ interface IState {
   orderDirection: 'asc' | 'desc';
 }
 
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
-  router?: AppRouter;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   loader: {
     textAlign: 'center',
@@ -57,7 +57,7 @@ interface IProps {
     marginTop: theme.spacing.unit,
   },
 }))
-class UpsellListPage extends PureComponent<IProps, IState> {
+export default class UpsellListPage extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -97,7 +97,7 @@ class UpsellListPage extends PureComponent<IProps, IState> {
     }));
   }
 
-  handleNew = () => this.props.router.navigate('/upsell/novo');
+  handleNew = () => this.props.history.push('/upsell/novo');
 
   render() {
     const { classes } = this.props;
@@ -216,9 +216,3 @@ class UpsellListPage extends PureComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <UpsellListPage {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));

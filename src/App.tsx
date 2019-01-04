@@ -10,14 +10,13 @@ import validationMessage from '@react-form-fields/core/validator/custom-language
 import FormFieldsContext from '@react-form-fields/material-ui/components/Context';
 import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
-import AppRouter from 'components/Router';
+import Pages from 'components/Pages';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import locale from 'date-fns/locale/pt-BR';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
-import baseRoutes from 'routes';
 import { setup } from 'rxjs-operators';
 
 // tslint:disable:jsx-no-lambda
@@ -54,7 +53,7 @@ class App extends React.PureComponent {
             <Alert.Global />
             <Toast.Global />
 
-            <AppRouter routes={baseRoutes} />
+            <Pages />
           </FormFieldsContext>
         </MuiThemeProvider>
       </JssProvider>

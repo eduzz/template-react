@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import { theme } from 'assets/theme';
-import AppRouter, { RouterContext } from 'components/Router';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { dateFormat } from 'formatters/date';
 import { ICertificate } from 'interfaces/models/certificate';
@@ -30,12 +30,12 @@ interface IState {
   firstExpanded: boolean;
 }
 
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
   certificate: ICertificate;
-  router?: AppRouter;
 }
 
+@WithRouter()
 @WithStyles({
   buttonHidden: {
     visibility: 'hidden'
@@ -54,7 +54,7 @@ interface IProps {
     },
   }
 })
-class CertificateItem extends PureComponent<IProps, IState> {
+export default class CertificateItem extends PureComponent<IProps, IState> {
   actions = [{
     text: 'Vincular cursos',
     icon: FormatListBulletedIcon,
@@ -62,7 +62,7 @@ class CertificateItem extends PureComponent<IProps, IState> {
   }, {
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => this.props.router.navigate(`/certificados/${this.props.certificate.id}/editar`),
+    handler: () => this.props.history.push(`/certificados/${this.props.certificate.id}/editar`),
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
@@ -166,9 +166,3 @@ class CertificateItem extends PureComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <CertificateItem {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));

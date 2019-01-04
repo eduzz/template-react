@@ -2,10 +2,11 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import AppRouter, { RouterContext } from 'components/Router';
+import nutrorLogo from 'assets/svg/nutror-logo.svg';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
 import CursorDefaultIcon from 'mdi-react/CursorDefaultIcon';
@@ -17,17 +18,13 @@ import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
 import { CDN_URL } from 'settings';
 
-// import ChartPieIcon from 'mdi-react/ChartPieIcon';
-// import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
-const nutrorLogo = require('assets/svg/nutror-logo.svg');
-
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
   upsell: IUpsellList;
-  router?: AppRouter;
   onDelete?: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   root: {
     border: '1px solid',
@@ -53,11 +50,11 @@ interface IProps {
     color: '#8C9198',
   },
 }))
-class UpsellItem extends PureComponent<IProps> {
+export default class UpsellItem extends PureComponent<IProps> {
   actions = [{
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => this.props.router.navigate(`/upsell/${this.props.upsell.id}/editar`),
+    handler: () => this.props.history.push(`/upsell/${this.props.upsell.id}/editar`),
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
@@ -189,9 +186,3 @@ class UpsellItem extends PureComponent<IProps> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <UpsellItem {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));

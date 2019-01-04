@@ -12,7 +12,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import Toolbar from 'components/Layout/Toolbar';
-import AppRouter, { RouterContext } from 'components/Router';
 import TableWrapper from 'components/Shared/TableWrapper';
 import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/models/author';
@@ -35,7 +34,6 @@ interface IState extends IStateList {
 
 interface IProps {
   classes?: any;
-  router?: AppRouter;
 }
 
 @WithStyles({
@@ -46,7 +44,7 @@ interface IProps {
     minHeight: 'fit-content',
   },
 })
-class AuthorIndexPage extends ListComponent<IProps, IState> {
+export default class AuthorIndexPage extends ListComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props, 'title', 'asc');
   }
@@ -158,9 +156,3 @@ class AuthorIndexPage extends ListComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <AuthorIndexPage {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));

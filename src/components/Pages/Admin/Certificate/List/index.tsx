@@ -9,8 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import { theme } from 'assets/theme';
 import Toolbar from 'components/Layout/Toolbar';
-import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificate } from 'interfaces/models/certificate';
 import ArrowDownIcon from 'mdi-react/ArrowDownIcon';
@@ -30,11 +30,11 @@ interface IState {
   orderDirection: 'asc' | 'desc';
 }
 
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
-  router?: AppRouter;
 }
 
+@WithRouter()
 @WithStyles({
   loader: {
     textAlign: 'center'
@@ -48,7 +48,7 @@ interface IProps {
     },
   }
 })
-class CertificateListPage extends PureComponent<IProps, IState> {
+export default class CertificateListPage extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -82,7 +82,7 @@ class CertificateListPage extends PureComponent<IProps, IState> {
     this.setState({ orderDirection: this.state.orderDirection === 'asc' ? 'desc' : 'asc' }, () => this.loadData());
   }
 
-  handleNew = () => this.props.router.navigate('/certificados/novo');
+  handleNew = () => this.props.history.push('/certificados/novo');
 
   render() {
     const { classes } = this.props;
@@ -160,9 +160,3 @@ class CertificateListPage extends PureComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <CertificateListPage {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));

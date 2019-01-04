@@ -1,12 +1,10 @@
 import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-// import { dateFormat } from 'formatters/date';
+import { ICategory } from 'interfaces/models/category';
 import TagTextOutlineIcon from 'mdi-react/TagTextOutlineIcon';
 import React, { PureComponent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import { RouterContext } from 'components/Router';
-import { ICategory } from 'interfaces/models/category';
 
 interface IProps {
   classes?: any;
@@ -18,7 +16,7 @@ interface IProps {
     borderTop: 'solid 1px #d5d5d5',
   },
 })
-class CategoryItem extends PureComponent<IProps> {
+export default class CategoryItem extends PureComponent<IProps> {
   render() {
     const { category, classes } = this.props;
 
@@ -42,9 +40,3 @@ class CategoryItem extends PureComponent<IProps> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <CategoryItem {...props} {...ref} />}
-  </RouterContext.Consumer>
-));

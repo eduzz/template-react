@@ -4,8 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import AppRouter from 'components/Router';
-import { WithRouter } from 'decorators/withRouter';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import AddIcon from 'mdi-react/AddIcon';
@@ -20,10 +19,8 @@ interface IState {
   banners?: IBanner[];
 }
 
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
-  router?: AppRouter;
-  match?: any;
 }
 
 @WithRouter()

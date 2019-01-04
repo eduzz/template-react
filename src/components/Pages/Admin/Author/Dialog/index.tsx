@@ -120,7 +120,7 @@ export default class AuthorFormDialog extends FormComponent<IProps, IState> {
 
     return (
       <Dialog
-        open={opened}
+        open={opened || false}
         disableBackdropClick
         disableEscapeKeyDown
         onEnter={this.handleEnter}

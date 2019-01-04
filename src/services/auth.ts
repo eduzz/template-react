@@ -76,6 +76,15 @@ export class AuthService {
     return this.user$;
   }
 
+  public canAccess(): rxjs.Observable<boolean> {
+    return this.getUser().pipe(
+      rxjsOperators.map(user => {
+        if (!user) return false;
+        return true;
+      })
+    );
+  }
+
   public isAuthenticated(): rxjs.Observable<boolean> {
     return tokenService.getAccessToken().pipe(rxjsOperators.map(token => !!token));
   }

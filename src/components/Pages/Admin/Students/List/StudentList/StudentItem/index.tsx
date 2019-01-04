@@ -1,14 +1,14 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import Grid from '@material-ui/core/Grid';
-import { IStudent } from 'interfaces/models/student';
-import { WithStyles } from 'decorators/withStyles';
 import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { differenceInDays, formatDistance } from 'date-fns/esm';
 import ptLocate from 'date-fns/esm/locale/pt-BR';
-import { CDN_URL } from 'settings';
 import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudent } from 'interfaces/models/student';
+import React, { PureComponent, SyntheticEvent } from 'react';
+import { CDN_URL } from 'settings';
 
 interface IProps {
   classes?: any;
@@ -44,7 +44,7 @@ interface IProps {
 }))
 export default class StudentItem extends PureComponent<IProps> {
   handleClick = () => {
-    this.props.history.push(`alunos/${this.props.student.id}`);
+    this.props.history.push(`alunos/${this.props.student.id}/detalhes`);
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
