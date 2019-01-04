@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
-import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { IFiltersModel } from 'interfaces/models/student';
-import studentService from 'services/student';
-import rxjsOperators from 'rxjs-operators';
 import Toast from 'components/Shared/Toast';
+import { dateFormat } from 'formatters/date';
+import { IFiltersModel } from 'interfaces/models/student';
+import React, { PureComponent } from 'react';
+import rxjsOperators from 'rxjs-operators';
+import studentService from 'services/student';
 
 interface IProps {
 
@@ -47,8 +48,6 @@ export default class Chips extends PureComponent<IProps, IState> {
   render() {
     const { filters } = this.state;
 
-    console.log('chips -> ', filters);
-
     return (
       <Grid container spacing={8}>
         {!!filters.name &&
@@ -70,7 +69,7 @@ export default class Chips extends PureComponent<IProps, IState> {
         {!!filters.last_used_at_start &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>Data Inicial: {filters.last_used_at_start}</Typography>}
+              label={<Typography variant='subtitle2'>Data Inicial: {dateFormat(filters.last_used_at_start)}</Typography>}
               onDelete={this.handleDelete('last_used_at_start')}
             />
           </Grid>
@@ -78,7 +77,7 @@ export default class Chips extends PureComponent<IProps, IState> {
         {!!filters.last_used_at_end &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>Data final: {filters.last_used_at_end}</Typography>}
+              label={<Typography variant='subtitle2'>Data final: {dateFormat(filters.last_used_at_end)}</Typography>}
               onDelete={this.handleDelete('last_used_at_end')}
             />
           </Grid>

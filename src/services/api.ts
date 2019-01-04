@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { apiRequestFormatter } from 'formatters/apiRequest';
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 
@@ -73,8 +74,8 @@ export class ApiService {
           url,
           method,
           headers,
-          params: method === 'GET' ? data : null,
-          data: method === 'POST' || method === 'PUT' ? data : null,
+          params: method === 'GET' ? apiRequestFormatter(data) : null,
+          data: method === 'POST' || method === 'PUT' ? apiRequestFormatter(data) : null,
           onUploadProgress: (progress: ProgressEvent) => {
             const result = progress.loaded / progress.total;
             progress$.next(result * 100);

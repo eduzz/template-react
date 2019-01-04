@@ -1,15 +1,17 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import MaterialDrawer from '@material-ui/core/Drawer';
-import Typography from '@material-ui/core/Typography';
-import { WithStyles } from 'decorators/withStyles';
-import { FieldText } from '@react-form-fields/material-ui';
 import Button from '@material-ui/core/Button';
-import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import MaterialDrawer from '@material-ui/core/Drawer';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { FieldText } from '@react-form-fields/material-ui';
+import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import studentService from 'services/student';
+import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import { WithStyles } from 'decorators/withStyles';
+import { removeTime } from 'formatters/date';
 import { IFiltersModel } from 'interfaces/models/student';
+import React from 'react';
 import rxjsOperators from 'rxjs-operators';
+import studentService from 'services/student';
 
 interface IProps {
   classes?: any;
@@ -40,6 +42,8 @@ interface IState extends IStateForm<IFiltersModel> {
   },
 }))
 export default class Drawer extends FormComponent<IProps, IState> {
+  today = new Date();
+
   constructor(props: IProps) {
     super(props);
 
@@ -85,7 +89,6 @@ export default class Drawer extends FormComponent<IProps, IState> {
                 <FieldText
                   value={model.name}
                   placeholder='Filtrar por nome de aluno'
-                  fullWidth
                   label='Nome'
                   validation='min:3'
                   onChange={this.updateModel((model, value) => model.name = value)}
@@ -95,7 +98,6 @@ export default class Drawer extends FormComponent<IProps, IState> {
                 <FieldText
                   value={model.email}
                   placeholder='Filtrar por e-mail de aluno'
-                  fullWidth
                   validation='email'
                   label='E-mail'
                   onChange={this.updateModel((model, value) => model.email = value)}
@@ -104,21 +106,22 @@ export default class Drawer extends FormComponent<IProps, IState> {
               <Grid item>
                 <Grid container spacing={16}>
                   <Grid item xs={6}>
-                    <FieldText
-                      value={model.last_used_at_start}
-                      fullWidth
-                      type='date'
+                    <FieldDate
                       label='Data Inicial'
-                      onChange={this.updateModel((model, value) => model.last_used_at_start = value)}
+                      validation='date'
+                      maxDate={this.today}
+                      value={model.last_used_at_start}
+                      onChange={this.updateModel((model, value) => model.last_used_at_start = removeTime(value))}
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <FieldText
-                      value={model.last_used_at_end}
-                      fullWidth
-                      type='date'
+                    <FieldDate
                       label='Data Final'
-                      onChange={this.updateModel((model, value) => model.last_used_at_end = value)}
+                      validation='date|after:data inicial'
+                      validationContext={{ 'data inicial': model.last_used_at_start }}
+                      maxDate={this.today}
+                      value={model.last_used_at_end}
+                      onChange={this.updateModel((model, value) => model.last_used_at_end = removeTime(value))}
                     />
                   </Grid>
                 </Grid>

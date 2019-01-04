@@ -11,8 +11,8 @@ class StudentService {
   private initialFilters: IFiltersModel = {
     name: '',
     email: '',
-    last_used_at_start: '',
-    last_used_at_end: '',
+    last_used_at_start: null,
+    last_used_at_end: null,
   };
   private initialPaginator: IPaginationParams = { page: 1, size: 8 };
   private filters$: Rx.BehaviorSubject<IFiltersModel> = new Rx.BehaviorSubject(this.initialFilters);
