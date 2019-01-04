@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import { IStudentActivity } from 'interfaces/models/student';
-import { WithStyles } from 'decorators/withStyles';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import { WithRouter } from 'decorators/withRouter';
 import format from 'date-fns/esm/format';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudentActivity } from 'interfaces/models/student';
+import React, { PureComponent } from 'react';
 
 interface IProps {
   classes?: any;
@@ -32,11 +32,11 @@ export default class CourseItem extends PureComponent<IProps> {
       <ListItem className={classes.root}>
         <Grid container alignItems='center' spacing={40}>
           <Grid item xs='auto'>
-            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(new Date(activity.created_at), 'dd/MM/YYYY')}</Typography>
-            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(new Date(activity.created_at), 'HH:mm')}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(activity.date, 'dd/MM/YYYY')}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(activity.date, 'HH:mm')}</Typography>
           </Grid>
           <Grid item xs={true}>
-            <Typography variant='subtitle2' color='inherit' noWrap>{activity.title}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap>{activity.data.message}</Typography>
           </Grid>
         </Grid>
       </ListItem>

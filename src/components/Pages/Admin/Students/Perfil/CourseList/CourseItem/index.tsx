@@ -1,15 +1,15 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
-import { IStudentCourse } from 'interfaces/models/student';
-import { WithStyles } from 'decorators/withStyles';
-import Typography from '@material-ui/core/Typography';
-import { CDN_URL } from 'settings';
-import { WithRouter } from 'decorators/withRouter';
-import format from 'date-fns/esm/format';
-import studentService from 'services/student';
-import rxjsOperators from 'rxjs-operators';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import format from 'date-fns/esm/format';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudentCourse } from 'interfaces/models/student';
+import React, { PureComponent, SyntheticEvent } from 'react';
+import rxjsOperators from 'rxjs-operators';
+import studentService from 'services/student';
+import { CDN_URL } from 'settings';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 

@@ -22,7 +22,18 @@ export interface IStudentCourse {
 }
 
 export interface IStudentActivity {
-  id?: number;
-  title: string;
-  created_at: string;
+  data: {
+    subdomain: null;
+    requestUri: string;
+    origin: string;
+    host: string;
+    referer: string;
+    ip: string;
+    usr_cod: number;
+    usr_email: string;
+    usr_type: number;
+    action: string;
+    message: string;
+  };
+  date: string;
 }

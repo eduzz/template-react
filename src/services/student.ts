@@ -1,8 +1,11 @@
+import { IFiltersModel, IStudent, IStudentActivity, IStudentCourse } from 'interfaces/models/student';
+import { IPaginationParams } from 'interfaces/pagination';
 import * as Rx from 'rxjs';
 import rxjsOperators from 'rxjs-operators';
+import { API_ENDPOINT } from 'settings';
+
 import apiService from './api';
-import { IStudent, IFiltersModel, IStudentCourse } from 'interfaces/models/student';
-import { IPaginationParams } from 'interfaces/pagination';
+import tokenService, { TokenService } from './token';
 
 class StudentService {
   private initialFilters: IFiltersModel = {
@@ -11,16 +14,13 @@ class StudentService {
     last_used_at_start: '',
     last_used_at_end: '',
   };
-  private initialPaginator: IPaginationParams = {
-    page: 1,
-    size: 8,
-  };
+  private initialPaginator: IPaginationParams = { page: 1, size: 8 };
   private filters$: Rx.BehaviorSubject<IFiltersModel> = new Rx.BehaviorSubject(this.initialFilters);
   private paginator$: Rx.BehaviorSubject<IPaginationParams> = new Rx.BehaviorSubject(this.initialPaginator);
   private students$: Rx.BehaviorSubject<IStudent[]> = new Rx.BehaviorSubject(null);
   private totalPages: number = this.initialPaginator.page;
 
-  constructor() {
+  constructor(private tokenService: TokenService) {
     this.filters$.subscribe(() => {
       this.paginator$.next(this.initialPaginator);
     });
@@ -84,6 +84,18 @@ class StudentService {
     );
   }
 
+  public getStudentLogs(studentId: number) {
+    return apiService.get<IStudentActivity[]>(`/producer/students/${studentId}/logs`).pipe(
+      rxjsOperators.map(response => response.data),
+    );
+  }
+
+  public getStudentLogsUrl(studentId: number) {
+    return this.tokenService.getTokens().pipe(
+      rxjsOperators.map(({ token }) => `${API_ENDPOINT}/producer/students/${studentId}/logs/export?t=${token}`)
+    );
+  }
+
   public setFilters(filters: IFiltersModel) {
     this.filters$.next({ ...filters });
   }
@@ -101,5 +113,5 @@ class StudentService {
   }
 }
 
-const studentService = new StudentService();
+const studentService = new StudentService(tokenService);
 export default studentService;

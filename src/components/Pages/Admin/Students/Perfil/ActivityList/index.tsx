@@ -1,18 +1,21 @@
-import React, { PureComponent, Fragment } from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import Loading from 'components/Shared/Loading';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudentActivity } from 'interfaces/models/student';
+import React, { Fragment, PureComponent } from 'react';
+import rxjsOperators from 'rxjs-operators';
+import studentService from 'services/student';
+
+import ActivityItem from './ActivityItem';
+
 // import studentService from 'services/student';
 // import rxjsOperators from 'rxjs-operators';
-import { WithRouter } from 'decorators/withRouter';
-import { IStudentActivity } from 'interfaces/models/student';
-import CardContent from '@material-ui/core/CardContent';
-import ErrorMessage from 'components/Shared/ErrorMessage';
-import List from '@material-ui/core/List';
-import Loading from 'components/Shared/Loading';
-import ActivityItem from './ActivityItem';
-import ListItem from '@material-ui/core/ListItem';
-import Grid from '@material-ui/core/Grid';
-
 interface IProps {
   classes?: any;
   history?: any;
@@ -47,39 +50,14 @@ export default class StudentActivity extends PureComponent<IProps, IState> {
   }
 
   loadData = () => {
-    this.setState({
-      activities: [
-        {
-          id: 1,
-          created_at: '2018-11-22 09:11:19.0000000',
-          title: 'Acessou a vitrine',
-        },
-        {
-          id: 2,
-          created_at: '2018-11-22 09:11:19.0000000',
-          title: 'Assistiu a aula: Como comprar paletes para construir móveis',
-        },
-      ],
+    studentService.getStudentLogs(this.props.match.params.id).pipe(
+      rxjsOperators.logError(),
+      rxjsOperators.bindComponent(this),
+    ).subscribe(activities => {
+      this.setState({ activities, error: null });
+    }, error => {
+      this.setState({ error });
     });
-
-    // this.setState({
-    //   error: null,
-    //   courses: null,
-    // });
-
-    // studentService.getStudentCourses(this.props.match.params.id).pipe(
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this),
-    // ).subscribe(courses => {
-    //   this.setState({
-    //     courses,
-    //     error: null,
-    //   });
-    // }, error => {
-    //   this.setState({
-    //     error,
-    //   });
-    // });
   }
 
   render() {
