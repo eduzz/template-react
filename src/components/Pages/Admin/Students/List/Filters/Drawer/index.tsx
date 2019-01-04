@@ -7,7 +7,6 @@ import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
-import { removeTime } from 'formatters/date';
 import { IFiltersModel } from 'interfaces/models/student';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -111,17 +110,17 @@ export default class Drawer extends FormComponent<IProps, IState> {
                       validation='date'
                       maxDate={this.today}
                       value={model.last_used_at_start}
-                      onChange={this.updateModel((model, value) => model.last_used_at_start = removeTime(value))}
+                      onChange={this.updateModel((model, value) => model.last_used_at_start = value)}
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <FieldDate
                       label='Data Final'
-                      validation='date|after:data inicial'
+                      validation='date|after_or_equal:data inicial'
                       validationContext={{ 'data inicial': model.last_used_at_start }}
                       maxDate={this.today}
                       value={model.last_used_at_end}
-                      onChange={this.updateModel((model, value) => model.last_used_at_end = removeTime(value))}
+                      onChange={this.updateModel((model, value) => model.last_used_at_end = value)}
                     />
                   </Grid>
                 </Grid>
