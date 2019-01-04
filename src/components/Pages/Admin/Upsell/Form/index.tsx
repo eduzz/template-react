@@ -2,20 +2,20 @@ import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
 import { History } from 'history';
 import { IUpsell } from 'interfaces/models/upsell';
+import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
 import upsellService from 'services/upsell';
-import Content from './Content';
-import { WithStyles } from 'decorators/withStyles';
-import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
-import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
+import Content from './Content';
 import { UpsellFormContext } from './Context';
 
 interface IProps {
@@ -103,10 +103,7 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   handleSubmit = (isValid: boolean) => {
-    console.log(this.state.model);
-
     const { highlight_images, small_image, external_url, show_type, course_hash } = this.state.model;
-
     const isFormValid = isValid && !!highlight_images.large && !!small_image;
 
     this.setState({
@@ -114,7 +111,6 @@ export default class Form extends FormComponent<IProps, IState> {
     });
 
     if (show_type === 2 && !course_hash) return;
-
     if (show_type === 3 && !external_url) return;
 
     if (!isFormValid) {
@@ -126,10 +122,25 @@ export default class Form extends FormComponent<IProps, IState> {
     const model = {
       ...this.state.model,
       courses: this.state.model.has_selected_courses || this.state.model.has_selected_lessons ?
-        this.state.model.courses
-          .filter(course => course.course_page || course.modules
-            .some(module => module.checked || module.lessons
-              .some(lesson => lesson.checked)))
+        this.state.model.courses.filter(course => {
+          if (!this.state.model.has_selected_courses) {
+            course.course_page = false;
+          }
+
+          return course.course_page || course.modules.some(module => {
+            if (!this.state.model.has_selected_lessons) {
+              module.checked = false;
+            }
+
+            return module.checked || module.lessons.some(lesson => {
+              if (!this.state.model.has_selected_lessons) {
+                lesson.checked = false;
+              }
+
+              return lesson.checked;
+            });
+          });
+        })
         : [],
     };
 
