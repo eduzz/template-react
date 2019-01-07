@@ -18,6 +18,8 @@ async function init() {
   if (isDirty) {
     throw new Error('First commit your changes');
   }
+
+  await execCommand('git merge seed/master');
 }
 
 async function checkDeps() {
