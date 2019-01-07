@@ -1,4 +1,6 @@
-import { ListItemIcon, ListItemText, MenuItem } from '@material-ui/core';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
 

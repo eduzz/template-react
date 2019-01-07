@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
 import ErrorMessageIcon from 'components/Shared/ErrorMessageIcon';
 import React, { Fragment, PureComponent } from 'react';

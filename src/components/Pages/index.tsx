@@ -1,24 +1,22 @@
-import { IAppRoute } from 'interfaces/route';
-import * as React from 'react';
+import PermissionRoute from 'components/Shared/PermissionRoute';
+import React, { PureComponent } from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
-import AdminModule from './Admin';
+import AdminPage from './Admin';
 import NewPasswordPage from './Public/NewPassword';
 
-export default class Pages extends React.PureComponent {
-  public static routes: IAppRoute[] = [
-    {
-      path: '/nova-senha',
-      exact: true,
-      allowAnonymous: true,
-      component: NewPasswordPage
-    },
-    {
-      path: '/',
-      component: AdminModule
-    },
-  ];
-
+export default class Pages extends PureComponent {
   render() {
-    return this.props.children;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path='/nova-senha' exact component={NewPasswordPage} />
+          <PermissionRoute path='/' component={AdminPage} />
+
+          <Route path='/reload' exact render={() => <div />} />
+          <Route render={() => <Redirect to='/' />} />
+        </Switch>
+      </BrowserRouter>
+    );
   }
 }

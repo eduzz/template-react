@@ -1,5 +1,5 @@
 import { Observable, ReplaySubject } from 'rxjs';
-import * as rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 
 import storageService, { StorageService } from './storage';
 
@@ -10,22 +10,22 @@ export class TokenService {
     this.token$ = new ReplaySubject(1);
 
     this.storageService.get('authToken').pipe(
-      rxjsOperators.logError()
+      RxOp.logError()
     ).subscribe(token => this.token$.next(token));
   }
 
   public getToken(): Observable<string> {
-    return this.token$.pipe(rxjsOperators.distinctUntilChanged());
+    return this.token$.pipe(RxOp.distinctUntilChanged());
   }
 
   public setToken(token: string): Observable<string> {
     return this.storageService.set('authToken', token).pipe(
-      rxjsOperators.tap(() => this.token$.next(token))
+      RxOp.tap(() => this.token$.next(token))
     );
   }
 
   public clearToken(): Observable<void> {
-    return this.setToken(null).pipe(rxjsOperators.map(() => null));
+    return this.setToken(null).pipe(RxOp.map(() => null));
   }
 
   public decode<T>(token: string): T {

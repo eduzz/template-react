@@ -1,11 +1,10 @@
-import { Dialog, Slide } from '@material-ui/core';
-import background from 'assets/images/background.jpg';
-import logo from 'assets/images/logo.png';
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import * as rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 import LoginDialogForm from './Form';
@@ -22,36 +21,35 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    backgroundColor: theme.palette.primary.main,
-    backgroundImage: `url(${background})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    background: theme.palette.primary.main,
     minHeight: '100vh',
     minWidth: '100vw',
-    height: '100vh',
-    width: '100vw',
     position: 'relative'
   },
   container: {
-    background: 'white',
-    height: '100vh',
-    width: '400px',
-    maxWidth: '100vw',
-    paddingTop: 'calc(50vh - 170px)',
-    boxShadow: theme.shadows['5']
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    right: '0',
+    bottom: '0',
+    margin: 'auto',
+    width: 320,
+    height: 340,
+    maxWidth: 'calc(100% - 30px)',
+    color: 'white'
   },
   logo: {
-    paddingLeft: 30,
-    marginBottom: 10
+    textAlign: 'center',
+    marginBottom: 20
   },
   logoImage: {
     maxWidth: '100%',
-    maxHeight: 50
+    maxHeight: 120
   },
   viewContainer: {
     boxSizing: 'border-box',
     padding: '0 10px',
-    height: 330
+    height: 310
   }
 }))
 export default class LoginDialog extends PureComponent<IProps, IState> {
@@ -62,8 +60,8 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     authService.shouldOpenLogin().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(opened => {
       this.setState({ opened });
     });
@@ -90,7 +88,7 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
           <div className={classes.container}>
 
             <div className={classes.logo}>
-              <img src={logo} className={classes.logoImage} />
+              <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
             </div>
 
             <SwipeableViews index={currentView}>

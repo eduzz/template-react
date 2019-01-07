@@ -1,4 +1,4 @@
-import { IconButton } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import Alert from 'components/Shared/Alert';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
@@ -18,7 +18,7 @@ interface IProps {
   }
 }))
 export default class ErrorMessageIcon extends PureComponent<IProps> {
-  showAlert = async () => {
+  async showAlert() {
     const { error, onDismiss } = this.props;
 
     await Alert.show(errorMessageFormatter(error));
@@ -29,7 +29,7 @@ export default class ErrorMessageIcon extends PureComponent<IProps> {
     const { classes } = this.props;
 
     return (
-      <IconButton onClick={this.showAlert}>
+      <IconButton onClick={() => this.showAlert()}>
         <AlertCircleIcon className={classes.icon} />
       </IconButton>
     );

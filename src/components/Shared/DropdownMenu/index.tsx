@@ -1,6 +1,6 @@
-import { IconButton, Menu } from '@material-ui/core';
-import { MenuProps } from '@material-ui/core/Menu';
-import { MdiReactIconComponentType } from 'mdi-react';
+import IconButton from '@material-ui/core/IconButton';
+import Menu, { MenuProps } from '@material-ui/core/Menu';
+import MoreIcon from 'mdi-react/MoreIcon';
 import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import * as React from 'react';
 
@@ -8,7 +8,7 @@ import OptionItem from './OptionItem';
 
 export interface IOption {
   text: string;
-  icon?: MdiReactIconComponentType;
+  icon?: typeof MoreIcon;
   handler: () => void;
 }
 

@@ -1,27 +1,30 @@
-import { IUser } from 'interfaces/models/user';
+import { DeepReadonly } from 'helpers/immutable';
+import IUser from 'interfaces/models/user';
+import IUserRole from 'interfaces/models/userRole';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
-import * as rxjs from 'rxjs';
-import rxjsOperators from 'rxjs-operators';
+import * as Rx from 'rxjs';
+import * as RxOp from 'rxjs-operators';
 
 import apiService, { ApiService } from './api';
 
 export class UserService {
   constructor(private apiService: ApiService) { }
 
-  public list(params: IPaginationParams): rxjs.Observable<IPaginationResponse<IUser>> {
-    return this.apiService.get<IUser[]>('/users', params).pipe(
-      //TEST from https://jsonplaceholder.typicode.com/users
-      rxjsOperators.map(users => {
-        return { ...params, total: users.length, results: users };
-      })
+  public list(params: IPaginationParams): Rx.Observable<IPaginationResponse<IUser>> {
+    return this.apiService.get('/user', params);
+  }
+
+  public roles(refresh: boolean = false): Rx.Observable<DeepReadonly<IUserRole[]>> {
+    return this.apiService.get('/user/roles').pipe(
+      RxOp.cache('user-service-roles', { refresh })
     );
   }
 
-  public save(model: IUser): rxjs.Observable<IUser> {
+  public save(model: IUser): Rx.Observable<IUser> {
     return this.apiService.post('/user', model);
   }
 
-  public delete(id: number): rxjs.Observable<void> {
+  public delete(id: number): Rx.Observable<void> {
     return this.apiService.delete(`/user/${id}`);
   }
 }

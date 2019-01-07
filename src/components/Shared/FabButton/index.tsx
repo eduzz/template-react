@@ -1,13 +1,14 @@
-import { Button, Tooltip } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
+import Tooltip from '@material-ui/core/Tooltip';
 import { WithStyles } from 'decorators/withStyles';
-import { MdiReactIconComponentType } from 'mdi-react';
+import MoreVertIcon from 'mdi-react/MoreVertIcon';
 import React, { PureComponent } from 'react';
 
 interface IProps {
   classes?: any;
   hasTabs?: boolean;
   actions: {
-    icon: MdiReactIconComponentType,
+    icon: typeof MoreVertIcon,
     tooltip?: string;
     onClick: () => void;
   }[];
@@ -43,16 +44,16 @@ export default class FabButton extends PureComponent<IProps> {
       <div className={classes.root + ' header-app ' + (hasTabs ? classes.withTabs : '')}>
         {action.tooltip &&
           <Tooltip title={action.tooltip}>
-            <Button variant='fab' color='secondary' onClick={action.onClick}>
+            <Fab color='secondary' onClick={action.onClick}>
               <action.icon />
-            </Button>
+            </Fab>
           </Tooltip>
         }
 
         {!action.tooltip &&
-          <Button variant='fab' color='secondary' onClick={action.onClick}>
+          <Fab color='secondary' onClick={action.onClick}>
             <action.icon />
-          </Button>
+          </Fab>
         }
       </div>
     );

@@ -1,14 +1,22 @@
-import { Card, CardContent, Grid, IconButton, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import Toolbar from 'components/Layout/Toolbar';
 import FabButton from 'components/Shared/FabButton';
 import TableWrapper from 'components/Shared/TableWrapper';
-import { IUser } from 'interfaces/models/user';
+import IUser from 'interfaces/models/user';
 import { IPaginationParams } from 'interfaces/pagination';
 import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 import userService from 'services/user';
 
 import UserFormDialog from '../UserFormDialog';
@@ -37,14 +45,12 @@ export default class UserListPage extends ListComponent<{}, IState> {
     this.setState({ loading: true, error: null });
 
     userService.list(this.mergeParams(params)).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(items => {
       this.setPaginatedData(items);
     }, error => this.setError(error));
   }
-
-  handleRefresh = () => this.loadData();
 
   handleCreate = () => {
     this.setState({ formOpened: true, current: null });
@@ -104,7 +110,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
                     Email
                   </TableCellSortable>
                   <TableCell>
-                    <IconButton disabled={loading} onClick={this.handleRefresh}>
+                    <IconButton disabled={loading} onClick={() => this.loadData()}>
                       <RefreshIcon />
                     </IconButton>
                   </TableCell>

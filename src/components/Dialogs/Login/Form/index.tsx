@@ -1,11 +1,15 @@
-import { Button, CardActions, CardContent, CircularProgress, LinearProgress } from '@material-ui/core';
-import ValidationContext from '@react-form-fields/core/components/ValidationContext';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import Snackbar from 'components/Shared/Snackbar';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
-import React, { FormEvent, MouseEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import React, { MouseEvent } from 'react';
+import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState extends IStateForm<{
@@ -32,25 +36,20 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     this.state = { ...this.state, opened: false, loading: false };
   }
 
-  onSubmit = async (event: FormEvent) => {
-    const { model, loading } = this.state;
-
-    event.preventDefault();
-    if (loading) return;
-
-    const isValid = await this.isFormValid();
+  onSubmit = (isValid: boolean) => {
     if (!isValid) return;
 
+    const { model } = this.state;
     this.setState({ loading: true });
 
     authService.login(model.email, model.password).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       this.setState({ loading: false });
       this.resetForm();
     }, err => {
-      Snackbar.error(err);
+      Toast.error(err);
       this.setState({ loading: false });
     });
   }
@@ -60,9 +59,9 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     const { classes, onRecoveryAccess } = this.props;
 
     return (
-      <form onSubmit={this.onSubmit} noValidate>
-        <ValidationContext ref={this.bindValidationContext}>
+      <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
 
+        <Card>
           <CardContent>
 
             <FieldText
@@ -88,16 +87,13 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
 
           <CardActions className={classes.buttons}>
             <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
-            <Button variant='raised' color='secondary' type='submit'>
-              {!loading && 'Entrar'}
-              {loading && <CircularProgress color='inherit' size={20} />}
-            </Button>
+            <Button disabled={loading} color='secondary' type='submit'>Entrar</Button>
           </CardActions>
 
           {loading && <LinearProgress color='secondary' />}
+        </Card>
 
-        </ValidationContext>
-      </form>
+      </FormValidation>
     );
   }
 }

@@ -1,71 +1,71 @@
-import AppWrapper from 'components/Layout/AppWrapper';
-import { IAppRoute } from 'interfaces/route';
-import ContactsIcon from 'mdi-react/ContactsIcon';
-import StarIcon from 'mdi-react/StarIcon';
+import Drawer, { IMenu } from 'components/Layout/Drawer';
+import PermissionRoute from 'components/Shared/PermissionRoute';
+import { WithStyles } from 'decorators/withStyles';
+import { enRoles } from 'interfaces/models/user';
+import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
+import DomainIcon from 'mdi-react/DomainIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
-import * as React from 'react';
-import rxjsOperators from 'rxjs-operators';
-import authService from 'services/auth';
+import React, { PureComponent } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
+import CompanyIndexPage from './Company';
 import DashboardIndexPage from './Dashboard';
-import ExtraIndexPage from './Extra';
 import UserIndexPage from './User';
 
-interface IState {
-  routes: IAppRoute[];
+interface IProps {
+  classes?: any;
 }
 
-export default class AdminModule extends React.PureComponent<{}, IState>  {
-  static routes: IAppRoute[] = [
-    {
-      path: '/extra',
-      sideDrawer: { display: 'Extra', order: 2, icon: StarIcon },
-      roles: [],
-      component: ExtraIndexPage
-    },
-    {
-      path: '/usuarios',
-      sideDrawer: { display: 'Usuários', order: 1, icon: ContactsIcon },
-      roles: [],
-      component: UserIndexPage
-    },
-    {
-      path: '/',
-      sideDrawer: { display: 'Dashboard', order: 0, icon: ViewDashboardIcon },
-      exact: true,
-      roles: [],
-      component: DashboardIndexPage
-    },
+export const ScrollTopContext = React.createContext<Function>((() => { }));
+
+@WithStyles(theme => ({
+  root: {
+    position: 'relative',
+    display: 'flex',
+    width: '100vw',
+    height: '100vh'
+  },
+  content: {
+    backgroundColor: theme.palette.background.default,
+    width: '100vw',
+    height: '100vh',
+    overflow: 'auto',
+    padding: theme.variables.contentPadding,
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.variables.contentPaddingUpSm,
+    }
+  }
+}))
+export default class AdminPage extends PureComponent<IProps, {}> {
+  mainContent: React.RefObject<HTMLMainElement> = React.createRef();
+  menu: IMenu[] = [
+    { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
+    { path: '/usuarios', display: 'Usuários', role: enRoles.admin, icon: AccountMultipleIcon },
+    { path: '/empresa', display: 'Empresa', icon: DomainIcon }
   ];
 
-  constructor(props: {}) {
-    super(props);
-    this.state = { routes: [] };
-  }
-
-  componentDidMount() {
-    authService.getUser().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(user => {
-      if (!user) {
-        this.setState({ routes: [] });
-        return;
-      }
-
-      this.setState({
-        routes: AdminModule.routes.filter(route => user.canAccess(...route.roles))
-      });
-    });
+  scrollTop = () => {
+    setTimeout(() => this.mainContent.current.scrollTo(0, 0), 100);
   }
 
   render() {
-    const { routes } = this.state;
+    const { classes } = this.props;
 
     return (
-      <AppWrapper routes={routes}>
-        {this.props.children}
-      </AppWrapper>
+      <div className={classes.root}>
+        <ScrollTopContext.Provider value={this.scrollTop}>
+          <Drawer menu={this.menu}>
+            <main ref={this.mainContent} className={classes.content}>
+              <Switch>
+                <PermissionRoute path='/usuarios' role={enRoles.sysAdmin} component={UserIndexPage} />
+                <Route path='/empresa' component={CompanyIndexPage} />
+                <Route path='/' component={DashboardIndexPage} />
+                <Route render={() => <Redirect to='/' />} />
+              </Switch>
+            </main>
+          </Drawer>
+        </ScrollTopContext.Provider>
+      </div>
     );
   }
 }

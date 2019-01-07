@@ -1,4 +1,5 @@
-import { Button, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
@@ -6,7 +7,7 @@ import React, { PureComponent } from 'react';
 
 interface IProps {
   error: any;
-  tryAgain?: () => void;
+  tryAgain?: Function;
   classes?: any;
 }
 
@@ -30,11 +31,11 @@ export default class ErrorMessage extends PureComponent<IProps> {
     return (
       <div className={classes.root}>
         <AlertCircleIcon size={50} className={classes.icon} />
-        <Typography variant='body2'>{errorMessageFormatter(error)}</Typography>
+        <Typography variant='body1'>{errorMessageFormatter(error)}</Typography>
 
         {tryAgain &&
           <Button
-            onClick={tryAgain}
+            onClick={() => tryAgain()}
             className={classes.button}
             color='secondary'
             variant='outlined'

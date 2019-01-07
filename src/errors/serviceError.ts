@@ -1,4 +1,4 @@
-export class ServiceError<T = any> extends Error {
+export default class ServiceError<T = any> extends Error {
   public readonly ignoreLog: boolean;
   public readonly extraData: T;
 

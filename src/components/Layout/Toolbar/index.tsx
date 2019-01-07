@@ -1,10 +1,14 @@
-import { AppBar, IconButton, MuiThemeProvider, Toolbar as CoreToolbar, Typography } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import CoreToolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
 
-import { DrawerContext, IDrawerContext } from '../Drawer';
+import { DrawerContext, IDrawerContext } from '../Drawer/context';
 
 interface IProps {
   title?: string;
@@ -35,10 +39,11 @@ interface IProps {
   },
 }))
 export default class Toolbar extends PureComponent<IProps> {
-  drawer: IDrawerContext;
+  static contextType = DrawerContext;
+  context: IDrawerContext;
 
   openDrawer = () => {
-    this.drawer.open();
+    this.context.open();
   }
 
   render() {
@@ -46,10 +51,6 @@ export default class Toolbar extends PureComponent<IProps> {
 
     return (
       <div className={classes.root}>
-        <DrawerContext.Consumer>
-          {drawer => (this.drawer = drawer) && null}
-        </DrawerContext.Consumer>
-
         <MuiThemeProvider theme={whiteTheme}>
           <AppBar className={classes.appBar} elevation={1}>
             <CoreToolbar>
@@ -62,7 +63,7 @@ export default class Toolbar extends PureComponent<IProps> {
               </IconButton>
               {children}
               {!children &&
-                <Typography variant='title' color='inherit' noWrap>
+                <Typography variant='h6' color='inherit' noWrap>
                   {title || 'App'}
                 </Typography>
               }

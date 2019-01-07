@@ -11,10 +11,6 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
     return dateParse(obj) as any;
   }
 
-  if (typeof obj === 'string' && !isNaN(Number(obj))) {
-    return Number(obj) as any;
-  }
-
   if (typeof obj === 'object' && !(obj instanceof Date)) {
     return Object.keys(obj).reduce((acc, key) => {
       acc[key] = apiResponseFormatter(obj[key]);
@@ -26,5 +22,5 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
 }
 
 function isValidDateString(value: any): boolean {
-  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+)Z)?)?$/.test(value);
+  return /^(\d{4})-(\d{2})-(\d{2})([T\s](\d{2}):(\d{2}):(\d{2})(\.(\d+)(Z)?)?)?$/.test(value);
 }

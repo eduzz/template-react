@@ -1,10 +1,10 @@
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import { MdiReactIconComponentType } from 'mdi-react';
+import MoreIcon from 'mdi-react/MoreIcon';
 import React, { PureComponent } from 'react';
 
 interface IProps {
-  icon: MdiReactIconComponentType;
+  icon: typeof MoreIcon;
   message: any;
   classes?: any;
 }

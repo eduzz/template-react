@@ -1,16 +1,12 @@
-import {
-  IconButton,
-  InputAdornment,
-  LinearProgress,
-  TableCell,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-} from '@material-ui/core';
-import { TableCellProps } from '@material-ui/core/TableCell';
-import { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import TableCell, { TableCellProps } from '@material-ui/core/TableCell';
+import TablePagination, { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import FieldText from '@react-form-fields/material-ui/components/Text';
-import { ScrollTopContext } from 'components/Layout/AppWrapper';
+import { ScrollTopContext } from 'components/Pages/Admin';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import IconMessage from 'components/Shared/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
@@ -134,7 +130,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   labelDisplayedRows = ({ from, to, count }: LabelDisplayedRowsArgs) => `${from}-${to} de ${count}`;
-  onChangePage = (event: any, page: number) => this.handlePaginate(page);
+  onChangePage = (event: any, page: number) => this.handlePaginate(page + 1);
   onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.page, Number(event.target.value));
 
   renderSearch = (props: Partial<FieldText['props']> = {}) => {
@@ -216,11 +212,10 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         <TablePagination
           labelRowsPerPage='items'
           labelDisplayedRows={this.labelDisplayedRows}
-          component='div'
           count={total}
           rowsPerPage={pageSize}
           rowsPerPageOptions={[10, 25, 50]}
-          page={page}
+          page={page - 1}
           onChangePage={this.onChangePage}
           onChangeRowsPerPage={this.onChangeRowsPerPage}
           {...props}

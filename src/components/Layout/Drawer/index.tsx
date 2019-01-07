@@ -1,110 +1,95 @@
-import { List } from '@material-ui/core';
-import { darken } from '@material-ui/core/styles/colorManipulator';
-import logoWhite from 'assets/images/logo-white.png';
-import AppRouter, { RouterContext } from 'components/Router';
+import CoreDrawer from '@material-ui/core/Drawer';
+import Hidden from '@material-ui/core/Hidden';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
-import { DeepReadonly } from 'helpers/immutable';
-import { IAppRoute } from 'interfaces/route';
-import { IUserToken } from 'interfaces/tokens/user';
-import React, { PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
-import authService from 'services/auth';
+import { enRoles } from 'interfaces/models/user';
+import MoreIcon from 'mdi-react/MoreIcon';
+import React, { Fragment, PureComponent } from 'react';
 
-import DrawerListItem from './ListItem';
-import { IAppRouteParsed, routeParser } from './routeParser';
-import AppDrawerUser from './UserMenu';
+import Content from './Content';
+import { DrawerContext } from './context';
+
+export interface IMenu {
+  path: string;
+  icon?: typeof MoreIcon;
+  display: string;
+  role?: enRoles;
+  submenu?: IMenu[];
+}
 
 interface IState {
-  user?: DeepReadonly<IUserToken>;
-  routes: IAppRouteParsed[];
+  drawerOpened: boolean;
 }
 
-interface IProps {
-  routes: IAppRoute[];
+interface IProps extends IRouteProps {
+  menu: IMenu[];
   classes?: any;
-  router?: AppRouter;
-  drawer?: IDrawerContext;
 }
 
-export interface IDrawerContext {
-  open(): void;
-  close(): void;
-}
-
-export const DrawerContext = React.createContext<IDrawerContext>(null);
-
+@WithRouter()
 @WithStyles(theme => ({
-  root: {
-    background: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    height: '100vh'
+  drawer: {
+    width: theme.variables.drawerWidth,
+    borderRight: 'none !important',
+    boxShadow: `${theme.variables.boxShadow} !important`,
+    [theme.breakpoints.up('md')]: {
+      width: theme.variables.drawerWidth,
+      position: 'relative',
+      height: '100vh'
+    }
   },
-  header: {
-    padding: '10px 0',
-    textAlign: 'center',
-    background: darken(theme.palette.primary.main, 0.15)
-  },
-  logo: {
-    maxWidth: 170,
-    maxHeight: 100,
-    margin: '10px 0'
-  },
-  list: {
-    padding: 0
-  }
 }))
-class AppDrawer extends PureComponent<IProps, IState> {
-  constructor(props: any) {
+export default class Drawer extends PureComponent<IProps, IState> {
+  modalProps = { keepMounted: true };
+  drawerClasses = { paper: this.props.classes.drawer };
+
+  constructor(props: IProps) {
     super(props);
-    this.state = { routes: [] };
+    this.state = { drawerOpened: false };
   }
 
-  static getDerivedStateFromProps(props: IProps, currentState: IState): IState {
-    return {
-      ...currentState,
-      routes: routeParser(props.routes)
-    };
+  navigate = (url: string) => {
+    this.props.history.push(url);
+    this.close();
   }
 
-  componentDidMount() {
-    authService.getUser().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
-    ).subscribe(user => this.setState({ user }));
-  }
-
-  toRoute = (route: IAppRoute) => {
-    this.props.drawer.close();
-    this.props.router.navigate(route.path);
-  }
+  open = () => this.setState({ drawerOpened: true });
+  close = () => this.setState({ drawerOpened: false });
 
   render() {
-    const { routes, user } = this.state;
-    const { classes } = this.props;
+    const { drawerOpened } = this.state;
+    const { menu, children } = this.props;
+
+    const content = <Content menu={menu} navigate={this.navigate} close={this.close} />;
 
     return (
-      <div className={classes.root}>
-        <div className={classes.header}>
-          <img src={logoWhite} className={classes.logo} />
-          <AppDrawerUser user={user} />
-        </div>
+      <Fragment>
+        <DrawerContext.Provider value={this}>
+          <Hidden mdUp implementation='css'>
+            <CoreDrawer
+              variant='temporary'
+              anchor='left'
+              open={drawerOpened}
+              classes={this.drawerClasses}
+              onClose={this.close}
+              ModalProps={this.modalProps}
+            >
+              {content}
+            </CoreDrawer>
+          </Hidden>
+          <Hidden smDown implementation='css'>
+            <CoreDrawer
+              variant='permanent'
+              open
+              classes={this.drawerClasses}
+            >
+              {content}
+            </CoreDrawer>
+          </Hidden>
 
-        <List className={classes.list}>
-          {routes.map(route =>
-            <DrawerListItem key={route.path} user={user} route={route} onClick={this.toRoute} />
-          )}
-        </List>
-      </div>
+          {children}
+        </DrawerContext.Provider>
+      </Fragment>
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router =>
-      <DrawerContext.Consumer>
-        {drawer => <AppDrawer {...props} ref={ref} router={router} drawer={drawer} />}
-      </DrawerContext.Consumer>
-    }
-  </RouterContext.Consumer>
-));

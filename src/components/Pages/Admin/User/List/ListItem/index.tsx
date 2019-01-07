@@ -1,13 +1,14 @@
-import { TableCell, TableRow } from '@material-ui/core';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import ListItemComponent, { IStateListItem } from 'components/Abstract/ListItem';
 import Alert from 'components/Shared/Alert';
 import { IOption } from 'components/Shared/DropdownMenu';
-import Snackbar from 'components/Shared/Snackbar';
-import { IUser } from 'interfaces/models/user';
+import Toast from 'components/Shared/Toast';
+import IUser from 'interfaces/models/user';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import EditIcon from 'mdi-react/EditIcon';
 import * as React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 import userService from 'services/user';
 
 interface IState extends IStateListItem {
@@ -44,16 +45,16 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
   handleDelete = async () => {
     const { user, onDeleteComplete } = this.props;
 
-    const ok = await Alert.confirm(`Deseja excluir o usuário ${user.name}?`);
+    const ok = await Alert.confirm(`Deseja excluir o usuário ${user.firstName}?`);
     if (!ok) return;
 
     this.setState({ loading: true });
 
     userService.delete(user.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
-      Snackbar.show(`${user.name} foi removido`);
+      Toast.show(`${user.firstName} foi removido`);
       this.setState({ loading: false, deleted: true });
       onDeleteComplete();
     }, error => {
@@ -71,7 +72,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
 
     return (
       <TableRow>
-        <TableCell>{user.name}</TableCell>
+        <TableCell>{user.fullName}</TableCell>
         <TableCell>{user.email}</TableCell>
         <TableCell>
           {this.renderSideMenu(this.options)}

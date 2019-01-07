@@ -1,6 +1,6 @@
 import { enRoles } from './user';
 
-export interface IUserRole {
+export default interface IUserRole {
   role: enRoles;
   name: string;
   description?: string;

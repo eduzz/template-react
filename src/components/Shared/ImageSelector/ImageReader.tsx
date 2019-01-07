@@ -1,10 +1,12 @@
-import { Button, CircularProgress } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import IconMessage from 'components/Shared/IconMessage';
-import Snackbar from 'components/Shared/Snackbar';
 import { WithStyles } from 'decorators/withStyles';
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
 import React, { DragEvent, Fragment, PureComponent } from 'react';
+
+import Toast from '../Toast';
 
 export interface ImageReaderResult {
   url: string;
@@ -48,7 +50,7 @@ interface IProps {
   }
 })
 export default class ImageReader extends PureComponent<IProps, IState> {
-  inputRef: HTMLInputElement;
+  inputRef: React.RefObject<HTMLInputElement> = React.createRef();
   extensions = ['png', 'gif', 'jpeg', 'jpg', 'bmp'];
 
   constructor(props: IProps) {
@@ -57,16 +59,16 @@ export default class ImageReader extends PureComponent<IProps, IState> {
   }
 
   handleSelectImage = () => {
-    this.inputRef.click();
+    this.inputRef.current.click();
   }
 
   onFileSelected = () => {
-    if (!this.inputRef.files.length) return;
+    if (!this.inputRef.current.files.length) return;
 
     this.setState({ loading: true });
 
-    this.loadFile(this.inputRef.files[0]);
-    this.inputRef.value = '';
+    this.loadFile(this.inputRef.current.files[0]);
+    this.inputRef.current.value = '';
   }
 
   onDropFile = (event: DragEvent<any>) => {
@@ -94,7 +96,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
     const regexp = new RegExp(`.(${this.extensions.join('|')})$`, 'gi');
 
     if (!regexp.test(file.name)) {
-      Snackbar.show(`Apenas imagens: ${this.extensions.join(', ')}`);
+      Toast.show(`Apenas imagens: ${this.extensions.join(', ')}`);
       return;
     }
 
@@ -102,7 +104,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
 
     reader.onload = (e: any) => this.getImageDimensions(e.target.result);
     reader.onerror = () => {
-      Snackbar.show('Não conseguimos carregar a imagem');
+      Toast.show('Não conseguimos carregar a imagem');
       this.setState({ loading: false });
     };
 
@@ -120,7 +122,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
     };
 
     image.onerror = () => {
-      Snackbar.show('Não conseguimos carregar a imagem');
+      Toast.show('Não conseguimos carregar a imagem');
       this.setState({ loading: false });
     };
 
@@ -173,7 +175,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
       <Fragment>
         <input
           type='file'
-          ref={ref => this.inputRef = ref}
+          ref={this.inputRef}
           className='hide'
           onChange={this.onFileSelected}
           accept={`.${this.extensions.join(',.')}`}

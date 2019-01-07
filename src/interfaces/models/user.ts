@@ -1,8 +1,12 @@
-export interface IUser {
+export default interface IUser {
   id?: number;
-  name: string;
+  firstName: string;
+  lastName?: string;
   email: string;
   password?: string;
+  roles: enRoles[];
+
+  fullName?: string;
 
   createdDate?: Date;
   updatedDate?: Date;
