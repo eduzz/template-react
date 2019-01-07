@@ -20,6 +20,7 @@ async function init() {
   }
 
   console.log(await execCommand('git pull seed master'));
+  await selfDestruction();
 }
 
 async function checkDeps() {
@@ -30,6 +31,12 @@ async function checkDeps() {
   await execCommand('git --version').catch(() => {
     throw new Error('Git is required')
   });
+}
+
+async function selfDestruction() {
+  await new Promise((resolve, reject) =>
+    rimraf('./init.js', err => err ? reject(err) : resolve())
+  );
 }
 
 async function execCommand(command) {

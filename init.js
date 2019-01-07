@@ -135,7 +135,8 @@ async function cleanup(params) {
     replaceContent('./README.md', replacers),
     replaceContent('./docker-compose.yml', replacers),
     replaceContent('./.env.development', replacers),
-    replaceContent('./.env.production', replacers)
+    replaceContent('./.env.production', replacers),
+    replaceContent('./.gitignore', { from: '.yarn.lock', to: '' })
   ]);
 }
 
