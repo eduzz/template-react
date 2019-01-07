@@ -11,9 +11,3 @@ export const TOAST_DEFAULT_TIMEOUT = 3000;
 export const TOAST_ERROR_TIMEOUT = 15000;
 
 export const IS_DEVELOPMENT = ENV === 'development';
-export const SNACKBAR_DEFAULT_TIMEOUT = 3000;
-
-export const ZIPCODE_WEBMANIA = {
-  key: (process.env.REACT_APP_ZIPCODE_WEBMANIA_KEY || '').trim(),
-  secret: (process.env.REACT_APP_ZIPCODE_WEBMANIA_SECRET || '').trim(),
-};
