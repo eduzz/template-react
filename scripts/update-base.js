@@ -22,7 +22,7 @@ async function init() {
   }
 
   try {
-    console.log(await execCommand('git pull seed master'));
+    console.log(await execCommand('git pull seed master --no-commit --no-ff'));
   } catch (err) {
     console.error(err);
   }
