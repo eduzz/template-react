@@ -1,13 +1,15 @@
 const fs = require('fs');
 
 async function init() {
-  const params = require(__dirname + '/init-params.json');
-
   console.log('CLEANING PROJECT');
-  await cleanup(params);
+  await cleanup();
 }
 
 module.exports = async function cleanup(params) {
+  if (!params) {
+    params = require('path').join(__dirname, 'init-params.json')
+  }
+
   const replacers = [{
     from: '%PROJECT-NAME%',
     to: params.project

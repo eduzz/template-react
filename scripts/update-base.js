@@ -1,4 +1,5 @@
 const childProcess = require('child_process');
+const cleanup = require(require('path').join(__dirname, 'cleanup'));
 
 const repoSeed =
   process.env.npm_package_repository_seed ||
@@ -20,6 +21,8 @@ async function init() {
   }
 
   console.log(await execCommand('git pull seed master'));
+
+  await cleanup();
   await selfDestruction();
 }
 
