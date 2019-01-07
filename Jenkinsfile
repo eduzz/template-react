@@ -27,10 +27,10 @@ node {
          }
      }
 
-     stage('Deploy to PROD'){
-        if (env.BRANCH_NAME ==~ /(master)/) {
-            sh "ecs-deploy -c nutrorv3 -n service-nutror-front-producer -t 500 -i infraeduzz/nutror-v3-front-producer:${env.BRANCH_NAME}"
-            cleanWs()
-        }
-    }
+    //  stage('Deploy to PROD'){
+    //     if (env.BRANCH_NAME ==~ /(master)/) {
+    //         sh "ecs-deploy -c nutrorv3 -n service-nutror-front-producer -t 500 -i infraeduzz/nutror-v3-front-producer:${env.BRANCH_NAME}"
+    //         cleanWs()
+    //     }
+    // }
 }
