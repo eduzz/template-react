@@ -21,7 +21,11 @@ async function init() {
     throw new Error('First commit your changes');
   }
 
-  console.log(await execCommand('git pull seed master'));
+  try {
+    console.log(await execCommand('git pull seed master'));
+  } catch (err) {
+    console.error(err);
+  }
 
   await cleanup();
   await selfDestruction();
