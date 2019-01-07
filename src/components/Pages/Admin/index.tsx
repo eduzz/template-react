@@ -3,12 +3,10 @@ import PermissionRoute from 'components/Shared/PermissionRoute';
 import { WithStyles } from 'decorators/withStyles';
 import { enRoles } from 'interfaces/models/user';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
-import DomainIcon from 'mdi-react/DomainIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import React, { PureComponent } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import CompanyIndexPage from './Company';
 import DashboardIndexPage from './Dashboard';
 import UserIndexPage from './User';
 
@@ -41,7 +39,6 @@ export default class AdminPage extends PureComponent<IProps, {}> {
   menu: IMenu[] = [
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
     { path: '/usuarios', display: 'Usuários', role: enRoles.admin, icon: AccountMultipleIcon },
-    { path: '/empresa', display: 'Empresa', icon: DomainIcon }
   ];
 
   scrollTop = () => {
@@ -58,7 +55,6 @@ export default class AdminPage extends PureComponent<IProps, {}> {
             <main ref={this.mainContent} className={classes.content}>
               <Switch>
                 <PermissionRoute path='/usuarios' role={enRoles.sysAdmin} component={UserIndexPage} />
-                <Route path='/empresa' component={CompanyIndexPage} />
                 <Route path='/' component={DashboardIndexPage} />
                 <Route render={() => <Redirect to='/' />} />
               </Switch>

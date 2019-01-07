@@ -14,7 +14,7 @@ const secondary = {
   light: '#ffff53',
   main: '#ffcc09',
   dark: '#c79c00',
-  contrastText: '#000',
+  contrastText: '#fff',
 };
 
 export const theme = createMuiTheme({
