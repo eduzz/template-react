@@ -1,5 +1,6 @@
 const childProcess = require('child_process');
 const cleanup = require(require('path').join(__dirname, 'cleanup'));
+const rimraf = require('rimraf');
 
 const repoSeed =
   process.env.npm_package_repository_seed ||
