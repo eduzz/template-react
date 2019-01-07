@@ -16,3 +16,7 @@ export function dateParse(value: any, format: string = null): Date {
 export function dateFormat(date: Date, format: string = 'dd/MM/yyyy'): string {
   return dateFnsFormat(date, format, { locale });
 }
+
+export function removeTime(date: Date): Date {
+  return dateParse(dateFormat(date, 'yyyy-MM-dd'), 'yyyy-MM-dd');
+}

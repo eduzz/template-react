@@ -49,7 +49,7 @@ const overrides: Overrides = {
   },
   MuiInputLabel: {
     root: {
-      fontSize: 16,
+      fontSize: 14,
       color: palette.text.primary,
     },
   },

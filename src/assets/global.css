@@ -57,6 +57,7 @@ b {
 [class*='MuiDialogContent'] {
   max-height: calc(100vh - 140px) !important;
   overflow: auto;
+  min-width: 100%;
 }
 
 .button-margin-input {
