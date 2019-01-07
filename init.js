@@ -57,7 +57,7 @@ async function resetGit(params) {
   await execCommand('git add . && git commit -am "initial"')
 }
 
-async function selfDestruction(params) {
+async function selfDestruction() {
   await new Promise((resolve, reject) =>
     rimraf('./init.js', err => err ? reject(err) : resolve())
   );
