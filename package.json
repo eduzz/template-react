@@ -5,13 +5,15 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "%PROJECT-REPO%"
+    "url": "%PROJECT-REPO%",
+    "seed": "git@github.com:eduzz/react-admin-seed.git"
   },
   "scripts": {
     "start": "react-scripts-ts start",
     "dev": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "eject": "react-scripts-ts eject",
+    "update-seed": "node ./scripts/update-base.js",
     "webpack-analyze": "node ./scripts/webpack-analyze.js",
     "update-base": "git pull seed master && git merge seed/master --no-commit --no-ff && yarn rimraf ./init.js"
   },
