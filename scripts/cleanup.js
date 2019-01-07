@@ -5,9 +5,9 @@ async function init() {
   await cleanup();
 }
 
-module.exports = async function cleanup(params) {
+async function cleanup(params) {
   if (!params) {
-    params = require('path').join(__dirname, 'init-params.json')
+    params = require('path').join(__dirname, 'init-params.json');
   }
 
   const replacers = [{
@@ -53,7 +53,7 @@ module.exports = async function cleanup(params) {
     replaceContent('./docker-compose.yml', replacers),
     replaceContent('./.env.development', replacers),
     replaceContent('./.env.production', replacers),
-    replaceContent('./.gitignore', [{ from: '.yarn.lock', to: '' }])
+    replaceContent('./.gitignore', [{ from: 'yarn.lock', to: '' }])
   ]);
 }
 
@@ -70,6 +70,8 @@ async function replaceContent(file, replacers) {
     fs.writeFile(file, content, (err, data) => err ? reject(err) : resolve(data))
   );
 }
+
+module.exports = cleanup;
 
 if (require.main === module) {
   init().then(() => {

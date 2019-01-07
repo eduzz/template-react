@@ -5,6 +5,7 @@ const lodash = require('lodash');
 const rimraf = require('rimraf');
 const childProcess = require('child_process');
 const cleanup = require('./scripts/cleanup');
+const askParams = require('./scripts/ask-params');
 
 async function init() {
   await awaitWarning();
@@ -14,10 +15,6 @@ async function init() {
 
   let promise = cleanup(params);
   ora.promise(promise, 'Renomeando projeto...');
-  await promise;
-
-  promise = removePackages(params);
-  ora.promise(promise, 'Limpando dependencias...');
   await promise;
 
   promise = selfDestruction(params);
@@ -46,57 +43,6 @@ async function checkDeps() {
   await execCommand('git --version').catch(() => {
     throw new Error('Git is required')
   });
-}
-
-async function askParams(answers = {}) {
-  const params = await inquirer.prompt([{
-    name: 'project',
-    default: answers.project,
-    message: 'Nome do projeto*',
-    validate: i => i.length >= 3 ? true : 'Pelo menos 3 letras'
-  }, {
-    name: 'repository',
-    default: answers.repository,
-    message: 'Repositorio',
-  }, {
-    name: 'endpointDev',
-    default: answers.endpointDev || 'http://localhost:3001',
-    message: 'Endpoint API(Dev)'
-  }, {
-    name: 'endpointProd',
-    default: answers.endpointProd,
-    message: 'Endpoint API(Prod)'
-  }, {
-    name: 'dockerImage',
-    default: (a) => answers.dockerImage || `infraeduzz/${lodash.kebabCase(a.project).toLowerCase()}`,
-    message: 'Docker Repo (infraeduzz/example)'
-  }, {
-    name: 'dockerCredentials',
-    default: answers.dockerCredentials,
-    message: 'Docker Credentials (UUID/GUID)'
-  }, {
-    name: 'sentryDsn',
-    default: answers.sentryDsn,
-    message: 'Sentry DSN'
-  }, {
-    name: 'confirmed',
-    type: 'confirm',
-    message: 'Confirma as configurações?'
-  }]);
-
-  if (!params.confirmed) {
-    console.log('---- Responda novamente:')
-    return askParams(params);
-  }
-
-  params.slug = lodash.kebabCase(params.project).toLowerCase();
-  fs.writeFile('./src/init-params.json', JSON.stringify(params, null, 2));
-
-  return params;
-}
-
-async function removePackages() {
-  await execCommand(`yarn remove inquirer ora`);
 }
 
 async function resetGit(params) {
