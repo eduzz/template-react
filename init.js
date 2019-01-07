@@ -128,6 +128,7 @@ async function cleanup(params) {
     to: params.sentryDsn
   }];
 
+
   await Promise.all([
     replaceContent('./Jenkinsfile', replacers),
     replaceContent('./package.json', replacers),
@@ -170,7 +171,9 @@ async function resetGit(params) {
   await execCommand('git add . && git commit -am "initial"')
 }
 
-async function selfDestruction() {
+async function selfDestruction(params) {
+  fs.writeFile('./src/init-params.json', JSON.stringify(params, null, 2));
+
   await new Promise((resolve, reject) =>
     rimraf('./init.js', err => err ? reject(err) : resolve())
   );
