@@ -4,6 +4,7 @@ const ora = require('ora');
 const lodash = require('lodash');
 const rimraf = require('rimraf');
 const childProcess = require('child_process');
+const cleanup = require('./scripts/cleanup');
 
 async function init() {
   await awaitWarning();
@@ -89,70 +90,9 @@ async function askParams(answers = {}) {
   }
 
   params.slug = lodash.kebabCase(params.project).toLowerCase();
+  fs.writeFile('./src/init-params.json', JSON.stringify(params, null, 2));
+
   return params;
-}
-
-async function cleanup(params) {
-  const replacers = [{
-    from: '%PROJECT-NAME%',
-    to: params.project
-  }, {
-    from: 'PROJECT-NAME',
-    to: params.project
-  }, {
-    from: 'Projeto Base React Eduzz',
-    to: params.project
-  }, {
-    from: '%PROJECT-SLUG%',
-    to: params.slug
-  }, {
-    from: 'PROJECT-SLUG',
-    to: params.slug
-  }, {
-    from: '%PROJECT-REPO%',
-    to: params.repository || '%PROJECT-REPO%'
-  }, {
-    from: '%DEV-ENDPOINT%',
-    to: params.endpointDev || '%DEV-ENDPOINT%'
-  }, {
-    from: '%PROD-ENDPOINT%',
-    to: params.endpointProd || '%PROD-ENDPOINT%'
-  }, {
-    from: '%DOCKER-IMAGE%',
-    to: params.dockerImage || '%DOCKER-IMAGE%'
-  }, {
-    from: '%DOCKER-CREDENTIALS%',
-    to: params.dockerCredentials || '%DOCKER-CREDENTIALS%'
-  }, {
-    from: '%SENTRY-DSN%',
-    to: params.sentryDsn
-  }];
-
-
-  await Promise.all([
-    replaceContent('./Jenkinsfile', replacers),
-    replaceContent('./package.json', replacers),
-    replaceContent('./public/index.html', replacers),
-    replaceContent('./README.md', replacers),
-    replaceContent('./docker-compose.yml', replacers),
-    replaceContent('./.env.development', replacers),
-    replaceContent('./.env.production', replacers),
-    replaceContent('./.gitignore', { from: '.yarn.lock', to: '' })
-  ]);
-}
-
-async function replaceContent(file, replacers) {
-  let content = await new Promise((resolve, reject) =>
-    fs.readFile(file, 'utf8', (err, data) => err ? reject(err) : resolve(data))
-  );
-
-  for (let replacer of replacers) {
-    content = content.replace(replacer.from, replacer.to);
-  }
-
-  await new Promise((resolve, reject) =>
-    fs.writeFile(file, content, (err, data) => err ? reject(err) : resolve(data))
-  );
 }
 
 async function removePackages() {
@@ -172,8 +112,6 @@ async function resetGit(params) {
 }
 
 async function selfDestruction(params) {
-  fs.writeFile('./src/init-params.json', JSON.stringify(params, null, 2));
-
   await new Promise((resolve, reject) =>
     rimraf('./init.js', err => err ? reject(err) : resolve())
   );

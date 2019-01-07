@@ -1,5 +1,4 @@
 import './assets/global.css';
-import 'fieldConfig';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';

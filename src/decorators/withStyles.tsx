@@ -8,3 +8,13 @@ export function WithStyles(
     return withStyles(styles, options)(target as any) as any;
   };
 }
+
+export type AppStyle<Classkeys extends string = string> = StyleRules<Classkeys> | StyleRulesCallback<Classkeys>;
+
+export type ClassesFrom<AppStyle> = {
+  [key in AppStyle extends StyleRulesCallback ? keyof ReturnType<AppStyle> : keyof AppStyle]: string
+};
+
+export interface IStyledProps<T = any> {
+  classes?: ClassesFrom<T>;
+}
