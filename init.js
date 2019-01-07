@@ -57,7 +57,7 @@ async function askParams(answers = {}) {
   }, {
     name: 'repository',
     default: answers.repository,
-    message: 'Repositorio'
+    message: 'Repositorio',
   }, {
     name: 'endpointDev',
     default: answers.endpointDev || 'http://localhost:3001',
@@ -68,7 +68,7 @@ async function askParams(answers = {}) {
     message: 'Endpoint API(Prod)'
   }, {
     name: 'dockerImage',
-    default: answers.dockerImage,
+    default: (a) => answers.dockerImage || `infraeduzz/${lodash.kebabCase(a.project).toLowerCase()}`,
     message: 'Docker Repo (infraeduzz/example)'
   }, {
     name: 'dockerCredentials',
