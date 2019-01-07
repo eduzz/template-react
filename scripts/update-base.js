@@ -19,7 +19,7 @@ async function init() {
     throw new Error('First commit your changes');
   }
 
-  await execCommand('git merge seed/master');
+  await execCommand('git pull seed master');
 }
 
 async function checkDeps() {
