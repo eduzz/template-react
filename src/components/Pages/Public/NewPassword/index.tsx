@@ -6,14 +6,13 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
-import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
-import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
 import queryString from 'query-string';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import tokenService from 'services/token';
+import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
 
 interface IState extends IStateForm<{
   password: string;
@@ -114,7 +113,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
         <div className={classes.container}>
 
           <div className={classes.logo}>
-            <img src={logoWhite} className={classes.logoImage} />
+            <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
           </div>
 
           <FormValidation onSubmit={this.onSubmit}>

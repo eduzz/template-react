@@ -1,5 +1,5 @@
 import Typography from '@material-ui/core/Typography';
-import { FieldText } from '@react-form-fields/material-ui';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { WithStyles } from 'decorators/withStyles';
 import React, { Fragment, PureComponent } from 'react';
 

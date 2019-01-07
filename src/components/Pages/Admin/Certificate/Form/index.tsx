@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import { FieldSwitch } from '@react-form-fields/material-ui';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { theme } from 'assets/theme';
@@ -25,6 +24,7 @@ import certificateService from 'services/certificate';
 import Editor from './Editor';
 import { IEditorItem } from './Editor/interfaces';
 import CertificatePreviewDialog from './PreviewDialog';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
 interface IState extends IStateForm<{
   id: number;

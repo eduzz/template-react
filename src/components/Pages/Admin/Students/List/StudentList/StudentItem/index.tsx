@@ -55,7 +55,11 @@ export default class StudentItem extends PureComponent<IProps> {
     const { classes, student } = this.props;
 
     return (
-      <ListItem className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`} button onClick={this.handleClick}>
+      <ListItem
+        className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`}
+        button
+        onClick={this.handleClick}
+      >
         <Grid container alignItems='center' spacing={16} wrap='nowrap'>
           <Grid item xs='auto'>
             <Grid container>
@@ -69,7 +73,9 @@ export default class StudentItem extends PureComponent<IProps> {
             <Typography variant='subtitle2' color='inherit' noWrap>{student.email}</Typography>
           </Grid>
           <Grid item xs='auto'>
-            <Typography variant='subtitle2' color='inherit' noWrap>{formatDistance(new Date(), new Date(student.last_used_at), { locale: ptLocate })}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap>
+              {formatDistance(new Date(), new Date(student.last_used_at), { locale: ptLocate })}
+            </Typography>
           </Grid>
         </Grid>
       </ListItem>

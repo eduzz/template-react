@@ -1,5 +1,5 @@
 import { Observable, Subscriber, Subscription } from 'rxjs';
-import * as rxjsOperators from 'rxjs/operators';
+import * as RxOp from 'rxjs/operators';
 
 let globalLoaderComponent: ILoader;
 
@@ -21,7 +21,7 @@ class LoaderOperator {
 
   public call(subscriber: Subscriber<any>, source: Observable<any>): Subscription {
     return source.pipe(
-      rxjsOperators.delay(500)
+      RxOp.delay(500)
     ).subscribe(new LoaderSubscriber(subscriber, this.loaderComponent));
   }
 }

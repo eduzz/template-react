@@ -137,7 +137,9 @@ export default class UpsellItem extends PureComponent<IProps> {
                 </Grid>
               </Grid>
               <Grid item>
-                <Typography variant='subtitle1'>{upsell.total_click} ({((((upsell.total_click / upsell.total_view) || 0) * 100).toFixed(2)).replace('.', ',')}%)</Typography>
+                <Typography variant='subtitle1'>
+                  {upsell.total_click} ({((((upsell.total_click / upsell.total_view) || 0) * 100).toFixed(2)).replace('.', ',')}%)
+                </Typography>
               </Grid>
             </Grid>
           </Grid>

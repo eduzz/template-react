@@ -1,4 +1,4 @@
-import { FieldHidden } from '@react-form-fields/material-ui';
+import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import ImageSelector from 'components/Shared/ImageSelector';
 import { WithStyles } from 'decorators/withStyles';
 import CloudUploadIcon from 'mdi-react/CloudUploadIcon';

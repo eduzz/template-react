@@ -1,6 +1,6 @@
 import redirectV2 from 'helpers/redirectV2';
 import { Observable, ReplaySubject } from 'rxjs';
-import * as rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 
 import storageService from './storage';
 
@@ -17,15 +17,15 @@ export class TokenService {
     this.tokens$ = new ReplaySubject(1);
 
     storageService.get('authToken').pipe(
-      rxjsOperators.first(),
-      rxjsOperators.logError()
+      RxOp.first(),
+      RxOp.logError()
     ).subscribe(token => this.tokens$.next(token));
   }
 
   public getAccessToken(): Observable<string> {
     return this.tokens$.pipe(
-      rxjsOperators.map(tokens => (tokens || { token: null }).token),
-      rxjsOperators.distinctUntilChanged()
+      RxOp.map(tokens => (tokens || { token: null }).token),
+      RxOp.distinctUntilChanged()
     );
   }
 
@@ -40,13 +40,13 @@ export class TokenService {
     document.cookie = `userSession=${JSON.stringify(tokens)}; domain=.nutror.com; expires=${date.toUTCString()}`;
 
     return storageService.set<ITokens>('authToken', { legacyLogin, ...tokens }).pipe(
-      rxjsOperators.tap(tokens => this.tokens$.next(tokens))
+      RxOp.tap(tokens => this.tokens$.next(tokens))
     );
   }
 
   public setAccessToken(token: string): Observable<ITokens> {
     return this.tokens$.pipe(
-      rxjsOperators.switchMap(({ legacyLogin, refresh_token }) => {
+      RxOp.switchMap(({ legacyLogin, refresh_token }) => {
         return storageService.set<ITokens>('authToken', { legacyLogin, token, refresh_token });
       })
     );
@@ -55,16 +55,16 @@ export class TokenService {
     let legacyLogin = false;
 
     return this.tokens$.pipe(
-      rxjsOperators.first(),
-      rxjsOperators.filter(tokens => !!tokens),
-      rxjsOperators.tap(tokens => legacyLogin = tokens.legacyLogin),
-      rxjsOperators.switchMap(() => storageService.set('authToken', null)),
-      rxjsOperators.filter(() => {
+      RxOp.first(),
+      RxOp.filter(tokens => !!tokens),
+      RxOp.tap(tokens => legacyLogin = tokens.legacyLogin),
+      RxOp.switchMap(() => storageService.set('authToken', null)),
+      RxOp.filter(() => {
         if (legacyLogin) redirectV2('/user/logout');
         return !legacyLogin;
       }),
-      rxjsOperators.tap(() => this.tokens$.next(null)),
-      rxjsOperators.map(() => null)
+      RxOp.tap(() => this.tokens$.next(null)),
+      RxOp.map(() => null)
     );
   }
 

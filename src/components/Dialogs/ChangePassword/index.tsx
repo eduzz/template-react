@@ -10,7 +10,7 @@ import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState extends IStateForm<{
@@ -40,8 +40,8 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
 
   componentDidMount() {
     authService.shouldOpenChangePassword().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(opened => {
       this.setState({ opened });
     });
@@ -54,6 +54,7 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
   onSubmit = async (isValid: boolean) => {
     if (!isValid) return;
 
+    // const { model } = this.state;
     this.setState({ loading: true });
 
     // authService.changePassword(model.currentPassword, model.newPassword).pipe(

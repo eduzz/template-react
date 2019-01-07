@@ -3,11 +3,11 @@ import { apiRequestFormatter } from 'formatters/apiRequest';
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 
-import { ApiError } from '../errors/api';
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
 import authService from './auth';
 import tokenService, { TokenService } from './token';
+import ApiError from 'errors/api';
 
 export class ApiService {
   constructor(

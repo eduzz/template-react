@@ -6,8 +6,8 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
-import { format } from 'date-fns';
 import { WithRouter } from 'decorators/withRouter';
+import { dateFormat } from 'formatters/date';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -99,7 +99,7 @@ export default class Form extends FormComponent<IProps, IState> {
       5: '',
     },
     author: {},
-    release_at: format(new Date(), 'yyyy-MM-dd'),
+    release_at: dateFormat(new Date(), 'yyyy-MM-dd'),
     available_days: null,
     days_locked: null,
     image: '',
@@ -159,7 +159,7 @@ export default class Form extends FormComponent<IProps, IState> {
       this.setState({
         model: {
           ...lesson,
-          release_at: format(new Date(lesson.release_at), 'yyyy-MM-dd'),
+          release_at: dateFormat(new Date(lesson.release_at), 'yyyy-MM-dd'),
         },
       });
     }, (error: any) => Toast.error(error));

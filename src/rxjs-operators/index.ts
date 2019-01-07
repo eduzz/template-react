@@ -11,7 +11,7 @@ export * from './cache';
 export * from './loader';
 export * from './logError';
 
-const rxjsOperators = {
+const RxOp = {
   ...coreOperators,
   bindComponent,
   cache,
@@ -19,4 +19,4 @@ const rxjsOperators = {
   logError
 };
 
-export default rxjsOperators;
+export default RxOp;

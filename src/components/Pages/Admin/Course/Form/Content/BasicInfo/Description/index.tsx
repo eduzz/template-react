@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
-import { WithStyles } from 'decorators/withStyles';
 import Grid from '@material-ui/core/Grid';
-
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { IForm } from 'components/Pages/Admin/Course/Form';
-import { FieldText } from '@react-form-fields/material-ui';
+import { WithStyles } from 'decorators/withStyles';
+import React, { Fragment } from 'react';
 
 interface IProps {
   classes?: any;

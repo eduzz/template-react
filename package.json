@@ -7,9 +7,9 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "update-packages:check": "ncu",
     "update-packages:do": "ncu -u",
-    "webpack-analyze": "node ./scripts/webpack-analyze.js"
+    "webpack-analyze": "node ./scripts/webpack-analyze.js",
+    "update-base": "node ./scripts/update-base.js"
   },
   "husky": {
     "hooks": {

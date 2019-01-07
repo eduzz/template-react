@@ -11,10 +11,6 @@ export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): 
     return dateParse(obj) as any;
   }
 
-  if (typeof obj === 'string' && !isNaN(Number(obj))) {
-    return Number(obj) as any;
-  }
-
   if (typeof obj === 'object' && !(obj instanceof Date)) {
     return Object.keys(obj).reduce((acc, key) => {
       acc[key] = apiResponseFormatter(obj[key]);

@@ -1,10 +1,11 @@
-export interface IUser {
+export default interface IUser {
   id?: number;
   firstName: string;
   lastName?: string;
-  fullName?: string;
   email: string;
   password?: string;
+
+  fullName?: string;
 
   createdDate?: Date;
   updatedDate?: Date;

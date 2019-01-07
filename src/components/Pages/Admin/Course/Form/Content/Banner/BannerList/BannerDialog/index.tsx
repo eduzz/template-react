@@ -5,7 +5,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
-import { FieldText } from '@react-form-fields/material-ui';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
@@ -18,6 +17,7 @@ import rxjsOperators from 'rxjs-operators';
 import bannerService from 'services/banner';
 
 import ImageUploader from './ImageUploader';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 
 export interface IForm {
   model: IBanner;

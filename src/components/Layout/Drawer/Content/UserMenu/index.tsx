@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
-import { IUserToken } from 'interfaces/userToken';
+import IUserToken from 'interfaces/tokens/userToken';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { PureComponent } from 'react';

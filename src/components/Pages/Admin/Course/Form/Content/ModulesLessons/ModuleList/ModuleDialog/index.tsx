@@ -6,11 +6,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
-import { FieldText } from '@react-form-fields/material-ui';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import { format } from 'date-fns';
 import { WithStyles } from 'decorators/withStyles';
+import { dateFormat } from 'formatters/date';
 import { IModule } from 'interfaces/models/module';
 import React from 'react';
 import rxjsOperators from 'rxjs-operators';
@@ -74,7 +74,7 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
     hidden_module: false,
     module_validity: null,
     module_scheduling: null,
-    release_at: format(new Date(), 'yyyy-MM-dd'),
+    release_at: dateFormat(new Date(), 'yyyy-MM-dd'),
   };
 
   constructor(props: IProps) {
