@@ -12,8 +12,8 @@ import { CDN_URL } from 'settings';
 
 interface IProps {
   classes?: any;
-  history?: any;
   match?: any;
+  history?: any;
 }
 
 interface IState {
