@@ -96,7 +96,7 @@ export class AuthService {
   }
 
   public isAuthenticated(): Rx.Observable<boolean> {
-    return this.tokenService.getToken().pipe(RxOp.map(token => !!token));
+    return this.getUser().pipe(RxOp.map(user => !!user));
   }
 }
 
