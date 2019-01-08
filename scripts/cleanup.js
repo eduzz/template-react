@@ -58,9 +58,19 @@ async function cleanup(params) {
 }
 
 async function replaceContent(file, replacers) {
-  let content = await new Promise((resolve, reject) =>
-    fs.readFile(file, 'utf8', (err, data) => err ? reject(err) : resolve(data))
-  );
+  let content
+
+  try {
+    content = await new Promise((resolve, reject) =>
+      fs.readFile(file, 'utf8', (err, data) => err ? reject(err) : resolve(data))
+    );
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      return;
+    }
+
+    throw err;
+  }
 
   for (let replacer of replacers) {
     content = content.replace(replacer.from, replacer.to);
