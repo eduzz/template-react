@@ -1,6 +1,7 @@
 import redirectV2 from 'helpers/redirectV2';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as RxOp from 'rxjs-operators';
+import { COOKIE_DOMAIN } from 'settings';
 
 import storageService from './storage';
 
@@ -34,10 +35,9 @@ export class TokenService {
   }
 
   public setTokens(tokens: Pick<ITokens, Exclude<keyof ITokens, 'legacyLogin'>>, legacyLogin: boolean = false): Observable<ITokens> {
-
     const date = new Date();
     date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
-    document.cookie = `userSession=${JSON.stringify(tokens)}; domain=.nutror.com; expires=${date.toUTCString()}`;
+    document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/; expires=${date.toUTCString()}`;
 
     return storageService.set<ITokens>('authToken', { legacyLogin, ...tokens }).pipe(
       RxOp.tap(tokens => this.tokens$.next(tokens))

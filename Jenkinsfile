@@ -10,7 +10,7 @@ node {
     }
 
     stage ('Set Env') {
-        sh "sh ./scripts/set-env.sh"
+        sh "sh ./scripts/build-set-env.sh"
     }
 
     stage ('Build container') {
