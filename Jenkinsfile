@@ -9,7 +9,7 @@ node {
         checkout scm
     }
 
-    stage ('Set Env') {
+    stage ('Set Environment') {
         sh "sh ./scripts/set-env.sh"
     }
 
@@ -25,7 +25,7 @@ node {
              }
          }
 
-         if (env.BRANCH_NAME =~ /(release*)/) {
+         if (env.BRANCH_NAME =~ /(release)/) {
              withDockerRegistry([credentialsId: '2efdc2c1-bfcc-4925-b9c2-5c2f8923d04b', url: 'https://registry.hub.docker.com']) {
                  app.push("${env.BRANCH_NAME}")
              }
