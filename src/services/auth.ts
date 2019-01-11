@@ -56,6 +56,15 @@ export class AuthService {
     );
   }
 
+  public loginAs(token: string): rxjs.Observable<void> {
+    return this.getDevideInfo().pipe(
+      rxjsOperators.switchMap(deviceInfo => apiService.post('/oauth/token/login-as', { token, ...deviceInfo })),
+      rxjsOperators.tap(() => this.openLogin$.next(false)),
+      rxjsOperators.switchMap(response => tokenService.setTokens(response.data)),
+      rxjsOperators.map(() => null)
+    );
+  }
+
   public logout(): rxjs.Observable<void> {
     return tokenService.clearToken();
   }
