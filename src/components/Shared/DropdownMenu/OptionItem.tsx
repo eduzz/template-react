@@ -36,7 +36,7 @@ export default class OptionItem extends PureComponent<IProps> {
           </ListItemIcon>
         }
         <ListItemText
-          inset
+          inset={!!option.icon}
           primary={option.text}
           className={option.icon ? classes.text : null}
         />
