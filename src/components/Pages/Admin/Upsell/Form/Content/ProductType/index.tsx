@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
+import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import Button from '@material-ui/core/Button';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
-import CardContent from '@material-ui/core/CardContent';
+import React, { PureComponent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 
 const infoProduto = require('assets/images/info-produto.png');
 const produtoFisico = require('assets/images/produto-fisico.png');
@@ -129,8 +130,8 @@ export default class ProductType extends PureComponent<IProps, IState> {
           </Grid>
           <Grid item>
             <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-              Percebemos que não temos um produto específico para vender, vamos iniciar escolhendo um tipo de produto
-                </Typography>
+              Para iniciar a configuração é necessário escolher qual o produto que vamos promover, vamos iniciar escolhendo um tipo de produto.
+            </Typography>
           </Grid>
           <Grid item>
             <Grid container spacing={16} justify='center'>
