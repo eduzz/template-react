@@ -2,7 +2,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import { WithStyles } from 'decorators/withStyles';
-import React, { PureComponent } from 'react';
+import React, { PureComponent, SyntheticEvent } from 'react';
 
 import { IOption } from '.';
 
@@ -19,7 +19,9 @@ interface IProps {
 })
 export default class OptionItem extends PureComponent<IProps> {
 
-  onClick = () => {
+  onClick = (event: SyntheticEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
     this.props.onClick(this.props.option);
   }
 
