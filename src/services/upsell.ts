@@ -1,23 +1,23 @@
 import { IUpsell, IUpsellCourse, IUpsellList, IUpsellProduct } from 'interfaces/models/upsell';
-import * as rxjs from 'rxjs';
-import rxjsOperators from 'rxjs-operators';
+import * as Rx from 'rxjs';
+import RxOp from 'rxjs-operators';
 
 import apiService from './api';
 
 class UpsellService {
-  private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
+  private deleted$ = new Rx.BehaviorSubject<number[]>([]);
   // private products$ = new rxjs.BehaviorSubject<IUpsellProduct[]>(null);
   private currentProductType: number = null;
 
   public getTreeCourses() {
     return apiService.get<IUpsellCourse[]>('producer/upsell/gettreecourses').pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 
   public getCourses() {
     return apiService.get<IUpsellCourse[]>('producer/courses/my').pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 
@@ -26,7 +26,7 @@ class UpsellService {
   //   this.currentProductType = type;
 
   //   apiService.get<IUpsellProduct[]>('/producer/upsell/products/' + type).pipe(
-  //     rxjsOperators.map(response => response.data),
+  //     RxOp.map(response => response.data),
   //   ).subscribe(products => {
   //     this.products$.next(products);
   //   }, error => {
@@ -43,7 +43,7 @@ class UpsellService {
 
   public getProducts(type: number) {
     return apiService.get<IUpsellProduct[]>('/producer/upsell/products/' + type).pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 
@@ -53,13 +53,13 @@ class UpsellService {
 
   public getUpsell(code: number) {
     return apiService.get<IUpsell>('/producer/upsell/' + code).pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 
   public list(orderBy: string, orderDirection: string) {
     return apiService.get<IUpsellList[]>('/producer/upsell', { orderby: orderBy, order: orderDirection }).pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 
@@ -75,7 +75,7 @@ class UpsellService {
 
   public delete(id: number) {
     return apiService.delete(`producer/upsell/${id}`).pipe(
-      rxjsOperators.map(() => this.deleted$.next([...this.deleted$.value, id]))
+      RxOp.map(() => this.deleted$.next([...this.deleted$.value, id]))
     );
   }
 }

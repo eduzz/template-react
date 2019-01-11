@@ -1,12 +1,12 @@
-import React, { PureComponent } from 'react';
+import Button from '@material-ui/core/Button';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from 'decorators/withStyles';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import MonitorIcon from 'mdi-react/MonitorIcon';
-import CellphoneIcon from 'mdi-react/CellphoneIcon';
-import Button from '@material-ui/core/Button';
 import ImageSelector from 'components/Shared/ImageSelector';
+import { WithStyles } from 'decorators/withStyles';
+import CellphoneIcon from 'mdi-react/CellphoneIcon';
+import MonitorIcon from 'mdi-react/MonitorIcon';
+import React, { PureComponent } from 'react';
 import { CDN_URL } from 'settings';
 
 export interface IMiniature {
@@ -203,11 +203,19 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
               <Grid item>
                 <Typography variant='caption'>Responsivo</Typography>
                 <Grid container className={classes.responsiveContainer}>
-                  <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'large' && classes.selectedOption}`} onClick={this.handleSelectResolution('large')}>
+                  <Grid
+                    item
+                    className={`${classes.responsiveOption} ${selectedResolution === 'large' && classes.selectedOption}`}
+                    onClick={this.handleSelectResolution('large')}
+                  >
                     <MonitorIcon className={classes.icon} />
                   </Grid>
                   {!!resolution.medium &&
-                    <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'medium' && classes.selectedOption}`} onClick={this.handleSelectResolution('medium')}>
+                    <Grid
+                      item
+                      className={`${classes.responsiveOption} ${selectedResolution === 'medium' && classes.selectedOption}`}
+                      onClick={this.handleSelectResolution('medium')}
+                    >
                       <CellphoneIcon className={classes.icon} />
                       {!resolution['medium'].image &&
                         <div className={classes.warningIcon}>
@@ -217,7 +225,11 @@ export default class ImageUploader extends PureComponent<IProps, IState> {
                     </Grid>
                   }
                   {!!resolution.small &&
-                    <Grid item className={`${classes.responsiveOption} ${selectedResolution === 'small' && classes.selectedOption}`} onClick={this.handleSelectResolution('small')}>
+                    <Grid
+                      item
+                      className={`${classes.responsiveOption} ${selectedResolution === 'small' && classes.selectedOption}`}
+                      onClick={this.handleSelectResolution('small')}
+                    >
                       <CellphoneIcon size={20} className={classes.icon} />
                       {!resolution['small'].image &&
                         <div className={classes.warningIcon}>

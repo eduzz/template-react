@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@react-form-fields/material-ui/components/Select';
 import { IForm } from '../../..';
 import categoryService from 'services/category';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import { ICategory } from 'interfaces/models/category';
 
 interface IProps {
@@ -61,9 +61,9 @@ export default class Category extends React.PureComponent<IProps, IState> {
     });
 
     categoryService.getCategories().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.loader(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.loader(),
+      RxOp.bindComponent(this),
     ).subscribe((categories: any) => {
       this.setState({ categories });
     }, (error: any) => this.setState({ error }));

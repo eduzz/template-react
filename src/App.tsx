@@ -3,30 +3,25 @@ import './legacyLogin';
 import './version';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { createGenerateClassName } from '@material-ui/core/styles';
+import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import commonMasks from '@react-form-fields/core/mask/common/pt-br';
 import validationMessage from '@react-form-fields/core/validator/custom-languages/pt-br';
 import FormFieldsContext from '@react-form-fields/material-ui/components/Context';
 import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
-import AppRouter from 'components/Router';
+import Pages from 'components/Pages';
 import Alert from 'components/Shared/Alert';
-import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import locale from 'date-fns/locale/pt-BR';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
-import baseRoutes from 'routes';
-import { setup } from 'rxjs-operators';
 
-// tslint:disable:jsx-no-lambda
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true
 });
 
 class App extends React.PureComponent {
-  loader: Loader;
   formFieldConfig = {
     masks: commonMasks,
     dateLocale: locale,
@@ -37,10 +32,6 @@ class App extends React.PureComponent {
     super(props);
   }
 
-  componentDidMount() {
-    setup(this.loader);
-  }
-
   render() {
     return (
       <JssProvider generateClassName={generateClassName}>
@@ -49,12 +40,10 @@ class App extends React.PureComponent {
             <CssBaseline />
             <Dialogs />
 
-            <Loader ref={ref => this.loader = ref} />
-
             <Alert.Global />
             <Toast.Global />
 
-            <AppRouter routes={baseRoutes} />
+            <Pages />
           </FormFieldsContext>
         </MuiThemeProvider>
       </JssProvider>

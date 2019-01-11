@@ -2,10 +2,11 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import AppRouter, { RouterContext } from 'components/Router';
+import nutrorLogo from 'assets/svg/nutror-logo.svg';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
 import CursorDefaultIcon from 'mdi-react/CursorDefaultIcon';
@@ -13,21 +14,17 @@ import EyeIcon from 'mdi-react/EyeIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
 import { CDN_URL } from 'settings';
 
-// import ChartPieIcon from 'mdi-react/ChartPieIcon';
-// import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
-const nutrorLogo = require('assets/svg/nutror-logo.svg');
-
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
   upsell: IUpsellList;
-  router?: AppRouter;
   onDelete?: any;
 }
 
+@WithRouter()
 @WithStyles(theme => ({
   root: {
     border: '1px solid',
@@ -53,11 +50,11 @@ interface IProps {
     color: '#8C9198',
   },
 }))
-class UpsellItem extends PureComponent<IProps> {
+export default class UpsellItem extends PureComponent<IProps> {
   actions = [{
     text: 'Editar',
     icon: SquareEditOutlineIcon,
-    handler: () => this.props.router.navigate(`/upsell/${this.props.upsell.id}/editar`),
+    handler: () => this.props.history.push(`/upsell/${this.props.upsell.id}/editar`),
   }, {
     text: 'Excluir',
     icon: TrashCanIcon,
@@ -71,9 +68,9 @@ class UpsellItem extends PureComponent<IProps> {
     if (!confirm) return;
 
     upsellService.delete(upsell.id).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       Toast.show('Upsell excluído com sucesso');
 
@@ -140,7 +137,9 @@ class UpsellItem extends PureComponent<IProps> {
                 </Grid>
               </Grid>
               <Grid item>
-                <Typography variant='subtitle1'>{upsell.total_click} ({((((upsell.total_click / upsell.total_view) || 0) * 100).toFixed(2)).replace('.', ',')}%)</Typography>
+                <Typography variant='subtitle1'>
+                  {upsell.total_click} ({((((upsell.total_click / upsell.total_view) || 0) * 100).toFixed(2)).replace('.', ',')}%)
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
@@ -189,9 +188,3 @@ class UpsellItem extends PureComponent<IProps> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <UpsellItem {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));

@@ -1,7 +1,8 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Overrides } from '@material-ui/core/styles/overrides';
-import variables from './variables';
+
 import { palette } from './palette';
+import variables from './variables';
 
 const defaultTheme = createMuiTheme({
   typography: { useNextVariants: true },

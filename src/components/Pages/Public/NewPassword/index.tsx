@@ -6,15 +6,15 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
-import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import AppRouter, { RouterContext } from 'components/Router';
 import { WithStyles } from 'decorators/withStyles';
-import { IResetPasswordToken } from 'interfaces/resetPasswordToken';
+import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
 import queryString from 'query-string';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import tokenService from 'services/token';
+
+import styles from './style';
 
 interface IState extends IStateForm<{
   password: string;
@@ -27,46 +27,10 @@ interface IState extends IStateForm<{
 
 interface IProps extends RouteComponentProps<{ t: string }, {}> {
   classes?: any;
-  router?: AppRouter;
 }
 
-@WithStyles(theme => ({
-  root: {
-    background: theme.palette.primary.main,
-    minHeight: '100vh',
-    minWidth: '100vw',
-    position: 'relative'
-  },
-  container: {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
-    margin: 'auto',
-    width: '320px',
-    height: '400px',
-    maxWidth: 'calc(100% - 30px)',
-    color: 'white'
-  },
-  logo: {
-    textAlign: 'center',
-    marginBottom: 20
-  },
-  logoImage: {
-    maxWidth: '100%',
-    maxHeight: 120
-  },
-  viewContainer: {
-    boxSizing: 'border-box',
-    padding: '0 10px',
-    height: 310
-  },
-  buttons: {
-    justifyContent: 'flex-end'
-  }
-}))
-class NewPasswordPage extends FormComponent<IProps, IState> {
+@WithStyles(styles)
+export default class NewPasswordPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
@@ -89,9 +53,9 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
     this.setState({ loading: true });
 
     // authService.resetPassword(token, model.password).pipe(
-    //   rxjsOperators.switchMap(() => authService.login(tokenData.email, model.password)),
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this)
+    //   RxOp.switchMap(() => authService.login(tokenData.email, model.password)),
+    //   RxOp.logError(),
+    //   RxOp.bindComponent(this)
     // ).subscribe(() => {
     //   Toast.show('Senha alterada com sucesso!');
     //   this.props.router().navigate('/');
@@ -116,7 +80,7 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
         <div className={classes.container}>
 
           <div className={classes.logo}>
-            <img src={logoWhite} className={classes.logoImage} />
+            <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
           </div>
 
           <FormValidation onSubmit={this.onSubmit}>
@@ -160,9 +124,3 @@ class NewPasswordPage extends FormComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <NewPasswordPage {...props} ref={ref} router={router} />}
-  </RouterContext.Consumer>
-));

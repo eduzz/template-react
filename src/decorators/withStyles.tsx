@@ -1,24 +1,21 @@
 import { StyleRules, StyleRulesCallback } from '@material-ui/core/styles';
 import withStyles, { WithStylesOptions } from '@material-ui/core/styles/withStyles';
-import React from 'react';
 
 export function WithStyles(
   styles: StyleRules<any> | StyleRulesCallback<any>,
   options?: WithStylesOptions
 ) {
-  return function <T>(component: T): T {
-    const StyledComponent = withStyles(styles, options)(component as any);
-    const WrappedComponent = React.forwardRef((props: any, ref: any) =>
-      <StyledComponent {...props} innerRef={ref} />
-    ) as any;
-
-    // add static methods
-    Object.getOwnPropertyNames(component).forEach(prop => {
-      if (typeof component[prop] === 'function' && prop !== 'getDerivedStateFromProps') {
-        WrappedComponent[prop] = component[prop];
-      }
-    });
-
-    return WrappedComponent;
+  return function <T>(target: T): T {
+    return withStyles(styles, options)(target as any) as any;
   };
+}
+
+export type AppStyle<Classkeys extends string = string> = StyleRules<Classkeys> | StyleRulesCallback<Classkeys>;
+
+export type ClassesFrom<AppStyle> = {
+  [key in AppStyle extends StyleRulesCallback ? keyof ReturnType<AppStyle> : keyof AppStyle]: string
+};
+
+export interface IStyledProps<T = any> {
+  classes?: ClassesFrom<T>;
 }

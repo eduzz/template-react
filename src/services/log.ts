@@ -1,6 +1,6 @@
 import Raven from 'raven-js';
 
-import { IUserToken } from '../interfaces/userToken';
+import IUserToken from '../interfaces/tokens/userToken';
 import { ENV, SENTRY_KEY } from '../settings';
 
 export class LogService {

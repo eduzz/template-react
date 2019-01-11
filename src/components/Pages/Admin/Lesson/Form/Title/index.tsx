@@ -1,6 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import Typography from '@material-ui/core/Typography';
-import { FieldText } from '@react-form-fields/material-ui';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { IForm } from '..';
 
 interface IProps {

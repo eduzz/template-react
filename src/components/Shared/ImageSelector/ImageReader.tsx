@@ -49,7 +49,7 @@ interface IProps {
   }
 })
 export default class ImageReader extends PureComponent<IProps, IState> {
-  inputRef: HTMLInputElement;
+  inputRef: React.RefObject<HTMLInputElement> = React.createRef();
   extensions = ['png', 'gif', 'jpeg', 'jpg', 'bmp'];
 
   constructor(props: IProps) {
@@ -58,16 +58,16 @@ export default class ImageReader extends PureComponent<IProps, IState> {
   }
 
   handleSelectImage = () => {
-    this.inputRef.click();
+    this.inputRef.current.click();
   }
 
   onFileSelected = () => {
-    if (!this.inputRef.files.length) return;
+    if (!this.inputRef.current.files.length) return;
 
     this.setState({ loading: true });
 
-    this.loadFile(this.inputRef.files[0]);
-    this.inputRef.value = '';
+    this.loadFile(this.inputRef.current.files[0]);
+    this.inputRef.current.value = '';
   }
 
   onDropFile = (event: DragEvent<any>) => {
@@ -174,7 +174,7 @@ export default class ImageReader extends PureComponent<IProps, IState> {
       <Fragment>
         <input
           type='file'
-          ref={ref => this.inputRef = ref}
+          ref={this.inputRef}
           className='hide'
           onChange={this.onFileSelected}
           accept={`.${this.extensions.join(',.')}`}

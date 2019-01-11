@@ -5,7 +5,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
-import { FieldText } from '@react-form-fields/material-ui';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
@@ -14,10 +13,11 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import bannerService from 'services/banner';
 
 import ImageUploader from './ImageUploader';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 
 export interface IForm {
   model: IBanner;
@@ -87,8 +87,8 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
 
   componentDidMount() {
     bannerService.getBannerInfo().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
+      RxOp.bindComponent(this),
+      RxOp.logError(),
     ).subscribe((banner = this.initialModel as IBanner) => {
       this.setState({
         open: true,
@@ -109,9 +109,9 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
   handleSubmit = (isValid: boolean) => {
     if (!isValid) return;
     bannerService.save(this.props.match.params.id, this.state.model as IBanner).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(() => {
       Toast.show('Anúncio salvo com sucesso!');
       this.handleClose();

@@ -9,13 +9,13 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudentActivity } from 'interfaces/models/student';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
 import ActivityItem from './ActivityItem';
 
 // import studentService from 'services/student';
-// import rxjsOperators from 'rxjs-operators';
+// import RxOp from 'rxjs-operators';
 interface IProps {
   classes?: any;
   history?: any;
@@ -51,8 +51,8 @@ export default class StudentActivity extends PureComponent<IProps, IState> {
 
   loadData = () => {
     studentService.getStudentLogs(this.props.match.params.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(activities => {
       this.setState({ activities, error: null });
     }, error => {

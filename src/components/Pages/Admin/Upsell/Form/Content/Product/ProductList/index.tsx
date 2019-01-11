@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import ProductItem from './ProductItem';
 import List from '@material-ui/core/List';
 import upsellService from 'services/upsell';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import { IUpsellProduct } from 'interfaces/models/upsell';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
 import Loading from 'components/Shared/Loading';
@@ -63,8 +63,8 @@ export default class ProductList extends PureComponent<IProps, IState> {
     });
 
     upsellService.getProducts(this.context.model.type).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(products => {
       this.setState({ products });
     }, error => this.setState({ error }));

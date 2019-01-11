@@ -1,14 +1,15 @@
-import React, { PureComponent } from 'react';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import FieldText from '@react-form-fields/material-ui/components/Text';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
-import Grid from '@material-ui/core/Grid';
-import FieldSelect from '@react-form-fields/material-ui/components/Select';
-import { WithStyles } from 'decorators/withStyles';
-import ImageUploader from './ImageUploader';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import FieldSelect from '@react-form-fields/material-ui/components/Select';
+import FieldText from '@react-form-fields/material-ui/components/Text';
+import { WithStyles } from 'decorators/withStyles';
+import React, { PureComponent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 import ActionButtons from '../ActionButtons';
+import ImageUploader from './ImageUploader';
 
 const destaqueVitrine = require('assets/images/destaque-vitrine.png');
 const cardVitrine = require('assets/images/card-vitrine.png');
@@ -97,7 +98,9 @@ export default class Informations extends PureComponent<IProps> {
             <Typography variant='subtitle1'>
               <strong>Informações da Oferta</strong>
             </Typography>
-            <Typography variant='caption'>Insira as informações para definir como será sua oferta, é muito importante que seja um texto coeso e de fácil entendimento.</Typography>
+            <Typography variant='caption'>
+              Insira as informações para definir como será sua oferta, é muito importante que seja um texto coeso e de fácil entendimento.
+            </Typography>
           </Grid>
           <Grid item>
             <FieldText

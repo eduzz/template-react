@@ -1,4 +1,4 @@
-export interface ISelectItem<T = string> {
+export default interface ISelectItem<T = string> {
   value: T;
-  display: string;
+  label: string;
 }

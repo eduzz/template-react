@@ -7,7 +7,7 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudentCourse } from 'interfaces/models/student';
 import React, { PureComponent, SyntheticEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 import { CDN_URL } from 'settings';
 
@@ -70,8 +70,8 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const { id, type } = this.props.course;
 
     studentService.getStudentCourseProgress(this.props.match.params.id, id, type).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(progress => {
       this.setState({
         progress,

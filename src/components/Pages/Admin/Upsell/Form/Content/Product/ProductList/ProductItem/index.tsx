@@ -1,17 +1,18 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import { WithStyles } from 'decorators/withStyles';
-import ListItem from '@material-ui/core/ListItem';
+import Collapse from '@material-ui/core/Collapse';
 import Grid from '@material-ui/core/Grid';
-import { IUpsellProduct } from 'interfaces/models/upsell';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsellProduct } from 'interfaces/models/upsell';
+import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import ChevronUpIcon from 'mdi-react/ChevronUpIcon';
-import { UpsellFormContext, IUpsellFormContext } from '../../../../Context';
-import Collapse from '@material-ui/core/Collapse';
-import ProductVariants from './ProductVariants';
-import IconButton from '@material-ui/core/IconButton';
-import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 import MinusCircleIcon from 'mdi-react/MinusCircleIcon';
+import React, { PureComponent, SyntheticEvent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../../../Context';
+import ProductVariants from './ProductVariants';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -153,15 +154,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                 <Typography variant='subtitle2' className={classes.title} noWrap>{product.title}</Typography>
               </Grid>
 
-              <Grid item xs={true}>
-                {/* <Typography variant='subtitle1' noWrap className={classes.price}>
-                    {!!product.children && product.children.length ?
-                      `De R$ ${Math.min(...product.children.map(variant => variant.price))} até R$ ${Math.max(...product.children.map(variant => variant.price))}`
-                      :
-                      `R$ ${product.price}`
-                    }
-                  </Typography> */}
-              </Grid>
+              <Grid item xs={true} />
 
               {!!product.children && !!product.children.length &&
                 <Grid item xs={false}>

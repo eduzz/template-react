@@ -2,14 +2,14 @@ import Button from '@material-ui/core/Button';
 import MaterialDrawer from '@material-ui/core/Drawer';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { FieldText } from '@react-form-fields/material-ui';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
 import { IFiltersModel } from 'interfaces/models/student';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
 interface IProps {
@@ -53,8 +53,8 @@ export default class Drawer extends FormComponent<IProps, IState> {
 
   componentDidMount() {
     studentService.getFilters().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(filters => {
       this.setState({
         model: filters,

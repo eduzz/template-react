@@ -10,7 +10,7 @@ import { IAuthor } from 'interfaces/models/author';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import EditIcon from 'mdi-react/EditIcon';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import authorService from 'services/author';
 import { CDN_URL } from 'settings';
 
@@ -53,8 +53,8 @@ export default class AuthorItem extends ListItemComponent<IProps, IState> {
     this.setState({ loading: true });
 
     authorService.delete(author.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       Toast.show('Autor excluído com sucesso');
     }, err => this.setError(err));

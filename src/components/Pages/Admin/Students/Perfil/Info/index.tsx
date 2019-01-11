@@ -1,13 +1,13 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import { WithStyles } from 'decorators/withStyles';
-import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
-import { IStudent } from 'interfaces/models/student';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import studentService from 'services/student';
-import rxjsOperators from 'rxjs-operators';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudent } from 'interfaces/models/student';
+import React, { PureComponent, SyntheticEvent } from 'react';
+import RxOp from 'rxjs-operators';
+import studentService from 'services/student';
 
 interface IProps {
   classes?: any;
@@ -53,8 +53,8 @@ export default class Info extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     studentService.getStudent(this.props.match.params.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(student => {
       this.setState({
         student,
@@ -89,7 +89,9 @@ export default class Info extends PureComponent<IProps, IState> {
     return (
       <Grid container alignItems='center' spacing={24}>
         <Grid item>
-          <Avatar className={classes.avatar} alt={student.name} src={student.avatar} onError={this.handleImageError}>{student.name.substring(0, 1)}</Avatar>
+          <Avatar className={classes.avatar} alt={student.name} src={student.avatar} onError={this.handleImageError}>
+            {student.name.substring(0, 1)}
+          </Avatar>
         </Grid>
         <Grid item>
           <Typography variant='h6' gutterBottom>{student.name}</Typography>

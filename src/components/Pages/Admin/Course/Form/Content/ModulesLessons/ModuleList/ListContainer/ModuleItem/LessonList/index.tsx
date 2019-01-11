@@ -41,7 +41,7 @@ class LessonList extends PureComponent<IProps> {
     const { lessons, module, classes } = this.props;
 
     return (
-      <List component='div' disablePadding>
+      <List disablePadding>
         {lessons && lessons.map((lesson, index: number) =>
           <LessonItem
             key={index}

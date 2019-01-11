@@ -13,7 +13,7 @@ import imageCompress from 'helpers/imagerCompress';
 import { Subscription } from 'indefinite-observable';
 import React, { Fragment, PureComponent } from 'react';
 import { Cropper } from 'react-image-cropper';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import uploadService from 'services/upload';
 
 import Toast from '../Toast';
@@ -84,8 +84,8 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
 
     this.uploadSubscription && this.uploadSubscription.unsubscribe();
     this.uploadSubscription = uploadService.saveImage(image).pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError()
+      RxOp.bindComponent(this),
+      RxOp.logError()
     ).subscribe(({ url, progress }) => {
       this.setState({ progress });
 

@@ -36,11 +36,12 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
   onSubmit = async (isValid: boolean) => {
     if (!isValid) return;
 
+    // const { model } = this.state;
     this.setState({ loading: true });
 
     // authService.sendResetPassword(model.email).pipe(
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this)
+    //   RxOp.logError(),
+    //   RxOp.bindComponent(this)
     // ).subscribe(() => {
     //   this.setState({ loading: false });
     //   this.resetForm();

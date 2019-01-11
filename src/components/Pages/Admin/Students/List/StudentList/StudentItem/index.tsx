@@ -1,14 +1,14 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import Grid from '@material-ui/core/Grid';
-import { IStudent } from 'interfaces/models/student';
-import { WithStyles } from 'decorators/withStyles';
 import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
+import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import { differenceInDays, formatDistance } from 'date-fns/esm';
 import ptLocate from 'date-fns/esm/locale/pt-BR';
-import { CDN_URL } from 'settings';
 import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudent } from 'interfaces/models/student';
+import React, { PureComponent, SyntheticEvent } from 'react';
+import { CDN_URL } from 'settings';
 
 interface IProps {
   classes?: any;
@@ -44,7 +44,7 @@ interface IProps {
 }))
 export default class StudentItem extends PureComponent<IProps> {
   handleClick = () => {
-    this.props.history.push(`alunos/${this.props.student.id}`);
+    this.props.history.push(`alunos/${this.props.student.id}/detalhes`);
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
@@ -55,7 +55,11 @@ export default class StudentItem extends PureComponent<IProps> {
     const { classes, student } = this.props;
 
     return (
-      <ListItem className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`} button onClick={this.handleClick}>
+      <ListItem
+        className={`${classes.root} ${differenceInDays(new Date(), new Date(student.last_used_at)) <= 30 && classes.active}`}
+        button
+        onClick={this.handleClick}
+      >
         <Grid container alignItems='center' spacing={16} wrap='nowrap'>
           <Grid item xs='auto'>
             <Grid container>
@@ -69,7 +73,9 @@ export default class StudentItem extends PureComponent<IProps> {
             <Typography variant='subtitle2' color='inherit' noWrap>{student.email}</Typography>
           </Grid>
           <Grid item xs='auto'>
-            <Typography variant='subtitle2' color='inherit' noWrap>{formatDistance(new Date(), new Date(student.last_used_at), { locale: ptLocate })}</Typography>
+            <Typography variant='subtitle2' color='inherit' noWrap>
+              {formatDistance(new Date(), new Date(student.last_used_at), { locale: ptLocate })}
+            </Typography>
           </Grid>
         </Grid>
       </ListItem>

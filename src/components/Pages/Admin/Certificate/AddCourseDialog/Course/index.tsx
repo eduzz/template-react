@@ -11,7 +11,7 @@ import CheckIcon from 'mdi-react/CheckIcon';
 import PlusIcon from 'mdi-react/PlusIcon';
 import TrashIcon from 'mdi-react/TrashIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 interface IState {
@@ -75,8 +75,8 @@ export class AddCourseItemDialog extends PureComponent<IProps, IState> {
       certificateService.removeCourse(certificateId, course);
 
     stream$.pipe(
-      rxjsOperators.logError(),
-      // rxjsOperators.bindComponent(this) removi de proposito
+      RxOp.logError(),
+      // RxOp.bindComponent(this) removi de proposito
     ).subscribe(() => {
       if (this.unmounted) {
         Toast.show(`${course.title} adicionado`);

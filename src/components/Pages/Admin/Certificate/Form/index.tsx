@@ -5,27 +5,26 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
-import { FieldSwitch } from '@react-form-fields/material-ui';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { theme } from 'assets/theme';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
-import AppRouter, { RouterContext } from 'components/Router';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
+import { IRouteProps } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import getCertificatePreviewUrl from 'helpers/certificateUrl';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
 import React, { Fragment } from 'react';
-import { RouteComponentProps } from 'react-router';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 import Editor from './Editor';
 import { IEditorItem } from './Editor/interfaces';
 import CertificatePreviewDialog from './PreviewDialog';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
 interface IState extends IStateForm<{
   id: number;
@@ -41,9 +40,8 @@ interface IState extends IStateForm<{
   error?: any;
 }
 
-interface IProps extends RouteComponentProps<{ id: string }> {
+interface IProps extends IRouteProps {
   classes?: any;
-  router?: AppRouter;
 }
 
 @WithStyles({
@@ -62,7 +60,7 @@ interface IProps extends RouteComponentProps<{ id: string }> {
     }
   }
 })
-class CertificateFormPage extends FormComponent<IProps, IState> {
+export default class CertificateFormPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -88,8 +86,8 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     this.setState({ loading: true, error: null });
 
     certificateService.get(id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(certificate => {
       this.setState({
         loading: false,
@@ -109,15 +107,15 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
 
     return new Promise<number>(resolve => {
       certificateService.save(params).pipe(
-        rxjsOperators.loader(),
-        rxjsOperators.logError(),
-        rxjsOperators.bindComponent(this),
+        RxOp.loader(),
+        RxOp.logError(),
+        RxOp.bindComponent(this),
       ).subscribe(certificateId => {
         Toast.show('Certificado salvo com sucesso');
         resolve(certificateId);
 
         if (certificateId === model.id) return;
-        this.props.router.replace(`/certificados/${certificateId}/editar`);
+        this.props.history.replace(`/certificados/${certificateId}/editar`);
       }, err => {
         resolve(null);
         Toast.error(err);
@@ -226,9 +224,3 @@ class CertificateFormPage extends FormComponent<IProps, IState> {
     );
   }
 }
-
-export default React.forwardRef((props: IProps, ref: any) => (
-  <RouterContext.Consumer>
-    {router => <CertificateFormPage {...props} {...ref} router={router} />}
-  </RouterContext.Consumer>
-));
