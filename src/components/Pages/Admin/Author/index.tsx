@@ -19,7 +19,7 @@ import { IPaginationParams } from 'interfaces/pagination';
 import PlusIcon from 'mdi-react/PlusIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import authorService from 'services/author';
 
 import AuthorFormDialog from './Dialog';
@@ -57,8 +57,8 @@ export default class AuthorIndexPage extends ListComponent<IProps, IState> {
     this.setState({ error: null, authors: null, loading: true });
 
     authorService.list(this.mergeParams(params)).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(authors => {
       this.setPaginatedData(authors);
     }, error => this.setError(error));

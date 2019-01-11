@@ -8,7 +8,7 @@ import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import React, { MouseEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 interface IState extends IStateForm<{
@@ -42,8 +42,8 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     this.setState({ loading: true });
 
     authService.login(model.username, model.password).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       this.setState({ loading: false });
       this.resetForm();

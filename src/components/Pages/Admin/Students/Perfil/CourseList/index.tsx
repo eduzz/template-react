@@ -2,7 +2,7 @@ import React, { PureComponent, SyntheticEvent, Fragment } from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import Typography from '@material-ui/core/Typography';
 import studentService from 'services/student';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import { WithRouter } from 'decorators/withRouter';
 import { IStudentCourse } from 'interfaces/models/student';
 import CardContent from '@material-ui/core/CardContent';
@@ -59,8 +59,8 @@ export default class CourseList extends PureComponent<IProps, IState> {
     });
 
     studentService.getStudentCourses(this.props.match.params.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(courses => {
       this.setState({
         courses,

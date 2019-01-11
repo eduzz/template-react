@@ -18,7 +18,7 @@ import ArrowUpIcon from 'mdi-react/ArrowUpIcon';
 import PlusIcon from 'mdi-react/PlusIcon';
 import SortVariantIcon from 'mdi-react/SortVariantIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 import CertificateItem from './ListItem';
@@ -66,9 +66,9 @@ export default class CertificateListPage extends PureComponent<IProps, IState> {
     const { orderBy, orderDirection } = this.state;
 
     certificateService.list(orderBy, orderDirection).pipe(
-      rxjsOperators.delay(1000),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.delay(1000),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(certificates => {
       this.setState({ certificates });
     }, error => this.setState({ error }));

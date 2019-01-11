@@ -13,7 +13,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { dateFormat } from 'formatters/date';
 import { IModule } from 'interfaces/models/module';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import moduleService from 'services/module';
 
 import FreeModule from './FreeModule';
@@ -91,8 +91,8 @@ export default class ModuleDialog extends FormComponent<IProps, IState> {
 
   componentDidMount() {
     moduleService.getModuleInfo().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
+      RxOp.bindComponent(this),
+      RxOp.logError(),
     ).subscribe((module = this.initialModel as IModule) => {
       this.setState({
         open: true,

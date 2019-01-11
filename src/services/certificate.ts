@@ -1,25 +1,25 @@
 import { ICertificate, ICertificateCourse } from 'interfaces/models/certificate';
-import * as rxjs from 'rxjs';
-import rxjsOperators from 'rxjs-operators';
+import * as Rx from 'rxjs';
+import RxOp from 'rxjs-operators';
 
 import apiService from './api';
 import cacheService from './cache';
 
 class CertificateService {
-  private openAddCourse$ = new rxjs.BehaviorSubject<number>(null);
-  private deleted$ = new rxjs.BehaviorSubject<number[]>([]);
+  private openAddCourse$ = new Rx.BehaviorSubject<number>(null);
+  private deleted$ = new Rx.BehaviorSubject<number[]>([]);
 
-  public list(orderBy: string, orderDirection: string): rxjs.Observable<ICertificate[]> {
+  public list(orderBy: string, orderDirection: string): Rx.Observable<ICertificate[]> {
     return apiService.get<ICertificate[]>('producer/certificates', { orderby: orderBy, order: orderDirection }).pipe(
-      rxjsOperators.map(response => response.data),
-      rxjsOperators.combineLatest(this.deleted$),
-      rxjsOperators.map(([certificates, deleted]) => certificates.filter(c => !deleted.includes(c.id))),
+      RxOp.map(response => response.data),
+      RxOp.combineLatest(this.deleted$),
+      RxOp.map(([certificates, deleted]) => certificates.filter(c => !deleted.includes(c.id))),
     );
   }
 
-  public get(id: number): rxjs.Observable<ICertificate> {
+  public get(id: number): Rx.Observable<ICertificate> {
     return apiService.get<ICertificate>(`producer/certificates/${id}`).pipe(
-      rxjsOperators.map(response => response.data)
+      RxOp.map(response => response.data)
     );
   }
 
@@ -29,50 +29,50 @@ class CertificateService {
       apiService.put<number>(`/producer/certificates/${params.id}`, params);
 
     return stream$.pipe(
-      rxjsOperators.map(response => response.data || params.id)
+      RxOp.map(response => response.data || params.id)
     );
   }
 
-  public searchCourses(certificateId: number, search: string): rxjs.Observable<ICertificateCourse[]> {
+  public searchCourses(certificateId: number, search: string): Rx.Observable<ICertificateCourse[]> {
     return apiService.get<ICertificateCourse[]>(`producer/certificates/${certificateId}/courses`, { search, size: 10 }).pipe(
-      rxjsOperators.map(response => response.data)
+      RxOp.map(response => response.data)
     );
   }
 
-  public getCourses(certificateId: number): rxjs.Observable<ICertificateCourse[]> {
+  public getCourses(certificateId: number): Rx.Observable<ICertificateCourse[]> {
     return apiService.get<ICertificateCourse[]>(`producer/certificates/${certificateId}/courses`).pipe(
-      rxjsOperators.map(response => (response.data || []).filter(d => d.has_selected)),
-      rxjsOperators.cache(`certificate-courses-${certificateId}`)
+      RxOp.map(response => (response.data || []).filter(d => d.has_selected)),
+      RxOp.cache(`certificate-courses-${certificateId}`)
     );
   }
 
   public addCourse(certificateId: number, course: ICertificateCourse) {
     return this.getCourses(certificateId).pipe(
-      rxjsOperators.first(),
-      rxjsOperators.map(courses => [...courses, { ...course, has_selected: true }]),
-      rxjsOperators.switchMap(courses => this.saveCourses(certificateId, courses))
+      RxOp.first(),
+      RxOp.map(courses => [...courses, { ...course, has_selected: true }]),
+      RxOp.switchMap(courses => this.saveCourses(certificateId, courses))
     );
   }
 
   public removeCourse(certificateId: number, course: ICertificateCourse) {
     return this.getCourses(certificateId).pipe(
-      rxjsOperators.first(),
-      rxjsOperators.map(courses => courses.filter(c => c.id !== course.id)),
-      rxjsOperators.switchMap(courses => this.saveCourses(certificateId, courses))
+      RxOp.first(),
+      RxOp.map(courses => courses.filter(c => c.id !== course.id)),
+      RxOp.switchMap(courses => this.saveCourses(certificateId, courses))
     );
   }
 
   private saveCourses(certificateId: number, courses: ICertificateCourse[]) {
-    return rxjs.of(courses).pipe(
-      rxjsOperators.switchMap(courses => cacheService.saveData(`certificate-courses-${certificateId}`, courses)),
-      rxjsOperators.map(courses => courses.data.map(c => c.id)),
-      rxjsOperators.switchMap(courses => apiService.put(`producer/certificates/${certificateId}/courses`, { courses }))
+    return Rx.of(courses).pipe(
+      RxOp.switchMap(courses => cacheService.saveData(`certificate-courses-${certificateId}`, courses)),
+      RxOp.map(courses => courses.data.map(c => c.id)),
+      RxOp.switchMap(courses => apiService.put(`producer/certificates/${certificateId}/courses`, { courses }))
     );
   }
 
-  public delete(id: number): rxjs.Observable<void> {
+  public delete(id: number): Rx.Observable<void> {
     return apiService.delete(`producer/certificates/${id}`).pipe(
-      rxjsOperators.map(() => this.deleted$.next([...this.deleted$.value, id]))
+      RxOp.map(() => this.deleted$.next([...this.deleted$.value, id]))
     );
   }
 
@@ -84,7 +84,7 @@ class CertificateService {
     this.openAddCourse$.next(null);
   }
 
-  public shouldOpenAddCourse(): rxjs.Observable<number> {
+  public shouldOpenAddCourse(): Rx.Observable<number> {
     return this.openAddCourse$.asObservable();
   }
 }

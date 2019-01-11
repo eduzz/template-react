@@ -18,7 +18,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/models/author';
 import CameraIcon from 'mdi-react/CameraIcon';
 import * as React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import authorService from 'services/author';
 import { CDN_URL } from 'settings';
 
@@ -101,8 +101,8 @@ export default class AuthorFormDialog extends FormComponent<IProps, IState> {
     this.setState({ isSaving: true });
 
     authorService.save(this.state.model).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(author => {
       this.setState({ isSaving: false });
 

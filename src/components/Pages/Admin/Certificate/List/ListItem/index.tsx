@@ -20,7 +20,7 @@ import FormatListBulletedIcon from 'mdi-react/FormatListBulletedIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 import Courses from './Courses';
@@ -90,9 +90,9 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
     if (!confirm) return;
 
     certificateService.delete(certificate.id).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       Toast.show('Certificado excluído com sucesso');
     }, err => Toast.error(err));

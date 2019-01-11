@@ -58,8 +58,8 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     this.setState({ loading: true });
 
     // authService.changePassword(model.currentPassword, model.newPassword).pipe(
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this)
+    //   RxOp.logError(),
+    //   RxOp.bindComponent(this)
     // ).subscribe(() => {
     //   this.setState({ loading: false });
 

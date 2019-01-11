@@ -9,7 +9,7 @@ import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
 import ActivityList from './ActivityList';
@@ -41,8 +41,8 @@ export default class Perfil extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     studentService.getStudentLogsUrl(this.props.match.params.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(exportUrl => {
       this.setState({ exportUrl });
     }, err => Toast.error(err));

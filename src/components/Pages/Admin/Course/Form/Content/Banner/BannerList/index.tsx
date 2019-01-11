@@ -9,7 +9,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import AddIcon from 'mdi-react/AddIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import bannerService from 'services/banner';
 
 import ListContainer from './ListContainer';
@@ -42,9 +42,9 @@ export default class BannerList extends PureComponent<IProps, IState> {
 
   loadData = (courseID: number) => {
     bannerService.getBannerlist(courseID).pipe(
-      rxjsOperators.delay(1000),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.delay(1000),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe((banners: any) => {
       this.setState({ banners });
     }, (error: any) => this.setState({ error }));

@@ -12,7 +12,7 @@ import { History } from 'history';
 import { IUpsell } from 'interfaces/models/upsell';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
 
 import Content from './Content';
@@ -78,9 +78,9 @@ export default class Form extends FormComponent<IProps, IState> {
     if (!id) return;
 
     upsellService.getUpsell(id).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(model => {
       this.setState({
         model: {
@@ -145,9 +145,9 @@ export default class Form extends FormComponent<IProps, IState> {
     };
 
     upsellService.save(model as IUpsell).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(() => {
       this.props.history.push('/upsell/sucesso');
     }, (error: any) => {

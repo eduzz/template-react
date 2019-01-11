@@ -5,7 +5,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { ICertificate, ICertificateCourse } from 'interfaces/models/certificate';
 import CreationIcon from 'mdi-react/CreationIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 import CourseItem from './CourseItem';
@@ -40,8 +40,8 @@ export default class Courses extends PureComponent<IProps, IState> {
     this.setState({ courses: null, error: null });
 
     certificateService.getCourses(this.props.certificate.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(courses => {
       this.setState({ courses });
     }, error => this.setState({ error }));

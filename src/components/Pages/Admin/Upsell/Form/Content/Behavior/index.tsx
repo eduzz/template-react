@@ -10,7 +10,7 @@ import FieldText from '@react-form-fields/material-ui/components/Text';
 import { WithStyles } from 'decorators/withStyles';
 import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 import React, { PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 import upsellService from 'services/upsell';
 
@@ -115,8 +115,8 @@ export default class Behavior extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     authService.getUserInfo().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
+      RxOp.bindComponent(this),
+      RxOp.logError(),
     ).subscribe(user => {
       this.setState({
         user,
@@ -124,9 +124,9 @@ export default class Behavior extends PureComponent<IProps, IState> {
     });
 
     upsellService.getCourses().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
-      rxjsOperators.map(courses =>
+      RxOp.bindComponent(this),
+      RxOp.logError(),
+      RxOp.map(courses =>
         (courses || []).map(course => ({
           label: course.title,
           value: course.hash,

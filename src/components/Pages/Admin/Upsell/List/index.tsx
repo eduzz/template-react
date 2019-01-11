@@ -12,7 +12,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
 import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
 
 import ConfirmDialog from './ConfirmDialog';
@@ -75,9 +75,9 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
     const { orderBy, orderDirection } = this.state;
 
     upsellService.list(orderBy, orderDirection).pipe(
-      rxjsOperators.delay(1000),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.delay(1000),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe((upsells: any) => {
       this.setState({ upsells });
     }, (error: any) => this.setState({ error }));

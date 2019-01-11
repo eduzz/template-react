@@ -6,7 +6,7 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
 import React, { PureComponent, SyntheticEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
 interface IProps {
@@ -53,8 +53,8 @@ export default class Info extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     studentService.getStudent(this.props.match.params.id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(student => {
       this.setState({
         student,

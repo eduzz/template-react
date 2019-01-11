@@ -7,7 +7,7 @@ import ErrorMessageIcon from 'components/Shared/ErrorMessageIcon';
 import { ICertificateCourse } from 'interfaces/models/certificate';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { Fragment, PureComponent, SyntheticEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 interface IState {
@@ -36,8 +36,8 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     this.setState({ loading: true });
 
     certificateService.removeCourse(certificateId, course).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => { }, error => this.setState({ error, loading: false }));
   }
 

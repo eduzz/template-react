@@ -14,7 +14,7 @@ import EyeIcon from 'mdi-react/EyeIcon';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
 import { CDN_URL } from 'settings';
 
@@ -68,9 +68,9 @@ export default class UpsellItem extends PureComponent<IProps> {
     if (!confirm) return;
 
     upsellService.delete(upsell.id).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       Toast.show('Upsell excluído com sucesso');
 

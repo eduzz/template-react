@@ -18,7 +18,7 @@ import getCertificatePreviewUrl from 'helpers/certificateUrl';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
 import React, { Fragment } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 import Editor from './Editor';
@@ -86,8 +86,8 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
     this.setState({ loading: true, error: null });
 
     certificateService.get(id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(certificate => {
       this.setState({
         loading: false,
@@ -107,9 +107,9 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
 
     return new Promise<number>(resolve => {
       certificateService.save(params).pipe(
-        rxjsOperators.loader(),
-        rxjsOperators.logError(),
-        rxjsOperators.bindComponent(this),
+        RxOp.loader(),
+        RxOp.logError(),
+        RxOp.bindComponent(this),
       ).subscribe(certificateId => {
         Toast.show('Certificado salvo com sucesso');
         resolve(certificateId);

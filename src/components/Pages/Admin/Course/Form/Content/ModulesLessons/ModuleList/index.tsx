@@ -11,7 +11,7 @@ import { IModule } from 'interfaces/models/module';
 import AddIcon from 'mdi-react/AddIcon';
 import React from 'react';
 import { arrayMove, SortEnd } from 'react-sortable-hoc';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import moduleService from 'services/module';
 
 import ListContainer from './ListContainer';
@@ -47,7 +47,7 @@ export default class ModuleList extends React.PureComponent<IProps, IState> {
 
   loadData = () => {
     moduleService.list().pipe(
-      rxjsOperators.bindComponent(this),
+      RxOp.bindComponent(this),
     ).subscribe(modules => {
       this.setState({
         modules,

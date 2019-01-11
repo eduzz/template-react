@@ -86,9 +86,9 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     this.setState({ loading: true });
 
     // authService.resetPassword(token, model.password).pipe(
-    //   rxjsOperators.switchMap(() => authService.login(tokenData.email, model.password)),
-    //   rxjsOperators.logError(),
-    //   rxjsOperators.bindComponent(this)
+    //   RxOp.switchMap(() => authService.login(tokenData.email, model.password)),
+    //   RxOp.logError(),
+    //   RxOp.bindComponent(this)
     // ).subscribe(() => {
     //   Toast.show('Senha alterada com sucesso!');
     //   this.props.router().navigate('/');

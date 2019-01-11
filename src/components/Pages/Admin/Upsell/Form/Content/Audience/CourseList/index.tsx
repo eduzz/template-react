@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import CourseItem from './CourseItem';
 import upsellService from 'services/upsell';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import Loading from 'components/Shared/Loading';
 import { WithRouter } from 'decorators/withRouter';
 import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
@@ -44,8 +44,8 @@ export default class CourseList extends PureComponent<IProps, IState> {
 
     if (!this.props.match.params.id) {
       upsellService.getTreeCourses().pipe(
-        rxjsOperators.bindComponent(this),
-        rxjsOperators.logError(),
+        RxOp.bindComponent(this),
+        RxOp.logError(),
       ).subscribe(courses => {
         this.context.updateModel(model => model.courses = courses)();
       }, error => {

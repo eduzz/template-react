@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import { IStudent } from 'interfaces/models/student';
 import StudentItem from './StudentItem';
 import studentService from 'services/student';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import Loading from 'components/Shared/Loading';
 import CardContent from '@material-ui/core/CardContent';
 import ErrorMessage from 'components/Shared/ErrorMessage';
@@ -42,8 +42,8 @@ export default class StudentList extends PureComponent<IProps, IState> {
     });
 
     studentService.getStudents().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(students => {
       this.setState({
         students,

@@ -13,7 +13,7 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import bannerService from 'services/banner';
 
 import ImageUploader from './ImageUploader';
@@ -87,8 +87,8 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
 
   componentDidMount() {
     bannerService.getBannerInfo().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
+      RxOp.bindComponent(this),
+      RxOp.logError(),
     ).subscribe((banner = this.initialModel as IBanner) => {
       this.setState({
         open: true,
@@ -109,9 +109,9 @@ export default class BannerDialog extends FormComponent<IProps, IState> {
   handleSubmit = (isValid: boolean) => {
     if (!isValid) return;
     bannerService.save(this.props.match.params.id, this.state.model as IBanner).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(() => {
       Toast.show('Anúncio salvo com sucesso!');
       this.handleClose();
