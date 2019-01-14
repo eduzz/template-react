@@ -11,8 +11,8 @@ import studentService from 'services/student';
 import { CDN_URL } from 'settings';
 
 interface IProps {
-  classes?: any;
   match?: any;
+  classes?: any;
   history?: any;
 }
 
