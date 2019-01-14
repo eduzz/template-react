@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
-import * as rxjs from 'rxjs';
-import * as rxjsOperators from 'rxjs/operators';
+import * as Rx from 'rxjs';
+import * as RxOp from 'rxjs/operators';
 
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
@@ -15,31 +15,31 @@ export class ApiService {
     private tokenService: TokenService
   ) { }
 
-  public get<T = any>(url: string, params?: any): rxjs.Observable<T> {
+  public get<T = any>(url: string, params?: any): Rx.Observable<T> {
     return this.request<T>('GET', url, params).pipe(
-      rxjsOperators.map(({ response }) => response),
-      rxjsOperators.filter(response => !!response)
+      RxOp.map(({ response }) => response),
+      RxOp.filter(response => response !== undefined)
     );
   }
 
-  public post<T = any>(url: string, body: any): rxjs.Observable<T> {
+  public post<T = any>(url: string, body: any): Rx.Observable<T> {
     return this.request<T>('POST', url, body).pipe(
-      rxjsOperators.map(({ response }) => response),
-      rxjsOperators.filter(response => !!response)
+      RxOp.map(({ response }) => response),
+      RxOp.filter(response => response !== undefined)
     );
   }
 
-  public put<T = any>(url: string, body: any): rxjs.Observable<T> {
+  public put<T = any>(url: string, body: any): Rx.Observable<T> {
     return this.request<T>('PUT', url, body).pipe(
-      rxjsOperators.map(({ response }) => response),
-      rxjsOperators.filter(response => !!response)
+      RxOp.map(({ response }) => response),
+      RxOp.filter(response => response !== undefined)
     );
   }
 
-  public delete<T = any>(url: string, params?: any): rxjs.Observable<T> {
+  public delete<T = any>(url: string, params?: any): Rx.Observable<T> {
     return this.request<T>('DELETE', url, params).pipe(
-      rxjsOperators.map(({ response }) => response),
-      rxjsOperators.filter(response => !!response)
+      RxOp.map(({ response }) => response),
+      RxOp.filter(response => response !== undefined)
     );
   }
 
@@ -52,16 +52,16 @@ export class ApiService {
     url: string,
     data: any = null,
     retry: boolean = true
-  ): rxjs.Observable<{ response: T, progress: number }> {
-    const progress$ = new rxjs.BehaviorSubject(0);
+  ): Rx.Observable<{ response: T, progress: number }> {
+    const progress$ = new Rx.BehaviorSubject(0);
 
     return this.tokenService.getToken().pipe(
-      rxjsOperators.first(),
-      rxjsOperators.map(token => {
+      RxOp.first(),
+      RxOp.map(token => {
         if (!token) return {};
         return { Authorization: `Bearer ${token}` };
       }),
-      rxjsOperators.switchMap(headers => {
+      RxOp.switchMap(headers => {
         return axios.request({
           baseURL: this.apiEndpoint,
           url,
@@ -80,45 +80,45 @@ export class ApiService {
           }
         });
       }),
-      rxjsOperators.tap(() => progress$.next(100)),
-      rxjsOperators.switchMap(res => this.checkNewToken(res)),
-      rxjsOperators.map(res => apiResponseFormatter<T>(res.data)),
-      rxjsOperators.startWith(null),
-      rxjsOperators.combineLatest(
-        progress$.pipe(rxjsOperators.distinctUntilChanged()),
+      RxOp.tap(() => progress$.next(100)),
+      RxOp.switchMap(res => this.checkNewToken(res)),
+      RxOp.map(res => apiResponseFormatter<T>(res.data) || null),
+      RxOp.startWith(undefined),
+      RxOp.combineLatest(
+        progress$.pipe(RxOp.distinctUntilChanged()),
         (response, progress) => ({ response, progress })
       ),
-      rxjsOperators.catchError(err => {
+      RxOp.catchError(err => {
         progress$.complete();
         return this.handleError(err, retry);
       }),
     );
   }
 
-  private checkNewToken(response: AxiosResponse): rxjs.Observable<AxiosResponse> {
+  private checkNewToken(response: AxiosResponse): Rx.Observable<AxiosResponse> {
     const token = response.headers['x-token'];
 
     if (!token) {
-      return rxjs.of(response);
+      return Rx.of(response);
     }
 
     return this.tokenService.setToken(token).pipe(
-      rxjsOperators.map(() => response)
+      RxOp.map(() => response)
     );
   }
   private handleError(err: AxiosError, retry: boolean) {
-    if (!err.config || !err.response) return rxjs.throwError(err);
+    if (!err.config || !err.response) return Rx.throwError(err);
 
     if (err.response.status !== 401 || !retry) {
-      return rxjs.throwError(new ApiError(err.config, err.response, err));
+      return Rx.throwError(new ApiError(err.config, err.response, err));
     }
 
     authService.openLogin();
     return authService.getUser().pipe(
-      rxjsOperators.skip(1),
-      rxjsOperators.switchMap(user => {
+      RxOp.skip(1),
+      RxOp.switchMap(user => {
         if (!user) {
-          return rxjs.throwError(new ApiError(err.config, err.response, err));
+          return Rx.throwError(new ApiError(err.config, err.response, err));
         }
 
         return this.request(
