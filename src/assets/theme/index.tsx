@@ -1,6 +1,7 @@
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 
 import overrides from './overrides';
+import props from './props';
 import variables from './variables';
 
 const primary = {
@@ -21,14 +22,16 @@ export const theme = createMuiTheme({
   palette: { primary, secondary },
   typography: { useNextVariants: true },
   overrides,
-  variables
+  variables,
+  props
 });
 
 export const reverseTheme = createMuiTheme({
   palette: { primary: secondary, secondary: primary },
   typography: { useNextVariants: true },
   overrides,
-  variables
+  variables,
+  props
 });
 
 export const whiteTheme = createMuiTheme({
@@ -48,5 +51,6 @@ export const whiteTheme = createMuiTheme({
   },
   typography: { useNextVariants: true },
   overrides,
-  variables
+  variables,
+  props
 });
