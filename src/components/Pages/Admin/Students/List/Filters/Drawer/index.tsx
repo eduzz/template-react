@@ -36,7 +36,7 @@ interface IState extends IStateForm<IFiltersModel> {
     width: '100%',
     borderRadius: 0,
     position: 'absolute',
-    top: 'calc(100% - 38px)',
+    top: 'calc(100% - 37px)',
     margin: 0,
   },
 }))
@@ -102,7 +102,10 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   onChange={this.updateModel((model, value) => model.email = value)}
                 />
               </Grid>
+            </Grid>
+            <Grid container direction='column' wrap='nowrap' className={classes.filtersContainer}>
               <Grid item>
+                <Typography variant='subtitle1'>Período do login</Typography>
                 <Grid container spacing={16}>
                   <Grid item xs={6}>
                     <FieldDate
