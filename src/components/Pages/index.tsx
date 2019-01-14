@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import AdminPage from './Admin';
+import LoginAsPage from './Public/LoginAs';
 import NewPasswordPage from './Public/NewPassword';
 
 export default class Pages extends PureComponent {
@@ -14,6 +15,7 @@ export default class Pages extends PureComponent {
       <BrowserRouter>
         <Switch>
           <Route path='/nova-senha' component={NewPasswordPage} />
+          <Route path='/integracao/login' component={LoginAsPage} />
           <PermissionRoute path='/' component={AdminPage} />
 
           <Route path='/reload' exact render={this.renderReload} />

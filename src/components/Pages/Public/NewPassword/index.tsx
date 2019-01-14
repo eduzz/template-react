@@ -8,11 +8,13 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
+import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
 import queryString from 'query-string';
 import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
 import tokenService from 'services/token';
-import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
+
+import styles from './style';
 
 interface IState extends IStateForm<{
   password: string;
@@ -27,42 +29,7 @@ interface IProps extends RouteComponentProps<{ t: string }, {}> {
   classes?: any;
 }
 
-@WithStyles(theme => ({
-  root: {
-    background: theme.palette.primary.main,
-    minHeight: '100vh',
-    minWidth: '100vw',
-    position: 'relative'
-  },
-  container: {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    right: '0',
-    bottom: '0',
-    margin: 'auto',
-    width: '320px',
-    height: '400px',
-    maxWidth: 'calc(100% - 30px)',
-    color: 'white'
-  },
-  logo: {
-    textAlign: 'center',
-    marginBottom: 20
-  },
-  logoImage: {
-    maxWidth: '100%',
-    maxHeight: 120
-  },
-  viewContainer: {
-    boxSizing: 'border-box',
-    padding: '0 10px',
-    height: 310
-  },
-  buttons: {
-    justifyContent: 'flex-end'
-  }
-}))
+@WithStyles(styles)
 export default class NewPasswordPage extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
