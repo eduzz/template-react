@@ -21,6 +21,17 @@ export class TokenService {
       rxjsOperators.first(),
       rxjsOperators.logError()
     ).subscribe(token => this.tokens$.next(token));
+
+    this.tokens$.pipe(
+      rxjsOperators.filter(tokens => !!tokens),
+      rxjsOperators.map(({ token }) => token),
+      rxjsOperators.distinctUntilChanged(),
+      rxjsOperators.logError()
+    ).subscribe((token) => {
+      const date = new Date();
+      date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
+      document.cookie = `userSession=${JSON.stringify(token)}; domain=${COOKIE_DOMAIN}; path=/; expires=${date.toUTCString()}`;
+    });
   }
 
   public getAccessToken(): Observable<string> {
@@ -35,10 +46,6 @@ export class TokenService {
   }
 
   public setTokens(tokens: Pick<ITokens, Exclude<keyof ITokens, 'legacyLogin'>>, legacyLogin: boolean = false): Observable<ITokens> {
-    const date = new Date();
-    date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
-    document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/; expires=${date.toUTCString()}`;
-
     return storageService.set<ITokens>('authToken', { legacyLogin, ...tokens }).pipe(
       rxjsOperators.tap(tokens => this.tokens$.next(tokens))
     );
@@ -46,9 +53,11 @@ export class TokenService {
 
   public setAccessToken(token: string): Observable<ITokens> {
     return this.tokens$.pipe(
+      rxjsOperators.first(),
       rxjsOperators.switchMap(({ legacyLogin, refresh_token }) => {
         return storageService.set<ITokens>('authToken', { legacyLogin, token, refresh_token });
-      })
+      }),
+      rxjsOperators.tap(tokens => this.tokens$.next(tokens))
     );
   }
   public clearToken(): Observable<void> {
