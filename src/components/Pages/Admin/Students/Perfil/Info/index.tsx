@@ -8,11 +8,12 @@ import { IStudent } from 'interfaces/models/student';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
+import { CDN_URL } from 'settings';
 
 interface IProps {
+  match?: any;
   classes?: any;
   history?: any;
-  match?: any;
 }
 
 interface IState {
@@ -89,7 +90,7 @@ export default class Info extends PureComponent<IProps, IState> {
     return (
       <Grid container alignItems='center' spacing={24}>
         <Grid item>
-          <Avatar className={classes.avatar} alt={student.name} src={student.avatar} onError={this.handleImageError}>
+          <Avatar className={classes.avatar} alt={student.name} src={CDN_URL + student.avatar} onError={this.handleImageError}>
             {student.name.substring(0, 1)}
           </Avatar>
         </Grid>
