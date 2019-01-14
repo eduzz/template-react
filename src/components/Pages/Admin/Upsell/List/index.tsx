@@ -164,13 +164,12 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
               <Grid container spacing={8} alignItems='center' direction='column'>
                 <Grid item>
                   <Typography variant='h4' align='center' gutterBottom className={classes.messageTitle}>
-                    Seja muito bem vindo às ofertas do Nutror
+                    Ótima decisão! Nós vamos te ajudar a vender mais.
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography variant='caption' align='center' className={classes.messageDescription}>
-                    As ofertas do Nutror são ótimas decisões que impulsionam suas vendas!
-                    Crie, edite, teste e acompanhe os resultados das suas ofertas
+                    É possível aumentar as suas vendas oferecendo novos produtos para seus alunos. Vamos começar criando a primeira oferta.
                   </Typography>
                 </Grid>
                 <Grid item>
