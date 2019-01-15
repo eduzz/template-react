@@ -1,3 +1,3 @@
-cat .env.homolog > .env.production
+cat .env.homolog > .env.production.local
 echo "Variáveis de homologação definidas"
-cat .env.production
+cat .env.production.local
