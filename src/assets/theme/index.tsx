@@ -33,24 +33,3 @@ export const reverseTheme = createMuiTheme({
   variables,
   props
 });
-
-export const whiteTheme = createMuiTheme({
-  palette: {
-    primary: {
-      light: '#ffffff',
-      main: '#ffffff',
-      dark: '#cccccc',
-      contrastText: '#3a3a3a'
-    },
-    secondary: {
-      light: '#4ec485',
-      main: '#009358',
-      dark: '#00642e',
-      contrastText: '#fff',
-    }
-  },
-  typography: { useNextVariants: true },
-  overrides,
-  variables,
-  props
-});

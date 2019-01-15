@@ -1,6 +1,4 @@
 import AppBar from '@material-ui/core/AppBar';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
 
@@ -36,11 +34,9 @@ export class ToolbarTabs extends PureComponent<IProps> {
 
     return (
       <div className={classes.root}>
-        <MuiThemeProvider theme={whiteTheme}>
-          <AppBar className={classes.appBar}>
-            {children}
-          </AppBar>
-        </MuiThemeProvider>
+        <AppBar className={classes.appBar} color='default'>
+          {children}
+        </AppBar>
       </div>
     );
   }
