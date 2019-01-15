@@ -59,8 +59,13 @@ export default class AuthorIndexPage extends ListComponent<IProps, IState> {
     authorService.list(this.mergeParams(params)).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe(authors => {
-      this.setPaginatedData(authors);
+    ).subscribe(result => {
+      if(result.updating) {
+      this.setState({ loading: result.updating });
+        return;
+      }
+
+      this.setPaginatedData(result.data);
     }, error => this.setError(error));
   }
 
