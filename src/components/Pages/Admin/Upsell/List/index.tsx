@@ -3,6 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from 'components/Layout/Toolbar';
@@ -10,7 +11,7 @@ import ErrorMessage from 'components/Shared/ErrorMessage';
 import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IUpsellList } from 'interfaces/models/upsell';
-import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
+import PlusIcon from 'mdi-react/PlusIcon';
 import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
@@ -106,31 +107,27 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
     return (
       <Fragment>
         <Toolbar>
-          <Grid container spacing={8} alignItems='center'>
-            <Grid item>
-              <FileDocumentIcon className={classes.icon} />
+          <Grid container spacing={16} alignItems='center'>
+            <Grid item xs={true}>
+              <Typography variant='h6' noWrap>
+                <Hidden xsDown>Minhas Ofertas</Hidden>
+                <Hidden smUp><small>Minhas Ofertas</small></Hidden>
+              </Typography>
             </Grid>
-            <Grid item>
-              <Typography variant='h6'>Minhas Ofertas</Typography>
+
+            <Grid item xs={false}>
+              <Button size='small' variant='contained' color='secondary' onClick={this.handleNew}>
+                <PlusIcon />
+                <Hidden xsDown>Nova Oferta</Hidden>
+              </Button>
             </Grid>
           </Grid>
         </Toolbar>
 
         <Card>
           <CardContent>
-            <Grid container alignItems='center'>
-              <Grid item sm={true}>
-                <Typography variant='subtitle2'>Lista de Ofertas</Typography>
-                <Typography variant='caption'>Selecione um produto para ofertar</Typography>
-              </Grid>
-
-              <Grid item sm={false}>
-                <Button variant='contained' size='small' color='secondary' className={classes.newOfferButton} onClick={this.handleNew}>
-                  Nova Oferta
-                </Button>
-              </Grid>
-
-            </Grid>
+            <Typography variant='subtitle2'>Lista de Ofertas</Typography>
+            <Typography variant='caption'>Selecione um produto para ofertar</Typography>
           </CardContent>
 
           {!error && !upsells &&

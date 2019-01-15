@@ -54,7 +54,7 @@ export default class Toolbar extends PureComponent<IProps> {
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={whiteTheme}>
-          <AppBar className={classes.appBar}>
+          <AppBar className={classes.appBar} color='default'>
             <CoreToolbar>
               <IconButton
                 color='inherit'

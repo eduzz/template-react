@@ -40,7 +40,7 @@ export const whitePalette = {
     light: '#ffffff',
     main: '#ffffff',
     dark: '#cccccc',
-    contrastText: '##596375'
+    contrastText: '#596375'
   },
   secondary: {
     light: '#4ec485',

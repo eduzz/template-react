@@ -10,7 +10,6 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { History } from 'history';
 import { IUpsell } from 'interfaces/models/upsell';
-import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React from 'react';
 import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
@@ -33,8 +32,9 @@ interface IState extends IStateForm<IUpsell> {
 
 @WithRouter()
 @WithStyles(theme => ({
-  root: {
-    height: 'calc(100vh - 48px)',
+  card: {
+    height: 'calc(100vh - 99px)',
+    marginTop: '-5px'
   },
   icon: {
     fill: theme.palette.text.primary,
@@ -163,34 +163,28 @@ export default class Form extends FormComponent<IProps, IState> {
     const { classes } = this.props;
     const { flowStep, model, updateModel } = this.state;
 
-    console.log(this.state.model);
-
     return (
       <FormValidation onSubmit={this.handleSubmit} ref={this.bindForm}>
         <UpsellFormContext.Provider value={this.state}>
-          <div className={classes.root}>
-            <Toolbar>
-              <Grid container spacing={8} alignItems='center'>
-                <Grid item>
-                  <FileDocumentIcon className={classes.icon} />
-                </Grid>
-                <Grid item xs={true}>
-                  <Typography variant='h6'>Ofertas</Typography>
-                </Grid>
-                <Grid item xs={false}>
-                  <FieldSwitch
-                    checked={model.published}
-                    onChange={updateModel((model, v) => model.published = v)}
-                    label='Publicado'
-                  />
-                </Grid>
+          <Toolbar>
+            <Grid container spacing={8} alignItems='center'>
+              <Grid item xs={true}>
+                <Typography variant='h6' color='inherit'>Ofertas</Typography>
               </Grid>
-            </Toolbar>
+              <Grid item xs={false}>
+                <FieldSwitch
+                  checked={model.published}
+                  onChange={updateModel((model, v) => model.published = v)}
+                  label='Publicado'
+                />
+              </Grid>
+            </Grid>
+          </Toolbar>
 
-            <Card>
-              <Content step={flowStep} />
-            </Card>
-          </div>
+          <Card className={classes.card}>
+            <Content step={flowStep} />
+          </Card>
+
         </UpsellFormContext.Provider>
       </FormValidation>
     );
