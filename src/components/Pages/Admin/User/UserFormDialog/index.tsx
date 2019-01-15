@@ -15,7 +15,6 @@ import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
-import { makeWritable } from 'helpers/immutable';
 import IUser from 'interfaces/models/user';
 import IUserRole from 'interfaces/models/userRole';
 import React, { Fragment } from 'react';
@@ -84,7 +83,7 @@ export default class UserFormDialog extends FormComponent<IProps, IState> {
       const { user } = this.props;
 
       this.setState({
-        roles: makeWritable(roles).map(r => ({ ...r, selected: !user ? false : user.roles.includes(r.role) })),
+        roles: roles.map(r => ({ ...r, selected: !user ? false : user.roles.includes(r.role) })),
         loading: false
       });
     }, error => {
