@@ -64,6 +64,14 @@ b {
   margin-top: 25px !important;
 }
 
+label+.MuiInput-formControl {
+  margin-top: 24px !important;
+}
+
+.MuiExpansionPanel-expanded:before {
+  opacity: 1;
+}
+
 /* [class*='MuiModal-'] {
   overflow: auto !important;
 } */

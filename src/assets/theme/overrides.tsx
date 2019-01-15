@@ -2,7 +2,6 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { Overrides } from '@material-ui/core/styles/overrides';
 
 import { palette } from './palette';
-import variables from './variables';
 
 const defaultTheme = createMuiTheme({
   typography: { useNextVariants: true },
@@ -41,9 +40,6 @@ const overrides: Overrides = {
         display: 'none'
       },
     },
-    formControl: {
-      marginTop: '24px !important',
-    },
     inputMultiline: {
       height: 100
     },
@@ -77,20 +73,6 @@ const overrides: Overrides = {
   MuiExpansionPanelDetails: {
     root: {
       display: 'block'
-    }
-  },
-  MuiCard: {
-    root: {
-      border: '1px solid',
-      borderColor: variables.contentBorderColor,
-      minHeight: 'calc(100% - 56px)',
-      boxShadow: 'none',
-    },
-  },
-  MuiAppBar: {
-    root: {
-      boxShadow: '0 1px 2px 0 rgba(0,0,0,0.08)',
-      marginBottom: 2,
     },
   },
   MuiTabs: {

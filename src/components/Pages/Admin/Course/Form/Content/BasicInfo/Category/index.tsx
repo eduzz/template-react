@@ -1,13 +1,14 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@react-form-fields/material-ui/components/Select';
-import { IForm } from '../../..';
-import categoryService from 'services/category';
-import RxOp from 'rxjs-operators';
+import { WithStyles } from 'decorators/withStyles';
 import { ICategory } from 'interfaces/models/category';
+import React from 'react';
+import RxOp from 'rxjs-operators';
+import categoryService from 'services/category';
+
+import { IForm } from '../../..';
 
 interface IProps {
   classes?: any;
@@ -56,15 +57,14 @@ export default class Category extends React.PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    this.setState({
-      error: null,
-    });
+    this.setState({ error: null });
 
     categoryService.getCategories().pipe(
       RxOp.logError(),
       RxOp.loader(),
       RxOp.bindComponent(this),
-    ).subscribe((categories: any) => {
+      RxOp.map(({ data }) => data)
+    ).subscribe(categories => {
       this.setState({ categories });
     }, (error: any) => this.setState({ error }));
   }

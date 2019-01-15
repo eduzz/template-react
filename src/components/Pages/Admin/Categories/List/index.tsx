@@ -1,16 +1,17 @@
-import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
-import List from '@material-ui/core/List';
-import CategoryItem from './ListItem';
-import categoryService from 'services/category';
-import RxOp from 'rxjs-operators';
 import { WithStyles } from 'decorators/withStyles';
 import { ICategory } from 'interfaces/models/category';
+import React from 'react';
+import RxOp from 'rxjs-operators';
+import categoryService from 'services/category';
+
+import CategoryItem from './ListItem';
 
 interface IState {
   error?: any;
@@ -47,7 +48,8 @@ export default class CategoriesList extends React.PureComponent<IProps, IState> 
       RxOp.delay(1000),
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe((categories: any) => {
+      RxOp.map(({ data }) => data)
+    ).subscribe(categories => {
       this.setState({ categories });
     }, (error: any) => this.setState({ error }));
   }

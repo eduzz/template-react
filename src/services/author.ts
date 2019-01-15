@@ -14,7 +14,7 @@ class AuthorService {
 
   public get(id: number): Rx.Observable<IAuthor> {
     return apiService.get<IAuthor>(`/producer/authors/${id}`).pipe(
-      RxOp.map(response => response.data),
+      RxOp.map(response => response.data)
     );
   }
 
