@@ -1,3 +1,5 @@
+import IApiResponse from './apiResonse';
+
 export interface IPaginationParams {
   search?: string;
   page?: number;

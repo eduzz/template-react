@@ -26,6 +26,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
   }
 
   handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
     event.stopPropagation();
     this.setState({ targetElem: event.currentTarget });
   }

@@ -1,13 +1,17 @@
-import ICache from 'interfaces/cache';
 import * as Rx from 'rxjs';
 import * as RxOp from 'rxjs/operators';
 import cacheService from 'services/cache';
-import logService from 'services/log';
 
 interface IOptions {
   refresh: boolean;
   persist: boolean;
   expirationMinutes: number;
+}
+
+export interface ICacheResult<T = any> {
+  cached: boolean;
+  updating: boolean;
+  data: T;
 }
 
 export function cache<T>(key: string, options: Partial<IOptions> = {}) {
@@ -17,7 +21,7 @@ export function cache<T>(key: string, options: Partial<IOptions> = {}) {
     expirationMinutes: 5
   };
 
-  return (source: Rx.Observable<T>) => source.lift<T>(new CacheOperator(key, { ...defaultOptions, ...options }));
+  return (source: Rx.Observable<T>) => source.lift<ICacheResult<T>>(new CacheOperator(key, { ...defaultOptions, ...options }));
 }
 
 class CacheOperator<T> implements Rx.Operator<T, T> {
@@ -30,27 +34,35 @@ class CacheOperator<T> implements Rx.Operator<T, T> {
     const start = this.options.refresh ?
       cacheService.removeData(this.key) : Rx.of(true);
 
-    let currentCache: ICache;
     return start.pipe(
       RxOp.switchMap(() => cacheService.watchData(this.key)),
       RxOp.switchMap(cache => {
-        currentCache = cache;
-
         if (cache && !cacheService.isExpirated(cache)) {
-          return Rx.of(cache.data);
+          return Rx.of({
+            cached: true,
+            updating: false,
+            data: cache.data
+          } as ICacheResult);
         }
 
-        return !cache ? source : source.pipe(RxOp.startWith(cache.data));
-      }),
-      RxOp.switchMap(data => {
-        if (currentCache && currentCache.data === data) {
-          logService.breadcrumb('Cache', 'manual', data);
-          return Rx.of(data);
-        }
+        return source.pipe(
+          RxOp.map(data => ({
+            cached: false,
+            updating: true,
+            data
+          } as ICacheResult)),
+          RxOp.switchMap((result: ICacheResult) => {
+            if (result.cached) return Rx.of(result);
 
-        logService.breadcrumb('Cache Set', 'manual', data);
-        return cacheService.saveData(this.key, data, this.options).pipe(
-          RxOp.filter(() => false)
+            return cacheService.saveData(this.key, result.data, this.options).pipe(
+              RxOp.map(() => result)
+            );
+          }),
+          RxOp.startWith({
+            cached: !!(cache && cache.data),
+            updating: true,
+            data: cache && cache.data
+          } as ICacheResult)
         );
       })
     ).subscribe(subscriber);

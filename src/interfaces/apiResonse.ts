@@ -1,4 +1,4 @@
-interface IApiResponse<T> {
+export default interface IApiResponse<T> {
   success: boolean;
   data: T;
   paginator: {

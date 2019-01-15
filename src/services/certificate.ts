@@ -42,7 +42,8 @@ class CertificateService {
   public getCourses(certificateId: number): Rx.Observable<ICertificateCourse[]> {
     return apiService.get<ICertificateCourse[]>(`producer/certificates/${certificateId}/courses`).pipe(
       RxOp.map(response => (response.data || []).filter(d => d.has_selected)),
-      RxOp.cache(`certificate-courses-${certificateId}`)
+      RxOp.cache(`certificate-courses-${certificateId}`),
+      RxOp.map(({ data }) => data)
     );
   }
 
