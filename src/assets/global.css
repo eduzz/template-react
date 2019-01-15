@@ -69,7 +69,11 @@ label+.MuiInput-formControl {
 }
 
 .MuiExpansionPanel-expanded:before {
-  opacity: 1;
+  opacity: 1 !important;
+}
+
+.MuiExpansionPanel-expanded+.MuiExpansionPanel-root {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /* [class*='MuiModal-'] {
