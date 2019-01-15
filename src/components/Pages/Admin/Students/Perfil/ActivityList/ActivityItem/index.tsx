@@ -20,8 +20,6 @@ interface IProps {
     borderRadius: '0 0 2px 2px',
     color: '#8C9198',
     borderColor: theme.variables.contentBorderColor,
-    padding: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 4,
   },
 }))
 export default class CourseItem extends PureComponent<IProps> {
@@ -30,13 +28,14 @@ export default class CourseItem extends PureComponent<IProps> {
 
     return (
       <ListItem className={classes.root}>
-        <Grid container alignItems='center' spacing={40}>
-          <Grid item xs='auto'>
-            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(activity.date, 'dd/MM/YYYY')}</Typography>
-            <Typography variant='subtitle2' color='inherit' noWrap align='center'>{format(activity.date, 'HH:mm')}</Typography>
+        <Grid container spacing={40}>
+          <Grid item sm={4} md={3} lg={2}>
+            <Typography variant='subtitle2' color='inherit'>
+              {format(activity.date, 'dd/MM/YYYY')} - {format(activity.date, 'HH:mm')}
+            </Typography>
           </Grid>
-          <Grid item xs={true}>
-            <Typography variant='subtitle2' color='inherit' noWrap>{activity.data.message}</Typography>
+          <Grid item sm={8} md={9} lg={10}>
+            <Typography variant='subtitle2' color='inherit'>{activity.data.message}</Typography>
           </Grid>
         </Grid>
       </ListItem>

@@ -81,11 +81,11 @@ export default class StudentActivity extends PureComponent<IProps, IState> {
       <Fragment>
         <List disablePadding>
           <ListItem className={classes.header}>
-            <Grid container alignItems='center' spacing={40}>
-              <Grid item xs='auto'>
+            <Grid container spacing={40}>
+              <Grid item sm={4} md={3} lg={2}>
                 <Typography variant='subtitle2' noWrap>Realizado em:</Typography>
               </Grid>
-              <Grid item xs={true}>
+              <Grid item sm={8} md={9} lg={10}>
                 <Typography variant='subtitle2' noWrap>Atividade</Typography>
               </Grid>
             </Grid>
