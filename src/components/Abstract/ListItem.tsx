@@ -9,6 +9,8 @@ export interface IStateListItem {
 }
 
 export default abstract class ListItemComponent<P = {}, S extends IStateListItem = IStateListItem> extends PureComponent<P, S> {
+  styleProgress = { padding: 12 };
+
   constructor(props: P) {
     super(props);
     this.state = {
@@ -26,7 +28,11 @@ export default abstract class ListItemComponent<P = {}, S extends IStateListItem
 
     return (
       <Fragment>
-        {loading && <CircularProgress color='secondary' size={20} />}
+        {loading &&
+          <div style={this.styleProgress}>
+            <CircularProgress color='secondary' size={20} />
+          </div>
+        }
         {!loading && error &&
           <ErrorMessageIcon error={error} onDismiss={this.handleDismisError} />
         }
