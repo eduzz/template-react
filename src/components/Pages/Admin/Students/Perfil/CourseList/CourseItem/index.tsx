@@ -2,10 +2,15 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
+import DropdownMenu from 'components/Shared/DropdownMenu';
 import format from 'date-fns/esm/format';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudentCourse } from 'interfaces/models/student';
+import AccountRemoveIcon from 'mdi-react/AccountRemoveIcon';
+import BlockHelperIcon from 'mdi-react/BlockHelperIcon';
+import CheckBoxMultipleOutlineIcon from 'mdi-react/CheckBoxMultipleOutlineIcon';
+import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
@@ -32,7 +37,6 @@ interface IState {
     borderColor: theme.variables.contentBorderColor,
     marginBottom: theme.spacing.unit,
     padding: theme.spacing.unit,
-    paddingRight: theme.spacing.unit * 4,
     '&:before': {
       content: '""',
       width: 4,
@@ -58,6 +62,24 @@ interface IState {
   },
 }))
 export default class CourseItem extends PureComponent<IProps, IState> {
+  private actions = [{
+    text: 'Liberação de Módulos',
+    icon: CheckBoxMultipleOutlineIcon,
+    handler: () => this.handleDelete(),
+  }, {
+    text: 'Bloquear Acesso',
+    icon: BlockHelperIcon,
+    handler: () => this.handleDelete(),
+  }, {
+    text: 'Remover Acesso',
+    icon: AccountRemoveIcon,
+    handler: () => this.handleDelete(),
+  }, {
+    text: 'Link de Acesso Direto',
+    icon: OpenInNewIcon,
+    handler: () => this.handleDelete(),
+  }];
+
   constructor(props: IProps) {
     super(props);
 
@@ -81,6 +103,10 @@ export default class CourseItem extends PureComponent<IProps, IState> {
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = nutrorLogo;
+  }
+
+  handleDelete = async () => {
+    console.log('DELETE');
   }
 
   render() {
@@ -119,6 +145,9 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 </Grid>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item xs={false}>
+            <DropdownMenu options={this.actions} />
           </Grid>
         </Grid>
       </ListItem>
