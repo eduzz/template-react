@@ -118,7 +118,7 @@ export default class Info extends PureComponent<IProps, IState> {
   handleRecoveryPassword = () => {
     studentService.sencRecoveryPassword(this.props.match.params.id).pipe(
       RxOp.logError(),
-      RxOp.bindComponent(this)
+      RxOp.bindComponent(this),
     ).subscribe(
       () => Toast.show('Link de recuperação de senha enviado com sucesso'),
       err => Toast.error(err.data.details)
