@@ -27,9 +27,7 @@ export class TokenService {
       RxOp.distinctUntilChanged(),
       RxOp.logError()
     ).subscribe((tokens) => {
-      const date = new Date();
-      date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
-      document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/; expires=${date.toUTCString()}`;
+      document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/`;
     });
   }
 
