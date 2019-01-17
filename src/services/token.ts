@@ -1,4 +1,3 @@
-import redirectV2 from 'helpers/redirectV2';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as rxjsOperators from 'rxjs-operators';
 import { COOKIE_DOMAIN } from 'settings';
@@ -58,17 +57,10 @@ export class TokenService {
     );
   }
   public clearToken(): Observable<void> {
-    let legacyLogin = false;
-
     return this.tokens$.pipe(
       rxjsOperators.first(),
       rxjsOperators.filter(tokens => !!tokens),
-      rxjsOperators.tap(tokens => legacyLogin = tokens.legacyLogin),
       rxjsOperators.switchMap(() => storageService.set('authToken', null)),
-      rxjsOperators.filter(() => {
-        if (legacyLogin) redirectV2('/user/logout');
-        return !legacyLogin;
-      }),
       rxjsOperators.tap(() => this.tokens$.next(null)),
       rxjsOperators.map(() => null)
     );
