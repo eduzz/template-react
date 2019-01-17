@@ -43,13 +43,21 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
 
   render() {
     const { targetElem } = this.state;
-    const { options, ...menuProps } = this.props;
+    const { options, children, ...menuProps } = this.props;
 
     return (
       <div>
-        <IconButton onClick={this.handleOpen} color='inherit'>
-          <DotsHorizontalIcon />
-        </IconButton>
+        {!!children &&
+          <span onClick={this.handleOpen}>
+            {children}
+          </span>
+        }
+
+        {!children &&
+          <IconButton onClick={this.handleOpen} color='inherit'>
+            <DotsHorizontalIcon />
+          </IconButton>
+        }
 
         <Menu
           {...menuProps}

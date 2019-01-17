@@ -1,10 +1,17 @@
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
+import AtIcon from 'mdi-react/AtIcon';
+import DeleteIcon from 'mdi-react/DeleteIcon';
+import LockResetIcon from 'mdi-react/LockResetIcon';
+import SendIcon from 'mdi-react/SendIcon';
+import SettingsOutlineIcon from 'mdi-react/SettingsOutlineIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
@@ -23,8 +30,8 @@ interface IState {
 @WithRouter()
 @WithStyles(theme => ({
   avatar: {
-    width: 155,
-    height: 155,
+    width: 80,
+    height: 80,
     fontSize: 80,
   },
   loadingName: {
@@ -38,8 +45,32 @@ interface IState {
     height: 16,
     backgroundColor: '#bdbdbd',
   },
+  icon: {
+    color: '#596375',
+  },
+  settings: {
+    alignSelf: 'flex-start',
+  }
 }))
 export default class Info extends PureComponent<IProps, IState> {
+  private actions = [{
+    text: 'Redefinir E-mail',
+    icon: AtIcon,
+    handler: () => console.log(true),
+  }, {
+    text: 'Redefinir Senha',
+    icon: LockResetIcon,
+    handler: () => console.log(true),
+  }, {
+    text: 'Enviar link de redefinição de Senha',
+    icon: SendIcon,
+    handler: () => console.log(true),
+  }, {
+    text: 'Excluir Aluno',
+    icon: DeleteIcon,
+    handler: () => console.log(true),
+  }];
+
   constructor(props: IProps) {
     super(props);
 
@@ -94,9 +125,16 @@ export default class Info extends PureComponent<IProps, IState> {
             {student.name.substring(0, 1)}
           </Avatar>
         </Grid>
-        <Grid item>
-          <Typography variant='h6' gutterBottom>{student.name}</Typography>
+        <Grid item xs={true}>
+          <Typography variant='h6'>{student.name}</Typography>
           <Typography variant='caption'>{student.email}</Typography>
+        </Grid>
+        <Grid item alignItems='flex-start' className={classes.settings}>
+          <DropdownMenu options={this.actions}>
+            <IconButton className={classes.icon}>
+              <SettingsOutlineIcon />
+            </IconButton>
+          </DropdownMenu>
         </Grid>
       </Grid>
     );
