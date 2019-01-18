@@ -47,6 +47,11 @@ export default class Drawer extends PureComponent<IProps, IState> {
   }
 
   navigate = (url: string) => {
+    if (url.startsWith('http')) {
+      window.location.href = url;
+      return;
+    }
+
     this.props.history.push(url);
     this.close();
   }

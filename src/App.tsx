@@ -12,16 +12,19 @@ import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
 import Pages from 'components/Pages';
 import Alert from 'components/Shared/Alert';
+import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import locale from 'date-fns/locale/pt-BR';
 import React from 'react';
 import JssProvider from 'react-jss/lib/JssProvider';
+import { setup } from 'rxjs-operators';
 
 const generateClassName = createGenerateClassName({
   dangerouslyUseGlobalCSS: true
 });
 
 class App extends React.PureComponent {
+  loader = React.createRef<Loader>();
   formFieldConfig = {
     masks: commonMasks,
     dateLocale: locale,
@@ -32,6 +35,10 @@ class App extends React.PureComponent {
     super(props);
   }
 
+  componentDidMount() {
+    setup(this.loader.current);
+  }
+
   render() {
     return (
       <JssProvider generateClassName={generateClassName}>
@@ -39,6 +46,8 @@ class App extends React.PureComponent {
           <FormFieldsContext config={this.formFieldConfig}>
             <CssBaseline />
             <Dialogs />
+
+            <Loader innerRef={this.loader} />
 
             <Alert.Global />
             <Toast.Global />
