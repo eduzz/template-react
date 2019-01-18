@@ -9,6 +9,7 @@ interface IState {
 }
 
 interface IProps {
+  innerRef?: any;
   classes?: any;
 }
 
