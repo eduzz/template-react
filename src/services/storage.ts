@@ -1,28 +1,28 @@
-import * as rxjs from 'rxjs';
-import * as rxjsOperators from 'rxjs/operators';
+import * as Rx from 'rxjs';
+import * as RxOp from 'rxjs/operators';
 
 import { apiResponseFormatter } from '../formatters/apiResponse';
 
 export class StorageService {
 
-  public get<T = any>(key: string): rxjs.Observable<T> {
-    return rxjs.of(true).pipe(
-      rxjsOperators.map(() => localStorage.getItem(key)),
-      rxjsOperators.map(data => data ? apiResponseFormatter(JSON.parse(data)) : null),
-      rxjsOperators.catchError(() => rxjs.of(null))
+  public get<T = any>(key: string): Rx.Observable<T> {
+    return Rx.of(true).pipe(
+      RxOp.map(() => localStorage.getItem(key)),
+      RxOp.map(data => data ? apiResponseFormatter(JSON.parse(data)) : null),
+      RxOp.catchError(() => Rx.of(null))
     );
   }
 
-  public set<T = any>(key: string, value: T): rxjs.Observable<T> {
-    return rxjs.of(true).pipe(
-      rxjsOperators.map(() => localStorage.setItem(key, JSON.stringify(value))),
-      rxjsOperators.map(() => value)
+  public set<T = any>(key: string, value: T): Rx.Observable<T> {
+    return Rx.of(true).pipe(
+      RxOp.map(() => localStorage.setItem(key, JSON.stringify(value))),
+      RxOp.map(() => value)
     );
   }
 
-  public clear(regexp: RegExp): rxjs.Observable<void> {
-    return rxjs.of(Object.keys(localStorage)).pipe(
-      rxjsOperators.map(keys => {
+  public clear(regexp: RegExp): Rx.Observable<void> {
+    return Rx.of(Object.keys(localStorage)).pipe(
+      RxOp.map(keys => {
         if (regexp) {
           keys = keys.filter(k => regexp.test(k));
         }

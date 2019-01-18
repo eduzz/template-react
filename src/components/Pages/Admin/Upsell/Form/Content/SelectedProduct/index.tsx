@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import { IUpsellProduct } from 'interfaces/models/upsell';
 import upsellService from 'services/upsell';
 import Toast from 'components/Shared/Toast';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 
 interface IProps {
   classes?: any;
@@ -49,8 +49,8 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
     const { model } = this.context;
 
     upsellService.getProducts(model.type).pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
+      RxOp.bindComponent(this),
+      RxOp.logError(),
     ).subscribe(products => {
       if (products)
         this.setState({

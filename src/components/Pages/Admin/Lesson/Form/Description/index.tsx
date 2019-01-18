@@ -5,7 +5,7 @@ import { IForm } from '../';
 import { WithStyles } from 'decorators/withStyles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
-import { FieldText } from '@react-form-fields/material-ui';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 

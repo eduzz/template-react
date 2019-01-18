@@ -1,19 +1,20 @@
-import React, { PureComponent } from 'react';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import FieldSelect from '@react-form-fields/material-ui/components/Select';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { WithStyles } from 'decorators/withStyles';
 import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
-import Button from '@material-ui/core/Button';
-import FieldText from '@react-form-fields/material-ui/components/Text';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
+import React, { PureComponent } from 'react';
+import RxOp from 'rxjs-operators';
 import authService from 'services/auth';
-import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import upsellService from 'services/upsell';
-import rxjsOperators from 'rxjs-operators';
-import LinearProgress from '@material-ui/core/LinearProgress';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 
 const vendaNutror = require('assets/images/venda-nutror.png');
 const checkout = require('assets/images/checkout.png');
@@ -114,8 +115,8 @@ export default class Behavior extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     authService.getUserInfo().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
+      RxOp.bindComponent(this),
+      RxOp.logError(),
     ).subscribe(user => {
       this.setState({
         user,
@@ -123,9 +124,9 @@ export default class Behavior extends PureComponent<IProps, IState> {
     });
 
     upsellService.getCourses().pipe(
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.logError(),
-      rxjsOperators.map(courses =>
+      RxOp.bindComponent(this),
+      RxOp.logError(),
+      RxOp.map(courses =>
         (courses || []).map(course => ({
           label: course.title,
           value: course.hash,
@@ -158,7 +159,9 @@ export default class Behavior extends PureComponent<IProps, IState> {
             <Typography variant='subtitle1'>
               <strong>Comportamentos</strong>
             </Typography>
-            <Typography variant='caption'>Aqui podemos definir o fluxo da oferta. Personalize como devem se comportar cada tipo de exibição.</Typography>
+            <Typography variant='caption'>
+              Aqui podemos definir o fluxo da oferta. Personalize como devem se comportar cada tipo de exibição.
+              </Typography>
           </Grid>
           <Grid item>
             <List disablePadding>
@@ -217,7 +220,9 @@ export default class Behavior extends PureComponent<IProps, IState> {
                     </Grid>
                     <Grid item xs={5}>
                       <Typography variant='subtitle1'><strong>Landing Page Externa</strong></Typography>
-                      <Typography variant='caption'>Se você tem uma página de vendas com link da Eduzz pode utilizar para definir o fluxo da venda.</Typography>
+                      <Typography variant='caption'>
+                        Se você tem uma página de vendas com link da Eduzz pode utilizar para definir o fluxo da venda.
+                      </Typography>
                     </Grid>
                     <Grid item xs={true}>
                       <Grid container alignItems='flex-end' wrap='nowrap'>

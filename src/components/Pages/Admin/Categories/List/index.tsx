@@ -8,7 +8,7 @@ import ErrorMessage from 'components/Shared/ErrorMessage';
 import List from '@material-ui/core/List';
 import CategoryItem from './ListItem';
 import categoryService from 'services/category';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import { WithStyles } from 'decorators/withStyles';
 import { ICategory } from 'interfaces/models/category';
 
@@ -44,9 +44,9 @@ export default class CategoriesList extends React.PureComponent<IProps, IState> 
     this.setState({ error: null, categories: null });
 
     categoryService.getCategories().pipe(
-      rxjsOperators.delay(1000),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.delay(1000),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe((categories: any) => {
       this.setState({ categories });
     }, (error: any) => this.setState({ error }));

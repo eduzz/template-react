@@ -10,7 +10,7 @@ import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import React, { Fragment } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import courseService from 'services/course';
 
 import Content from './Content';
@@ -159,9 +159,9 @@ export default class Form extends FormComponent<IProps, IState> {
     const { id } = this.props.match.params;
 
     courseService.getCourse(id).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.loader(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.loader(),
+      RxOp.bindComponent(this),
     ).subscribe((course: any) => {
       this.setState({
         model: {
@@ -187,9 +187,9 @@ export default class Form extends FormComponent<IProps, IState> {
 
     if (id) {
       courseService.edit(id, params).pipe(
-        rxjsOperators.loader(),
-        rxjsOperators.logError(),
-        rxjsOperators.bindComponent(this),
+        RxOp.loader(),
+        RxOp.logError(),
+        RxOp.bindComponent(this),
       ).subscribe(() => {
         Toast.show('Curso editado com sucesso!');
       }, (error: any) => {
@@ -197,9 +197,9 @@ export default class Form extends FormComponent<IProps, IState> {
       });
     } else {
       courseService.save(params).pipe(
-        rxjsOperators.loader(),
-        rxjsOperators.logError(),
-        rxjsOperators.bindComponent(this),
+        RxOp.loader(),
+        RxOp.logError(),
+        RxOp.bindComponent(this),
       ).subscribe(() => {
         Toast.show('Curso criado com sucesso!');
       }, (error: any) => {

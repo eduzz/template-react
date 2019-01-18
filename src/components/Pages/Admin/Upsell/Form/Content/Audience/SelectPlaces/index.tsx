@@ -1,8 +1,9 @@
-import React, { PureComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
+import React, { PureComponent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../../Context';
 
 const destaqueVitrine = require('assets/images/destaque-vitrine.png');
 const cardVitrine = require('assets/images/card-vitrine.png');
@@ -92,7 +93,7 @@ export default class ProductType extends PureComponent<IProps> {
     {
       value: 3,
       title: 'Miniatura na tela de Curso',
-      description: 'Exibe no card de oferta na página de curso.',
+      description: 'É exibido dentro da página de curso na lateral.',
       image: curso,
       selectedLabel: 'has_selected_courses',
       handleClick: () => {
@@ -102,7 +103,7 @@ export default class ProductType extends PureComponent<IProps> {
     {
       value: 4,
       title: 'Miniatura na tela de Aula',
-      description: 'Serviços que podem ser prestados através da plataforma Jobzz',
+      description: 'A oferta é exibida dentro de uma aula.',
       image: aula,
       selectedLabel: 'has_selected_lessons',
       handleClick: () => {

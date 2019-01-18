@@ -10,8 +10,8 @@ import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithStyles } from 'decorators/withStyles';
 import { ICertificateCourse } from 'interfaces/models/certificate';
 import * as React from 'react';
-import * as rxjs from 'rxjs';
-import rxjsOperators from 'rxjs-operators';
+import * as Rx from 'rxjs';
+import RxOp from 'rxjs-operators';
 import certificateService from 'services/certificate';
 
 import { AddCourseItemDialog } from './Course';
@@ -36,12 +36,12 @@ interface IProps {
   }
 })
 export default class AddCourseDialog extends React.PureComponent<IProps, IState> {
-  search$: rxjs.Subject<string>;
+  search$: Rx.Subject<string>;
 
   constructor(props: IProps) {
     super(props);
 
-    this.search$ = new rxjs.Subject();
+    this.search$ = new Rx.Subject();
 
     this.state = {
       certificateId: 8,
@@ -54,19 +54,19 @@ export default class AddCourseDialog extends React.PureComponent<IProps, IState>
 
   componentDidMount() {
     certificateService.shouldOpenAddCourse().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(certificateId => {
       this.setState({ opened: !!certificateId, certificateId });
     });
 
     this.search$.pipe(
-      rxjsOperators.debounceTime(500),
-      rxjsOperators.filter(search => search.length === 0 || search.length >= 3),
-      rxjsOperators.tap(() => this.setState({ loading: true, error: null })),
-      rxjsOperators.switchMap((search) => certificateService.searchCourses(this.state.certificateId, search)),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.debounceTime(500),
+      RxOp.filter(search => search.length === 0 || search.length >= 3),
+      RxOp.tap(() => this.setState({ loading: true, error: null })),
+      RxOp.switchMap((search) => certificateService.searchCourses(this.state.certificateId, search)),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(courses => {
       this.setState({ courses, loading: false });
     }, error => this.setState({ error, loading: false }));

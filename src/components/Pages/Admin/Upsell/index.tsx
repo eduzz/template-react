@@ -1,26 +1,17 @@
-import { IAppRoute } from 'interfaces/route';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
 import UpsellFormPage from './Form';
 import UpsellListPage from './List';
 
 export default class UpsellIndexPage extends PureComponent {
-  public static routes: IAppRoute[] = [{
-    path: '/novo',
-    component: UpsellFormPage
-  }, {
-    path: '/:id/editar',
-    component: UpsellFormPage
-  }, {
-    path: '/:success?',
-    component: UpsellListPage
-  }];
-
   render() {
     return (
-      <Fragment>
-        {this.props.children}
-      </Fragment>
+      <Switch>
+        <Route path='*/novo' exact component={UpsellFormPage} />
+        <Route path='*/:id/editar' exact component={UpsellFormPage} />
+        <Route path='*/:success?' exact component={UpsellListPage} />
+      </Switch>
     );
   }
 }

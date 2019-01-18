@@ -1,4 +1,4 @@
-export interface ICache<T = any> {
+export default interface ICache<T = any> {
   data: T;
   createdAt: Date;
   expirationDate: Date;

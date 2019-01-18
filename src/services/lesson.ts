@@ -1,11 +1,11 @@
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 
 import apiService from './api';
 
 class LessonService {
   public getLesson(lessonId: number): any {
     return apiService.get(`producer/lessons/${lessonId}`).pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 

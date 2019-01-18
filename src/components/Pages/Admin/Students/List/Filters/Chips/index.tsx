@@ -5,7 +5,7 @@ import Toast from 'components/Shared/Toast';
 import { dateFormat } from 'formatters/date';
 import { IFiltersModel } from 'interfaces/models/student';
 import React, { PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
 interface IProps {
@@ -27,8 +27,8 @@ export default class Chips extends PureComponent<IProps, IState> {
 
   componentDidMount() {
     studentService.getFilters().pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe(filters => {
       this.setState({
         filters,

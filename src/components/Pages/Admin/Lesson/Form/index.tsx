@@ -6,11 +6,11 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
-import { format } from 'date-fns';
 import { WithRouter } from 'decorators/withRouter';
+import { dateFormat } from 'formatters/date';
 import ContentSaveIcon from 'mdi-react/ContentSaveIcon';
 import React from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import lessonService from 'services/lesson';
 
 import Chats from './Chats';
@@ -99,7 +99,7 @@ export default class Form extends FormComponent<IProps, IState> {
       5: '',
     },
     author: {},
-    release_at: format(new Date(), 'yyyy-MM-dd'),
+    release_at: dateFormat(new Date(), 'yyyy-MM-dd'),
     available_days: null,
     days_locked: null,
     image: '',
@@ -152,14 +152,14 @@ export default class Form extends FormComponent<IProps, IState> {
 
   loadData = (lessonId: number) => {
     lessonService.getLesson(lessonId).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.loader(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.loader(),
+      RxOp.bindComponent(this),
     ).subscribe((lesson: any) => {
       this.setState({
         model: {
           ...lesson,
-          release_at: format(new Date(lesson.release_at), 'yyyy-MM-dd'),
+          release_at: dateFormat(new Date(lesson.release_at), 'yyyy-MM-dd'),
         },
       });
     }, (error: any) => Toast.error(error));
@@ -169,9 +169,9 @@ export default class Form extends FormComponent<IProps, IState> {
     const { model } = this.state;
 
     lessonService.save(model).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.loader(),
-      rxjsOperators.bindComponent(this),
+      RxOp.logError(),
+      RxOp.loader(),
+      RxOp.bindComponent(this),
     ).subscribe((lesson: any) => {
       console.log(lesson);
     }, (error: any) => Toast.error(error));

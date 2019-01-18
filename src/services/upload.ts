@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import * as rxjsOperators from 'rxjs-operators';
+import * as RxOp from 'rxjs-operators';
 
 import apiService from './api';
 
@@ -10,7 +10,7 @@ export class UploadService {
     data.append('file', image, 'upload-image.png');
 
     return apiService.upload('/producer/upload', data).pipe(
-      rxjsOperators.map(({ response, progress }) => {
+      RxOp.map(({ response, progress }) => {
         return {
           url: response ? response.data.url : null,
           progress

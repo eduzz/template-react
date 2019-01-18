@@ -8,7 +8,7 @@ import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
 
-import { DrawerContext, IDrawerContext } from '../Drawer';
+import { DrawerContext, IDrawerContext } from '../Drawer/context';
 
 interface IProps {
   title?: string;
@@ -41,10 +41,11 @@ interface IProps {
   },
 }))
 export default class Toolbar extends PureComponent<IProps> {
-  drawer: IDrawerContext;
+  static contextType = DrawerContext;
+  context: IDrawerContext;
 
   openDrawer = () => {
-    this.drawer.open();
+    this.context.open();
   }
 
   render() {
@@ -52,10 +53,6 @@ export default class Toolbar extends PureComponent<IProps> {
 
     return (
       <div className={classes.root}>
-        <DrawerContext.Consumer>
-          {drawer => (this.drawer = drawer) && null}
-        </DrawerContext.Consumer>
-
         <MuiThemeProvider theme={whiteTheme}>
           <AppBar className={classes.appBar}>
             <CoreToolbar>

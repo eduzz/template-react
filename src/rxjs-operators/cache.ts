@@ -1,6 +1,6 @@
-import { ICache } from 'interfaces/cache';
-import * as rxjs from 'rxjs';
-import * as rxjsOperators from 'rxjs/operators';
+import ICache from 'interfaces/cache';
+import * as Rx from 'rxjs';
+import * as RxOp from 'rxjs/operators';
 import cacheService from 'services/cache';
 import logService from 'services/log';
 
@@ -17,40 +17,40 @@ export function cache<T>(key: string, options: Partial<IOptions> = {}) {
     expirationMinutes: 5
   };
 
-  return (source: rxjs.Observable<T>) => source.lift<T>(new CacheOperator(key, { ...defaultOptions, ...options }));
+  return (source: Rx.Observable<T>) => source.lift<T>(new CacheOperator(key, { ...defaultOptions, ...options }));
 }
 
-class CacheOperator<T> implements rxjs.Operator<T, T> {
+class CacheOperator<T> implements Rx.Operator<T, T> {
   constructor(
     private key: string,
     private options: IOptions
   ) { }
 
-  public call(subscriber: rxjs.Subscriber<any>, source: rxjs.Observable<any>): rxjs.Subscription {
+  public call(subscriber: Rx.Subscriber<any>, source: Rx.Observable<any>): Rx.Subscription {
     const start = this.options.refresh ?
-      cacheService.removeData(this.key) : rxjs.of(true);
+      cacheService.removeData(this.key) : Rx.of(true);
 
     let currentCache: ICache;
     return start.pipe(
-      rxjsOperators.switchMap(() => cacheService.watchData(this.key)),
-      rxjsOperators.switchMap(cache => {
+      RxOp.switchMap(() => cacheService.watchData(this.key)),
+      RxOp.switchMap(cache => {
         currentCache = cache;
 
         if (cache && !cacheService.isExpirated(cache)) {
-          return rxjs.of(cache.data);
+          return Rx.of(cache.data);
         }
 
-        return !cache ? source : source.pipe(rxjsOperators.startWith(cache.data));
+        return !cache ? source : source.pipe(RxOp.startWith(cache.data));
       }),
-      rxjsOperators.switchMap(data => {
+      RxOp.switchMap(data => {
         if (currentCache && currentCache.data === data) {
           logService.breadcrumb('Cache', 'manual', data);
-          return rxjs.of(data);
+          return Rx.of(data);
         }
 
         logService.breadcrumb('Cache Set', 'manual', data);
         return cacheService.saveData(this.key, data, this.options).pipe(
-          rxjsOperators.filter(() => false)
+          RxOp.filter(() => false)
         );
       })
     ).subscribe(subscriber);

@@ -1,12 +1,12 @@
-export interface IUserToken {
+export default interface IUserToken {
   id: number;
   email: string;
   name: string;
+  roles: string[];
   exp: number;
   type: enUserType;
 
-  firstName: string;
-  canAccess(...roles: string[]): boolean;
+  firstName?: string;
 }
 
 export enum enUserType {

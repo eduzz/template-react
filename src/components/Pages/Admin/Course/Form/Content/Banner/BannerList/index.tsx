@@ -4,13 +4,12 @@ import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import AppRouter from 'components/Router';
-import { WithRouter } from 'decorators/withRouter';
+import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import AddIcon from 'mdi-react/AddIcon';
 import React, { Fragment, PureComponent } from 'react';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import bannerService from 'services/banner';
 
 import ListContainer from './ListContainer';
@@ -20,10 +19,8 @@ interface IState {
   banners?: IBanner[];
 }
 
-interface IProps {
+interface IProps extends IRouteProps {
   classes?: any;
-  router?: AppRouter;
-  match?: any;
 }
 
 @WithRouter()
@@ -45,9 +42,9 @@ export default class BannerList extends PureComponent<IProps, IState> {
 
   loadData = (courseID: number) => {
     bannerService.getBannerlist(courseID).pipe(
-      rxjsOperators.delay(1000),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this),
+      RxOp.delay(1000),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
     ).subscribe((banners: any) => {
       this.setState({ banners });
     }, (error: any) => this.setState({ error }));

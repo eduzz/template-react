@@ -1,22 +1,22 @@
 import { IAuthor } from 'interfaces/models/author';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
-import * as rxjs from 'rxjs';
-import rxjsOperators from 'rxjs-operators';
+import * as Rx from 'rxjs';
+import RxOp from 'rxjs-operators';
 
 import apiService from './api';
 
 class AuthorService {
-  private update$ = new rxjs.BehaviorSubject<boolean>(true);
+  private update$ = new Rx.BehaviorSubject<boolean>(true);
 
-  public list(params: IPaginationParams): rxjs.Observable<IPaginationResponse<IAuthor>> {
+  public list(params: IPaginationParams): Rx.Observable<IPaginationResponse<IAuthor>> {
     return this.update$.pipe(
-      rxjsOperators.switchMap(() => apiService.get<IAuthor[]>('/producer/authors', params)),
+      RxOp.switchMap(() => apiService.get<IAuthor[]>('/producer/authors', params)),
     );
   }
 
-  public get(id: number): rxjs.Observable<IAuthor> {
+  public get(id: number): Rx.Observable<IAuthor> {
     return apiService.get<IAuthor>(`/producer/authors/${id}`).pipe(
-      rxjsOperators.map(response => response.data),
+      RxOp.map(response => response.data),
     );
   }
 
@@ -26,14 +26,14 @@ class AuthorService {
       apiService.put<IAuthor>(`/producer/authors/${params.id}`, params);
 
     return stream$.pipe(
-      rxjsOperators.tap(() => this.update$.next(true)),
-      rxjsOperators.map(result => result.data)
+      RxOp.tap(() => this.update$.next(true)),
+      RxOp.map(result => result.data)
     );
   }
 
-  public delete(id: number): rxjs.Observable<void> {
+  public delete(id: number): Rx.Observable<void> {
     return apiService.delete(`/producer/authors/${id}`).pipe(
-      rxjsOperators.map(() => this.update$.next(true))
+      RxOp.map(() => this.update$.next(true))
     );
   }
 }

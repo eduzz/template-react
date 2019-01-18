@@ -1,7 +1,7 @@
 import React from 'react';
 import { WithStyles } from 'decorators/withStyles';
 import { IForm } from '../';
-import { FieldText } from '@react-form-fields/material-ui';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 
 interface IProps {
   classes?: any;

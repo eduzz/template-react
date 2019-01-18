@@ -49,9 +49,9 @@ class BannerItem extends PureComponent<IProps> {
     if (!confirm) return;
 
     bannerService.delete(banner.id).pipe(
-      rxjsOperators.loader(),
-      rxjsOperators.logError(),
-      rxjsOperators.bindComponent(this)
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this)
     ).subscribe(() => {
       Toast.show('Certificado excluído com sucesso');
 

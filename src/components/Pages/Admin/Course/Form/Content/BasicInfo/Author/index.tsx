@@ -8,7 +8,7 @@ import { IForm } from '../../..';
 import Avatar from '@material-ui/core/Avatar';
 import { CDN_URL } from 'settings';
 import authorService from 'services/author';
-import rxjsOperators from 'rxjs-operators';
+import RxOp from 'rxjs-operators';
 import { IAuthor } from 'interfaces/models/author';
 
 interface IProps {
@@ -87,10 +87,10 @@ export default class Author extends React.PureComponent<IProps, IState> {
     });
 
     authorService.list({ orderby, order, page: 1, size: 50 }).pipe(
-      rxjsOperators.logError(),
-      rxjsOperators.loader(),
-      rxjsOperators.bindComponent(this),
-      rxjsOperators.map(authors => authors.data),
+      RxOp.logError(),
+      RxOp.loader(),
+      RxOp.bindComponent(this),
+      RxOp.map(authors => authors.data),
     ).subscribe((authors: any) => {
       this.setState({ authors });
     }, (error: any) => this.setState({ error }));

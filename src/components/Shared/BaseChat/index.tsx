@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
-import Typography from '@material-ui/core/Typography';
-import { FieldText } from '@react-form-fields/material-ui';
 import Grid from '@material-ui/core/Grid';
 import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { WithStyles } from 'decorators/withStyles';
+import React, { PureComponent } from 'react';
 
 interface IProps {
   classes?: any;
