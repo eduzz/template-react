@@ -10,6 +10,9 @@ node {
     }
 
     stage ('Set Environment') {
+        if (env.BRANCH_NAME =~ /(release)/) {
+            sh "sh ./scripts/set-env-homolog.sh"
+        }
         sh "sh ./scripts/set-env.sh"
     }
 
