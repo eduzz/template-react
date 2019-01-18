@@ -1,4 +1,3 @@
-import redirectV2 from 'helpers/redirectV2';
 import { Observable, ReplaySubject } from 'rxjs';
 import * as RxOp from 'rxjs-operators';
 import { COOKIE_DOMAIN } from 'settings';
@@ -23,13 +22,11 @@ export class TokenService {
     ).subscribe(token => this.tokens$.next(token));
 
     this.tokens$.pipe(
-      RxOp.filter(tokens => !!tokens),
-      RxOp.distinctUntilChanged(),
-      RxOp.logError()
+      rxjsOperators.filter(tokens => !!tokens),
+      rxjsOperators.distinctUntilChanged(),
+      rxjsOperators.logError()
     ).subscribe((tokens) => {
-      const date = new Date();
-      date.setTime(date.getTime() + (1000 * 60 * 60 * 24));
-      document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/; expires=${date.toUTCString()}`;
+      document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/`;
     });
   }
 
@@ -60,17 +57,10 @@ export class TokenService {
     );
   }
   public clearToken(): Observable<void> {
-    let legacyLogin = false;
-
     return this.tokens$.pipe(
       RxOp.first(),
       RxOp.filter(tokens => !!tokens),
-      RxOp.tap(tokens => legacyLogin = tokens.legacyLogin),
       RxOp.switchMap(() => storageService.set('authToken', null)),
-      RxOp.filter(() => {
-        if (legacyLogin) redirectV2('/user/logout');
-        return !legacyLogin;
-      }),
       RxOp.tap(() => this.tokens$.next(null)),
       RxOp.map(() => null)
     );
