@@ -22,11 +22,10 @@ export class TokenService {
     ).subscribe(token => this.tokens$.next(token));
 
     this.tokens$.pipe(
-      rxjsOperators.filter(tokens => !!tokens),
-      rxjsOperators.distinctUntilChanged(),
-      rxjsOperators.logError()
+      RxOp.distinctUntilChanged(),
+      RxOp.logError()
     ).subscribe((tokens) => {
-      document.cookie = `userSession=${JSON.stringify(tokens)}; domain=${COOKIE_DOMAIN}; path=/`;
+      document.cookie = `userSession=${tokens ? JSON.stringify(tokens) : ''}; domain=${COOKIE_DOMAIN}; path=/`;
     });
   }
 
