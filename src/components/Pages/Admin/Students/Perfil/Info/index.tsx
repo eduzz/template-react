@@ -1,9 +1,10 @@
 import Avatar from '@material-ui/core/Avatar';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
-import Toast from 'components/Shared/Toast';
+import ErrorMessage from 'components/Shared/ErrorMessage';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
@@ -18,6 +19,7 @@ import studentService from 'services/student';
 import { CDN_URL } from 'settings';
 
 import ChangeEmailDialog from './ChangeEmailDialog';
+import ChangePasswordDialog from './ChangePasswordDialog';
 
 interface IProps {
   match?: any;
@@ -26,8 +28,10 @@ interface IProps {
 }
 
 interface IState {
-  student: IStudent;
+  student?: IStudent;
   changeEmailOpened: boolean;
+  changePasswordOpened: boolean;
+  error?: any;
 }
 
 @WithRouter()
@@ -56,51 +60,14 @@ interface IState {
   }
 }))
 export default class Info extends PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      student: {
-        name: '',
-        email: '',
-        avatar: null,
-      },
-      changeEmailOpened: false,
-    };
-  }
-
-  componentDidMount() {
-    studentService.getStudent(this.props.match.params.id).pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this),
-    ).subscribe(student => {
-      this.setState({ student, avatar: student.avatar ? CDN_URL + student.avatar : null });
-    }, error => {
-      this.props.history.push('/alunos');
-      Toast.error(error);
-    });
-  }
-
-  handleImageError = () => {
-    this.setState({ avatar: null });
-  }
-
-  handleOpenChangeEmail = () => {
-    this.setState({ changeEmailOpened: true });
-  }
-
-  handleCloseChangeEmail = async (placeholders?: { [key: string]: string }) => {
-    this.setState({ changeEmailOpened: false });
-  }
-
   private actions = [{
     text: 'Redefinir E-mail',
     icon: AtIcon,
-    handler: this.handleOpenChangeEmail,
+    handler: () => this.handleOpenChangeEmail(),
   }, {
     text: 'Redefinir Senha',
     icon: LockResetIcon,
-    handler: () => console.log(true),
+    handler: () => this.handleOpenChangePassword(),
   }, {
     text: 'Enviar link de redefinição de Senha',
     icon: SendIcon,
@@ -111,9 +78,53 @@ export default class Info extends PureComponent<IProps, IState> {
     handler: () => console.log(true),
   }];
 
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      changeEmailOpened: false,
+      changePasswordOpened: false,
+    };
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  handleImageError = () => {
+    this.setState({ avatar: null });
+  }
+
+  handleOpenChangeEmail = () => { this.setState({ changeEmailOpened: true }); };
+  handleCloseChangeEmail = async () => { this.setState({ changeEmailOpened: false }); };
+
+  handleOpenChangePassword = () => { this.setState({ changePasswordOpened: true }); };
+  handleCloseChangePassword = async () => { this.setState({ changePasswordOpened: false }); };
+
+  loadData = () => {
+    this.setState({ error: null });
+
+    studentService.getStudent(this.props.match.params.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(result => {
+      this.setState({
+        student: result.updating ? null : result.data
+      });
+    }, error => this.setState({ error }));
+  }
+
   render() {
     const { classes } = this.props;
-    const { student, changeEmailOpened } = this.state;
+    const { student, changeEmailOpened, changePasswordOpened, error } = this.state;
+
+    if (!!error) {
+      return (
+        <CardContent>
+          <ErrorMessage error={error} tryAgain={this.loadData} />
+        </CardContent>
+      );
+    }
 
     if (!student)
       return (
@@ -134,6 +145,11 @@ export default class Info extends PureComponent<IProps, IState> {
           studentID={this.props.match.params.id}
           opened={changeEmailOpened}
           onCancel={this.handleCloseChangeEmail}
+        />
+        <ChangePasswordDialog
+          studentID={this.props.match.params.id}
+          opened={changePasswordOpened}
+          onCancel={this.handleCloseChangePassword}
         />
         <Grid container alignItems='center' spacing={24}>
           <Grid item>
