@@ -114,6 +114,10 @@ class StudentService {
   public sencRecoveryPassword(studentId: number) {
     return apiService.post(`/producer/students/${studentId}/send-link-recovery`, {});
   }
+
+  public changeStudentEmail(studentId: number, data: any) {
+    return apiService.post(`/producer/students/${studentId}/change-email`, data);
+  }
 }
 
 const studentService = new StudentService(tokenService);
