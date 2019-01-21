@@ -10,8 +10,8 @@ node {
     }
 
     stage ('Set Environment') {
-        if (env.BRANCH_NAME =~ /(release)/) {
-            sh "sh ./scripts/set-env-homolog.sh"
+        if (env.BRANCH_NAME =~ /(release|hotfix)/) {
+            sh "sh ./scripts/set-env-homolog.sh ${env.BRANCH_NAME} ${env.BUILD_NUMBER}"
         }
         sh "sh ./scripts/set-env.sh"
     }
@@ -28,7 +28,7 @@ node {
              }
          }
 
-         if (env.BRANCH_NAME =~ /(release)/) {
+         if (env.BRANCH_NAME =~ /(release|hotfix)/) {
              withDockerRegistry([credentialsId: '2efdc2c1-bfcc-4925-b9c2-5c2f8923d04b', url: 'https://registry.hub.docker.com']) {
                  app.push("${env.BRANCH_NAME}")
              }

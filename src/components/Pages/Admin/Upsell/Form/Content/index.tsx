@@ -1,17 +1,18 @@
+import AppBar from '@material-ui/core/AppBar';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Fade from 'components/Shared/Fade';
+import { WithStyles } from 'decorators/withStyles';
 import React, { SyntheticEvent } from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import { WithStyles } from 'decorators/withStyles';
-import Product from './Product';
-import ProductType from './ProductType';
-import { UpsellFormContext, IUpsellFormContext } from '../Context';
-import Informations from './Informations';
-import SelectedProduct from './SelectedProduct';
-import Fade from 'components/Shared/Fade';
+
+import { IUpsellFormContext, UpsellFormContext } from '../Context';
 import Audience from './Audience';
 import Behavior from './Behavior';
+import Informations from './Informations';
+import Product from './Product';
+import ProductType from './ProductType';
+import SelectedProduct from './SelectedProduct';
 
 interface IProps {
   classes?: any;

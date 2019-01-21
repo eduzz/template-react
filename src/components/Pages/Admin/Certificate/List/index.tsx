@@ -69,8 +69,8 @@ export default class CertificateListPage extends PureComponent<IProps, IState> {
       RxOp.delay(1000),
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe(certificates => {
-      this.setState({ certificates });
+    ).subscribe(result => {
+      this.setState({ certificates: result.updating ? null : result.data });
     }, error => this.setState({ error }));
   }
 

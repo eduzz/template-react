@@ -10,7 +10,7 @@ import { ScrollTopContext } from 'components/Pages/Admin';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import IconMessage from 'components/Shared/IconMessage';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
-import CreationIcon from 'mdi-react/CreationIcon';
+import AlertCircleOutlineIcon from 'mdi-react/AlertCircleOutlineIcon';
 import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import React from 'react';
 import { Fragment, PureComponent } from 'react';
@@ -173,7 +173,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         {!error && !items.length && !loading &&
           <TableRow>
             <TableCell colSpan={numberOfcolumns}>
-              <IconMessage icon={CreationIcon} message='Está vázio por aqui...' />
+              <IconMessage icon={AlertCircleOutlineIcon} message='Nenhum item cadastrado...' />
             </TableCell>
           </TableRow>
         }

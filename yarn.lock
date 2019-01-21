@@ -222,10 +222,10 @@
     tslib ">=1.9.0"
     validatorjs ">=3.0.0"
 
-"@react-form-fields/material-ui@1.11.7":
-  version "1.11.7"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.11.7.tgz#0c08eefad2f20c56536de30e6cc448ed80bb8304"
-  integrity sha512-u6LdG79eo9fNumkCdInZQvuZvSEZEHg5U5oUgufQ86L0PeZkHALNF5tyAj1dH4QuqofFnR41+ZcAVecq9jCYjQ==
+"@react-form-fields/material-ui@1.11.12":
+  version "1.11.12"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.11.12.tgz#bcdb2c52344feb7156214ae3bbbe115b7cc87dc8"
+  integrity sha512-8l9gTUuN1WoLwqYaFe0LiU4Kaq3FsiQqX16Zzkoac/VDm9KOTLrr0SpTqzpeCIr41UumovErl5o2liBMhkqz9A==
   dependencies:
     "@date-io/date-fns" "^0.0.2"
     "@react-form-fields/core" "^1.3.1"

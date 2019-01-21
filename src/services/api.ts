@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
+import IApiResponse from 'interfaces/apiResonse';
 import * as Rx from 'rxjs';
 import * as RxOp from 'rxjs/operators';
 
@@ -18,28 +19,28 @@ export class ApiService {
   public get<T = any>(url: string, params?: any): Rx.Observable<IApiResponse<T>> {
     return this.request<T>('GET', url, params).pipe(
       RxOp.map(({ response }) => response),
-      RxOp.filter(response => !!response)
+      RxOp.filter(response => response !== undefined)
     );
   }
 
   public post<T = any>(url: string, body: any): Rx.Observable<IApiResponse<T>> {
     return this.request<T>('POST', url, body).pipe(
       RxOp.map(({ response }) => response),
-      RxOp.filter(response => !!response)
+      RxOp.filter(response => response !== undefined)
     );
   }
 
   public put<T = any>(url: string, body: any): Rx.Observable<IApiResponse<T>> {
     return this.request<T>('PUT', url, body).pipe(
       RxOp.map(({ response }) => response),
-      RxOp.filter(response => !!response)
+      RxOp.filter(response => response !== undefined)
     );
   }
 
   public delete<T = any>(url: string, params?: any): Rx.Observable<IApiResponse<T>> {
     return this.request<T>('DELETE', url, params).pipe(
       RxOp.map(({ response }) => response),
-      RxOp.filter(response => !!response)
+      RxOp.filter(response => response !== undefined)
     );
   }
 
@@ -82,12 +83,10 @@ export class ApiService {
           }
         });
       }),
-      RxOp.tap(() => {
-        progress$.next(100);
-      }),
+      RxOp.tap(() => progress$.next(100)),
       RxOp.switchMap(res => this.checkNewToken(res)),
-      RxOp.map(res => apiResponseFormatter<IApiResponse<T>>(res.data)),
-      RxOp.startWith(null),
+      RxOp.map(res => apiResponseFormatter<IApiResponse<T>>(res.data) || null),
+      RxOp.startWith(undefined),
       RxOp.combineLatest(
         progress$.pipe(RxOp.distinctUntilChanged()),
         (response, progress) => ({ response, progress })

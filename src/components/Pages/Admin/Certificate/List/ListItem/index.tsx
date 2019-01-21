@@ -110,7 +110,7 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
     const { expanded, firstExpanded } = this.state;
 
     return (
-      <ExpansionPanel expanded={expanded} onChange={this.handleChange}>
+      <ExpansionPanel elevation={0} expanded={expanded} onChange={this.handleChange}>
         <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
           <Grid container spacing={16} alignItems='center'>
             <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 2}>

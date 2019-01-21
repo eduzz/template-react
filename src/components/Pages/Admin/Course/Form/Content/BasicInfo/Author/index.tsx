@@ -1,15 +1,16 @@
-import React from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import Avatar from '@material-ui/core/Avatar';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Select from '@react-form-fields/material-ui/components/Select';
-import { IForm } from '../../..';
-import Avatar from '@material-ui/core/Avatar';
-import { CDN_URL } from 'settings';
-import authorService from 'services/author';
-import RxOp from 'rxjs-operators';
+import { WithStyles } from 'decorators/withStyles';
 import { IAuthor } from 'interfaces/models/author';
+import React from 'react';
+import RxOp from 'rxjs-operators';
+import authorService from 'services/author';
+import { CDN_URL } from 'settings';
+
+import { IForm } from '../../..';
 
 interface IProps {
   classes?: any;
@@ -90,8 +91,8 @@ export default class Author extends React.PureComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.loader(),
       RxOp.bindComponent(this),
-      RxOp.map(authors => authors.data),
-    ).subscribe((authors: any) => {
+      RxOp.map(authors => authors.data.data),
+    ).subscribe((authors) => {
       this.setState({ authors });
     }, (error: any) => this.setState({ error }));
   }
