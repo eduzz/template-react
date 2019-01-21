@@ -69,6 +69,7 @@ class StudentService {
   public getStudent(id: number) {
     return apiService.get<IStudent>(`/producer/students/${id}`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-${id}`),
     );
   }
 
@@ -113,7 +114,13 @@ class StudentService {
   }
 
   public changeStudentEmail(studentId: number, data: string) {
-    return apiService.post(`/producer/students/${studentId}/change-email`, { email: data });
+    return apiService.post(`/producer/students/${studentId}/change-email`, { email: data }).pipe(
+      RxOp.cacheClean(`student-${studentId}`)
+    );
+  }
+
+  public changeStudentPassword(studentId: number, data: string) {
+    return apiService.post(`/producer/students/${studentId}/change-password`, { password: data });
   }
 }
 
