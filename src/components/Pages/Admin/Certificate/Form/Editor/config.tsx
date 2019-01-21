@@ -12,7 +12,8 @@ export const PLACEHOLDERS = [
   'AUTOR',
   'DATA',
   'CURSO',
-  'DURACAO'
+  'DURACAO',
+  'CPF',
 ];
 
 export const FONTS = [
