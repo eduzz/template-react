@@ -112,8 +112,8 @@ class StudentService {
     return !!(this.totalPages - this.paginator$.value.page);
   }
 
-  public changeStudentEmail(studentId: number, data: any) {
-    return apiService.post(`/producer/students/${studentId}/change-email`, data);
+  public changeStudentEmail(studentId: number, data: string) {
+    return apiService.post(`/producer/students/${studentId}/change-email`, { email: data });
   }
 }
 
