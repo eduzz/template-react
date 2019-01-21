@@ -100,8 +100,8 @@ class StudentService {
     this.filters$.next({ ...filters });
   }
 
-  public changeStudentEmail(studentId: number, data: any) {
-    return apiService.post(`/producer/students/${studentId}/change-email`, data);
+  public changeStudentEmail(studentId: number, data: string) {
+    return apiService.post(`/producer/students/${studentId}/change-email`, { email: data });
   }
 }
 
