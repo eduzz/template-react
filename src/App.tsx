@@ -12,6 +12,7 @@ import { theme } from 'assets/theme';
 import Dialogs from 'components/Dialogs';
 import Pages from 'components/Pages';
 import Alert from 'components/Shared/Alert';
+import Environment from 'components/Shared/Environment/indext';
 import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import locale from 'date-fns/locale/pt-BR';
@@ -51,6 +52,8 @@ class App extends React.PureComponent {
 
             <Alert.Global />
             <Toast.Global />
+
+            <Environment />
 
             <Pages />
           </FormFieldsContext>

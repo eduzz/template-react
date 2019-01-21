@@ -1,3 +1,5 @@
+import { BUILD_DATE, BUILD_NUMBER } from 'settings';
+
 import logoImage from './assets/images/logo.png';
 
 console.log(' %c      ', `
@@ -8,4 +10,4 @@ console.log(' %c      ', `
   background: url(${logoImage}) no-repeat;
   background-size: 170px 50px;
 `);
-console.log(`v3.${process.env.REACT_APP_BUILD_NUMBER}  ${process.env.REACT_APP_BUILD_DATE}`);
+console.log(`v3.${BUILD_NUMBER}  ${BUILD_DATE}`);
