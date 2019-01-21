@@ -54,7 +54,7 @@ export default class ChangeEmailDialog extends FormComponent<IProps, IState> {
     const { model } = this.state;
     this.setState({ loading: true });
 
-    studentService.changeStudentEmail(this.props.studentID, { email: model.email }).pipe(
+    studentService.changeStudentEmail(this.props.studentID, model.email).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(() => {
