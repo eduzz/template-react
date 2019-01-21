@@ -12,10 +12,12 @@ import DeleteIcon from 'mdi-react/DeleteIcon';
 import LockResetIcon from 'mdi-react/LockResetIcon';
 import SendIcon from 'mdi-react/SendIcon';
 import SettingsOutlineIcon from 'mdi-react/SettingsOutlineIcon';
-import React, { PureComponent, SyntheticEvent } from 'react';
+import React, { Fragment, PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 import { CDN_URL } from 'settings';
+
+import ChangeEmailDialog from './ChangeEmailDialog';
 
 interface IProps {
   match?: any;
@@ -24,8 +26,8 @@ interface IProps {
 }
 
 interface IState {
-  student?: IStudent;
-  avatar?: string;
+  student: IStudent;
+  changeEmailOpened: boolean;
 }
 
 @WithRouter()
@@ -54,27 +56,17 @@ interface IState {
   }
 }))
 export default class Info extends PureComponent<IProps, IState> {
-  private actions = [{
-    text: 'Redefinir E-mail',
-    icon: AtIcon,
-    handler: () => console.log(true),
-  }, {
-    text: 'Redefinir Senha',
-    icon: LockResetIcon,
-    handler: () => console.log(true),
-  }, {
-    text: 'Enviar link de redefinição de Senha',
-    icon: SendIcon,
-    handler: () => console.log(true),
-  }, {
-    text: 'Excluir Aluno',
-    icon: DeleteIcon,
-    handler: () => console.log(true),
-  }];
-
   constructor(props: IProps) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      student: {
+        name: '',
+        email: '',
+        avatar: null,
+      },
+      changeEmailOpened: false,
+    };
   }
 
   componentDidMount() {
@@ -93,9 +85,35 @@ export default class Info extends PureComponent<IProps, IState> {
     this.setState({ avatar: null });
   }
 
+  handleOpenChangeEmail = () => {
+    this.setState({ changeEmailOpened: true });
+  }
+
+  handleCloseChangeEmail = async (placeholders?: { [key: string]: string }) => {
+    this.setState({ changeEmailOpened: false });
+  }
+
+  private actions = [{
+    text: 'Redefinir E-mail',
+    icon: AtIcon,
+    handler: this.handleOpenChangeEmail,
+  }, {
+    text: 'Redefinir Senha',
+    icon: LockResetIcon,
+    handler: () => console.log(true),
+  }, {
+    text: 'Enviar link de redefinição de Senha',
+    icon: SendIcon,
+    handler: () => console.log(true),
+  }, {
+    text: 'Excluir Aluno',
+    icon: DeleteIcon,
+    handler: () => console.log(true),
+  }];
+
   render() {
     const { classes } = this.props;
-    const { student, avatar } = this.state;
+    const { student, changeEmailOpened } = this.state;
 
     if (!student)
       return (
@@ -111,24 +129,31 @@ export default class Info extends PureComponent<IProps, IState> {
       );
 
     return (
-      <Grid container alignItems='center' spacing={24}>
-        <Grid item>
-          <Avatar className={classes.avatar} src={avatar} onError={this.handleImageError}>
-            {student.name.substring(0, 1)}
-          </Avatar>
+      <Fragment>
+        <ChangeEmailDialog
+          studentID={this.props.match.params.id}
+          opened={changeEmailOpened}
+          onCancel={this.handleCloseChangeEmail}
+        />
+        <Grid container alignItems='center' spacing={24}>
+          <Grid item>
+            <Avatar className={classes.avatar} alt={student.name} src={CDN_URL + student.avatar} onError={this.handleImageError}>
+              {student.name.substring(0, 1)}
+            </Avatar>
+          </Grid>
+          <Grid item xs={true}>
+            <Typography variant='h6'>{student.name}</Typography>
+            <Typography variant='caption'>{student.email}</Typography>
+          </Grid>
+          <Grid item className={classes.settings}>
+            <DropdownMenu options={this.actions}>
+              <IconButton className={classes.icon}>
+                <SettingsOutlineIcon />
+              </IconButton>
+            </DropdownMenu>
+          </Grid>
         </Grid>
-        <Grid item xs={true}>
-          <Typography variant='h6'>{student.name}</Typography>
-          <Typography variant='caption'>{student.email}</Typography>
-        </Grid>
-        <Grid item alignItems='flex-start' className={classes.settings}>
-          <DropdownMenu options={this.actions}>
-            <IconButton className={classes.icon}>
-              <SettingsOutlineIcon />
-            </IconButton>
-          </DropdownMenu>
-        </Grid>
-      </Grid>
+      </Fragment>
     );
   }
 }

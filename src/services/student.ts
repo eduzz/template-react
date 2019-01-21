@@ -99,6 +99,10 @@ class StudentService {
   public setFilters(filters: IFiltersModel) {
     this.filters$.next({ ...filters });
   }
+
+  public changeStudentEmail(studentId: number, data: any) {
+    return apiService.post(`/producer/students/${studentId}/change-email`, data);
+  }
 }
 
 const studentService = new StudentService(tokenService);
