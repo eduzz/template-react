@@ -111,6 +111,10 @@ class StudentService {
   public hasMoreStudents() {
     return !!(this.totalPages - this.paginator$.value.page);
   }
+
+  public changeStudentEmail(studentId: number, data: any) {
+    return apiService.post(`/producer/students/${studentId}/change-email`, data);
+  }
 }
 
 const studentService = new StudentService(tokenService);
