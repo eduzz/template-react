@@ -70,7 +70,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }, {
     text: 'Bloquear Acesso',
     icon: BlockHelperIcon,
-    handler: () => console.log(true),
+    handler: () => this.handleDisableCourse(),
   }, {
     text: 'Remover Acesso',
     icon: AccountRemoveIcon,
@@ -112,6 +112,16 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.bindComponent(this)
     ).subscribe(
       () => Toast.show('Todos os módulos foram liberados com sucesso'),
+      (err: any) => Toast.error(err.data.details)
+    );
+  }
+
+  handleDisableCourse = () => {
+    studentService.disableCourse(this.props.match.params.id, this.props.course.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      () => Toast.show('Acesso bloqueado com sucesso'),
       (err: any) => Toast.error(err.data.details)
     );
   }

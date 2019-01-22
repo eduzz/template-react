@@ -1,18 +1,19 @@
-import React, { PureComponent, SyntheticEvent, Fragment } from 'react';
-import { WithStyles } from 'decorators/withStyles';
-import Typography from '@material-ui/core/Typography';
-import studentService from 'services/student';
-import RxOp from 'rxjs-operators';
-import { WithRouter } from 'decorators/withRouter';
-import { IStudentCourse } from 'interfaces/models/student';
 import CardContent from '@material-ui/core/CardContent';
-import ErrorMessage from 'components/Shared/ErrorMessage';
-import List from '@material-ui/core/List';
-import Loading from 'components/Shared/Loading';
-import CourseItem from './CourseItem';
-import ListItem from '@material-ui/core/ListItem';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import Loading from 'components/Shared/Loading';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
+import { IStudentCourse } from 'interfaces/models/student';
+import React, { Fragment, PureComponent, SyntheticEvent } from 'react';
+import RxOp from 'rxjs-operators';
+import studentService from 'services/student';
+
+import CourseItem from './CourseItem';
 
 interface IProps {
   classes?: any;
