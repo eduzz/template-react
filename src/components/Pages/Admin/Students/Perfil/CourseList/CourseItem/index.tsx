@@ -3,6 +3,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import Toast from 'components/Shared/Toast';
 import format from 'date-fns/esm/format';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
@@ -65,19 +66,19 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   private actions = [{
     text: 'Liberação de Módulos',
     icon: CheckBoxMultipleOutlineIcon,
-    handler: () => this.handleDelete(),
+    handler: () => this.handleReleaseModules(),
   }, {
     text: 'Bloquear Acesso',
     icon: BlockHelperIcon,
-    handler: () => this.handleDelete(),
+    handler: () => console.log(true),
   }, {
     text: 'Remover Acesso',
     icon: AccountRemoveIcon,
-    handler: () => this.handleDelete(),
+    handler: () => console.log(true),
   }, {
     text: 'Link de Acesso Direto',
     icon: OpenInNewIcon,
-    handler: () => this.handleDelete(),
+    handler: () => console.log(true),
   }];
 
   constructor(props: IProps) {
@@ -105,8 +106,14 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     e.currentTarget.src = nutrorLogo;
   }
 
-  handleDelete = async () => {
-    console.log('DELETE');
+  handleReleaseModules = () => {
+    studentService.releaseModules(this.props.match.params.id, this.props.course.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      () => Toast.show('Todos os módulos foram liberados com sucesso'),
+      (err: any) => Toast.error(err.data.details)
+    );
   }
 
   render() {
