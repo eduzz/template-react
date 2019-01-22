@@ -111,6 +111,10 @@ class StudentService {
   public hasMoreStudents() {
     return !!(this.totalPages - this.paginator$.value.page);
   }
+
+  public releaseModules(studentId: number, courseId: number): any {
+    return apiService.post(`/producer/students/${studentId}/allow-modules`, { courseId });
+  }
 }
 
 const studentService = new StudentService(tokenService);
