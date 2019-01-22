@@ -122,6 +122,10 @@ class StudentService {
   public changeStudentPassword(studentId: number, data: string) {
     return apiService.post(`/producer/students/${studentId}/change-password`, { password: data });
   }
+
+  public sencRecoveryPassword(studentId: number) {
+    return apiService.post(`/producer/students/${studentId}/send-link-recovery`, {});
+  }
 }
 
 const studentService = new StudentService(tokenService);

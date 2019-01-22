@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
@@ -71,7 +72,7 @@ export default class Info extends PureComponent<IProps, IState> {
   }, {
     text: 'Enviar link de redefinição de Senha',
     icon: SendIcon,
-    handler: () => console.log(true),
+    handler: () => this.handleRecoveryPassword(),
   }, {
     text: 'Excluir Aluno',
     icon: DeleteIcon,
@@ -91,16 +92,6 @@ export default class Info extends PureComponent<IProps, IState> {
     this.loadData();
   }
 
-  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = null;
-  }
-
-  handleOpenChangeEmail = () => { this.setState({ changeEmailOpened: true }); };
-  handleCloseChangeEmail = async () => { this.setState({ changeEmailOpened: false }); };
-
-  handleOpenChangePassword = () => { this.setState({ changePasswordOpened: true }); };
-  handleCloseChangePassword = async () => { this.setState({ changePasswordOpened: false }); };
-
   loadData = () => {
     this.setState({ error: null });
 
@@ -112,6 +103,26 @@ export default class Info extends PureComponent<IProps, IState> {
         student: result.updating ? null : result.data
       });
     }, error => this.setState({ error }));
+  }
+
+  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = null;
+  }
+
+  handleOpenChangeEmail = () => { this.setState({ changeEmailOpened: true }); };
+  handleCloseChangeEmail = async () => { this.setState({ changeEmailOpened: false }); };
+
+  handleOpenChangePassword = () => { this.setState({ changePasswordOpened: true }); };
+  handleCloseChangePassword = async () => { this.setState({ changePasswordOpened: false }); };
+
+  handleRecoveryPassword = () => {
+    studentService.sencRecoveryPassword(this.props.match.params.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      () => Toast.show('Link de recuperação de senha enviado com sucesso'),
+      err => Toast.error(err.data.details)
+    );
   }
 
   render() {
