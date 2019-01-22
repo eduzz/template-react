@@ -229,10 +229,10 @@
     tslib ">=1.9.3"
     validatorjs "^3.15.1"
 
-"@react-form-fields/material-ui@1.14.3":
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.14.3.tgz#220c0e3d4cd855fdb69f2395ef7aea329100b4e5"
-  integrity sha512-VgWpTow8BAyVXhSeBqdrtkhlIiwUiBhdyMP/GPtc7I56MHDLzILy8w+4SyX92U1wmiKP1Iq4cIho9CIANXiwhw==
+"@react-form-fields/material-ui@1.14.4":
+  version "1.14.4"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.14.4.tgz#0c0ed8d221b4fd83f7f00d27907707367c7ac070"
+  integrity sha512-+psl/gSUbFari5vIviqmg+9ngCu1T0f+FQ4opX6L81H6XXeyEk+FJtLAggRgMmr0drGFLCh2xvEsoQ5SEwfkJg==
   dependencies:
     "@date-io/date-fns" "^1.0.1"
     "@react-form-fields/core" "^1.4.5"
