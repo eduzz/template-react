@@ -220,22 +220,22 @@
     prop-types "^15.6.0"
     react-is "^16.6.3"
 
-"@react-form-fields/core@^1.4.4":
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/core/-/core-1.4.4.tgz#7097a8a2de3c38c68e87b86e286da00ed323ef0f"
-  integrity sha512-cHvvYc7T7HSjpnXjXqvUNZ3EFxKQ8MYBhnsSLfljsmVtu+UaZ5V68oz1UqGm3YdgS9dve2cScucxxbFOPJJVtQ==
+"@react-form-fields/core@^1.4.5":
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/core/-/core-1.4.5.tgz#52744e8c2f8641f728f406631e27dfd1b8c81ab8"
+  integrity sha512-XQAJErtUi8pMD+yGjspvJ8ojv/kjlnarb3pKr8pQBwgc4wTiS4ylxl+buviS5LMNlFsvUAM1Zih4s26H3xGrHA==
   dependencies:
     react ">=16.3.0"
     tslib ">=1.9.3"
     validatorjs "^3.15.1"
 
-"@react-form-fields/material-ui@1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.14.2.tgz#81d57fd9dae52cae7bda4b96ab0dab44a49e83ac"
-  integrity sha512-HoZ+O9TFVgxxgm/cBAX1aVr2CNF67dhfRlSdLQqBT0HbH6zdiJCPRtAwgIHcmymds4EWpF7vnvdpCAoKipK1pw==
+"@react-form-fields/material-ui@1.14.3":
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/@react-form-fields/material-ui/-/material-ui-1.14.3.tgz#220c0e3d4cd855fdb69f2395ef7aea329100b4e5"
+  integrity sha512-VgWpTow8BAyVXhSeBqdrtkhlIiwUiBhdyMP/GPtc7I56MHDLzILy8w+4SyX92U1wmiKP1Iq4cIho9CIANXiwhw==
   dependencies:
     "@date-io/date-fns" "^1.0.1"
-    "@react-form-fields/core" "^1.4.4"
+    "@react-form-fields/core" "^1.4.5"
     autosuggest-highlight ">=3.1.1"
     date-fns "2.0.0-alpha.21"
     draft-js "^0.10.5"
