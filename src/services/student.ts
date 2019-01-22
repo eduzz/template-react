@@ -112,8 +112,12 @@ class StudentService {
     return !!(this.totalPages - this.paginator$.value.page);
   }
 
-  public releaseModules(studentId: number, courseId: number): any {
-    return apiService.post(`/producer/students/${studentId}/allow-modules`, { courseId });
+  public releaseModules(student_id: number, course_id: number): any {
+    return apiService.post(`/producer/students/${student_id}/allow-modules`, { course_id });
+  }
+
+  public disableCourse(student_id: number, course_id: number): any {
+    return apiService.post(`/producer/students/${student_id}/disable-course`, { course_id });
   }
 }
 
