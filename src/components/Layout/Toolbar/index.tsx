@@ -1,9 +1,7 @@
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import CoreToolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { whiteTheme } from 'assets/theme';
 import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { PureComponent } from 'react';
@@ -53,25 +51,23 @@ export default class Toolbar extends PureComponent<IProps> {
 
     return (
       <div className={classes.root}>
-        <MuiThemeProvider theme={whiteTheme}>
-          <AppBar className={classes.appBar} color='default'>
-            <CoreToolbar>
-              <IconButton
-                color='inherit'
-                onClick={this.openDrawer}
-                className={classes.iconMenu}
-              >
-                <MenuIcon />
-              </IconButton>
-              {children}
-              {!children &&
-                <Typography variant='h6' color='inherit' noWrap>
-                  {title || 'App'}
-                </Typography>
-              }
-            </CoreToolbar>
-          </AppBar>
-        </MuiThemeProvider>
+        <AppBar className={classes.appBar} color='default'>
+          <CoreToolbar>
+            <IconButton
+              color='inherit'
+              onClick={this.openDrawer}
+              className={classes.iconMenu}
+            >
+              <MenuIcon />
+            </IconButton>
+            {children}
+            {!children &&
+              <Typography variant='h6' color='inherit' noWrap>
+                {title || 'App'}
+              </Typography>
+            }
+          </CoreToolbar>
+        </AppBar>
       </div>
     );
   }

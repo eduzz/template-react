@@ -34,20 +34,3 @@ export const reversePalette = {
   background,
   text,
 };
-
-export const whitePalette = {
-  primary: {
-    light: '#ffffff',
-    main: '#ffffff',
-    dark: '#cccccc',
-    contrastText: '#596375'
-  },
-  secondary: {
-    light: '#4ec485',
-    main: '#009358',
-    dark: '#00642e',
-    contrastText: '#fff',
-  },
-  background,
-  text,
-};
