@@ -62,9 +62,9 @@ export default class CourseList extends PureComponent<IProps, IState> {
     studentService.getStudentCourses(this.props.match.params.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe(courses => {
+    ).subscribe(result => {
       this.setState({
-        courses,
+        courses: result.data || [],
         error: null,
       });
     }, error => {

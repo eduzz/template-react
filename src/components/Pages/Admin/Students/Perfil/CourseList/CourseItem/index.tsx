@@ -2,6 +2,7 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
+import Alert from 'components/Shared/Alert';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import format from 'date-fns/esm/format';
@@ -74,11 +75,11 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }, {
     text: 'Remover Acesso',
     icon: AccountRemoveIcon,
-    handler: () => console.log(true),
+    handler: () => this.handleRemoveAccess(),
   }, {
     text: 'Link de Acesso Direto',
     icon: OpenInNewIcon,
-    handler: () => console.log(true),
+    handler: () => this.handleAccessLink(),
   }];
 
   constructor(props: IProps) {
@@ -123,6 +124,34 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     ).subscribe(
       () => Toast.show('Acesso bloqueado com sucesso'),
       (err: any) => Toast.error(err.data.details)
+    );
+  }
+
+  handleRemoveAccess = () => {
+    studentService.removeAccess(this.props.match.params.id, this.props.course.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      () => Toast.show('Aluno removido com sucesso'),
+      (err: any) => Toast.error(err.data.details)
+    );
+  }
+
+  handleAccessLink = () => {
+    studentService.accessLink(this.props.match.params.id, this.props.course.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      (response: any) => {
+        Alert.show({
+          message: response.data.url,
+          title: 'Link de Acesso Direto',
+        });
+        Toast.show('URL copiada para a área de transferência com sucesso');
+      },
+      (err: any) => {
+        Toast.error(err.data.details);
+      }
     );
   }
 
