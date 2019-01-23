@@ -115,18 +115,22 @@ class StudentService {
     return apiService.post(`/producer/students/${studentId}/send-link-recovery`, {});
   }
 
-  public changeStudentEmail(studentId: number, data: string) {
-    return apiService.post(`/producer/students/${studentId}/change-email`, { email: data }).pipe(
-      RxOp.cacheClean(`student-${studentId}`)
+  public changeStudentEmail(student_id: number, data: string) {
+    return apiService.post(`/producer/students/${student_id}/change-email`, { email: data }).pipe(
+      RxOp.cacheClean(`student-${student_id}`)
     );
   }
 
-  public changeStudentPassword(studentId: number, data: string) {
-    return apiService.post(`/producer/students/${studentId}/change-password`, { password: data });
+  public changeStudentPassword(student_id: number, data: string) {
+    return apiService.post(`/producer/students/${student_id}/change-password`, { password: data });
   }
 
-  public sencRecoveryPassword(studentId: number) {
-    return apiService.post(`/producer/students/${studentId}/send-link-recovery`, {});
+  public sendRecoveryPassword(student_id: number) {
+    return apiService.post(`/producer/students/${student_id}/send-link-recovery`, {});
+  }
+
+  public removeStudent(student_id: number) {
+    return apiService.delete(`/producer/students/${student_id}/remove-student`);
   }
 }
 

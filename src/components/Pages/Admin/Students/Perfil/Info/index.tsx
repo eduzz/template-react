@@ -3,6 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Alert from 'components/Shared/Alert';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
@@ -115,12 +116,22 @@ export default class Info extends PureComponent<IProps, IState> {
   handleCloseChangePassword = async () => { this.setState({ changePasswordOpened: false }); };
 
   handleRecoveryPassword = () => {
-    studentService.sencRecoveryPassword(this.props.match.params.id).pipe(
+    studentService.sendRecoveryPassword(this.props.match.params.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(
       () => Toast.show('Link de recuperação de senha enviado com sucesso'),
       err => Toast.error(err.data.details)
+    );
+  }
+
+  handleRemoveStudent = () => {
+    studentService.removeStudent(this.props.match.params.id).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      () => Alert.show('Aluno removido com sucesso'),
+      err => Toast.error(err.data.details),
     );
   }
 
