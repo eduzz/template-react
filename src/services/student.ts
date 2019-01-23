@@ -75,6 +75,7 @@ class StudentService {
   public getStudentCourses(id: number) {
     return apiService.get<IStudentCourse[]>(`/producer/students/${id}/contents`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-courses-${id}`),
     );
   }
 
@@ -118,6 +119,16 @@ class StudentService {
 
   public disableCourse(student_id: number, course_id: number): any {
     return apiService.post(`/producer/students/${student_id}/disable-course`, { course_id });
+  }
+
+  public removeAccess(student_id: number, course_id: number): any {
+    return apiService.delete(`/producer/students/${student_id}/remove-access`, { course_id }).pipe(
+      RxOp.cacheClean(`student-courses-${student_id}`),
+    );
+  }
+
+  public accessLink(student_id: number, course_id: number): any {
+    return apiService.get(`/producer/students/${student_id}/access-link`, { course_id });
   }
 }
 
