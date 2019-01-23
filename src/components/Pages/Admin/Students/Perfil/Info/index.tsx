@@ -5,7 +5,7 @@ import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
-import React, { PureComponent, SyntheticEvent } from 'react';
+import React, { PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 import { CDN_URL } from 'settings';
@@ -17,7 +17,8 @@ interface IProps {
 }
 
 interface IState {
-  student: IStudent;
+  student?: IStudent;
+  avatar?: string;
 }
 
 @WithRouter()
@@ -42,14 +43,7 @@ interface IState {
 export default class Info extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      student: {
-        name: '',
-        email: '',
-        avatar: null,
-      },
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -57,24 +51,22 @@ export default class Info extends PureComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(student => {
-      this.setState({
-        student,
-      });
+      this.setState({ student, avatar: student.avatar ? CDN_URL + student.avatar : null });
     }, error => {
       this.props.history.push('/alunos');
       Toast.error(error);
     });
   }
 
-  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = null;
+  handleImageError = () => {
+    this.setState({ avatar: null });
   }
 
   render() {
     const { classes } = this.props;
-    const { student } = this.state;
+    const { student, avatar } = this.state;
 
-    if (!student.id)
+    if (!student)
       return (
         <Grid container alignItems='center' spacing={24}>
           <Grid item>
@@ -90,7 +82,7 @@ export default class Info extends PureComponent<IProps, IState> {
     return (
       <Grid container alignItems='center' spacing={24}>
         <Grid item>
-          <Avatar className={classes.avatar} alt={student.name} src={CDN_URL + student.avatar} onError={this.handleImageError}>
+          <Avatar className={classes.avatar} src={avatar} onError={this.handleImageError}>
             {student.name.substring(0, 1)}
           </Avatar>
         </Grid>
