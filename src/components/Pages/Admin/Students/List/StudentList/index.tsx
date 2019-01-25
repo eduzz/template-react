@@ -1,35 +1,29 @@
-import React, { PureComponent, Fragment } from 'react';
-import List from '@material-ui/core/List';
-import { IStudent } from 'interfaces/models/student';
-import StudentItem from './StudentItem';
-import studentService from 'services/student';
-import RxOp from 'rxjs-operators';
-import Loading from 'components/Shared/Loading';
-import CardContent from '@material-ui/core/CardContent';
-import ErrorMessage from 'components/Shared/ErrorMessage';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import ListItem from '@material-ui/core/ListItem';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import ErrorMessage from 'components/Shared/ErrorMessage';
+import Loading from 'components/Shared/Loading';
+import React, { Fragment, PureComponent } from 'react';
+import RxOp from 'rxjs-operators';
+import studentService, { IStudentListResult } from 'services/student';
+
+import StudentItem from './StudentItem';
 
 interface IProps {
 
 }
 
-interface IState {
-  students: IStudent[];
-  error?: any;
+interface IState extends IStudentListResult {
   isFetching: boolean;
 }
 
 export default class StudentList extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-
-    this.state = {
-      students: null,
-      isFetching: false,
-    };
+    this.state = { isFetching: true };
   }
 
   componentDidMount() {
@@ -37,69 +31,62 @@ export default class StudentList extends PureComponent<IProps, IState> {
   }
 
   loadData = () => {
-    this.setState({
-      error: null,
-    });
+    this.setState({ error: null });
 
     studentService.getStudents().pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe(students => {
-      this.setState({
-        students,
-        error: null,
-        isFetching: false,
-      });
-    }, error => {
-      this.setState({
-        error,
-        isFetching: false,
-      });
-    });
+    ).subscribe(result => {
+      this.setState({ ...result, isFetching: false });
+    }, error => this.setState({ error, isFetching: false }));
   }
 
   handleLoadMore = () => {
-    this.setState({
-      isFetching: true,
-    });
-
+    this.setState({ isFetching: true });
     studentService.loadMoreStudents();
   }
 
   render() {
-    const { students, error, isFetching } = this.state;
+    const { students, hasMore, error, isFetching } = this.state;
 
-    if (!!error)
+    if (error) {
       return (
         <CardContent>
           <ErrorMessage error={error} tryAgain={this.loadData} />
         </CardContent>
       );
+    }
 
-    if (!students)
+    if (!students) {
       return <Loading />;
+    }
 
-    if (!students.length)
+    if (!students.length) {
       return <Typography variant='subtitle1' align='center'><strong>Nenhum aluno encontrado!</strong></Typography>;
+    }
 
     return (
       <Fragment>
         <List disablePadding>
-          {students.map((student, index) =>
-            <StudentItem key={index} student={student} />
+          {students.map(student =>
+            <StudentItem key={student.id} student={student} />
           )}
-        </List>
-        <ListItem>
-          <Grid container justify='center'>
-            <Grid item>
-              {isFetching ?
-                <Loading />
-                :
-                studentService.hasMoreStudents() && <Button variant='outlined' onClick={this.handleLoadMore}>Mostrar mais alunos</Button>
-              }
+          <ListItem>
+            <Grid container justify='center'>
+              <Grid item>
+                {isFetching &&
+                  <Loading />
+                }
+
+                {!isFetching && hasMore &&
+                  <Button variant='outlined' color='secondary' onClick={this.handleLoadMore}>
+                    Mostrar mais alunos
+                  </Button>
+                }
+              </Grid>
             </Grid>
-          </Grid>
-        </ListItem>
+          </ListItem>
+        </List>
       </Fragment>
     );
   }

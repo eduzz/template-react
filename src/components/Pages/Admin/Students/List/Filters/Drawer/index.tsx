@@ -1,13 +1,17 @@
 import Button from '@material-ui/core/Button';
+import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import MaterialDrawer from '@material-ui/core/Drawer';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FieldText from '@react-form-fields/material-ui/components/Text';
 import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
 import { IFiltersModel } from 'interfaces/models/student';
+import CloseIcon from 'mdi-react/CloseIcon';
 import React from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
@@ -19,46 +23,31 @@ interface IProps {
 }
 
 interface IState extends IStateForm<IFiltersModel> {
-  model: IFiltersModel;
 }
 
 @WithStyles(theme => ({
-  drawerContainer: {
-    overflow: 'hidden',
-    width: 300,
+  iconMenu: {
+    marginLeft: '-15px'
   },
-  filtersContainer: {
-    padding: theme.spacing.unit * 2,
-    maxHeight: 'calc(100vh - 22px)',
-    overflowX: 'auto',
+  container: {
+    height: 'calc(100vh - 70px)'
   },
-  saveFiltersButton: {
-    width: '100%',
-    borderRadius: 0,
-    position: 'absolute',
-    top: 'calc(100% - 37px)',
-    margin: 0,
+  form: {
+    overflow: 'auto'
   },
+  actions: {
+    textAlign: 'center'
+  }
 }))
 export default class Drawer extends FormComponent<IProps, IState> {
   today = new Date();
-
-  constructor(props: IProps) {
-    super(props);
-
-    this.state = {
-      model: studentService.getInitialFilters(),
-    };
-  }
 
   componentDidMount() {
     studentService.getFilters().pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(filters => {
-      this.setState({
-        model: filters,
-      });
+      this.setState({ model: filters });
     });
   }
 
@@ -66,7 +55,6 @@ export default class Drawer extends FormComponent<IProps, IState> {
     if (!isValid) return;
 
     this.props.onClose();
-
     studentService.setFilters(this.state.model);
   }
 
@@ -77,14 +65,18 @@ export default class Drawer extends FormComponent<IProps, IState> {
     return (
       <MaterialDrawer anchor='right' open={open} onClose={onClose}>
         <FormValidation onSubmit={this.handleSubmitFilters}>
-          <div className={classes.drawerContainer}>
-            <Grid container direction='column' wrap='nowrap' className={classes.filtersContainer}>
-              <Grid item>
-                <Typography variant='subtitle1' gutterBottom>
-                  <strong>Filtros</strong>
-                </Typography>
+          <CardContent>
+            <Grid container alignItems='center' spacing={16}>
+              <Grid item xs={true}>
+                <Typography variant='h6'>Filtros</Typography>
               </Grid>
-              <Grid item>
+              <IconButton onClick={onClose}>
+                <CloseIcon />
+              </IconButton>
+            </Grid>
+
+            <Grid container direction='column' spacing={16} className={classes.container}>
+              <Grid item xs={true} className={classes.form}>
                 <FieldText
                   value={model.name}
                   placeholder='Filtrar por nome de aluno'
@@ -92,25 +84,20 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   validation='min:3'
                   onChange={this.updateModel((model, value) => model.name = value)}
                 />
-              </Grid>
-              <Grid item>
+
                 <FieldText
                   value={model.email}
                   placeholder='Filtrar por e-mail de aluno'
-                  validation='email'
                   label='E-mail'
                   onChange={this.updateModel((model, value) => model.email = value)}
                 />
-              </Grid>
-            </Grid>
-            <Grid container direction='column' wrap='nowrap' className={classes.filtersContainer}>
-              <Grid item>
-                <Typography variant='subtitle1'>Período do login</Typography>
+
                 <Grid container spacing={16}>
                   <Grid item xs={6}>
                     <FieldDate
-                      label='Data Inicial'
+                      label='Período do login'
                       validation='date'
+                      placeholder='Inicio'
                       maxDate={this.today}
                       value={model.last_used_at_start}
                       onChange={this.updateModel((model, value) => model.last_used_at_start = value)}
@@ -118,7 +105,8 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   </Grid>
                   <Grid item xs={6}>
                     <FieldDate
-                      label='Data Final'
+                      label=' '
+                      placeholder='Fim'
                       validation='date|after_or_equal:data inicial'
                       validationContext={{ 'data inicial': model.last_used_at_start }}
                       maxDate={this.today}
@@ -128,11 +116,18 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   </Grid>
                 </Grid>
               </Grid>
+
+              <Grid item xs={false}>
+                <Divider />
+              </Grid>
+
+              <Grid item xs={false} className={classes.actions}>
+                <Button variant='contained' type='submit' color='secondary'>
+                  Aplicar Filtros
+                </Button>
+              </Grid>
             </Grid>
-            <Button variant='contained' type='submit' color='secondary' className={classes.saveFiltersButton}>
-              Aplicar Filtros
-            </Button>
-          </div>
+          </CardContent>
         </FormValidation>
       </MaterialDrawer>
     );
