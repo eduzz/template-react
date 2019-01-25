@@ -19,10 +19,11 @@ interface IState {
 export default class Chips extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
+    this.state = { filters: {} };
+  }
 
-    this.state = {
-      filters: studentService.getInitialFilters(),
-    };
+  get isEmpty(): boolean {
+    return Object.keys(this.state.filters).filter(k => !!this.state.filters[k]).length === 0;
   }
 
   componentDidMount() {
@@ -30,12 +31,8 @@ export default class Chips extends PureComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(filters => {
-      this.setState({
-        filters,
-      });
-    }, error => {
-      Toast.error(error);
-    });
+      this.setState({ filters });
+    }, error =>   Toast.error(error));
   }
 
   handleDelete = (identifierLabel: string) => () => {
@@ -47,6 +44,14 @@ export default class Chips extends PureComponent<IProps, IState> {
 
   render() {
     const { filters } = this.state;
+
+    if (this.isEmpty) {
+      return (
+        <div>
+          <Typography component='em'>Nenhum filtro ativo</Typography>
+        </div>
+      );
+    }
 
     return (
       <Grid container spacing={8}>

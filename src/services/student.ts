@@ -7,49 +7,44 @@ import { API_ENDPOINT } from 'settings';
 import apiService from './api';
 import tokenService, { TokenService } from './token';
 
+export interface IStudentListResult {
+  error?: any;
+  students?: IStudent[];
+  hasMore?: boolean;
+}
+
 class StudentService {
-  private initialFilters: IFiltersModel = {
-    name: '',
-    email: '',
-    last_used_at_start: null,
-    last_used_at_end: null,
-  };
   private initialPaginator: IPaginationParams = { page: 1, size: 8 };
-  private filters$: Rx.BehaviorSubject<IFiltersModel> = new Rx.BehaviorSubject(this.initialFilters);
-  private paginator$: Rx.BehaviorSubject<IPaginationParams> = new Rx.BehaviorSubject(this.initialPaginator);
-  private students$: Rx.BehaviorSubject<IStudent[]> = new Rx.BehaviorSubject(null);
-  private totalPages: number = this.initialPaginator.page;
+
+  private filters$ = new Rx.BehaviorSubject<IFiltersModel>({});
+  private paginator$ = new Rx.BehaviorSubject<IPaginationParams>(this.initialPaginator);
+  private students$ = new Rx.BehaviorSubject<IStudentListResult>({});
 
   constructor(private tokenService: TokenService) {
     this.filters$.subscribe(() => {
       this.paginator$.next(this.initialPaginator);
     });
 
-    this.paginator$.pipe(
-      RxOp.skip(1),
-    ).subscribe(() => {
+    this.paginator$.pipe(RxOp.skip(1)).subscribe(() => {
       this.loadStudents();
     });
   }
 
-  public loadStudents() {
-    if (this.paginator$.value.page <= this.initialPaginator.page)
-      this.students$.next(null);
+  private loadStudents() {
+    if (this.paginator$.value.page <= this.initialPaginator.page) {
+      this.students$.next({});
+    }
 
     apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).pipe(
-      RxOp.tap(response => this.totalPages = response.paginator.total_pages),
-      RxOp.map(response => response.data),
-    ).subscribe(students => {
-      if (this.paginator$.value.page <= this.initialPaginator.page)
-        return this.students$.next(students);
-
-      this.students$.next([
-        ...this.students$.value,
-        ...students,
-      ]);
-    }, error => {
-      this.students$.error(error);
-    });
+    ).subscribe(response => {
+      this.students$.next({
+        hasMore: response.paginator.page < response.paginator.total_pages,
+        students: [
+          ...(this.students$.value.students || []),
+          ...(response.data || []),
+        ],
+      });
+    }, error => this.students$.next({ error }));
   }
 
   public loadMoreStudents() {
@@ -60,8 +55,9 @@ class StudentService {
   }
 
   public getStudents() {
-    if (!this.students$.value)
+    if (!this.students$.value.students) {
       this.loadStudents();
+    }
 
     return this.students$.asObservable();
   }
@@ -96,20 +92,12 @@ class StudentService {
     );
   }
 
-  public setFilters(filters: IFiltersModel) {
-    this.filters$.next({ ...filters });
-  }
-
   public getFilters() {
     return this.filters$.asObservable();
   }
 
-  public getInitialFilters() {
-    return this.initialFilters;
-  }
-
-  public hasMoreStudents() {
-    return !!(this.totalPages - this.paginator$.value.page);
+  public setFilters(filters: IFiltersModel) {
+    this.filters$.next({ ...filters });
   }
 }
 
