@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
-import FileDocumentIcon from 'mdi-react/FileDocumentIcon';
 import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
@@ -54,16 +53,7 @@ export default class Perfil extends PureComponent<IProps, IState> {
 
     return (
       <Fragment>
-        <Toolbar>
-          <Grid container spacing={8} alignItems='center'>
-            <Grid item>
-              <FileDocumentIcon className={classes.icon} />
-            </Grid>
-            <Grid item>
-              <Typography variant='h6'>Perfil do Aluno</Typography>
-            </Grid>
-          </Grid>
-        </Toolbar>
+        <Toolbar title='Perfil do Aluno' />
 
         <Grid container direction='column' wrap='nowrap' spacing={24}>
           <Grid item>
