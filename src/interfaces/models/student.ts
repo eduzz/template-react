@@ -7,10 +7,10 @@ export interface IStudent {
 }
 
 export interface IFiltersModel {
-  name: string;
-  email: string;
-  last_used_at_start: Date;
-  last_used_at_end: Date;
+  name?: string;
+  email?: string;
+  last_used_at_start?: Date;
+  last_used_at_end?: Date;
 }
 
 export interface IStudentCourse {

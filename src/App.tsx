@@ -24,7 +24,6 @@ const generateClassName = createGenerateClassName({
 
 class App extends React.PureComponent {
   loader = React.createRef<Loader>();
-  formFieldConfig = fieldConfig;
 
   constructor(props: any) {
     super(props);
@@ -38,7 +37,7 @@ class App extends React.PureComponent {
     return (
       <JssProvider generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>
-          <FormFieldsContext config={this.formFieldConfig}>
+          <FormFieldsContext config={fieldConfig}>
             <CssBaseline />
             <Dialogs />
 
