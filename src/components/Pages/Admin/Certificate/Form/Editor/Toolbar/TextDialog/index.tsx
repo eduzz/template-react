@@ -63,6 +63,10 @@ export default class TextDialog extends FormComponent<IProps, IState> {
     });
   }
 
+  resetForm = () => {
+    this.field.current.resetState();
+  }
+
   render() {
     const { model } = this.state;
     const { classes, opened } = this.props;
