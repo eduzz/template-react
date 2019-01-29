@@ -116,6 +116,7 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
 
         if (certificateId === model.id) return;
         this.props.history.replace(`/certificados/${certificateId}/editar`);
+        this.setState({ model: {...model, id: certificateId}, isEdit: true });
       }, err => {
         resolve(null);
         Toast.error(err);
