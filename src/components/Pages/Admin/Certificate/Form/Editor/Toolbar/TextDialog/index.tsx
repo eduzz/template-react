@@ -7,7 +7,6 @@ import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Slide from '@material-ui/core/Slide';
-import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
@@ -33,6 +32,8 @@ interface IProps {
   }
 })
 export default class TextDialog extends FormComponent<IProps, IState> {
+  field = React.createRef<FieldText>();
+
   constructor(props: IProps) {
     super(props);
     this.state = { ...this.state };
@@ -50,16 +51,20 @@ export default class TextDialog extends FormComponent<IProps, IState> {
     this.props.onChange({ text: this.props.value });
   }
 
-  onSubmit = async (isValid: boolean) => {
-    if (!isValid) return;
+  handleAddMask = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    this.setState({ model: { text: this.state.model.text + e.target.value } });
+  }
+
+  onClick = () => {
+    if (!this.field.current.isValid()) return;
 
     this.props.onChange({
       text: this.state.model.text.replace(/(?:\r\n|\r|\n)/gim, '<br />')
     });
   }
 
-  handleAddMask = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ model: { text: this.state.model.text + e.target.value } });
+  resetForm = () => {
+    this.field.current.resetState();
   }
 
   render() {
@@ -75,35 +80,33 @@ export default class TextDialog extends FormComponent<IProps, IState> {
         onExited={this.resetForm}
         TransitionComponent={Transition}
       >
-        <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-          <DialogTitle>Editar Texto</DialogTitle>
+        <DialogTitle>Editar Texto</DialogTitle>
 
-          <DialogContent className={classes.content}>
-            <FormControl className={classes.root}>
-              <Select value='' onChange={this.handleAddMask} displayEmpty>
-                <MenuItem value='' disabled>Máscaras</MenuItem>
-                {PLACEHOLDERS.map(placeholder =>
-                  <MenuItem key={placeholder} value={`[${placeholder}]`}>{placeholder}</MenuItem>
-                )}
-              </Select>
-            </FormControl>
+        <DialogContent className={classes.content}>
+          <FormControl className={classes.root}>
+            <Select value='' onChange={this.handleAddMask} displayEmpty>
+              <MenuItem value='' disabled>Máscaras</MenuItem>
+              {PLACEHOLDERS.map(placeholder =>
+                <MenuItem key={placeholder} value={`[${placeholder}]`}>{placeholder}</MenuItem>
+              )}
+            </Select>
+          </FormControl>
 
-            <FieldText
-              label='Texto'
-              type='password'
-              value={model.text}
-              validation='required'
-              multiline
-              onChange={this.updateModel((model, v) => model.text = v)}
-            />
-          </DialogContent>
+          <FieldText
+            label='Texto'
+            type='password'
+            value={model.text}
+            validation='required'
+            ref={this.field}
+            multiline
+            onChange={this.updateModel((model, v) => model.text = v)}
+          />
+        </DialogContent>
 
-          <DialogActions>
-            <Button onClick={this.onCancel}>Cancelar</Button>
-            <Button color='secondary' type='submit'>Salvar</Button>
-          </DialogActions>
-
-        </FormValidation>
+        <DialogActions>
+          <Button onClick={this.onCancel}>Cancelar</Button>
+          <Button color='secondary' onClick={this.onClick}>Salvar</Button>
+        </DialogActions>
       </Dialog>
     );
   }
