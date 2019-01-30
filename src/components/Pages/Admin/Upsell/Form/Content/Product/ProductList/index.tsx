@@ -1,17 +1,19 @@
-import React, { PureComponent } from 'react';
-import ProductItem from './ProductItem';
-import List from '@material-ui/core/List';
-import upsellService from 'services/upsell';
-import RxOp from 'rxjs-operators';
-import { IUpsellProduct } from 'interfaces/models/upsell';
-import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
-import Loading from 'components/Shared/Loading';
-import Typography from '@material-ui/core/Typography';
-import { WithStyles } from 'decorators/withStyles';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import Loading from 'components/Shared/Loading';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsellProduct } from 'interfaces/models/upsell';
+import SearchIcon from 'mdi-react/SearchIcon';
+import React, { PureComponent } from 'react';
+import RxOp from 'rxjs-operators';
+import upsellService from 'services/upsell';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../../Context';
+import ProductItem from './ProductItem';
 
 interface IProps {
   classes?: any;
@@ -30,12 +32,7 @@ interface IState {
     borderRadius: 4,
     paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 3,
-  },
-  list: {
-    height: 'calc(100vh - 458px)',
-    overflow: 'auto',
-    paddingRight: theme.spacing.unit,
-  },
+  }
 }))
 export default class ProductList extends PureComponent<IProps, IState> {
   static contextType = UpsellFormContext;
@@ -52,9 +49,7 @@ export default class ProductList extends PureComponent<IProps, IState> {
   }
 
   handleSearch = (e: any) => {
-    this.setState({
-      search: e.target.value,
-    });
+    this.setState({ search: e.target.value });
   }
 
   loadData = () => {
@@ -95,18 +90,23 @@ export default class ProductList extends PureComponent<IProps, IState> {
       <Grid container direction='column' spacing={8}>
         <Grid item>
           <TextField
-            label='Pesquisar'
+            placeholder='Pesquisar'
             fullWidth
             onChange={this.handleSearch}
+            InputProps={{
+              endAdornment: (
+                <SearchIcon />
+              )
+            }}
           />
         </Grid>
         <Grid item>
-          <List className={classes.list} disablePadding>
+          <List disablePadding>
             {products
               .filter(product => product.title.toLowerCase().includes(search.trim().toLowerCase()))
-              .map((product, index) => (
+              .map((product) => (
                 <ProductItem
-                  key={index}
+                  key={product.content_id}
                   product={product}
                 />
               ))

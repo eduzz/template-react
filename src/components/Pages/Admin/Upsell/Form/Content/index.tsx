@@ -1,6 +1,7 @@
-import AppBar from '@material-ui/core/AppBar';
+import Card from '@material-ui/core/Card';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import { ToolbarTabs } from 'components/Layout/ToolbarTabs';
 import Fade from 'components/Shared/Fade';
 import { WithStyles } from 'decorators/withStyles';
 import React, { SyntheticEvent } from 'react';
@@ -20,14 +21,12 @@ interface IProps {
   step: number;
 }
 
-@WithStyles(theme => ({
-  root: {
-    backgroundColor: '#fff',
-  },
+@WithStyles({
   container: {
-    position: 'relative',
+    boxSizing: 'border-box',
+    padding: 5
   },
-}), { withTheme: true })
+}, { withTheme: true })
 export default class Content extends React.Component<IProps> {
   static contextType = UpsellFormContext;
   public context: IUpsellFormContext;
@@ -37,29 +36,35 @@ export default class Content extends React.Component<IProps> {
   }
 
   render() {
-    const { classes, theme, step } = this.props;
+    const { theme, step, classes } = this.props;
     const { model, updateFlowStep } = this.context;
 
     return (
-      <div className={classes.root}>
-        <AppBar position='static' color='inherit' elevation={0}>
+      <div>
+        <ToolbarTabs>
           <Tabs
             value={step}
             onChange={this.handleChange}
+            variant='scrollable'
+            scrollButtons='off'
           >
             <Tab label='Produto' />
             <Tab disabled={!model.content_id} label='Informações' />
             <Tab disabled={!model.content_id} label='Audiência' />
             <Tab disabled={!model.content_id} label='Comportamentos' />
           </Tabs>
-        </AppBar>
+        </ToolbarTabs>
 
         <Fade in={!model.type} absolute>
-          <ProductType />
+          <Card>
+            <ProductType />
+          </Card>
         </Fade>
 
         <Fade in={!!model.type && !model.content_id} absolute unmountOnExit>
-          <Product />
+          <Card>
+            <Product />
+          </Card>
         </Fade>
 
         <Fade in={!!model.content_id} unmountOnExit>
@@ -67,11 +72,20 @@ export default class Content extends React.Component<IProps> {
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={step}
             onChangeIndex={updateFlowStep}
+            animateHeight
           >
-            <SelectedProduct />
-            <Informations />
-            <Audience />
-            <Behavior />
+            <div className={classes.container}>
+              <SelectedProduct />
+            </div>
+            <div className={classes.container}>
+              <Informations />
+            </div>
+            <div className={classes.container}>
+              <Audience />
+            </div>
+            <div className={classes.container}>
+              <Behavior />
+            </div>
           </SwipeableViews>
         </Fade>
       </div>

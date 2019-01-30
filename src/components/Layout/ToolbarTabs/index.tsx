@@ -20,12 +20,13 @@ interface IProps {
     position: 'fixed',
     top: theme.variables.headerHeight,
     left: 0,
+    backgroundColor: '#FFFFFF',
     boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.29)',
     [theme.breakpoints.up('md')]: {
       left: theme.variables.drawerWidth,
       top: theme.variables.headerHeightUpSm,
       width: `calc(100% - ${theme.variables.drawerWidth}px)`
-    }
+    },
   }
 }))
 export class ToolbarTabs extends PureComponent<IProps> {

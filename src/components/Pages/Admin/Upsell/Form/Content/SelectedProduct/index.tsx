@@ -1,15 +1,17 @@
-import React, { PureComponent } from 'react';
+import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import { WithStyles } from 'decorators/withStyles';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Product from './Product';
-import Button from '@material-ui/core/Button';
-import { IUpsellProduct } from 'interfaces/models/upsell';
-import upsellService from 'services/upsell';
 import Toast from 'components/Shared/Toast';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsellProduct } from 'interfaces/models/upsell';
+import React, { PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
+import upsellService from 'services/upsell';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
+import Product from './Product';
 
 interface IProps {
   classes?: any;
@@ -72,37 +74,39 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
     const { selectedProduct } = this.state;
 
     return (
-      <CardContent className={classes.root}>
-        <Grid container direction='column' spacing={16}>
-          <Grid item>
-            <Typography variant='subtitle1'>
-              <strong>Produto Selecionado:</strong>
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Product product={selectedProduct} />
-          </Grid>
-          <Grid item>
-            <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>
-              <Grid item>
-                <Typography variant='subtitle1' align='center' gutterBottom>
-                  <strong>Muito Bem! Escolhemos nosso produto</strong>
+      <Card>
+        <CardContent className={classes.root}>
+          <Grid container direction='column' spacing={16}>
+            <Grid item>
+              <Typography variant='subtitle1'>
+                <strong>Produto Selecionado:</strong>
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Product product={selectedProduct} />
+            </Grid>
+            <Grid item>
+              <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>
+                <Grid item>
+                  <Typography variant='subtitle1' align='center' gutterBottom>
+                    <strong>Muito Bem! Escolhemos nosso produto</strong>
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
+                    Estamos prontos para inserir os dados e preparar a oferta
                 </Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant='subtitle1' align='center' className={classes.messageDescription}>
-                  Estamos prontos para inserir os dados e preparar a oferta
-                </Typography>
-              </Grid>
-              <Grid item>
-                <Button variant='contained' color='secondary' className={classes.messageButton} onClick={this.handleInformations}>
-                  Ir para Informações
+                </Grid>
+                <Grid item>
+                  <Button variant='contained' color='secondary' className={classes.messageButton} onClick={this.handleInformations}>
+                    Ir para Informações
                 </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
+        </CardContent>
+      </Card>
     );
   }
 }

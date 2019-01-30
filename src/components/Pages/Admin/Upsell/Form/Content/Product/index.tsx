@@ -1,11 +1,12 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
-import Grid from '@material-ui/core/Grid';
+import React, { PureComponent, SyntheticEvent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 import ProductList from './ProductList';
-import Button from '@material-ui/core/Button';
 
 interface IProps {
   classes?: any;
@@ -28,7 +29,6 @@ export default class Product extends PureComponent<IProps> {
 
   handleCleanType = (e: SyntheticEvent) => {
     e.preventDefault();
-
     this.context.updateModel(model => model.type = null)();
   }
 
