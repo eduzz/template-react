@@ -65,6 +65,7 @@ class StudentService {
   public getStudent(id: number) {
     return apiService.get<IStudent>(`/producer/students/${id}`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-${id}`),
     );
   }
 
@@ -119,6 +120,28 @@ class StudentService {
     return apiService.get(`/producer/students/${student_id}/access-link`, { course_id }).pipe(
       RxOp.map(r => r.data.url)
     );
+  }
+
+  public sencRecoveryPassword(studentId: number) {
+    return apiService.post(`/producer/students/${studentId}/send-link-recovery`, {});
+  }
+
+  public changeStudentEmail(student_id: number, data: string) {
+    return apiService.post(`/producer/students/${student_id}/change-email`, { email: data }).pipe(
+      RxOp.cacheClean(`student-${student_id}`)
+    );
+  }
+
+  public changeStudentPassword(student_id: number, data: string) {
+    return apiService.post(`/producer/students/${student_id}/change-password`, { password: data });
+  }
+
+  public sendRecoveryPassword(student_id: number) {
+    return apiService.post(`/producer/students/${student_id}/send-link-recovery`, {});
+  }
+
+  public removeStudent(student_id: number) {
+    return apiService.delete(`/producer/students/${student_id}/remove-student`);
   }
 }
 
