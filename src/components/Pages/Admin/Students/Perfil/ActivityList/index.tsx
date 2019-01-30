@@ -76,7 +76,11 @@ export default class StudentActivity extends PureComponent<IProps, IState> {
       return <Loading />;
 
     if (!activities.length)
-      return <Typography variant='subtitle1' align='center'><strong>Nenhuma atividade encontrada!</strong></Typography>;
+      return (
+        <CardContent>
+          <Typography variant='subtitle1' align='center'><strong>Nenhuma atividade encontrada</strong></Typography>
+        </CardContent>
+      );
 
     return (
       <Fragment>

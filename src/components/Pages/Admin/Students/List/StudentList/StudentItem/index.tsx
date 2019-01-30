@@ -1,4 +1,3 @@
-import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import ListItem from '@material-ui/core/ListItem';
@@ -11,6 +10,7 @@ import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
 import React, { PureComponent } from 'react';
 import { CDN_URL } from 'settings';
+import Avatar from 'components/Shared/Avatar';
 
 interface IState {
   isActive: boolean;
@@ -83,9 +83,7 @@ export default class StudentItem extends PureComponent<IProps, IState> {
         <Grid container alignItems='center' spacing={16}>
           <Hidden smDown>
             <Grid item sm={'auto'}>
-              <Avatar src={avatar} onError={this.handleImageError}>
-                {student.name.substring(0, 1)}
-              </Avatar>
+              <Avatar src={avatar} text={student.name} />
             </Grid>
           </Hidden>
           <Grid item xs={12} sm={true}>

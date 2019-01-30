@@ -1,4 +1,3 @@
-import Avatar from '@material-ui/core/Avatar';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,9 +7,9 @@ import { IAuthor } from 'interfaces/models/author';
 import React from 'react';
 import RxOp from 'rxjs-operators';
 import authorService from 'services/author';
-import { CDN_URL } from 'settings';
 
 import { IForm } from '../../..';
+import Avatar from 'components/Shared/Avatar';
 
 interface IProps {
   classes?: any;
@@ -117,7 +116,7 @@ export default class Author extends React.PureComponent<IProps, IState> {
               >
                 <MenuItem value=''>
                   <div className={classes.menuItemContent}>
-                    <Avatar alt='' className={classes.avatar}>A</Avatar>
+                    <Avatar text='A' className={classes.avatar} />
                     <label className={classes.menuItemLabel}>Selecione um autor</label>
                   </div>
                 </MenuItem>
@@ -127,11 +126,7 @@ export default class Author extends React.PureComponent<IProps, IState> {
                     value={author.id}
                   >
                     <div className={classes.menuItemContent}>
-                      {author.avatar ?
-                        <Avatar alt='' src={CDN_URL + author.avatar} className={classes.avatar} />
-                        :
-                        <Avatar alt='' className={classes.avatar}>{author.name.substring(0, 1).toUpperCase()}</Avatar>
-                      }
+                      <Avatar text={author.avatar} src={author.avatar} className={classes.avatar} />
                       <label className={classes.menuItemLabel}>{author.name}</label>
                     </div>
                   </MenuItem>

@@ -4,6 +4,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Alert from 'components/Shared/Alert';
+import Avatar from 'components/Shared/Avatar';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
 import format from 'date-fns/esm/format';
@@ -14,12 +15,9 @@ import AccountRemoveIcon from 'mdi-react/AccountRemoveIcon';
 import BlockHelperIcon from 'mdi-react/BlockHelperIcon';
 import CheckBoxMultipleOutlineIcon from 'mdi-react/CheckBoxMultipleOutlineIcon';
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
-import React, { PureComponent, SyntheticEvent } from 'react';
+import React, { PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
-import { CDN_URL } from 'settings';
-
-const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
 interface IProps {
   classes?: any;
@@ -51,8 +49,7 @@ interface IState {
   },
   avatar: {
     width: 44,
-    height: 44,
-    borderRadius: 2,
+    height: 44
   },
   progressNumber: {
     width: 40,
@@ -101,11 +98,10 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     });
   }
 
-  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = nutrorLogo;
-  }
+  handleReleaseModules = async () => {
+    const isOk = await Alert.confirm('Deseja realmente liberar o accesso a todos os modulos desse aluno?');
+    if (!isOk) return;
 
-  handleReleaseModules = () => {
     studentService.releaseModules(this.props.match.params.id, this.props.course.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
@@ -115,7 +111,10 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     );
   }
 
-  handleDisableCourse = () => {
+  handleDisableCourse = async () => {
+    const isOk = await Alert.confirm('Deseja realmente bloquear o accesso desse aluno?');
+    if (!isOk) return;
+
     studentService.disableCourse(this.props.match.params.id, this.props.course.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
@@ -125,7 +124,10 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     );
   }
 
-  handleRemoveAccess = () => {
+  handleRemoveAccess = async () => {
+    const isOk = await Alert.confirm('Deseja realmente remover o accesso desse aluno?');
+    if (!isOk) return;
+
     studentService.removeAccess(this.props.match.params.id, this.props.course.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
@@ -158,12 +160,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
         <Grid container wrap='nowrap' alignItems='center' spacing={16}>
           <Hidden xsDown>
             <Grid item sm={'auto'}>
-              <img
-                className={classes.avatar}
-                alt=''
-                src={course.avatar ? CDN_URL + course.avatar : null}
-                onError={this.handleImageError}
-              />
+              <Avatar className={classes.avatar} src={course.avatar} />
             </Grid>
           </Hidden>
           <Grid item xs={12} sm={true}>

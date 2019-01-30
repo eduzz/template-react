@@ -58,9 +58,11 @@ export default class CourseList extends PureComponent<IProps, IState> {
         {loading && <Loading />}
 
         {!loading && !courses.length &&
-          <Typography variant='subtitle1' align='center'>
-            <strong>Este aluno não possui cursos</strong>
-          </Typography>
+          <CardContent>
+            <Typography variant='subtitle1' align='center'>
+              <strong>Este aluno não possui cursos</strong>
+            </Typography>
+          </CardContent>
         }
 
         {!loading && !!error &&

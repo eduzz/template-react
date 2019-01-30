@@ -122,10 +122,6 @@ class StudentService {
     );
   }
 
-  public sencRecoveryPassword(studentId: number) {
-    return apiService.post(`/producer/students/${studentId}/send-link-recovery`, {});
-  }
-
   public changeStudentEmail(student_id: number, data: string) {
     return apiService.post(`/producer/students/${student_id}/change-email`, { email: data }).pipe(
       RxOp.cacheClean(`student-${student_id}`)
