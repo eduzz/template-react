@@ -73,6 +73,7 @@ interface IState {
   },
   externalField: {
     width: 285,
+    maxWidth: '100%',
     margin: 0,
   },
   externalLabel: {
@@ -167,7 +168,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
             <Grid item>
               <List disablePadding>
                 <ListItem className={classes.item} onClick={this.handleClick(1)}>
-                  <Grid container spacing={16} wrap='nowrap'>
+                  <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
                       <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 1 && classes.selected}`} />
                     </Grid>
@@ -181,7 +182,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                   </Grid>
                 </ListItem>
                 <ListItem className={classes.item} onClick={this.handleClick(2)}>
-                  <Grid container spacing={16} wrap='nowrap'>
+                  <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
                       <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 2 && classes.selected}`} />
                     </Grid>
@@ -207,7 +208,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                 </ListItem>
                 {!!user && user.beta.some(b => b.content === 'upsell') &&
                   <ListItem className={classes.item} onClick={this.handleClick(3)}>
-                    <Grid container spacing={16} wrap='nowrap'>
+                    <Grid container spacing={16}>
                       <Grid item className={classes.checkboxContainer}>
                         <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />
                       </Grid>
