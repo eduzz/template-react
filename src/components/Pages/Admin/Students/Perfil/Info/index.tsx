@@ -99,10 +99,11 @@ export default class Info extends PureComponent<IProps, IState> {
     studentService.getStudent(this.props.match.params.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
-    ).subscribe(
-      () => Toast.show('Link de recuperação de senha enviado com sucesso'),
-      err => Toast.error(err.data.details)
-    );
+    ).subscribe(result => {
+      this.setState({
+        student: result.updating ? null : result.data
+      });
+    }, error => this.setState({ error }));
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
