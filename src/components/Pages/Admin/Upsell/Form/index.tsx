@@ -99,8 +99,22 @@ class Form extends FormComponent<IProps, IState> {
   }
 
   handleSubmit = (isValid: boolean) => {
-    const { highlight_images, small_image, external_url, show_type, course_hash } = this.state.model;
-    const isFormValid = isValid && !!highlight_images.large && !!small_image;
+    const {
+      highlight_images,
+      highlight,
+      offer_shelf,
+      has_selected_courses,
+      has_selected_lessons,
+      small_image,
+      external_url,
+      show_type,
+      course_hash
+    } = this.state.model;
+
+    const isHighlightInvalid = !!highlight && !highlight_images.large;
+    const isSmallInvalid = (!!offer_shelf || !!has_selected_courses || !!has_selected_lessons) && !small_image;
+
+    const isFormValid = isValid && !isHighlightInvalid && !isSmallInvalid;
 
     this.setState({ isFormValid });
 

@@ -11,6 +11,7 @@ import { IUpsellFormContext, UpsellFormContext } from '../Context';
 import Audience from './Audience';
 import Behavior from './Behavior';
 import Informations from './Informations';
+import Midia from './Midia';
 import Product from './Product';
 import ProductType from './ProductType';
 import SelectedProduct from './SelectedProduct';
@@ -51,6 +52,7 @@ export default class Content extends React.Component<IProps> {
             <Tab label='Produto' />
             <Tab disabled={!model.content_id} label='Informações' />
             <Tab disabled={!model.content_id} label='Audiência' />
+            <Tab disabled={!model.content_id} label='Mídias' />
             <Tab disabled={!model.content_id} label='Comportamentos' />
           </Tabs>
         </ToolbarTabs>
@@ -82,6 +84,9 @@ export default class Content extends React.Component<IProps> {
             </div>
             <div className={classes.container}>
               <Audience />
+            </div>
+            <div className={classes.container}>
+              <Midia />
             </div>
             <div className={classes.container}>
               <Behavior />
