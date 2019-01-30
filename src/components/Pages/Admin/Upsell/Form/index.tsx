@@ -169,6 +169,7 @@ class Form extends FormComponent<IProps, IState> {
 
   render() {
     const { flowStep, model, updateModel } = this.state;
+    const { match } = this.props;
 
     return (
       <FormValidation onSubmit={this.handleSubmit} ref={this.bindForm}>
@@ -176,7 +177,9 @@ class Form extends FormComponent<IProps, IState> {
           <Toolbar>
             <Grid container spacing={8} alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='h6' color='inherit'>Ofertas</Typography>
+                <Typography variant='h6' color='inherit'>
+                  {match.params.id ? 'Editar' : 'Nova'} Oferta
+                </Typography>
               </Grid>
               <Grid item xs={false}>
                 <FieldSwitch
