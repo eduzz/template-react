@@ -10,11 +10,8 @@ import * as React from 'react';
 
 import { AlertGlobalProvider } from './global';
 
-interface IState {
+interface IState extends IAlertShowParams {
   opened: boolean;
-  message?: React.ReactNode;
-  title?: string;
-  confirmation?: boolean;
 }
 
 interface IProps {
@@ -31,6 +28,7 @@ export interface IAlertShowParams {
   message?: React.ReactNode;
   title?: string;
   confirmation?: boolean;
+  ok?: string;
 }
 
 @WithStyles(theme => ({
@@ -81,7 +79,7 @@ export default class Alert extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { opened, title, message, confirmation } = this.state;
+    const { opened, title, message, confirmation, ok } = this.state;
     const { classes } = this.props;
 
     return (
@@ -105,7 +103,7 @@ export default class Alert extends React.Component<IProps, IState> {
             </Button>
           }
           <Button autoFocus={!confirmation} onClick={this.handleOk} color='secondary'>
-            OK
+            {ok || 'OK'}
           </Button>
         </DialogActions>
       </Dialog>

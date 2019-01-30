@@ -27,11 +27,11 @@ interface IProps extends IRouteProps {
 @WithRouter()
 @WithStyles(theme => ({
   root: {
-    border: '1px solid',
-    borderColor: theme.variables.contentBorderColor,
-    borderRadius: 4,
-    padding: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
+    // border: '1px solid',
+    // borderColor: theme.variables.contentBorderColor,
+    // borderRadius: 4,
+    // padding: theme.spacing.unit,
+    // marginBottom: theme.spacing.unit,
   },
   avatar: {
     width: 44,
@@ -88,40 +88,26 @@ export default class UpsellItem extends PureComponent<IProps> {
     const { upsell, classes } = this.props;
 
     return (
-      <ListItem className={classes.root}>
-        <Grid container spacing={16} justify='flex-end' alignItems='center'>
+      <ListItem component='div' disableGutters className={classes.root}>
+        <Grid container spacing={16} justify='space-around' alignItems='center'>
           <Hidden xsDown>
-            <Grid item>
-              <Grid container>
-                <img
-                  alt=''
-                  className={classes.avatar}
-                  src={CDN_URL + upsell.small_image}
-                  onError={this.handleImageError}
-                  height={44}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item xs={4}>
-              <Typography variant='subtitle2' className={classes.title} noWrap>{upsell.title}</Typography>
+            <Grid item xs='auto'>
+              <img
+                className={classes.avatar}
+                src={CDN_URL + upsell.small_image}
+                onError={this.handleImageError}
+              />
             </Grid>
           </Hidden>
 
-          <Hidden xsDown>
-            <Grid item xs={true}>
-              {/* <Typography variant='subtitle1' noWrap>
-                R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
-              </Typography> */}
-            </Grid>
-          </Hidden>
+          <Grid item xs={4}>
+            <Typography variant='subtitle2' className={classes.title} noWrap>{upsell.title}</Typography>
+          </Grid>
 
           <Grid item xs={false}>
             <Grid container alignItems='center'>
               <Grid item>
-                <Grid container>
-                  <EyeIcon className={classes.icon} />
-                </Grid>
+                <EyeIcon className={classes.icon} />
               </Grid>
               <Grid item>
                 <Typography variant='subtitle1'>{upsell.total_view}</Typography>

@@ -101,22 +101,24 @@ class StudentService {
     this.filters$.next({ ...filters });
   }
 
-  public releaseModules(student_id: number, course_id: number): any {
+  public releaseModules(student_id: number, course_id: number) {
     return apiService.post(`/producer/students/${student_id}/allow-modules`, { course_id });
   }
 
-  public disableCourse(student_id: number, course_id: number): any {
+  public disableCourse(student_id: number, course_id: number) {
     return apiService.post(`/producer/students/${student_id}/disable-course`, { course_id });
   }
 
-  public removeAccess(student_id: number, course_id: number): any {
+  public removeAccess(student_id: number, course_id: number) {
     return apiService.delete(`/producer/students/${student_id}/remove-access`, { course_id }).pipe(
       RxOp.cacheClean(`student-courses-${student_id}`),
     );
   }
 
-  public accessLink(student_id: number, course_id: number): any {
-    return apiService.get(`/producer/students/${student_id}/access-link`, { course_id });
+  public accessLink(student_id: number, course_id: number): Rx.Observable<string> {
+    return apiService.get(`/producer/students/${student_id}/access-link`, { course_id }).pipe(
+      RxOp.map(r => r.data.url)
+    );
   }
 }
 

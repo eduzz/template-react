@@ -27,15 +27,13 @@ b {
   overflow: visible !important;
 }
 
+.MuiCard-root+.MuiCard-root {
+  margin-top: 24px;
+}
+
 [class*='MuiTable-'] tr td,
 [class*='MuiTable-'] tr th {
   padding: 3px 15px 3px 15px !important;
-}
-
-[class*='MuiTable-'] tr td:last-child:not(.empty),
-[class*='MuiTable-'] tr th:last-child:not(.empty) {
-  text-align: right !important;
-  width: 50px;
 }
 
 [class*='MuiTable-'] tr td.empty {

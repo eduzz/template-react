@@ -54,7 +54,6 @@ export default class Toolbar extends PureComponent<IProps> {
         <AppBar className={classes.appBar} color='default'>
           <CoreToolbar>
             <IconButton
-              color='inherit'
               onClick={this.openDrawer}
               className={classes.iconMenu}
             >
@@ -62,7 +61,7 @@ export default class Toolbar extends PureComponent<IProps> {
             </IconButton>
             {children}
             {!children &&
-              <Typography variant='h6' color='inherit' noWrap>
+              <Typography variant='h6' noWrap>
                 {title || 'App'}
               </Typography>
             }

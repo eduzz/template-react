@@ -1,4 +1,5 @@
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
@@ -33,12 +34,6 @@ interface IState {
 @WithRouter()
 @WithStyles(theme => ({
   root: {
-    border: '1px solid',
-    borderRadius: 2,
-    color: '#8C9198',
-    borderColor: theme.variables.contentBorderColor,
-    marginBottom: theme.spacing.unit,
-    padding: theme.spacing.unit,
     '&:before': {
       content: '""',
       width: 4,
@@ -59,8 +54,13 @@ interface IState {
     height: 44,
     borderRadius: 2,
   },
+  progressNumber: {
+    width: 40,
+    textAlign: 'right'
+  },
   progress: {
     width: 180,
+    maxWidth: 'calc(100vw - 160px)'
   },
 }))
 export default class CourseItem extends PureComponent<IProps, IState> {
@@ -97,9 +97,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(progress => {
-      this.setState({
-        progress,
-      });
+      this.setState({ progress });
     });
   }
 
@@ -141,18 +139,14 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     studentService.accessLink(this.props.match.params.id, this.props.course.id).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
-    ).subscribe(
-      (response: any) => {
-        Alert.show({
-          message: response.data.url,
-          title: 'Link de Acesso Direto',
-        });
-        Toast.show('URL copiada para a área de transferência com sucesso');
-      },
-      (err: any) => {
-        Toast.error(err.data.details);
-      }
-    );
+    ).subscribe(url => {
+      Alert.show({
+        message: url,
+        title: 'Link de Acesso Direto',
+        ok: 'Copiar'
+      });
+      Toast.show('URL copiada para a área de transferência com sucesso');
+    }, (err: any) => Toast.error(err.data.details));
   }
 
   render() {
@@ -160,10 +154,10 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const { progress } = this.state;
 
     return (
-      <ListItem className={`${classes.root}`}>
+      <ListItem className={classes.root}>
         <Grid container wrap='nowrap' alignItems='center' spacing={16}>
-          <Grid item xs='auto'>
-            <Grid container>
+          <Hidden xsDown>
+            <Grid item sm={'auto'}>
               <img
                 className={classes.avatar}
                 alt=''
@@ -171,27 +165,19 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 onError={this.handleImageError}
               />
             </Grid>
+          </Hidden>
+          <Grid item xs={12} sm={true}>
+            <Typography variant='body1'>{course.title}</Typography>
+            <Typography variant='body2'>Matrícula: {format(new Date(course.created_at), 'dd/MM/YYYY')}</Typography>
+            <Hidden smUp>
+              <CourseProgress progress={progress} classes={classes} />
+            </Hidden>
           </Grid>
-          <Grid item xs={true}>
-            <Grid container alignItems='center' spacing={16}>
-              <Grid item sm={4}>
-                <Typography variant='subtitle2' color='inherit' noWrap>{course.title}</Typography>
-              </Grid>
-              <Grid item sm={true}>
-                <Typography variant='subtitle2' color='inherit' noWrap>{format(new Date(course.created_at), 'dd/MM/YYYY')}</Typography>
-              </Grid>
-              <Grid item xs='auto'>
-                <Grid container alignItems='center' spacing={8}>
-                  <Grid item>
-                    <Typography variant='subtitle2' color='inherit'>{progress}%</Typography>
-                  </Grid>
-                  <Grid item>
-                    <LinearProgress variant='determinate' color='secondary' value={progress} className={classes.progress} />
-                  </Grid>
-                </Grid>
-              </Grid>
+          <Hidden xsDown>
+            <Grid item xs='auto'>
+              <CourseProgress progress={progress} classes={classes} />
             </Grid>
-          </Grid>
+          </Hidden>
           <Grid item xs={false}>
             <DropdownMenu options={this.actions} />
           </Grid>
@@ -199,4 +185,17 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       </ListItem>
     );
   }
+}
+
+function CourseProgress({ progress, classes }: { progress: number, classes: any }) {
+  return (
+    <Grid wrap='nowrap' container alignItems='center' spacing={8}>
+      <Grid item className={classes.progressNumber}>
+        <Typography variant='subtitle2' color='inherit'>{progress}%</Typography>
+      </Grid>
+      <Grid item>
+        <LinearProgress variant='determinate' color='secondary' value={progress} className={classes.progress} />
+      </Grid>
+    </Grid>
+  );
 }
