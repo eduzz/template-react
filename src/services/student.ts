@@ -32,7 +32,7 @@ class StudentService {
 
   private loadStudents() {
     if (this.paginator$.value.page <= this.initialPaginator.page) {
-      this.students$.next({});
+      this.students$.next({ students: null });
     }
 
     apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).pipe(
@@ -76,8 +76,8 @@ class StudentService {
     );
   }
 
-  public getStudentCourseProgress(studentId: number, courseId: number, type: number) {
-    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/${courseId}/progress/${type}`).pipe(
+  public getStudentCourseProgress(studentId: number, contentId: number, courseId: number, type: number) {
+    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/${contentId}/progress/${courseId}/${type}`).pipe(
       RxOp.map(response => response.data.percentage),
     );
   }
@@ -102,22 +102,26 @@ class StudentService {
     this.filters$.next({ ...filters });
   }
 
-  public releaseModules(student_id: number, course_id: number) {
-    return apiService.post(`/producer/students/${student_id}/allow-modules`, { course_id });
+  public releaseModules(student_id: number, content_id: number) {
+    return apiService.put(`/producer/students/${student_id}/contents/${content_id}/allow-modules`).pipe(
+      RxOp.cacheClean(`student-courses-${student_id}`)
+    );
   }
 
-  public disableCourse(student_id: number, course_id: number) {
-    return apiService.post(`/producer/students/${student_id}/disable-course`, { course_id });
+  public disableCourse(student_id: number, content_id: number) {
+    return apiService.put(`/producer/students/${student_id}/contents/${content_id}/status`).pipe(
+      RxOp.cacheClean(`student-courses-${student_id}`)
+    );
   }
 
-  public removeAccess(student_id: number, course_id: number) {
-    return apiService.delete(`/producer/students/${student_id}/remove-access`, { course_id }).pipe(
+  public removeAccess(student_id: number, content_id: number) {
+    return apiService.delete(`/producer/students/${student_id}/contents/${content_id}/remove-access`).pipe(
       RxOp.cacheClean(`student-courses-${student_id}`),
     );
   }
 
-  public accessLink(student_id: number, course_id: number): Rx.Observable<string> {
-    return apiService.get(`/producer/students/${student_id}/access-link`, { course_id }).pipe(
+  public accessLink(student_id: number, content_id: number): Rx.Observable<string> {
+    return apiService.get(`/producer/students/${student_id}/contents/${content_id}/access-link`).pipe(
       RxOp.map(r => r.data.url)
     );
   }

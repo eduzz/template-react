@@ -90,12 +90,13 @@ export default class ChangeEmailDialog extends FormComponent<IProps, IState> {
           <DialogContent className={classes.content}>
             <FieldText
               autoFocus
-              label='Informe o novo e-mail'
+              placeholder='Informe o novo e-mail'
               type='email'
               id='new-email'
               disabled={loading}
               value={model.email}
               validation='required|email'
+              margin='none'
               onChange={this.updateModel((model, v) => model.email = v)}
             />
           </DialogContent>

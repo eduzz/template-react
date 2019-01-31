@@ -52,7 +52,7 @@ export default class CourseList extends PureComponent<IProps, IState> {
     return (
       <Fragment>
         <CardContent>
-          <Typography variant='h6'>Cursos Matriculados</Typography>
+          <Typography variant='h6'>Conteúdos</Typography>
         </CardContent>
 
         {loading && <Loading />}
@@ -74,7 +74,7 @@ export default class CourseList extends PureComponent<IProps, IState> {
         {!loading && !error && !!courses.length &&
           <List disablePadding>
             {courses.map((course, index) =>
-              <CourseItem key={index} course={course} />
+              <CourseItem key={index} data={course} />
             )}
           </List>
         }

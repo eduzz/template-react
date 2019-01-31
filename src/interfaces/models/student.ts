@@ -14,11 +14,23 @@ export interface IFiltersModel {
 }
 
 export interface IStudentCourse {
-  id?: number;
-  title: string;
-  avatar: string;
+  id: number;
+  release_modules: boolean;
+  status: boolean;
   created_at: string;
-  type: number;
+  course: {
+    id: number;
+    title: string;
+    type: number;
+    avatar?: string;
+  };
+  permission: {
+    course: 7351
+    delete: boolean
+    insert: boolean
+    read: boolean
+    update: boolean
+  };
 }
 
 export interface IStudentActivity {

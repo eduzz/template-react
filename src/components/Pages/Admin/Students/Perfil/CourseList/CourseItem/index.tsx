@@ -11,9 +11,11 @@ import format from 'date-fns/esm/format';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudentCourse } from 'interfaces/models/student';
-import AccountRemoveIcon from 'mdi-react/AccountRemoveIcon';
-import BlockHelperIcon from 'mdi-react/BlockHelperIcon';
-import CheckBoxMultipleOutlineIcon from 'mdi-react/CheckBoxMultipleOutlineIcon';
+import DeleteIcon from 'mdi-react/DeleteIcon';
+import DoorClosedIcon from 'mdi-react/DoorClosedIcon';
+import DoorOpenIcon from 'mdi-react/DoorOpenIcon';
+import LockIcon from 'mdi-react/LockIcon';
+import LockOpenIcon from 'mdi-react/LockOpenIcon';
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
 import React, { PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
@@ -21,7 +23,7 @@ import studentService from 'services/student';
 
 interface IProps {
   classes?: any;
-  course: IStudentCourse;
+  data: IStudentCourse;
   match?: any;
 }
 
@@ -36,7 +38,7 @@ interface IState {
       content: '""',
       width: 4,
       height: 'calc(100% + 2px)',
-      backgroundColor: theme.variables.colors.disabled,
+      backgroundColor: theme.palette.error.light,
       position: 'absolute',
       left: -1,
       borderRadius: '2px 0 0 2px',
@@ -46,6 +48,9 @@ interface IState {
     '&:before': {
       backgroundColor: theme.palette.secondary.light,
     },
+  },
+  title: {
+    wordBreak: 'break-word'
   },
   avatar: {
     width: 44,
@@ -62,16 +67,16 @@ interface IState {
 }))
 export default class CourseItem extends PureComponent<IProps, IState> {
   private actions = [{
-    text: 'Liberação de Módulos',
-    icon: CheckBoxMultipleOutlineIcon,
+    text: this.props.data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos',
+    icon: this.props.data.release_modules ? LockIcon : LockOpenIcon,
     handler: () => this.handleReleaseModules(),
   }, {
-    text: 'Bloquear Acesso',
-    icon: BlockHelperIcon,
+    text: this.props.data.status ? 'Bloquear Acesso' : 'Liberar Acesso',
+    icon: this.props.data.status ? DoorClosedIcon : DoorOpenIcon,
     handler: () => this.handleDisableCourse(),
   }, {
-    text: 'Remover Acesso',
-    icon: AccountRemoveIcon,
+    text: 'Remover Conteúdo',
+    icon: DeleteIcon,
     handler: () => this.handleRemoveAccess(),
   }, {
     text: 'Link de Acesso Direto',
@@ -83,14 +88,14 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     super(props);
 
     this.state = {
-      progress: 0,
+      progress: null,
     };
   }
 
   componentDidMount() {
-    const { id, type } = this.props.course;
+    const { id, course } = this.props.data;
 
-    studentService.getStudentCourseProgress(this.props.match.params.id, id, type).pipe(
+    studentService.getStudentCourseProgress(this.props.match.params.id, id, course.id, course.type).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(progress => {
@@ -102,7 +107,8 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const isOk = await Alert.confirm('Deseja realmente liberar o accesso a todos os modulos desse aluno?');
     if (!isOk) return;
 
-    studentService.releaseModules(this.props.match.params.id, this.props.course.id).pipe(
+    studentService.releaseModules(this.props.match.params.id, this.props.data.id).pipe(
+      RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(
@@ -115,7 +121,8 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const isOk = await Alert.confirm('Deseja realmente bloquear o accesso desse aluno?');
     if (!isOk) return;
 
-    studentService.disableCourse(this.props.match.params.id, this.props.course.id).pipe(
+    studentService.disableCourse(this.props.match.params.id, this.props.data.id).pipe(
+      RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(
@@ -128,7 +135,8 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const isOk = await Alert.confirm('Deseja realmente remover o accesso desse aluno?');
     if (!isOk) return;
 
-    studentService.removeAccess(this.props.match.params.id, this.props.course.id).pipe(
+    studentService.removeAccess(this.props.match.params.id, this.props.data.id).pipe(
+      RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(
@@ -138,7 +146,8 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleAccessLink = () => {
-    studentService.accessLink(this.props.match.params.id, this.props.course.id).pipe(
+    studentService.accessLink(this.props.match.params.id, this.props.data.id).pipe(
+      RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(url => {
@@ -152,20 +161,20 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes, course } = this.props;
+    const { classes, data } = this.props;
     const { progress } = this.state;
 
     return (
-      <ListItem className={classes.root}>
+      <ListItem className={`${classes.root} ${data.status ? classes.active : ''}`}>
         <Grid container wrap='nowrap' alignItems='center' spacing={16}>
           <Hidden xsDown>
             <Grid item sm={'auto'}>
-              <Avatar className={classes.avatar} src={course.avatar} />
+              <Avatar className={classes.avatar} src={data.course.avatar} />
             </Grid>
           </Hidden>
           <Grid item xs={12} sm={true}>
-            <Typography variant='body1'>{course.title}</Typography>
-            <Typography variant='body2'>Matrícula: {format(new Date(course.created_at), 'dd/MM/YYYY')}</Typography>
+            <Typography variant='body1' className={classes.title}>{data.course.title}</Typography>
+            <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography>
             <Hidden smUp>
               <CourseProgress progress={progress} classes={classes} />
             </Hidden>
@@ -188,10 +197,17 @@ function CourseProgress({ progress, classes }: { progress: number, classes: any 
   return (
     <Grid wrap='nowrap' container alignItems='center' spacing={8}>
       <Grid item className={classes.progressNumber}>
-        <Typography variant='subtitle2' color='inherit'>{progress}%</Typography>
+        {progress !== null &&
+          <Typography variant='subtitle2' color='inherit'>{progress}%</Typography>
+        }
       </Grid>
       <Grid item>
-        <LinearProgress variant='determinate' color='secondary' value={progress} className={classes.progress} />
+        <LinearProgress
+          variant={progress === null ? 'indeterminate' : 'determinate'}
+          color='secondary'
+          value={progress}
+          className={classes.progress}
+        />
       </Grid>
     </Grid>
   );
