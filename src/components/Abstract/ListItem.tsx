@@ -1,5 +1,6 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import ErrorMessageIcon from 'components/Shared/ErrorMessageIcon';
 import React, { Fragment, PureComponent } from 'react';
 
@@ -37,7 +38,9 @@ export default abstract class ListItemComponent<P = {}, S extends IStateListItem
           <ErrorMessageIcon error={error} onDismiss={this.handleDismisError} />
         }
         {!loading && !error &&
-          <DropdownMenu options={options} />
+          <DropdownMenu>
+            {options.map(o => <OptionItem key={o.text} {...o} />)}
+          </DropdownMenu>
         }
       </Fragment>
     );

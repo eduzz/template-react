@@ -1,29 +1,51 @@
 import IconButton from '@material-ui/core/IconButton';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
-import MoreIcon from 'mdi-react/MoreIcon';
-import MoreVertIcon from 'mdi-react/MoreVertIcon';
+import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 import * as React from 'react';
 
+import DropdownMenuContext from './context';
 import OptionItem from './OptionItem';
 
 export interface IOption {
   text: string;
-  icon?: typeof MoreIcon;
+  icon?: typeof DotsHorizontalIcon;
   handler: () => void;
 }
 
 interface IState {
   targetElem?: HTMLElement;
+  options: OptionItem[];
+  content: React.ReactChild[];
 }
 
 interface IProps extends Partial<MenuProps> {
-  options: IOption[];
 }
 
 export default class DropdownMenu extends React.PureComponent<IProps, IState> {
   constructor(props: any) {
     super(props);
-    this.state = {};
+    this.state = { options: [], content: [] };
+  }
+
+  static getDerivedStateFromProps({ children }: IProps, currentState: IState): IState {
+    const options: OptionItem[] = [];
+    const content: React.ReactChild[] = [];
+
+    React.Children
+      .toArray(children)
+      .forEach((child: any) => {
+        if (child.type === OptionItem) {
+          options.push(child);
+          return;
+        }
+
+        content.push(child);
+      });
+
+    return {
+      ...currentState,
+      options
+    };
   }
 
   handleOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,24 +54,33 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
     this.setState({ targetElem: event.currentTarget });
   }
 
-  handleClose = () => {
+  handleClose = (event?: React.MouseEvent<HTMLElement>) => {
+    event && event.stopPropagation();
     this.setState({ targetElem: null });
   }
 
-  handleClick = (option: IOption) => {
+  handleClick = (handler: () => void) => {
     this.handleClose();
-    option.handler();
+    handler();
   }
 
   render() {
-    const { targetElem } = this.state;
-    const { options, ...menuProps } = this.props;
+    const { targetElem, options, content } = this.state;
+    const { ...menuProps } = this.props;
 
     return (
       <div>
-        <IconButton onClick={this.handleOpen} color='inherit'>
-          <MoreVertIcon />
-        </IconButton>
+        {!!content &&
+          <span onClick={this.handleOpen}>
+            {content}
+          </span>
+        }
+
+        {!content &&
+          <IconButton onClick={this.handleOpen} color='inherit'>
+            <DotsHorizontalIcon />
+          </IconButton>
+        }
 
         <Menu
           {...menuProps}
@@ -57,9 +88,9 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
           open={!!targetElem}
           onClose={this.handleClose}
         >
-          {options.map(option =>
-            <OptionItem key={option.text} option={option} onClick={this.handleClick} />
-          )}
+          <DropdownMenuContext.Provider value={this.handleClick}>
+            {options}
+          </DropdownMenuContext.Provider>
         </Menu>
       </div>
     );
