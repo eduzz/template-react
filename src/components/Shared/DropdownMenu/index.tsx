@@ -3,6 +3,7 @@ import Menu, { MenuProps } from '@material-ui/core/Menu';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 import * as React from 'react';
 
+import PermissionHide from '../PermissionHide';
 import DropdownMenuContext from './context';
 import OptionItem from './OptionItem';
 
@@ -14,7 +15,7 @@ export interface IOption {
 
 interface IState {
   targetElem?: HTMLElement;
-  options: OptionItem[];
+  options: React.ReactChild[];
   content: React.ReactChild[];
 }
 
@@ -28,13 +29,13 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
   }
 
   static getDerivedStateFromProps({ children }: IProps, currentState: IState): IState {
-    const options: OptionItem[] = [];
+    const options: React.ReactChild[] = [];
     const content: React.ReactChild[] = [];
 
     React.Children
       .toArray(children)
       .forEach((child: any) => {
-        if (child.type === OptionItem) {
+        if (child.type === OptionItem || child.type === PermissionHide) {
           options.push(child);
           return;
         }
@@ -44,7 +45,8 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
 
     return {
       ...currentState,
-      options
+      options,
+      content: content.length ? content : null
     };
   }
 
