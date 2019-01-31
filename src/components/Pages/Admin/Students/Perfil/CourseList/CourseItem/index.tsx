@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Alert from 'components/Shared/Alert';
 import Avatar from 'components/Shared/Avatar';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
 import format from 'date-fns/esm/format';
 import { WithRouter } from 'decorators/withRouter';
@@ -66,24 +67,6 @@ interface IState {
   },
 }))
 export default class CourseItem extends PureComponent<IProps, IState> {
-  private actions = [{
-    text: this.props.data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos',
-    icon: this.props.data.release_modules ? LockIcon : LockOpenIcon,
-    handler: () => this.handleReleaseModules(),
-  }, {
-    text: this.props.data.status ? 'Bloquear Acesso' : 'Liberar Acesso',
-    icon: this.props.data.status ? DoorClosedIcon : DoorOpenIcon,
-    handler: () => this.handleDisableCourse(),
-  }, {
-    text: 'Remover Conteúdo',
-    icon: DeleteIcon,
-    handler: () => this.handleRemoveAccess(),
-  }, {
-    text: 'Link de Acesso Direto',
-    icon: OpenInNewIcon,
-    handler: () => this.handleAccessLink(),
-  }];
-
   constructor(props: IProps) {
     super(props);
 
@@ -185,7 +168,28 @@ export default class CourseItem extends PureComponent<IProps, IState> {
             </Grid>
           </Hidden>
           <Grid item xs={false}>
-            <DropdownMenu options={this.actions} />
+            <DropdownMenu >
+              <OptionItem
+                text={data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos'}
+                icon={data.release_modules ? LockIcon : LockOpenIcon}
+                handler={this.handleReleaseModules}
+              />
+              <OptionItem
+                text={data.status ? 'Bloquear Acesso' : 'Liberar Acesso'}
+                icon={data.status ? DoorClosedIcon : DoorOpenIcon}
+                handler={this.handleDisableCourse}
+              />
+              <OptionItem
+                text={'Remover Conteúdo'}
+                icon={DeleteIcon}
+                handler={this.handleRemoveAccess}
+              />
+              <OptionItem
+                text={'Link de Acesso Direto'}
+                icon={OpenInNewIcon}
+                handler={this.handleAccessLink}
+              />
+            </DropdownMenu>
           </Grid>
         </Grid>
       </ListItem>

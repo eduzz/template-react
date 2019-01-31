@@ -5,7 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Alert from 'components/Shared/Alert';
 import Avatar from 'components/Shared/Avatar';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import PermissionHide from 'components/Shared/PermissionHide';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
@@ -61,24 +63,6 @@ interface IState {
   }
 }))
 export default class Info extends PureComponent<IProps, IState> {
-  private actions = [{
-    text: 'Redefinir E-mail',
-    icon: AtIcon,
-    handler: () => this.handleOpenChangeEmail(),
-  }, {
-    text: 'Redefinir Senha',
-    icon: LockResetIcon,
-    handler: () => this.handleOpenChangePassword(),
-  }, {
-    text: 'Enviar link de redefinição de Senha',
-    icon: SendIcon,
-    handler: () => this.handleRecoveryPassword(),
-  }, {
-    text: 'Excluir Aluno',
-    icon: DeleteIcon,
-    handler: () => this.handleRemoveStudent(),
-  }];
-
   constructor(props: IProps) {
     super(props);
 
@@ -197,10 +181,16 @@ export default class Info extends PureComponent<IProps, IState> {
             <Typography variant='caption'>{student.email}</Typography>
           </Grid>
           <Grid item className={classes.settings}>
-            <DropdownMenu options={this.actions}>
+            <DropdownMenu>
               <IconButton className={classes.icon}>
                 <SettingsOutlineIcon />
               </IconButton>
+              <PermissionHide>
+                <OptionItem text='Redefinir E-mail' icon={AtIcon} handler={this.handleOpenChangeEmail} />
+              </PermissionHide>
+              <OptionItem text='Redefinir Senha' icon={LockResetIcon} handler={this.handleOpenChangePassword} />
+              <OptionItem text='Enviar link de redefinição de Senha' icon={SendIcon} handler={this.handleRecoveryPassword} />
+              <OptionItem text='Excluir Aluno' icon={DeleteIcon} handler={this.handleRemoveStudent} />
             </DropdownMenu>
           </Grid>
         </Grid>

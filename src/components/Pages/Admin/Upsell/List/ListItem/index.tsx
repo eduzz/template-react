@@ -6,6 +6,7 @@ import nutrorLogo from 'assets/svg/nutror-logo.svg';
 import Avatar from 'components/Shared/Avatar';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
 import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
@@ -43,15 +44,9 @@ interface IProps extends IRouteProps {
   },
 }))
 export default class UpsellItem extends PureComponent<IProps> {
-  actions = [{
-    text: 'Editar',
-    icon: SquareEditOutlineIcon,
-    handler: () => this.props.history.push(`/upsell/${this.props.upsell.id}/editar`),
-  }, {
-    text: 'Excluir',
-    icon: TrashCanIcon,
-    handler: () => this.handleDelete(),
-  }];
+  handleEdit = () => {
+    this.props.history.push(`/upsell/${this.props.upsell.id}/editar`);
+  }
 
   handleDelete = async () => {
     const { upsell, onDelete } = this.props;
@@ -122,7 +117,10 @@ export default class UpsellItem extends PureComponent<IProps> {
           </Grid>
 
           <Grid item xs={false}>
-            <DropdownMenu options={this.actions} />
+            <DropdownMenu>
+              <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+              <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+            </DropdownMenu>
           </Grid>
 
           <Hidden smUp>

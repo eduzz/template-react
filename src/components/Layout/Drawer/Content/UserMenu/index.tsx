@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import IUserToken from 'interfaces/tokens/userToken';
@@ -35,16 +36,6 @@ interface IProps {
   }
 }))
 export default class UserMenu extends PureComponent<IProps, IState> {
-  options = [{
-    text: 'Trocar senha',
-    icon: KeyVariantIcon,
-    handler: () => this.handleChangePassword()
-  }, {
-    text: 'Sair',
-    icon: ExitToAppIcon,
-    handler: () => this.handleLogout()
-  }];
-
   constructor(props: IProps) {
     super(props);
     this.state = { user: null };
@@ -89,7 +80,18 @@ export default class UserMenu extends PureComponent<IProps, IState> {
           </Typography>
         </Grid>
         <Grid item>
-          <DropdownMenu options={this.options} />
+          <DropdownMenu>
+            <OptionItem
+              text='Trocar senha'
+              icon={KeyVariantIcon}
+              handler={this.handleChangePassword}
+            />
+            <OptionItem
+              text='Sair'
+              icon={ExitToAppIcon}
+              handler={this.handleLogout}
+            />
+          </DropdownMenu>
         </Grid>
       </Grid>
     );

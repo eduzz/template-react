@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { theme } from 'assets/theme';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
 import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
@@ -55,20 +56,6 @@ interface IProps extends IRouteProps {
   }
 })
 export default class CertificateItem extends PureComponent<IProps, IState> {
-  actions = [{
-    text: 'Vincular cursos',
-    icon: FormatListBulletedIcon,
-    handler: () => this.setExpanded(true),
-  }, {
-    text: 'Editar',
-    icon: SquareEditOutlineIcon,
-    handler: () => this.props.history.push(`/certificados/${this.props.certificate.id}/editar`),
-  }, {
-    text: 'Excluir',
-    icon: TrashCanIcon,
-    handler: () => this.handleDelete(),
-  }];
-
   constructor(props: IProps) {
     super(props);
     this.state = { expanded: false, firstExpanded: false };
@@ -81,6 +68,10 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
 
   handleChange = (event: SyntheticEvent, expanded: boolean) => {
     this.setExpanded(expanded);
+  }
+
+  handleEdit = () => {
+    this.props.history.push(`/certificados/${this.props.certificate.id}/editar`);
   }
 
   handleDelete = async () => {
@@ -98,6 +89,7 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
     }, err => Toast.error(err));
   }
 
+  setExpandedTrue = () => this.setExpanded(true);
   setExpanded = (expanded: boolean) => {
     this.setState({
       expanded,
@@ -124,7 +116,11 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
             <Hidden smUp>
               <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 3}>
                 <div className={classes.dropMenu}>
-                  <DropdownMenu options={this.actions} />
+                  <DropdownMenu>
+                    <OptionItem text='Vincular cursos' icon={FormatListBulletedIcon} handler={this.setExpandedTrue} />
+                    <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+                    <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+                  </DropdownMenu>
                 </div>
               </Grid>
             </Hidden>
@@ -147,7 +143,9 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
 
             <Hidden xsDown>
               <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 4}>
-                <DropdownMenu options={this.actions} />
+                <OptionItem text='Vincular cursos' icon={FormatListBulletedIcon} handler={this.setExpandedTrue} />
+                <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+                <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
               </Grid>
             </Hidden>
           </Grid>
