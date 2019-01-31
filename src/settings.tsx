@@ -18,3 +18,6 @@ export const CERTIFICATE_URL = (process.env.REACT_APP_CERTIFICATE_URL || '').tri
 export const CDN_URL = (process.env.REACT_APP_CDN || '').trim();
 
 export const COOKIE_DOMAIN = (process.env.REACT_APP_COOKIE_DOMAIN || '').trim();
+
+export const BUILD_NUMBER = process.env.REACT_APP_BUILD_NUMBER;
+export const BUILD_DATE = process.env.REACT_APP_BUILD_DATE;
