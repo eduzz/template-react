@@ -8,12 +8,11 @@ import EyeIcon from 'mdi-react/EyeIcon';
 import React, { PureComponent } from 'react';
 import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
+import { REACT_APP_LEARNER } from 'settings';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
 import UserMenu from './UserMenu';
-
-//import { REACT_APP_LEARNER } from 'settings';
 
 interface IProps {
   menu: IMenu[];
@@ -45,12 +44,16 @@ interface IProps {
     display: 'flex',
     flexDirection: 'column',
     '& > div:nth-last-child(2)': { marginBottom: 46, },
-    '& > div:first-child': { backgroundColor: 'rgba(255,255,255,.2)', },
     '& > div:last-child': {
       bottom: 0,
       position: 'absolute',
     }
   },
+  link: {
+    color: '#fff',
+    textDecoration: 'none',
+    backgroundColor: 'rgba(255,255,255,.2)',
+  }
 }))
 export default class Content extends PureComponent<IProps, {}> {
   constructor(props: any) {
@@ -79,13 +82,12 @@ export default class Content extends PureComponent<IProps, {}> {
   render() {
     const { classes, close, menu } = this.props;
     const goToLearner = {
-      icon: EyeIcon,
       display: 'Visualizar como Aluno',
-      path: 'www.google.com',
+      icon: EyeIcon,
     };
     const logoff = {
-      icon: ExitToAppIcon,
       display: 'Sair',
+      icon: ExitToAppIcon,
     };
     return (
       <div className={classes.root}>
@@ -95,7 +97,9 @@ export default class Content extends PureComponent<IProps, {}> {
         </div>
 
         <List className={classes.list}>
-          <DrawerListItem key='goToLearner' data={goToLearner} onClick={() => false} />
+          <a href={REACT_APP_LEARNER} className={classes.link}>
+            <DrawerListItem key='goToLearner' data={goToLearner} onClick={() => false} />
+          </a>
           {menu.map(item =>
             <DrawerListItem key={item.path || item.display} data={item} onClick={this.navigate} />
           )}
