@@ -6,6 +6,7 @@ import * as React from 'react';
 import PermissionHide from '../PermissionHide';
 import DropdownMenuContext from './context';
 import OptionItem from './OptionItem';
+import { Fragment } from 'react';
 
 export interface IOption {
   text: string;
@@ -35,7 +36,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
     React.Children
       .toArray(children)
       .forEach((child: any) => {
-        if (child.type === OptionItem || child.type === PermissionHide) {
+        if (child.type === OptionItem || child.type === PermissionHide || child.type === Fragment) {
           options.push(child);
           return;
         }

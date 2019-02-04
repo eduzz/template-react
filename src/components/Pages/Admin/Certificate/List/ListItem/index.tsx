@@ -143,9 +143,11 @@ export default class CertificateItem extends PureComponent<IProps, IState> {
 
             <Hidden xsDown>
               <Grid item xs={window.innerWidth > theme.breakpoints.values.sm ? false : 4}>
-                <OptionItem text='Vincular cursos' icon={FormatListBulletedIcon} handler={this.setExpandedTrue} />
-                <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
-                <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+                <DropdownMenu>
+                  <OptionItem text='Vincular cursos' icon={FormatListBulletedIcon} handler={this.setExpandedTrue} />
+                  <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+                  <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+                </DropdownMenu>
               </Grid>
             </Hidden>
           </Grid>

@@ -18,7 +18,7 @@ import DoorOpenIcon from 'mdi-react/DoorOpenIcon';
 import LockIcon from 'mdi-react/LockIcon';
 import LockOpenIcon from 'mdi-react/LockOpenIcon';
 import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
@@ -96,7 +96,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.bindComponent(this)
     ).subscribe(
       () => Toast.show('Todos os módulos foram liberados com sucesso'),
-      (err: any) => Toast.error(err.data.details)
+      (err: any) => Toast.error(err)
     );
   }
 
@@ -110,7 +110,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.bindComponent(this)
     ).subscribe(
       () => Toast.show('Acesso bloqueado com sucesso'),
-      (err: any) => Toast.error(err.data.details)
+      (err: any) => Toast.error(err)
     );
   }
 
@@ -124,7 +124,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.bindComponent(this)
     ).subscribe(
       () => Toast.show('Aluno removido com sucesso'),
-      (err: any) => Toast.error(err.data.details)
+      (err: any) => Toast.error(err)
     );
   }
 
@@ -137,10 +137,9 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       Alert.show({
         message: url,
         title: 'Link de Acesso Direto',
-        ok: 'Copiar'
+        copy: true
       });
-      Toast.show('URL copiada para a área de transferência com sucesso');
-    }, (err: any) => Toast.error(err.data.details));
+    }, (err: any) => Toast.error(err));
   }
 
   render() {
@@ -169,21 +168,27 @@ export default class CourseItem extends PureComponent<IProps, IState> {
           </Hidden>
           <Grid item xs={false}>
             <DropdownMenu >
-              <OptionItem
-                text={data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos'}
-                icon={data.release_modules ? LockIcon : LockOpenIcon}
-                handler={this.handleReleaseModules}
-              />
-              <OptionItem
-                text={data.status ? 'Bloquear Acesso' : 'Liberar Acesso'}
-                icon={data.status ? DoorClosedIcon : DoorOpenIcon}
-                handler={this.handleDisableCourse}
-              />
-              <OptionItem
-                text={'Remover Conteúdo'}
-                icon={DeleteIcon}
-                handler={this.handleRemoveAccess}
-              />
+              {data.permission.update &&
+                <Fragment>
+                  <OptionItem
+                    text={data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos'}
+                    icon={data.release_modules ? LockIcon : LockOpenIcon}
+                    handler={this.handleReleaseModules}
+                  />
+                  <OptionItem
+                    text={data.status ? 'Bloquear Acesso' : 'Liberar Acesso'}
+                    icon={data.status ? DoorClosedIcon : DoorOpenIcon}
+                    handler={this.handleDisableCourse}
+                  />
+                </Fragment>
+              }
+              {data.permission.delete &&
+                <OptionItem
+                  text={'Remover Conteúdo'}
+                  icon={DeleteIcon}
+                  handler={this.handleRemoveAccess}
+                />
+              }
               <OptionItem
                 text={'Link de Acesso Direto'}
                 icon={OpenInNewIcon}

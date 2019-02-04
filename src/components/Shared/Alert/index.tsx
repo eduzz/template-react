@@ -5,9 +5,11 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import Clipboard from 'clipboard';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 
+import Toast from '../Toast';
 import { AlertGlobalProvider } from './global';
 
 interface IState extends IAlertShowParams {
@@ -22,6 +24,7 @@ interface IProps {
   global?: boolean;
   onClose: (ok: boolean) => void;
   classes?: any;
+  copy?: boolean;
 }
 
 export interface IAlertShowParams {
@@ -29,6 +32,7 @@ export interface IAlertShowParams {
   title?: string;
   confirmation?: boolean;
   ok?: string;
+  copy?: boolean;
 }
 
 @WithStyles(theme => ({
@@ -41,6 +45,9 @@ export interface IAlertShowParams {
 }))
 export default class Alert extends React.Component<IProps, IState> {
   static Global = AlertGlobalProvider;
+
+  clipboard: Clipboard;
+  okRef = React.createRef<HTMLButtonElement>();
 
   constructor(props: IProps) {
     super(props);
@@ -70,16 +77,33 @@ export default class Alert extends React.Component<IProps, IState> {
     return AlertGlobalProvider.show({ ...paramsData, confirmation: true });
   }
 
+  handleEnter = () => {
+    if (this.props.copy) {
+      this.clipboard = new Clipboard(this.okRef.current);
+      this.clipboard.on('success', (e) => {
+        console.log(e.text);
+        Toast.show('Copiado');
+      });
+      this.clipboard.on('error', (e) => console.error(e));
+    }
+  }
+
   handleOk = () => {
+    this.clipboard && this.clipboard.destroy();
+    this.clipboard = null;
+
     this.props.onClose(true);
   }
 
   handleCancel = () => {
+    this.clipboard && this.clipboard.destroy();
+    this.clipboard = null;
+
     this.props.onClose(false);
   }
 
   render() {
-    const { opened, title, message, confirmation, ok } = this.state;
+    const { opened, title, message, confirmation, ok, copy } = this.state;
     const { classes } = this.props;
 
     return (
@@ -87,12 +111,13 @@ export default class Alert extends React.Component<IProps, IState> {
         open={opened}
         keepMounted
         TransitionComponent={Transition}
+        onEnter={this.handleEnter}
         onClose={this.handleCancel}
         className={classes.root}
       >
         <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
         <DialogContent>
-          <DialogContentText className={classes.content}>
+          <DialogContentText className={classes.content} id='alert-message'>
             {message}
           </DialogContentText>
         </DialogContent>
@@ -102,8 +127,13 @@ export default class Alert extends React.Component<IProps, IState> {
               Cancelar
             </Button>
           }
-          <Button autoFocus={!confirmation} onClick={this.handleOk} color='secondary'>
-            {ok || 'OK'}
+          <Button
+            autoFocus={!confirmation}
+            onClick={copy ? null : this.handleOk}
+            color='secondary'
+            buttonRef={this.okRef}
+          >
+            {ok || (copy ? 'Copiar' : 'Ok')}
           </Button>
         </DialogActions>
       </Dialog>

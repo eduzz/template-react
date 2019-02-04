@@ -12,6 +12,7 @@ import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 interface IState extends IStateForm<{
   email: string;
@@ -67,12 +68,6 @@ export default class ChangeEmailDialog extends FormComponent<IProps, IState> {
     });
   }
 
-  handleChange = (e: any) => {
-    this.setState({
-      filter: e.target.value,
-    });
-  }
-
   render() {
     const { classes, opened } = this.props;
     const { loading, model } = this.state;
@@ -84,6 +79,8 @@ export default class ChangeEmailDialog extends FormComponent<IProps, IState> {
         open={opened}
         TransitionComponent={Transition}
       >
+        {loading && <LinearProgress color='secondary' />}
+
         <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
           <DialogTitle>Redefinir E-mail</DialogTitle>
 
