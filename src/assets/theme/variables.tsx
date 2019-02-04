@@ -1,7 +1,7 @@
 import { ThemeVariables } from '@material-ui/core/styles/createMuiTheme';
 
 const variables: ThemeVariables = {
-  drawerWidth: 240,
+  drawerWidth: 250,
   headerHeight: 56,
   headerHeightUpSm: 64,
   tabbarHeight: 48,
