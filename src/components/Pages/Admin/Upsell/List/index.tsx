@@ -116,7 +116,7 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={false}>
-              <Button size='small' variant='contained' color='secondary' onClick={this.handleNew}>
+              <Button id='NovaOferta' size='small' variant='contained' color='secondary' onClick={this.handleNew}>
                 <PlusIcon />
                 <Hidden xsDown>Nova Oferta</Hidden>
               </Button>
@@ -126,7 +126,7 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
 
         <Card>
           <CardContent>
-            <Typography variant='subtitle2'>Lista de Ofertas</Typography>
+            <Typography id='txtListaOfertas' variant='subtitle2'>Lista de Ofertas</Typography>
             <Typography variant='caption'>Selecione um produto para ofertar</Typography>
           </CardContent>
 
@@ -144,7 +144,7 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
 
           {!!upsells &&
             <CardContent>
-              <List disablePadding>
+              <List id='ListaUpsell' disablePadding>
                 {upsells.map(upsell => (
                   <UpsellItem
                     key={upsell.id}

@@ -95,7 +95,7 @@ export default class Informations extends PureComponent<IProps> {
       <CardContent className={classes.root}>
         <Grid container direction='column' spacing={16}>
           <Grid item>
-            <Typography variant='subtitle1'>
+            <Typography id='txtInformacoesOferta' variant='subtitle1'>
               <strong>Informações da Oferta</strong>
             </Typography>
             <Typography variant='caption'>
@@ -104,6 +104,7 @@ export default class Informations extends PureComponent<IProps> {
           </Grid>
           <Grid item>
             <FieldText
+              id='Titulo'
               label='Título'
               value={model.title}
               validation='required|max:50'
@@ -111,6 +112,7 @@ export default class Informations extends PureComponent<IProps> {
               onChange={updateModel((model, v) => model.title = v)}
             />
             <FieldText
+              id='Descricao'
               label='Descrição'
               value={model.description}
               validation='required|max:300'

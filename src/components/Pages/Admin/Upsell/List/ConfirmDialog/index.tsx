@@ -1,13 +1,13 @@
-import React, { PureComponent } from 'react';
+import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import CloseIcon from 'mdi-react/CloseIcon';
-import IconButton from '@material-ui/core/IconButton';
-import { WithRouter } from 'decorators/withRouter';
+import React, { PureComponent } from 'react';
 
 interface IProps {
   classes?: any;
@@ -65,7 +65,7 @@ export default class ConfirmDialog extends PureComponent<IProps, IState> {
         <DialogContent className={classes.content}>
           <Grid container direction='column' spacing={24} alignItems='center'>
             <Grid item>
-              <Typography variant='h4' align='center'>Muito Bem!</Typography>
+              <Typography id='txtOfertaCriada'variant='h4' align='center'>Muito Bem!</Typography>
             </Grid>
             <Grid item className={classes.description}>
               <Typography variant='subtitle1' align='center'>

@@ -1,11 +1,11 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import { IUpsellFormContext, UpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
 import { WithStyles } from 'decorators/withStyles';
 import { ILesson } from 'interfaces/models/lesson';
-import { UpsellFormContext, IUpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
+import React, { PureComponent, SyntheticEvent } from 'react';
 
 interface IProps {
   lesson: ILesson;
@@ -68,7 +68,7 @@ export default class LessonItem extends PureComponent<IProps> {
       <ListItem className={classes.root} onClick={this.handleClick}>
         <Grid container alignContent='center'>
           <Grid item>
-            <Checkbox className={classes.checkbox} checked={lesson.checked} />
+            <Checkbox id={`selecionaAula${(lesson.title).replace(/ /g, '')}`} className={classes.checkbox} checked={lesson.checked} />
           </Grid>
           <Grid item className={classes.title}>
             <Typography variant='body2'>{lesson.title}</Typography>
