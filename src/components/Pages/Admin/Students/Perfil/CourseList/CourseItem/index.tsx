@@ -75,10 +75,14 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     };
   }
 
+  get id(): number {
+    return this.props.match.params.id;
+  }
+
   componentDidMount() {
     const { id, course } = this.props.data;
 
-    studentService.getStudentCourseProgress(this.props.match.params.id, id, course.id, course.type).pipe(
+    studentService.getStudentCourseProgress(this.id, id, course.id, course.type).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(progress => {
@@ -90,7 +94,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const isOk = await Alert.confirm('Deseja realmente liberar o accesso a todos os modulos desse aluno?');
     if (!isOk) return;
 
-    studentService.releaseModules(this.props.match.params.id, this.props.data.id).pipe(
+    studentService.releaseModules(this.id, this.props.data.id).pipe(
       RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
@@ -104,7 +108,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const isOk = await Alert.confirm('Deseja realmente bloquear o accesso desse aluno?');
     if (!isOk) return;
 
-    studentService.disableCourse(this.props.match.params.id, this.props.data.id).pipe(
+    studentService.disableCourse(this.id, this.props.data.id).pipe(
       RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
@@ -118,7 +122,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const isOk = await Alert.confirm('Deseja realmente remover o accesso desse aluno?');
     if (!isOk) return;
 
-    studentService.removeAccess(this.props.match.params.id, this.props.data.id).pipe(
+    studentService.removeAccess(this.id, this.props.data.id).pipe(
       RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
@@ -129,15 +133,23 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleAccessLink = () => {
-    studentService.accessLink(this.props.match.params.id, this.props.data.id).pipe(
+    const { data } = this.props;
+
+    studentService.accessLink(this.id, data.id).pipe(
       RxOp.loader(),
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(url => {
       Alert.show({
-        message: url,
+        message: (
+          <span>
+            O link abaixo é válido pelo período de 24 horas.
+            <br /><br />
+            <span style={{ wordBreak: 'break-all' }}>{url}</span>
+          </span>
+        ),
         title: 'Link de Acesso Direto',
-        copy: true
+        copy: url
       });
     }, (err: any) => Toast.error(err));
   }

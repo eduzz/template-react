@@ -121,10 +121,10 @@ class StudentService {
   }
 
   public accessLink(student_id: number, content_id: number): Rx.Observable<string> {
-    return Rx.of('Teste' + Date.now());
-    // return apiService.get(`/producer/students/${student_id}/contents/${content_id}/access-link`).pipe(
-    //   RxOp.map(r => r.data.url)
-    // );
+    return apiService.get(`/producer/students/${student_id}/contents/${content_id}/access-link`).pipe(
+      RxOp.map(r => r.data),
+      RxOp.map(token => `${window.location.origin}/integracao/login?t=${token}`)
+    );
   }
 
   public changeStudentEmail(student_id: number, data: string) {
@@ -138,7 +138,7 @@ class StudentService {
   }
 
   public sendRecoveryPassword(student_id: number) {
-    return apiService.post(`/producer/students/${student_id}/send-link-recovery`, {});
+    return apiService.put(`/producer/students/${student_id}/recovery-password`, {});
   }
 
   public removeStudent(student_id: number) {

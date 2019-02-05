@@ -24,7 +24,7 @@ interface IProps {
   global?: boolean;
   onClose: (ok: boolean) => void;
   classes?: any;
-  copy?: boolean;
+  copy?: string;
 }
 
 export interface IAlertShowParams {
@@ -32,7 +32,7 @@ export interface IAlertShowParams {
   title?: string;
   confirmation?: boolean;
   ok?: string;
-  copy?: boolean;
+  copy?: string;
 }
 
 @WithStyles(theme => ({
@@ -78,14 +78,18 @@ export default class Alert extends React.Component<IProps, IState> {
   }
 
   handleEnter = () => {
-    if (this.props.copy) {
-      this.clipboard = new Clipboard(this.okRef.current);
-      this.clipboard.on('success', (e) => {
-        console.log(e.text);
+    if (!this.props.copy) return;
+
+    setTimeout(() => {
+      this.clipboard = new Clipboard(this.okRef.current, { container: document.activeElement });
+
+      this.clipboard.on('success', () => {
         Toast.show('Copiado');
+        this.handleOk();
       });
-      this.clipboard.on('error', (e) => console.error(e));
-    }
+
+      this.clipboard.on('error', () => Toast.error('Não foi possível copiar'));
+    }, 500);
   }
 
   handleOk = () => {
@@ -117,7 +121,7 @@ export default class Alert extends React.Component<IProps, IState> {
       >
         <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
         <DialogContent>
-          <DialogContentText className={classes.content} id='alert-message'>
+          <DialogContentText className={classes.content}>
             {message}
           </DialogContentText>
         </DialogContent>
@@ -127,13 +131,22 @@ export default class Alert extends React.Component<IProps, IState> {
               Cancelar
             </Button>
           }
+          {!!copy &&
+            <Button
+              autoFocus={!confirmation}
+              color='secondary'
+              buttonRef={this.okRef}
+              data-clipboard-text={copy}
+            >
+              Copiar
+            </Button>
+          }
           <Button
-            autoFocus={!confirmation}
-            onClick={copy ? null : this.handleOk}
+            autoFocus={!confirmation && !copy}
+            onClick={this.handleOk}
             color='secondary'
-            buttonRef={this.okRef}
           >
-            {ok || (copy ? 'Copiar' : 'Ok')}
+            {ok || 'Ok'}
           </Button>
         </DialogActions>
       </Dialog>

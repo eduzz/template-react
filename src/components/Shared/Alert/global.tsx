@@ -7,7 +7,7 @@ interface IState {
   message?: React.ReactNode;
   title?: string;
   confirmation?: boolean;
-  copy?: boolean;
+  copy?: string;
 }
 
 let lastPromise = Promise.resolve(false);
@@ -39,7 +39,7 @@ export class AlertGlobalProvider extends PureComponent<{}, IState> {
   show = (params: IAlertShowParams): Promise<boolean> => {
     const result = new Promise<boolean>(resolve => {
       this.promiseResolve = resolve;
-      this.setState({ opened: true, confirmation: false, ...params });
+      this.setState({ opened: true, confirmation: false, copy: null, ...params });
     });
 
     result.then(() => this.setState({ opened: false }));

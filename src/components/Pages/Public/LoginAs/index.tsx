@@ -29,10 +29,8 @@ export default class LoginAsPage extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    const token = queryString.parse(props.location.search).t as string;
-
     this.state = {
-      token,
+      token: queryString.parse(props.location.search).t as string,
       loading: true,
     };
   }
@@ -43,7 +41,12 @@ export default class LoginAsPage extends PureComponent<IProps, IState> {
     authService.loginAs(this.state.token).pipe(
       rxjsOperators.logError(),
       rxjsOperators.bindComponent(this)
-    ).subscribe(() => {
+    ).subscribe(redirect => {
+      if (redirect) {
+        window.location.href = redirect;
+        return;
+      }
+
       this.props.history.push('/');
     }, error => {
       this.setState({ loading: false, error });

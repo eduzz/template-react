@@ -20,6 +20,7 @@ export interface IStudentCourse {
   created_at: string;
   course: {
     id: number;
+    hash: string;
     title: string;
     type: number;
     avatar?: string;

@@ -16,6 +16,7 @@ export const TOAST_ERROR_TIMEOUT = 15000;
 export const BASEURL_V2 = (process.env.REACT_APP_BASEURL_V2 || '').trim();
 export const CERTIFICATE_URL = (process.env.REACT_APP_CERTIFICATE_URL || '').trim();
 export const CDN_URL = (process.env.REACT_APP_CDN || '').trim();
+export const LEARNER_URL = (process.env.REACT_APP_LEARNER_URL || '').trim();
 
 export const COOKIE_DOMAIN = (process.env.REACT_APP_COOKIE_DOMAIN || '').trim();
 
