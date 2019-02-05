@@ -33,7 +33,19 @@ interface IProps extends IRouteProps {
     [theme.breakpoints.up('md')]: {
       width: theme.variables.drawerWidth,
       position: 'relative',
-      height: '100vh'
+      height: '100vh',
+      '& > div': {
+        height: 'inherit',
+        overflow: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        '&::-webkit-scrollbar-track': { backgroundColor: '#F4F4F4', },
+        '&::-webkit-scrollbar': {
+          width: 6,
+          background: '#F4F4F4',
+        },
+        '&::-webkit-scrollbar-thumb': { background: theme.variables.colors.success, },
+      },
     }
   },
 }))

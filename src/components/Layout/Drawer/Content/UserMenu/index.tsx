@@ -5,7 +5,6 @@ import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import IUserToken from 'interfaces/tokens/userToken';
-import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { PureComponent } from 'react';
 import * as RxOp from 'rxjs-operators';
@@ -54,15 +53,6 @@ export default class UserMenu extends PureComponent<IProps, IState> {
     authService.openChangePassword();
   }
 
-  handleLogout = () => {
-    this.props.closeDrawer();
-
-    authService.logout().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(() => { }, err => Toast.error(err));
-  }
-
   render() {
     const { classes } = this.props;
     const { user } = this.state;
@@ -85,11 +75,6 @@ export default class UserMenu extends PureComponent<IProps, IState> {
               text='Trocar senha'
               icon={KeyVariantIcon}
               handler={this.handleChangePassword}
-            />
-            <OptionItem
-              text='Sair'
-              icon={ExitToAppIcon}
-              handler={this.handleLogout}
             />
           </DropdownMenu>
         </Grid>
