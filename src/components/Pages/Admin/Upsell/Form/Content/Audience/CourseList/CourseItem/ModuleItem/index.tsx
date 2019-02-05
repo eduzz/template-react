@@ -1,13 +1,14 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import Grid from '@material-ui/core/Grid';
 import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
-import { IModule } from 'interfaces/models/module';
-import ListItem from '@material-ui/core/ListItem';
-import { WithStyles } from 'decorators/withStyles';
+import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import { IUpsellFormContext, UpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
+import { WithStyles } from 'decorators/withStyles';
+import { IModule } from 'interfaces/models/module';
+import React, { PureComponent, SyntheticEvent } from 'react';
+
 import LessonItem from './LessonItem';
-import { UpsellFormContext, IUpsellFormContext } from 'components/Pages/Admin/Upsell/Form/Context';
 
 interface IProps {
   module: IModule;
@@ -71,7 +72,12 @@ export default class ModuleItem extends PureComponent<IProps> {
           <Grid item>
             <Grid container alignContent='center'>
               <Grid item>
-                <Checkbox className={classes.checkbox} checked={module.checked} indeterminate={this.getIndeterminatedStatus()} />
+                <Checkbox
+                  id={`selecionaModulo${(module.title).replace(/ /g, '')}`}
+                  className={classes.checkbox}
+                  checked={module.checked}
+                  indeterminate={this.getIndeterminatedStatus()}
+                />
               </Grid>
               <Grid item className={classes.title}>
                 <Typography variant='body2'>{module.title}</Typography>

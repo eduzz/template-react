@@ -1,11 +1,12 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
-import Grid from '@material-ui/core/Grid';
+import React, { PureComponent, SyntheticEvent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 import ProductList from './ProductList';
-import Button from '@material-ui/core/Button';
 
 interface IProps {
   classes?: any;
@@ -41,7 +42,7 @@ export default class Product extends PureComponent<IProps> {
       <CardContent>
         <Grid container direction='column' spacing={24} wrap='nowrap'>
           <Grid item>
-            <Typography variant='subtitle1'>
+            <Typography id='txtTipoSelecionado' variant='subtitle1'>
               <strong>Tipo Selecionado:</strong> Infoproduto <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
             </Typography>
           </Grid>
@@ -56,6 +57,7 @@ export default class Product extends PureComponent<IProps> {
           </Grid>
           <Grid item xs={false}>
             <Button
+              id='buttonSelecionarProduto'
               className={classes.button}
               onClick={this.handleSubmitContent}
               variant='contained'

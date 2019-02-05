@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { WithStyles } from 'decorators/withStyles';
 import ArrowLeftIcon from 'mdi-react/ArrowLeftIcon';
 import ArrowRightIcon from 'mdi-react/ArrowRightIcon';
-import { WithStyles } from 'decorators/withStyles';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
+import React, { PureComponent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 
 interface IProps {
   classes?: any;
@@ -39,7 +40,7 @@ export default class ActionButtons extends PureComponent<IProps> {
           </Button>
         </Grid>
         <Grid item xs='auto'>
-          <Button variant='contained' color='secondary' onClick={this.handleNext}>
+          <Button id='proximo' variant='contained' color='secondary' onClick={this.handleNext}>
             Próximo
             <ArrowRightIcon />
           </Button>

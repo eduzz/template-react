@@ -121,6 +121,7 @@ export default class ProductType extends PureComponent<IProps> {
         {this.places.map(place =>
           <Grid item key={place.value}>
             <div
+              id={`selectAudiencia${(place.title).replace(/ /g,'')}`}
               className={`${classes.item} ${!!model[place.selectedLabel] && classes.selectedPlace}`}
               onClick={place.handleClick}
             >

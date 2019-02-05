@@ -124,7 +124,7 @@ export default class ProductType extends PureComponent<IProps, IState> {
       <CardContent className={classes.root}>
         <Grid container spacing={8} alignItems='center' direction='column'>
           <Grid item>
-            <Typography variant='h4' align='center'>
+            <Typography id='textoIntroducao' variant='h4' align='center'>
               Oba! Vamos escolher qual produto vamos vender!
                 </Typography>
           </Grid>
@@ -138,6 +138,7 @@ export default class ProductType extends PureComponent<IProps, IState> {
               {this.types.map(type =>
                 <Grid item key={type.value}>
                   <div
+                    id={`tipo${(type.title).replace(' ','')}`}
                     className={`${classes.typeItem} ${selectedType === type.value && classes.selectedType}`}
                     onClick={this.handleSelectType(type.value)}
                   >
@@ -151,6 +152,7 @@ export default class ProductType extends PureComponent<IProps, IState> {
           </Grid>
           <Grid item>
             <Button
+              id='buttonIniciarOferta'
               className={classes.button}
               onClick={this.handleSubmitSelectType}
               variant='contained'

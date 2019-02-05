@@ -124,7 +124,7 @@ export default class ProductItem extends PureComponent<IProps, IState> {
             <Grid container spacing={16} alignItems='center'>
               <Grid item>
                 <Grid container alignItems='center'>
-                  <Grid item className={classes.checkboxContainer}>
+                  <Grid id={`escolheProduto${(product.title).replace(/ /g,'')}`} item className={classes.checkboxContainer}>
                     {this.isSomeVariantSelected() ?
                       <MinusCircleIcon
                         className={`${classes.checkbox} ${classes.selected}`}

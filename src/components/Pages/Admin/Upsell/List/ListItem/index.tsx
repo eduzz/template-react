@@ -174,7 +174,7 @@ export default class UpsellItem extends PureComponent<IProps> {
             <Grid item xs={true} />
           </Hidden>
 
-          <Grid item xs={false}>
+          <Grid id={`opcaoEditarExcluir${(upsell.title).replace(/ /g, '')}`} className='buttonDropDown' item xs={false}>
             <DropdownMenu options={this.actions} />
           </Grid>
 

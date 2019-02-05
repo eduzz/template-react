@@ -29,7 +29,7 @@ export default class OptionItem extends PureComponent<IProps> {
     const { option, classes } = this.props;
 
     return (
-      <MenuItem onClick={this.onClick}>
+      <MenuItem id={`button${(option.text).replace(/ /g, '')}`} onClick={this.onClick}>
         {!!option.icon &&
           <ListItemIcon>
             <option.icon />
