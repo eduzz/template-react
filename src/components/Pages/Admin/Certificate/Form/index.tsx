@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { theme } from 'assets/theme';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
@@ -24,7 +25,6 @@ import certificateService from 'services/certificate';
 import Editor from './Editor';
 import { IEditorItem } from './Editor/interfaces';
 import CertificatePreviewDialog from './PreviewDialog';
-import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 
 interface IState extends IStateForm<{
   id: number;
@@ -116,7 +116,7 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
 
         if (certificateId === model.id) return;
         this.props.history.replace(`/certificados/${certificateId}/editar`);
-        this.setState({ model: {...model, id: certificateId}, isEdit: true });
+        this.setState({ model: { ...model, id: certificateId }, isEdit: true });
       }, err => {
         resolve(null);
         Toast.error(err);
@@ -167,7 +167,7 @@ export default class CertificateFormPage extends FormComponent<IProps, IState> {
               <Grid item xs={false}>
                 <Button className={classes.toolbarBtn} size='small' disabled={loading || error} onClick={this.handleOpenPreview}>
                   <OpenInNewIcon />
-                  <Hidden implementation='css' xsDown>Preview</Hidden>
+                  <Hidden implementation='css' xsDown>Visualizar</Hidden>
                 </Button>
               </Grid>
 
