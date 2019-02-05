@@ -57,13 +57,13 @@ export default class CertificatePreviewDialog extends FormComponent<IProps, ISta
         TransitionComponent={Transition}
       >
         <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-          <DialogTitle>Preview</DialogTitle>
+          <DialogTitle>Visualizar</DialogTitle>
 
           <DialogContent className={classes.content}>
             <Typography>
-              Forneça as informações para o preview do certificado, é necessário salvar para poder
-              visualizar as alterações feitas, uma vez gerado o link do preview ele ficará disponível
-              por 15 minutos e as alterações feitas serão sincronizadas.
+              Forneça as informações para visualizar um certificado de exemplo.
+              É necessário salvar para conferir as alterações realizadas. Uma vez efetuado esse procedimento,
+              um link temporário para visualização ficará disponível por 15 minutos.
               </Typography>
 
             {PLACEHOLDERS.map(placeholder =>
