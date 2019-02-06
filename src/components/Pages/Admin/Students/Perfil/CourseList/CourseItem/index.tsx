@@ -91,7 +91,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleReleaseModules = async () => {
-    const isOk = await Alert.confirm('Deseja realmente liberar o accesso a todos os modulos desse aluno?');
+    const isOk = await Alert.confirm('Deseja realmente liberar o acesso a todos os modulos desse aluno?');
     if (!isOk) return;
 
     studentService.releaseModules(this.id, this.props.data.id).pipe(
@@ -105,7 +105,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleDisableCourse = async () => {
-    const isOk = await Alert.confirm('Deseja realmente bloquear o accesso desse aluno?');
+    const isOk = await Alert.confirm('Deseja realmente bloquear o acesso desse aluno?');
     if (!isOk) return;
 
     studentService.disableCourse(this.id, this.props.data.id).pipe(
@@ -119,7 +119,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleRemoveAccess = async () => {
-    const isOk = await Alert.confirm('Deseja realmente remover o accesso desse aluno?');
+    const isOk = await Alert.confirm('Deseja realmente remover o acesso desse aluno?');
     if (!isOk) return;
 
     studentService.removeAccess(this.id, this.props.data.id).pipe(
