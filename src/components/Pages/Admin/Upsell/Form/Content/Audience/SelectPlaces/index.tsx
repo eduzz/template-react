@@ -1,7 +1,8 @@
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import { WithStyles } from 'decorators/withStyles';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 
 import { IUpsellFormContext, UpsellFormContext } from '../../../Context';
 
@@ -117,21 +118,28 @@ export default class ProductType extends PureComponent<IProps> {
     const { model } = this.context;
 
     return (
-      <Grid container spacing={16}>
-        {this.places.map(place =>
-          <Grid item key={place.value}>
-            <div
-              id={`selectAudiencia${(place.title).replace(/ /g,'')}`}
-              className={`${classes.item} ${!!model[place.selectedLabel] && classes.selectedPlace}`}
-              onClick={place.handleClick}
-            >
-              <img className={classes.image} alt='' src={place.image} />
-              <Typography align='center' variant='subtitle1' gutterBottom><strong>{place.title}</strong></Typography>
-              <Typography align='center' variant='caption' className={classes.description}>{place.description}</Typography>
-            </div>
-          </Grid>
-        )}
-      </Grid>
+      <Fragment>
+        <FieldHidden
+          value={!model.highlight && !model.offer_shelf && !model.has_selected_courses && !model.has_selected_lessons ? null : 'OK'}
+          validation='required'
+        />
+
+        <Grid container spacing={16}>
+          {this.places.map(place =>
+            <Grid item key={place.value}>
+              <div
+                id={`selectAudiencia${(place.title).replace(/ /g, '')}`}
+                className={`${classes.item} ${!!model[place.selectedLabel] && classes.selectedPlace}`}
+                onClick={place.handleClick}
+              >
+                <img className={classes.image} alt='' src={place.image} />
+                <Typography align='center' variant='subtitle1' gutterBottom><strong>{place.title}</strong></Typography>
+                <Typography align='center' variant='caption' className={classes.description}>{place.description}</Typography>
+              </div>
+            </Grid>
+          )}
+        </Grid>
+      </Fragment>
     );
   }
 }

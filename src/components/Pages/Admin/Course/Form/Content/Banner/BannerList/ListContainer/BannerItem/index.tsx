@@ -1,6 +1,7 @@
 import Grid from '@material-ui/core/Grid';
 import ListItem from '@material-ui/core/ListItem';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import { WithStyles } from 'decorators/withStyles';
 import { IBanner } from 'interfaces/models/banner';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
@@ -28,16 +29,6 @@ interface IProps {
   }
 })
 class BannerItem extends PureComponent<IProps> {
-  actions = [{
-    text: 'Editar',
-    icon: SquareEditOutlineIcon,
-    handler: () => this.handleEdit(),
-  }, {
-    text: 'Excluir',
-    icon: TrashCanIcon,
-    handler: () => this.handleDelete(),
-  }];
-
   handleEdit = () => {
     bannerService.editBanner(this.props.banner);
   }
@@ -74,7 +65,10 @@ class BannerItem extends PureComponent<IProps> {
           </Grid>
 
           <Grid item xs={false}>
-            <DropdownMenu options={this.actions} />
+            <DropdownMenu >
+              <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+              <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+            </DropdownMenu>
           </Grid>
         </Grid>
       </ListItem>

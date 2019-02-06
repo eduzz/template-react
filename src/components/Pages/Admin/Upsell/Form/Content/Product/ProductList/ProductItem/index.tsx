@@ -150,11 +150,9 @@ export default class ProductItem extends PureComponent<IProps, IState> {
                 </Grid>
               </Grid>
 
-              <Grid item xs={5}>
+              <Grid item xs={true}>
                 <Typography variant='subtitle2' className={classes.title} noWrap>{product.title}</Typography>
               </Grid>
-
-              <Grid item xs={true} />
 
               {!!product.children && !!product.children.length &&
                 <Grid item xs={false}>

@@ -23,14 +23,14 @@ export class ApiService {
     );
   }
 
-  public post<T = any>(url: string, body: any): Rx.Observable<IApiResponse<T>> {
+  public post<T = any>(url: string, body: any = {}): Rx.Observable<IApiResponse<T>> {
     return this.request<T>('POST', url, body).pipe(
       RxOp.map(({ response }) => response),
       RxOp.filter(response => response !== undefined)
     );
   }
 
-  public put<T = any>(url: string, body: any): Rx.Observable<IApiResponse<T>> {
+  public put<T = any>(url: string, body: any = {}): Rx.Observable<IApiResponse<T>> {
     return this.request<T>('PUT', url, body).pipe(
       RxOp.map(({ response }) => response),
       RxOp.filter(response => response !== undefined)

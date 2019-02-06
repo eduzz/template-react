@@ -55,55 +55,38 @@ export default class Perfil extends PureComponent<IProps, IState> {
       <Fragment>
         <Toolbar title='Perfil do Aluno' />
 
-        <Grid container direction='column' wrap='nowrap' spacing={24}>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardContent>
-                <Info />
-              </CardContent>
-              <CardContent>
-                <Divider />
-              </CardContent>
-              <CardContent>
-                <Typography variant='h6'>
-                  <strong>Cursos Matriculados</strong>
-                </Typography>
-                <CourseList />
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item>
-            <Card className={classes.card}>
-              <CardContent>
-                <Grid container spacing={16} direction='column'>
-                  <Grid item>
-                    <Grid container>
-                      <Grid item xs={true}>
-                        <Typography variant='h6'>
-                          <strong>Histórico de Atividades</strong>
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <Button
-                          href={exportUrl}
-                          target='_blank'
-                          variant='contained'
-                          color='secondary'
-                          disabled={!exportUrl}
-                        >
-                          Exportar Resultados
-                        </Button>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item>
-                    <ActivityList />
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        <Card className={classes.card}>
+          <CardContent>
+            <Info />
+          </CardContent>
+
+          <Divider />
+
+          <CourseList />
+        </Card>
+
+        <Card className={classes.card}>
+          <CardContent>
+            <Grid container>
+              <Grid item xs={true}>
+                <Typography variant='h6'>Histórico de Atividades</Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  href={exportUrl}
+                  target='_blank'
+                  variant='contained'
+                  color='secondary'
+                  disabled={!exportUrl}
+                >
+                  Exportar
+                </Button>
+              </Grid>
+            </Grid>
+          </CardContent>
+
+          <ActivityList />
+        </Card>
       </Fragment>
     );
   }

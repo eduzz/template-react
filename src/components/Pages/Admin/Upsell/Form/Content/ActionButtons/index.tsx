@@ -1,9 +1,8 @@
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { WithStyles } from 'decorators/withStyles';
-import ArrowLeftIcon from 'mdi-react/ArrowLeftIcon';
-import ArrowRightIcon from 'mdi-react/ArrowRightIcon';
-import React, { PureComponent } from 'react';
+import React, { Fragment, PureComponent } from 'react';
 
 import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 
@@ -13,7 +12,7 @@ interface IProps {
 
 @WithStyles(theme => ({
   root: {
-    marginBottom: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 2,
   },
 }))
 export default class ActionButtons extends PureComponent<IProps> {
@@ -32,20 +31,21 @@ export default class ActionButtons extends PureComponent<IProps> {
     const { classes } = this.props;
 
     return (
-      <Grid container className={classes.root}>
-        <Grid item xs={true}>
-          <Button variant='contained' color='secondary' onClick={this.handlePrevious}>
-            <ArrowLeftIcon />
-            Anterior
+      <Fragment>
+        <Divider />
+        <Grid container className={classes.root}>
+          <Grid item xs={true}>
+            <Button variant='outlined' color='secondary' onClick={this.handlePrevious}>
+              Anterior
           </Button>
+          </Grid>
+          <Grid item xs='auto'>
+            <Button id='proximo' variant='contained' color='secondary' onClick={this.handleNext}>
+              Próximo
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs='auto'>
-          <Button id='proximo' variant='contained' color='secondary' onClick={this.handleNext}>
-            Próximo
-            <ArrowRightIcon />
-          </Button>
-        </Grid>
-      </Grid>
+      </Fragment>
     );
   }
 }

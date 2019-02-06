@@ -29,7 +29,6 @@ export default class Product extends PureComponent<IProps> {
 
   handleCleanType = (e: SyntheticEvent) => {
     e.preventDefault();
-
     this.context.updateModel(model => model.type = null)();
   }
 

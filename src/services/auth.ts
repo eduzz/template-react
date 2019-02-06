@@ -1,6 +1,7 @@
 import IUserToken, { enUserType } from 'interfaces/tokens/userToken';
 import * as Rx from 'rxjs';
 import RxOp from 'rxjs-operators';
+import { LEARNER_URL } from 'settings';
 import UAParser from 'ua-parser-js';
 import { v4 } from 'uuid';
 
@@ -51,12 +52,21 @@ export class AuthService {
     );
   }
 
-  public loginAs(token: string): Rx.Observable<void> {
+  public loginAs(token: string): Rx.Observable<string> {
     return this.getDevideInfo().pipe(
       RxOp.switchMap(deviceInfo => apiService.post('/oauth/token/login-as', { token, ...deviceInfo })),
       RxOp.tap(() => this.openLogin$.next(false)),
       RxOp.switchMap(response => tokenService.setTokens(response.data)),
-      RxOp.map(() => null)
+      RxOp.switchMap(() => tokenService.getAccessToken()),
+      RxOp.map(accessToken => {
+        const redirect = tokenService.decode<any>(token).redirect;
+
+        if (redirect) {
+          return redirect;
+        }
+
+        return tokenService.decode<IUserToken>(accessToken).type !== enUserType.PRODUCER ? LEARNER_URL : '';
+      })
     );
   }
 

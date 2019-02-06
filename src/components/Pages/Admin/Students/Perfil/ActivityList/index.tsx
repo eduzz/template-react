@@ -1,7 +1,9 @@
 import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Loading from 'components/Shared/Loading';
@@ -61,7 +63,6 @@ export default class StudentActivity extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { classes } = this.props;
     const { activities, error } = this.state;
 
     if (!!error)
@@ -75,26 +76,27 @@ export default class StudentActivity extends PureComponent<IProps, IState> {
       return <Loading />;
 
     if (!activities.length)
-      return <Typography variant='subtitle1' align='center'><strong>Nenhuma atividade encontrada!</strong></Typography>;
+      return (
+        <CardContent>
+          <Typography variant='subtitle1' align='center'><strong>Nenhuma atividade encontrada</strong></Typography>
+        </CardContent>
+      );
 
     return (
       <Fragment>
-        <List disablePadding>
-          <ListItem className={classes.header}>
-            <Grid container alignItems='center' spacing={40}>
-              <Grid item xs='auto'>
-                <Typography variant='subtitle2' noWrap>Realizado em:</Typography>
-              </Grid>
-              <Grid item xs={true}>
-                <Typography variant='subtitle2' noWrap>Atividade</Typography>
-              </Grid>
-            </Grid>
-          </ListItem>
-
-          {activities.map((activity, index) =>
-            <ActivityItem key={index} activity={activity} />
-          )}
-        </List>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Realizado em</TableCell>
+              <TableCell>Atividade</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {activities.map((activity, index) =>
+              <ActivityItem key={index} activity={activity} />
+            )}
+          </TableBody>
+        </Table>
       </Fragment>
     );
   }

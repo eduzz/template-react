@@ -1,3 +1,4 @@
+import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -14,9 +15,6 @@ interface IProps {
 }
 
 @WithStyles({
-  root: {
-    height: 'calc(100vh - 148px)',
-  },
   list: {
     transition: 'all 0.3s ease',
   },
@@ -34,32 +32,34 @@ export default class Audience extends PureComponent<IProps> {
     const { classes } = this.props;
 
     return (
-      <CardContent className={classes.root}>
-        <Grid container direction='column' spacing={32} wrap='nowrap'>
-          <Grid item>
-            <Typography id='txtAudiencia' variant='subtitle1'>
-              <strong>Audiência</strong>
+      <Card>
+        <CardContent>
+          <Grid container direction='column' spacing={32} wrap='nowrap'>
+            <Grid item>
+              <Typography id='txtAudiencia' variant='subtitle1'>
+                <strong>Audiência</strong>
+              </Typography>
+              <Typography variant='caption'>
+                Insira as informações para definir como será sua oferta,  é muito importante que seja um texto coeso e de fácil entendimento.
             </Typography>
-            <Typography variant='caption'>
-              Insira as informações para definir como será sua oferta,  é muito importante que seja um texto coeso e de fácil entendimento.
-            </Typography>
-          </Grid>
-          <Grid item>
-            <SelectPlaces />
-          </Grid>
-          <Grid item className={`${classes.list} ${(!model.has_selected_courses && !model.has_selected_lessons) && classes.disabled}`}>
-            <Typography variant='subtitle1'>
-              <strong>Aulas a exibir</strong>
-            </Typography>
-            <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
+            </Grid>
+            <Grid item>
+              <SelectPlaces />
+            </Grid>
+            <Grid item className={`${classes.list} ${(!model.has_selected_courses && !model.has_selected_lessons) && classes.disabled}`}>
+              <Typography variant='subtitle1'>
+                <strong>Aulas a exibir</strong>
+              </Typography>
+              <Typography variant='caption' gutterBottom>Selecione as aulas em que deseja mostrar a Oferta</Typography>
 
-            <CourseList />
+              <CourseList />
+            </Grid>
+            <Grid item>
+              <ActionButtons />
+            </Grid>
           </Grid>
-          <Grid item>
-            <ActionButtons />
-          </Grid>
-        </Grid>
-      </CardContent>
+        </CardContent>
+      </Card>
     );
   }
 }

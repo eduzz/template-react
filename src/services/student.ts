@@ -32,7 +32,7 @@ class StudentService {
 
   private loadStudents() {
     if (this.paginator$.value.page <= this.initialPaginator.page) {
-      this.students$.next({});
+      this.students$.next({ students: null });
     }
 
     apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).pipe(
@@ -65,17 +65,19 @@ class StudentService {
   public getStudent(id: number) {
     return apiService.get<IStudent>(`/producer/students/${id}`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-${id}`),
     );
   }
 
   public getStudentCourses(id: number) {
     return apiService.get<IStudentCourse[]>(`/producer/students/${id}/contents`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-courses-${id}`),
     );
   }
 
-  public getStudentCourseProgress(studentId: number, courseId: number, type: number) {
-    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/${courseId}/progress/${type}`).pipe(
+  public getStudentCourseProgress(studentId: number, contentId: number, courseId: number, type: number) {
+    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/${contentId}/progress/${courseId}/${type}`).pipe(
       RxOp.map(response => response.data.percentage),
     );
   }
@@ -98,6 +100,49 @@ class StudentService {
 
   public setFilters(filters: IFiltersModel) {
     this.filters$.next({ ...filters });
+  }
+
+  public releaseModules(student_id: number, content_id: number) {
+    return apiService.put(`/producer/students/${student_id}/contents/${content_id}/allow-modules`).pipe(
+      RxOp.cacheClean(`student-courses-${student_id}`)
+    );
+  }
+
+  public disableCourse(student_id: number, content_id: number) {
+    return apiService.put(`/producer/students/${student_id}/contents/${content_id}/status`).pipe(
+      RxOp.cacheClean(`student-courses-${student_id}`)
+    );
+  }
+
+  public removeAccess(student_id: number, content_id: number) {
+    return apiService.delete(`/producer/students/${student_id}/contents/${content_id}/remove-access`).pipe(
+      RxOp.cacheClean(`student-courses-${student_id}`),
+    );
+  }
+
+  public accessLink(student_id: number, content_id: number): Rx.Observable<string> {
+    return apiService.get(`/producer/students/${student_id}/contents/${content_id}/access-link`).pipe(
+      RxOp.map(r => r.data),
+      RxOp.map(token => `${window.location.origin}/integracao/login?t=${token}`)
+    );
+  }
+
+  public changeStudentEmail(student_id: number, data: string) {
+    return apiService.put(`/producer/students/${student_id}/change-email`, { email: data }).pipe(
+      RxOp.cacheClean(`student-${student_id}`)
+    );
+  }
+
+  public changeStudentPassword(student_id: number, data: string) {
+    return apiService.put(`/producer/students/${student_id}/change-password`, { password: data });
+  }
+
+  public sendRecoveryPassword(student_id: number) {
+    return apiService.put(`/producer/students/${student_id}/recovery-password`, {});
+  }
+
+  public removeStudent(student_id: number) {
+    return apiService.delete(`/producer/students/${student_id}/remove-student`);
   }
 }
 
