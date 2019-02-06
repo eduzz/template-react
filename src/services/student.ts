@@ -142,7 +142,7 @@ class StudentService {
   }
 
   public removeStudent(student_id: number) {
-    return apiService.delete(`/producer/students/${student_id}/remove-student`);
+    return apiService.delete(`/producer/students/${student_id}/remove-all-access`);
   }
 }
 
