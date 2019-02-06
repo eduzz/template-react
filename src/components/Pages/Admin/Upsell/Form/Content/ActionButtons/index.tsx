@@ -40,7 +40,7 @@ export default class ActionButtons extends PureComponent<IProps> {
           </Button>
           </Grid>
           <Grid item xs='auto'>
-            <Button variant='contained' color='secondary' onClick={this.handleNext}>
+            <Button id='proximo' variant='contained' color='secondary' onClick={this.handleNext}>
               Próximo
             </Button>
           </Grid>

@@ -158,7 +158,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
         <CardContent>
           <Grid container direction='column' spacing={24}>
             <Grid item>
-              <Typography variant='subtitle1'>
+              <Typography id='txtComportamentos' variant='subtitle1'>
                 <strong>Comportamentos</strong>
               </Typography>
               <Typography variant='caption'>
@@ -167,7 +167,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
             </Grid>
             <Grid item>
               <List disablePadding>
-                <ListItem className={classes.item} onClick={this.handleClick(1)}>
+                <ListItem id='CheckoutSun' className={classes.item} onClick={this.handleClick(1)}>
                   <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
                       <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 1 && classes.selected}`} />
@@ -181,7 +181,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                     </Grid>
                   </Grid>
                 </ListItem>
-                <ListItem className={classes.item} onClick={this.handleClick(2)}>
+                <ListItem id='PaginaInterna' className={classes.item} onClick={this.handleClick(2)}>
                   <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
                       <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 2 && classes.selected}`} />
@@ -207,7 +207,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                   </Grid>
                 </ListItem>
                 {!!user && user.beta.some(b => b.content === 'upsell') &&
-                  <ListItem className={classes.item} onClick={this.handleClick(3)}>
+                  <ListItem id='PaginaExterna' className={classes.item} onClick={this.handleClick(3)}>
                     <Grid container spacing={16}>
                       <Grid item className={classes.checkboxContainer}>
                         <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />
@@ -250,7 +250,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant='contained' type='submit' color='secondary'>
+                  <Button id='Salvar' variant='contained' type='submit' color='secondary'>
                     Salvar
                   </Button>
                 </Grid>

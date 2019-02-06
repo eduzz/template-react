@@ -36,7 +36,7 @@ export default class Audience extends PureComponent<IProps> {
         <CardContent>
           <Grid container direction='column' spacing={32} wrap='nowrap'>
             <Grid item>
-              <Typography variant='subtitle1'>
+              <Typography id='txtAudiencia' variant='subtitle1'>
                 <strong>Audiência</strong>
               </Typography>
               <Typography variant='caption'>

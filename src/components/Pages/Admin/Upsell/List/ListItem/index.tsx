@@ -116,7 +116,7 @@ export default class UpsellItem extends PureComponent<IProps> {
             </Grid>
           </Grid>
 
-          <Grid item xs={false}>
+          <Grid id={`opcaoEditarExcluir${(upsell.title).replace(/ /g, '')}`} item xs={false}>
             <DropdownMenu>
               <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
               <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />

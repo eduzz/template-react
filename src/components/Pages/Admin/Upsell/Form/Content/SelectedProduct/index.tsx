@@ -88,7 +88,7 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
             <Grid item>
               <Grid container spacing={8} alignItems='center' direction='column' className={classes.messageContainer}>
                 <Grid item>
-                  <Typography variant='subtitle1' align='center' gutterBottom>
+                  <Typography id='txtSelecaoProduto' variant='subtitle1' align='center' gutterBottom>
                     <strong>Muito Bem! Escolhemos nosso produto</strong>
                   </Typography>
                 </Grid>
@@ -98,9 +98,15 @@ export default class SelectedProduct extends PureComponent<IProps, IState> {
                 </Typography>
                 </Grid>
                 <Grid item>
-                  <Button variant='contained' color='secondary' className={classes.messageButton} onClick={this.handleInformations}>
+                  <Button
+                    id='buttonInformacoes'
+                    variant='contained'
+                    color='secondary'
+                    className={classes.messageButton}
+                    onClick={this.handleInformations}
+                  >
                     Ir para Informações
-                </Button>
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>

@@ -118,7 +118,7 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={false}>
-              <Button size='small' variant='contained' color='secondary' onClick={this.handleNew}>
+              <Button id='NovaOferta' size='small' variant='contained' color='secondary' onClick={this.handleNew}>
                 <PlusIcon />
                 <Hidden xsDown>Nova Oferta</Hidden>
               </Button>
@@ -141,7 +141,7 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
           }
 
           {!!upsells &&
-            <List disablePadding>
+            <List id='ListaUpsell' disablePadding>
               {upsells.map(upsell => (
                 <Fragment key={upsell.id}>
                   <UpsellItem
