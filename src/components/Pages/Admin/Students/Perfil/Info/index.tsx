@@ -126,7 +126,7 @@ export default class Info extends PureComponent<IProps, IState> {
       RxOp.bindComponent(this)
     ).subscribe(
       () => {
-        Alert.show('Aluno removido com sucesso');
+        Toast.show('Aluno removido com sucesso');
         this.props.history.push('/alunos');
       },
       err => Toast.error(err),

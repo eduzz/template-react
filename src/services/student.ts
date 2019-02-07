@@ -35,8 +35,7 @@ class StudentService {
       this.students$.next({ students: null });
     }
 
-    apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).pipe(
-    ).subscribe(response => {
+    apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).subscribe(response => {
       this.students$.next({
         hasMore: response.paginator.page < response.paginator.total_pages,
         students: [
@@ -55,10 +54,7 @@ class StudentService {
   }
 
   public getStudents() {
-    if (!this.students$.value.students) {
-      this.loadStudents();
-    }
-
+    this.loadStudents();
     return this.students$.asObservable();
   }
 
