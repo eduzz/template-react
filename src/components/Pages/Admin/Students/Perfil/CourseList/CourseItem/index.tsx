@@ -107,7 +107,9 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleDisableCourse = async () => {
-    const isOk = await Alert.confirm('Deseja realmente bloquear o acesso desse aluno?');
+    const { data } = this.props;
+
+    const isOk = await Alert.confirm(`Deseja realmente ${data.status ? 'bloqueados' : 'liberados'} o acesso desse aluno?`);
     if (!isOk) return;
 
     studentService.disableCourse(this.id, this.props.data.id).pipe(
@@ -115,7 +117,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(
-      () => Toast.show('Acesso bloqueado com sucesso'),
+      () => Toast.show(`Acesso ${data.status ? 'bloqueado' : 'liberado'} com sucesso`),
       (err: any) => Toast.error(err)
     );
   }
