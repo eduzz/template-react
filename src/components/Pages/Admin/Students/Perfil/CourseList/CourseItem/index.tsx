@@ -91,7 +91,9 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleReleaseModules = async () => {
-    const isOk = await Alert.confirm('Deseja realmente liberar o acesso a todos os modulos desse aluno?');
+    const { data } = this.props;
+
+    const isOk = await Alert.confirm(`Deseja realmente ${data.release_modules ? 'bloquear' : 'liberar'} o acesso a todos os modulos desse aluno?`);
     if (!isOk) return;
 
     studentService.releaseModules(this.id, this.props.data.id).pipe(
@@ -99,7 +101,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.bindComponent(this)
     ).subscribe(
-      () => Toast.show('Todos os módulos foram liberados com sucesso'),
+      () => Toast.show(`Todos os módulos foram ${data.release_modules ? 'bloqueados' : 'liberados'} com sucesso`),
       (err: any) => Toast.error(err)
     );
   }
