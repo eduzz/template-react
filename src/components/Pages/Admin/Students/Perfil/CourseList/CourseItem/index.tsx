@@ -109,7 +109,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   handleDisableCourse = async () => {
     const { data } = this.props;
 
-    const isOk = await Alert.confirm(`Deseja realmente ${data.status ? 'bloqueados' : 'liberados'} o acesso deste aluno?`);
+    const isOk = await Alert.confirm(`Deseja realmente ${data.status ? 'bloquear' : 'liberar'} o acesso deste aluno?`);
     if (!isOk) return;
 
     studentService.disableCourse(this.id, this.props.data.id).pipe(
