@@ -1,11 +1,12 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
+import Button from '@material-ui/core/Button';
 import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { WithStyles } from 'decorators/withStyles';
-import { UpsellFormContext, IUpsellFormContext } from '../../Context';
-import Grid from '@material-ui/core/Grid';
+import React, { PureComponent, SyntheticEvent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 import ProductList from './ProductList';
-import Button from '@material-ui/core/Button';
 
 interface IProps {
   classes?: any;
@@ -34,6 +35,17 @@ export default class Product extends PureComponent<IProps> {
 
   handleSubmitContent = () => this.context.updateModel(model => model.content_id = model.pre_content_id)();
 
+  getNameProductType = (type: number) => {
+    switch (type) {
+      case 1:
+        return 'Infoproduto ';
+      case 3:
+        return 'Produto Físico ';
+      default:
+        return '';
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -42,7 +54,8 @@ export default class Product extends PureComponent<IProps> {
         <Grid container direction='column' spacing={24} wrap='nowrap'>
           <Grid item>
             <Typography variant='subtitle1'>
-              <strong>Tipo Selecionado:</strong> Infoproduto <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
+              <strong>Tipo Selecionado:</strong> {this.getNameProductType(this.context.model.type)}
+              <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
             </Typography>
           </Grid>
           <Grid item>
