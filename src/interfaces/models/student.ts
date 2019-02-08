@@ -44,3 +44,12 @@ export interface IStudentActivity {
   };
   date: string;
 }
+
+export interface IStudentCourseAcquisition {
+  id: number;
+  status: boolean;
+  accepted_termat: null;
+  release_modules: boolean;
+  expire_at: null;
+  created_at: string;
+}

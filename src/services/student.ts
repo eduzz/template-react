@@ -1,4 +1,10 @@
-import { IFiltersModel, IStudent, IStudentActivity, IStudentCourse } from 'interfaces/models/student';
+import {
+  IFiltersModel,
+  IStudent,
+  IStudentActivity,
+  IStudentCourse,
+  IStudentCourseAcquisition,
+} from 'interfaces/models/student';
 import { IPaginationParams } from 'interfaces/pagination';
 import * as Rx from 'rxjs';
 import RxOp from 'rxjs-operators';
@@ -78,6 +84,13 @@ class StudentService {
     );
   }
 
+  public getStudentCourseAcquisitions(id: number, courseId: number) {
+    return apiService.get<IStudentCourseAcquisition[]>(`/producer/students/${id}/contents/${courseId}/acquisition`).pipe(
+      RxOp.map(response => response.data),
+      RxOp.cache(`student-${id}-courses-${courseId}-acquisition`),
+    );
+  }
+
   public getStudentLogs(studentId: number) {
     return apiService.get<IStudentActivity[]>(`/producer/students/${studentId}/logs`).pipe(
       RxOp.map(response => response.data),
@@ -98,26 +111,26 @@ class StudentService {
     this.filters$.next({ ...filters });
   }
 
-  public releaseModules(student_id: number, content_id: number) {
-    return apiService.put(`/producer/students/${student_id}/contents/${content_id}/allow-modules`).pipe(
-      RxOp.cacheClean(`student-courses-${student_id}`)
+  public releaseModules(studentId: number, courseId: number, acquisitonId: number) {
+    return apiService.put(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/allow-modules`).pipe(
+      RxOp.cacheClean(`student-${studentId}-courses-${courseId}-acquisition`)
     );
   }
 
-  public disableCourse(student_id: number, content_id: number) {
-    return apiService.put(`/producer/students/${student_id}/contents/${content_id}/status`).pipe(
-      RxOp.cacheClean(`student-courses-${student_id}`)
+  public disableCourse(studentId: number, courseId: number, acquisitonId: number) {
+    return apiService.put(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/status`).pipe(
+      RxOp.cacheClean(`student-${studentId}-courses-${courseId}-acquisition`)
     );
   }
 
-  public removeAccess(student_id: number, content_id: number) {
-    return apiService.delete(`/producer/students/${student_id}/contents/${content_id}/remove-access`).pipe(
-      RxOp.cacheClean(`student-courses-${student_id}`),
+  public removeAccess(studentId: number, courseId: number, acquisitonId: number) {
+    return apiService.delete(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/remove-access`).pipe(
+      RxOp.cacheClean(`student-${studentId}-courses-${courseId}-acquisition`),
     );
   }
 
-  public accessLink(student_id: number, content_id: number): Rx.Observable<string> {
-    return apiService.get(`/producer/students/${student_id}/contents/${content_id}/access-link`).pipe(
+  public accessLink(studentId: number, courseId: number, acquisitonId: number): Rx.Observable<string> {
+    return apiService.get(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/access-link`).pipe(
       RxOp.map(r => r.data),
       RxOp.map(token => `${window.location.origin}/integracao/login?t=${token}`)
     );
