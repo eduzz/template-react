@@ -5,20 +5,23 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Alert from 'components/Shared/Alert';
 import Avatar from 'components/Shared/Avatar';
-import DropdownMenu from 'components/Shared/DropdownMenu';
-import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
+// import DropdownMenu from 'components/Shared/DropdownMenu';
+// import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
-import format from 'date-fns/esm/format';
+// import format from 'date-fns/esm/format';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudentCourse } from 'interfaces/models/student';
-import DeleteIcon from 'mdi-react/DeleteIcon';
-import DoorClosedIcon from 'mdi-react/DoorClosedIcon';
-import DoorOpenIcon from 'mdi-react/DoorOpenIcon';
-import LockIcon from 'mdi-react/LockIcon';
-import LockOpenIcon from 'mdi-react/LockOpenIcon';
-import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
-import React, { Fragment, PureComponent } from 'react';
+// import DeleteIcon from 'mdi-react/DeleteIcon';
+// import DoorClosedIcon from 'mdi-react/DoorClosedIcon';
+// import DoorOpenIcon from 'mdi-react/DoorOpenIcon';
+// import LockIcon from 'mdi-react/LockIcon';
+// import LockOpenIcon from 'mdi-react/LockOpenIcon';
+// import OpenInNewIcon from 'mdi-react/OpenInNewIcon';
+import React, {
+  // Fragment,
+  PureComponent
+} from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
@@ -80,9 +83,9 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    const { id, course } = this.props.data;
+    const { id, type } = this.props.data;
 
-    studentService.getStudentCourseProgress(this.id, id, course.id, course.type).pipe(
+    studentService.getStudentCourseProgress(this.id, id, type).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(progress => {
@@ -91,35 +94,35 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleReleaseModules = async () => {
-    const { data } = this.props;
+    // const { data } = this.props;
 
-    const isOk = await Alert.confirm(`Deseja realmente ${data.release_modules ? 'bloquear' : 'liberar'} o acesso a todos os modulos deste aluno?`);
-    if (!isOk) return;
+    // const isOk = await Alert.confirm(`Deseja realmente ${data.release_modules ? 'bloquear' : 'liberar'} o acesso a todos os modulos deste aluno?`);
+    // if (!isOk) return;
 
-    studentService.releaseModules(this.id, this.props.data.id).pipe(
-      RxOp.loader(),
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(
-      () => Toast.show(`Todos os módulos foram ${data.release_modules ? 'bloqueados' : 'liberados'} com sucesso`),
-      (err: any) => Toast.error(err)
-    );
+    // studentService.releaseModules(this.id, this.props.data.id).pipe(
+    //   RxOp.loader(),
+    //   RxOp.logError(),
+    //   RxOp.bindComponent(this)
+    // ).subscribe(
+    //   () => Toast.show(`Todos os módulos foram ${data.release_modules ? 'bloqueados' : 'liberados'} com sucesso`),
+    //   (err: any) => Toast.error(err)
+    // );
   }
 
   handleDisableCourse = async () => {
-    const { data } = this.props;
+    // const { data } = this.props;
 
-    const isOk = await Alert.confirm(`Deseja realmente ${data.status ? 'bloquear' : 'liberar'} o acesso deste aluno?`);
-    if (!isOk) return;
+    // const isOk = await Alert.confirm(`Deseja realmente ${data.status ? 'bloquear' : 'liberar'} o acesso deste aluno?`);
+    // if (!isOk) return;
 
-    studentService.disableCourse(this.id, this.props.data.id).pipe(
-      RxOp.loader(),
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(
-      () => Toast.show(`Acesso ${data.status ? 'bloqueado' : 'liberado'} com sucesso`),
-      (err: any) => Toast.error(err)
-    );
+    // studentService.disableCourse(this.id, this.props.data.id).pipe(
+    //   RxOp.loader(),
+    //   RxOp.logError(),
+    //   RxOp.bindComponent(this)
+    // ).subscribe(
+    //   () => Toast.show(`Acesso ${data.status ? 'bloqueado' : 'liberado'} com sucesso`),
+    //   (err: any) => Toast.error(err)
+    // );
   }
 
   handleRemoveAccess = async () => {
@@ -163,16 +166,16 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     const { progress } = this.state;
 
     return (
-      <ListItem className={`${classes.root} ${data.status ? classes.active : ''}`}>
+      <ListItem className={`${classes.root} ${classes.active}`}>
         <Grid container wrap='nowrap' alignItems='center' spacing={16}>
           <Hidden xsDown>
             <Grid item sm={'auto'}>
-              <Avatar className={classes.avatar} src={data.course.avatar} />
+              <Avatar className={classes.avatar} src={data.avatar} />
             </Grid>
           </Hidden>
           <Grid item xs={12} sm={true}>
-            <Typography variant='body1' className={classes.title}>{data.course.title}</Typography>
-            <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography>
+            <Typography variant='body1' className={classes.title}>{data.title}</Typography>
+            {/* <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography> */}
             <Hidden smUp>
               <CourseProgress progress={progress} classes={classes} />
             </Hidden>
@@ -182,7 +185,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
               <CourseProgress progress={progress} classes={classes} />
             </Grid>
           </Hidden>
-          <Grid item xs={false}>
+          {/* <Grid item xs={false}>
             <DropdownMenu >
               {data.permission.update &&
                 <Fragment>
@@ -211,7 +214,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 handler={this.handleAccessLink}
               />
             </DropdownMenu>
-          </Grid>
+          </Grid> */}
         </Grid>
       </ListItem>
     );

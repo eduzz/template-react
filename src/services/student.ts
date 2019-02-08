@@ -72,8 +72,8 @@ class StudentService {
     );
   }
 
-  public getStudentCourseProgress(studentId: number, contentId: number, courseId: number, type: number) {
-    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/${contentId}/progress/${courseId}/${type}`).pipe(
+  public getStudentCourseProgress(studentId: number, courseId: number, type: number) {
+    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/progress/${courseId}/${type}`).pipe(
       RxOp.map(response => response.data.percentage),
     );
   }
