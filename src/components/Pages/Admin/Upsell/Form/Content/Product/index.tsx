@@ -34,6 +34,17 @@ export default class Product extends PureComponent<IProps> {
 
   handleSubmitContent = () => this.context.updateModel(model => model.content_id = model.pre_content_id)();
 
+  getNameProductType = (type: number) => {
+    switch (type) {
+      case 1:
+        return 'Infoproduto ';
+      case 3:
+        return 'Produto Físico ';
+      default:
+        return '';
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -42,7 +53,8 @@ export default class Product extends PureComponent<IProps> {
         <Grid container direction='column' spacing={24} wrap='nowrap'>
           <Grid item>
             <Typography id='txtTipoSelecionado' variant='subtitle1'>
-              <strong>Tipo Selecionado:</strong> Infoproduto <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
+              <strong>Tipo Selecionado:</strong> {this.getNameProductType(this.context.model.type)}
+              <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
             </Typography>
           </Grid>
           <Grid item>
