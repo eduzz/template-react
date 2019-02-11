@@ -15,16 +15,10 @@ export interface IFiltersModel {
 
 export interface IStudentCourse {
   id: number;
-  release_modules: boolean;
-  status: boolean;
-  created_at: string;
-  course: {
-    id: number;
-    hash: string;
-    title: string;
-    type: number;
-    avatar?: string;
-  };
+  hash: string;
+  title: string;
+  type: number;
+  avatar?: string;
   permission: {
     course: 7351
     delete: boolean
@@ -49,4 +43,13 @@ export interface IStudentActivity {
     message: string;
   };
   date: string;
+}
+
+export interface IStudentCourseAcquisition {
+  id: number;
+  status: boolean;
+  accepted_termat: null;
+  release_modules: boolean;
+  expire_at: null;
+  created_at: string;
 }

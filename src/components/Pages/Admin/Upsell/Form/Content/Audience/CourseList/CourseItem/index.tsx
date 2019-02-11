@@ -89,9 +89,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleClick = () => {
-    this.setState(state => ({
-      isOpen: !state.isOpen,
-    }));
+    this.setState(state => ({ isOpen: !state.isOpen }), () => this.context.updateHeight());
   }
 
   handleCourseSelect = (e: SyntheticEvent) => {

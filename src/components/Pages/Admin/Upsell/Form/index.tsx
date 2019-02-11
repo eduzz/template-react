@@ -15,7 +15,7 @@ import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
 
 import Content from './Content';
-import { UpsellFormContext } from './Context';
+import { IUpsellFormContext, UpsellFormContext } from './Context';
 
 interface IProps {
   classes?: any;
@@ -24,11 +24,7 @@ interface IProps {
   scrollTop: Function;
 }
 
-interface IState extends IStateForm<IUpsell> {
-  updateModel: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
-  isFormValid: boolean;
-  flowStep: number;
-  updateFlowStep: (flowStep: number) => void;
+interface IState extends IStateForm<IUpsell>, IUpsellFormContext {
 }
 
 @WithRouter()
@@ -67,6 +63,12 @@ class Form extends FormComponent<IProps, IState> {
       isFormValid: true,
       flowStep: 0,
       updateFlowStep: this.updateFlowStep,
+      setUpdateHeight: f => this.updateHeight = f,
+      updateHeight: () => {
+        setTimeout(() => this.updateHeight(), 100);
+        setTimeout(() => this.updateHeight(), 500);
+        setTimeout(() => this.updateHeight(), 1000);
+      }
     };
   }
 
@@ -97,6 +99,8 @@ class Form extends FormComponent<IProps, IState> {
     this.setState({ flowStep });
     this.props.scrollTop();
   }
+
+  updateHeight = () => { };
 
   handleSubmit = (isValid: boolean) => {
     const {

@@ -32,8 +32,26 @@ export default class Content extends React.Component<IProps> {
   static contextType = UpsellFormContext;
   public context: IUpsellFormContext;
 
+  swipeableViews = React.createRef<SwipeableViews>();
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateHeight);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateHeight);
+  }
+
+  updateHeight = () => {
+    this.context.updateHeight();
+  }
+
   handleChange = (event: SyntheticEvent, step: number) => {
     this.context.updateFlowStep(step);
+  }
+
+  setSwipeableViewsActions = (actions: any) => {
+    this.context.setUpdateHeight(actions.updateHeight);
   }
 
   render() {
@@ -73,6 +91,7 @@ export default class Content extends React.Component<IProps> {
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={step}
+            action={this.setSwipeableViewsActions as any}
             onChangeIndex={updateFlowStep}
             animateHeight
           >
