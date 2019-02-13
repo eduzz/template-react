@@ -8,6 +8,7 @@ export function errorMessageFormatter(err: any): string {
     400: 'Dados inválidos',
     401: 'Sem permissão de acesso',
     403: 'Sem permissão de acesso',
+    404: 'Não encontrado',
     422: 'Dados inválidos',
     411: 'Dados inválidos',
   };
