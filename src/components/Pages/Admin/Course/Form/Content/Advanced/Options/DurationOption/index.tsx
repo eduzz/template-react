@@ -41,8 +41,6 @@ export default class DurationOption extends React.PureComponent<IProps> {
   parseDuration = (duration: string) => {
     const [hours, minutes] = duration.split(':');
 
-    console.log(hours, minutes);
-
     if (!minutes)
       return parseInt(hours);
 

@@ -173,12 +173,7 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   handleSubmit = (isValid: boolean) => {
-
-    console.log('before validation -> ', this.state);
-
     if (!isValid) return;
-
-    console.log('after validation -> ', this.state);
 
     const { id } = this.props.match.params;
     const params = {
@@ -220,8 +215,6 @@ export default class Form extends FormComponent<IProps, IState> {
       model: this.state.model,
       updateModel: this.updateModel,
     };
-
-    console.log(this.state.model);
 
     return (
       <Fragment>

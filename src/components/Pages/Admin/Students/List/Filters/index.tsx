@@ -71,7 +71,7 @@ export default class Filters extends PureComponent<IProps, IState> {
   render() {
     const { isFiltersOpen } = this.state;
     const { exportUrl } = this.state;
-    console.log(this.state);
+
     return (
       <CardContent>
         <Grid container spacing={16}>

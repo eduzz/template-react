@@ -66,7 +66,6 @@ export default class StudentItem extends PureComponent<IProps, IState> {
   }
 
   handleImageError = () => {
-    console.log('olá');
     this.setState({ avatar: null });
   }
 

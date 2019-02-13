@@ -1,3 +1,4 @@
+import { ICourse } from 'interfaces/models/course';
 import RxOp from 'rxjs-operators';
 
 import apiService from './api';
@@ -15,6 +16,15 @@ class CourseService {
 
   public edit(id: number, course: any): any {
     return apiService.put(`/producer/courses/${id}`, course);
+  }
+
+  public getCourses(types?: string[]) {
+    let params = '?';
+    types.map(type => params += `types[]=${type}&`);
+
+    return apiService.get<ICourse[]>(`producer/courses/my${params}`).pipe(
+      RxOp.map(response => response.data),
+    );
   }
 }
 

@@ -11,6 +11,8 @@ export interface IFiltersModel {
   email?: string;
   last_used_at_start?: Date;
   last_used_at_end?: Date;
+  course_id?: string;
+  type?: string | number;
 }
 
 export interface IStudentCourse {
