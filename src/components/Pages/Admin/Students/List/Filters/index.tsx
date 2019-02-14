@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Toast from 'components/Shared/Toast';
 import { IFiltersModel } from 'interfaces/models/student';
+import EmailIcon from 'mdi-react/EmailIcon';
 import ExportIcon from 'mdi-react/ExportIcon';
 import FilterOutlineIcon from 'mdi-react/FilterOutlineIcon';
 import React, { PureComponent } from 'react';
@@ -12,6 +13,7 @@ import studentService from 'services/student';
 
 import Chips from './Chips';
 import Drawer from './Drawer';
+import SendEmailDialog from './SendEmailDialog';
 
 interface IProps {
 }
@@ -20,6 +22,7 @@ interface IState {
   isFiltersOpen: boolean;
   filters: IFiltersModel;
   exportUrl: string;
+  formOpened: boolean;
 }
 
 export default class Filters extends PureComponent<IProps, IState> {
@@ -30,6 +33,7 @@ export default class Filters extends PureComponent<IProps, IState> {
       isFiltersOpen: false,
       filters: {},
       exportUrl: '',
+      formOpened: false,
     };
   }
 
@@ -38,16 +42,24 @@ export default class Filters extends PureComponent<IProps, IState> {
   }
 
   handleOpenFilters = () => {
-    this.setState({
-      isFiltersOpen: true,
-    });
+    this.setState({ isFiltersOpen: true, });
   }
 
   handleCloseFilter = () => {
     this.getExportUrl();
-    this.setState({
-      isFiltersOpen: false,
-    });
+    this.setState({ isFiltersOpen: false, });
+  }
+
+  handleSendEmailOpen = () => {
+    this.setState({ formOpened: true });
+  }
+
+  handleSendEmailCallback = () => {
+    this.setState({ formOpened: false });
+  }
+
+  handleSendEmailCancel = () => {
+    this.setState({ formOpened: false });
   }
 
   getExportUrl = () => {
@@ -62,8 +74,7 @@ export default class Filters extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { isFiltersOpen } = this.state;
-    const { exportUrl } = this.state;
+    const { isFiltersOpen, exportUrl, formOpened } = this.state;
 
     return (
       <CardContent>
@@ -71,6 +82,13 @@ export default class Filters extends PureComponent<IProps, IState> {
           <Grid item xs={12} sm={true}>
             <Typography variant='subtitle1'>Filtros Ativos:</Typography>
             <Chips />
+          </Grid>
+
+          <Grid item xs={12} sm='auto'>
+            <Button fullWidth variant='contained' color='primary' onClick={() => this.handleSendEmailOpen()}>
+              <EmailIcon color='inherit' />
+              Enviar E-mail
+            </Button>
           </Grid>
 
           <Grid item xs={12} sm='auto'>
@@ -91,6 +109,12 @@ export default class Filters extends PureComponent<IProps, IState> {
         <Drawer
           open={isFiltersOpen}
           onClose={this.handleCloseFilter}
+        />
+
+        <SendEmailDialog
+          opened={formOpened}
+          onComplete={this.handleSendEmailCallback}
+          onCancel={this.handleSendEmailCancel}
         />
       </CardContent>
     );
