@@ -1,10 +1,10 @@
-import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldSwitch from '@react-form-fields/material-ui/components/Switch';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
+import { ScrollTopContext } from 'components/Pages/Admin';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
@@ -15,32 +15,25 @@ import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
 
 import Content from './Content';
-import { UpsellFormContext } from './Context';
+import { IUpsellFormContext, UpsellFormContext } from './Context';
 
 interface IProps {
   classes?: any;
   match?: any;
   history?: History;
+  scrollTop: Function;
 }
 
-interface IState extends IStateForm<IUpsell> {
-  updateModel: (handler: (model: Partial<IUpsell>, value: any) => void) => any;
-  isFormValid: boolean;
-  flowStep: number;
-  updateFlowStep: (flowStep: number) => void;
+interface IState extends IStateForm<IUpsell>, IUpsellFormContext {
 }
 
 @WithRouter()
 @WithStyles(theme => ({
-  card: {
-    height: 'calc(100vh - 99px)',
-    marginTop: '-5px'
-  },
   icon: {
     fill: theme.palette.text.primary,
   },
 }))
-export default class Form extends FormComponent<IProps, IState> {
+class Form extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -70,6 +63,12 @@ export default class Form extends FormComponent<IProps, IState> {
       isFormValid: true,
       flowStep: 0,
       updateFlowStep: this.updateFlowStep,
+      setUpdateHeight: f => this.updateHeight = f,
+      updateHeight: () => {
+        setTimeout(() => this.updateHeight(), 100);
+        setTimeout(() => this.updateHeight(), 500);
+        setTimeout(() => this.updateHeight(), 1000);
+      }
     };
   }
 
@@ -97,18 +96,31 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   updateFlowStep = (flowStep: number) => {
-    this.setState({
-      flowStep
-    });
+    this.setState({ flowStep });
+    this.props.scrollTop();
   }
 
-  handleSubmit = (isValid: boolean) => {
-    const { highlight_images, small_image, external_url, show_type, course_hash } = this.state.model;
-    const isFormValid = isValid && !!highlight_images.large && !!small_image;
+  updateHeight = () => { };
 
-    this.setState({
-      isFormValid,
-    });
+  handleSubmit = (isValid: boolean) => {
+    const {
+      highlight_images,
+      highlight,
+      offer_shelf,
+      has_selected_courses,
+      has_selected_lessons,
+      small_image,
+      external_url,
+      show_type,
+      course_hash
+    } = this.state.model;
+
+    const isHighlightInvalid = !!highlight && !highlight_images.large;
+    const isSmallInvalid = (!!offer_shelf || !!has_selected_courses || !!has_selected_lessons) && !small_image;
+
+    const isFormValid = isValid && !isHighlightInvalid && !isSmallInvalid;
+
+    this.setState({ isFormValid });
 
     if (show_type === 2 && !course_hash) return;
     if (show_type === 3 && !external_url) return;
@@ -160,8 +172,8 @@ export default class Form extends FormComponent<IProps, IState> {
   }
 
   render() {
-    const { classes } = this.props;
     const { flowStep, model, updateModel } = this.state;
+    const { match } = this.props;
 
     return (
       <FormValidation onSubmit={this.handleSubmit} ref={this.bindForm}>
@@ -169,7 +181,9 @@ export default class Form extends FormComponent<IProps, IState> {
           <Toolbar>
             <Grid container spacing={8} alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='h6' color='inherit'>Ofertas</Typography>
+                <Typography variant='h6' color='inherit'>
+                  {match.params.id ? 'Editar' : 'Nova'} Oferta
+                </Typography>
               </Grid>
               <Grid item xs={false}>
                 <FieldSwitch
@@ -181,12 +195,16 @@ export default class Form extends FormComponent<IProps, IState> {
             </Grid>
           </Toolbar>
 
-          <Card className={classes.card}>
-            <Content step={flowStep} />
-          </Card>
+          <Content step={flowStep} />
 
         </UpsellFormContext.Provider>
       </FormValidation>
     );
   }
 }
+
+export default React.forwardRef<Form>((props, ref) => (
+  <ScrollTopContext.Consumer>
+    {scrollTop => <Form {...props} ref={ref} scrollTop={scrollTop} />}
+  </ScrollTopContext.Consumer>
+));

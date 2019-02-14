@@ -24,6 +24,7 @@
     "@material-ui/icons": "3.0.2",
     "@react-form-fields/material-ui": "1.14.7",
     "axios": "0.18.0",
+    "clipboard": "2.0.4",
     "date-fns": "2.0.0-alpha.21",
     "lodash": "4.17.11",
     "mdi-react": "5.2.0",
@@ -46,6 +47,8 @@
     "uuid": "3.3.2"
   },
   "devDependencies": {
+    "@types/clipboard": "2.0.1",
+    "@types/date-fns": "2.6.0",
     "@types/jest": "23.3.13",
     "@types/lodash": "4.14.120",
     "@types/node": "10.12.18",
@@ -53,9 +56,8 @@
     "@types/react": "16.7.20",
     "@types/react-dom": "16.0.11",
     "@types/react-router-dom": "4.3.1",
-    "@types/react-swipeable-views": "0.12.2",
-    "@types/date-fns": "2.6.0",
     "@types/react-sortable-hoc": "0.6.4",
+    "@types/react-swipeable-views": "0.12.2",
     "@types/recharts": "1.1.9",
     "@types/ua-parser-js": "0.7.32",
     "@types/uuid": "3.4.4",

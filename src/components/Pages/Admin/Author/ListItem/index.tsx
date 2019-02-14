@@ -1,7 +1,7 @@
-import Avatar from '@material-ui/core/Avatar';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import ListItemComponent, { IStateListItem } from 'components/Abstract/ListItem';
+import Avatar from 'components/Shared/Avatar';
 import Confirm from 'components/Shared/Confirm';
 import { IOption } from 'components/Shared/DropdownMenu';
 import Toast from 'components/Shared/Toast';
@@ -12,10 +12,8 @@ import EditIcon from 'mdi-react/EditIcon';
 import React from 'react';
 import RxOp from 'rxjs-operators';
 import authorService from 'services/author';
-import { CDN_URL } from 'settings';
 
 interface IState extends IStateListItem {
-  defaultAvatar: boolean;
 }
 
 interface IProps {
@@ -60,25 +58,20 @@ export default class AuthorItem extends ListItemComponent<IProps, IState> {
     }, err => this.setError(err));
   }
 
-  handleErrorAvatar = () => {
-    this.setState({ defaultAvatar: true });
-  }
-
   render() {
-    const { defaultAvatar } = this.state;
     const { author } = this.props;
 
     return (
       <TableRow>
         <TableCell>
-          {author.avatar && !defaultAvatar ?
-            <Avatar src={CDN_URL + author.avatar} onError={this.handleErrorAvatar} /> :
-            <Avatar>{author.name.substr(0, 1).toUpperCase()}</Avatar>
-          }
+          <Avatar
+            src={author.avatar}
+            text={author.name}
+          />
         </TableCell>
         <TableCell>{author.name}</TableCell>
         <TableCell>{dateFormat(author.created_at, 'dd/MM/yyyy')}</TableCell>
-        <TableCell>
+        <TableCell className='actions'>
           {this.renderSideMenu(this.options)}
         </TableCell>
       </TableRow>

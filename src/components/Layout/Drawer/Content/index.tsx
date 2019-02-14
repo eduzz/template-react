@@ -8,7 +8,7 @@ import EyeIcon from 'mdi-react/EyeIcon';
 import React, { PureComponent } from 'react';
 import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
-import { REACT_APP_LEARNER } from 'settings';
+import { LEARNER_URL } from 'settings';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
@@ -97,7 +97,7 @@ export default class Content extends PureComponent<IProps, {}> {
         </div>
 
         <List className={classes.list}>
-          <a href={REACT_APP_LEARNER} className={classes.link}>
+          <a href={LEARNER_URL} className={classes.link}>
             <DrawerListItem key='goToLearner' data={goToLearner} onClick={() => false} />
           </a>
           {menu.map(item =>

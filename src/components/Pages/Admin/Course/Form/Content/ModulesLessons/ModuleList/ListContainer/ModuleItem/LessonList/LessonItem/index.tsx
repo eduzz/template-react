@@ -1,16 +1,18 @@
-import React, { PureComponent } from 'react';
-import { WithStyles } from 'decorators/withStyles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Confirm from 'components/Shared/Confirm';
+import DropdownMenu from 'components/Shared/DropdownMenu';
+import { WithRouter } from 'decorators/withRouter';
+import { WithStyles } from 'decorators/withStyles';
 import { ILesson } from 'interfaces/models/lesson';
-import { SortableElement } from 'react-sortable-hoc';
-import DragHandle from '../../../../DragHandle';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
+import React, { PureComponent } from 'react';
+import { SortableElement } from 'react-sortable-hoc';
 import moduleService from 'services/module';
-import Confirm from 'components/Shared/Confirm';
-import { WithRouter } from 'decorators/withRouter';
+
+import DragHandle from '../../../../DragHandle';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 
 interface IProps {
   classes?: any;
@@ -30,22 +32,8 @@ interface IProps {
   },
 }))
 class LessonItem extends PureComponent<IProps> {
-  private readonly options: IOption[];
-
-  constructor(props: IProps) {
-    super(props);
-
-    this.options = [{
-      text: 'Editar',
-      icon: SquareEditOutlineIcon,
-      handler: () => {
-        this.props.history.push(`/aula/${this.props.lesson.id}/editar`);
-      },
-    }, {
-      text: 'Excluir',
-      icon: TrashCanIcon,
-      handler: this.handleDelete,
-    }];
+  handleEdit = () => {
+    this.props.history.push(`/aula/${this.props.lesson.id}/editar`);
   }
 
   handleDelete = async () => {
@@ -65,7 +53,10 @@ class LessonItem extends PureComponent<IProps> {
         <ListItem className={classes.nested}>
           <DragHandle />
           <ListItemText inset primary={lesson.title} />
-          <DropdownMenu options={this.options} />
+          <DropdownMenu>
+            <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+            <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+          </DropdownMenu>
         </ListItem>
       </div>
     );

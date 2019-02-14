@@ -1,14 +1,27 @@
-import Avatar from '@material-ui/core/Avatar';
+import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Alert from 'components/Shared/Alert';
+import Avatar from 'components/Shared/Avatar';
+import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
+import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
-import React, { PureComponent } from 'react';
+import AtIcon from 'mdi-react/AtIcon';
+import DeleteIcon from 'mdi-react/DeleteIcon';
+import LockResetIcon from 'mdi-react/LockResetIcon';
+import SendIcon from 'mdi-react/SendIcon';
+import SettingsOutlineIcon from 'mdi-react/SettingsOutlineIcon';
+import React, { Fragment, PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
-import { CDN_URL } from 'settings';
+
+import ChangeEmailDialog from './ChangeEmailDialog';
+import ChangePasswordDialog from './ChangePasswordDialog';
 
 interface IProps {
   match?: any;
@@ -18,15 +31,17 @@ interface IProps {
 
 interface IState {
   student?: IStudent;
-  avatar?: string;
+  changeEmailOpened: boolean;
+  changePasswordOpened: boolean;
+  error?: any;
 }
 
 @WithRouter()
 @WithStyles(theme => ({
   avatar: {
-    width: 155,
-    height: 155,
-    fontSize: 80,
+    width: 80,
+    height: 80,
+    fontSize: 40,
   },
   loadingName: {
     width: 150,
@@ -39,38 +54,102 @@ interface IState {
     height: 16,
     backgroundColor: '#bdbdbd',
   },
+  icon: {
+    color: '#596375',
+  },
+  settings: {
+    alignSelf: 'flex-start',
+  }
 }))
 export default class Info extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {};
+
+    this.state = {
+      changeEmailOpened: false,
+      changePasswordOpened: false,
+    };
+  }
+
+  get studentId() {
+    return this.props.match.params.id;
   }
 
   componentDidMount() {
-    studentService.getStudent(this.props.match.params.id).pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this),
-    ).subscribe(student => {
-      this.setState({ student, avatar: student.avatar ? CDN_URL + student.avatar : null });
-    }, error => {
-      this.props.history.push('/alunos');
-      Toast.error(error);
-    });
+    this.loadData();
   }
 
-  handleImageError = () => {
-    this.setState({ avatar: null });
+  loadData = () => {
+    this.setState({ error: null });
+
+    studentService.getStudent(this.studentId).pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(result => {
+      this.setState({
+        student: result.updating ? null : result.data
+      });
+    }, error => this.setState({ error }));
+  }
+
+  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = null;
+  }
+
+  handleOpenChangeEmail = () => { this.setState({ changeEmailOpened: true }); };
+  handleCloseChangeEmail = async () => { this.setState({ changeEmailOpened: false }); };
+
+  handleOpenChangePassword = () => { this.setState({ changePasswordOpened: true }); };
+  handleCloseChangePassword = async () => { this.setState({ changePasswordOpened: false }); };
+
+  handleRecoveryPassword = async () => {
+    const isOk = await Alert.confirm('Deseja realmente enviar um link de redefinição de senha para o aluno?');
+    if (!isOk) return;
+
+    studentService.sendRecoveryPassword(this.studentId).pipe(
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this),
+    ).subscribe(
+      () => Toast.show('Link de recuperação de senha enviado com sucesso'),
+      err => Toast.error(err)
+    );
+  }
+
+  handleRemoveStudent = async () => {
+    const isOk = await Alert.confirm('Deseja realmente excluir esse aluno?');
+    if (!isOk) return;
+
+    studentService.removeStudent(this.studentId).pipe(
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(
+      () => {
+        Toast.show('Aluno removido com sucesso');
+        this.props.history.push('/alunos');
+      },
+      err => Toast.error(err),
+    );
   }
 
   render() {
     const { classes } = this.props;
-    const { student, avatar } = this.state;
+    const { student, changeEmailOpened, changePasswordOpened, error } = this.state;
+
+    if (!!error) {
+      return (
+        <CardContent>
+          <ErrorMessage error={error} tryAgain={this.loadData} />
+        </CardContent>
+      );
+    }
 
     if (!student)
       return (
         <Grid container alignItems='center' spacing={24}>
           <Grid item>
-            <Avatar className={classes.avatar}>{' '}</Avatar>
+            <Avatar className={classes.avatar} />
           </Grid>
           <Grid item>
             <div className={classes.loadingName} />
@@ -80,17 +159,48 @@ export default class Info extends PureComponent<IProps, IState> {
       );
 
     return (
-      <Grid container alignItems='center' spacing={24}>
-        <Grid item>
-          <Avatar className={classes.avatar} src={avatar} onError={this.handleImageError}>
-            {student.name.substring(0, 1)}
-          </Avatar>
+      <Fragment>
+        <ChangeEmailDialog
+          studentID={this.studentId}
+          opened={changeEmailOpened}
+          onCancel={this.handleCloseChangeEmail}
+        />
+
+        <ChangePasswordDialog
+          studentID={this.studentId}
+          opened={changePasswordOpened}
+          onCancel={this.handleCloseChangePassword}
+        />
+
+        <Grid container alignItems='center' spacing={24}>
+          <Grid item>
+            <Avatar
+              className={classes.avatar}
+              src={student.avatar}
+              text={student.name}
+            />
+          </Grid>
+          <Grid item xs={true}>
+            <Typography variant='h6'>{student.name}</Typography>
+            <Typography variant='caption'>{student.email}</Typography>
+          </Grid>
+          <Grid item className={classes.settings}>
+            <DropdownMenu>
+              <IconButton className={classes.icon}>
+                <SettingsOutlineIcon />
+              </IconButton>
+              {!student.last_used_at &&
+                <Fragment>
+                  <OptionItem text='Redefinir E-mail' icon={AtIcon} handler={this.handleOpenChangeEmail} />
+                  <OptionItem text='Redefinir Senha' icon={LockResetIcon} handler={this.handleOpenChangePassword} />
+                </Fragment>
+              }
+              <OptionItem text='Enviar link de redefinição de Senha' icon={SendIcon} handler={this.handleRecoveryPassword} />
+              <OptionItem text='Excluir Aluno' icon={DeleteIcon} handler={this.handleRemoveStudent} />
+            </DropdownMenu>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Typography variant='h6' gutterBottom>{student.name}</Typography>
-          <Typography variant='caption'>{student.email}</Typography>
-        </Grid>
-      </Grid>
+      </Fragment>
     );
   }
 }

@@ -1,4 +1,10 @@
-import { IFiltersModel, IStudent, IStudentActivity, IStudentCourse } from 'interfaces/models/student';
+import {
+  IFiltersModel,
+  IStudent,
+  IStudentActivity,
+  IStudentCourse,
+  IStudentCourseAcquisition,
+} from 'interfaces/models/student';
 import { IPaginationParams } from 'interfaces/pagination';
 import * as Rx from 'rxjs';
 import RxOp from 'rxjs-operators';
@@ -32,11 +38,10 @@ class StudentService {
 
   private loadStudents() {
     if (this.paginator$.value.page <= this.initialPaginator.page) {
-      this.students$.next({});
+      this.students$.next({ students: null });
     }
 
-    apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).pipe(
-    ).subscribe(response => {
+    apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).subscribe(response => {
       this.students$.next({
         hasMore: response.paginator.page < response.paginator.total_pages,
         students: [
@@ -55,28 +60,34 @@ class StudentService {
   }
 
   public getStudents() {
-    if (!this.students$.value.students) {
-      this.loadStudents();
-    }
-
+    this.loadStudents();
     return this.students$.asObservable();
   }
 
   public getStudent(id: number) {
     return apiService.get<IStudent>(`/producer/students/${id}`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-${id}`),
     );
   }
 
   public getStudentCourses(id: number) {
     return apiService.get<IStudentCourse[]>(`/producer/students/${id}/contents`).pipe(
       RxOp.map(response => response.data),
+      RxOp.cache(`student-courses-${id}`),
     );
   }
 
   public getStudentCourseProgress(studentId: number, courseId: number, type: number) {
-    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/${courseId}/progress/${type}`).pipe(
+    return apiService.get<{ percentage: number }>(`/producer/students/${studentId}/contents/progress/${courseId}/${type}`).pipe(
       RxOp.map(response => response.data.percentage),
+    );
+  }
+
+  public getStudentCourseAcquisitions(id: number, courseId: number) {
+    return apiService.get<IStudentCourseAcquisition[]>(`/producer/students/${id}/contents/${courseId}/acquisition`).pipe(
+      RxOp.map(response => response.data),
+      RxOp.cache(`student-${id}-courses-${courseId}-acquisition`),
     );
   }
 
@@ -98,6 +109,49 @@ class StudentService {
 
   public setFilters(filters: IFiltersModel) {
     this.filters$.next({ ...filters });
+  }
+
+  public releaseModules(studentId: number, courseId: number, acquisitonId: number) {
+    return apiService.put(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/allow-modules`).pipe(
+      RxOp.cacheClean(`student-${studentId}-courses-${courseId}-acquisition`)
+    );
+  }
+
+  public disableCourse(studentId: number, courseId: number, acquisitonId: number) {
+    return apiService.put(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/status`).pipe(
+      RxOp.cacheClean(`student-${studentId}-courses-${courseId}-acquisition`)
+    );
+  }
+
+  public removeAccess(studentId: number, courseId: number, acquisitonId: number) {
+    return apiService.delete(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/remove-access`).pipe(
+      RxOp.cacheClean(`student-${studentId}-courses-${courseId}-acquisition`),
+    );
+  }
+
+  public accessLink(studentId: number, courseId: number, acquisitonId: number): Rx.Observable<string> {
+    return apiService.get(`/producer/students/${studentId}/contents/acquisition/${acquisitonId}/access-link`).pipe(
+      RxOp.map(r => r.data),
+      RxOp.map(token => `${window.location.origin}/integracao/login?t=${token}`)
+    );
+  }
+
+  public changeStudentEmail(student_id: number, data: string) {
+    return apiService.put(`/producer/students/${student_id}/change-email`, { email: data }).pipe(
+      RxOp.cacheClean(`student-${student_id}`)
+    );
+  }
+
+  public changeStudentPassword(student_id: number, data: string) {
+    return apiService.put(`/producer/students/${student_id}/change-password`, { password: data });
+  }
+
+  public sendRecoveryPassword(student_id: number) {
+    return apiService.put(`/producer/students/${student_id}/recovery-password`, {});
+  }
+
+  public removeStudent(student_id: number) {
+    return apiService.delete(`/producer/students/${student_id}/remove-all-access`);
   }
 }
 

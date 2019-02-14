@@ -1,12 +1,16 @@
 import Button from '@material-ui/core/Button';
+import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import checkout from 'assets/images/checkout.png';
+import landing from 'assets/images/landing.png';
+import vendaNutror from 'assets/images/venda-nutror.png';
 import { WithStyles } from 'decorators/withStyles';
 import CheckCircleIcon from 'mdi-react/CheckCircleIcon';
 import React, { PureComponent } from 'react';
@@ -15,10 +19,6 @@ import authService from 'services/auth';
 import upsellService from 'services/upsell';
 
 import { IUpsellFormContext, UpsellFormContext } from '../../Context';
-
-const vendaNutror = require('assets/images/venda-nutror.png');
-const checkout = require('assets/images/checkout.png');
-const landing = require('assets/images/landing.png');
 
 interface IBeta {
   content: string;
@@ -73,6 +73,7 @@ interface IState {
   },
   externalField: {
     width: 285,
+    maxWidth: '100%',
     margin: 0,
   },
   externalLabel: {
@@ -153,111 +154,111 @@ export default class Behavior extends PureComponent<IProps, IState> {
     const { user, courses } = this.state;
 
     return (
-      <CardContent>
-        <Grid container direction='column' spacing={24}>
-          <Grid item>
-            <Typography variant='subtitle1'>
-              <strong>Comportamentos</strong>
-            </Typography>
-            <Typography variant='caption'>
-              Aqui podemos definir o fluxo da oferta. Personalize como devem se comportar cada tipo de exibição.
+      <Card>
+        <CardContent>
+          <Grid container direction='column' spacing={24}>
+            <Grid item>
+              <Typography id='txtComportamentos' variant='subtitle1'>
+                <strong>Comportamentos</strong>
               </Typography>
-          </Grid>
-          <Grid item>
-            <List disablePadding>
-              <ListItem className={classes.item} onClick={this.handleClick(1)}>
-                <Grid container spacing={16} wrap='nowrap'>
-                  <Grid item className={classes.checkboxContainer}>
-                    <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 1 && classes.selected}`} />
-                  </Grid>
-                  <Grid item>
-                    <img alt='' src={vendaNutror} />
-                  </Grid>
-                  <Grid item>
-                    <Typography variant='subtitle1'><strong>Checkout Sun</strong></Typography>
-                    <Typography variant='caption'>Direciona o fluxo da venda diretamente para o Checkout Sun.</Typography>
-                  </Grid>
-                </Grid>
-              </ListItem>
-              <ListItem className={classes.item} onClick={this.handleClick(2)}>
-                <Grid container spacing={16} wrap='nowrap'>
-                  <Grid item className={classes.checkboxContainer}>
-                    <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 2 && classes.selected}`} />
-                  </Grid>
-                  <Grid item>
-                    <img alt='' src={checkout} />
-                  </Grid>
-                  <Grid item xs={5}>
-                    <Typography variant='subtitle1'><strong>Página de Venda Nutror </strong></Typography>
-                    <Typography variant='caption'>Na página de Venda do Nutror é exibido o curso em detalhes</Typography>
-                  </Grid>
-                  <Grid item xs={true}>
-                    <Grid container alignItems='flex-end' wrap='nowrap'>
-                      <Grid item className={classes.fieldSelectContainer}>
-                        <Typography variant='caption' className={classes.externalLabel}>Curso a ser exibido</Typography>
-                        {!courses.length && <LinearProgress color='secondary' className={classes.fieldSelectLoading} />}
-                        <FieldSelect
-                          className={classes.externalField}
-                          value={model.course_hash}
-                          validation={model.show_type === 2 ? 'required' : null}
-                          onChange={updateModel((model, v) => model.course_hash = v)}
-                          options={courses}
-                          disabled={!courses.length}
-                        />
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </ListItem>
-              {!!user && user.beta.some(b => b.content === 'upsell') &&
-                <ListItem className={classes.item} onClick={this.handleClick(3)}>
-                  <Grid container spacing={16} wrap='nowrap'>
+              <Typography variant='caption'>
+                Aqui podemos definir o fluxo da oferta. Personalize como devem se comportar cada tipo de exibição.
+              </Typography>
+            </Grid>
+            <Grid item>
+              <List disablePadding>
+                <ListItem id='CheckoutSun' className={classes.item} onClick={this.handleClick(1)}>
+                  <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
-                      <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />
+                      <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 1 && classes.selected}`} />
                     </Grid>
                     <Grid item>
-                      <img alt='' src={landing} />
-                    </Grid>
-                    <Grid item xs={5}>
-                      <Typography variant='subtitle1'><strong>Landing Page Externa</strong></Typography>
-                      <Typography variant='caption'>
-                        Se você tem uma página de vendas com link da Eduzz pode utilizar para definir o fluxo da venda.
-                      </Typography>
+                      <img alt='' src={vendaNutror} />
                     </Grid>
                     <Grid item xs={true}>
-                      <Grid container alignItems='flex-end' wrap='nowrap'>
-                        <Grid item>
-                          <Typography variant='caption' className={classes.externalLabel}>Link da página</Typography>
-                          <FieldText
-                            className={classes.externalField}
-                            value={model.external_url}
-                            onChange={this.handleChange}
-                            validation={model.show_type === 3 ? 'required' : null}
-                          />
-                        </Grid>
-                      </Grid>
+                      <Typography variant='subtitle1'><strong>Checkout Sun</strong></Typography>
+                      <Typography variant='caption'>Direciona o fluxo da venda diretamente para o Checkout Sun.</Typography>
                     </Grid>
                   </Grid>
                 </ListItem>
-              }
-            </List>
-          </Grid>
-          <Grid item>
-            <Grid container>
-              <Grid item xs={true}>
-                <Button variant='outlined' color='secondary' onClick={this.handleBack}>
-                  Voltar
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant='contained' type='submit' color='secondary'>
-                  Salvar
-                </Button>
+                <ListItem id='PaginaInterna' className={classes.item} onClick={this.handleClick(2)}>
+                  <Grid container spacing={16}>
+                    <Grid item className={classes.checkboxContainer}>
+                      <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 2 && classes.selected}`} />
+                    </Grid>
+                    <Grid item>
+                      <img alt='' src={checkout} />
+                    </Grid>
+                    <Grid item xs={true}>
+                      <Typography variant='subtitle1'><strong>Página de Venda Nutror </strong></Typography>
+                      <Typography variant='caption'>Na página de Venda do Nutror é exibido o curso em detalhes</Typography>
+
+                      <FieldSelect
+                        label='Curso a ser exibido'
+                        className={classes.externalField}
+                        value={model.course_hash}
+                        validation={model.show_type === 2 ? 'required' : null}
+                        onChange={updateModel((model, v) => model.course_hash = v)}
+                        options={courses}
+                        loading={!courses.length}
+                        disabled={!courses.length}
+                      />
+                    </Grid>
+                  </Grid>
+                </ListItem>
+                {!!user && user.beta.some(b => b.content === 'upsell') &&
+                  <ListItem id='PaginaExterna' className={classes.item} onClick={this.handleClick(3)}>
+                    <Grid container spacing={16}>
+                      <Grid item className={classes.checkboxContainer}>
+                        <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />
+                      </Grid>
+                      <Grid item>
+                        <img alt='' src={landing} />
+                      </Grid>
+                      <Grid item xs={5}>
+                        <Typography variant='subtitle1'><strong>Landing Page Externa</strong></Typography>
+                        <Typography variant='caption'>
+                          Se você tem uma página de vendas com link da Eduzz pode utilizar para definir o fluxo da venda.
+                      </Typography>
+                      </Grid>
+                      <Grid item xs={true}>
+                        <Grid container alignItems='flex-end' wrap='nowrap'>
+                          <Grid item>
+                            <Typography variant='caption' className={classes.externalLabel}>Link da página</Typography>
+                            <FieldText
+                              className={classes.externalField}
+                              value={model.external_url}
+                              onChange={this.handleChange}
+                              validation={model.show_type === 3 ? 'required' : null}
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+                }
+              </List>
+            </Grid>
+            <Grid item>
+              <Divider />
+            </Grid>
+            <Grid item>
+              <Grid container>
+                <Grid item xs={true}>
+                  <Button variant='outlined' color='secondary' onClick={this.handleBack}>
+                    Anterior
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button id='Salvar' variant='contained' type='submit' color='secondary'>
+                    Salvar
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
+        </CardContent>
+      </Card>
     );
   }
 }

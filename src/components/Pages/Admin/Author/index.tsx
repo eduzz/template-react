@@ -60,8 +60,8 @@ export default class AuthorIndexPage extends ListComponent<IProps, IState> {
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(result => {
-      if(result.updating) {
-      this.setState({ loading: result.updating });
+      if (result.updating) {
+        this.setState({ loading: result.updating });
         return;
       }
 
@@ -136,7 +136,7 @@ export default class AuthorIndexPage extends ListComponent<IProps, IState> {
                   <TableCellSortable {...this.sortableProps} column='created_at'>
                     Data de criação
                   </TableCellSortable>
-                  <TableCell>
+                  <TableCell className='actions'>
                     <IconButton disabled={loading} onClick={this.handleRefresh}>
                       <RefreshIcon />
                     </IconButton>

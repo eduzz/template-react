@@ -1,127 +1,180 @@
+import Divider from '@material-ui/core/Divider';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
-import format from 'date-fns/esm/format';
+import Avatar from 'components/Shared/Avatar';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudentCourse } from 'interfaces/models/student';
+import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
-import { CDN_URL } from 'settings';
 
-const nutrorLogo = require('assets/svg/nutror-logo.svg');
+import Acquisitions from './Acquisitions';
 
 interface IProps {
   classes?: any;
-  course: IStudentCourse;
+  data: IStudentCourse;
   match?: any;
 }
 
 interface IState {
   progress: number;
+  expanded: boolean;
+  firstExpanded: boolean;
 }
 
 @WithRouter()
 @WithStyles(theme => ({
-  root: {
-    border: '1px solid',
-    borderRadius: 2,
-    color: '#8C9198',
-    borderColor: theme.variables.contentBorderColor,
-    marginBottom: theme.spacing.unit,
-    padding: theme.spacing.unit,
-    paddingRight: theme.spacing.unit * 4,
-    '&:before': {
-      content: '""',
-      width: 4,
-      height: 'calc(100% + 2px)',
-      backgroundColor: theme.variables.colors.disabled,
-      position: 'absolute',
-      left: -1,
-      borderRadius: '2px 0 0 2px',
-    },
-  },
-  active: {
-    '&:before': {
-      backgroundColor: theme.palette.secondary.light,
-    },
+  title: {
+    wordBreak: 'break-word'
   },
   avatar: {
     width: 44,
-    height: 44,
-    borderRadius: 2,
+    height: 44
+  },
+  progressNumber: {
+    width: 40,
+    textAlign: 'right'
   },
   progress: {
     width: 180,
+    maxWidth: 'calc(100vw - 160px)'
   },
+  padding: {
+    padding: '8px 8px 8px 24px'
+  }
 }))
 export default class CourseItem extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
     this.state = {
-      progress: 0,
+      progress: null,
+      expanded: false,
+      firstExpanded: false
     };
   }
 
-  componentDidMount() {
-    const { id, type } = this.props.course;
+  get id(): number {
+    return this.props.match.params.id;
+  }
 
-    studentService.getStudentCourseProgress(this.props.match.params.id, id, type).pipe(
+  componentDidMount() {
+    const { id, type } = this.props.data;
+
+    studentService.getStudentCourseProgress(this.id, id, type).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(progress => {
-      this.setState({
-        progress,
-      });
+      this.setState({ progress });
     });
   }
 
-  handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = nutrorLogo;
+  handleChange = (event: SyntheticEvent, expanded: boolean) => {
+    this.setExpanded(expanded);
+  }
+
+  setExpanded = (expanded: boolean) => {
+    this.setState({
+      expanded,
+      firstExpanded: expanded || this.state.firstExpanded
+    });
   }
 
   render() {
-    const { classes, course } = this.props;
-    const { progress } = this.state;
+    const { classes, data } = this.props;
+    const { expanded, progress, firstExpanded } = this.state;
 
     return (
-      <ListItem className={`${classes.root}`}>
-        <Grid container wrap='nowrap' alignItems='center' spacing={16}>
-          <Grid item xs='auto'>
-            <Grid container>
-              <img
-                className={classes.avatar}
-                alt=''
-                src={course.avatar ? CDN_URL + course.avatar : null}
-                onError={this.handleImageError}
-              />
+      <ExpansionPanel elevation={0} expanded={expanded} onChange={this.handleChange}>
+        <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
+          <Grid container wrap='nowrap' alignItems='center' spacing={16}>
+            <Hidden xsDown>
+              <Grid item sm={'auto'}>
+                <Avatar className={classes.avatar} src={data.avatar} />
+              </Grid>
+            </Hidden>
+            <Grid item xs={12} sm={true}>
+              <Typography variant='body1' className={classes.title}>{data.title}</Typography>
+              {/* <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography> */}
+              <Hidden smUp>
+                <CourseProgress progress={progress} classes={classes} />
+              </Hidden>
             </Grid>
-          </Grid>
-          <Grid item xs={true}>
-            <Grid container alignItems='center' spacing={16}>
-              <Grid item sm={4}>
-                <Typography variant='subtitle2' color='inherit' noWrap>{course.title}</Typography>
-              </Grid>
-              <Grid item sm={true}>
-                <Typography variant='subtitle2' color='inherit' noWrap>{format(new Date(course.created_at), 'dd/MM/YYYY')}</Typography>
-              </Grid>
+            <Hidden xsDown>
               <Grid item xs='auto'>
-                <Grid container alignItems='center' spacing={8}>
-                  <Grid item>
-                    <Typography variant='subtitle2' color='inherit'>{progress}%</Typography>
-                  </Grid>
-                  <Grid item>
-                    <LinearProgress variant='determinate' color='secondary' value={progress} className={classes.progress} />
-                  </Grid>
-                </Grid>
+                <CourseProgress progress={progress} classes={classes} />
               </Grid>
-            </Grid>
+            </Hidden>
+            {/* <Grid item xs={false}>
+            <DropdownMenu >
+              {data.permission.update &&
+                <Fragment>
+                  <OptionItem
+                    text={data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos'}
+                    icon={data.release_modules ? LockIcon : LockOpenIcon}
+                    handler={this.handleReleaseModules}
+                  />
+                  <OptionItem
+                    text={data.status ? 'Bloquear Acesso' : 'Liberar Acesso'}
+                    icon={data.status ? DoorClosedIcon : DoorOpenIcon}
+                    handler={this.handleDisableCourse}
+                  />
+                </Fragment>
+              }
+              {data.permission.delete &&
+                <OptionItem
+                  text={'Remover Conteúdo'}
+                  icon={DeleteIcon}
+                  handler={this.handleRemoveAccess}
+                />
+              }
+              <OptionItem
+                text={'Link de Acesso Direto'}
+                icon={OpenInNewIcon}
+                handler={this.handleAccessLink}
+              />
+            </DropdownMenu>
+          </Grid> */}
           </Grid>
-        </Grid>
-      </ListItem>
+
+        </ExpansionPanelSummary>
+
+        <Divider />
+
+        <ExpansionPanelDetails className={classes.padding}>
+          {firstExpanded &&
+            <Acquisitions studentId={this.id} data={data} />
+          }
+        </ExpansionPanelDetails>
+
+      </ExpansionPanel>
     );
   }
+}
+
+function CourseProgress({ progress, classes }: { progress: number, classes: any }) {
+  return (
+    <Grid wrap='nowrap' container alignItems='center' spacing={8}>
+      <Grid item className={classes.progressNumber}>
+        {progress !== null &&
+          <Typography variant='subtitle2' color='inherit'>{progress}%</Typography>
+        }
+      </Grid>
+      <Grid item>
+        <LinearProgress
+          variant={progress === null ? 'indeterminate' : 'determinate'}
+          color='secondary'
+          value={progress}
+          className={classes.progress}
+        />
+      </Grid>
+    </Grid>
+  );
 }

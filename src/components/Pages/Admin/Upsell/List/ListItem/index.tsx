@@ -3,8 +3,10 @@ import Hidden from '@material-ui/core/Hidden';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import nutrorLogo from 'assets/svg/nutror-logo.svg';
+import Avatar from 'components/Shared/Avatar';
 import Confirm from 'components/Shared/Confirm';
 import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import Toast from 'components/Shared/Toast';
 import { IRouteProps, WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
@@ -16,7 +18,6 @@ import TrashCanIcon from 'mdi-react/TrashCanIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import RxOp from 'rxjs-operators';
 import upsellService from 'services/upsell';
-import { CDN_URL } from 'settings';
 
 interface IProps extends IRouteProps {
   classes?: any;
@@ -26,17 +27,9 @@ interface IProps extends IRouteProps {
 
 @WithRouter()
 @WithStyles(theme => ({
-  root: {
-    border: '1px solid',
-    borderColor: theme.variables.contentBorderColor,
-    borderRadius: 4,
-    padding: theme.spacing.unit,
-    marginBottom: theme.spacing.unit,
-  },
   avatar: {
     width: 44,
     height: 44,
-    borderRadius: 2,
   },
   icon: {
     fill: '#596375',
@@ -51,15 +44,9 @@ interface IProps extends IRouteProps {
   },
 }))
 export default class UpsellItem extends PureComponent<IProps> {
-  actions = [{
-    text: 'Editar',
-    icon: SquareEditOutlineIcon,
-    handler: () => this.props.history.push(`/upsell/${this.props.upsell.id}/editar`),
-  }, {
-    text: 'Excluir',
-    icon: TrashCanIcon,
-    handler: () => this.handleDelete(),
-  }];
+  handleEdit = () => {
+    this.props.history.push(`/upsell/${this.props.upsell.id}/editar`);
+  }
 
   handleDelete = async () => {
     const { upsell, onDelete } = this.props;
@@ -88,40 +75,25 @@ export default class UpsellItem extends PureComponent<IProps> {
     const { upsell, classes } = this.props;
 
     return (
-      <ListItem className={classes.root}>
-        <Grid container spacing={16} justify='flex-end' alignItems='center'>
+      <ListItem component='div'>
+        <Grid container spacing={16} alignItems='center'>
           <Hidden xsDown>
-            <Grid item>
-              <Grid container>
-                <img
-                  alt=''
-                  className={classes.avatar}
-                  src={CDN_URL + upsell.small_image}
-                  onError={this.handleImageError}
-                  height={44}
-                />
-              </Grid>
-            </Grid>
-
-            <Grid item xs={4}>
-              <Typography variant='subtitle2' className={classes.title} noWrap>{upsell.title}</Typography>
+            <Grid item xs='auto'>
+              <Avatar
+                className={classes.avatar}
+                src={upsell.small_image}
+              />
             </Grid>
           </Hidden>
 
-          <Hidden xsDown>
-            <Grid item xs={true}>
-              {/* <Typography variant='subtitle1' noWrap>
-                R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
-              </Typography> */}
-            </Grid>
-          </Hidden>
+          <Grid item xs={true}>
+            <Typography variant='subtitle2' className={classes.title} noWrap>{upsell.title}</Typography>
+          </Grid>
 
           <Grid item xs={false}>
             <Grid container alignItems='center'>
               <Grid item>
-                <Grid container>
-                  <EyeIcon className={classes.icon} />
-                </Grid>
+                <EyeIcon className={classes.icon} />
               </Grid>
               <Grid item>
                 <Typography variant='subtitle1'>{upsell.total_view}</Typography>
@@ -144,38 +116,11 @@ export default class UpsellItem extends PureComponent<IProps> {
             </Grid>
           </Grid>
 
-          {/* <Grid item xs={false}>
-            <Grid container alignItems='center'>
-              <Grid item>
-                <Grid container>
-                  <ChartPieIcon className={classes.icon} />
-                </Grid>
-              </Grid>
-              <Grid item>
-                <Typography variant='subtitle1'>{this.randomizeInt(100)}%</Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={false}>
-            <Grid container alignItems='center'>
-              <Grid item>
-                <ArrowUpIcon className={`${classes.icon} ${classes.greenIcon}`} />
-              </Grid>
-              <Grid item>
-                <Typography variant='subtitle1' color='secondary'>
-                  R$ {this.randomizeInt(999)},{this.randomizeInt(9)}{this.randomizeInt(9)}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid> */}
-
-          <Hidden smUp>
-            <Grid item xs={true} />
-          </Hidden>
-
-          <Grid item xs={false}>
-            <DropdownMenu options={this.actions} />
+          <Grid id={`opcaoEditarExcluir${(upsell.title).replace(/ /g, '')}`} item xs={false}>
+            <DropdownMenu>
+              <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+              <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+            </DropdownMenu>
           </Grid>
 
           <Hidden smUp>

@@ -29,7 +29,6 @@ export default class Product extends PureComponent<IProps> {
 
   handleCleanType = (e: SyntheticEvent) => {
     e.preventDefault();
-
     this.context.updateModel(model => model.type = null)();
   }
 
@@ -53,7 +52,7 @@ export default class Product extends PureComponent<IProps> {
       <CardContent>
         <Grid container direction='column' spacing={24} wrap='nowrap'>
           <Grid item>
-            <Typography variant='subtitle1'>
+            <Typography id='txtTipoSelecionado' variant='subtitle1'>
               <strong>Tipo Selecionado:</strong> {this.getNameProductType(this.context.model.type)}
               <a className={classes.changeLink} href='' onClick={this.handleCleanType}>(Trocar)</a>
             </Typography>
@@ -69,6 +68,7 @@ export default class Product extends PureComponent<IProps> {
           </Grid>
           <Grid item xs={false}>
             <Button
+              id='buttonSelecionarProduto'
               className={classes.button}
               onClick={this.handleSubmitContent}
               variant='contained'

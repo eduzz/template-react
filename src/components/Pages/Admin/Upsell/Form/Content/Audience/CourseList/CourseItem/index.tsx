@@ -11,6 +11,7 @@ import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import ChevronUpIcon from 'mdi-react/ChevronUpIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
 import { BASEURL_V2 } from 'settings';
+
 import { IUpsellFormContext, UpsellFormContext } from '../../../../Context';
 import ModuleItem from './ModuleItem';
 
@@ -88,9 +89,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
   }
 
   handleClick = () => {
-    this.setState(state => ({
-      isOpen: !state.isOpen,
-    }));
+    this.setState(state => ({ isOpen: !state.isOpen }), () => this.context.updateHeight());
   }
 
   handleCourseSelect = (e: SyntheticEvent) => {
@@ -127,7 +126,11 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 <Grid container alignItems='center'>
                   <Grid item className={classes.checkboxContainer}>
                     <Grid container>
-                      <IconButton onClick={this.handleCourseSelect} disableRipple={!model.has_selected_courses}>
+                      <IconButton
+                        id={`selecionaCurso${(course.title).replace(/ /g, '')}`}
+                        onClick={this.handleCourseSelect}
+                        disableRipple={!model.has_selected_courses}
+                      >
                         <CheckCircleIcon
                           className={`${classes.checkbox} ${model.has_selected_courses ? course.course_page && classes.selected : classes.disabled}`}
                         />

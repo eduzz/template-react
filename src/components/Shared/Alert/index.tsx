@@ -5,16 +5,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import Clipboard from 'clipboard';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 
+import Toast from '../Toast';
 import { AlertGlobalProvider } from './global';
 
-interface IState {
+interface IState extends IAlertShowParams {
   opened: boolean;
-  message?: React.ReactNode;
-  title?: string;
-  confirmation?: boolean;
 }
 
 interface IProps {
@@ -25,12 +24,15 @@ interface IProps {
   global?: boolean;
   onClose: (ok: boolean) => void;
   classes?: any;
+  copy?: string;
 }
 
 export interface IAlertShowParams {
   message?: React.ReactNode;
   title?: string;
   confirmation?: boolean;
+  ok?: string;
+  copy?: string;
 }
 
 @WithStyles(theme => ({
@@ -43,6 +45,9 @@ export interface IAlertShowParams {
 }))
 export default class Alert extends React.Component<IProps, IState> {
   static Global = AlertGlobalProvider;
+
+  clipboard: Clipboard;
+  okRef = React.createRef<HTMLButtonElement>();
 
   constructor(props: IProps) {
     super(props);
@@ -72,16 +77,37 @@ export default class Alert extends React.Component<IProps, IState> {
     return AlertGlobalProvider.show({ ...paramsData, confirmation: true });
   }
 
+  handleEnter = () => {
+    if (!this.props.copy) return;
+
+    setTimeout(() => {
+      this.clipboard = new Clipboard(this.okRef.current, { container: document.activeElement });
+
+      this.clipboard.on('success', () => {
+        Toast.show('Copiado');
+        this.handleOk();
+      });
+
+      this.clipboard.on('error', () => Toast.error('Não foi possível copiar'));
+    }, 500);
+  }
+
   handleOk = () => {
+    this.clipboard && this.clipboard.destroy();
+    this.clipboard = null;
+
     this.props.onClose(true);
   }
 
   handleCancel = () => {
+    this.clipboard && this.clipboard.destroy();
+    this.clipboard = null;
+
     this.props.onClose(false);
   }
 
   render() {
-    const { opened, title, message, confirmation } = this.state;
+    const { opened, title, message, confirmation, ok, copy } = this.state;
     const { classes } = this.props;
 
     return (
@@ -89,6 +115,7 @@ export default class Alert extends React.Component<IProps, IState> {
         open={opened}
         keepMounted
         TransitionComponent={Transition}
+        onEnter={this.handleEnter}
         onClose={this.handleCancel}
         className={classes.root}
       >
@@ -104,8 +131,22 @@ export default class Alert extends React.Component<IProps, IState> {
               Cancelar
             </Button>
           }
-          <Button autoFocus={!confirmation} onClick={this.handleOk} color='secondary'>
-            OK
+          {!!copy &&
+            <Button
+              autoFocus={!confirmation}
+              color='secondary'
+              buttonRef={this.okRef}
+              data-clipboard-text={copy}
+            >
+              Copiar
+            </Button>
+          }
+          <Button
+            autoFocus={!confirmation && !copy}
+            onClick={this.handleOk}
+            color='secondary'
+          >
+            {ok || 'Ok'}
           </Button>
         </DialogActions>
       </Dialog>

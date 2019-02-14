@@ -2,6 +2,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import List from '@material-ui/core/List';
@@ -34,6 +35,7 @@ interface IProps extends IRouteProps {
 @WithStyles(theme => ({
   loader: {
     textAlign: 'center',
+    padding: 50
   },
   icon: {
     fill: theme.palette.text.primary,
@@ -116,7 +118,7 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
             </Grid>
 
             <Grid item xs={false}>
-              <Button size='small' variant='contained' color='secondary' onClick={this.handleNew}>
+              <Button id='NovaOferta' size='small' variant='contained' color='secondary' onClick={this.handleNew}>
                 <PlusIcon />
                 <Hidden xsDown>Nova Oferta</Hidden>
               </Button>
@@ -125,10 +127,6 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
         </Toolbar>
 
         <Card>
-          <CardContent>
-            <Typography variant='subtitle2'>Lista de Ofertas</Typography>
-            <Typography variant='caption'>Selecione um produto para ofertar</Typography>
-          </CardContent>
 
           {!error && !upsells &&
             <CardContent className={classes.loader}>
@@ -143,17 +141,17 @@ export default class UpsellListPage extends PureComponent<IProps, IState> {
           }
 
           {!!upsells &&
-            <CardContent>
-              <List disablePadding>
-                {upsells.map(upsell => (
+            <List id='ListaUpsell' disablePadding>
+              {upsells.map(upsell => (
+                <Fragment key={upsell.id}>
                   <UpsellItem
-                    key={upsell.id}
                     upsell={upsell}
                     onDelete={this.handleDelete}
                   />
-                ))}
-              </List>
-            </CardContent>
+                  <Divider />
+                </Fragment>
+              ))}
+            </List>
           }
 
           {!!upsells && !upsells.length &&

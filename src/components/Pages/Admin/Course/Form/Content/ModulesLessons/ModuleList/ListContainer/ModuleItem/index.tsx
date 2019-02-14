@@ -1,18 +1,19 @@
-import React, { PureComponent } from 'react';
-import { WithStyles } from 'decorators/withStyles';
+import Collapse from '@material-ui/core/Collapse';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import { SortableElement, SortEnd } from 'react-sortable-hoc';
+import Confirm from 'components/Shared/Confirm';
+import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
+import { WithStyles } from 'decorators/withStyles';
 import { IModule } from 'interfaces/models/module';
-import DragHandle from '../../DragHandle';
-import LessonList from './LessonList';
-import { arrayMove } from 'react-sortable-hoc';
 import SquareEditOutlineIcon from 'mdi-react/SquareEditOutlineIcon';
 import TrashCanIcon from 'mdi-react/TrashCanIcon';
-import DropdownMenu, { IOption } from 'components/Shared/DropdownMenu';
+import React, { PureComponent } from 'react';
+import { arrayMove, SortableElement, SortEnd } from 'react-sortable-hoc';
 import moduleService from 'services/module';
-import Confirm from 'components/Shared/Confirm';
+
+import DragHandle from '../../DragHandle';
+import LessonList from './LessonList';
 
 interface IProps {
   classes?: any;
@@ -32,27 +33,10 @@ interface IState {
   },
 }))
 class ModuleItem extends PureComponent<IProps, IState> {
-  private readonly options: IOption[];
-
   constructor(props: IProps) {
     super(props);
 
-    this.state = {
-      open: false,
-    };
-
-    this.options = [
-      {
-        text: 'Editar',
-        icon: SquareEditOutlineIcon,
-        handler: this.handleEdit,
-      },
-      {
-        text: 'Excluir',
-        icon: TrashCanIcon,
-        handler: this.handleDelete,
-      }
-    ];
+    this.state = { open: false };
   }
 
   handleEdit = () => {
@@ -86,7 +70,10 @@ class ModuleItem extends PureComponent<IProps, IState> {
         <ListItem onClick={this.handleClick}>
           <DragHandle />
           <ListItemText inset primary={module.title} />
-          <DropdownMenu options={this.options} />
+          <DropdownMenu>
+            <OptionItem text='Editar' icon={SquareEditOutlineIcon} handler={this.handleEdit} />
+            <OptionItem text='Excluir' icon={TrashCanIcon} handler={this.handleDelete} />
+          </DropdownMenu>
         </ListItem>
         <Collapse in={this.state.open} timeout='auto' unmountOnExit>
           <LessonList

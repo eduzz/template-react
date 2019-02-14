@@ -52,6 +52,7 @@ const MAX_WIDTH = 600;
   },
   imageContainer: {
     width: MAX_WIDTH,
+    maxWidth: '100%'
   },
   imagePlaceholder: {
     borderRadius: 4,
@@ -60,7 +61,8 @@ const MAX_WIDTH = 600;
   },
   image: {
     borderRadius: 4,
-    maxWidth: MAX_WIDTH,
+    maxWidth: '100%',
+    maxHeight: 200
   },
   imageError: {
     border: '1px solid #eb442c',
