@@ -49,6 +49,10 @@ export default class LoginAsPage extends PureComponent<IProps, IState> {
 
       this.props.history.push('/');
     }, error => {
+      if (error.status === 400) {
+        error = 'Acesso expirado';
+      }
+
       this.setState({ loading: false, error });
     });
   }
