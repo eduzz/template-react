@@ -52,19 +52,12 @@ export default class Filters extends PureComponent<IProps, IState> {
 
   getExportUrl = () => {
     studentService.getFilters().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this),
-    ).subscribe(filters => {
-      this.setState({ filters });
-    }, error => Toast.error(error));
-
-    studentService.getExportStudentsUrl(this.state.filters).pipe(
-      RxOp.loader(),
+      RxOp.switchMap(filters => studentService.getExportStudentsUrl(filters)),
       RxOp.logError(),
       RxOp.bindComponent(this),
     ).subscribe(
-      result => this.setState({ ...this.state, exportUrl: result }),
-      err => Toast.error(err),
+      exportUrl => this.setState({ ...this.state, exportUrl }),
+      error => Toast.error(error),
     );
   }
 
@@ -81,7 +74,7 @@ export default class Filters extends PureComponent<IProps, IState> {
           </Grid>
 
           <Grid item xs={12} sm='auto'>
-            <Button fullWidth href={exportUrl} target='_blank' variant='contained' color='primary'>
+            <Button disabled={!exportUrl} fullWidth href={exportUrl} target='_blank' variant='contained' color='primary'>
               <ExportIcon color='inherit' />
               Exportar
             </Button>

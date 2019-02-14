@@ -82,12 +82,9 @@ export default class Drawer extends FormComponent<IProps, IState> {
     studentService.setFilters(this.state.model);
   }
 
-  getCourses = (type?: string) => {
-    let types = [];
-    !type &&
-      this.filterByOption.map(option => types.push(option.value));
-    !!type &&
-      types.push(type);
+  getCourses = (type?: number) => {
+    const types = type ? [type] :
+      this.filterByOption.map(option => option.value);
 
     this.setState({
       ...this.state,

@@ -18,11 +18,8 @@ class CourseService {
     return apiService.put(`/producer/courses/${id}`, course);
   }
 
-  public getCourses(types?: string[]) {
-    let params = '?';
-    types.map(type => params += `types[]=${type}&`);
-
-    return apiService.get<ICourse[]>(`producer/courses/my${params}`).pipe(
+  public getCourses(types?: number[]) {
+    return apiService.get<ICourse[]>(`producer/courses/my`, { types }).pipe(
       RxOp.map(response => response.data),
     );
   }
