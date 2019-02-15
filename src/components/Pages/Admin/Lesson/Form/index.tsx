@@ -186,8 +186,6 @@ export default class Form extends FormComponent<IProps, IState> {
       updateModel: this.updateModel,
     } as IForm;
 
-    console.log(model);
-
     return (
       <FormValidation onSubmit={this.handleSubmit}>
         <Toolbar>

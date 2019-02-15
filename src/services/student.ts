@@ -103,6 +103,18 @@ class StudentService {
     );
   }
 
+  public getExportStudentsUrl(filters: IFiltersModel) {
+    let params = '&';
+
+    Object.entries(filters).forEach(([key, value]) => {
+      params += `${key}=${value}&`;
+    });
+
+    return this.tokenService.getTokens().pipe(
+      RxOp.map(({ token }) => `${API_ENDPOINT}/producer/students/export?t=${token}${params}`)
+    );
+  }
+
   public getFilters() {
     return this.filters$.asObservable();
   }

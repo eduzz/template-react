@@ -7,13 +7,16 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import { WithStyles } from 'decorators/withStyles';
+import { ICourseOptions } from 'interfaces/models/course';
 import { IFiltersModel } from 'interfaces/models/student';
 import CloseIcon from 'mdi-react/CloseIcon';
 import React from 'react';
 import RxOp from 'rxjs-operators';
+import courseService from 'services/course';
 import studentService from 'services/student';
 
 interface IProps {
@@ -23,6 +26,8 @@ interface IProps {
 }
 
 interface IState extends IStateForm<IFiltersModel> {
+  courses?: ICourseOptions[];
+  loadingCourses: boolean;
 }
 
 @WithStyles(theme => ({
@@ -42,6 +47,23 @@ interface IState extends IStateForm<IFiltersModel> {
 export default class Drawer extends FormComponent<IProps, IState> {
   today = new Date();
 
+  private filterByOption = [{
+    label: 'Curso',
+    value: 1,
+  }, {
+    label: 'Pacote',
+    value: 2,
+  }];
+
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      ...this.state,
+      courses: [],
+      loadingCourses: false
+    };
+  }
+
   componentDidMount() {
     studentService.getFilters().pipe(
       RxOp.logError(),
@@ -49,6 +71,8 @@ export default class Drawer extends FormComponent<IProps, IState> {
     ).subscribe(filters => {
       this.setState({ model: filters });
     });
+
+    this.getCourses();
   }
 
   handleSubmitFilters = (isValid: boolean) => {
@@ -58,9 +82,37 @@ export default class Drawer extends FormComponent<IProps, IState> {
     studentService.setFilters(this.state.model);
   }
 
+  getCourses = (type?: number) => {
+    const types = type ? [type] :
+      this.filterByOption.map(option => option.value);
+
+    this.setState({
+      ...this.state,
+      loadingCourses: true,
+    });
+
+    courseService.getCourses(types).pipe(
+      RxOp.bindComponent(this),
+      RxOp.logError(),
+      RxOp.map(courses =>
+        (courses || []).map(course => ({
+          label: course.title,
+          value: course.id,
+          type: course.type,
+        }))
+      ),
+    ).subscribe(courses => {
+      this.setState({
+        ...this.state,
+        courses,
+        loadingCourses: false,
+      });
+    });
+  }
+
   render() {
     const { classes, onClose, open } = this.props;
-    const { model } = this.state;
+    const { model, courses, loadingCourses } = this.state;
 
     return (
       <MaterialDrawer anchor='right' open={open} onClose={onClose}>
@@ -115,6 +167,27 @@ export default class Drawer extends FormComponent<IProps, IState> {
                     />
                   </Grid>
                 </Grid>
+
+                <FieldSelect
+                  value={model.type}
+                  onChange={this.updateModel((model, v) => {
+                    model.type = v;
+                    this.getCourses(v);
+                  })}
+                  options={this.filterByOption}
+                  label='Filtrar por'
+                  emptyOption='Todos'
+                />
+
+                {!!model.type &&
+                  <FieldSelect
+                    loading={loadingCourses}
+                    value={model.course_id}
+                    onChange={this.updateModel((model, v) => model.course_id = v)}
+                    options={courses.filter(course => course.type === model.type)}
+                    emptyOption='Todos'
+                  />
+                }
               </Grid>
 
               <Grid item xs={false}>

@@ -32,7 +32,7 @@ export default class Chips extends PureComponent<IProps, IState> {
       RxOp.bindComponent(this),
     ).subscribe(filters => {
       this.setState({ filters });
-    }, error =>   Toast.error(error));
+    }, error => Toast.error(error));
   }
 
   handleDelete = (identifierLabel: string) => () => {
@@ -84,6 +84,14 @@ export default class Chips extends PureComponent<IProps, IState> {
             <Chip
               label={<Typography variant='subtitle2'>Data final: {dateFormat(filters.last_used_at_end)}</Typography>}
               onDelete={this.handleDelete('last_used_at_end')}
+            />
+          </Grid>
+        }
+        {!!filters.type && filters.type !== '' &&
+          <Grid item>
+            <Chip
+              label={<Typography variant='subtitle2'>Curso / Pacote</Typography>}
+              onDelete={this.handleDelete('type')}
             />
           </Grid>
         }
