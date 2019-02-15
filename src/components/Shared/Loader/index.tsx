@@ -10,6 +10,7 @@ interface IState {
 
 interface IProps {
   classes?: any;
+  innerRef?: any;
 }
 
 @WithStyles(theme => ({
