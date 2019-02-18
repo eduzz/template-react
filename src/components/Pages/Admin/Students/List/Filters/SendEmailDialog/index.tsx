@@ -8,13 +8,13 @@ import Slide from '@material-ui/core/Slide';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import { IAuthor } from 'interfaces/models/author';
+import Toast from 'components/Shared/Toast';
+import { IEmail } from 'interfaces/models/email';
 import * as React from 'react';
+import RxOp from 'rxjs-operators';
+import studentService from 'services/student';
 
-/* import Toast from 'components/Shared/Toast'; */
-/* import RxOp from 'rxjs-operators'; */
-
-interface IState extends IStateForm<IAuthor> {
+interface IState extends IStateForm<IEmail> {
   isSending: boolean;
 }
 
@@ -39,22 +39,38 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
   }
 
   onSubmit = async (isValid: boolean) => {
+    const { model } = this.state;
+
     if (!isValid) return;
 
     this.setState({ isSending: true });
 
-    /* authorService.save(this.state.model).pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(author => {
-      this.setState({ isSending: false });
-
-      Toast.show('Salvo com sucesso');
-      this.props.onComplete(author);
-    }, err => {
-      Toast.error(err);
-      this.setState({ isSending: false });
-    }); */
+    studentService.getFilters()
+      .pipe(
+        RxOp.map(filters => studentService.sendEmail(
+          {
+            title: model.title,
+            message: model.message,
+            course_name: model.course_name || null
+          },
+          filters
+        ))
+      )
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(
+        () => {
+          this.setState({ isSending: false });
+          Toast.show('E-mail enviado com sucesso!');
+          this.props.onCancel();
+        },
+        err => {
+          Toast.error(err);
+          this.setState({ isSending: false });
+        }
+      );
   }
 
   render() {
@@ -72,17 +88,17 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
         {isSending && <LinearProgress color='secondary' />}
 
         <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-          <DialogTitle>Eniar E-amail para os alunos</DialogTitle>
+          <DialogTitle>Enviar E-mail para os alunos</DialogTitle>
 
           <DialogContent>
             <FieldText
               type='text'
-              label='Nome'
+              label='Título'
               tabIndex={1}
               validation='required|max:120'
               disabled={isSending}
-              value={model.name}
-              onChange={this.updateModel((m, v) => m.name = v)}
+              value={model.title}
+              onChange={this.updateModel((m, v) => m.title = v)}
             />
 
             <FieldText
@@ -90,13 +106,13 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
               rows={100}
               className='textarea'
               type='text'
-              label='Resumo'
+              label='Mensagem'
               tabIndex={2}
               validation='required|max:300'
-              helperText={`${(model.description || '').length}/300 caracteres`}
+              helperText={`${(model.message || '').length}/300 caracteres`}
               disabled={isSending}
-              value={model.description}
-              onChange={this.updateModel((m, v) => m.description = v)}
+              value={model.message}
+              onChange={this.updateModel((m, v) => m.message = v)}
             />
           </DialogContent>
 

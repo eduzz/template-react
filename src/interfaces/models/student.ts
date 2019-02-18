@@ -11,7 +11,8 @@ export interface IFiltersModel {
   email?: string;
   last_used_at_start?: Date;
   last_used_at_end?: Date;
-  course_id?: string;
+  course_name?: string;
+  course_id?: string | number;
   type?: string | number;
 }
 
