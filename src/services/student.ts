@@ -172,7 +172,9 @@ class StudentService {
     Object.entries(filters).forEach(([key, value]) => {
       params += `${key}=${value}&`;
     });
-    return apiService.post(`/producer/students/send-mail?title=${e.title}&message=${e.message}${!!e.course_name && `&${e.course_name}`}&${params}`);
+    return apiService.post(
+      `/producer/students/send-mail?title=${e.title}&message=${e.message}${!!e.course_name ? `&${e.course_name}` : ''}&${params}`,
+      {});
   }
 }
 

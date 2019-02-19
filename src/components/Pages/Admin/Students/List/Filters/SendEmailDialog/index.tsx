@@ -47,7 +47,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
 
     studentService.getFilters()
       .pipe(
-        RxOp.map(filters => studentService.sendEmail(
+        RxOp.switchMap(filters => studentService.sendEmail(
           {
             title: model.title,
             message: model.message,
