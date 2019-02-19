@@ -1,5 +1,6 @@
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Avatar from 'components/Shared/Avatar';
@@ -9,6 +10,7 @@ import ptLocate from 'date-fns/esm/locale/pt-BR';
 import { WithRouter } from 'decorators/withRouter';
 import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
+import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import React, { PureComponent } from 'react';
 import { CDN_URL } from 'settings';
 
@@ -44,6 +46,9 @@ interface IProps {
   },
   lastAccess: {
     textAlign: 'right'
+  },
+  view: {
+    margin: -15
   }
 }))
 export default class StudentItem extends PureComponent<IProps, IState> {
@@ -89,9 +94,14 @@ export default class StudentItem extends PureComponent<IProps, IState> {
             <Typography variant='body1'>{student.name}</Typography>
             <Typography variant='body2'>{student.email}</Typography>
           </Grid>
-          <Grid item xs={12} sm={'auto'} className={classes.lastAccess}>
+          <Grid item xs={true} sm={'auto'} className={classes.lastAccess}>
             <Typography variant='caption'>Último acesso</Typography>
             <Typography variant='body1'>{distance}</Typography>
+          </Grid>
+          <Grid item xs={'auto'}>
+            <IconButton className={classes.view}>
+              <ChevronRightIcon />
+            </IconButton>
           </Grid>
         </Grid>
       </ListItem>
