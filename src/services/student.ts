@@ -170,10 +170,10 @@ class StudentService {
   public sendEmail(e: IEmail, filters: IFiltersModel) {
     let params = '&';
     Object.entries(filters).forEach(([key, value]) => {
-      params += `${key}=${value}&`;
+      params += `${key}=${value || ''}&`;
     });
     return apiService.post(
-      `/producer/students/send-mail?title=${e.title}&message=${e.message}${!!e.course_name ? `&${e.course_name}` : ''}&${params}`,
+      `/producer/students/send-email?title=${e.title}&message=${e.message}${!!e.course_name ? `&${e.course_name}` : ''}&${params}`,
       {});
   }
 }

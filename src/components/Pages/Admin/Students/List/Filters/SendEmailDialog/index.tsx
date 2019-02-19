@@ -47,11 +47,12 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
 
     studentService.getFilters()
       .pipe(
+        RxOp.first(),
         RxOp.switchMap(filters => studentService.sendEmail(
           {
             title: model.title,
             message: model.message,
-            course_name: model.course_name || null
+            course_name: model.course_name || ''
           },
           filters
         ))
@@ -62,6 +63,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
       )
       .subscribe(
         () => {
+          this.resetForm();
           this.setState({ isSending: false });
           Toast.show('E-mail enviado com sucesso!');
           this.props.onCancel();
