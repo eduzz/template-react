@@ -54,14 +54,7 @@ export default class AdminPage extends PureComponent<IProps, {}> {
     { display: 'Cursos', icon: BullhornIcon, path: getUrlV2('/'), },
     { display: 'Pacotes', icon: ViewDashboardIcon, path: getUrlV2('/user/pacotes') },
     { display: 'Comentários', icon: CommentMultipleIcon, path: getUrlV2('/comentarios') },
-    {
-      display: 'Alunos',
-      icon: AccountGroupIcon,
-      submenu: [
-        { display: 'Gerenciar', path: getUrlV2('/alunos') },
-        { display: 'Histórico', path: '/alunos' }
-      ]
-    },
+    { display: 'Alunos', icon: AccountGroupIcon, path: '/alunos' },
     { display: 'Customização', icon: WaterIcon, path: getUrlV2('/user/customizacao') },
     { display: 'Controle de Acesso', icon: SettingsIcon, path: getUrlV2('/grupos') },
     { display: 'Certificados', icon: CertificateIcon, path: '/certificados' },
