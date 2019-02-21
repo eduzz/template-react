@@ -102,7 +102,6 @@ export default class CourseItem extends PureComponent<IProps, IState> {
             </Hidden>
             <Grid item xs={12} sm={true}>
               <Typography variant='body1' className={classes.title}>{data.title}</Typography>
-              {/* <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography> */}
               <Hidden smUp>
                 <CourseProgress progress={progress} classes={classes} />
               </Hidden>
@@ -112,36 +111,6 @@ export default class CourseItem extends PureComponent<IProps, IState> {
                 <CourseProgress progress={progress} classes={classes} />
               </Grid>
             </Hidden>
-            {/* <Grid item xs={false}>
-            <DropdownMenu >
-              {data.permission.update &&
-                <Fragment>
-                  <OptionItem
-                    text={data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos'}
-                    icon={data.release_modules ? LockIcon : LockOpenIcon}
-                    handler={this.handleReleaseModules}
-                  />
-                  <OptionItem
-                    text={data.status ? 'Bloquear Acesso' : 'Liberar Acesso'}
-                    icon={data.status ? DoorClosedIcon : DoorOpenIcon}
-                    handler={this.handleDisableCourse}
-                  />
-                </Fragment>
-              }
-              {data.permission.delete &&
-                <OptionItem
-                  text={'Remover Conteúdo'}
-                  icon={DeleteIcon}
-                  handler={this.handleRemoveAccess}
-                />
-              }
-              <OptionItem
-                text={'Link de Acesso Direto'}
-                icon={OpenInNewIcon}
-                handler={this.handleAccessLink}
-              />
-            </DropdownMenu>
-          </Grid> */}
           </Grid>
 
         </ExpansionPanelSummary>
