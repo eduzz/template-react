@@ -24,6 +24,7 @@ interface IProps extends IStyledProps {
   studentId: number;
   course: IStudentCourse;
   data: IStudentCourseAcquisition;
+  match?: any;
 }
 
 interface IState {
@@ -139,13 +140,15 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
   }
 
   render() {
-    const { data, course, classes } = this.props;
+    const { data, course, classes, studentId } = this.props;
     const { formOpened } = this.state;
 
     return (
       <div className={`${classes.root} ${data.status ? classes.active : ''}`}>
         <ExtendAccessDialog
           opened={formOpened}
+          courseId={data.id}
+          studentId={studentId}
           onComplete={this.handleFormCallback}
           onCancel={this.handleFormCancel}
         />
@@ -155,7 +158,7 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
             <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography>
           </Grid>
           <Grid item xs={false}>
-            <DropdownMenu >
+            <DropdownMenu>
               <OptionItem
                 text={'Link de Acesso Direto'}
                 icon={OpenInNewIcon}
@@ -164,7 +167,7 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
               {course.permission.update &&
                 <Fragment>
                   <OptionItem
-                    text={'Extender Acesso'}
+                    text={'Estender Acesso'}
                     icon={CalendarPlusIcon}
                     handler={this.handleExtendAccess}
                   />

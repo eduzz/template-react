@@ -6,15 +6,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
+import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
+import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
-
-/* import Toast from 'components/Shared/Toast'; */
-/* import RxOp from 'rxjs-operators';
-import authorService from 'services/author'; */
+import RxOp from 'rxjs-operators';
+import courseService from 'services/course';
 
 interface IState extends IStateForm {
   isSaving: boolean;
@@ -24,6 +23,8 @@ interface IState extends IStateForm {
 interface IProps {
   classes?: any;
   opened: boolean;
+  courseId: number;
+  studentId: number;
   onComplete: () => void;
   onCancel: () => void;
 }
@@ -35,6 +36,8 @@ interface IProps {
   },
 }))
 export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
+  today = new Date();
+
   constructor(props: IProps) {
     super(props);
     this.state = { ...this.state, isSaving: false };
@@ -49,22 +52,30 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
   }
 
   onSubmit = async (isValid: boolean) => {
+    const { model } = this.state;
+    const { courseId, studentId } = this.props;
+
     if (!isValid) return;
 
     this.setState({ isSaving: true });
 
-    /* authorService.save(this.state.model).pipe(
+    let data = {
+      expire_at: model.limitDate,
+      course_id: courseId
+    };
+
+    courseService.extendAccess(studentId, data).pipe(
       RxOp.logError(),
       RxOp.bindComponent(this)
-    ).subscribe(author => {
+    ).subscribe(() => {
       this.setState({ isSaving: false });
 
-      Toast.show('Salvo com sucesso');
-      this.props.onComplete(author);
+      Toast.show('Acesso estendido com sucesso!');
+      this.props.onComplete();
     }, err => {
       Toast.error(err);
       this.setState({ isSaving: false });
-    }); */
+    });
   }
 
   render() {
@@ -82,19 +93,18 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
         {isSaving && <LinearProgress color='secondary' />}
 
         <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-          <DialogTitle>Extender acesso ao curso</DialogTitle>
+          <DialogTitle>Estender acesso</DialogTitle>
 
           <DialogContent className={classes.content}>
             <Grid container spacing={16} alignItems='center' className={classes.avatarContainer}>
               <Grid item xs={true}>
-                <FieldText
-                  type='text'
-                  label='Extender até:'
-                  tabIndex={1}
-                  validation='required'
-                  disabled={isSaving}
-                  value={model.date}
-                  onChange={this.updateModel((m, v) => m.date = v)}
+                <FieldDate
+                  label='Liberar acesso até'
+                  validation='date'
+                  placeholder='Data limite'
+                  minDate={this.today}
+                  value={model.limitDate}
+                  onChange={this.updateModel((model, value) => model.limitDate = value)}
                 />
               </Grid>
             </Grid>
@@ -102,7 +112,7 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
 
           <DialogActions>
             <Button disabled={isSaving} onClick={this.onCancel}>Cancelar</Button>
-            <Button color='secondary' type='submit' disabled={isSaving}>Extender</Button>
+            <Button color='secondary' type='submit' disabled={isSaving}>Estender</Button>
           </DialogActions>
 
         </FormValidation>
