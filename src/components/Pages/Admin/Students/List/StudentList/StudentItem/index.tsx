@@ -12,7 +12,6 @@ import { WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
 import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import React, { PureComponent } from 'react';
-import { CDN_URL } from 'settings';
 
 interface IState {
   isActive: boolean;
@@ -62,7 +61,7 @@ export default class StudentItem extends PureComponent<IProps, IState> {
       ...state,
       isActive: differenceInDays(new Date(), student.last_used_at) <= 30,
       distance: student.last_used_at ? formatDistance(new Date(), student.last_used_at, { locale: ptLocate }) : 'Nunca',
-      avatar: student.avatar ? CDN_URL + student.avatar : null
+      avatar: student.avatar || null,
     };
   }
 
