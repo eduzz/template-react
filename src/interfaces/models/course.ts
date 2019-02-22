@@ -17,4 +17,5 @@ export interface ICourseOptions {
 export interface IExtendAccess {
   expire_at: string;
   course_id: number;
+  matriculation_id: number;
 }

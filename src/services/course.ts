@@ -27,6 +27,7 @@ class CourseService {
   public extendAccess(studentId: number, data: IExtendAccess) {
     return apiService.put(`producer/students/${studentId}/change-expire`, data).pipe(
       RxOp.map(response => response.data),
+      RxOp.cacheClean(`student-courses-${studentId}`),
     );
   }
 }

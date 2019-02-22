@@ -24,6 +24,7 @@ interface IProps {
   classes?: any;
   opened: boolean;
   courseId: number;
+  matriculationId: number;
   studentId: number;
   onComplete: () => void;
   onCancel: () => void;
@@ -53,7 +54,7 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
 
   onSubmit = async (isValid: boolean) => {
     const { model } = this.state;
-    const { courseId, studentId } = this.props;
+    const { courseId, matriculationId, studentId } = this.props;
 
     if (!isValid) return;
 
@@ -61,7 +62,8 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
 
     let data = {
       expire_at: model.limitDate,
-      course_id: courseId
+      course_id: courseId,
+      matriculation_id: matriculationId,
     };
 
     courseService.extendAccess(studentId, data).pipe(
