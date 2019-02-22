@@ -7,6 +7,7 @@ import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toolbar from 'components/Layout/Toolbar';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Loading from 'components/Shared/Loading';
+import Toast from 'components/Shared/Toast';
 import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { ICustomization } from 'interfaces/models/customization';
 import React, { Fragment } from 'react';
@@ -44,6 +45,14 @@ export default class CustomizationPage extends FormComponent<IProps, IState> {
 
   handleSubmit = (isValid: boolean) => {
     if (!isValid) return;
+
+    customizationService.save(this.state.model).pipe(
+      RxOp.loader(),
+      RxOp.logError(),
+      RxOp.bindComponent(this)
+    ).subscribe(model => {
+      Toast.show('Configurações salvas');
+    }, error => Toast.error(error));
   }
 
   render() {
