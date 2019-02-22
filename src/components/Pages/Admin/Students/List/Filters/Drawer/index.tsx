@@ -77,9 +77,8 @@ export default class Drawer extends FormComponent<IProps, IState> {
 
   handleSubmitFilters = (isValid: boolean) => {
     if (!isValid) return;
-
-    this.props.onClose();
     studentService.setFilters(this.state.model);
+    this.props.onClose();
   }
 
   getCourses = (type?: number) => {
@@ -183,7 +182,10 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   <FieldSelect
                     loading={loadingCourses}
                     value={model.course_id}
-                    onChange={this.updateModel((model, v) => model.course_id = v)}
+                    onChange={this.updateModel((model, value) => {
+                      model.course_id = value;
+                      model.course_name = courses.filter(c => c.value === value).map(c => c.label)[0];
+                    })}
                     options={courses.filter(course => course.type === model.type)}
                     emptyOption='Todos'
                   />

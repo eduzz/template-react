@@ -10,6 +10,7 @@ import CommentMultipleIcon from 'mdi-react/CommentMultipleIcon';
 import HelpCircleIcon from 'mdi-react/HelpCircleIcon';
 import SettingsIcon from 'mdi-react/SettingsIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
+import WaterIcon from 'mdi-react/WaterIcon';
 import React, { PureComponent } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
@@ -55,7 +56,7 @@ export default class AdminPage extends PureComponent<IProps, {}> {
     { display: 'Pacotes', icon: ViewDashboardIcon, path: getUrlV2('/user/pacotes') },
     { display: 'Comentários', icon: CommentMultipleIcon, path: getUrlV2('/comentarios') },
     { display: 'Alunos', icon: AccountGroupIcon, path: '/alunos' },
-    // { display: 'Customização', icon: WaterIcon, path: getUrlV2('/user/customizacao') },
+    { display: 'Customização', icon: WaterIcon, path: getUrlV2('/user/customizacao') },
     { display: 'Controle de Acesso', icon: SettingsIcon, path: getUrlV2('/grupos') },
     { display: 'Certificados', icon: CertificateIcon, path: '/certificados' },
     { display: 'Novidades', icon: AlertCircleIcon, path: getUrlV2('/newzz') },

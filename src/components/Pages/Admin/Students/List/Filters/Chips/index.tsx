@@ -90,7 +90,9 @@ export default class Chips extends PureComponent<IProps, IState> {
         {!!filters.type && filters.type !== '' &&
           <Grid item>
             <Chip
-              label={<Typography variant='subtitle2'>Curso / Pacote</Typography>}
+              label={<Typography variant='subtitle2'>{
+                filters.type === 1 ? 'CURSO' : 'PACOTE'}{!!filters.course_name && `: ${filters.course_name}`}
+              </Typography>}
               onDelete={this.handleDelete('type')}
             />
           </Grid>
