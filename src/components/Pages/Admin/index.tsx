@@ -18,6 +18,7 @@ import AuthorIndexPage from './Author';
 import CategoriesIndexPage from './Categories';
 import CertificateIndexPage from './Certificate';
 import CourseIndexPage from './Course';
+import CustomizationPage from './Customization';
 import DashboardIndexPage from './Dashboard';
 import LessonIndexPage from './Lesson';
 import StudentsIndexPage from './Students';
@@ -56,7 +57,7 @@ export default class AdminPage extends PureComponent<IProps, {}> {
     { display: 'Pacotes', icon: ViewDashboardIcon, path: getUrlV2('/user/pacotes') },
     { display: 'Comentários', icon: CommentMultipleIcon, path: getUrlV2('/comentarios') },
     { display: 'Alunos', icon: AccountGroupIcon, path: '/alunos' },
-    { display: 'Customização', icon: WaterIcon, path: getUrlV2('/user/customizacao') },
+    { display: 'Customização', icon: WaterIcon, path: '/customizacao' },
     { display: 'Controle de Acesso', icon: SettingsIcon, path: getUrlV2('/grupos') },
     { display: 'Certificados', icon: CertificateIcon, path: '/certificados' },
     { display: 'Novidades', icon: AlertCircleIcon, path: getUrlV2('/newzz') },
@@ -84,6 +85,7 @@ export default class AdminPage extends PureComponent<IProps, {}> {
                 <Route path='/curso' component={CourseIndexPage} />
                 <Route path='/modulos' component={LessonIndexPage} />
                 <Route path='/categorias' component={CategoriesIndexPage} />
+                <Route path='/customizacao' component={CustomizationPage} />
                 <Route path='/alunos' component={StudentsIndexPage} />
                 <Route path='/' component={DashboardIndexPage} />
                 <Route render={this.renderRedirect} />
