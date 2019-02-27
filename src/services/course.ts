@@ -1,4 +1,4 @@
-import { ICourse } from 'interfaces/models/course';
+import { ICourse, IExtendAccess } from 'interfaces/models/course';
 import RxOp from 'rxjs-operators';
 
 import apiService from './api';
@@ -21,6 +21,13 @@ class CourseService {
   public getCourses(types?: number[]) {
     return apiService.get<ICourse[]>(`producer/courses/my`, { types }).pipe(
       RxOp.map(response => response.data),
+    );
+  }
+
+  public extendAccess(studentId: number, data: IExtendAccess) {
+    return apiService.put(`producer/students/${studentId}/change-expire`, data).pipe(
+      RxOp.map(response => response.data),
+      RxOp.cacheClean(`student-courses-${studentId}`),
     );
   }
 }

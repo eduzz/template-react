@@ -7,6 +7,7 @@ import Toast from 'components/Shared/Toast';
 import format from 'date-fns/esm/format';
 import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IStudentCourse, IStudentCourseAcquisition } from 'interfaces/models/student';
+import CalendarPlusIcon from 'mdi-react/CalendarPlusIcon';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import DoorClosedIcon from 'mdi-react/DoorClosedIcon';
 import DoorOpenIcon from 'mdi-react/DoorOpenIcon';
@@ -17,10 +18,17 @@ import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
 
+import ExtendAccessDialog from './ExtendAccessDialog';
+
 interface IProps extends IStyledProps {
   studentId: number;
   course: IStudentCourse;
   data: IStudentCourseAcquisition;
+  match?: any;
+}
+
+interface IState {
+  formOpened: boolean;
 }
 
 @WithStyles(theme => ({
@@ -42,7 +50,13 @@ interface IProps extends IStyledProps {
     },
   },
 }))
-export default class AcquisitionItem extends PureComponent<IProps> {
+export default class AcquisitionItem extends PureComponent<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = { formOpened: false, };
+  }
+
   handleReleaseModules = async () => {
     const { data, studentId, course } = this.props;
 
@@ -113,19 +127,51 @@ export default class AcquisitionItem extends PureComponent<IProps> {
     }, (err: any) => Toast.error(err));
   }
 
-  render() {
-    const { data, course, classes } = this.props;
+  handleExtendAccess = () => {
+    this.setState({ formOpened: true });
+  }
 
+  handleFormCallback = () => {
+    this.setState({ formOpened: false });
+  }
+
+  handleFormCancel = () => {
+    this.setState({ formOpened: false });
+  }
+
+  render() {
+    const { data, course, classes, studentId } = this.props;
+    const { formOpened } = this.state;
+    console.log(data);
     return (
       <div className={`${classes.root} ${data.status ? classes.active : ''}`}>
+        <ExtendAccessDialog
+          opened={formOpened}
+          matriculationId={data.id}
+          courseId={data.course_id}
+          studentId={studentId}
+          onComplete={this.handleFormCallback}
+          onCancel={this.handleFormCancel}
+        />
+
         <Grid container wrap='nowrap' alignItems='center' spacing={16}>
           <Grid item xs={12} sm={true}>
             <Typography variant='body2'>Matrícula: {format(new Date(data.created_at), 'dd/MM/YYYY')}</Typography>
           </Grid>
           <Grid item xs={false}>
-            <DropdownMenu >
+            <DropdownMenu>
+              <OptionItem
+                text={'Link de Acesso Direto'}
+                icon={OpenInNewIcon}
+                handler={this.handleAccessLink}
+              />
               {course.permission.update &&
                 <Fragment>
+                  <OptionItem
+                    text={'Estender Acesso'}
+                    icon={CalendarPlusIcon}
+                    handler={this.handleExtendAccess}
+                  />
                   <OptionItem
                     text={data.release_modules ? 'Bloquear todos os Módulos' : 'Liberar todos os Módulos'}
                     icon={data.release_modules ? LockIcon : LockOpenIcon}
@@ -140,16 +186,11 @@ export default class AcquisitionItem extends PureComponent<IProps> {
               }
               {course.permission.delete &&
                 <OptionItem
-                  text={'Remover Conteúdo'}
+                  text={'Desmatricular'}
                   icon={DeleteIcon}
                   handler={this.handleRemoveAccess}
                 />
               }
-              <OptionItem
-                text={'Link de Acesso Direto'}
-                icon={OpenInNewIcon}
-                handler={this.handleAccessLink}
-              />
             </DropdownMenu>
           </Grid>
         </Grid>

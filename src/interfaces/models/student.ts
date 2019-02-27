@@ -55,4 +55,5 @@ export interface IStudentCourseAcquisition {
   release_modules: boolean;
   expire_at: null;
   created_at: string;
+  course_id: number;
 }
