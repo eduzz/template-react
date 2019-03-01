@@ -25,13 +25,9 @@ export class AuthService {
         if (!user) return null;
 
         user.fullName = `${user.firstName} ${user.lastName}`;
-
         return user;
       }),
-      RxOp.catchError(() => {
-        console.log('error');
-        return Rx.of(null);
-      }),
+      RxOp.catchError(() => Rx.of(null)),
       RxOp.shareReplay(1)
     );
   }
