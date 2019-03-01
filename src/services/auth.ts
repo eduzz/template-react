@@ -6,6 +6,7 @@ import UAParser from 'ua-parser-js';
 import { v4 } from 'uuid';
 
 import apiService from './api';
+import cacheService from './cache';
 import storageService from './storage';
 import tokenService from './token';
 
@@ -28,11 +29,15 @@ export class AuthService {
         user.firstName = (user.name || '').split(' ')[0];
         return user;
       }),
-      RxOp.catchError(err => {
-        return Rx.of(null);
-      }),
+      RxOp.catchError(err => Rx.of(null)),
       RxOp.shareReplay(1)
     );
+
+    this.getUser().pipe(
+      RxOp.distinctUntilChanged((a, b) => (a || {} as IUserToken).id !== (b || {} as IUserToken).id),
+      RxOp.switchMap(() => cacheService.clear()),
+      RxOp.logError()
+    ).subscribe();
   }
 
   public openLogin(): void {
