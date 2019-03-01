@@ -1,11 +1,9 @@
 import dateFnsAddMinutes from 'date-fns/addMinutes';
 import dateFnsIsBefore from 'date-fns/isBefore';
-import IUserToken from 'interfaces/tokens/userToken';
 import * as Rx from 'rxjs';
-import RxOp from 'rxjs-operators';
+import * as RxOp from 'rxjs/operators';
 
 import ICache from '../interfaces/cache';
-import authService from './auth';
 import storageService from './storage';
 
 export class CacheService {
@@ -14,12 +12,6 @@ export class CacheService {
 
   constructor() {
     this.memory = {};
-
-    authService.getUser().pipe(
-      RxOp.distinctUntilChanged((a, b) => (a || {} as IUserToken).id !== (b || {} as IUserToken).id),
-      RxOp.switchMap(() => this.clear()),
-      RxOp.logError()
-    ).subscribe();
   }
 
   public getData<T = any>(key: string): Rx.Observable<ICache<T>> {

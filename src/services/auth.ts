@@ -3,6 +3,7 @@ import * as Rx from 'rxjs';
 import * as RxOp from 'rxjs-operators';
 
 import apiService, { ApiService } from './api';
+import cacheService from './cache';
 import tokenService, { TokenService } from './token';
 
 export class AuthService {
@@ -30,6 +31,12 @@ export class AuthService {
       RxOp.catchError(() => Rx.of(null)),
       RxOp.shareReplay(1)
     );
+
+    this.getUser().pipe(
+      RxOp.distinctUntilChanged((a, b) => (a || {} as IUserToken).id !== (b || {} as IUserToken).id),
+      RxOp.switchMap(() => cacheService.clear()),
+      RxOp.logError()
+    ).subscribe();
   }
 
   public openLogin(): void {
