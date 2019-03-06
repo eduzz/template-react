@@ -14,6 +14,7 @@ export interface IFiltersModel {
   course_name?: string;
   course_id?: string | number;
   type?: string | number;
+  total_results?: number;
 }
 
 export interface IStudentCourse {

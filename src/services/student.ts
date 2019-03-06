@@ -18,6 +18,7 @@ export interface IStudentListResult {
   error?: any;
   students?: IStudent[];
   hasMore?: boolean;
+  total_students?: number;
 }
 
 class StudentService {
@@ -45,6 +46,7 @@ class StudentService {
     apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).subscribe(response => {
       this.students$.next({
         hasMore: response.paginator.page < response.paginator.total_pages,
+        total_students: response.paginator.total_rows,
         students: [
           ...(this.students$.value.students || []),
           ...(response.data || []),

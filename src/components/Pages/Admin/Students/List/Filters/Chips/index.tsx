@@ -33,6 +33,18 @@ export default class Chips extends PureComponent<IProps, IState> {
     ).subscribe(filters => {
       this.setState({ filters });
     }, error => Toast.error(error));
+
+    studentService.getStudents().pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this),
+    ).subscribe(result => {
+      this.setState({
+        filters: {
+          ...this.state.filters,
+          total_results: result.total_students
+        }
+      });
+    }, error => Toast.error(error));
   }
 
   handleDelete = (identifierLabel: string) => () => {
@@ -44,6 +56,7 @@ export default class Chips extends PureComponent<IProps, IState> {
 
   render() {
     const { filters } = this.state;
+    const plural = !!filters.total_results && filters.total_results > 1;
 
     if (this.isEmpty) {
       return (
@@ -55,6 +68,11 @@ export default class Chips extends PureComponent<IProps, IState> {
 
     return (
       <Grid container spacing={8}>
+        {!!filters.total_results &&
+          <Grid item>
+            <Chip label={<Typography variant='subtitle2'>{filters.total_results} aluno{!!plural && 's'} encontrado{!!plural && 's'}</Typography>} />
+          </Grid>
+        }
         {!!filters.name &&
           <Grid item>
             <Chip
