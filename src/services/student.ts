@@ -108,7 +108,7 @@ class StudentService {
     let params = '&';
 
     Object.entries(filters).forEach(([key, value]) => {
-      params += `${key}=${value}&`;
+      params += `${key}=${value instanceof Date ? value.toISOString() : value}&`;
     });
 
     return this.tokenService.getTokens().pipe(
