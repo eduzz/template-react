@@ -50,6 +50,15 @@ export default class Chips extends PureComponent<IProps, IState> {
     });
   }
 
+  handleDeleteCourse = () => () => {
+    studentService.setFilters({
+      ...this.state.filters,
+      ['type']: '',
+      ['course_id']: '',
+      ['course_name']: '',
+    });
+  }
+
   partialTotalStudents = () => {
     const { totalStudents } = this.state;
     const plural = !!totalStudents && totalStudents > 1;
@@ -118,7 +127,7 @@ export default class Chips extends PureComponent<IProps, IState> {
               label={<Typography variant='subtitle2'>{
                 filters.type === 1 ? 'CURSO' : 'PACOTE'}{!!filters.course_name && `: ${filters.course_name}`}
               </Typography>}
-              onDelete={this.handleDelete('type')}
+              onDelete={this.handleDeleteCourse()}
             />
           </Grid>
         }
