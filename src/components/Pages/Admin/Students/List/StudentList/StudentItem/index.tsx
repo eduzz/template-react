@@ -28,6 +28,14 @@ interface IProps {
 @WithRouter()
 @WithStyles(theme => ({
   root: {
+    border: `${theme.variables.colors.disabled} thin solid`,
+    margin: '8px 24px',
+    padding: '4px 8px',
+    width: 'calc(100% - 48px)',
+
+    '&:first-child': { marginTop: 24 },
+    '&:last-child': { marginBottom: 24 },
+
     '&:before': {
       content: '""',
       width: 4,
@@ -39,16 +47,18 @@ interface IProps {
     },
   },
   active: {
+    borderColor: theme.palette.secondary.light,
     '&:before': {
       backgroundColor: theme.palette.secondary.light,
     },
   },
-  lastAccess: {
-    textAlign: 'right'
+  lastAccess: { textAlign: 'right' },
+  view: { margin: -15 },
+  mainInfo: { display: 'flex' },
+  mainInfoName: {
+    width: '100%',
+    maxWidth: 400,
   },
-  view: {
-    margin: -15
-  }
 }))
 export default class StudentItem extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -89,8 +99,8 @@ export default class StudentItem extends PureComponent<IProps, IState> {
               <Avatar src={avatar} text={student.name} />
             </Grid>
           </Hidden>
-          <Grid item xs={12} sm={true}>
-            <Typography variant='body1'>{student.name}</Typography>
+          <Grid item xs={12} sm={true} className={classes.mainInfo}>
+            <Typography variant='body1' className={classes.mainInfoName}>{student.name}</Typography>
             <Typography variant='body2'>{student.email}</Typography>
           </Grid>
           <Grid item xs={true} sm={'auto'} className={classes.lastAccess}>
