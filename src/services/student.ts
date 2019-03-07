@@ -108,7 +108,7 @@ class StudentService {
     let params = '&';
 
     Object.entries(filters).forEach(([key, value]) => {
-      params += `${key}=${value}&`;
+      params += `${key}=${value instanceof Date ? value.toISOString() : value}&`;
     });
 
     return this.tokenService.getTokens().pipe(
@@ -170,7 +170,7 @@ class StudentService {
   public sendEmail(e: IEmail, filters: IFiltersModel) {
     let params = '&';
     Object.entries(filters).forEach(([key, value]) => {
-      params += `${key}=${value || ''}&`;
+      params += `${key}=${value instanceof Date ? value.toISOString() : value || ''}&`;
     });
     return apiService.post(
       `/producer/students/send-email?title=${e.title}&message=${e.message}${!!e.course_name ? `&${e.course_name}` : ''}&${params}`,
