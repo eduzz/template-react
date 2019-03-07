@@ -14,12 +14,13 @@ interface IProps {
 
 interface IState {
   filters: IFiltersModel;
+  totalStudents: number;
 }
 
 export default class Chips extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = { filters: {} };
+    this.state = { filters: {}, totalStudents: 0 };
   }
 
   get isEmpty(): boolean {
@@ -33,6 +34,13 @@ export default class Chips extends PureComponent<IProps, IState> {
     ).subscribe(filters => {
       this.setState({ filters });
     }, error => Toast.error(error));
+
+    studentService.getTotalStudents().pipe(
+      RxOp.logError(),
+      RxOp.bindComponent(this),
+    ).subscribe(students => {
+      this.setState({ totalStudents: students.total_results });
+    }, error => Toast.error(error));
   }
 
   handleDelete = (identifierLabel: string) => () => {
@@ -42,19 +50,36 @@ export default class Chips extends PureComponent<IProps, IState> {
     });
   }
 
+  partialTotalStudents = () => {
+    const { totalStudents } = this.state;
+    const plural = !!totalStudents && totalStudents > 1;
+
+    return (
+      <Grid item>
+        <Chip label={<Typography variant='subtitle2'>{totalStudents} aluno{!!plural && 's'} encontrado{!!plural && 's'}</Typography>} />
+      </Grid>
+    );
+  }
+
   render() {
-    const { filters } = this.state;
+    const { filters, totalStudents } = this.state;
 
     if (this.isEmpty) {
       return (
         <div>
           <Typography component='em'>Nenhum filtro ativo</Typography>
+          {
+            !!totalStudents && this.partialTotalStudents()
+          }
         </div>
       );
     }
 
     return (
       <Grid container spacing={8}>
+        {
+          !!totalStudents && this.partialTotalStudents()
+        }
         {!!filters.name &&
           <Grid item>
             <Chip
