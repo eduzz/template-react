@@ -142,7 +142,7 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
   render() {
     const { data, course, classes, studentId } = this.props;
     const { formOpened } = this.state;
-    console.log(data);
+
     return (
       <div className={`${classes.root} ${data.status ? classes.active : ''}`}>
         <ExtendAccessDialog
