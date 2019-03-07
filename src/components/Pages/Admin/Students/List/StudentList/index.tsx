@@ -13,7 +13,6 @@ import studentService, { IStudentListResult } from 'services/student';
 import StudentItem from './StudentItem';
 
 interface IProps {
-
 }
 
 interface IState extends IStudentListResult {

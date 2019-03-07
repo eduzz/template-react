@@ -67,7 +67,7 @@ export default class Chips extends PureComponent<IProps, IState> {
     if (this.isEmpty) {
       return (
         <div>
-          <Typography component='em'>Nenhum filtro ativo</Typography>
+          <Typography component='em' style={{ marginBottom: 4 }}>Nenhum filtro ativo</Typography>
           {
             !!totalStudents && this.partialTotalStudents()
           }

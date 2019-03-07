@@ -3,6 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Toast from 'components/Shared/Toast';
+import { WithStyles } from 'decorators/withStyles';
 import { IFiltersModel } from 'interfaces/models/student';
 import EmailIcon from 'mdi-react/EmailIcon';
 import ExportIcon from 'mdi-react/ExportIcon';
@@ -16,6 +17,7 @@ import Drawer from './Drawer';
 import SendEmailDialog from './SendEmailDialog';
 
 interface IProps {
+  classes?: any;
 }
 
 interface IState {
@@ -25,6 +27,39 @@ interface IState {
   formOpened: boolean;
 }
 
+@WithStyles(theme => ({
+  label: {
+    fontSize: 11,
+    padding: '0 24px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+
+  item: {
+    position: 'relative',
+    paddingLeft: 15,
+
+    '&::before': {
+      content: `''`,
+      width: 10,
+      height: 10,
+      backgroundColor: theme.variables.colors.disabled,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      margin: 'auto',
+    },
+
+    '&:first-child': {
+      marginTop: 24,
+      marginRight: 10,
+
+      '&::before': { backgroundColor: theme.palette.secondary.light, }
+    },
+  },
+}))
 export default class Filters extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -75,6 +110,7 @@ export default class Filters extends PureComponent<IProps, IState> {
 
   render() {
     const { isFiltersOpen, exportUrl, formOpened } = this.state;
+    const { classes } = this.props;
 
     return (
       <CardContent>
@@ -103,6 +139,10 @@ export default class Filters extends PureComponent<IProps, IState> {
               <FilterOutlineIcon color='inherit' />
               Filtros
             </Button>
+            <div className={classes.label}>
+              <div className={classes.item}>Ativo nos últimos 30 dias</div>
+              <div className={classes.item}>Inativo nos últimos 30 dias</div>
+            </div>
           </Grid>
         </Grid>
 
