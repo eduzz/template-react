@@ -78,6 +78,7 @@ export default class Perfil extends PureComponent<IProps, IState> {
                   variant='contained'
                   color='secondary'
                   disabled={!exportUrl}
+                  id='btn_exportar'
                 >
                   Exportar
                 </Button>

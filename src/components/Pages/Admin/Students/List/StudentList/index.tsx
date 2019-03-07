@@ -79,7 +79,7 @@ export default class StudentList extends PureComponent<IProps, IState> {
                 }
 
                 {!isFetching && hasMore &&
-                  <Button variant='outlined' color='secondary' onClick={this.handleLoadMore}>
+                  <Button variant='outlined' color='secondary' onClick={this.handleLoadMore} id='btn_mostrarMaisAlunos'>
                     Mostrar mais alunos
                   </Button>
                 }

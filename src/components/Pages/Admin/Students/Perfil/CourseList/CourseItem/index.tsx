@@ -94,7 +94,7 @@ export default class CourseItem extends PureComponent<IProps, IState> {
     return (
       <ExpansionPanel elevation={0} expanded={expanded} onChange={this.handleChange}>
         <ExpansionPanelSummary expandIcon={<ChevronDownIcon />}>
-          <Grid container wrap='nowrap' alignItems='center' spacing={16}>
+          <Grid container wrap='nowrap' alignItems='center' spacing={16} id={`conteudo-${(data.title).replace(/ /g, '')}`}>
             <Hidden xsDown>
               <Grid item sm={'auto'}>
                 <Avatar className={classes.avatar} src={data.avatar} />

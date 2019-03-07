@@ -89,8 +89,8 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
       >
         {isSending && <LinearProgress color='secondary' />}
 
-        <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-          <DialogTitle>Enviar E-mail para os alunos</DialogTitle>
+        <FormValidation onSubmit={this.onSubmit} ref={this.bindForm} >
+          <DialogTitle><div id='title_enviaEmail'>Enviar E-mail para os alunos</div></DialogTitle>
 
           <DialogContent>
             <FieldText
@@ -101,6 +101,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
               disabled={isSending}
               value={model.title}
               onChange={this.updateModel((m, v) => m.title = v)}
+              id='titulo'
             />
 
             <FieldText
@@ -115,12 +116,13 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
               disabled={isSending}
               value={model.message}
               onChange={this.updateModel((m, v) => m.message = v)}
+              id='mensagem'
             />
           </DialogContent>
 
           <DialogActions>
-            <Button disabled={isSending} onClick={this.onCancel}>Cancelar</Button>
-            <Button color='secondary' type='submit' disabled={isSending}>Enviar</Button>
+            <Button disabled={isSending} onClick={this.onCancel} id='btn_cancelar'>Cancelar</Button>
+            <Button color='secondary' type='submit' disabled={isSending} id='btn_enviar'>Enviar</Button>
           </DialogActions>
 
         </FormValidation>

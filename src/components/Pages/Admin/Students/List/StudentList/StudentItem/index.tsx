@@ -82,6 +82,7 @@ export default class StudentItem extends PureComponent<IProps, IState> {
         className={`${classes.root} ${isActive ? classes.active : ''}`}
         button
         onClick={this.handleClick}
+        id={`item-${(student.name).replace(/ /g, '')}`}
       >
         <Grid container alignItems='center' spacing={16}>
           <Hidden smDown>
