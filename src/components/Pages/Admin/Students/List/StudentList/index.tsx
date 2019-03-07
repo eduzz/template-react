@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Loading from 'components/Shared/Loading';
+import { WithStyles } from 'decorators/withStyles';
 import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService, { IStudentListResult } from 'services/student';
@@ -13,12 +14,20 @@ import studentService, { IStudentListResult } from 'services/student';
 import StudentItem from './StudentItem';
 
 interface IProps {
+  classes?: any;
 }
 
 interface IState extends IStudentListResult {
   isFetching: boolean;
 }
 
+@WithStyles(theme => ({
+  empty: {
+    fontSize: 12,
+    padding: '48px 0',
+    textTransform: 'uppercase',
+  },
+}))
 export default class StudentList extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -47,6 +56,7 @@ export default class StudentList extends PureComponent<IProps, IState> {
 
   render() {
     const { students, hasMore, error, isFetching } = this.state;
+    const { classes } = this.props;
 
     if (error) {
       return (
@@ -61,7 +71,7 @@ export default class StudentList extends PureComponent<IProps, IState> {
     }
 
     if (!students.length) {
-      return <Typography variant='subtitle1' align='center'><strong>Nenhum aluno encontrado!</strong></Typography>;
+      return <Typography variant='subtitle1' align='center' className={classes.empty}><strong>Nenhum aluno encontrado!</strong></Typography>;
     }
 
     return (
