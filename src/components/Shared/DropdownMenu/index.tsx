@@ -2,11 +2,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 import * as React from 'react';
+import { Fragment } from 'react';
 
 import PermissionHide from '../PermissionHide';
 import DropdownMenuContext from './context';
 import OptionItem from './OptionItem';
-import { Fragment } from 'react';
 
 export interface IOption {
   text: string;
@@ -80,7 +80,7 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
         }
 
         {!content &&
-          <IconButton onClick={this.handleOpen} color='inherit'>
+          <IconButton onClick={this.handleOpen} color='inherit' id='opcaoConteudo'>
             <DotsHorizontalIcon />
           </IconButton>
         }

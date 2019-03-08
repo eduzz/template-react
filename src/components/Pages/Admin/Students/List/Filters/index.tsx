@@ -80,26 +80,26 @@ export default class Filters extends PureComponent<IProps, IState> {
       <CardContent>
         <Grid container spacing={16}>
           <Grid item xs={12} sm={true}>
-            <Typography variant='subtitle1'>Filtros Ativos:</Typography>
+            <Typography variant='subtitle1' id='title_filtrosAtivos'>Filtros Ativos:</Typography>
             <Chips />
           </Grid>
 
           <Grid item xs={12} sm='auto'>
-            <Button fullWidth variant='contained' color='primary' onClick={() => this.handleSendEmailOpen()}>
+            <Button fullWidth variant='contained' color='primary' onClick={() => this.handleSendEmailOpen()} id='btn_enviaEmail'>
               <EmailIcon color='inherit' />
               Enviar E-mail
             </Button>
           </Grid>
 
           <Grid item xs={12} sm='auto'>
-            <Button disabled={!exportUrl} fullWidth href={exportUrl} target='_blank' variant='contained' color='primary'>
+            <Button disabled={!exportUrl} fullWidth href={exportUrl} target='_blank' variant='contained' color='primary' id='btn_exportar'>
               <ExportIcon color='inherit' />
               Exportar
             </Button>
           </Grid>
 
           <Grid item xs={12} sm='auto'>
-            <Button fullWidth variant='contained' color='secondary' onClick={this.handleOpenFilters}>
+            <Button fullWidth variant='contained' color='secondary' onClick={this.handleOpenFilters} id='btn_filtros'>
               <FilterOutlineIcon color='inherit' />
               Filtros
             </Button>

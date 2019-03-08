@@ -186,7 +186,7 @@ export default class Info extends PureComponent<IProps, IState> {
           </Grid>
           <Grid item className={classes.settings}>
             <DropdownMenu>
-              <IconButton className={classes.icon}>
+              <IconButton className={classes.icon} id='setup'>
                 <SettingsOutlineIcon />
               </IconButton>
               {!student.last_used_at &&
