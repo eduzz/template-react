@@ -3,7 +3,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IFiltersModel } from 'interfaces/models/student';
 import EmailIcon from 'mdi-react/EmailIcon';
 import ExportIcon from 'mdi-react/ExportIcon';
@@ -16,8 +16,7 @@ import Chips from './Chips';
 import Drawer from './Drawer';
 import SendEmailDialog from './SendEmailDialog';
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
 }
 
 interface IState {

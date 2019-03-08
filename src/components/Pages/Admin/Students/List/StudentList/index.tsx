@@ -6,15 +6,14 @@ import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Loading from 'components/Shared/Loading';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService, { IStudentListResult } from 'services/student';
 
 import StudentItem from './StudentItem';
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
 }
 
 interface IState extends IStudentListResult {

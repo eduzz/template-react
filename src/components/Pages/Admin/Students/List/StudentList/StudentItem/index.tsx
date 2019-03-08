@@ -8,7 +8,7 @@ import differenceInDays from 'date-fns/esm/differenceInDays';
 import formatDistance from 'date-fns/esm/formatDistance';
 import ptLocate from 'date-fns/esm/locale/pt-BR';
 import { WithRouter } from 'decorators/withRouter';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
 import ChevronRightIcon from 'mdi-react/ChevronRightIcon';
 import React, { PureComponent } from 'react';
@@ -19,8 +19,7 @@ interface IState {
   avatar?: string;
 }
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   student: IStudent;
   history?: any;
 }
