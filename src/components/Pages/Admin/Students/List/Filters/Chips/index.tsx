@@ -53,9 +53,9 @@ export default class Chips extends PureComponent<IProps, IState> {
   handleDeleteCourse = () => () => {
     studentService.setFilters({
       ...this.state.filters,
-      ['type']: '',
-      ['course_id']: '',
-      ['course_name']: '',
+      type: '',
+      course_id: '',
+      course_name: '',
     });
   }
 
