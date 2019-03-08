@@ -10,7 +10,7 @@ import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import RxOp from 'rxjs-operators';
 import courseService from 'services/course';
@@ -20,8 +20,7 @@ interface IState extends IStateForm {
   openedAvatar: boolean;
 }
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   opened: boolean;
   courseId: number;
   matriculationId: number;

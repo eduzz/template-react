@@ -8,7 +8,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import Avatar from 'components/Shared/Avatar';
 import { WithRouter } from 'decorators/withRouter';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IStudentCourse } from 'interfaces/models/student';
 import ChevronDownIcon from 'mdi-react/ChevronDownIcon';
 import React, { PureComponent, SyntheticEvent } from 'react';
@@ -17,8 +17,7 @@ import studentService from 'services/student';
 
 import Acquisitions from './Acquisitions';
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   data: IStudentCourse;
   match?: any;
 }

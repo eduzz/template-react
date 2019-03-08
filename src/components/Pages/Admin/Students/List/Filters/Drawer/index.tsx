@@ -10,7 +10,7 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { ICourseOptions } from 'interfaces/models/course';
 import { IFiltersModel } from 'interfaces/models/student';
 import CloseIcon from 'mdi-react/CloseIcon';
@@ -19,8 +19,7 @@ import RxOp from 'rxjs-operators';
 import courseService from 'services/course';
 import studentService from 'services/student';
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   open: boolean;
   onClose?: () => void;
 }

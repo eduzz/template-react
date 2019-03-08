@@ -68,7 +68,7 @@ class StudentService {
   }
 
   public getTotalStudents() {
-    return this.students$.asObservable();
+    return this.students$.asObservable().pipe(RxOp.map(result => result.total_results));
   }
 
   public getStudent(id: number) {
