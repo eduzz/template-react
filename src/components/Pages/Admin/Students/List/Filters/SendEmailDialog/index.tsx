@@ -41,8 +41,8 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
     studentService.getTotalStudents().pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe(students => {
-      this.setState({ totalStudents: students.total_results });
+    ).subscribe(totalStudents => {
+      this.setState({ totalStudents });
     }, error => Toast.error(error));
   }
 
