@@ -115,7 +115,6 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
 
         <FormValidation onSubmit={this.onSubmit} ref={this.bindForm} >
           <DialogTitle><div id='title_enviaEmail'>Enviar E-mail para os alunos</div></DialogTitle>
-
           <DialogContent>
             <FieldText
               type='text'
