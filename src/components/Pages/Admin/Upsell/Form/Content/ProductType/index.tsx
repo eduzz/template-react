@@ -9,12 +9,13 @@ import { IUpsellFormContext, UpsellFormContext } from '../../Context';
 
 const infoProduto = require('assets/images/info-produto.png');
 const produtoFisico = require('assets/images/produto-fisico.png');
+const produtoEvento = require('assets/images/produto-evento.png');
 
 interface IType {
   value: number;
   title: string;
   description: string;
-  svg: string;
+  svg: any;
 }
 
 interface IProps {
@@ -86,6 +87,12 @@ export default class ProductType extends PureComponent<IProps, IState> {
       description: 'Livros, Peças, brindes, camisetas, tenis',
       svg: produtoFisico,
     },
+    {
+      value: 4,
+      title: 'Evento',
+      description: 'Entrada para seu evento',
+      svg: produtoEvento,
+    },
   ];
 
   constructor(props: IProps) {
@@ -138,7 +145,7 @@ export default class ProductType extends PureComponent<IProps, IState> {
               {this.types.map(type =>
                 <Grid item key={type.value}>
                   <div
-                    id={`tipo${(type.title).replace(' ','')}`}
+                    id={`tipo${(type.title).replace(' ', '')}`}
                     className={`${classes.typeItem} ${selectedType === type.value && classes.selectedType}`}
                     onClick={this.handleSelectType(type.value)}
                   >
