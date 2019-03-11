@@ -40,6 +40,8 @@ export default class Product extends PureComponent<IProps> {
         return 'Infoproduto ';
       case 3:
         return 'Produto Físico ';
+      case 4:
+        return 'Evento ';
       default:
         return '';
     }
