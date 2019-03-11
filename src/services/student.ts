@@ -6,9 +6,9 @@ import {
   IStudentCourse,
   IStudentCourseAcquisition,
 } from 'interfaces/models/student';
-import { IPaginationParams } from 'interfaces/pagination';
+import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import * as Rx from 'rxjs';
-import RxOp from 'rxjs-operators';
+import RxOp, { ICacheResult } from 'rxjs-operators';
 import { API_ENDPOINT } from 'settings';
 
 import apiService from './api';
@@ -22,53 +22,25 @@ export interface IStudentListResult {
 }
 
 class StudentService {
-  private initialPaginator: IPaginationParams = { page: 1, size: 8 };
-
   private filters$ = new Rx.BehaviorSubject<IFiltersModel>({});
-  private paginator$ = new Rx.BehaviorSubject<IPaginationParams>(this.initialPaginator);
-  private students$ = new Rx.BehaviorSubject<IStudentListResult>({});
+  private total$ = new Rx.BehaviorSubject<number>(0);
 
   constructor(private tokenService: TokenService) {
-    this.filters$.subscribe(() => {
-      this.paginator$.next(this.initialPaginator);
-    });
-
-    this.paginator$.pipe(RxOp.skip(1)).subscribe(() => {
-      this.loadStudents();
-    });
+    this.filters$.pipe(
+      RxOp.cacheClean('student-list')
+    ).subscribe();
   }
 
-  private loadStudents() {
-    if (this.paginator$.value.page <= this.initialPaginator.page) {
-      this.students$.next({ students: null });
-    }
-
-    apiService.get<IStudent[]>('producer/students', { ...this.filters$.value, ...this.paginator$.value }).subscribe(response => {
-      this.students$.next({
-        hasMore: response.paginator.page < response.paginator.total_pages,
-        total_results: response.paginator.total_rows,
-        students: [
-          ...(this.students$.value.students || []),
-          ...(response.data || []),
-        ],
-      });
-    }, error => this.students$.next({ error }));
-  }
-
-  public loadMoreStudents() {
-    this.paginator$.next({
-      ...this.paginator$.value,
-      page: this.paginator$.value.page + 1,
-    });
-  }
-
-  public getStudents() {
-    this.loadStudents();
-    return this.students$.asObservable();
+  public getStudents(params: IPaginationParams): Rx.Observable<ICacheResult<IPaginationResponse<IStudent>>> {
+    return this.filters$.pipe(
+      RxOp.switchMap(filters => apiService.get('producer/students', { ...filters, ...params })),
+      RxOp.cache('student-list', { refresh: true }),
+      RxOp.tap(result => this.total$.next((result.data || { paginator: { total_rows: 0 } }).paginator.total_rows))
+    );
   }
 
   public getTotalStudents() {
-    return this.students$.asObservable().pipe(RxOp.map(result => result.total_results));
+    return this.total$.asObservable();
   }
 
   public getStudent(id: number) {
