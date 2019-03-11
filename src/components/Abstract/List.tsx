@@ -27,6 +27,7 @@ export interface IStateList<T = any> extends IPaginationParams {
 export abstract class ListComponent<P = {}, S extends IStateList = IStateList<any>> extends PureComponent<P, S> {
   scrollTop: Function;
   timeoutTerm: any;
+  sizes = [10, 20, 30];
 
   abstract loadData: (params?: Partial<IPaginationParams>) => void;
 
@@ -196,7 +197,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
           component='div'
           count={total_rows}
           rowsPerPage={size}
-          rowsPerPageOptions={[10, 25, 50]}
+          rowsPerPageOptions={this.sizes}
           page={page - 1}
           onChangePage={this.onChangePage}
           onChangeRowsPerPage={this.onChangeRowsPerPage}
