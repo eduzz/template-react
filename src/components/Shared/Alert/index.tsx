@@ -119,7 +119,7 @@ export default class Alert extends React.Component<IProps, IState> {
         onClose={this.handleCancel}
         className={classes.root}
       >
-        <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
+        <DialogTitle><div id='title_confirmacao'>{title || (confirmation ? 'Confirmação' : 'Atenção')}</div></DialogTitle>
         <DialogContent>
           <DialogContentText className={classes.content}>
             {message}
@@ -127,7 +127,7 @@ export default class Alert extends React.Component<IProps, IState> {
         </DialogContent>
         <DialogActions>
           {confirmation &&
-            <Button onClick={this.handleCancel} autoFocus>
+            <Button onClick={this.handleCancel} autoFocus id='cancelar'>
               Cancelar
             </Button>
           }
@@ -137,6 +137,7 @@ export default class Alert extends React.Component<IProps, IState> {
               color='secondary'
               buttonRef={this.okRef}
               data-clipboard-text={copy}
+              id='copiar'
             >
               Copiar
             </Button>
@@ -145,6 +146,7 @@ export default class Alert extends React.Component<IProps, IState> {
             autoFocus={!confirmation && !copy}
             onClick={this.handleOk}
             color='secondary'
+            id='btn_ok'
           >
             {ok || 'Ok'}
           </Button>

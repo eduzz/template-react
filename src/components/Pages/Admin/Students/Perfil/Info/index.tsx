@@ -9,7 +9,7 @@ import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
 import { WithRouter } from 'decorators/withRouter';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IStudent } from 'interfaces/models/student';
 import AtIcon from 'mdi-react/AtIcon';
 import DeleteIcon from 'mdi-react/DeleteIcon';
@@ -23,9 +23,8 @@ import studentService from 'services/student';
 import ChangeEmailDialog from './ChangeEmailDialog';
 import ChangePasswordDialog from './ChangePasswordDialog';
 
-interface IProps {
+interface IProps extends IStyledProps {
   match?: any;
-  classes?: any;
   history?: any;
 }
 
@@ -186,7 +185,7 @@ export default class Info extends PureComponent<IProps, IState> {
           </Grid>
           <Grid item className={classes.settings}>
             <DropdownMenu>
-              <IconButton className={classes.icon}>
+              <IconButton className={classes.icon} id='setup'>
                 <SettingsOutlineIcon />
               </IconButton>
               {!student.last_used_at &&

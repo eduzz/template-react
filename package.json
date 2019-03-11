@@ -44,7 +44,8 @@
     "rxjs": "6.4.0",
     "tslib": "1.9.3",
     "ua-parser-js": "0.7.19",
-    "uuid": "3.3.2"
+    "uuid": "3.3.2",
+    "yarn": "^1.13.0"
   },
   "devDependencies": {
     "@types/clipboard": "2.0.1",

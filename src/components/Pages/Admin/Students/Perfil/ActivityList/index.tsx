@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Loading from 'components/Shared/Loading';
 import { WithRouter } from 'decorators/withRouter';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IStudentActivity } from 'interfaces/models/student';
 import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
@@ -18,8 +18,7 @@ import ActivityItem from './ActivityItem';
 
 // import studentService from 'services/student';
 // import RxOp from 'rxjs-operators';
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   history?: any;
   match?: any;
 }

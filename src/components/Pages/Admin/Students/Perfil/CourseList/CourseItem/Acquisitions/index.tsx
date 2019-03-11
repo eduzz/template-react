@@ -1,7 +1,7 @@
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import IconMessage from 'components/Shared/IconMessage';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { IStudentCourse, IStudentCourseAcquisition } from 'interfaces/models/student';
 import CreationIcon from 'mdi-react/CreationIcon';
 import React, { Fragment, PureComponent } from 'react';
@@ -15,8 +15,7 @@ interface IState {
   acquisitions?: IStudentCourseAcquisition[];
 }
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   studentId: number;
   data: IStudentCourse;
 }

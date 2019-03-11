@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from 'components/Layout/Toolbar';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import React, { Fragment, PureComponent } from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
@@ -19,8 +19,7 @@ interface IState {
   exportUrl: string;
 }
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   match?: any;
 }
 
@@ -78,6 +77,7 @@ export default class Perfil extends PureComponent<IProps, IState> {
                   variant='contained'
                   color='secondary'
                   disabled={!exportUrl}
+                  id='btn_exportar'
                 >
                   Exportar
                 </Button>

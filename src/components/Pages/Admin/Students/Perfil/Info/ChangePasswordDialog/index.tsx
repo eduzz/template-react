@@ -9,7 +9,7 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
@@ -21,11 +21,10 @@ interface IState extends IStateForm<{
   loading: boolean;
 }
 
-interface IProps {
+interface IProps extends IStyledProps {
   studentID: number;
   opened: boolean;
   onCancel: () => void;
-  classes?: any;
 }
 
 @WithStyles({

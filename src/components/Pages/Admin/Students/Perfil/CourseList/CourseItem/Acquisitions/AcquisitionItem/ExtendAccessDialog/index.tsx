@@ -10,7 +10,7 @@ import FieldDate from '@react-form-fields/material-ui/components/Date';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import RxOp from 'rxjs-operators';
 import courseService from 'services/course';
@@ -20,8 +20,7 @@ interface IState extends IStateForm {
   openedAvatar: boolean;
 }
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   opened: boolean;
   courseId: number;
   matriculationId: number;
@@ -95,7 +94,7 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
         {isSaving && <LinearProgress color='secondary' />}
 
         <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-          <DialogTitle>Estender acesso</DialogTitle>
+          <DialogTitle><div id='title_estenderAcesso'>Estender acesso</div></DialogTitle>
 
           <DialogContent className={classes.content}>
             <Grid container spacing={16} alignItems='center' className={classes.avatarContainer}>
@@ -107,14 +106,15 @@ export default class ExtendAccessDialog extends FormComponent<IProps, IState> {
                   minDate={this.today}
                   value={model.limitDate}
                   onChange={this.updateModel((model, value) => model.limitDate = value)}
+                  id='liberarAcessoAte'
                 />
               </Grid>
             </Grid>
           </DialogContent>
 
           <DialogActions>
-            <Button disabled={isSaving} onClick={this.onCancel}>Cancelar</Button>
-            <Button color='secondary' type='submit' disabled={isSaving}>Estender</Button>
+            <Button disabled={isSaving} onClick={this.onCancel} id='btn_cancelar'>Cancelar</Button>
+            <Button color='secondary' type='submit' disabled={isSaving} id='btn_estender'>Estender</Button>
           </DialogActions>
 
         </FormValidation>

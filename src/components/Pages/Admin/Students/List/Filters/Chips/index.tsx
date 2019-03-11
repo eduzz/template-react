@@ -38,8 +38,8 @@ export default class Chips extends PureComponent<IProps, IState> {
     studentService.getTotalStudents().pipe(
       RxOp.logError(),
       RxOp.bindComponent(this),
-    ).subscribe(students => {
-      this.setState({ totalStudents: students.total_results });
+    ).subscribe(totalStudents => {
+      this.setState({ totalStudents });
     }, error => Toast.error(error));
   }
 
@@ -47,6 +47,15 @@ export default class Chips extends PureComponent<IProps, IState> {
     studentService.setFilters({
       ...this.state.filters,
       [identifierLabel]: '',
+    });
+  }
+
+  handleDeleteCourse = () => () => {
+    studentService.setFilters({
+      ...this.state.filters,
+      type: '',
+      course_id: '',
+      course_name: '',
     });
   }
 
@@ -67,7 +76,7 @@ export default class Chips extends PureComponent<IProps, IState> {
     if (this.isEmpty) {
       return (
         <div>
-          <Typography component='em'>Nenhum filtro ativo</Typography>
+          <Typography component='em' style={{ marginBottom: 4 }}>Nenhum filtro ativo</Typography>
           {
             !!totalStudents && this.partialTotalStudents()
           }
@@ -118,7 +127,7 @@ export default class Chips extends PureComponent<IProps, IState> {
               label={<Typography variant='subtitle2'>{
                 filters.type === 1 ? 'CURSO' : 'PACOTE'}{!!filters.course_name && `: ${filters.course_name}`}
               </Typography>}
-              onDelete={this.handleDelete('type')}
+              onDelete={this.handleDeleteCourse()}
             />
           </Grid>
         }

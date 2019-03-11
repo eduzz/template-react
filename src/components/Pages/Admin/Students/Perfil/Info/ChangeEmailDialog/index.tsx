@@ -3,16 +3,16 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
 import RxOp from 'rxjs-operators';
 import studentService from 'services/student';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 interface IState extends IStateForm<{
   email: string;
@@ -21,11 +21,10 @@ interface IState extends IStateForm<{
   loading: boolean;
 }
 
-interface IProps {
+interface IProps extends IStyledProps {
   studentID: number;
   opened: boolean;
   onCancel: () => void;
-  classes?: any;
 }
 
 @WithStyles({

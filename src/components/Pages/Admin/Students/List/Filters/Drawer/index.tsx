@@ -10,7 +10,7 @@ import FormValidation from '@react-form-fields/material-ui/components/FormValida
 import FieldSelect from '@react-form-fields/material-ui/components/Select';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
-import { WithStyles } from 'decorators/withStyles';
+import { IStyledProps, WithStyles } from 'decorators/withStyles';
 import { ICourseOptions } from 'interfaces/models/course';
 import { IFiltersModel } from 'interfaces/models/student';
 import CloseIcon from 'mdi-react/CloseIcon';
@@ -19,8 +19,7 @@ import RxOp from 'rxjs-operators';
 import courseService from 'services/course';
 import studentService from 'services/student';
 
-interface IProps {
-  classes?: any;
+interface IProps extends IStyledProps {
   open: boolean;
   onClose?: () => void;
 }
@@ -120,7 +119,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
           <CardContent>
             <Grid container alignItems='center' spacing={16}>
               <Grid item xs={true}>
-                <Typography variant='h6'>Filtros</Typography>
+                <Typography variant='h6' id='title_filtros'>Filtros</Typography>
               </Grid>
               <IconButton onClick={onClose}>
                 <CloseIcon />
@@ -135,6 +134,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   label='Nome'
                   validation='min:3'
                   onChange={this.updateModel((model, value) => model.name = value)}
+                  id='filterName'
                 />
 
                 <FieldText
@@ -142,6 +142,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
                   placeholder='Filtrar por e-mail de aluno'
                   label='E-mail'
                   onChange={this.updateModel((model, value) => model.email = value)}
+                  id='filterEmail'
                 />
 
                 <Grid container spacing={16}>
@@ -153,6 +154,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
                       maxDate={this.today}
                       value={model.last_used_at_start}
                       onChange={this.updateModel((model, value) => model.last_used_at_start = value)}
+                      id='filterStartDate'
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -164,6 +166,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
                       maxDate={this.today}
                       value={model.last_used_at_end}
                       onChange={this.updateModel((model, value) => model.last_used_at_end = value)}
+                      id='filterEndDate'
                     />
                   </Grid>
                 </Grid>
@@ -198,7 +201,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
               </Grid>
 
               <Grid item xs={false} className={classes.actions}>
-                <Button variant='contained' type='submit' color='secondary'>
+                <Button variant='contained' type='submit' color='secondary' id='btn_aplicarFiltros'>
                   Aplicar Filtros
                 </Button>
               </Grid>
