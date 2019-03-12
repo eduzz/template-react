@@ -22,7 +22,7 @@
     "@ckeditor/ckeditor5-react": "1.1.0",
     "@material-ui/core": "3.9.2",
     "@material-ui/icons": "3.0.2",
-    "@react-form-fields/material-ui": "1.14.14",
+    "@react-form-fields/material-ui": "1.15.1",
     "axios": "0.18.0",
     "clipboard": "2.0.4",
     "date-fns": "2.0.0-alpha.21",

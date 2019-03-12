@@ -83,3 +83,7 @@ label+.MuiInput-formControl {
 /* [class*='MuiModal-'] {
   overflow: auto !important;
 } */
+
+.hide {
+  display: none !important;
+}
