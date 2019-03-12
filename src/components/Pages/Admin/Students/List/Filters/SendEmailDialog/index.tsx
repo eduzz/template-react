@@ -7,6 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
+import FieldHtml from '@react-form-fields/material-ui/components/Html';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Alert from 'components/Shared/Alert';
@@ -127,11 +128,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
               id='titulo'
             />
 
-            <FieldText
-              multiline
-              rows={100}
-              className='textarea'
-              type='text'
+            <FieldHtml
               label='Mensagem'
               tabIndex={2}
               validation='required|max:300'

@@ -151,8 +151,10 @@ class StudentService {
       params += `${key}=${value instanceof Date ? value.toISOString() : value || ''}&`;
     });
     return apiService.post(
-      `/producer/students/send-email?title=${e.title}&message=${e.message}${!!e.course_name ? `&${e.course_name}` : ''}&${params}`,
-      {});
+      `/producer/students/send-email?${!!e.course_name ? `&${e.course_name}` : ''}&${params}`, {
+        title: e.title,
+        message: e.message
+      });
   }
 }
 
