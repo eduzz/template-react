@@ -38,7 +38,7 @@ export class AlertGlobalProvider extends PureComponent<{}, IState> {
   show = (params: IAlertShowParams): Promise<boolean> => {
     const result = new Promise<boolean>(resolve => {
       this.promiseResolve = resolve;
-      this.setState({ opened: true, confirmation: false, ...params });
+      this.setState({ opened: true, confirmation: false, title: null, ...params });
     });
 
     result.then(() => this.setState({ opened: false }));
