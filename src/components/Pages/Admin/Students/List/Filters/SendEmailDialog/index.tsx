@@ -131,8 +131,9 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
             <FieldHtml
               label='Mensagem'
               tabIndex={2}
-              validation='required|max:300'
-              helperText={`${(model.message || '').length}/300 caracteres`}
+              editorStyle={{ minHeight: 300 }}
+              validation='required|max:10000'
+              helperText={`${(model.message || '').length}/10000 caracteres`}
               disabled={isSending}
               value={model.message}
               onChange={this.updateModel((m, v) => m.message = v)}
@@ -140,7 +141,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
             />
 
             <Typography component='em'>
-              O e-mail será enviado apenas para os alunos que foram listados com base nos filtros.
+              <small>O e-mail será enviado apenas para os alunos que foram listados com base nos filtros.</small>
             </Typography>
           </DialogContent>
 
