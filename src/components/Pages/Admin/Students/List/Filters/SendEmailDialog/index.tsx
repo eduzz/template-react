@@ -148,7 +148,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
             />
 
             <Typography component='em'>
-              O e-mail será enviado apenas para os alunos que foram listados com base nos filtros.
+              <small>O e-mail será enviado apenas para os alunos que foram listados com base nos filtros.</small>
             </Typography>
           </DialogContent>
 
