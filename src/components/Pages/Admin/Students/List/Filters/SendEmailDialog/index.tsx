@@ -132,8 +132,8 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
               label='Mensagem'
               tabIndex={2}
               editorStyle={{ minHeight: 300 }}
-              validation='required|max:2000'
-              helperText={`${(model.message || '').length}/2000 caracteres`}
+              validation='required|max:10000'
+              helperText={`${(model.message || '').length}/10000 caracteres`}
               disabled={isSending}
               value={model.message}
               onChange={this.updateModel((m, v) => m.message = v)}
