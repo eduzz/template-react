@@ -77,7 +77,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
   handleSubmitFilters = (isValid: boolean) => {
     if (!isValid) return;
 
-    studentService.setFilters(this.state.model);
+    studentService.setFilters({ ...this.state.model, newFilter: true });
     this.props.onClose();
   }
 
