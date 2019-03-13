@@ -12,7 +12,6 @@ import FieldText from '@react-form-fields/material-ui/components/Text';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Alert from 'components/Shared/Alert';
 import Toast from 'components/Shared/Toast';
-import { WithStyles } from 'decorators/withStyles';
 import { IEmail } from 'interfaces/models/email';
 import * as React from 'react';
 import RxOp from 'rxjs-operators';
@@ -24,17 +23,11 @@ interface IState extends IStateForm<IEmail> {
 }
 
 interface IProps {
-  classes?: any;
   opened: boolean;
   onComplete: () => void;
   onCancel: () => void;
 }
 
-@WithStyles(theme => ({
-  editorHtml: {
-    minHeight: 300,
-  },
-}))
 export default class SendEmailDialog extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
@@ -109,7 +102,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
 
   render() {
     const { isSending, model } = this.state;
-    const { opened, classes } = this.props;
+    const { opened } = this.props;
 
     return (
       <Dialog
@@ -138,7 +131,7 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
             <FieldHtml
               label='Mensagem'
               tabIndex={2}
-              className={classes.editorHtml}
+              editorStyle={{ minHeight: 300 }}
               validation='required|max:2000'
               helperText={`${(model.message || '').length}/2000 caracteres`}
               disabled={isSending}
