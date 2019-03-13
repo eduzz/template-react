@@ -60,7 +60,10 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
   handleReleaseModules = async () => {
     const { data, studentId, course } = this.props;
 
-    const isOk = await Alert.confirm(`Deseja realmente ${data.release_modules ? 'bloquear' : 'liberar'} o acesso a todos os modulos deste aluno?`);
+    const isOk = await Alert.confirm({
+      message: `Deseja realmente ${data.release_modules ? 'bloquear' : 'liberar'} o acesso a todos os módulos deste aluno?`,
+      title: `${data.release_modules ? 'Bloquear' : 'Liberar'} todos os módulos`,
+    });
     if (!isOk) return;
 
     studentService.releaseModules(studentId, course.id, data.id).pipe(
@@ -76,7 +79,10 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
   handleDisableCourse = async () => {
     const { data, studentId, course } = this.props;
 
-    const isOk = await Alert.confirm(`Deseja realmente ${data.status ? 'bloquear' : 'liberar'} o acesso deste aluno?`);
+    const isOk = await Alert.confirm({
+      message: `Deseja realmente ${data.status ? 'bloquear' : 'liberar'} o acesso deste aluno?`,
+      title: `${data.status ? 'Bloquear' : 'Liberar'} acesso`,
+    });
     if (!isOk) return;
 
     studentService.disableCourse(studentId, course.id, data.id).pipe(
@@ -92,7 +98,10 @@ export default class AcquisitionItem extends PureComponent<IProps, IState> {
   handleRemoveAccess = async () => {
     const { data, studentId, course } = this.props;
 
-    const isOk = await Alert.confirm('Deseja realmente remover o acesso deste aluno?');
+    const isOk = await Alert.confirm({
+      message: 'Deseja realmente remover o acesso deste aluno?',
+      title: 'Desmatricular aluno',
+    });
     if (!isOk) return;
 
     studentService.removeAccess(studentId, course.id, data.id).pipe(

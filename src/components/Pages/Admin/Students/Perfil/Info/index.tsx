@@ -102,7 +102,10 @@ export default class Info extends PureComponent<IProps, IState> {
   handleCloseChangePassword = async () => { this.setState({ changePasswordOpened: false }); };
 
   handleRecoveryPassword = async () => {
-    const isOk = await Alert.confirm('Deseja realmente enviar um link de redefinição de senha para o aluno?');
+    const isOk = await Alert.confirm({
+      message: 'Deseja realmente enviar um link de redefinição de senha para o aluno?',
+      title: 'Redefinir senha',
+    });
     if (!isOk) return;
 
     studentService.sendRecoveryPassword(this.studentId).pipe(
@@ -116,7 +119,10 @@ export default class Info extends PureComponent<IProps, IState> {
   }
 
   handleRemoveStudent = async () => {
-    const isOk = await Alert.confirm('Deseja realmente excluir esse aluno?');
+    const isOk = await Alert.confirm({
+      message: 'Deseja realmente excluir esse aluno?',
+      title: 'Excluir aluno',
+    });
     if (!isOk) return;
 
     studentService.removeStudent(this.studentId).pipe(
