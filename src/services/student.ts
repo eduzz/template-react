@@ -33,7 +33,11 @@ class StudentService {
 
   public getStudents(params: IPaginationParams): Rx.Observable<ICacheResult<IPaginationResponse<IStudent>>> {
     return this.filters$.pipe(
-      RxOp.switchMap(filters => apiService.get('producer/students', { ...filters, ...params })),
+      RxOp.switchMap(filters => {
+        const parameters = !!filters.newFilter ? { ...params, page: 1 } : params;
+        delete filters.newFilter;
+        return apiService.get('producer/students', { ...filters, ...parameters });
+      }),
       RxOp.cache('student-list', { refresh: true }),
       RxOp.tap(result => this.total$.next((result.data || { paginator: { total_rows: 0 } }).paginator.total_rows))
     );
