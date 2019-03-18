@@ -15,10 +15,12 @@ import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import React from 'react';
 import { Fragment, PureComponent } from 'react';
 
-export interface IStateList<T = any> extends IPaginationParams {
+export interface IStateList<T = any, P extends IPaginationParams = IPaginationParams> {
   items: T[];
   allItems: T[];
   total: number;
+
+  params: P;
 
   error?: any;
   loading: boolean;
@@ -29,15 +31,17 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   timeoutTerm: any;
   isPaginatedData: boolean = false;
 
-  abstract loadData: (params?: Partial<IPaginationParams>) => void;
+  abstract loadData: (params?: IStateList['params']) => void;
 
   constructor(props: P, orderBy: string = null, orderDirection: string = 'asc') {
     super(props);
     this.state = {
-      page: 0,
-      pageSize: 10,
-      orderBy,
-      orderDirection,
+      params: {
+        page: 0,
+        pageSize: 10,
+        orderBy,
+        orderDirection,
+      },
       items: [],
       allItems: [],
       total: 0,
@@ -46,7 +50,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   get sortableProps() {
-    const { loading, orderBy, orderDirection } = this.state;
+    const { loading, params: { orderBy, orderDirection } } = this.state;
 
     return {
       loading,
@@ -56,9 +60,8 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     };
   }
 
-  mergeParams = (params: Partial<IPaginationParams>): IPaginationParams => {
-    const { term, page, pageSize, orderBy, orderDirection } = this.state;
-    return { term, page, pageSize, orderBy, orderDirection, ...params };
+  mergeParams = (params: Partial<IStateList['params']>): IStateList['params'] => {
+    return { ...this.state.params, ...params };
   }
 
   setError = (error: any) => {
@@ -66,11 +69,12 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   setPaginatedData = (data: IPaginationResponse<S['items'][0]>) => {
-    const { results, ...others } = data;
+    const { results, total, ...others } = data;
     this.isPaginatedData = true;
 
     this.setState({
-      ...others,
+      total,
+      params: { ...others },
       items: results,
       allItems: results,
       loading: false
@@ -78,14 +82,14 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   setAllItems = (allItems: S['allItems']): void => {
-    const { page, pageSize } = this.state;
+    const { params: { page, pageSize } } = this.state;
     this.isPaginatedData = false;
 
     this.setState({ allItems, total: allItems.length, loading: false });
     this.handlePaginate(page, pageSize);
   }
 
-  handlePaginate = (page: number, pageSize: number = this.state.pageSize): void => {
+  handlePaginate = (page: number, pageSize: number = this.state.params.pageSize): void => {
     const { allItems, loading } = this.state;
     if (loading) return;
 
@@ -97,8 +101,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
     this.setState({
       items: allItems.slice(pageSize * page, (pageSize * page) + pageSize),
-      pageSize,
-      page,
+      params: { ...this.state.params, page, pageSize },
       loading: false,
     });
 
@@ -106,18 +109,21 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   handleSort = (column: string) => {
-    const { orderBy, orderDirection, pageSize } = this.state;
+    const { params: { orderBy, orderDirection, pageSize } } = this.state;
 
     this.setState({
-      orderBy: column,
-      orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
+      params: {
+        ...this.state.params,
+        orderBy: column,
+        orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
+      }
     }, () => this.handlePaginate(0, pageSize));
   }
 
   handleChangeTerm = (term: string) => {
     if (this.state.loading) return;
 
-    this.setState({ term });
+    this.setState({ params: { ...this.state.params, term } });
     clearTimeout(this.timeoutTerm);
 
     if (term && term.length < 3) return;
@@ -131,10 +137,10 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
   labelDisplayedRows = ({ from, to, count }: LabelDisplayedRowsArgs) => `${from}-${to} de ${count}`;
   onChangePage = (event: any, page: number) => this.handlePaginate(page + 1);
-  onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.page, Number(event.target.value));
+  onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.params.page, Number(event.target.value));
 
   renderSearch = (props: Partial<FieldText['props']> = {}) => {
-    const { term } = this.state;
+    const { params: { term } } = this.state;
 
     return (
       <FieldText
@@ -201,7 +207,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   renderTablePagination = (props: Partial<TablePaginationProps> = {}) => {
-    const { total, page, pageSize, loading } = this.state;
+    const { total, params: { page, pageSize }, loading } = this.state;
 
     return (
       <div style={loading ? { pointerEvents: 'none', opacity: 0.7 } : null}>
