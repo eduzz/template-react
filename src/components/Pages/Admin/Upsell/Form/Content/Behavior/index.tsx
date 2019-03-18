@@ -144,7 +144,12 @@ export default class Behavior extends PureComponent<IProps, IState> {
     this.context.updateModel(model => model.external_url = url)();
   }
 
-  handleClick = (type: number) => () => this.context.updateModel(model => model.show_type = type)();
+  handleClick = (type: number, typeOffer: number) => {
+    if ((type === 2 || type === 3) && typeOffer === 4) {
+      return () => { };
+    }
+    return () => this.context.updateModel(model => model.show_type = type)();
+  }
 
   handleBack = () => this.context.updateFlowStep(this.context.flowStep - 1);
 
@@ -167,7 +172,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
             </Grid>
             <Grid item>
               <List disablePadding>
-                <ListItem id='CheckoutSun' className={classes.item} onClick={this.handleClick(1)}>
+                <ListItem id='CheckoutSun' className={classes.item} onClick={this.handleClick(1, model.type)}>
                   <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
                       <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 1 && classes.selected}`} />
@@ -181,7 +186,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                     </Grid>
                   </Grid>
                 </ListItem>
-                <ListItem id='PaginaInterna' className={classes.item} onClick={this.handleClick(2)}>
+                <ListItem id='PaginaInterna' className={classes.item} onClick={this.handleClick(2, model.type)}>
                   <Grid container spacing={16}>
                     <Grid item className={classes.checkboxContainer}>
                       <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 2 && classes.selected}`} />
@@ -207,7 +212,7 @@ export default class Behavior extends PureComponent<IProps, IState> {
                   </Grid>
                 </ListItem>
                 {!!user && user.beta.some(b => b.content === 'upsell') &&
-                  <ListItem id='PaginaExterna' className={classes.item} onClick={this.handleClick(3)}>
+                  <ListItem id='PaginaExterna' className={classes.item} onClick={this.handleClick(3, model.type)}>
                     <Grid container spacing={16}>
                       <Grid item className={classes.checkboxContainer}>
                         <CheckCircleIcon className={`${classes.checkbox} ${model.show_type === 3 && classes.selected}`} />

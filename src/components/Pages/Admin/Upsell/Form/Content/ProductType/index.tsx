@@ -120,6 +120,9 @@ export default class ProductType extends PureComponent<IProps, IState> {
     // if (upsellService.getCurrentProductType() !== selectedType)
     //   upsellService.loadProducts(selectedType);
 
+    if (selectedType === 4)
+      this.context.updateModel(model => model.show_type = 1)();
+
     this.context.updateModel(model => model.type = selectedType)();
   }
 
