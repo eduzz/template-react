@@ -11,6 +11,11 @@ interface IProps extends RouteProps {
 }
 
 export default class PermissionRoute extends Route<IProps> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = { ...(this.state || {}) };
+  }
+
   componentDidMount() {
     super.componentDidMount && super.componentDidMount();
 
