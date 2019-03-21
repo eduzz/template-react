@@ -71,7 +71,6 @@ export default class Product extends PureComponent<IProps, IState> {
   }
 
   handleImageError = (e: SyntheticEvent<HTMLImageElement>) => {
-    console.log(0);
     e.currentTarget.src = nutrorLogo;
   }
 
