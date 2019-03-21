@@ -82,8 +82,9 @@ export default class Product extends PureComponent<IProps, IState> {
     const { classes } = this.props;
     const { product } = this.state;
 
-    if (!product.title)
+    if (!product.title) {
       return <Loading />;
+    }
 
     return (
       <Grid container className={classes.root} alignItems='center' spacing={16}>
