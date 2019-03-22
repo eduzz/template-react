@@ -125,12 +125,11 @@ export default class ProductItem extends PureComponent<IProps, IState> {
               <Grid item>
                 <Grid container alignItems='center'>
                   <Grid id={`escolheProduto${(product.title).replace(/ /g, '')}`} item className={classes.checkboxContainer}>
-                    {this.isSomeVariantSelected() ?
-                      <MinusCircleIcon
+                    {this.isSomeVariantSelected()
+                      ? <MinusCircleIcon
                         className={`${classes.checkbox} ${classes.selected}`}
                       />
-                      :
-                      <CheckCircleIcon
+                      : <CheckCircleIcon
                         className={`${classes.checkbox} ${product.content_id === model.pre_content_id && classes.selected}`}
                       />
                     }

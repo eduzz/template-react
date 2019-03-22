@@ -1,11 +1,12 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import { WithStyles } from 'decorators/withStyles';
-import Grid from '@material-ui/core/Grid';
-import { IUpsellProduct } from 'interfaces/models/upsell';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { UpsellFormContext, IUpsellFormContext } from '../../../Context';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import Loading from 'components/Shared/Loading';
+import { WithStyles } from 'decorators/withStyles';
+import { IUpsellProduct } from 'interfaces/models/upsell';
+import React, { PureComponent, SyntheticEvent } from 'react';
+
+import { IUpsellFormContext, UpsellFormContext } from '../../../Context';
 
 const nutrorLogo = require('assets/svg/nutror-logo.svg');
 
@@ -81,22 +82,22 @@ export default class Product extends PureComponent<IProps, IState> {
     const { classes } = this.props;
     const { product } = this.state;
 
+    if (!product.title) {
+      return <Loading />;
+    }
+
     return (
       <Grid container className={classes.root} alignItems='center' spacing={16}>
         <Grid item>
           <Grid container>
-            {product.image ?
-              <img
-                alt=''
-                className={classes.avatar}
-                src={product.image}
-                // src={CDN_URL + upsell.small_image}
-                onError={this.handleImageError}
-                height={44}
-              />
-              :
-              <Loading />
-            }
+            <img
+              alt={product.title}
+              className={classes.avatar}
+              src={!!product.image ? product.image : ''}
+              // src={CDN_URL + upsell.small_image}
+              onError={this.handleImageError}
+              height={44}
+            />
           </Grid>
         </Grid>
         <Grid item xs={true}>
