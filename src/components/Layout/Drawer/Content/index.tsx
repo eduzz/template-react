@@ -29,12 +29,12 @@ interface IProps {
     height: '100vh'
   },
   header: {
-    padding: '10px 0',
+    padding: '15px 0',
     textAlign: 'center',
     background: darken(theme.palette.primary.main, 0.15)
   },
   logo: {
-    maxWidth: 170,
+    maxWidth: 130,
     maxHeight: 100,
     margin: '10px 0'
   },
