@@ -120,7 +120,9 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
             <FieldText
               type='text'
               label='Título'
-              tabIndex={1}
+              inputProps={{
+                tabindex: 1,
+              }}
               validation='required|max:120'
               disabled={isSending}
               value={model.title}
@@ -146,8 +148,8 @@ export default class SendEmailDialog extends FormComponent<IProps, IState> {
           </DialogContent>
 
           <DialogActions>
-            <Button disabled={isSending} onClick={this.onCancel} id='btn_cancelar'>Cancelar</Button>
-            <Button color='secondary' type='submit' disabled={isSending} id='btn_enviar'>Enviar</Button>
+            <Button tabIndex={4} disabled={isSending} onClick={this.onCancel} id='btn_cancelar'>Cancelar</Button>
+            <Button tabIndex={3} color='secondary' type='submit' disabled={isSending} id='btn_enviar'>Enviar</Button>
           </DialogActions>
 
         </FormValidation>
