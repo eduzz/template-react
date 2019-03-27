@@ -6,6 +6,7 @@ import { WithStyles } from 'decorators/withStyles';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import EyeIcon from 'mdi-react/EyeIcon';
 import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
 import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 import { LEARNER_URL } from 'settings';
@@ -28,12 +29,12 @@ interface IProps {
     height: '100vh'
   },
   header: {
-    padding: '10px 0',
+    padding: '15px 0',
     textAlign: 'center',
     background: darken(theme.palette.primary.main, 0.15)
   },
   logo: {
-    maxWidth: 170,
+    maxWidth: 130,
     maxHeight: 100,
     margin: '10px 0'
   },
@@ -92,7 +93,7 @@ export default class Content extends PureComponent<IProps, {}> {
     return (
       <div className={classes.root}>
         <div className={classes.header}>
-          <img src={logoWhite} className={classes.logo} />
+          <Link to='/'><img src={logoWhite} className={classes.logo} /></Link>
           <UserMenu closeDrawer={close} />
         </div>
 
