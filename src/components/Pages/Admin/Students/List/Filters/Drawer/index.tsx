@@ -161,7 +161,7 @@ export default class Drawer extends FormComponent<IProps, IState> {
                     <FieldDate
                       label=' '
                       placeholder='Fim'
-                      validation='date|after_or_equal:data inicial'
+                      validation={!!model.last_used_at_start ? 'date|after_or_equal:data inicial' : 'date'}
                       validationContext={{ 'data inicial': model.last_used_at_start }}
                       maxDate={this.today}
                       value={model.last_used_at_end}
