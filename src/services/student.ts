@@ -94,6 +94,7 @@ class StudentService {
     });
 
     return this.tokenService.getTokens().pipe(
+      RxOp.filter(tokens => !!tokens),
       RxOp.map(({ token }) => `${API_ENDPOINT}/producer/students/export?t=${token}${params}`)
     );
   }
