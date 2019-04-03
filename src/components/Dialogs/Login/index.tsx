@@ -41,7 +41,7 @@ interface IProps {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    boxShadow: theme.shadows['5'],
+    boxShadow: '0 0 15px -6px #000',
   },
   logo: {
     padding: '0 26px',
@@ -56,6 +56,16 @@ interface IProps {
   viewContainer: {
     boxSizing: 'border-box',
     padding: '0 10px',
+  },
+  poweredContainer: {
+    alignSelf: 'center',
+  },
+  poweredLink: {
+    fontSize: 10,
+    color: '#bcbcbc',
+    lineHeight: 15,
+    letterSpacing: .5,
+    textDecoration: 'none',
   }
 }))
 export default class LoginDialog extends PureComponent<IProps, IState> {
@@ -108,6 +118,10 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
                 />
               </div>
             </SwipeableViews>
+
+            <div className={classes.poweredContainer}>
+              <a className={classes.poweredLink} target='_blank' href='https://www.eduzz.com'>Powered by Eduzz</a>
+            </div>
           </div>
         </div>
       </Dialog>
