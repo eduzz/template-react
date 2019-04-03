@@ -33,6 +33,8 @@ interface IProps {
     padding: '12px 30px',
     borderRadius: 30,
     boxShadow: 'none',
+    textTransform: 'none',
+    fontWeight: 400,
   },
   cardContent: {
     paddingTop: 0,
@@ -85,7 +87,7 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
 
         <CardContent className={classes.cardContent}>
           <FieldText
-            label='Email'
+            label='E-mail do Usuário'
             type='email'
             disabled={loading}
             value={model.username}
