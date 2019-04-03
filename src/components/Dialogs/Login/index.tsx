@@ -1,7 +1,7 @@
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import background from 'assets/images/background.jpg';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/svg/nutror-logo.svg';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
