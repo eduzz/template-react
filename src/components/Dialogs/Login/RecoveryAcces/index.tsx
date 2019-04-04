@@ -25,6 +25,46 @@ interface IProps {
 @WithStyles({
   buttons: {
     justifyContent: 'space-between'
+  },
+  buttonSubmit: {
+    padding: '12px 30px',
+    borderRadius: 30,
+    boxShadow: 'none',
+  },
+  buttonOutline: {
+    marginTop: 8,
+    padding: '8px 22px',
+    borderRadius: 50,
+    color: '#596375',
+    border: '1px solid #596375',
+  },
+  cardContent: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  title: {
+    margin: '0 0 10px',
+    display: 'inline-block',
+    color: '#596375',
+    fontSize: 14,
+    fontWeight: 600,
+  },
+  subtitle: {
+    marginBottom: 30,
+  },
+  footer: {
+    textAlign: 'center',
+    marginTop: 60,
+  },
+  paragraph: {
+    fontSize: 13,
+    lineHeight: '150%',
+    fontWeight: 300,
+    textAlign: 'center',
+  },
+  helpLink: {
+    fontWeight: 500,
+    textDecoration: 'underline',
   }
 })
 export default class LoginDialogRecoveryAccess extends FormComponent<IProps, IState>  {
@@ -61,11 +101,12 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     return (
       <FormValidation onSubmit={this.onSubmit}>
 
-        <CardContent>
-          <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
+        <CardContent className={classes.cardContent}>
+          <Typography className={classes.title}>Recuperar senha</Typography>
+          <Typography className={classes.subtitle}>Iremos lhe enviar um email para recuperar sua senha</Typography>
 
           <FieldText
-            label='Email'
+            label='Digite o e-mail para recuperar a senha '
             type='email'
             disabled={loading}
             value={model.email}
@@ -76,11 +117,15 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={loading} size='small' onClick={onCancel}>Voltar</Button>
-          <Button disabled={loading} color='secondary' type='submit'>Enviar</Button>
+          <Button disabled={loading} className={classes.buttonSubmit} variant='contained' color='secondary' type='submit'>Recuperar senha</Button>
         </CardActions>
 
         {loading && <LinearProgress color='secondary' />}
+
+        <div className={classes.footer}>
+          <Typography className={classes.paragraph}>Já possui uma conta?</Typography>
+          <Button className={classes.buttonOutline} disabled={loading} size='small' onClick={onCancel}>Acesse agora</Button>
+        </div>
 
       </FormValidation>
     );

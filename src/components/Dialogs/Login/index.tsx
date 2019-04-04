@@ -1,7 +1,7 @@
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import background from 'assets/images/background.jpg';
-import logo from 'assets/images/logo.png';
+import logo from 'assets/svg/nutror-logo.svg';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
@@ -38,21 +38,34 @@ interface IProps {
     height: '100vh',
     width: '400px',
     maxWidth: '100vw',
-    paddingTop: 'calc(50vh - 170px)',
-    boxShadow: theme.shadows['5']
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    boxShadow: '0 0 15px -6px #000',
   },
   logo: {
-    paddingLeft: 30,
-    marginBottom: 10
+    padding: '0 26px',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   logoImage: {
-    maxWidth: '100%',
-    maxHeight: 50
+    width: 150,
+    height: 150,
+    objectFit: 'contain',
   },
   viewContainer: {
     boxSizing: 'border-box',
     padding: '0 10px',
-    height: 330
+  },
+  poweredContainer: {
+    alignSelf: 'center',
+  },
+  poweredLink: {
+    fontSize: 10,
+    color: '#bcbcbc',
+    lineHeight: 15,
+    letterSpacing: .5,
+    textDecoration: 'none',
   }
 }))
 export default class LoginDialog extends PureComponent<IProps, IState> {
@@ -105,6 +118,10 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
                 />
               </div>
             </SwipeableViews>
+
+            <div className={classes.poweredContainer}>
+              <a className={classes.poweredLink} target='_blank' href='https://www.eduzz.com'>Powered by Eduzz</a>
+            </div>
           </div>
         </div>
       </Dialog>

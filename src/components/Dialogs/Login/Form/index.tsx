@@ -26,8 +26,33 @@ interface IProps {
 
 @WithStyles(theme => ({
   buttons: {
-    justifyContent: 'space-between'
-  }
+    justifyContent: 'space-between',
+    padding: '8px 12px',
+  },
+  buttonSubmit: {
+    padding: '12px 30px',
+    borderRadius: 30,
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontWeight: 400,
+  },
+  cardContent: {
+    paddingTop: 0,
+    paddingBottom: 0,
+  },
+  passContainer: {
+    position: 'relative',
+  },
+  buttonRecovery: {
+    position: 'absolute',
+    top: 12,
+    right: 0,
+    padding: '0 4px',
+    textTransform: 'none',
+    fontSize: 11,
+    fontWeight: 400,
+    zIndex: 1,
+  },
 }))
 export default class LoginDialogForm extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
@@ -60,9 +85,9 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
     return (
       <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
 
-        <CardContent>
+        <CardContent className={classes.cardContent}>
           <FieldText
-            label='Email'
+            label='E-mail do Usuário'
             type='email'
             disabled={loading}
             value={model.username}
@@ -71,20 +96,21 @@ export default class LoginDialogForm extends FormComponent<IProps, IState> {
             margin='dense'
           />
 
-          <FieldText
-            label='Senha'
-            type='password'
-            disabled={loading}
-            value={model.password}
-            validation='required'
-            onChange={this.updateModel((model, v) => model.password = v)}
-          />
-
+          <div className={classes.passContainer}>
+            <Button className={classes.buttonRecovery} disabled={loading} size='small' onClick={onRecoveryAccess}>Esqueceu sua senha?</Button>
+            <FieldText
+              label='Senha'
+              type='password'
+              disabled={loading}
+              value={model.password}
+              validation='required'
+              onChange={this.updateModel((model, v) => model.password = v)}
+            />
+          </div>
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={loading} size='small' onClick={onRecoveryAccess}>Recuperar Acesso</Button>
-          <Button variant='contained' color='secondary' type='submit'>
+          <Button className={classes.buttonSubmit} variant='contained' color='secondary' type='submit'>
             {!loading && 'Entrar'}
             {loading && <CircularProgress color='inherit' size={20} />}
           </Button>
