@@ -82,6 +82,7 @@ class StudentService {
 
   public getStudentLogsUrl(studentId: number) {
     return this.tokenService.getTokens().pipe(
+      RxOp.filter(tokens => !!tokens),
       RxOp.map(({ token }) => `${API_ENDPOINT}/producer/students/${studentId}/logs/export?t=${token}`)
     );
   }
