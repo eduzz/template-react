@@ -11,7 +11,7 @@ import imageCompress from 'helpers/imagerCompress';
 import React, { Fragment, PureComponent } from 'react';
 import { Cropper } from 'react-image-cropper';
 
-import ImageReader, { ImageReaderResult } from './ImageReader';
+import ImageReader, { IImageReaderResult } from './ImageReader';
 
 export interface IImageSelectorResult {
   filename: string;
@@ -19,7 +19,7 @@ export interface IImageSelectorResult {
 }
 
 interface IState {
-  image?: ImageReaderResult;
+  image?: IImageReaderResult;
   dimentions?: { width: number, height: number };
 }
 
@@ -78,7 +78,7 @@ export default class ImageSelector extends PureComponent<IProps, IState> {
     this.props.onComplete(null);
   }
 
-  setImage = (image: ImageReaderResult) => {
+  setImage = (image: IImageReaderResult) => {
     this.setState({ image: null });
 
     const dimentions = this.calculateRegion(image.width, image.height);

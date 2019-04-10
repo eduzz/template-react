@@ -8,7 +8,7 @@ import React, { DragEvent, Fragment, PureComponent } from 'react';
 
 import Toast from '../Toast';
 
-export interface ImageReaderResult {
+export interface IImageReaderResult {
   url: string;
   width: number;
   height: number;
@@ -22,7 +22,7 @@ interface IState {
 interface IProps {
   droppable?: boolean;
   className?: string;
-  onLoad: (result: ImageReaderResult) => void;
+  onLoad: (result: IImageReaderResult) => void;
   classes?: any;
 }
 
