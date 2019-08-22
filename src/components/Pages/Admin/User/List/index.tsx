@@ -54,7 +54,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
       )
       .subscribe(
         items => {
-          this.setAllItems(items as any);
+          this.setPaginatedData(items);
         },
         error => this.setError(error)
       );
