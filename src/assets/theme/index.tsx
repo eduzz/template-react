@@ -8,19 +8,18 @@ const primary = {
   light: '#3a5885',
   main: '#002f58',
   dark: '#00042f',
-  contrastText: '#fff',
+  contrastText: '#fff'
 };
 
 const secondary = {
   light: '#ffff53',
   main: '#ffcc09',
   dark: '#c79c00',
-  contrastText: '#fff',
+  contrastText: '#fff'
 };
 
 export const theme = createMuiTheme({
   palette: { primary, secondary },
-  typography: { useNextVariants: true },
   overrides,
   variables,
   props
@@ -28,7 +27,6 @@ export const theme = createMuiTheme({
 
 export const reverseTheme = createMuiTheme({
   palette: { primary: secondary, secondary: primary },
-  typography: { useNextVariants: true },
   overrides,
   variables,
   props

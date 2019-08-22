@@ -7,12 +7,10 @@ export class LogService {
   private bugsnag: any;
 
   constructor(sentryKey: string) {
-    Raven
-      .config(sentryKey, {
-        environment: ENV,
-        tags: { environment: ENV }
-      })
-      .install();
+    Raven.config(sentryKey, {
+      environment: ENV,
+      tags: { environment: ENV }
+    }).install();
 
     Raven.setShouldSendCallback(() => {
       let err: any = Raven.lastException();
@@ -39,7 +37,7 @@ export class LogService {
     Raven.captureBreadcrumb({ message, category, data });
   }
 
-  public handleError(err: any, force: boolean = false): void {
+  public handleError(err: any): void {
     if (!err) return;
 
     if (typeof err === 'string') {
@@ -48,7 +46,6 @@ export class LogService {
 
     Raven.captureException(err, { extra: err.extraData });
   }
-
 }
 
 const logService = new LogService(SENTRY_KEY);

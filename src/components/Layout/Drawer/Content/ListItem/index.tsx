@@ -26,11 +26,11 @@ interface IProps {
 
 @WithStyles(theme => ({
   item: {
-    paddingLeft: 14,
-    opacity: 0.8,
+    'paddingLeft': 14,
+    'opacity': 0.8,
     '&.active': {
       opacity: 1,
-      background: darken(theme.palette.primary.main, 0.30)
+      background: darken(theme.palette.primary.main, 0.3)
     }
   },
   icon: {
@@ -41,26 +41,26 @@ interface IProps {
     color: 'inherit'
   },
   expandablePanel: {
-    background: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
-    marginLeft: -10,
-    boxShadow: 'none',
-    margin: 0,
+    'background': theme.palette.primary.main,
+    'color': theme.palette.primary.contrastText,
+    'marginLeft': -10,
+    'boxShadow': 'none',
+    'margin': 0,
     '&.active': {
-      background: darken(theme.palette.primary.main, 0.10)
+      background: darken(theme.palette.primary.main, 0.1)
     }
   },
   expandableTitle: {
     '&:hover': {
-      background: darken(theme.palette.primary.main, 0.10)
+      background: darken(theme.palette.primary.main, 0.1)
     }
   },
   expandableDetails: {
     padding: 0
   },
   innerList: {
-    padding: 0,
-    width: '100%',
+    'padding': 0,
+    'width': '100%',
     '& > div': {
       paddingLeft: 40
     }
@@ -89,15 +89,15 @@ export default class DrawerListItem extends PureComponent<IProps, IState> {
 
   handleClick = () => {
     this.props.onClick(this.props.data);
-  }
+  };
 
   handleSubClick = (menu: IMenu) => {
     this.props.onClick(menu);
-  }
+  };
 
   handleExandedClick = (event: any, expanded: boolean) => {
     this.setState({ expanded });
-  }
+  };
 
   render() {
     const { data } = this.props;
@@ -122,15 +122,15 @@ export default class DrawerListItem extends PureComponent<IProps, IState> {
         className={`${classes.item} ${active ? 'active' : ''}`}
         onClick={this.handleClick}
       >
-        {!!data.icon &&
+        {!!data.icon && (
           <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
             <data.icon />
           </ListItemIcon>
-        }
+        )}
         <ListItemText primary={data.display} classes={{ primary: classes.text }} />
       </ListItem>
     );
-  }
+  };
 
   renderList = (): React.ReactNode => {
     const { expanded } = this.state;
@@ -142,22 +142,25 @@ export default class DrawerListItem extends PureComponent<IProps, IState> {
         onChange={this.handleExandedClick}
         className={`${classes.expandablePanel} ${expanded ? 'active' : ''}`}
       >
-        <ExpansionPanelSummary className={classes.expandableTitle} expandIcon={<ExpandMoreIcon className={classes.icon} />}>
-          {!!data.icon &&
+        <ExpansionPanelSummary
+          className={classes.expandableTitle}
+          expandIcon={<ExpandMoreIcon className={classes.icon} />}
+        >
+          {!!data.icon && (
             <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
               <data.icon />
             </ListItemIcon>
-          }
+          )}
           <ListItemText primary={data.display} classes={{ primary: classes.text }} />
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.expandableDetails}>
           <List className={classes.innerList}>
-            {data.submenu.map(sub =>
+            {data.submenu.map(sub => (
               <DrawerListItem key={sub.path} data={sub} onClick={this.handleSubClick} />
-            )}
+            ))}
           </List>
         </ExpansionPanelDetails>
       </ExpansionPanel>
     );
-  }
+  };
 }

@@ -11,10 +11,7 @@ export class AuthService {
   private openLogin$: Rx.BehaviorSubject<boolean>;
   private openChangePassword$: Rx.BehaviorSubject<boolean>;
 
-  constructor(
-    private api: ApiService,
-    private tokenService: TokenService
-  ) {
+  constructor(private api: ApiService, private tokenService: TokenService) {
     this.openLogin$ = new Rx.BehaviorSubject(false);
     this.openChangePassword$ = new Rx.BehaviorSubject(false);
 
@@ -32,11 +29,13 @@ export class AuthService {
       RxOp.shareReplay(1)
     );
 
-    this.getUser().pipe(
-      RxOp.distinctUntilChanged((a, b) => (a || {} as IUserToken).id !== (b || {} as IUserToken).id),
-      RxOp.switchMap(() => cacheService.clear()),
-      RxOp.logError()
-    ).subscribe();
+    this.getUser()
+      .pipe(
+        RxOp.distinctUntilChanged((a, b) => (a || ({} as IUserToken)).id !== (b || ({} as IUserToken)).id),
+        RxOp.switchMap(() => cacheService.clear()),
+        RxOp.logError()
+      )
+      .subscribe();
   }
 
   public openLogin(): void {
@@ -48,9 +47,7 @@ export class AuthService {
   }
 
   public login(email: string, password: string): Rx.Observable<void> {
-    return this.api.post('/auth/login', { email, password }).pipe(
-      RxOp.tap(() => this.openLogin$.next(false))
-    );
+    return this.api.post('/auth/login', { email, password }).pipe(RxOp.tap(() => this.openLogin$.next(false)));
   }
 
   public logout(): Rx.Observable<void> {
@@ -78,7 +75,10 @@ export class AuthService {
   }
 
   public changePassword(currentPassword: string, newPassword: string): Rx.Observable<void> {
-    return this.api.post('/auth/change-password', { currentPassword, newPassword });
+    return this.api.post('/auth/change-password', {
+      currentPassword,
+      newPassword
+    });
   }
 
   public getUser(): Rx.Observable<IUserToken> {

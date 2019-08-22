@@ -1,7 +1,4 @@
 {
   "upgrade": true,
-  "reject": [
-    "babel-jest",
-    "jest"
-  ]
+  "reject": []
 }

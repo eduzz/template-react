@@ -41,7 +41,9 @@ export default class TableWrapper extends PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    this.setState({ scrollEnded: this.root.current.clientWidth === this.root.current.scrollWidth });
+    this.setState({
+      scrollEnded: this.root.current.clientWidth === this.root.current.scrollWidth
+    });
     this.root.current.addEventListener('scroll', this.onScroll);
     window.addEventListener('resize', this.onScroll);
   }
@@ -54,7 +56,7 @@ export default class TableWrapper extends PureComponent<IProps, IState> {
   onScroll = () => {
     const endScroll = this.root.current.scrollWidth - this.root.current.clientWidth - 10;
     this.setState({ scrollEnded: this.root.current.scrollLeft >= endScroll });
-  }
+  };
 
   render() {
     const { scrollEnded } = this.state;
@@ -64,12 +66,9 @@ export default class TableWrapper extends PureComponent<IProps, IState> {
       <div className={classes.root}>
         <div className={`${classes.shadow} ${scrollEnded ? classes.noShadow : ''}`} />
         <div className={classes.scrollable} ref={this.root}>
-          <div style={({ minWidth: minWidth || 650 })}>
-            {children}
-          </div>
+          <div style={{ minWidth: minWidth || 650 }}>{children}</div>
         </div>
       </div>
-
     );
   }
 }

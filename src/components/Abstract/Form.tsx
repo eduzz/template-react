@@ -18,22 +18,22 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
   public bindScrollTop = (scrollTop: Function): React.ReactNode => {
     this.scrollTop = scrollTop;
     return null;
-  }
+  };
 
   public bindForm = (formValidation: FormValidation): void => {
     this.formValidation = formValidation;
-  }
+  };
 
   public isFormValid = () => {
     return this.formValidation.isValid();
-  }
+  };
 
   public resetForm = () => {
     this.setState({ model: {}, formSubmitted: false });
     this.formValidation.reset();
-  }
+  };
 
-  protected updateModel = (handler: (model: S['model'], value: any) => void): (value: any) => void => {
+  protected updateModel = (handler: (model: S['model'], value: any) => void): ((value: any) => void) => {
     return (value: any) => {
       const { model } = this.state;
 
@@ -41,6 +41,5 @@ export abstract class FormComponent<P, S extends IStateForm> extends Component<P
 
       this.setState({ model });
     };
-  }
-
+  };
 }

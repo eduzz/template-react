@@ -8,7 +8,7 @@ interface IProps {
   classes?: any;
   hasTabs?: boolean;
   actions: {
-    icon: typeof MoreVertIcon,
+    icon: typeof MoreVertIcon;
     tooltip?: string;
     onClick: () => void;
   }[];
@@ -42,19 +42,19 @@ export default class FabButton extends PureComponent<IProps> {
 
     return (
       <div className={classes.root + ' header-app ' + (hasTabs ? classes.withTabs : '')}>
-        {action.tooltip &&
+        {action.tooltip && (
           <Tooltip title={action.tooltip}>
             <Fab color='secondary' onClick={action.onClick}>
               <action.icon />
             </Fab>
           </Tooltip>
-        }
+        )}
 
-        {!action.tooltip &&
+        {!action.tooltip && (
           <Fab color='secondary' onClick={action.onClick}>
             <action.icon />
           </Fab>
-        }
+        )}
       </div>
     );
   }

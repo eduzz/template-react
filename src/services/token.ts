@@ -9,9 +9,10 @@ export class TokenService {
   constructor(private storageService: StorageService) {
     this.token$ = new ReplaySubject(1);
 
-    this.storageService.get('authToken').pipe(
-      RxOp.logError()
-    ).subscribe(token => this.token$.next(token));
+    this.storageService
+      .get('authToken')
+      .pipe(RxOp.logError())
+      .subscribe(token => this.token$.next(token));
   }
 
   public getToken(): Observable<string> {
@@ -19,9 +20,7 @@ export class TokenService {
   }
 
   public setToken(token: string): Observable<string> {
-    return this.storageService.set('authToken', token).pipe(
-      RxOp.tap(() => this.token$.next(token))
-    );
+    return this.storageService.set('authToken', token).pipe(RxOp.tap(() => this.token$.next(token)));
   }
 
   public clearToken(): Observable<void> {

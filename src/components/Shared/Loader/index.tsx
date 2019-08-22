@@ -17,7 +17,7 @@ interface IProps {
   loader: {
     width: 70,
     height: 70,
-    color: theme.palette.secondary.light,
+    color: theme.palette.secondary.light
   },
   paper: {
     boxShadow: 'none',
@@ -40,7 +40,7 @@ export default class Loader extends PureComponent<IProps, IState> {
     if (refs.includes(ref)) return;
 
     this.setState({ refs: [...refs, ref] });
-  }
+  };
 
   hide = (ref: string): void => {
     if (typeof ref !== 'string') {
@@ -53,20 +53,16 @@ export default class Loader extends PureComponent<IProps, IState> {
 
     refs.splice(index, 1);
     this.setState({ refs: [...refs] });
-  }
+  };
 
-  handleRequestClose = () => { };
+  handleRequestClose = () => {};
 
   render(): JSX.Element {
     const { refs } = this.state;
     const { classes } = this.props;
 
     return (
-      <Dialog
-        open={!!refs.length}
-        TransitionComponent={Transition}
-        PaperProps={{ className: classes.paper }}
-      >
+      <Dialog open={!!refs.length} TransitionComponent={Transition} PaperProps={{ className: classes.paper }}>
         <CircularProgress className={classes.loader} size='large' color='inherit' />
       </Dialog>
     );

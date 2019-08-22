@@ -7,7 +7,7 @@ import * as RxOp from 'rxjs-operators';
 import apiService, { ApiService } from './api';
 
 export class UserService {
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {}
 
   public list(params: IPaginationParams): Rx.Observable<IPaginationResponse<IUser>> {
     return this.apiService.get('/user', params);

@@ -44,15 +44,18 @@ export default class Content extends PureComponent<IProps, {}> {
   }
 
   componentDidMount() {
-    authService.getUser().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(user => this.setState({ user }));
+    authService
+      .getUser()
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(user => this.setState({ user }));
   }
 
   navigate = (menu: IMenu) => {
     this.props.navigate(menu.path);
-  }
+  };
 
   render() {
     const { classes, close, menu } = this.props;
@@ -65,9 +68,9 @@ export default class Content extends PureComponent<IProps, {}> {
         </div>
 
         <List className={classes.list}>
-          {menu.map(item =>
+          {menu.map(item => (
             <DrawerListItem key={item.path} data={item} onClick={this.navigate} />
-          )}
+          ))}
         </List>
       </div>
     );

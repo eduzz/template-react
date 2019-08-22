@@ -10,7 +10,7 @@ export function logError<T>(ignore: IIgnoreParam = null) {
 }
 
 class LogErrorOperator<T> implements Operator<T, T> {
-  constructor(private ignore: IIgnoreParam) { }
+  constructor(private ignore: IIgnoreParam) {}
 
   public call(subscriber: Subscriber<any>, source: Observable<any>): Subscription {
     return source.subscribe(new LogErrorSubscriber(subscriber, this.ignore));
@@ -18,10 +18,7 @@ class LogErrorOperator<T> implements Operator<T, T> {
 }
 
 class LogErrorSubscriber extends Subscriber<any> {
-  constructor(
-    protected destination: Subscriber<any>,
-    private ignore: IIgnoreParam
-  ) {
+  constructor(protected destination: Subscriber<any>, private ignore: IIgnoreParam) {
     super(destination);
 
     this.ignore = ignore;

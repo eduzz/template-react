@@ -10,7 +10,7 @@ export function bindComponent<T>(component: React.Component) {
 }
 
 class BindComponentOperator<T> implements Operator<T, T> {
-  constructor(private component: IBindableComponent) { }
+  constructor(private component: IBindableComponent) {}
 
   public call(subscriber: Subscriber<any>, source: Observable<any>): TeardownLogic {
     const subscription = source.subscribe(subscriber);

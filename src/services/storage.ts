@@ -4,11 +4,10 @@ import * as RxOp from 'rxjs/operators';
 import { apiResponseFormatter } from '../formatters/apiResponse';
 
 export class StorageService {
-
   public get<T = any>(key: string): Rx.Observable<T> {
     return Rx.of(true).pipe(
       RxOp.map(() => localStorage.getItem(key)),
-      RxOp.map(data => data ? apiResponseFormatter(JSON.parse(data)) : null),
+      RxOp.map(data => (data ? apiResponseFormatter(JSON.parse(data)) : null)),
       RxOp.catchError(() => Rx.of(null))
     );
   }
@@ -31,7 +30,6 @@ export class StorageService {
       })
     );
   }
-
 }
 
 const storageService = new StorageService();

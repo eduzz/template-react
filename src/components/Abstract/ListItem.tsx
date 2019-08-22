@@ -9,7 +9,10 @@ export interface IStateListItem {
   error?: any;
 }
 
-export default abstract class ListItemComponent<P = {}, S extends IStateListItem = IStateListItem> extends PureComponent<P, S> {
+export default abstract class ListItemComponent<
+  P = {},
+  S extends IStateListItem = IStateListItem
+> extends PureComponent<P, S> {
   styleProgress = { padding: 12 };
 
   constructor(props: P) {
@@ -22,27 +25,27 @@ export default abstract class ListItemComponent<P = {}, S extends IStateListItem
 
   handleDismisError = () => {
     this.setState({ error: null });
-  }
+  };
 
   renderSideMenu = (options: IOption[]) => {
     const { loading, error } = this.state;
 
     return (
       <Fragment>
-        {loading &&
+        {loading && (
           <div style={this.styleProgress}>
             <CircularProgress color='secondary' size={20} />
           </div>
-        }
-        {!loading && error &&
-          <ErrorMessageIcon error={error} onDismiss={this.handleDismisError} />
-        }
-        {!loading && !error &&
+        )}
+        {!loading && error && <ErrorMessageIcon error={error} onDismiss={this.handleDismisError} />}
+        {!loading && !error && (
           <DropdownMenu>
-            {options.map(o => <OptionItem key={o.text} {...o} />)}
+            {options.map(o => (
+              <OptionItem key={o.text} {...o} />
+            ))}
           </DropdownMenu>
-        }
+        )}
       </Fragment>
     );
-  }
+  };
 }

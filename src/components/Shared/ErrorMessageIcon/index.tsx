@@ -18,18 +18,18 @@ interface IProps {
   }
 }))
 export default class ErrorMessageIcon extends PureComponent<IProps> {
-  async showAlert() {
+  showAlert = async () => {
     const { error, onDismiss } = this.props;
 
     await Alert.show(errorMessageFormatter(error));
     onDismiss && onDismiss();
-  }
+  };
 
   render() {
     const { classes } = this.props;
 
     return (
-      <IconButton onClick={() => this.showAlert()}>
+      <IconButton onClick={this.showAlert}>
         <AlertCircleIcon className={classes.icon} />
       </IconButton>
     );

@@ -33,14 +33,14 @@ export interface IAlertShowParams {
   confirmation?: boolean;
 }
 
-@WithStyles(theme => ({
+@WithStyles({
   root: {
     zIndex: 1600
   },
   content: {
     minWidth: '250px'
   }
-}))
+})
 export default class Alert extends React.Component<IProps, IState> {
   static Global = AlertGlobalProvider;
 
@@ -74,11 +74,11 @@ export default class Alert extends React.Component<IProps, IState> {
 
   handleOk = () => {
     this.props.onClose(true);
-  }
+  };
 
   handleCancel = () => {
     this.props.onClose(false);
-  }
+  };
 
   render() {
     const { opened, title, message, confirmation } = this.state;
@@ -94,16 +94,14 @@ export default class Alert extends React.Component<IProps, IState> {
       >
         <DialogTitle>{title || (confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
         <DialogContent>
-          <DialogContentText className={classes.content}>
-            {message}
-          </DialogContentText>
+          <DialogContentText className={classes.content}>{message}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          {confirmation &&
+          {confirmation && (
             <Button onClick={this.handleCancel} autoFocus>
               Cancelar
             </Button>
-          }
+          )}
           <Button autoFocus={!confirmation} onClick={this.handleOk} color='primary'>
             OK
           </Button>
@@ -111,7 +109,6 @@ export default class Alert extends React.Component<IProps, IState> {
       </Dialog>
     );
   }
-
 }
 
 function Transition(props: any) {

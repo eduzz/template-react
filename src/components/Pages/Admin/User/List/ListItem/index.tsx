@@ -26,21 +26,24 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
 
   constructor(props: IProps) {
     super(props);
-    this.options = [{
-      text: 'Editar',
-      icon: EditIcon,
-      handler: this.handleEdit
-    }, {
-      text: 'Excluir',
-      icon: DeleteIcon,
-      handler: this.handleDelete
-    }];
+    this.options = [
+      {
+        text: 'Editar',
+        icon: EditIcon,
+        handler: this.handleEdit
+      },
+      {
+        text: 'Excluir',
+        icon: DeleteIcon,
+        handler: this.handleDelete
+      }
+    ];
   }
 
   handleEdit = () => {
     const { user, onEdit } = this.props;
     onEdit(user);
-  }
+  };
 
   handleDelete = async () => {
     const { user, onDeleteComplete } = this.props;
@@ -50,17 +53,23 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
 
     this.setState({ loading: true });
 
-    userService.delete(user.id).pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(() => {
-      Toast.show(`${user.firstName} foi removido`);
-      this.setState({ loading: false, deleted: true });
-      onDeleteComplete();
-    }, error => {
-      this.setState({ loading: false, error });
-    });
-  }
+    userService
+      .delete(user.id)
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(
+        () => {
+          Toast.show(`${user.firstName} foi removido`);
+          this.setState({ loading: false, deleted: true });
+          onDeleteComplete();
+        },
+        error => {
+          this.setState({ loading: false, error });
+        }
+      );
+  };
 
   render(): JSX.Element {
     const { deleted } = this.state;
@@ -74,9 +83,7 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
       <TableRow>
         <TableCell>{user.fullName}</TableCell>
         <TableCell>{user.email}</TableCell>
-        <TableCell>
-          {this.renderSideMenu(this.options)}
-        </TableCell>
+        <TableCell>{this.renderSideMenu(this.options)}</TableCell>
       </TableRow>
     );
   }

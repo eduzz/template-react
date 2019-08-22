@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
 import * as Rx from 'rxjs';
@@ -10,10 +10,7 @@ import authService from './auth';
 import tokenService, { TokenService } from './token';
 
 export class ApiService {
-  constructor(
-    private apiEndpoint: string,
-    private tokenService: TokenService
-  ) { }
+  constructor(private apiEndpoint: string, private tokenService: TokenService) {}
 
   public get<T = any>(url: string, params?: any): Rx.Observable<T> {
     return this.request<T>('GET', url, params).pipe(
@@ -48,11 +45,11 @@ export class ApiService {
   }
 
   private request<T = any>(
-    method: string,
+    method: Method,
     url: string,
     data: any = null,
     retry: boolean = true
-  ): Rx.Observable<{ response: T, progress: number }> {
+  ): Rx.Observable<{ response: T; progress: number }> {
     const progress$ = new Rx.BehaviorSubject(0);
 
     return this.tokenService.getToken().pipe(
@@ -68,9 +65,7 @@ export class ApiService {
           method,
           headers: {
             ...headers,
-            'Content-Type': data instanceof FormData ?
-              'multipart/form-data' :
-              'application/json'
+            'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
           },
           params: method === 'GET' ? apiRequestFormatter(data) : null,
           data: method === 'POST' || method === 'PUT' ? apiRequestFormatter(data) : null,
@@ -84,14 +79,11 @@ export class ApiService {
       RxOp.switchMap(res => this.checkNewToken(res)),
       RxOp.map(res => apiResponseFormatter<T>(res.data) || null),
       RxOp.startWith(undefined),
-      RxOp.combineLatest(
-        progress$.pipe(RxOp.distinctUntilChanged()),
-        (response, progress) => ({ response, progress })
-      ),
+      RxOp.combineLatest(progress$.pipe(RxOp.distinctUntilChanged()), (response, progress) => ({ response, progress })),
       RxOp.catchError(err => {
         progress$.complete();
         return this.handleError(err, retry);
-      }),
+      })
     );
   }
 
@@ -102,9 +94,7 @@ export class ApiService {
       return Rx.of(response);
     }
 
-    return this.tokenService.setToken(token).pipe(
-      RxOp.map(() => response)
-    );
+    return this.tokenService.setToken(token).pipe(RxOp.map(() => response));
   }
   private handleError(err: AxiosError, retry: boolean) {
     if (!err.config || !err.response) return Rx.throwError(err);
@@ -121,16 +111,10 @@ export class ApiService {
           return Rx.throwError(new ApiError(err.config, err.response, err));
         }
 
-        return this.request(
-          err.config.method,
-          err.config.url,
-          err.config.data || err.config.params,
-          false
-        );
+        return this.request(err.config.method, err.config.url, err.config.data || err.config.params, false);
       })
     );
   }
-
 }
 
 const apiService = new ApiService(API_ENDPOINT, tokenService);

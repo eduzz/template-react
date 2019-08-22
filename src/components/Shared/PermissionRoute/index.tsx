@@ -19,16 +19,19 @@ export default class PermissionRoute extends Route<IProps> {
   componentDidMount() {
     super.componentDidMount && super.componentDidMount();
 
-    authService.isAuthenticated().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this),
-      RxOp.tap(isAuthenticated => {
-        if (isAuthenticated) return;
-        authService.openLogin();
-      })
-    ).subscribe(isAuthenticated => {
-      this.setState({ isAuthenticated });
-    });
+    authService
+      .isAuthenticated()
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this),
+        RxOp.tap(isAuthenticated => {
+          if (isAuthenticated) return;
+          authService.openLogin();
+        })
+      )
+      .subscribe(isAuthenticated => {
+        this.setState({ isAuthenticated });
+      });
   }
 
   render() {
@@ -40,9 +43,7 @@ export default class PermissionRoute extends Route<IProps> {
 
     return (
       <Fragment>
-        <PermissionHide role={this.props.role}>
-          {super.render()}
-        </PermissionHide>
+        <PermissionHide role={this.props.role}>{super.render()}</PermissionHide>
 
         <PermissionHide inverse role={this.props.role}>
           <p>Não encontrado</p>

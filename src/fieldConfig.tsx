@@ -5,11 +5,13 @@ const fieldConfig = new ConfigBuilder()
   .fromLang(lang)
   .setTrumbowygConfig({
     btns: [
-      'viewHTML', ['h1', 'h2'],
+      'viewHTML',
+      ['h1', 'h2'],
       ['bold', 'italic', 'underline'],
       ['superscript', 'subscript'],
       'btnGrp-justify',
-      'btnGrp-lists', ['horizontalRule'],
+      'btnGrp-lists',
+      ['horizontalRule'],
       ['removeformat'],
       ['fullscreen']
     ]

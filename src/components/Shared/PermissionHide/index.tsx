@@ -26,12 +26,18 @@ export default class PermissionHide extends PureComponent<IProps, IState> {
     const { role } = this.props;
     const roles = Array.isArray(role) ? role : role ? [role] : [];
 
-    authService.canAccess(...roles).pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(canAccess => {
-      this.setState({ canAccess, verified: true });
-    }, err => Toast.error(err));
+    authService
+      .canAccess(...roles)
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(
+        canAccess => {
+          this.setState({ canAccess, verified: true });
+        },
+        err => Toast.error(err)
+      );
   }
 
   render() {

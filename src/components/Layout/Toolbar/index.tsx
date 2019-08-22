@@ -32,9 +32,9 @@ interface IProps {
   iconMenu: {
     marginLeft: '-15px',
     [theme.breakpoints.up('md')]: {
-      display: 'none',
+      display: 'none'
     }
-  },
+  }
 }))
 export default class Toolbar extends PureComponent<IProps> {
   static contextType = DrawerContext;
@@ -42,7 +42,7 @@ export default class Toolbar extends PureComponent<IProps> {
 
   openDrawer = () => {
     this.context.open();
-  }
+  };
 
   render() {
     const { children, title, classes } = this.props;
@@ -51,19 +51,15 @@ export default class Toolbar extends PureComponent<IProps> {
       <div className={classes.root}>
         <AppBar className={classes.appBar} color='default'>
           <CoreToolbar>
-            <IconButton
-              color='inherit'
-              onClick={this.openDrawer}
-              className={classes.iconMenu}
-            >
+            <IconButton color='inherit' onClick={this.openDrawer} className={classes.iconMenu}>
               <MenuIcon />
             </IconButton>
             {children}
-            {!children &&
+            {!children && (
               <Typography variant='h6' color='inherit' noWrap>
                 {title || 'App'}
               </Typography>
-            }
+            )}
           </CoreToolbar>
         </AppBar>
       </div>

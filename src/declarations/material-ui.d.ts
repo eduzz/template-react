@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/interface-name-prefix */
 import '@material-ui/core/styles/createMuiTheme';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
@@ -12,7 +13,7 @@ declare module '@material-ui/core/styles/createMuiTheme' {
     colors: {
       facebook: string;
       google: string;
-    }
+    };
   }
 
   interface Theme {

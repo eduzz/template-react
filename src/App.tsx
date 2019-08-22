@@ -1,7 +1,6 @@
 import './assets/global.css';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import FormFieldsContext from '@react-form-fields/material-ui/components/Context';
 import { theme } from 'assets/theme';
@@ -12,12 +11,7 @@ import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import fieldConfig from 'fieldConfig';
 import React from 'react';
-import JssProvider from 'react-jss/lib/JssProvider';
 import { setup } from 'rxjs-operators';
-
-const generateClassName = createGenerateClassName({
-  dangerouslyUseGlobalCSS: true
-});
 
 class App extends React.PureComponent {
   loader = React.createRef<Loader>();
@@ -33,21 +27,19 @@ class App extends React.PureComponent {
 
   render() {
     return (
-      <JssProvider generateClassName={generateClassName}>
-        <MuiThemeProvider theme={theme}>
-          <FormFieldsContext config={this.formFieldConfig}>
-            <CssBaseline />
-            <Dialogs />
+      <MuiThemeProvider theme={theme}>
+        <FormFieldsContext config={this.formFieldConfig}>
+          <CssBaseline />
+          <Dialogs />
 
-            <Loader innerRef={this.loader} />
+          <Loader innerRef={this.loader} />
 
-            <Alert.Global />
-            <Toast.Global />
+          <Alert.Global />
+          <Toast.Global />
 
-            <Pages />
-          </FormFieldsContext>
-        </MuiThemeProvider>
-      </JssProvider>
+          <Pages />
+        </FormFieldsContext>
+      </MuiThemeProvider>
     );
   }
 }

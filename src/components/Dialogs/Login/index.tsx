@@ -1,5 +1,6 @@
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
+import logoWhite from 'assets/images/logo-white.png';
 import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
@@ -59,36 +60,31 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    authService.shouldOpenLogin().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(opened => {
-      this.setState({ opened });
-    });
+    authService
+      .shouldOpenLogin()
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(opened => {
+        this.setState({ opened });
+      });
   }
 
   changeView = (view: number) => () => {
     this.setState({ currentView: view });
-  }
+  };
 
   render() {
     const { opened, currentView } = this.state;
     const { classes } = this.props;
 
     return (
-      <Dialog
-        fullScreen
-        disableBackdropClick
-        disableEscapeKeyDown
-        open={opened}
-        TransitionComponent={Transition}
-      >
-
+      <Dialog fullScreen disableBackdropClick disableEscapeKeyDown open={opened} TransitionComponent={Transition}>
         <div className={classes.root}>
           <div className={classes.container}>
-
             <div className={classes.logo}>
-              <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
+              <img src={logoWhite} className={classes.logoImage} />
             </div>
 
             <SwipeableViews index={currentView}>
@@ -96,10 +92,7 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
                 <LoginDialogForm onRecoveryAccess={this.changeView(1)} />
               </div>
               <div className={classes.viewContainer}>
-                <LoginDialogRecoveryAccess
-                  onCancel={this.changeView(0)}
-                  onComplete={this.changeView(0)}
-                />
+                <LoginDialogRecoveryAccess onCancel={this.changeView(0)} onComplete={this.changeView(0)} />
               </div>
             </SwipeableViews>
           </div>

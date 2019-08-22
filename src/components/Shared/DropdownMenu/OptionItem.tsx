@@ -26,23 +26,19 @@ export default class OptionItem extends PureComponent<IProps> {
     event.preventDefault();
     event.stopPropagation();
     this.context(this.props.handler);
-  }
+  };
 
   render() {
     const { icon: Icon, text, classes } = this.props;
 
     return (
       <MenuItem onClick={this.onClick}>
-        {!!Icon &&
+        {!!Icon && (
           <ListItemIcon>
             <Icon />
           </ListItemIcon>
-        }
-        <ListItemText
-          inset={!!Icon}
-          primary={text}
-          className={Icon ? classes.text : null}
-        />
+        )}
+        <ListItemText inset={!!Icon} primary={text} className={Icon ? classes.text : null} />
       </MenuItem>
     );
   }

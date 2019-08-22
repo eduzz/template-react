@@ -14,7 +14,7 @@ interface IProps {
   classes?: any;
 }
 
-export const ScrollTopContext = React.createContext<Function>((() => { }));
+export const ScrollTopContext = React.createContext<Function>(() => {});
 
 @WithStyles(theme => ({
   root: {
@@ -30,20 +30,27 @@ export const ScrollTopContext = React.createContext<Function>((() => { }));
     overflow: 'auto',
     padding: theme.variables.contentPadding,
     [theme.breakpoints.up('sm')]: {
-      padding: theme.variables.contentPaddingUpSm,
+      padding: theme.variables.contentPaddingUpSm
     }
   }
 }))
 export default class AdminPage extends PureComponent<IProps, {}> {
-  mainContent: React.RefObject<HTMLMainElement> = React.createRef();
+  mainContent: React.RefObject<HTMLDivElement> = React.createRef();
   menu: IMenu[] = [
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
-    { path: '/usuarios', display: 'Usuários', role: enRoles.admin, icon: AccountMultipleIcon },
+    {
+      path: '/usuarios',
+      display: 'Usuários',
+      role: enRoles.admin,
+      icon: AccountMultipleIcon
+    }
   ];
 
   scrollTop = () => {
     setTimeout(() => this.mainContent.current.scrollTo(0, 0), 100);
-  }
+  };
+
+  renderRedirect = () => <Redirect to='/' />;
 
   render() {
     const { classes } = this.props;
@@ -56,7 +63,7 @@ export default class AdminPage extends PureComponent<IProps, {}> {
               <Switch>
                 <PermissionRoute path='/usuarios' role={enRoles.sysAdmin} component={UserIndexPage} />
                 <Route path='/' component={DashboardIndexPage} />
-                <Route render={() => <Redirect to='/' />} />
+                <Route render={this.renderRedirect} />
               </Switch>
             </main>
           </Drawer>

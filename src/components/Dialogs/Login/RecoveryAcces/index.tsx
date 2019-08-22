@@ -13,9 +13,10 @@ import React, { MouseEvent } from 'react';
 import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
-interface IState extends IStateForm<{
-  email: string;
-}> {
+interface IState
+  extends IStateForm<{
+    email: string;
+  }> {
   opened: boolean;
   loading: boolean;
 }
@@ -31,7 +32,7 @@ interface IProps {
     justifyContent: 'space-between'
   }
 })
-export default class LoginDialogRecoveryAccess extends FormComponent<IProps, IState>  {
+export default class LoginDialogRecoveryAccess extends FormComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = { ...this.state, opened: false, loading: false };
@@ -43,20 +44,26 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
     const { model } = this.state;
     this.setState({ loading: true });
 
-    authService.sendResetPassword(model.email).pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(() => {
-      this.setState({ loading: false });
-      this.resetForm();
-      this.props.onComplete();
+    authService
+      .sendResetPassword(model.email)
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(
+        () => {
+          this.setState({ loading: false });
+          this.resetForm();
+          this.props.onComplete();
 
-      Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
-    }, err => {
-      Toast.error(err);
-      this.setState({ loading: false });
-    });
-  }
+          Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
+        },
+        err => {
+          Toast.error(err);
+          this.setState({ loading: false });
+        }
+      );
+  };
 
   render() {
     const { model, loading } = this.state;
@@ -64,7 +71,6 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
 
     return (
       <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-
         <Card>
           <CardContent>
             <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
@@ -75,19 +81,21 @@ export default class LoginDialogRecoveryAccess extends FormComponent<IProps, ISt
               disabled={loading}
               value={model.email}
               validation='required|email'
-              onChange={this.updateModel((model, v) => model.email = v)}
+              onChange={this.updateModel((model, v) => (model.email = v))}
             />
-
           </CardContent>
 
           <CardActions className={classes.buttons}>
-            <Button disabled={loading} size='small' onClick={onCancel}>Voltar</Button>
-            <Button disabled={loading} color='secondary' type='submit'>Enviar</Button>
+            <Button disabled={loading} size='small' onClick={onCancel}>
+              Voltar
+            </Button>
+            <Button disabled={loading} color='secondary' type='submit'>
+              Enviar
+            </Button>
           </CardActions>
 
           {loading && <LinearProgress color='secondary' />}
         </Card>
-
       </FormValidation>
     );
   }

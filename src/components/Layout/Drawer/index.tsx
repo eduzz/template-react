@@ -37,7 +37,7 @@ interface IProps extends IRouteProps {
       position: 'relative',
       height: '100vh'
     }
-  },
+  }
 }))
 export default class Drawer extends PureComponent<IProps, IState> {
   modalProps = { keepMounted: true };
@@ -51,7 +51,7 @@ export default class Drawer extends PureComponent<IProps, IState> {
   navigate = (url: string) => {
     this.props.history.push(url);
     this.close();
-  }
+  };
 
   open = () => this.setState({ drawerOpened: true });
   close = () => this.setState({ drawerOpened: false });
@@ -78,11 +78,7 @@ export default class Drawer extends PureComponent<IProps, IState> {
             </CoreDrawer>
           </Hidden>
           <Hidden smDown implementation='css'>
-            <CoreDrawer
-              variant='permanent'
-              open
-              classes={this.drawerClasses}
-            >
+            <CoreDrawer variant='permanent' open classes={this.drawerClasses}>
               {content}
             </CoreDrawer>
           </Hidden>

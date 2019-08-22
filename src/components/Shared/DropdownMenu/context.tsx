@@ -4,6 +4,6 @@ export interface IDropdownMenuContext {
   (handler: () => void): void;
 }
 
-const DropdownMenuContext = React.createContext<IDropdownMenuContext>(() => { });
+const DropdownMenuContext = React.createContext<IDropdownMenuContext>(() => {});
 
 export default DropdownMenuContext;

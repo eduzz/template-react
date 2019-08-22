@@ -19,8 +19,7 @@ interface IState {
   content: React.ReactChild[];
 }
 
-interface IProps extends Partial<MenuProps> {
-}
+interface IProps extends Partial<MenuProps> {}
 
 export default class DropdownMenu extends React.PureComponent<IProps, IState> {
   constructor(props: any) {
@@ -32,16 +31,14 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
     const options: React.ReactChild[] = [];
     const content: React.ReactChild[] = [];
 
-    React.Children
-      .toArray(children)
-      .forEach((child: any) => {
-        if (child.type === OptionItem || child.type === PermissionHide) {
-          options.push(child);
-          return;
-        }
+    React.Children.toArray(children).forEach((child: any) => {
+      if (child.type === OptionItem || child.type === PermissionHide) {
+        options.push(child);
+        return;
+      }
 
-        content.push(child);
-      });
+      content.push(child);
+    });
 
     return {
       ...currentState,
@@ -54,17 +51,17 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
     event.preventDefault();
     event.stopPropagation();
     this.setState({ targetElem: event.currentTarget });
-  }
+  };
 
   handleClose = (event?: React.MouseEvent<HTMLElement>) => {
     event && event.stopPropagation();
     this.setState({ targetElem: null });
-  }
+  };
 
   handleClick = (handler: () => void) => {
     this.handleClose();
     handler();
-  }
+  };
 
   render() {
     const { targetElem, options, content } = this.state;
@@ -72,27 +69,16 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
 
     return (
       <div>
-        {!!content &&
-          <span onClick={this.handleOpen}>
-            {content}
-          </span>
-        }
+        {!!content && <span onClick={this.handleOpen}>{content}</span>}
 
-        {!content &&
+        {!content && (
           <IconButton onClick={this.handleOpen} color='inherit'>
             <DotsHorizontalIcon />
           </IconButton>
-        }
+        )}
 
-        <Menu
-          {...menuProps}
-          anchorEl={targetElem}
-          open={!!targetElem}
-          onClose={this.handleClose}
-        >
-          <DropdownMenuContext.Provider value={this.handleClick}>
-            {options}
-          </DropdownMenuContext.Provider>
+        <Menu {...menuProps} anchorEl={targetElem} open={!!targetElem} onClose={this.handleClose}>
+          <DropdownMenuContext.Provider value={this.handleClick}>{options}</DropdownMenuContext.Provider>
         </Menu>
       </div>
     );

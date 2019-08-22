@@ -24,10 +24,10 @@ export default class ToastGlobalProvider extends PureComponent<{}, IState> {
     if (!globalToast) throw new Error('Please, initialize an Toast.Global before');
 
     //prevent an Toast to overhide another
-    return lastPromise = lastPromise.then(async () => {
+    return (lastPromise = lastPromise.then(async () => {
       await new Promise(resolve => setTimeout(() => resolve(), 500));
       return globalToast(message, error, timeout);
-    });
+    }));
   }
 
   componentDidMount() {
@@ -43,23 +43,15 @@ export default class ToastGlobalProvider extends PureComponent<{}, IState> {
 
     result.then(() => this.setState({ opened: false }));
     return result;
-  }
+  };
 
   handleClose = () => {
     this.promiseResolve && this.promiseResolve();
-  }
+  };
 
   render() {
     const { opened, message, error, timeout } = this.state;
 
-    return (
-      <Toast
-        opened={opened}
-        message={message}
-        error={error}
-        timeout={timeout}
-        onClose={this.handleClose}
-      />
-    );
+    return <Toast opened={opened} message={message} error={error} timeout={timeout} onClose={this.handleClose} />;
   }
 }

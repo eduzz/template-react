@@ -6,6 +6,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
+import logoWhite from 'assets/images/logo-white.png';
 import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
 import { IRouteProps } from 'decorators/withRouter';
@@ -20,17 +21,17 @@ import tokenService from 'services/token';
 
 import styles from './style';
 
-interface IState extends IStateForm<{
-  password: string;
-  confirmPassword: string;
-}> {
+interface IState
+  extends IStateForm<{
+    password: string;
+    confirmPassword: string;
+  }> {
   token: string;
   tokenData: IResetPasswordToken;
   loading: boolean;
 }
 
-interface IProps extends IStyledProps<typeof styles>, IRouteProps<{ t: string }> {
-}
+interface IProps extends IStyledProps<typeof styles>, IRouteProps<{ t: string }> {}
 
 @WithStyles(styles)
 export default class NewPasswordPage extends FormComponent<IProps, IState> {
@@ -44,7 +45,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
       ...this.state,
       token,
       tokenData,
-      loading: false,
+      loading: false
     };
   }
 
@@ -54,39 +55,41 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
     const { model, token, tokenData } = this.state;
     this.setState({ loading: true });
 
-    authService.resetPassword(token, model.password).pipe(
-      RxOp.switchMap(() => authService.login(tokenData.email, model.password)),
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(() => {
-      Toast.show('Senha alterada com sucesso!');
-      this.props.history.push('/');
-    }, err => {
-      Toast.error(err);
-      this.setState({ loading: false });
-    });
-  }
+    authService
+      .resetPassword(token, model.password)
+      .pipe(
+        RxOp.switchMap(() => authService.login(tokenData.email, model.password)),
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(
+        () => {
+          Toast.show('Senha alterada com sucesso!');
+          this.props.history.push('/');
+        },
+        err => {
+          Toast.error(err);
+          this.setState({ loading: false });
+        }
+      );
+  };
 
   render() {
     const { model, loading, tokenData } = this.state;
     const { classes } = this.props;
 
     if (!tokenData) {
-      return (
-        <Redirect to='/' />
-      );
+      return <Redirect to='/' />;
     }
 
     return (
       <div className={classes.root}>
         <div className={classes.container}>
-
           <div className={classes.logo}>
-            <img src={require('assets/images/logo-white.png')} className={classes.logoImage} />
+            <img src={logoWhite} className={classes.logoImage} />
           </div>
 
           <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>
-
             <Card>
               <CardContent>
                 <Typography>Olá {tokenData.firstName}, informe sua nova senha:</Typography>
@@ -97,7 +100,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
                   disabled={loading}
                   value={model.password}
                   validation='required|min:5'
-                  onChange={this.updateModel((model, v) => model.password = v)}
+                  onChange={this.updateModel((model, v) => (model.password = v))}
                 />
 
                 <FieldText
@@ -107,20 +110,19 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
                   value={model.confirmPassword}
                   validation='required|same:nova senha'
                   validationContext={{ 'nova senha': model.password }}
-                  onChange={this.updateModel((model, v) => model.confirmPassword = v)}
+                  onChange={this.updateModel((model, v) => (model.confirmPassword = v))}
                 />
-
               </CardContent>
 
               <CardActions className={classes.buttons}>
-                <Button disabled={loading} color='secondary' type='submit'>Salvar</Button>
+                <Button disabled={loading} color='secondary' type='submit'>
+                  Salvar
+                </Button>
               </CardActions>
 
               {loading && <LinearProgress color='secondary' />}
             </Card>
-
           </FormValidation>
-
         </div>
       </div>
     );

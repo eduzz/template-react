@@ -35,9 +35,9 @@ interface IProps {
     background: theme.palette.error.main
   },
   close: {
-    width: theme.spacing.unit * 4,
-    height: theme.spacing.unit * 4,
-  },
+    width: theme.spacing(4),
+    height: theme.spacing(4)
+  }
 }))
 export default class Toast extends PureComponent<IProps, IState> {
   static Global = ToastGlobalProvider;
@@ -73,7 +73,7 @@ export default class Toast extends PureComponent<IProps, IState> {
   handleClose = (event: any, reason: string) => {
     if (reason === 'clickaway') return;
     this.props.onClose();
-  }
+  };
 
   public render(): JSX.Element {
     const { opened, message, isError } = this.state;
@@ -89,12 +89,7 @@ export default class Toast extends PureComponent<IProps, IState> {
         className={classes.wrapper}
         ContentProps={{ className: isError ? classes.contentError : null }}
         action={[
-          <IconButton
-            key='close'
-            color='inherit'
-            className='close'
-            onClick={onClose}
-          >
+          <IconButton key='close' color='inherit' className='close' onClick={onClose}>
             <CloseIcon />
           </IconButton>
         ]}

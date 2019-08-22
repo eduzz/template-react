@@ -40,7 +40,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         page: 0,
         pageSize: 10,
         orderBy,
-        orderDirection,
+        orderDirection
       },
       items: [],
       allItems: [],
@@ -50,7 +50,10 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   }
 
   get sortableProps() {
-    const { loading, params: { orderBy, orderDirection } } = this.state;
+    const {
+      loading,
+      params: { orderBy, orderDirection }
+    } = this.state;
 
     return {
       loading,
@@ -62,11 +65,11 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
 
   mergeParams = (params: Partial<IStateList['params']>): IStateList['params'] => {
     return { ...this.state.params, ...params };
-  }
+  };
 
   setError = (error: any) => {
     this.setState({ error, items: [], allItems: [], loading: false });
-  }
+  };
 
   setPaginatedData = (data: IPaginationResponse<S['items'][0]>) => {
     const { results, total, ...others } = data;
@@ -79,15 +82,17 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
       allItems: results,
       loading: false
     });
-  }
+  };
 
   setAllItems = (allItems: S['allItems']): void => {
-    const { params: { page, pageSize } } = this.state;
+    const {
+      params: { page, pageSize }
+    } = this.state;
     this.isPaginatedData = false;
 
     this.setState({ allItems, total: allItems.length, loading: false });
     this.handlePaginate(page, pageSize);
-  }
+  };
 
   handlePaginate = (page: number, pageSize: number = this.state.params.pageSize): void => {
     const { allItems, loading } = this.state;
@@ -100,25 +105,30 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     }
 
     this.setState({
-      items: allItems.slice(pageSize * page, (pageSize * page) + pageSize),
+      items: allItems.slice(pageSize * page, pageSize * page + pageSize),
       params: { ...this.state.params, page, pageSize },
-      loading: false,
+      loading: false
     });
 
     this.scrollTop && this.scrollTop();
-  }
+  };
 
   handleSort = (column: string) => {
-    const { params: { orderBy, orderDirection, pageSize } } = this.state;
+    const {
+      params: { orderBy, orderDirection, pageSize }
+    } = this.state;
 
-    this.setState({
-      params: {
-        ...this.state.params,
-        orderBy: column,
-        orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
-      }
-    }, () => this.handlePaginate(0, pageSize));
-  }
+    this.setState(
+      {
+        params: {
+          ...this.state.params,
+          orderBy: column,
+          orderDirection: column === orderBy && orderDirection === 'asc' ? 'desc' : 'asc'
+        }
+      },
+      () => this.handlePaginate(0, pageSize)
+    );
+  };
 
   handleChangeTerm = (term: string) => {
     if (this.state.loading) return;
@@ -129,18 +139,20 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
     if (term && term.length < 3) return;
 
     this.timeoutTerm = setTimeout(() => this.loadData(), 500);
-  }
+  };
 
   handleTryAgain = () => {
     this.loadData();
-  }
+  };
 
   labelDisplayedRows = ({ from, to, count }: LabelDisplayedRowsArgs) => `${from}-${to} de ${count}`;
   onChangePage = (event: any, page: number) => this.handlePaginate(page + 1);
   onChangeRowsPerPage = (event: any) => this.handlePaginate(this.state.params.page, Number(event.target.value));
 
   renderSearch = (props: Partial<FieldText['props']> = {}) => {
-    const { params: { term } } = this.state;
+    const {
+      params: { term }
+    } = this.state;
 
     return (
       <FieldText
@@ -162,58 +174,57 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
           )
         }}
         {...props}
+        ref={null}
       />
     );
-  }
+  };
 
   renderLoader = () => {
     const { loading } = this.state;
 
-    return (
-      <div style={{ height: 5 }}>
-        {loading && <LinearProgress color='secondary' />}
-      </div>
-    );
-  }
+    return <div style={{ height: 5 }}>{loading && <LinearProgress color='secondary' />}</div>;
+  };
 
   renderEmptyAndErrorMessages = (numberOfcolumns: number) => {
     const { error, items, loading } = this.state;
 
     return (
       <Fragment>
-        {loading && !items.length &&
+        {loading && !items.length && (
           <TableRow>
             <TableCell className='empty' colSpan={numberOfcolumns}>
               Carregando...
             </TableCell>
           </TableRow>
-        }
-        {error && !loading &&
+        )}
+        {error && !loading && (
           <TableRow>
             <TableCell colSpan={numberOfcolumns} className='error'>
               <ErrorMessage error={error} tryAgain={this.handleTryAgain} />
             </TableCell>
           </TableRow>
-        }
-        {!error && !items.length && !loading &&
+        )}
+        {!error && !items.length && !loading && (
           <TableRow>
             <TableCell colSpan={numberOfcolumns}>
               <IconMessage icon={AlertCircleOutlineIcon} message='Nenhum item cadastrado...' />
             </TableCell>
           </TableRow>
-        }
+        )}
       </Fragment>
     );
-  }
+  };
 
   renderTablePagination = (props: Partial<TablePaginationProps> = {}) => {
-    const { total, params: { page, pageSize }, loading } = this.state;
+    const {
+      total,
+      params: { page, pageSize },
+      loading
+    } = this.state;
 
     return (
       <div style={loading ? { pointerEvents: 'none', opacity: 0.7 } : null}>
-        <ScrollTopContext.Consumer>
-          {scrollTop => (this.scrollTop = scrollTop) && null}
-        </ScrollTopContext.Consumer>
+        <ScrollTopContext.Consumer>{scrollTop => (this.scrollTop = scrollTop) && null}</ScrollTopContext.Consumer>
 
         <TablePagination
           labelRowsPerPage='items'
@@ -228,8 +239,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
         />
       </div>
     );
-  }
-
+  };
 }
 
 interface ITableCellSortableProps extends TableCellProps {
@@ -244,16 +254,13 @@ interface ITableCellSortableProps extends TableCellProps {
 export class TableCellSortable extends PureComponent<ITableCellSortableProps> {
   onChange = () => {
     this.props.onChange(this.props.column);
-  }
+  };
 
   render() {
-    const { currentColumn, currentDirection, children, onChange, column, loading, ...extra } = this.props;
+    const { currentColumn, currentDirection, children, column, loading, ...extra } = this.props;
 
     return (
-      <TableCell
-        {...extra}
-        sortDirection={currentColumn === column ? currentDirection : false}
-      >
+      <TableCell {...extra} onChange={null} sortDirection={currentColumn === column ? currentDirection : false}>
         <TableSortLabel
           disabled={loading}
           active={currentColumn === column}

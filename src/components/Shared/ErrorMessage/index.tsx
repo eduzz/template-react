@@ -7,7 +7,7 @@ import React, { PureComponent } from 'react';
 
 interface IProps {
   error: any;
-  tryAgain?: Function;
+  tryAgain?: () => void;
   classes?: any;
 }
 
@@ -33,16 +33,11 @@ export default class ErrorMessage extends PureComponent<IProps> {
         <AlertCircleIcon size={50} className={classes.icon} />
         <Typography variant='body1'>{errorMessageFormatter(error)}</Typography>
 
-        {tryAgain &&
-          <Button
-            onClick={() => tryAgain()}
-            className={classes.button}
-            color='secondary'
-            variant='outlined'
-          >
+        {tryAgain && (
+          <Button onClick={tryAgain} className={classes.button} color='secondary' variant='outlined'>
             Tentar novamente
           </Button>
-        }
+        )}
       </div>
     );
   }

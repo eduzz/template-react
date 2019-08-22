@@ -42,26 +42,35 @@ export default class UserMenu extends PureComponent<IProps, IState> {
   }
 
   componentDidMount() {
-    authService.getUser().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(user => {
-      this.setState({ user });
-    }, err => Toast.error(err));
+    authService
+      .getUser()
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(
+        user => {
+          this.setState({ user });
+        },
+        err => Toast.error(err)
+      );
   }
 
   handleChangePassword = () => {
     authService.openChangePassword();
-  }
+  };
 
   handleLogout = () => {
     this.props.closeDrawer();
 
-    authService.logout().pipe(
-      RxOp.logError(),
-      RxOp.bindComponent(this)
-    ).subscribe(() => { }, err => Toast.error(err));
-  }
+    authService
+      .logout()
+      .pipe(
+        RxOp.logError(),
+        RxOp.bindComponent(this)
+      )
+      .subscribe(() => {}, err => Toast.error(err));
+  };
 
   render() {
     const { classes } = this.props;
@@ -73,7 +82,7 @@ export default class UserMenu extends PureComponent<IProps, IState> {
 
     return (
       <Grid container className={classes.root} wrap='nowrap'>
-        <Grid item xs={true} >
+        <Grid item xs={true}>
           <Typography variant='body1' color='inherit' className={classes.text}>
             <small className={classes.textSmall}>Bem vindo</small>
             {user.firstName}
@@ -81,16 +90,8 @@ export default class UserMenu extends PureComponent<IProps, IState> {
         </Grid>
         <Grid item>
           <DropdownMenu>
-            <OptionItem
-              text='Trocar senha'
-              icon={KeyVariantIcon}
-              handler={this.handleChangePassword}
-            />
-            <OptionItem
-              text='Sair'
-              icon={ExitToAppIcon}
-              handler={this.handleLogout}
-            />
+            <OptionItem text='Trocar senha' icon={KeyVariantIcon} handler={this.handleChangePassword} />
+            <OptionItem text='Sair' icon={ExitToAppIcon} handler={this.handleLogout} />
           </DropdownMenu>
         </Grid>
       </Grid>

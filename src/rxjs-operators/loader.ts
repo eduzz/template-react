@@ -17,22 +17,17 @@ export function loader<T>(loaderComponent: ILoader = globalLoaderComponent) {
 }
 
 class LoaderOperator {
-  constructor(private loaderComponent: any) { }
+  constructor(private loaderComponent: any) {}
 
   public call(subscriber: Subscriber<any>, source: Observable<any>): Subscription {
-    return source.pipe(
-      RxOp.delay(500)
-    ).subscribe(new LoaderSubscriber(subscriber, this.loaderComponent));
+    return source.pipe(RxOp.delay(500)).subscribe(new LoaderSubscriber(subscriber, this.loaderComponent));
   }
 }
 
 class LoaderSubscriber extends Subscriber<any> {
   private ref: string;
 
-  constructor(
-    protected destination: Subscriber<any>,
-    private loader: ILoader
-  ) {
+  constructor(protected destination: Subscriber<any>, private loader: ILoader) {
     super(destination);
 
     this.ref = Date.now().toString();
