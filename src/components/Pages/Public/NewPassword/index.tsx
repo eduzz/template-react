@@ -86,7 +86,7 @@ export default class NewPasswordPage extends FormComponent<IProps, IState> {
       <div className={classes.root}>
         <div className={classes.container}>
           <div className={classes.logo}>
-            <img src={logoWhite} className={classes.logoImage} />
+            <img src={logoWhite} className={classes.logoImage} alt='logo' />
           </div>
 
           <FormValidation onSubmit={this.onSubmit} ref={this.bindForm}>

@@ -63,7 +63,7 @@ export default class Content extends PureComponent<IProps, {}> {
     return (
       <div className={classes.root}>
         <div className={classes.header}>
-          <img src={logoWhite} className={classes.logo} />
+          <img src={logoWhite} className={classes.logo} alt='logo' />
           <UserMenu closeDrawer={close} />
         </div>
 

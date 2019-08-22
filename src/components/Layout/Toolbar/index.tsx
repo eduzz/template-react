@@ -26,7 +26,9 @@ interface IProps {
   appBar: {
     marginLeft: theme.variables.drawerWidth,
     [theme.breakpoints.up('md')]: {
-      width: `calc(100% - ${theme.variables.drawerWidth}px)`
+      width: `calc(100% - ${theme.variables.drawerWidth}px)`,
+      backgroundColor: 'white',
+      color: theme.palette.text.primary
     }
   },
   iconMenu: {
@@ -49,7 +51,7 @@ export default class Toolbar extends PureComponent<IProps> {
 
     return (
       <div className={classes.root}>
-        <AppBar className={classes.appBar} color='default'>
+        <AppBar className={classes.appBar}>
           <CoreToolbar>
             <IconButton color='inherit' onClick={this.openDrawer} className={classes.iconMenu}>
               <MenuIcon />

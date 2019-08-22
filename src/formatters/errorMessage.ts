@@ -19,7 +19,7 @@ export function errorMessageFormatter(err: any): string {
     case 'zipcode-not-found':
       return 'CEP não encontrado';
     case 'api-error':
-      if (err.status == -1) {
+      if (err.status === -1) {
         return 'Não conseguimos se comunicar com o servidor';
       }
 

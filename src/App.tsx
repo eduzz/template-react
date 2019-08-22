@@ -17,10 +17,6 @@ class App extends React.PureComponent {
   loader = React.createRef<Loader>();
   formFieldConfig = fieldConfig;
 
-  constructor(props: any) {
-    super(props);
-  }
-
   componentDidMount() {
     setup(this.loader.current);
   }

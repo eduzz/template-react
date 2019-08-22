@@ -84,7 +84,7 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
         <div className={classes.root}>
           <div className={classes.container}>
             <div className={classes.logo}>
-              <img src={logoWhite} className={classes.logoImage} />
+              <img src={logoWhite} className={classes.logoImage} alt='logo' />
             </div>
 
             <SwipeableViews index={currentView}>

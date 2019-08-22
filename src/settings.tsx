@@ -1,6 +1,6 @@
 export const ENV = (process.env.REACT_APP_ENV || 'production').trim();
 
-export const API_ENDPOINT = (process.env.REACT_APP_API_ENDPOINT || '').trim();
+export const API_ENDPOINT = 'https://app.icbsorocaba.com.br/api/web'; // (process.env.REACT_APP_API_ENDPOINT || '').trim();
 export const CDN_ENDPOINT = (process.env.REACT_APP_CDN_ENDPOINT || '').trim();
 
 if (!API_ENDPOINT) throw new Error('Please provide an API_ENDPOINT');

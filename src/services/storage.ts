@@ -27,6 +27,7 @@ export class StorageService {
         }
 
         keys.forEach(k => localStorage.removeItem(k));
+        return null;
       })
     );
   }

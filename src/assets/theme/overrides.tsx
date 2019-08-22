@@ -16,9 +16,11 @@ const overrides: Overrides = {
     }
   },
   MuiExpansionPanel: {
-    expanded: {
-      marginTop: 0,
-      marginBottom: 0
+    root: {
+      '&$expanded': {
+        marginTop: 0,
+        marginBottom: 0
+      }
     }
   },
   MuiExpansionPanelDetails: {

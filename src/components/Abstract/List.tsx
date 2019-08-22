@@ -85,10 +85,14 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
   };
 
   setAllItems = (allItems: S['allItems']): void => {
-    const {
+    let {
       params: { page, pageSize }
     } = this.state;
     this.isPaginatedData = false;
+
+    if (page === 0) {
+      page++;
+    }
 
     this.setState({ allItems, total: allItems.length, loading: false });
     this.handlePaginate(page, pageSize);
@@ -233,6 +237,7 @@ export abstract class ListComponent<P = {}, S extends IStateList = IStateList<an
           rowsPerPage={pageSize}
           rowsPerPageOptions={[10, 25, 50]}
           page={page - 1}
+          component={'div' as any}
           onChangePage={this.onChangePage}
           onChangeRowsPerPage={this.onChangeRowsPerPage}
           {...props}

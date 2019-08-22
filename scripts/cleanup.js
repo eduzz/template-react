@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 
 async function init() {
@@ -10,40 +11,52 @@ async function cleanup(params) {
     params = require('path').join(__dirname, 'init-params.json');
   }
 
-  const replacers = [{
-    from: '%PROJECT-NAME%',
-    to: params.project
-  }, {
-    from: 'PROJECT-NAME',
-    to: params.project
-  }, {
-    from: 'Projeto Base React Eduzz',
-    to: params.project
-  }, {
-    from: '%PROJECT-SLUG%',
-    to: params.slug
-  }, {
-    from: 'PROJECT-SLUG',
-    to: params.slug
-  }, {
-    from: '%PROJECT-REPO%',
-    to: params.repository || '%PROJECT-REPO%'
-  }, {
-    from: '%DEV-ENDPOINT%',
-    to: params.endpointDev || '%DEV-ENDPOINT%'
-  }, {
-    from: '%PROD-ENDPOINT%',
-    to: params.endpointProd || '%PROD-ENDPOINT%'
-  }, {
-    from: '%DOCKER-IMAGE%',
-    to: params.dockerImage || '%DOCKER-IMAGE%'
-  }, {
-    from: '%DOCKER-CREDENTIALS%',
-    to: params.dockerCredentials || '%DOCKER-CREDENTIALS%'
-  }, {
-    from: '%SENTRY-DSN%',
-    to: params.sentryDsn
-  }];
+  const replacers = [
+    {
+      from: '%PROJECT-NAME%',
+      to: params.project
+    },
+    {
+      from: 'PROJECT-NAME',
+      to: params.project
+    },
+    {
+      from: 'Projeto Base React Eduzz',
+      to: params.project
+    },
+    {
+      from: '%PROJECT-SLUG%',
+      to: params.slug
+    },
+    {
+      from: 'PROJECT-SLUG',
+      to: params.slug
+    },
+    {
+      from: '%PROJECT-REPO%',
+      to: params.repository || '%PROJECT-REPO%'
+    },
+    {
+      from: '%DEV-ENDPOINT%',
+      to: params.endpointDev || '%DEV-ENDPOINT%'
+    },
+    {
+      from: '%PROD-ENDPOINT%',
+      to: params.endpointProd || '%PROD-ENDPOINT%'
+    },
+    {
+      from: '%DOCKER-IMAGE%',
+      to: params.dockerImage || '%DOCKER-IMAGE%'
+    },
+    {
+      from: '%DOCKER-CREDENTIALS%',
+      to: params.dockerCredentials || '%DOCKER-CREDENTIALS%'
+    },
+    {
+      from: '%SENTRY-DSN%',
+      to: params.sentryDsn
+    }
+  ];
 
   await Promise.all([
     replaceContent('./Jenkinsfile', replacers),
@@ -58,11 +71,11 @@ async function cleanup(params) {
 }
 
 async function replaceContent(file, replacers) {
-  let content
+  let content;
 
   try {
     content = await new Promise((resolve, reject) =>
-      fs.readFile(file, 'utf8', (err, data) => err ? reject(err) : resolve(data))
+      fs.readFile(file, 'utf8', (err, data) => (err ? reject(err) : resolve(data)))
     );
   } catch (err) {
     if (err.code === 'ENOENT') {
@@ -77,17 +90,19 @@ async function replaceContent(file, replacers) {
   }
 
   await new Promise((resolve, reject) =>
-    fs.writeFile(file, content, (err, data) => err ? reject(err) : resolve(data))
+    fs.writeFile(file, content, (err, data) => (err ? reject(err) : resolve(data)))
   );
 }
 
 module.exports = cleanup;
 
 if (require.main === module) {
-  init().then(() => {
-    process.exit(0);
-  }).catch(err => {
-    console.error(err);
-    process.exit(-1);
-  });
+  init()
+    .then(() => {
+      process.exit(0);
+    })
+    .catch(err => {
+      console.error(err);
+      process.exit(-1);
+    });
 }

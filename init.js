@@ -1,7 +1,5 @@
-const fs = require('fs');
-const inquirer = require('inquirer');
+/* eslint-disable @typescript-eslint/no-require-imports */
 const ora = require('ora');
-const lodash = require('lodash');
 const rimraf = require('rimraf');
 const childProcess = require('child_process');
 const cleanup = require('./scripts/cleanup');
@@ -37,11 +35,11 @@ async function awaitWarning() {
 
 async function checkDeps() {
   await execCommand('yarn -v').catch(() => {
-    throw new Error('Yarn is required')
+    throw new Error('Yarn is required');
   });
 
   await execCommand('git --version').catch(() => {
-    throw new Error('Git is required')
+    throw new Error('Git is required');
   });
 }
 
@@ -54,26 +52,26 @@ async function resetGit(params) {
     await execCommand(`git remote add origin ${params.repository}`);
   }
 
-  await execCommand('git add . && git commit -am "initial"')
+  await execCommand('git add . && git commit -am "initial"');
 }
 
 async function selfDestruction() {
-  await new Promise((resolve, reject) =>
-    rimraf('./init.js', err => err ? reject(err) : resolve())
-  );
+  await new Promise((resolve, reject) => rimraf('./init.js', err => (err ? reject(err) : resolve())));
 }
 
 async function execCommand(command) {
-  return await new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     childProcess.exec(command, (err, stdout) => {
       err ? reject(err) : resolve((stdout || '').trim());
     });
   });
 }
 
-init().then(() => {
-  process.exit(0);
-}).catch(err => {
-  console.error(err);
-  process.exit(-1);
-});
+init()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch(err => {
+    console.error(err);
+    process.exit(-1);
+  });
