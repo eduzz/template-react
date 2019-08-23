@@ -19,9 +19,11 @@ import IUser from 'interfaces/models/user';
 import IUserRole from 'interfaces/models/userRole';
 import React, { Fragment, memo, useState, useCallback } from 'react';
 import userService from 'services/user';
-import { first, switchMap, filter, map, logError, tap } from 'rxjs-operators';
 import { useRetryableObservable, useCallbackObservable } from 'react-use-observable';
 import { of } from 'rxjs';
+import { filter, first, tap, map } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IProps {
   opened: boolean;

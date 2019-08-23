@@ -11,8 +11,9 @@ import { FormComponent, IStateForm } from 'components/Abstract/Form';
 import Toast from 'components/Shared/Toast';
 import { WithStyles } from 'decorators/withStyles';
 import * as React from 'react';
-import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
+import { logError } from 'helpers/rxjs-operators/logError';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IState
   extends IStateForm<{
@@ -44,8 +45,8 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     authService
       .shouldOpenChangePassword()
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(opened => {
         this.setState({ opened });
@@ -65,8 +66,8 @@ export default class ChangePasswordDialog extends FormComponent<IProps, IState> 
     authService
       .changePassword(model.currentPassword, model.newPassword)
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(
         () => {

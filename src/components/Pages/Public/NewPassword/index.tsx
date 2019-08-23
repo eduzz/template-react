@@ -18,11 +18,12 @@ import React, { memo, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useCallbackObservable } from 'react-use-observable';
 import { of } from 'rxjs';
-import { filter, logError, switchMap, tap } from 'rxjs-operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import authService from 'services/auth';
 import tokenService from 'services/token';
 
 import styles from './style';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IProps extends IStyledProps<typeof styles>, IRouteProps<{ t: string }> {}
 

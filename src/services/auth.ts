@@ -1,10 +1,11 @@
 import IUserToken from 'interfaces/tokens/userToken';
 import * as Rx from 'rxjs';
-import * as RxOp from 'rxjs-operators';
 
 import apiService, { ApiService } from './api';
 import cacheService from './cache';
 import tokenService, { TokenService } from './token';
+import { catchError, shareReplay, distinctUntilChanged, switchMap, map, tap } from 'rxjs/operators';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 export class AuthService {
   private user$: Rx.Observable<IUserToken>;
@@ -16,7 +17,7 @@ export class AuthService {
     this.openChangePassword$ = new Rx.BehaviorSubject(false);
 
     this.user$ = this.tokenService.getToken().pipe(
-      RxOp.map(token => {
+      map(token => {
         if (!token) return null;
 
         const user = this.tokenService.decode<IUserToken>(token);
@@ -25,15 +26,15 @@ export class AuthService {
         user.fullName = `${user.firstName} ${user.lastName}`;
         return user;
       }),
-      RxOp.catchError(() => Rx.of(null)),
-      RxOp.shareReplay(1)
+      catchError(() => Rx.of(null)),
+      shareReplay(1)
     );
 
     this.getUser()
       .pipe(
-        RxOp.distinctUntilChanged((a, b) => (a || ({} as IUserToken)).id !== (b || ({} as IUserToken)).id),
-        RxOp.switchMap(() => cacheService.clear()),
-        RxOp.logError()
+        distinctUntilChanged((a, b) => (a || ({} as IUserToken)).id !== (b || ({} as IUserToken)).id),
+        switchMap(() => cacheService.clear()),
+        logError()
       )
       .subscribe();
   }
@@ -47,7 +48,7 @@ export class AuthService {
   }
 
   public login(email: string, password: string): Rx.Observable<void> {
-    return this.api.post('/auth/login', { email, password }).pipe(RxOp.tap(() => this.openLogin$.next(false)));
+    return this.api.post('/auth/login', { email, password }).pipe(tap(() => this.openLogin$.next(false)));
   }
 
   public logout(): Rx.Observable<void> {
@@ -87,7 +88,7 @@ export class AuthService {
 
   public canAccess(...roles: string[]): Rx.Observable<boolean> {
     return this.getUser().pipe(
-      RxOp.map(user => {
+      map(user => {
         if (!user) return false;
 
         if (!roles || roles.length === 0) return true;
@@ -99,7 +100,7 @@ export class AuthService {
   }
 
   public isAuthenticated(): Rx.Observable<boolean> {
-    return this.getUser().pipe(RxOp.map(user => !!user));
+    return this.getUser().pipe(map(user => !!user));
   }
 }
 

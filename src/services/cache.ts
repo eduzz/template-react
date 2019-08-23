@@ -1,10 +1,10 @@
 import dateFnsAddMinutes from 'date-fns/addMinutes';
 import dateFnsIsBefore from 'date-fns/isBefore';
 import * as Rx from 'rxjs';
-import * as RxOp from 'rxjs/operators';
 
 import ICache from '../interfaces/cache';
 import storageService from './storage';
+import { debounceTime, filter, map, tap, concat } from 'rxjs/operators';
 
 export class CacheService {
   private change$ = new Rx.Subject<{ key: string; value: ICache }>();
@@ -21,20 +21,20 @@ export class CacheService {
 
   public watchData<T>(key: string): Rx.Observable<ICache<T>> {
     return this.getData<T>(key).pipe(
-      RxOp.concat(
+      concat(
         this.change$.pipe(
-          RxOp.filter(data => data.key === key),
-          RxOp.map(data => data.value)
+          filter(data => data.key === key),
+          map(data => data.value)
         )
       ),
-      RxOp.debounceTime(100)
+      debounceTime(100)
     );
   }
 
   public removeData(key: string) {
     return storageService.set('app-cache-' + key, null).pipe(
-      RxOp.tap(() => (this.memory[key] = null)),
-      RxOp.tap(() => this.change$.next({ key, value: null }))
+      tap(() => (this.memory[key] = null)),
+      tap(() => this.change$.next({ key, value: null }))
     );
   }
 
@@ -53,13 +53,11 @@ export class CacheService {
     };
 
     if (options.persist) {
-      return storageService
-        .set('app-cache-' + key, cache)
-        .pipe(RxOp.tap(() => this.change$.next({ key, value: cache })));
+      return storageService.set('app-cache-' + key, cache).pipe(tap(() => this.change$.next({ key, value: cache })));
     }
 
     return Rx.of(true).pipe(
-      RxOp.map(() => {
+      map(() => {
         this.memory[key] = cache;
         this.change$.next({ key, value: cache });
         return cache;
@@ -72,7 +70,7 @@ export class CacheService {
   }
 
   public clear(): Rx.Observable<void> {
-    return storageService.clear(/^app-cache-/gi).pipe(RxOp.tap(() => (this.memory = {})));
+    return storageService.clear(/^app-cache-/gi).pipe(tap(() => (this.memory = {})));
   }
 }
 

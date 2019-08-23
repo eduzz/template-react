@@ -2,9 +2,10 @@ import IUser from 'interfaces/models/user';
 import IUserRole from 'interfaces/models/userRole';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import * as Rx from 'rxjs';
-import * as RxOp from 'rxjs-operators';
 
 import apiService, { ApiService } from './api';
+import cache from 'helpers/rxjs-operators/cache';
+import { map } from 'rxjs/operators';
 
 export class UserService {
   constructor(private apiService: ApiService) {}
@@ -15,8 +16,8 @@ export class UserService {
 
   public roles(refresh: boolean = false): Rx.Observable<IUserRole[]> {
     return this.apiService.get('/user/roles').pipe(
-      RxOp.cache('user-service-roles', { refresh }),
-      RxOp.map(({ data }) => data)
+      cache('user-service-roles', { refresh }),
+      map(({ data }) => data)
     );
   }
 

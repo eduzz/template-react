@@ -11,8 +11,9 @@ import useModel from 'hooks/useModel';
 import React, { memo, MouseEvent, useState } from 'react';
 import { useCallbackObservable } from 'react-use-observable';
 import { of } from 'rxjs';
-import { filter, logError, switchMap, tap } from 'rxjs-operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import authService from 'services/auth';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IProps {
   onRecoveryAccess: (e: MouseEvent<HTMLElement>) => void;

@@ -3,12 +3,13 @@ import { darken } from '@material-ui/core/styles/colorManipulator';
 import logoWhite from 'assets/images/logo-white.png';
 import { WithStyles } from 'decorators/withStyles';
 import React, { PureComponent } from 'react';
-import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
 import UserMenu from './UserMenu';
+import { logError } from 'helpers/rxjs-operators/logError';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IProps {
   menu: IMenu[];
@@ -47,8 +48,8 @@ export default class Content extends PureComponent<IProps, {}> {
     authService
       .getUser()
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(user => this.setState({ user }));
   }

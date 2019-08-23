@@ -35,7 +35,7 @@ ARQUITETURA
 * formatters: funções para formatar dado.
 * helpers: funções genéricas que auxiliam na tarefa.
 * interfaces: interfaces gerais.
-* rxjs-operators: operadores do RxJs criados para o projeto.
+* rxjs/operators: operadores do RxJs criados para o projeto.
 * services: responsável pela lógica de nogocio e a comunicação com o servidor.
 
 ---

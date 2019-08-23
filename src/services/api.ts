@@ -2,41 +2,52 @@ import axios, { AxiosError, AxiosResponse, Method } from 'axios';
 import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
 import * as Rx from 'rxjs';
-import * as RxOp from 'rxjs/operators';
 
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
 import authService from './auth';
 import tokenService, { TokenService } from './token';
+import {
+  filter,
+  combineLatest,
+  map,
+  first,
+  switchMap,
+  tap,
+  startWith,
+  distinctUntilChanged,
+  catchError,
+  skip
+} from 'rxjs/operators';
 
 export class ApiService {
   constructor(private apiEndpoint: string, private tokenService: TokenService) {}
 
   public get<T = any>(url: string, params?: any): Rx.Observable<T> {
     return this.request<T>('GET', url, params).pipe(
-      RxOp.map(({ response }) => response),
-      RxOp.filter(response => response !== undefined)
+      map(({ response }) => response),
+      filter(response => response !== undefined)
     );
   }
 
   public post<T = any>(url: string, body: any): Rx.Observable<T> {
     return this.request<T>('POST', url, body).pipe(
-      RxOp.map(({ response }) => response),
-      RxOp.filter(response => response !== undefined)
+      map(({ response }) => response),
+      filter(response => response !== undefined)
     );
   }
 
   public put<T = any>(url: string, body: any): Rx.Observable<T> {
     return this.request<T>('PUT', url, body).pipe(
-      RxOp.map(({ response }) => response),
-      RxOp.filter(response => response !== undefined)
+      map(({ response }) => response),
+      filter(response => response !== undefined)
     );
   }
 
   public delete<T = any>(url: string, params?: any): Rx.Observable<T> {
     return this.request<T>('DELETE', url, params).pipe(
-      RxOp.map(({ response }) => response),
-      RxOp.filter(response => response !== undefined)
+      map(({ response }) => response),
+      filter(response => response !== undefined)
     );
   }
 
@@ -53,12 +64,12 @@ export class ApiService {
     const progress$ = new Rx.BehaviorSubject(0);
 
     return this.tokenService.getToken().pipe(
-      RxOp.first(),
-      RxOp.map(token => {
+      first(),
+      map(token => {
         if (!token) return {};
         return { Authorization: `Bearer ${token}` };
       }),
-      RxOp.switchMap(headers => {
+      switchMap(headers => {
         return axios.request({
           baseURL: this.apiEndpoint,
           url,
@@ -75,12 +86,12 @@ export class ApiService {
           }
         });
       }),
-      RxOp.tap(() => progress$.next(100)),
-      RxOp.switchMap(res => this.checkNewToken(res)),
-      RxOp.map(res => apiResponseFormatter<T>(res.data) || null),
-      RxOp.startWith(undefined),
-      RxOp.combineLatest(progress$.pipe(RxOp.distinctUntilChanged()), (response, progress) => ({ response, progress })),
-      RxOp.catchError(err => {
+      tap(() => progress$.next(100)),
+      switchMap(res => this.checkNewToken(res)),
+      map(res => apiResponseFormatter<T>(res.data) || null),
+      startWith(undefined),
+      combineLatest(progress$.pipe(distinctUntilChanged()), (response, progress) => ({ response, progress })),
+      catchError(err => {
         progress$.complete();
         return this.handleError(err, retry);
       })
@@ -94,7 +105,7 @@ export class ApiService {
       return Rx.of(response);
     }
 
-    return this.tokenService.setToken(token).pipe(RxOp.map(() => response));
+    return this.tokenService.setToken(token).pipe(map(() => response));
   }
   private handleError(err: AxiosError, retry: boolean) {
     if (!err.config || !err.response) return Rx.throwError(err);
@@ -105,8 +116,8 @@ export class ApiService {
 
     authService.openLogin();
     return authService.getUser().pipe(
-      RxOp.skip(1),
-      RxOp.switchMap(user => {
+      skip(1),
+      switchMap(user => {
         if (!user) {
           return Rx.throwError(new ApiError(err.config, err.response, err));
         }

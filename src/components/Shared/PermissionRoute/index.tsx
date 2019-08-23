@@ -1,10 +1,12 @@
 import { enRoles } from 'interfaces/models/user';
 import React, { Fragment } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
-import RxOp from 'rxjs-operators';
+import { tap } from 'rxjs/operators';
 import authService from 'services/auth';
 
 import PermissionHide from '../PermissionHide';
+import { logError } from 'helpers/rxjs-operators/logError';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IProps extends RouteProps {
   role?: enRoles;
@@ -22,9 +24,9 @@ export default class PermissionRoute extends Route<IProps> {
     authService
       .isAuthenticated()
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this),
-        RxOp.tap(isAuthenticated => {
+        logError(),
+        bindComponent(this),
+        tap(isAuthenticated => {
           if (isAuthenticated) return;
           authService.openLogin();
         })

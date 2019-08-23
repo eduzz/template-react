@@ -8,8 +8,9 @@ import IUser from 'interfaces/models/user';
 import DeleteIcon from 'mdi-react/DeleteIcon';
 import EditIcon from 'mdi-react/EditIcon';
 import * as React from 'react';
-import * as RxOp from 'rxjs-operators';
 import userService from 'services/user';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IState extends IStateListItem {
   deleted?: boolean;
@@ -56,8 +57,8 @@ export default class ListItem extends ListItemComponent<IProps, IState> {
     userService
       .delete(user.id)
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(
         () => {

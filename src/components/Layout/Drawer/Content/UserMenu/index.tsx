@@ -8,8 +8,9 @@ import IUserToken from 'interfaces/tokens/userToken';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import React, { PureComponent } from 'react';
-import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
+import { logError } from 'helpers/rxjs-operators/logError';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IState {
   user: IUserToken;
@@ -45,8 +46,8 @@ export default class UserMenu extends PureComponent<IProps, IState> {
     authService
       .getUser()
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(
         user => {
@@ -66,8 +67,8 @@ export default class UserMenu extends PureComponent<IProps, IState> {
     authService
       .logout()
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(() => {}, err => Toast.error(err));
   };

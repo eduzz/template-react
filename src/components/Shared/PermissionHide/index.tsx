@@ -1,9 +1,10 @@
 import { enRoles } from 'interfaces/models/user';
 import { PureComponent } from 'react';
-import RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 import Toast from '../Toast';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IProps {
   passIfNull?: boolean;
@@ -29,8 +30,8 @@ export default class PermissionHide extends PureComponent<IProps, IState> {
     authService
       .canAccess(...roles)
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(
         canAccess => {

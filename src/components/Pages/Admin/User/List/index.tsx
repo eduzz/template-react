@@ -16,11 +16,12 @@ import { IPaginationParams } from 'interfaces/pagination';
 import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
 import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment } from 'react';
-import * as RxOp from 'rxjs-operators';
 import userService from 'services/user';
 
 import UserFormDialog from '../UserFormDialog';
 import ListItem from './ListItem';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
+import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IState extends IStateList<IUser> {
   current?: IUser;
@@ -49,8 +50,8 @@ export default class UserListPage extends ListComponent<{}, IState> {
     userService
       .list(this.mergeParams(params))
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(
         items => {

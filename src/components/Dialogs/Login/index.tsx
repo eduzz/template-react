@@ -5,11 +5,12 @@ import { WithStyles } from 'decorators/withStyles';
 import { PureComponent } from 'react';
 import * as React from 'react';
 import SwipeableViews from 'react-swipeable-views';
-import * as RxOp from 'rxjs-operators';
 import authService from 'services/auth';
 
 import LoginDialogForm from './Form';
 import LoginDialogRecoveryAccess from './RecoveryAcces';
+import { logError } from 'helpers/rxjs-operators/logError';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IState {
   opened: boolean;
@@ -63,8 +64,8 @@ export default class LoginDialog extends PureComponent<IProps, IState> {
     authService
       .shouldOpenLogin()
       .pipe(
-        RxOp.logError(),
-        RxOp.bindComponent(this)
+        logError(),
+        bindComponent(this)
       )
       .subscribe(opened => {
         this.setState({ opened });

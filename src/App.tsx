@@ -10,15 +10,11 @@ import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
 import fieldConfig from 'fieldConfig';
-import React, { memo, useEffect, useRef } from 'react';
-import { setup } from 'rxjs-operators';
+import React, { memo, useEffect } from 'react';
+import { setupServices } from 'services';
 
 const App = memo(() => {
-  const loader = useRef<Loader>();
-
-  useEffect(() => {
-    setup(loader.current);
-  }, [loader]);
+  useEffect(() => setupServices(), []);
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -26,7 +22,7 @@ const App = memo(() => {
         <CssBaseline />
         <Dialogs />
 
-        <Loader innerRef={loader} />
+        <Loader />
 
         <Alert.Global />
         <Toast.Global />
