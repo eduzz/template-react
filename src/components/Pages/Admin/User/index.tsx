@@ -1,14 +1,14 @@
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import UserListPage from './List';
 
-export default class UserIndexPage extends PureComponent {
-  render() {
-    return (
-      <Switch>
-        <Route path='/' component={UserListPage} />
-      </Switch>
-    );
-  }
-}
+const UserIndexPage = memo(() => {
+  return (
+    <Switch>
+      <Route path='/' component={UserListPage} />
+    </Switch>
+  );
+});
+
+export default UserIndexPage;

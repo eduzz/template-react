@@ -1,22 +1,18 @@
-import Drawer, { IMenu } from 'components/Layout/Drawer';
+import { makeStyles } from '@material-ui/core';
+import Drawer from 'components/Layout/Drawer';
 import PermissionRoute from 'components/Shared/PermissionRoute';
-import { WithStyles } from 'decorators/withStyles';
 import { enRoles } from 'interfaces/models/user';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
-import React, { PureComponent } from 'react';
+import React, { memo, useCallback, useRef, useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import DashboardIndexPage from './Dashboard';
 import UserIndexPage from './User';
 
-interface IProps {
-  classes?: any;
-}
-
 export const ScrollTopContext = React.createContext<Function>(() => {});
 
-@WithStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     position: 'relative',
     display: 'flex',
@@ -33,10 +29,13 @@ export const ScrollTopContext = React.createContext<Function>(() => {});
       padding: theme.variables.contentPaddingUpSm
     }
   }
-}))
-export default class AdminPage extends PureComponent<IProps, {}> {
-  mainContent: React.RefObject<HTMLDivElement> = React.createRef();
-  menu: IMenu[] = [
+}));
+
+const AdminPage = memo((props: {}) => {
+  const classes = useStyles(props);
+
+  const mainContent = useRef<HTMLDivElement>();
+  const [menu] = useState([
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
     {
       path: '/usuarios',
@@ -44,31 +43,26 @@ export default class AdminPage extends PureComponent<IProps, {}> {
       role: enRoles.admin,
       icon: AccountMultipleIcon
     }
-  ];
+  ]);
 
-  scrollTop = () => {
-    setTimeout(() => this.mainContent.current.scrollTo(0, 0), 100);
-  };
+  const scrollTop = useCallback(() => setTimeout(() => mainContent.current.scrollTo(0, 0), 100), []);
+  const renderRedirect = useCallback(() => <Redirect to='/' />, []);
 
-  renderRedirect = () => <Redirect to='/' />;
+  return (
+    <div className={classes.root}>
+      <ScrollTopContext.Provider value={scrollTop}>
+        <Drawer menu={menu}>
+          <main ref={mainContent} className={classes.content}>
+            <Switch>
+              <PermissionRoute path='/usuarios' role={enRoles.sysAdmin} component={UserIndexPage} />
+              <Route path='/' component={DashboardIndexPage} />
+              <Route render={renderRedirect} />
+            </Switch>
+          </main>
+        </Drawer>
+      </ScrollTopContext.Provider>
+    </div>
+  );
+});
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <ScrollTopContext.Provider value={this.scrollTop}>
-          <Drawer menu={this.menu}>
-            <main ref={this.mainContent} className={classes.content}>
-              <Switch>
-                <PermissionRoute path='/usuarios' role={enRoles.sysAdmin} component={UserIndexPage} />
-                <Route path='/' component={DashboardIndexPage} />
-                <Route render={this.renderRedirect} />
-              </Switch>
-            </main>
-          </Drawer>
-        </ScrollTopContext.Provider>
-      </div>
-    );
-  }
-}
+export default AdminPage;

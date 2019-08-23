@@ -28,7 +28,6 @@ interface IProps extends IStyledProps<typeof styles>, IRouteProps<{ t: string }>
 
 const useStyles = makeStyles(styles);
 
-// @WithStyles(styles)
 const NewPasswordPage = memo((props: IProps) => {
   const classes = useStyles(props);
 

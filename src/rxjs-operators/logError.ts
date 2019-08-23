@@ -1,8 +1,17 @@
 import { Observable, Operator, Subscriber, Subscription } from 'rxjs';
-import logService from 'services/log';
 
-interface IIgnoreParam {
+let globalLogService: ILogService;
+
+export interface ILogService {
+  handleError: (error: any) => void;
+}
+
+export interface IIgnoreParam {
   (err: any): boolean;
+}
+
+export function setuplog(logService: ILogService) {
+  globalLogService = logService;
 }
 
 export function logError<T>(ignore: IIgnoreParam = null) {
@@ -34,7 +43,7 @@ class LogErrorSubscriber extends Subscriber<any> {
 
   public _error(err: any): void {
     if (!this.ignore || !this.ignore(err)) {
-      logService.handleError(err);
+      globalLogService.handleError(err);
     }
 
     this.destination.error(err);
