@@ -1,12 +1,13 @@
+import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconMessage from 'components/Shared/IconMessage';
-import { WithStyles } from 'decorators/withStyles';
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
-import React, { DragEvent, Fragment, PureComponent } from 'react';
+import React, { DragEvent, Fragment, memo, useCallback, useRef, useState } from 'react';
 
 import Toast from '../Toast';
+import { loadFile } from './helpers';
 
 export interface IImageReaderResult {
   url: string;
@@ -14,19 +15,13 @@ export interface IImageReaderResult {
   height: number;
 }
 
-interface IState {
-  loading: boolean;
-  draggingOver: boolean;
-}
-
 interface IProps {
   droppable?: boolean;
   className?: string;
   onLoad: (result: IImageReaderResult) => void;
-  classes?: any;
 }
 
-@WithStyles({
+const useStyle = makeStyles({
   progress: {
     marginRight: 5
   },
@@ -48,138 +43,107 @@ interface IProps {
   dropAreaDraggingChildren: {
     pointerEvents: 'none'
   }
-})
-export default class ImageReader extends PureComponent<IProps, IState> {
-  inputRef: React.RefObject<HTMLInputElement> = React.createRef();
-  extensions = ['png', 'gif', 'jpeg', 'jpg', 'bmp'];
+});
 
-  constructor(props: IProps) {
-    super(props);
-    this.state = { loading: false, draggingOver: false };
-  }
+const ImageReader = memo((props: IProps) => {
+  const classes = useStyle(props);
+  const inputRef = useRef<HTMLInputElement>();
+  const extensions = useRef(['png', 'gif', 'jpeg', 'jpg', 'bmp']).current;
 
-  handleSelectImage = () => {
-    this.inputRef.current.click();
-  };
+  const [loading, setLoading] = useState(false);
+  const [draggingOver, setDraggingOver] = useState(false);
 
-  onFileSelected = () => {
-    if (!this.inputRef.current.files.length) return;
+  const handleSelectImage = useCallback(() => inputRef.current.click(), []);
 
-    this.setState({ loading: true });
+  const handleLoadFile = useCallback(
+    async (file: File) => {
+      if (loading) return;
 
-    this.loadFile(this.inputRef.current.files[0]);
-    this.inputRef.current.value = '';
-  };
+      try {
+        setLoading(true);
+        const result = await loadFile(file, extensions);
+        setLoading(false);
 
-  onDropFile = (event: DragEvent<any>) => {
+        setTimeout(() => props.onLoad(result), 1000);
+      } catch (err) {
+        Toast.show(
+          err === 'invalid-extension' ? `Apenas imagens: ${extensions.join(', ')}` : 'Não conseguimos carregar a imagem'
+        );
+      }
+    },
+    [extensions, loading, props]
+  );
+
+  const onFileSelected = useCallback(() => {
+    if (!inputRef.current.files.length) return;
+
+    setLoading(true);
+
+    handleLoadFile(inputRef.current.files[0]);
+    inputRef.current.value = '';
+  }, [handleLoadFile]);
+
+  const onDropFile = useCallback(
+    (event: DragEvent<any>) => {
+      event.preventDefault();
+      setDraggingOver(false);
+
+      handleLoadFile(event.dataTransfer.files[0]);
+    },
+    [handleLoadFile]
+  );
+
+  const onDragInOut = useCallback((draggingOver: boolean, event: DragEvent<any>) => {
     event.preventDefault();
 
-    this.setState({ draggingOver: false });
+    if (draggingOver === draggingOver) return;
+    setDraggingOver(draggingOver);
+  }, []);
 
-    if (this.state.loading) return;
-    this.loadFile(event.dataTransfer.files[0]);
-  };
+  const onDragIn = useCallback((event: DragEvent<any>) => onDragInOut(true, event), [onDragInOut]);
+  const onDragOut = useCallback((event: DragEvent<any>) => onDragInOut(false, event), [onDragInOut]);
 
-  onDragIn = (event: DragEvent<any>) => this.onDragInOut(true, event);
-  onDragOut = (event: DragEvent<any>) => this.onDragInOut(false, event);
+  const uploadButton = (
+    <Fragment>
+      <input
+        type='file'
+        ref={inputRef}
+        className='hide'
+        onChange={onFileSelected}
+        accept={`.${extensions.join(',.')}`}
+      />
 
-  onDragInOut = (draggingOver: boolean, event: DragEvent<any>) => {
-    event.preventDefault();
+      <Button color='secondary' disabled={loading} onClick={handleSelectImage}>
+        {loading ? <CircularProgress className={classes.progress} size={20} /> : <FolderOpenIcon />}
+        {loading ? 'Carregando' : 'Selecionar'}
+      </Button>
+    </Fragment>
+  );
 
-    if (this.state.loading) return;
-
-    if (this.state.draggingOver === draggingOver) return;
-    this.setState({ draggingOver });
-  };
-
-  loadFile = (file: File) => {
-    const regexp = new RegExp(`.(${this.extensions.join('|')})$`, 'gi');
-
-    if (!regexp.test(file.name)) {
-      Toast.show(`Apenas imagens: ${this.extensions.join(', ')}`);
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => this.getImageDimensions(e.target.result);
-    reader.onerror = () => {
-      Toast.show('Não conseguimos carregar a imagem');
-      this.setState({ loading: false });
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  getImageDimensions = (url: string) => {
-    const image = new Image();
-
-    image.onload = () => {
-      setTimeout(() => {
-        this.setState({ loading: false });
-        this.props.onLoad({ url, width: image.width, height: image.height });
-      }, 1000);
-    };
-
-    image.onerror = () => {
-      Toast.show('Não conseguimos carregar a imagem');
-      this.setState({ loading: false });
-    };
-
-    image.src = url;
-  };
-
-  render() {
-    const { droppable } = this.props;
-
-    return droppable ? this.renderArea() : this.renderButton();
+  if (!props.droppable) {
+    return uploadButton;
   }
 
-  renderArea = () => {
-    const { draggingOver, loading } = this.state;
-    const { classes, className } = this.props;
+  return (
+    <div
+      className={`${classes.dropArea} ${props.className || ''} ${draggingOver ? classes.dropAreaDragging : null}`}
+      onDrop={onDropFile}
+      onDragOver={onDragIn}
+      onDragLeave={onDragOut}
+    >
+      {loading && <CircularProgress color='secondary' size={50} className={classes.dropAreaProgress} />}
 
-    return (
-      <div
-        className={`${classes.dropArea} ${className || ''} ${draggingOver ? classes.dropAreaDragging : null}`}
-        onDrop={this.onDropFile}
-        onDragOver={this.onDragIn}
-        onDragLeave={this.onDragOut}
-      >
-        {loading && <CircularProgress color='secondary' size={50} className={classes.dropAreaProgress} />}
+      {!loading && (
+        <Fragment>
+          <div className={classes.dropAreaDraggingChildren}>
+            <IconMessage icon={FolderDownloadIcon} message='Arraste e solte a imagem aqui ou' />
+          </div>
 
-        {!loading && (
-          <Fragment>
-            <div className={classes.dropAreaDraggingChildren}>
-              <IconMessage icon={FolderDownloadIcon} message='Arraste e solte a imagem aqui ou' />
-            </div>
+          <div className={draggingOver ? classes.dropAreaDraggingChildren : null}>{uploadButton}</div>
+        </Fragment>
+      )}
+    </div>
+  );
+});
 
-            <div className={draggingOver ? classes.dropAreaDraggingChildren : null}>{this.renderButton()}</div>
-          </Fragment>
-        )}
-      </div>
-    );
-  };
-
-  renderButton = () => {
-    const { loading } = this.state;
-    const { classes } = this.props;
-
-    return (
-      <Fragment>
-        <input
-          type='file'
-          ref={this.inputRef}
-          className='hide'
-          onChange={this.onFileSelected}
-          accept={`.${this.extensions.join(',.')}`}
-        />
-
-        <Button color='secondary' disabled={loading} onClick={this.handleSelectImage}>
-          {loading ? <CircularProgress className={classes.progress} size={20} /> : <FolderOpenIcon />}
-          {loading ? 'Carregando' : 'Selecionar'}
-        </Button>
-      </Fragment>
-    );
-  };
-}
+export default ImageReader;

@@ -9,8 +9,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { IStateList, ListComponent, TableCellSortable } from 'components/Abstract/List';
 import Toolbar from 'components/Layout/Toolbar';
-import FabButton from 'components/Shared/FabButton';
 import TableWrapper from 'components/Shared/TableWrapper';
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
+import { logError } from 'helpers/rxjs-operators/logError';
 import IUser from 'interfaces/models/user';
 import { IPaginationParams } from 'interfaces/pagination';
 import AccountPlusIcon from 'mdi-react/AccountPlusIcon';
@@ -20,8 +21,6 @@ import userService from 'services/user';
 
 import UserFormDialog from '../UserFormDialog';
 import ListItem from './ListItem';
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
-import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IState extends IStateList<IUser> {
   current?: IUser;
@@ -89,7 +88,7 @@ export default class UserListPage extends ListComponent<{}, IState> {
         <Toolbar title='Usuários' />
 
         <Card>
-          <FabButton actions={this.actions} />
+          {/* <FabButton actions={this.actions} /> */}
 
           <UserFormDialog
             opened={formOpened || false}

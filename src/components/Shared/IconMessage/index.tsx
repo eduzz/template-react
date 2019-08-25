@@ -1,15 +1,14 @@
+import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from 'decorators/withStyles';
 import MoreIcon from 'mdi-react/MoreIcon';
-import React, { PureComponent } from 'react';
+import React, { memo } from 'react';
 
 interface IProps {
   icon: typeof MoreIcon;
   message: any;
-  classes?: any;
 }
 
-@WithStyles({
+const useStyle = makeStyles({
   root: {
     textAlign: 'center',
     padding: '20px',
@@ -19,22 +18,18 @@ interface IProps {
   },
   icon: {
     opacity: 0.7
-  },
-  button: {
-    marginTop: 20
   }
-})
-export default class IconMessage extends PureComponent<IProps> {
-  render() {
-    const { message, classes } = this.props;
+});
 
-    return (
-      <div className={classes.root}>
-        <this.props.icon size={50} className={classes.icon} />
-        <Typography variant='body1' className={classes.text}>
-          {message}
-        </Typography>
-      </div>
-    );
-  }
-}
+const IconMessage = memo((props: IProps) => {
+  const classes = useStyle(props);
+
+  return (
+    <div className={classes.root}>
+      <props.icon size={50} className={classes.icon} />
+      <Typography variant='body1'>{props.message}</Typography>
+    </div>
+  );
+});
+
+export default IconMessage;
