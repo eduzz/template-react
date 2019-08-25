@@ -1,7 +1,7 @@
 import IconButton from '@material-ui/core/IconButton';
 import Menu, { MenuProps } from '@material-ui/core/Menu';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
-import * as React from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 
 import PermissionHide from '../PermissionHide';
 import DropdownMenuContext from './context';
@@ -12,26 +12,14 @@ export interface IOption {
   icon?: typeof DotsHorizontalIcon;
   handler: () => void;
 }
+const DropdownMenu = memo((props: Partial<MenuProps>) => {
+  const [targetElem, setTargetElem] = useState<HTMLElement>();
 
-interface IState {
-  targetElem?: HTMLElement;
-  options: React.ReactChild[];
-  content: React.ReactChild[];
-}
-
-interface IProps extends Partial<MenuProps> {}
-
-export default class DropdownMenu extends React.PureComponent<IProps, IState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { options: [], content: [] };
-  }
-
-  static getDerivedStateFromProps({ children }: IProps, currentState: IState): IState {
+  const [options, content] = useMemo(() => {
     const options: React.ReactChild[] = [];
     const content: React.ReactChild[] = [];
 
-    React.Children.toArray(children).forEach((child: any) => {
+    React.Children.toArray(props.children).forEach((child: any) => {
       if (child.type === OptionItem || child.type === PermissionHide) {
         options.push(child);
         return;
@@ -40,47 +28,43 @@ export default class DropdownMenu extends React.PureComponent<IProps, IState> {
       content.push(child);
     });
 
-    return {
-      ...currentState,
-      options,
-      content: content.length ? content : null
-    };
-  }
+    return [options, content.length ? content : null];
+  }, [props.children]);
 
-  handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpen = useCallback((event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     event.stopPropagation();
-    this.setState({ targetElem: event.currentTarget });
-  };
+    setTargetElem(event.currentTarget);
+  }, []);
 
-  handleClose = (event?: React.MouseEvent<HTMLElement>) => {
+  const handleClose = useCallback((event?: React.MouseEvent<HTMLElement>) => {
     event && event.stopPropagation();
-    this.setState({ targetElem: null });
-  };
+    setTargetElem(null);
+  }, []);
 
-  handleClick = (handler: () => void) => {
-    this.handleClose();
-    handler();
-  };
+  const handleClick = useCallback(
+    (handler: () => void) => {
+      handleClose();
+      handler();
+    },
+    [handleClose]
+  );
 
-  render() {
-    const { targetElem, options, content } = this.state;
-    const { ...menuProps } = this.props;
+  return (
+    <div>
+      {!!content && <span onClick={handleOpen}>{content}</span>}
 
-    return (
-      <div>
-        {!!content && <span onClick={this.handleOpen}>{content}</span>}
+      {!content && (
+        <IconButton onClick={handleOpen} color='inherit'>
+          <DotsHorizontalIcon />
+        </IconButton>
+      )}
 
-        {!content && (
-          <IconButton onClick={this.handleOpen} color='inherit'>
-            <DotsHorizontalIcon />
-          </IconButton>
-        )}
+      <Menu {...props} anchorEl={targetElem} open={!!targetElem} onClose={handleClose}>
+        <DropdownMenuContext.Provider value={handleClick}>{options}</DropdownMenuContext.Provider>
+      </Menu>
+    </div>
+  );
+});
 
-        <Menu {...menuProps} anchorEl={targetElem} open={!!targetElem} onClose={this.handleClose}>
-          <DropdownMenuContext.Provider value={this.handleClick}>{options}</DropdownMenuContext.Provider>
-        </Menu>
-      </div>
-    );
-  }
-}
+export default DropdownMenu;

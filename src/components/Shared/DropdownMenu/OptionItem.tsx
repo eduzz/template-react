@@ -1,11 +1,12 @@
+import { makeStyles } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
-import { IStyledProps, WithStyles } from 'decorators/withStyles';
+import { IStyledProps } from 'decorators/withStyles';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
-import React, { PureComponent, SyntheticEvent } from 'react';
+import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
 
-import DropdownMenuContext, { IDropdownMenuContext } from './context';
+import DropdownMenuContext from './context';
 
 interface IProps extends IStyledProps {
   text: string;
@@ -13,33 +14,35 @@ interface IProps extends IStyledProps {
   handler: () => void;
 }
 
-@WithStyles({
+const useStyle = makeStyles({
   text: {
     paddingLeft: '0 !important'
   }
-})
-export default class OptionItem extends PureComponent<IProps> {
-  static contextType = DropdownMenuContext;
-  context: IDropdownMenuContext;
+});
 
-  onClick = (event: SyntheticEvent) => {
-    event.preventDefault();
-    event.stopPropagation();
-    this.context(this.props.handler);
-  };
+const OptionItem = memo((props: IProps) => {
+  const context = useContext(DropdownMenuContext);
+  const classes = useStyle(props);
 
-  render() {
-    const { icon: Icon, text, classes } = this.props;
+  const onClick = useCallback(
+    (event: SyntheticEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      context(props.handler);
+    },
+    [context, props.handler]
+  );
 
-    return (
-      <MenuItem onClick={this.onClick}>
-        {!!Icon && (
-          <ListItemIcon>
-            <Icon />
-          </ListItemIcon>
-        )}
-        <ListItemText inset={!!Icon} primary={text} className={Icon ? classes.text : null} />
-      </MenuItem>
-    );
-  }
-}
+  return (
+    <MenuItem onClick={onClick}>
+      {!!props.icon && (
+        <ListItemIcon>
+          <props.icon />
+        </ListItemIcon>
+      )}
+      <ListItemText inset={!!props.icon} primary={props.text} className={props.icon ? classes.text : null} />
+    </MenuItem>
+  );
+});
+
+export default OptionItem;
