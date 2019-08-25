@@ -1,18 +1,12 @@
 import IconButton from '@material-ui/core/IconButton';
-import Snackbar from '@material-ui/core/Snackbar';
-import { WithStyles } from 'decorators/withStyles';
+import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import CloseIcon from 'mdi-react/CloseIcon';
-import React, { PureComponent } from 'react';
+import React, { MemoExoticComponent, ComponentType, memo, useCallback, useMemo, useState } from 'react';
 import { TOAST_DEFAULT_TIMEOUT, TOAST_ERROR_TIMEOUT } from 'settings';
 
-import ToastGlobalProvider from './global';
-
-interface IState {
-  opened: boolean;
-  message?: string;
-  isError?: boolean;
-}
+import ToastGlobalProvider, { showGlobalToast } from './global';
+import { makeStyles } from '@material-ui/core';
 
 interface IProps {
   opened: boolean;
@@ -23,7 +17,14 @@ interface IProps {
   classes?: any;
 }
 
-@WithStyles(theme => ({
+type ToastComponent = MemoExoticComponent<ComponentType<IProps>> & {
+  Global?: typeof ToastGlobalProvider;
+
+  show?(message: string, timeout?: number): Promise<void>;
+  error?(error: any): Promise<void>;
+};
+
+const useStyles = makeStyles(theme => ({
   wrapper: {
     [theme.breakpoints.up('sm')]: {
       top: '24px',
@@ -38,62 +39,50 @@ interface IProps {
     width: theme.spacing(4),
     height: theme.spacing(4)
   }
-}))
-export default class Toast extends PureComponent<IProps, IState> {
-  static Global = ToastGlobalProvider;
+}));
 
-  constructor(props: IProps) {
-    super(props);
-    this.state = { opened: false };
-  }
+const Toast: ToastComponent = memo((props: IProps) => {
+  const classes = useStyles(props);
+  const [anchorOrigin] = useState<SnackbarOrigin>({ vertical: 'top', horizontal: 'right' });
 
-  static getDerivedStateFromProps(nextProps: IProps, prevState: IState): IState {
-    if (!nextProps.opened) {
-      return {
-        ...prevState,
-        opened: false
-      };
-    }
+  const [message, isError] = useMemo(() => {
+    return props.message ? [props.message, false] : [errorMessageFormatter(props.error), true];
+  }, [props.error, props.message]);
 
-    return {
-      opened: nextProps.opened,
-      message: nextProps.message || errorMessageFormatter(nextProps.error),
-      isError: !!nextProps.error
-    };
-  }
+  const handleClose = useCallback(
+    (event: any, reason?: string) => {
+      if (reason === 'clickaway') return;
+      props.onClose();
+    },
+    [props]
+  );
 
-  static show(message: string, timeout?: number) {
-    return ToastGlobalProvider.show(message, null, timeout || TOAST_DEFAULT_TIMEOUT);
-  }
+  return (
+    <Snackbar
+      anchorOrigin={anchorOrigin}
+      open={props.opened}
+      autoHideDuration={props.timeout}
+      onClose={handleClose}
+      message={<span>{message}</span>}
+      className={classes.wrapper}
+      ContentProps={{ className: isError ? classes.contentError : null }}
+      action={[
+        <IconButton key='close' color='inherit' className='close' onClick={handleClose}>
+          <CloseIcon />
+        </IconButton>
+      ]}
+    />
+  );
+});
 
-  static error(error: any) {
-    return ToastGlobalProvider.show(null, error, TOAST_ERROR_TIMEOUT);
-  }
+Toast.Global = ToastGlobalProvider;
 
-  handleClose = (event: any, reason: string) => {
-    if (reason === 'clickaway') return;
-    this.props.onClose();
-  };
+Toast.show = (message: string, timeout?: number) => {
+  return showGlobalToast(message, null, timeout || TOAST_DEFAULT_TIMEOUT);
+};
 
-  public render(): JSX.Element {
-    const { opened, message, isError } = this.state;
-    const { timeout, classes, onClose } = this.props;
+Toast.error = (error: any) => {
+  return showGlobalToast(null, error, TOAST_ERROR_TIMEOUT);
+};
 
-    return (
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={opened}
-        autoHideDuration={timeout}
-        onClose={this.handleClose}
-        message={<span>{message}</span>}
-        className={classes.wrapper}
-        ContentProps={{ className: isError ? classes.contentError : null }}
-        action={[
-          <IconButton key='close' color='inherit' className='close' onClick={onClose}>
-            <CloseIcon />
-          </IconButton>
-        ]}
-      />
-    );
-  }
-}
+export default Toast;

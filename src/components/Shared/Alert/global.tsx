@@ -1,62 +1,49 @@
-import React, { PureComponent } from 'react';
+import React, { memo, useState, useEffect, useCallback } from 'react';
 
 import Alert, { IAlertShowParams } from '.';
-
-interface IState {
-  opened: boolean;
-  message?: React.ReactNode;
-  title?: string;
-  confirmation?: boolean;
-}
 
 let lastPromise = Promise.resolve(false);
 let globalAlert: (params: IAlertShowParams) => Promise<boolean>;
 
-export class AlertGlobalProvider extends PureComponent<{}, IState> {
-  promiseResolve: (result: boolean) => void;
+const AlertGlobalProvider = memo(() => {
+  const [opened, setOpened] = useState<boolean>(false);
+  const [params, setParams] = useState<IAlertShowParams>();
+  const [promiseResolve, setPromiseResolve] = useState<(result: boolean) => void>();
 
-  constructor(props: {}) {
-    super(props);
-    this.state = { opened: false };
-  }
-
-  componentDidMount() {
-    if (globalAlert) throw new Error('Only one Alert.Global can be initialized');
-    globalAlert = this.show;
-  }
-
-  static async show(params: IAlertShowParams): Promise<boolean> {
-    if (!globalAlert) throw new Error('Please, initialize an Alert.Global before');
-
-    //prevent an alert to overhide another
-    return (lastPromise = lastPromise.then(async () => {
-      await new Promise(resolve => setTimeout(() => resolve(), 300));
-      return globalAlert(params);
-    }));
-  }
-
-  show = (params: IAlertShowParams): Promise<boolean> => {
+  const handleShow = useCallback((params: IAlertShowParams): Promise<boolean> => {
     const result = new Promise<boolean>(resolve => {
-      this.promiseResolve = resolve;
-      this.setState({
-        opened: true,
-        confirmation: false,
-        title: null,
-        ...params
-      });
+      setPromiseResolve(resolve);
+      setOpened(true);
+      setParams({ confirmation: false, title: null, ...params });
     });
 
-    result.then(() => this.setState({ opened: false }));
+    result.then(() => setOpened(false));
     return result;
-  };
+  }, []);
 
-  onClose = (ok: boolean) => {
-    this.promiseResolve && this.promiseResolve(ok);
-  };
+  const onClose = useCallback(
+    (ok: boolean) => {
+      promiseResolve && promiseResolve(ok);
+    },
+    [promiseResolve]
+  );
 
-  render() {
-    const { opened, message, title, confirmation } = this.state;
+  useEffect(() => {
+    if (globalAlert) throw new Error('Only one Alert.Global can be initialized');
+    globalAlert = handleShow;
+  }, [handleShow]);
 
-    return <Alert opened={opened} message={message} title={title} confirmation={confirmation} onClose={this.onClose} />;
-  }
+  return <Alert opened={opened} {...params} onClose={onClose} />;
+});
+
+export async function showGlobalAlert(params: IAlertShowParams): Promise<boolean> {
+  if (!globalAlert) throw new Error('Please, initialize an Alert.Global before');
+
+  //prevent an alert to overhide another
+  return (lastPromise = lastPromise.then(async () => {
+    await new Promise(resolve => setTimeout(() => resolve(), 300));
+    return globalAlert(params);
+  }));
 }
+
+export default AlertGlobalProvider;
