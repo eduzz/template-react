@@ -1,15 +1,15 @@
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, memo } from 'react';
 
 import ChangePasswordDialog from './ChangePassword';
 import LoginDialog from './Login';
 
-export default class Dialogs extends PureComponent {
-  render() {
-    return (
-      <Fragment>
-        <LoginDialog />
-        <ChangePasswordDialog />
-      </Fragment>
-    );
-  }
-}
+const Dialogs = memo(() => {
+  return (
+    <Fragment>
+      <LoginDialog />
+      <ChangePasswordDialog />
+    </Fragment>
+  );
+});
+
+export default Dialogs;

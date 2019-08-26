@@ -1,3 +1,5 @@
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
+import { logError } from 'helpers/rxjs-operators/logError';
 import { enRoles } from 'interfaces/models/user';
 import React, { Fragment } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
@@ -5,8 +7,6 @@ import { tap } from 'rxjs/operators';
 import authService from 'services/auth';
 
 import PermissionHide from '../PermissionHide';
-import { logError } from 'helpers/rxjs-operators/logError';
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IProps extends RouteProps {
   role?: enRoles;

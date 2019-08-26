@@ -14,16 +14,15 @@ import FieldHidden from '@react-form-fields/material-ui/components/Hidden';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import ErrorMessage from 'components/Shared/ErrorMessage';
 import Toast from 'components/Shared/Toast';
+import { logError } from 'helpers/rxjs-operators/logError';
 import useModel from 'hooks/useModel';
 import IUser from 'interfaces/models/user';
 import IUserRole from 'interfaces/models/userRole';
-import React, { Fragment, memo, useState, useCallback } from 'react';
-import userService from 'services/user';
-import { useRetryableObservable, useCallbackObservable } from 'react-use-observable';
+import React, { Fragment, memo, useCallback, useState } from 'react';
+import { useCallbackObservable, useRetryableObservable } from 'react-use-observable';
 import { of } from 'rxjs';
-import { filter, first, tap, map } from 'rxjs/operators';
-import { switchMap } from 'rxjs/operators';
-import { logError } from 'helpers/rxjs-operators/logError';
+import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import userService from 'services/user';
 
 interface IProps {
   opened: boolean;

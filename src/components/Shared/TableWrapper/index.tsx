@@ -1,16 +1,12 @@
-import { WithStyles } from 'decorators/withStyles';
-import React, { PureComponent } from 'react';
+import { makeStyles } from '@material-ui/core';
+import React, { memo, Props, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-interface IProps {
+interface IProps extends Props<{}> {
   minWidth?: number;
   classes?: any;
 }
 
-interface IState {
-  scrollEnded: boolean;
-}
-
-@WithStyles({
+const useStyle = makeStyles({
   root: {
     position: 'relative',
     overflow: 'hidden'
@@ -31,44 +27,42 @@ interface IState {
   noShadow: {
     opacity: 0
   }
-})
-export default class TableWrapper extends PureComponent<IProps, IState> {
-  root: React.RefObject<HTMLDivElement> = React.createRef();
+});
 
-  constructor(props: IProps) {
-    super(props);
-    this.state = { scrollEnded: true };
-  }
+const TableWrapper = memo((props: IProps) => {
+  const classes = useStyle(props);
+  const root = useRef<HTMLDivElement>();
 
-  componentDidMount() {
-    this.setState({
-      scrollEnded: this.root.current.clientWidth === this.root.current.scrollWidth
-    });
-    this.root.current.addEventListener('scroll', this.onScroll);
-    window.addEventListener('resize', this.onScroll);
-  }
+  const [scrollEnded, setScrollEnded] = useState(true);
 
-  componentWillUnmount() {
-    this.root.current.removeEventListener('scroll', this.onScroll);
-    window.removeEventListener('resize', this.onScroll);
-  }
+  const onScroll = useCallback(() => {
+    const endScroll = root.current.scrollWidth - root.current.clientWidth - 10;
+    setScrollEnded(root.current.scrollLeft >= endScroll);
+  }, [root]);
 
-  onScroll = () => {
-    const endScroll = this.root.current.scrollWidth - this.root.current.clientWidth - 10;
-    this.setState({ scrollEnded: this.root.current.scrollLeft >= endScroll });
-  };
+  useEffect(() => {
+    setScrollEnded(root.current.clientWidth === root.current.scrollWidth);
 
-  render() {
-    const { scrollEnded } = this.state;
-    const { classes, children, minWidth } = this.props;
+    root.current.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', onScroll);
 
-    return (
-      <div className={classes.root}>
-        <div className={`${classes.shadow} ${scrollEnded ? classes.noShadow : ''}`} />
-        <div className={classes.scrollable} ref={this.root}>
-          <div style={{ minWidth: minWidth || 650 }}>{children}</div>
-        </div>
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      root.current && root.current.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [onScroll]);
+
+  const style = useMemo(() => ({ minWidth: props.minWidth || 650 }), [props.minWidth]);
+
+  return (
+    <div className={classes.root}>
+      <div className={`${classes.shadow} ${scrollEnded ? classes.noShadow : ''}`} />
+      <div className={classes.scrollable} ref={root}>
+        <div style={style}>{props.children}</div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+});
+
+export default TableWrapper;

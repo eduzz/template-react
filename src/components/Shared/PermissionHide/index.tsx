@@ -1,62 +1,34 @@
+import { logError } from 'helpers/rxjs-operators/logError';
 import { enRoles } from 'interfaces/models/user';
-import { PureComponent } from 'react';
+import { memo, Props } from 'react';
+import { useObservable } from 'react-use-observable';
 import authService from 'services/auth';
 
-import Toast from '../Toast';
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
-import { logError } from 'helpers/rxjs-operators/logError';
-
-interface IProps {
+interface IProps extends Props<{}> {
   passIfNull?: boolean;
   role?: enRoles | enRoles[];
   inverse?: boolean;
 }
 
-interface IState {
-  canAccess: boolean;
-  verified?: boolean;
-}
+const PermissionHide = memo<IProps>(props => {
+  const [canAccess] = useObservable(() => {
+    const roles = Array.isArray(props.role) ? props.role : props.role ? [props.role] : [];
+    return authService.canAccess(...roles).pipe(logError());
+  }, [props.role]);
 
-export default class PermissionHide extends PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = { canAccess: false, verified: false };
+  if (canAccess === undefined) {
+    return null;
   }
 
-  componentDidMount() {
-    const { role } = this.props;
-    const roles = Array.isArray(role) ? role : role ? [role] : [];
-
-    authService
-      .canAccess(...roles)
-      .pipe(
-        logError(),
-        bindComponent(this)
-      )
-      .subscribe(
-        canAccess => {
-          this.setState({ canAccess, verified: true });
-        },
-        err => Toast.error(err)
-      );
+  if (props.inverse && !canAccess) {
+    return props.children as any;
   }
 
-  render() {
-    const { canAccess, verified } = this.state;
-    const { inverse } = this.props;
-
-    if (!verified) {
-      return null;
-    }
-
-    if (inverse && !canAccess) {
-      return this.props.children;
-    }
-
-    if (inverse || !canAccess) {
-      return null;
-    }
-
-    return this.props.children;
+  if (props.inverse || !canAccess) {
+    return null;
   }
-}
+
+  return props.children as any;
+});
+
+export default PermissionHide;
