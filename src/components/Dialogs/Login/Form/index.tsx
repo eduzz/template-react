@@ -1,19 +1,19 @@
+import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { makeStyles } from '@material-ui/styles';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import Toast from 'components/Shared/Toast';
+import { logError } from 'helpers/rxjs-operators/logError';
 import useModel from 'hooks/useModel';
 import React, { memo, MouseEvent, useState } from 'react';
 import { useCallbackObservable } from 'react-use-observable';
 import { of } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import authService from 'services/auth';
-import { logError } from 'helpers/rxjs-operators/logError';
 
 interface IProps {
   onRecoveryAccess: (e: MouseEvent<HTMLElement>) => void;

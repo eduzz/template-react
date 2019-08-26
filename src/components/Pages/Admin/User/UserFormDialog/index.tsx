@@ -1,3 +1,4 @@
+import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,7 +7,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/styles';
 import FieldCheckbox from '@react-form-fields/material-ui/components/Checkbox';
 import CustomMessage from '@react-form-fields/material-ui/components/CustomMessage';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';

@@ -1,24 +1,20 @@
+import { makeStyles } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import logoWhite from 'assets/images/logo-white.png';
-import { WithStyles } from 'decorators/withStyles';
-import React, { PureComponent } from 'react';
-import authService from 'services/auth';
+import React, { memo, useCallback } from 'react';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
 import UserMenu from './UserMenu';
-import { logError } from 'helpers/rxjs-operators/logError';
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
 interface IProps {
   menu: IMenu[];
   navigate: (path: string) => void;
   close: () => void;
-  classes?: any;
 }
 
-@WithStyles(theme => ({
+const useStyle = makeStyles(theme => ({
   root: {
     background: theme.palette.primary.main,
     color: theme.palette.primary.contrastText,
@@ -37,43 +33,26 @@ interface IProps {
   list: {
     padding: 0
   }
-}))
-export default class Content extends PureComponent<IProps, {}> {
-  constructor(props: any) {
-    super(props);
-    this.state = { routes: [] };
-  }
+}));
 
-  componentDidMount() {
-    authService
-      .getUser()
-      .pipe(
-        logError(),
-        bindComponent(this)
-      )
-      .subscribe(user => this.setState({ user }));
-  }
+const Content = memo((props: IProps) => {
+  const classes = useStyle(props);
+  const navigate = useCallback((menu: IMenu) => props.navigate(menu.path), [props]);
 
-  navigate = (menu: IMenu) => {
-    this.props.navigate(menu.path);
-  };
-
-  render() {
-    const { classes, close, menu } = this.props;
-
-    return (
-      <div className={classes.root}>
-        <div className={classes.header}>
-          <img src={logoWhite} className={classes.logo} alt='logo' />
-          <UserMenu closeDrawer={close} />
-        </div>
-
-        <List className={classes.list}>
-          {menu.map(item => (
-            <DrawerListItem key={item.path} data={item} onClick={this.navigate} />
-          ))}
-        </List>
+  return (
+    <div className={classes.root}>
+      <div className={classes.header}>
+        <img src={logoWhite} className={classes.logo} alt='logo' />
+        <UserMenu closeDrawer={close} />
       </div>
-    );
-  }
-}
+
+      <List className={classes.list}>
+        {props.menu.map(item => (
+          <DrawerListItem key={item.path} data={item} onClick={navigate} />
+        ))}
+      </List>
+    </div>
+  );
+});
+
+export default Content;

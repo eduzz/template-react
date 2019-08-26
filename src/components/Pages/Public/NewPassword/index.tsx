@@ -1,21 +1,20 @@
+import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/styles';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import logoWhite from 'assets/images/logo-white.png';
 import Toast from 'components/Shared/Toast';
-import { IRouteProps } from 'decorators/withRouter';
-import { IStyledProps } from 'decorators/withStyles';
+import { logError } from 'helpers/rxjs-operators/logError';
 import useModel from 'hooks/useModel';
 import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
 import queryString from 'query-string';
 import React, { memo, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
 import { useCallbackObservable } from 'react-use-observable';
 import { of } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -23,9 +22,8 @@ import authService from 'services/auth';
 import tokenService from 'services/token';
 
 import styles from './style';
-import { logError } from 'helpers/rxjs-operators/logError';
 
-interface IProps extends IStyledProps<typeof styles>, IRouteProps<{ t: string }> {}
+interface IProps extends RouteComponentProps<{ t: string }> {}
 
 const useStyles = makeStyles(styles);
 

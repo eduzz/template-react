@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-const useModel = <T>(initialState: Partial<T> = {}) => {
+export default function useModel<T>(initialState: Partial<T> = {}) {
   const [freezeInitalState] = useState(cloneDeep(initialState));
   const [model, setModel] = useState(cloneDeep(initialState));
   const [dirty, setDirty] = useState(false);
@@ -38,6 +38,4 @@ const useModel = <T>(initialState: Partial<T> = {}) => {
     typeof dirty,
     typeof cleanModel
   ];
-};
-
-export default useModel;
+}

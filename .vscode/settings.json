@@ -40,4 +40,5 @@
   },
   "typescriptHero.imports.organizeOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
+  "typescriptHero.imports.ignoredFromRemoval": []
 }
