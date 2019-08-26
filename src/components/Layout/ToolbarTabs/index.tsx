@@ -1,12 +1,8 @@
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
-import { WithStyles } from 'decorators/withStyles';
-import React, { PureComponent } from 'react';
+import React, { memo, Props } from 'react';
 
-interface IProps {
-  classes?: any;
-}
-
-@WithStyles(theme => ({
+const useStyle = makeStyles(theme => ({
   root: {
     height: theme.variables.headerHeight,
     marginTop: theme.variables.contentPadding * -1,
@@ -24,20 +20,23 @@ interface IProps {
     [theme.breakpoints.up('md')]: {
       left: theme.variables.drawerWidth,
       top: theme.variables.headerHeightUpSm,
-      width: `calc(100% - ${theme.variables.drawerWidth}px)`
+      width: `calc(100% - ${theme.variables.drawerWidth}px)`,
+      backgroundColor: 'white',
+      color: theme.palette.text.primary
     }
   }
-}))
-export class ToolbarTabs extends PureComponent<IProps> {
-  render() {
-    const { children, classes } = this.props;
+}));
 
-    return (
-      <div className={classes.root}>
-        <AppBar className={classes.appBar} color='default'>
-          {children}
-        </AppBar>
-      </div>
-    );
-  }
-}
+const ToolbarTabs = memo((props: Props<{}>) => {
+  const classes = useStyle(props);
+
+  return (
+    <div className={classes.root}>
+      <AppBar className={classes.appBar} color='default'>
+        {props.children}
+      </AppBar>
+    </div>
+  );
+});
+
+export default ToolbarTabs;

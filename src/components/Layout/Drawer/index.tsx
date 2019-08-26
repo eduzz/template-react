@@ -1,10 +1,10 @@
+import { makeStyles } from '@material-ui/core';
 import CoreDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
-import { IRouteProps, WithRouter } from 'decorators/withRouter';
-import { WithStyles } from 'decorators/withStyles';
 import { enRoles } from 'interfaces/models/user';
 import MoreIcon from 'mdi-react/MoreIcon';
-import React, { Fragment, PureComponent } from 'react';
+import React, { Fragment, memo, Props, useCallback, useMemo, useRef, useState } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import Content from './Content';
 import { DrawerContext } from './context';
@@ -17,17 +17,11 @@ export interface IMenu {
   submenu?: IMenu[];
 }
 
-interface IState {
-  drawerOpened: boolean;
-}
-
-interface IProps extends IRouteProps {
+interface IProps extends RouteComponentProps<{}>, Props<{}> {
   menu: IMenu[];
-  classes?: any;
 }
 
-@WithRouter()
-@WithStyles(theme => ({
+const useStyle = makeStyles(theme => ({
   drawer: {
     width: theme.variables.drawerWidth,
     borderRight: 'none !important',
@@ -38,54 +32,59 @@ interface IProps extends IRouteProps {
       height: '100vh'
     }
   }
-}))
-export default class Drawer extends PureComponent<IProps, IState> {
-  modalProps = { keepMounted: true };
-  drawerClasses = { paper: this.props.classes.drawer };
+}));
 
-  constructor(props: IProps) {
-    super(props);
-    this.state = { drawerOpened: false };
-  }
+const Drawer = memo(
+  withRouter((props: IProps) => {
+    const classes = useStyle(props);
+    const modalProps = useRef({ keepMounted: true }).current;
+    const drawerClasses = useRef({ paper: classes.drawer }).current;
+    const [drawerOpened, setDrawerOpened] = useState(false);
 
-  navigate = (url: string) => {
-    this.props.history.push(url);
-    this.close();
-  };
+    const navigate = useCallback(
+      (url: string) => {
+        props.history.push(url);
+        setDrawerOpened(false);
+      },
+      [props.history]
+    );
 
-  open = () => this.setState({ drawerOpened: true });
-  close = () => this.setState({ drawerOpened: false });
+    const contextValue = useMemo(
+      () => ({
+        open: () => setDrawerOpened(true),
+        close: () => setDrawerOpened(false)
+      }),
+      []
+    );
 
-  render() {
-    const { drawerOpened } = this.state;
-    const { menu, children } = this.props;
-
-    const content = <Content menu={menu} navigate={this.navigate} close={this.close} />;
+    const content = <Content menu={props.menu} navigate={navigate} close={close} />;
 
     return (
       <Fragment>
-        <DrawerContext.Provider value={this}>
+        <DrawerContext.Provider value={contextValue}>
           <Hidden mdUp implementation='css'>
             <CoreDrawer
               variant='temporary'
               anchor='left'
               open={drawerOpened}
-              classes={this.drawerClasses}
-              onClose={this.close}
-              ModalProps={this.modalProps}
+              classes={drawerClasses}
+              onClose={close}
+              ModalProps={modalProps}
             >
               {content}
             </CoreDrawer>
           </Hidden>
           <Hidden smDown implementation='css'>
-            <CoreDrawer variant='permanent' open classes={this.drawerClasses}>
+            <CoreDrawer variant='permanent' open classes={drawerClasses}>
               {content}
             </CoreDrawer>
           </Hidden>
 
-          {children}
+          {props.children}
         </DrawerContext.Provider>
       </Fragment>
     );
-  }
-}
+  })
+);
+
+export default Drawer;

@@ -1,27 +1,17 @@
+import { makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import logoWhite from 'assets/images/logo-white.png';
-import { WithStyles } from 'decorators/withStyles';
-import { PureComponent } from 'react';
-import * as React from 'react';
+import { logError } from 'helpers/rxjs-operators/logError';
+import React, { memo, useCallback, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import { useObservable } from 'react-use-observable';
 import authService from 'services/auth';
 
 import LoginDialogForm from './Form';
 import LoginDialogRecoveryAccess from './RecoveryAcces';
-import { logError } from 'helpers/rxjs-operators/logError';
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 
-interface IState {
-  opened: boolean;
-  currentView: number;
-}
-
-interface IProps {
-  classes?: any;
-}
-
-@WithStyles(theme => ({
+const useStyle = makeStyles(theme => ({
   root: {
     background: theme.palette.primary.main,
     minHeight: '100vh',
@@ -53,56 +43,42 @@ interface IProps {
     padding: '0 10px',
     height: 310
   }
-}))
-export default class LoginDialog extends PureComponent<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = { opened: false, currentView: 0 };
-  }
+}));
 
-  componentDidMount() {
-    authService
-      .shouldOpenLogin()
-      .pipe(
-        logError(),
-        bindComponent(this)
-      )
-      .subscribe(opened => {
-        this.setState({ opened });
-      });
-  }
+const LoginDialog = memo((props: {}) => {
+  const classes = useStyle(props);
+  const [currentView, setCurrentView] = useState(0);
 
-  changeView = (view: number) => () => {
-    this.setState({ currentView: view });
-  };
+  const [opened] = useObservable(() => {
+    return authService.shouldOpenLogin().pipe(logError());
+  }, []);
 
-  render() {
-    const { opened, currentView } = this.state;
-    const { classes } = this.props;
+  const handleChangeView = useCallback((view: number) => () => setCurrentView(view), []);
 
-    return (
-      <Dialog fullScreen disableBackdropClick disableEscapeKeyDown open={opened} TransitionComponent={Transition}>
-        <div className={classes.root}>
-          <div className={classes.container}>
-            <div className={classes.logo}>
-              <img src={logoWhite} className={classes.logoImage} alt='logo' />
-            </div>
-
-            <SwipeableViews index={currentView}>
-              <div className={classes.viewContainer}>
-                <LoginDialogForm onRecoveryAccess={this.changeView(1)} />
-              </div>
-              <div className={classes.viewContainer}>
-                <LoginDialogRecoveryAccess onCancel={this.changeView(0)} onComplete={this.changeView(0)} />
-              </div>
-            </SwipeableViews>
+  return (
+    <Dialog fullScreen disableBackdropClick disableEscapeKeyDown open={opened} TransitionComponent={Transition}>
+      <div className={classes.root}>
+        <div className={classes.container}>
+          <div className={classes.logo}>
+            <img src={logoWhite} className={classes.logoImage} alt='logo' />
           </div>
+
+          <SwipeableViews index={currentView}>
+            <div className={classes.viewContainer}>
+              <LoginDialogForm onRecoveryAccess={handleChangeView(1)} />
+            </div>
+            <div className={classes.viewContainer}>
+              <LoginDialogRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
+            </div>
+          </SwipeableViews>
         </div>
-      </Dialog>
-    );
-  }
-}
+      </div>
+    </Dialog>
+  );
+});
 
 function Transition(props: any) {
   return <Slide direction='up' {...props} />;
 }
+
+export default LoginDialog;

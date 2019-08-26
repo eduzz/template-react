@@ -1,19 +1,18 @@
+import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import CoreToolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { WithStyles } from 'decorators/withStyles';
 import MenuIcon from 'mdi-react/MenuIcon';
-import React, { PureComponent } from 'react';
+import React, { memo, Props, useCallback, useContext } from 'react';
 
-import { DrawerContext, IDrawerContext } from '../Drawer/context';
+import { DrawerContext } from '../Drawer/context';
 
-interface IProps {
+interface IProps extends Props<{}> {
   title?: string;
-  classes?: any;
 }
 
-@WithStyles(theme => ({
+const useStyle = makeStyles(theme => ({
   root: {
     height: theme.variables.headerHeight,
     marginTop: theme.variables.contentPadding * -1,
@@ -37,34 +36,31 @@ interface IProps {
       display: 'none'
     }
   }
-}))
-export default class Toolbar extends PureComponent<IProps> {
-  static contextType = DrawerContext;
-  context: IDrawerContext;
+}));
 
-  openDrawer = () => {
-    this.context.open();
-  };
+const Toolbar = memo((props: IProps) => {
+  const classes = useStyle(props);
+  const context = useContext(DrawerContext);
 
-  render() {
-    const { children, title, classes } = this.props;
+  const openDrawer = useCallback(() => context.open(), [context]);
 
-    return (
-      <div className={classes.root}>
-        <AppBar className={classes.appBar}>
-          <CoreToolbar>
-            <IconButton color='inherit' onClick={this.openDrawer} className={classes.iconMenu}>
-              <MenuIcon />
-            </IconButton>
-            {children}
-            {!children && (
-              <Typography variant='h6' color='inherit' noWrap>
-                {title || 'App'}
-              </Typography>
-            )}
-          </CoreToolbar>
-        </AppBar>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={classes.root}>
+      <AppBar className={classes.appBar}>
+        <CoreToolbar>
+          <IconButton color='inherit' onClick={openDrawer} className={classes.iconMenu}>
+            <MenuIcon />
+          </IconButton>
+          {props.children}
+          {!props.children && (
+            <Typography variant='h6' color='inherit' noWrap>
+              {props.title || 'App'}
+            </Typography>
+          )}
+        </CoreToolbar>
+      </AppBar>
+    </div>
+  );
+});
+
+export default Toolbar;
