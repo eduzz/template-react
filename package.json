@@ -41,7 +41,7 @@
     "react-router-dom": "5.0.1",
     "react-scripts": "3.1.1",
     "react-swipeable-views": "0.13.3",
-    "react-use-observable": "^0.0.10",
+    "react-use-observable": "https://github.com/danieloprado/react-use-observable",
     "recharts": "1.7.1",
     "rxjs": "6.5.2",
     "tslib": "1.10.0"
