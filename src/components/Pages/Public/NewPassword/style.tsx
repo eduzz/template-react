@@ -1,6 +1,6 @@
-import { AppStyle } from 'decorators/withStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
-const styles: AppStyle = theme => ({
+const useStyle = makeStyles(theme => ({
   root: {
     background: theme.palette.primary.main,
     minHeight: '100vh',
@@ -35,6 +35,6 @@ const styles: AppStyle = theme => ({
   buttons: {
     justifyContent: 'flex-end'
   }
-});
+}));
 
-export default styles;
+export default useStyle;

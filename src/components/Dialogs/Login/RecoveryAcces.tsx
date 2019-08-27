@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
@@ -75,7 +75,7 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
           <Button disabled={loading} size='small' onClick={props.onCancel}>
             Voltar
           </Button>
-          <Button disabled={loading} color='secondary' type='submit'>
+          <Button disabled={loading} color='primary' type='submit'>
             Enviar
           </Button>
         </CardActions>

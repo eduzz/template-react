@@ -52,7 +52,7 @@ const TablePagination = memo((props: IProps) => {
         {...extra}
         count={total}
         rowsPerPage={pageSize}
-        page={page - 1}
+        page={page}
         onChangeRowsPerPage={handleChangeRowsPerPage}
         onChangePage={handleChangePage}
       />

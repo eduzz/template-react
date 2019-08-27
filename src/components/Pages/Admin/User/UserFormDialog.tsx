@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import FieldCheckbox from '@react-form-fields/material-ui/components/Checkbox';
 import CustomMessage from '@react-form-fields/material-ui/components/CustomMessage';
@@ -142,11 +142,11 @@ const UserFormDialog = memo((props: IProps) => {
                 Acesso
               </Typography>
 
-              <FieldHidden value={roles.filter(r => r.selected).length} validation='required|numeric|min:1'>
+              <FieldHidden value={(roles || []).filter(r => r.selected).length} validation='required|numeric|min:1'>
                 <CustomMessage rules='min,required,numeric'>Selecione ao menos um</CustomMessage>
               </FieldHidden>
 
-              {roles.map(role => (
+              {(roles || []).map(role => (
                 <div key={role.role}>
                   <FieldCheckbox
                     helperText={role.description}
@@ -161,7 +161,7 @@ const UserFormDialog = memo((props: IProps) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.onCancel}>Cancelar</Button>
-          <Button color='secondary' type='submit' disabled={loading || !!rolesError}>
+          <Button color='primary' type='submit' disabled={loading || !!rolesError}>
             Salvar
           </Button>
         </DialogActions>

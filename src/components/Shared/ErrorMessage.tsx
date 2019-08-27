@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
@@ -34,7 +34,7 @@ const ErrorMessage = memo((props: IProps) => {
       <Typography variant='body1'>{errorMessageFormatter(error)}</Typography>
 
       {tryAgain && (
-        <Button onClick={tryAgain} className={classes.button} color='secondary' variant='outlined'>
+        <Button onClick={tryAgain} className={classes.button} color='primary' variant='outlined'>
           Tentar novamente
         </Button>
       )}

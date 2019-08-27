@@ -1,11 +1,12 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import transparency from 'assets/images/transparency.png';
 import imageCompress from 'helpers/imagerCompress';
@@ -36,7 +37,7 @@ const useStyle = makeStyles({
   },
   content: {
     overflow: 'auto',
-    width: '95vw',
+    width: 'calc(100vw - 110px)',
     maxHeight: 'calc(100vh - 140px) !important'
   }
 });
@@ -47,6 +48,7 @@ const ImageSelector = memo((props: IProps) => {
 
   const [resizeTimeout, setResizeTimeout] = useState();
   const [image, setImage] = useState<IImageReaderResult>();
+  const [saving, setSaving] = useState(false);
   const [dimentions, setDimentions] = useState<{ width: number; height: number }>();
 
   const reCalculateRegion = useCallback(() => {
@@ -57,7 +59,7 @@ const ImageSelector = memo((props: IProps) => {
 
         const newDimentions = calculateRegion(image.width, image.height);
 
-        if (newDimentions.width === dimentions.width && newDimentions.height === dimentions.height) {
+        if (dimentions && newDimentions.width === dimentions.width && newDimentions.height === dimentions.height) {
           return;
         }
 
@@ -68,7 +70,7 @@ const ImageSelector = memo((props: IProps) => {
         }, 0);
       }, 500)
     );
-  }, [dimentions.height, dimentions.width, image, resizeTimeout]);
+  }, [dimentions, image, resizeTimeout]);
 
   useEffect(() => {
     window.addEventListener('resize', reCalculateRegion);
@@ -77,15 +79,17 @@ const ImageSelector = memo((props: IProps) => {
 
   const onExited = useCallback(() => setImage(null), []);
 
-  const handleSave = async () => {
-    const { width, height } = props;
+  const handleSave = useCallback(async () => {
+    setSaving(true);
 
-    const result = await imageCompress(cropper.current.crop(), width, height);
+    const result = await imageCompress(cropper.current.crop(), props.width, props.height);
     props.onComplete({
       filename: 'image.png',
       base64: result
     });
-  };
+
+    setSaving(false);
+  }, [props]);
 
   const handleCancel = useCallback(() => props.onComplete(null), [props]);
 
@@ -141,9 +145,11 @@ const ImageSelector = memo((props: IProps) => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCancel}>Cancelar</Button>
-          <Button disabled={!image} color='secondary' onClick={handleSave}>
-            OK
+          <Button disabled={saving} onClick={handleCancel}>
+            Cancelar
+          </Button>
+          <Button disabled={!image || saving} color='primary' onClick={handleSave}>
+            {saving ? <CircularProgress size={20} /> : 'OK'}
           </Button>
         </DialogActions>
       </Dialog>

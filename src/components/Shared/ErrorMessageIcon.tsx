@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Alert from 'components/Shared/Alert';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';

@@ -1,4 +1,6 @@
-import { IconButton, InputAdornment, makeStyles } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import { IPaginationParams } from 'interfaces/pagination';
 import MagnifyIcon from 'mdi-react/MagnifyIcon';

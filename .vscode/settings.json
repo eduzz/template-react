@@ -38,7 +38,8 @@
     "**/bin/**": true,
     "**/obj/**": true
   },
-  "typescriptHero.imports.organizeOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescriptHero.imports.ignoredFromRemoval": []
+  "typescriptHero.imports.organizeOnSave": true,
+  "typescriptHero.imports.ignoredFromRemoval": [],
+  "typescriptHero.imports.multiLineTrailingComma": false
 }

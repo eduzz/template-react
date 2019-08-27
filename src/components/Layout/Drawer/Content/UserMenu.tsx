@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import OptionItem from 'components/Shared/DropdownMenu/OptionItem';

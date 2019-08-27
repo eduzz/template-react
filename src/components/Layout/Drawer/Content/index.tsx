@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import { darken } from '@material-ui/core/styles/colorManipulator';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import logoWhite from 'assets/images/logo-white.png';
 import React, { memo, useCallback } from 'react';
 
@@ -43,7 +43,7 @@ const Content = memo((props: IProps) => {
     <div className={classes.root}>
       <div className={classes.header}>
         <img src={logoWhite} className={classes.logo} alt='logo' />
-        <UserMenu closeDrawer={close} />
+        <UserMenu closeDrawer={props.close} />
       </div>
 
       <List className={classes.list}>

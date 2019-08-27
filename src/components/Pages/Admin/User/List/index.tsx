@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
@@ -27,7 +28,7 @@ const UserListPage = memo(() => {
   const [formOpened, setFormOpened] = useState(false);
   const [current, setCurrent] = useState();
 
-  const [params, mergeParams, data, error, , refresh] = usePaginationObservable(
+  const [params, mergeParams, loading, data, error, , refresh] = usePaginationObservable(
     params => userService.list(params),
     { orderBy: 'fullName', orderDirection: 'asc' },
     []
@@ -54,7 +55,7 @@ const UserListPage = memo(() => {
   const formCancel = useCallback(() => setFormOpened(false), []);
   const handleRefresh = useCallback(() => refresh(), [refresh]);
 
-  const loading = data === undefined;
+  const { total, results } = data || ({ total: 0, results: [] } as typeof data);
 
   return (
     <Fragment>
@@ -66,9 +67,15 @@ const UserListPage = memo(() => {
         <CardLoader show={loading} />
 
         <CardContent>
-          <Grid container>
+          <Grid container justify='space-between' alignItems='center' spacing={2}>
             <Grid item xs={12} sm={6} lg={4}>
               <SearchField paginationParams={params} onChange={mergeParams} />
+            </Grid>
+
+            <Grid item xs={12} sm={'auto'}>
+              <Button fullWidth variant='contained' color='primary' onClick={handleCreate}>
+                Adicionar
+              </Button>
             </Grid>
           </Grid>
         </CardContent>
@@ -100,17 +107,17 @@ const UserListPage = memo(() => {
                 colSpan={3}
                 error={error}
                 loading={loading}
-                hasData={data && data.results.length > 0}
+                hasData={results.length > 0}
                 onTryAgain={refresh}
               />
-              {data.results.map(user => (
+              {results.map(user => (
                 <ListItem key={user.id} user={user} onEdit={handleEdit} onDeleteComplete={refresh} />
               ))}
             </TableBody>
           </Table>
         </TableWrapper>
 
-        <TablePagination total={0} disabled={loading} paginationParams={params} onChange={mergeParams} />
+        <TablePagination total={total} disabled={loading} paginationParams={params} onChange={mergeParams} />
       </Card>
     </Fragment>
   );

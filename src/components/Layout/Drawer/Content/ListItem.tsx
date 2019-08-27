@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -7,11 +6,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { darken } from '@material-ui/core/styles/colorManipulator';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import PermissionHide from 'components/Shared/PermissionHide';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 import React, { memo, useCallback, useState } from 'react';
 
-import { IMenu } from '../..';
+import { IMenu } from '..';
 
 interface IProps {
   data: IMenu;

@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -21,11 +20,9 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 import authService from 'services/auth';
 import tokenService from 'services/token';
 
-import styles from './style';
+import useStyles from './style';
 
 interface IProps extends RouteComponentProps<{ t: string }> {}
-
-const useStyles = makeStyles(styles);
 
 const NewPasswordPage = memo((props: IProps) => {
   const classes = useStyles(props);
@@ -101,7 +98,7 @@ const NewPasswordPage = memo((props: IProps) => {
             </CardContent>
 
             <CardActions className={classes.buttons}>
-              <Button disabled={loading} color='secondary' type='submit'>
+              <Button disabled={loading} color='primary' type='submit'>
                 Salvar
               </Button>
             </CardActions>

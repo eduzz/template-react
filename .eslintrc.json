@@ -21,6 +21,7 @@
   },
   "env": {},
   "rules": {
+    "no-restricted-globals": ["error"],
     "react/display-name": [
       "off"
     ],
@@ -31,7 +32,9 @@
       "error",
       "date-fns",
       "mdi-react",
-      "lodash"
+      "lodash",
+      "@material-ui/core",
+      "@material-ui/styles"
     ],
     "linebreak-style": [
       "error",

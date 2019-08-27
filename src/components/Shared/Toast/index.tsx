@@ -1,12 +1,12 @@
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar, { SnackbarOrigin } from '@material-ui/core/Snackbar';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 import CloseIcon from 'mdi-react/CloseIcon';
-import React, { MemoExoticComponent, ComponentType, memo, useCallback, useMemo, useState } from 'react';
+import React, { ComponentType, memo, MemoExoticComponent, useCallback, useMemo, useState } from 'react';
 import { TOAST_DEFAULT_TIMEOUT, TOAST_ERROR_TIMEOUT } from 'settings';
 
 import ToastGlobalProvider, { showGlobalToast } from './global';
-import { makeStyles } from '@material-ui/core';
 
 interface IProps {
   opened: boolean;

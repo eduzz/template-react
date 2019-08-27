@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import MoreIcon from 'mdi-react/MoreIcon';
 import React, { memo } from 'react';

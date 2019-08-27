@@ -15,7 +15,7 @@ b {
   display: none !important;
 }
 
-[class*=' MuiButton']:not([class*=' MuiButton-fab']):not(.icon-right) .mdi-icon {
+/* [class*=' MuiButton']:not([class*=' MuiButton-fab']):not(.icon-right) .mdi-icon {
   margin-right: 10px;
 }
 

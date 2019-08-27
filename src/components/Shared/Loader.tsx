@@ -1,7 +1,7 @@
-import { makeStyles } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { logError } from 'helpers/rxjs-operators/logError';
 import React, { memo, useMemo } from 'react';
 import { useObservable } from 'react-use-observable';
@@ -27,7 +27,7 @@ const Loader = memo((props: {}) => {
   const paperProps = useMemo(() => ({ className: classes.paper }), [classes.paper]);
 
   return (
-    <Dialog open={visible} TransitionComponent={Transition} PaperProps={paperProps}>
+    <Dialog open={visible || false} TransitionComponent={Transition} PaperProps={paperProps}>
       <CircularProgress className={classes.loader} size='large' color='inherit' />
     </Dialog>
   );

@@ -22,7 +22,7 @@ export class LoaderService {
       throw new Error('Loader.hide needs a ref string value');
     }
 
-    this.refs.next([...this.refs.value.filter(r => r != ref)]);
+    this.refs.next([...this.refs.value.filter(r => r !== ref)]);
   }
 }
 

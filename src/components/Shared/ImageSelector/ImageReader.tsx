@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconMessage from 'components/Shared/IconMessage';
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
@@ -62,8 +62,6 @@ const ImageReader = memo((props: IProps) => {
       try {
         setLoading(true);
         const result = await loadFile(file, extensions);
-        setLoading(false);
-
         setTimeout(() => props.onLoad(result), 1000);
       } catch (err) {
         Toast.show(
@@ -95,8 +93,6 @@ const ImageReader = memo((props: IProps) => {
 
   const onDragInOut = useCallback((draggingOver: boolean, event: DragEvent<any>) => {
     event.preventDefault();
-
-    if (draggingOver === draggingOver) return;
     setDraggingOver(draggingOver);
   }, []);
 
@@ -113,9 +109,9 @@ const ImageReader = memo((props: IProps) => {
         accept={`.${extensions.join(',.')}`}
       />
 
-      <Button color='secondary' disabled={loading} onClick={handleSelectImage}>
+      <Button color='primary' disabled={loading} onClick={handleSelectImage}>
         {loading ? <CircularProgress className={classes.progress} size={20} /> : <FolderOpenIcon />}
-        {loading ? 'Carregando' : 'Selecionar'}
+        &nbsp;{loading ? 'Carregando' : 'Selecionar'}
       </Button>
     </Fragment>
   );

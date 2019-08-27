@@ -1,14 +1,13 @@
-import { makeStyles } from '@material-ui/core';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
-import { IStyledProps } from 'decorators/withStyles';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
 
 import DropdownMenuContext from './context';
 
-interface IProps extends IStyledProps {
+interface IProps {
   text: string;
   icon?: typeof DotsHorizontalIcon;
   handler: () => void;

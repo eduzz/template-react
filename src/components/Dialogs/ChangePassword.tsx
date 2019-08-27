@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,6 +5,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
 import FieldText from '@react-form-fields/material-ui/components/Text';
 import Toast from 'components/Shared/Toast';
@@ -65,7 +65,7 @@ const ChangePasswordDialog = memo((props: {}) => {
     <Dialog
       disableBackdropClick
       disableEscapeKeyDown
-      open={opened}
+      open={opened || false}
       onExited={cleanModel}
       TransitionComponent={Transition}
     >
@@ -108,7 +108,7 @@ const ChangePasswordDialog = memo((props: {}) => {
           <Button disabled={loading} onClick={onCancel}>
             Cancelar
           </Button>
-          <Button color='secondary' type='submit' disabled={loading}>
+          <Button color='primary' type='submit' disabled={loading}>
             Salvar
           </Button>
         </DialogActions>

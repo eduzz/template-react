@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import logoWhite from 'assets/images/logo-white.png';
 import { logError } from 'helpers/rxjs-operators/logError';
 import React, { memo, useCallback, useState } from 'react';
@@ -56,7 +56,13 @@ const LoginDialog = memo((props: {}) => {
   const handleChangeView = useCallback((view: number) => () => setCurrentView(view), []);
 
   return (
-    <Dialog fullScreen disableBackdropClick disableEscapeKeyDown open={opened} TransitionComponent={Transition}>
+    <Dialog
+      fullScreen
+      disableBackdropClick
+      disableEscapeKeyDown
+      open={opened || false}
+      TransitionComponent={Transition}
+    >
       <div className={classes.root}>
         <div className={classes.container}>
           <div className={classes.logo}>

@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import React, { memo, Props } from 'react';
 
 const useStyle = makeStyles(theme => ({
@@ -32,9 +32,7 @@ const ToolbarTabs = memo((props: Props<{}>) => {
 
   return (
     <div className={classes.root}>
-      <AppBar className={classes.appBar} color='default'>
-        {props.children}
-      </AppBar>
+      <AppBar className={classes.appBar}>{props.children}</AppBar>
     </div>
   );
 });

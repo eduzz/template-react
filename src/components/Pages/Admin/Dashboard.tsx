@@ -1,7 +1,7 @@
-import { makeStyles } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from 'components/Layout/Toolbar';
 import React, { Fragment, memo, useState } from 'react';
@@ -16,7 +16,7 @@ import {
   Pie,
   PieChart,
   ResponsiveContainer,
-  Tooltip,
+  Tooltip
 } from 'recharts';
 
 const useStyles = makeStyles({

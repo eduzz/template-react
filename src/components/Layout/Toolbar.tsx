@@ -1,12 +1,12 @@
-import { makeStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import CoreToolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from 'mdi-react/MenuIcon';
 import React, { memo, Props, useCallback, useContext } from 'react';
 
-import { DrawerContext } from '../Drawer/context';
+import { DrawerContext } from './Drawer/context';
 
 interface IProps extends Props<{}> {
   title?: string;

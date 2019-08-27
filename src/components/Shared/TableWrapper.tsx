@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import React, { memo, Props, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 interface IProps extends Props<{}> {

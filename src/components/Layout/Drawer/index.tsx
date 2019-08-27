@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core';
 import CoreDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import { enRoles } from 'interfaces/models/user';
 import MoreIcon from 'mdi-react/MoreIcon';
 import React, { Fragment, memo, Props, useCallback, useMemo, useRef, useState } from 'react';
@@ -57,7 +57,7 @@ const Drawer = memo(
       []
     );
 
-    const content = <Content menu={props.menu} navigate={navigate} close={close} />;
+    const content = <Content menu={props.menu} navigate={navigate} close={contextValue.close} />;
 
     return (
       <Fragment>
@@ -68,7 +68,7 @@ const Drawer = memo(
               anchor='left'
               open={drawerOpened}
               classes={drawerClasses}
-              onClose={close}
+              onClose={contextValue.close}
               ModalProps={modalProps}
             >
               {content}

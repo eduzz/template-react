@@ -19,8 +19,8 @@ export async function loadFile(file: File, extensions: string[]): Promise<IImage
 }
 
 export function calculateRegion(width: number, height: number): { width: number; height: number } {
-  const dialogWidth = window.innerWidth - 90;
-  const dialogHeight = window.innerHeight - 180;
+  const dialogWidth = window.innerWidth - 160;
+  const dialogHeight = window.innerHeight - 270;
 
   if (height <= dialogHeight && width <= dialogWidth) {
     return { width: Math.floor(width), height: Math.floor(height) };
