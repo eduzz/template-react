@@ -31,7 +31,7 @@ const SamplePage = memo((props: {}) => {
 
   const openSelector = useCallback(() => setSelectorOpened(true), []);
   const onSelectorComplete = useCallback((image: IImageSelectorResult) => {
-    setImage(image.base64);
+    setImage(image?.base64);
     setSelectorOpened(false);
   }, []);
 
