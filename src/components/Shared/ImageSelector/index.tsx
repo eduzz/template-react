@@ -10,7 +10,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
 import transparency from 'assets/images/transparency.png';
 import imageCompress from 'helpers/imagerCompress';
-import React, { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Cropper } from 'react-image-cropper';
 
 import { calculateRegion } from './helpers';
@@ -157,8 +157,10 @@ const ImageSelector = memo((props: IProps) => {
   );
 });
 
-function Transition(props: any) {
-  return <Slide direction='up' {...props} />;
-}
+const Transition = memo(
+  forwardRef((props: any, ref: any) => {
+    return <Slide direction='up' {...props} ref={ref} />;
+  })
+);
 
 export default ImageSelector;

@@ -1,31 +1,27 @@
+import cache from 'helpers/rxjs-operators/cache';
 import IUser from 'interfaces/models/user';
 import IUserRole from 'interfaces/models/userRole';
 import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
-import * as Rx from 'rxjs';
+import { Observable } from 'rxjs';
 
 import apiService, { ApiService } from './api';
-import cache from 'helpers/rxjs-operators/cache';
-import { map } from 'rxjs/operators';
 
 export class UserService {
   constructor(private apiService: ApiService) {}
 
-  public list(params: IPaginationParams): Rx.Observable<IPaginationResponse<IUser>> {
+  public list(params: IPaginationParams): Observable<IPaginationResponse<IUser>> {
     return this.apiService.get('/user', params);
   }
 
-  public roles(refresh: boolean = false): Rx.Observable<IUserRole[]> {
-    return this.apiService.get('/user/roles').pipe(
-      cache('user-service-roles', { refresh }),
-      map(({ data }) => data)
-    );
+  public roles(refresh: boolean = false): Observable<IUserRole[]> {
+    return this.apiService.get('/user/roles').pipe(cache('user-service-roles', { refresh }));
   }
 
-  public save(model: IUser): Rx.Observable<IUser> {
+  public save(model: IUser): Observable<IUser> {
     return this.apiService.post('/user', model);
   }
 
-  public delete(id: number): Rx.Observable<void> {
+  public delete(id: number): Observable<void> {
     return this.apiService.delete(`/user/${id}`);
   }
 }

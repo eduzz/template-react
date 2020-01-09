@@ -31,9 +31,8 @@ export default class ApiError extends ServiceError<IApiErrorMeta> {
     delete err.response;
     delete err.config;
 
-    const message = response.data && response.data.message;
     super(
-      message || 'api-error',
+      'api-error',
       {
         request: {
           baseURL: request.baseURL,

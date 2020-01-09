@@ -18,7 +18,7 @@ const ToastGlobalProvider = memo(() => {
 
   const handleShow = useCallback((message: string, error: any, timeout?: number): Promise<void> => {
     const result = new Promise<void>(resolve => {
-      setPromiseResolve(resolve);
+      setPromiseResolve(() => resolve);
       setOpened(true);
       setParams({ message, error, timeout });
     });

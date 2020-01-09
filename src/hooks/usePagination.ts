@@ -29,7 +29,10 @@ export default function usePaginationObservable<P extends IPaginationParams, T>(
       delay(500),
       tap(() => console.log('here')),
       switchMap(() => observableGenerator(params)),
-      tap(data => setLastResult(data), () => setLastResult(undefined))
+      tap(
+        data => setLastResult(data),
+        () => setLastResult(undefined)
+      )
     );
   }, [params, ...deps]);
 

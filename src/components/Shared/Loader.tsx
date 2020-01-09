@@ -3,7 +3,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { logError } from 'helpers/rxjs-operators/logError';
-import React, { memo, useMemo } from 'react';
+import React, { forwardRef, memo, useMemo } from 'react';
 import { useObservable } from 'react-use-observable';
 import loaderService from 'services/loader';
 
@@ -33,8 +33,10 @@ const Loader = memo((props: {}) => {
   );
 });
 
-function Transition(props: any) {
-  return <Slide direction='up' {...props} />;
-}
+const Transition = memo(
+  forwardRef((props: any, ref: any) => {
+    return <Slide direction='up' {...props} ref={ref} />;
+  })
+);
 
 export default Loader;

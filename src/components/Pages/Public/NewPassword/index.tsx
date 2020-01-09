@@ -41,25 +41,28 @@ const NewPasswordPage = memo((props: IProps) => {
     setLoading(false);
   }, [props.location.search]);
 
-  const [onSubmit] = useCallbackObservable((isValid: boolean) => {
-    return of(isValid).pipe(
-      filter(isValid => isValid),
-      tap(() => setLoading(true)),
-      switchMap(() => authService.resetPassword(token, model.password)),
-      switchMap(() => authService.login(tokenData.email, model.password)),
-      tap(
-        () => {
-          Toast.show('Senha alterada com sucesso!');
-          props.history.push('/');
-        },
-        err => {
-          Toast.error(err);
-          setLoading(false);
-        }
-      ),
-      logError()
-    );
-  }, []);
+  const [onSubmit] = useCallbackObservable(
+    (isValid: boolean) => {
+      return of(isValid).pipe(
+        filter(isValid => isValid),
+        tap(() => setLoading(true)),
+        switchMap(() => authService.resetPassword(token, model.password)),
+        switchMap(() => authService.login(tokenData.email, model.password)),
+        tap(
+          () => {
+            Toast.show('Senha alterada com sucesso!');
+            props.history.push('/');
+          },
+          err => {
+            Toast.error(err);
+            setLoading(false);
+          }
+        ),
+        logError()
+      );
+    },
+    [tokenData, model, props.history]
+  );
 
   if (!loading && !tokenData) {
     return <Redirect to='/' />;
@@ -75,7 +78,7 @@ const NewPasswordPage = memo((props: IProps) => {
         <FormValidation onSubmit={onSubmit}>
           <Card>
             <CardContent>
-              <Typography>Olá {tokenData.firstName}, informe sua nova senha:</Typography>
+              <Typography>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
 
               <FieldText
                 label='Nova senha'

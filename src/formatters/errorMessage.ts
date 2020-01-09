@@ -12,6 +12,8 @@ export function errorMessageFormatter(err: any): string {
     422: 'Dados inválidos'
   };
 
+  console.log((err || {}).message);
+
   switch ((err || {}).message) {
     case 'no-internet':
     case 'NETWORK_ERROR':

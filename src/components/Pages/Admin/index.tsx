@@ -2,7 +2,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from 'components/Layout/Drawer';
 import PermissionRoute from 'components/Shared/PermissionRoute';
 import { enRoles } from 'interfaces/models/user';
-import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import React, { memo, useCallback, useRef, useState } from 'react';
@@ -39,12 +38,6 @@ const AdminPage = memo((props: {}) => {
   const mainContent = useRef<HTMLDivElement>();
   const [menu] = useState([
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
-    {
-      path: '/usuarios',
-      display: 'Usuários',
-      role: enRoles.admin,
-      icon: AccountMultipleIcon
-    },
     { path: '/exemplos', display: 'Exemplos', icon: StarIcon }
   ]);
 

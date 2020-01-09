@@ -1,40 +1,40 @@
-import Raven from 'raven-js';
+import * as Sentry from '@sentry/browser';
 
 import IUserToken from '../interfaces/tokens/userToken';
-import { ENV, SENTRY_KEY } from '../settings';
+import { ENV, IS_DEVELOPMENT, SENTRY_KEY } from '../settings';
 
 export class LogService {
-  private bugsnag: any;
-
   constructor(sentryKey: string) {
-    Raven.config(sentryKey, {
-      environment: ENV,
-      tags: { environment: ENV }
-    }).install();
-
-    Raven.setShouldSendCallback(() => {
-      let err: any = Raven.lastException();
-      if (!err || err.ignoreLog || err.reported) return false;
-
-      err.reported = true;
-      return true;
+    Sentry.init({
+      dsn: sentryKey,
+      environment: ENV
     });
   }
 
   public setUser(user: IUserToken): void {
     if (!user) {
-      this.bugsnag.clearUser();
+      Sentry.setUser({
+        id: null,
+        email: null,
+        username: null,
+        extra: {}
+      });
       return;
     }
 
-    this.bugsnag.setUser(user.id.toString(), user.fullName);
+    Sentry.setUser({
+      id: user.id.toString(),
+      email: user.email,
+      username: user.email,
+      extra: { ...user }
+    });
   }
 
   public breadcrumb(message: string, category: string = 'manual', data: any = {}): void {
     data = data || {};
     delete data.type;
 
-    Raven.captureBreadcrumb({ message, category, data });
+    Sentry.addBreadcrumb({ message, category, data });
   }
 
   public handleError(err: any): void {
@@ -44,7 +44,14 @@ export class LogService {
       err = new Error(err);
     }
 
-    Raven.captureException(err, { extra: err.extraData });
+    if (IS_DEVELOPMENT) {
+      console.error(err);
+    }
+
+    Sentry.withScope(() => {
+      Sentry.setExtras({ extra: err.extraData || {} });
+      Sentry.captureException(err);
+    });
   }
 }
 

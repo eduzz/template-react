@@ -52,7 +52,7 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
         logError()
       );
     },
-    [props.onComplete]
+    [props.onComplete, model]
   );
 
   return (

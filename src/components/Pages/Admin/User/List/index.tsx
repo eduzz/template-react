@@ -5,13 +5,13 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Toolbar from 'components/Layout/Toolbar';
 import CardLoader from 'components/Shared/CardLoader';
 import EmptyAndErrorMessages from 'components/Shared/Pagination/EmptyAndErrorMessages';
 import SearchField from 'components/Shared/Pagination/SearchField';
+import TableCellActions from 'components/Shared/Pagination/TableCellActions';
 import TableCellSortable from 'components/Shared/Pagination/TableCellSortable';
 import TablePagination from 'components/Shared/Pagination/TablePagination';
 import TableWrapper from 'components/Shared/TableWrapper';
@@ -95,11 +95,11 @@ const UserListPage = memo(() => {
                 <TableCellSortable paginationParams={params} disabled={loading} onChange={mergeParams} column='email'>
                   Email
                 </TableCellSortable>
-                <TableCell>
+                <TableCellActions>
                   <IconButton disabled={loading} onClick={handleRefresh}>
                     <RefreshIcon />
                   </IconButton>
-                </TableCell>
+                </TableCellActions>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -12,7 +12,7 @@ const AlertGlobalProvider = memo(() => {
 
   const handleShow = useCallback((params: IAlertShowParams): Promise<boolean> => {
     const result = new Promise<boolean>(resolve => {
-      setPromiseResolve(resolve);
+      setPromiseResolve(() => resolve);
       setOpened(true);
       setParams({ confirmation: false, title: null, ...params });
     });

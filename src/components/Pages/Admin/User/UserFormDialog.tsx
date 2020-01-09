@@ -18,10 +18,10 @@ import { logError } from 'helpers/rxjs-operators/logError';
 import useModel from 'hooks/useModel';
 import IUser from 'interfaces/models/user';
 import IUserRole from 'interfaces/models/userRole';
-import React, { Fragment, memo, useCallback, useState } from 'react';
+import React, { forwardRef, Fragment, memo, useCallback, useState } from 'react';
 import { useCallbackObservable, useRetryableObservable } from 'react-use-observable';
 import { of } from 'rxjs';
-import { filter, first, map, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import userService from 'services/user';
 
 interface IProps {
@@ -45,28 +45,23 @@ const useStyle = makeStyles({
 const UserFormDialog = memo((props: IProps) => {
   const classes = useStyle(props);
 
-  const [model, setModelProp, setModel, , clearModel] = useModel<IUser>();
+  const [model, setModelProp, setModel, , clearModel] = useModel<IUser>({ roles: [] });
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [roles, rolesError, , retryRoles] = useRetryableObservable<Array<IUserRole & { selected: boolean }>>(() => {
-    return of(props.opened).pipe(
-      filter(opened => opened),
-      first(),
-      tap(() => setLoading(true)),
-      switchMap(() => userService.roles()),
-      map(roles => {
-        return roles.map(r => ({
-          ...r,
-          selected: !props.user ? false : props.user.roles.includes(r.role)
-        }));
-      }),
-      tap(() => setLoading(false), () => setLoading(false)),
+  const [roles, rolesError, , retryRoles] = useRetryableObservable<Array<IUserRole>>(() => {
+    setLoading(true);
+
+    return userService.roles().pipe(
+      tap(
+        () => setLoading(false),
+        () => setLoading(false)
+      ),
       logError()
     );
-  }, [props.opened, props.user]);
+  }, []);
 
   const handleEnter = useCallback(() => {
-    setModel(props.user || {});
+    setModel({ ...(props.user || {}), roles: props.user && props.user.roles ? props.user.roles : [] });
     retryRoles();
   }, [props.user, retryRoles, setModel]);
 
@@ -74,26 +69,28 @@ const UserFormDialog = memo((props: IProps) => {
     clearModel();
   }, [clearModel]);
 
-  const [onSubmit] = useCallbackObservable((isValid: boolean) => {
-    return of(isValid).pipe(
-      filter(isValid => isValid),
-      tap(() => setLoading(true)),
-      map(() => ({ ...model, roles: roles.filter(r => r.selected).map(r => r.role) })),
-      switchMap(() => userService.save(model as IUser)),
-      tap(
-        user => {
-          Toast.show(`${user.firstName} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
-          props.onComplete(user);
-          setLoading(false);
-        },
-        err => {
-          Toast.error(err.message === 'email-unavailable' ? 'Email já utlizado' : err);
-          setLoading(false);
-        }
-      ),
-      logError()
-    );
-  }, []);
+  const [onSubmit] = useCallbackObservable(
+    (isValid: boolean) => {
+      return of(isValid).pipe(
+        filter(isValid => isValid),
+        tap(() => setLoading(true)),
+        switchMap(() => userService.save(model as IUser)),
+        tap(
+          user => {
+            Toast.show(`${user.firstName} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
+            props.onComplete(user);
+            setLoading(false);
+          },
+          err => {
+            Toast.error(err.message === 'email-unavailable' ? 'Email já utlizado' : err);
+            setLoading(false);
+          }
+        ),
+        logError()
+      );
+    },
+    [model]
+  );
 
   return (
     <Dialog
@@ -142,7 +139,7 @@ const UserFormDialog = memo((props: IProps) => {
                 Acesso
               </Typography>
 
-              <FieldHidden value={(roles || []).filter(r => r.selected).length} validation='required|numeric|min:1'>
+              <FieldHidden value={model.roles.length} validation='required|numeric|min:1'>
                 <CustomMessage rules='min,required,numeric'>Selecione ao menos um</CustomMessage>
               </FieldHidden>
 
@@ -150,9 +147,13 @@ const UserFormDialog = memo((props: IProps) => {
                 <div key={role.role}>
                   <FieldCheckbox
                     helperText={role.description}
-                    checked={role.selected}
+                    checked={model.roles.includes(role.role)}
                     label={role.name}
-                    onChange={setModelProp('', (m, v) => (role.selected = v))}
+                    onChange={setModelProp(`role-${role.role}`, model =>
+                      model.roles.includes(role.role)
+                        ? (model.roles = model.roles.filter(r => r !== role.role))
+                        : (model.roles = [...model.roles, role.role])
+                    )}
                   />
                 </div>
               ))}
@@ -170,8 +171,10 @@ const UserFormDialog = memo((props: IProps) => {
   );
 });
 
-function Transition(props: any) {
-  return <Slide direction='up' {...props} />;
-}
+const Transition = memo(
+  forwardRef((props: any, ref: any) => {
+    return <Slide direction='up' {...props} ref={ref} />;
+  })
+);
 
 export default UserFormDialog;

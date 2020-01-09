@@ -1,33 +1,23 @@
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import loaderService from 'services/loader';
 
-let globalLoaderComponent: ILoader;
-
-export interface ILoader {
-  show: Function;
-  hide: Function;
-}
-
-export function setup(loader: ILoader): void {
-  globalLoaderComponent = loader;
-}
-
-export function loader<T>(loaderComponent: ILoader = globalLoaderComponent) {
-  return (source: Observable<T>) => source.lift<T>(new LoaderOperator(loaderComponent));
+export function loader<T>() {
+  return (source: Observable<T>) => source.lift<T>(new LoaderOperator());
 }
 
 class LoaderOperator {
-  constructor(private loaderComponent: any) {}
+  constructor() {}
 
   public call(subscriber: Subscriber<any>, source: Observable<any>): Subscription {
-    return source.pipe(delay(500)).subscribe(new LoaderSubscriber(subscriber, this.loaderComponent));
+    return source.pipe(delay(500)).subscribe(new LoaderSubscriber(subscriber));
   }
 }
 
 class LoaderSubscriber extends Subscriber<any> {
   private ref: string;
 
-  constructor(protected destination: Subscriber<any>, private loader: ILoader) {
+  constructor(protected destination: Subscriber<any>) {
     super(destination);
 
     this.ref = Date.now().toString();
@@ -55,10 +45,10 @@ class LoaderSubscriber extends Subscriber<any> {
   }
 
   private show(): void {
-    this.loader.show(this.ref);
+    loaderService.show(this.ref);
   }
 
   private hide(): void {
-    this.loader.hide(this.ref);
+    loaderService.hide(this.ref);
   }
 }

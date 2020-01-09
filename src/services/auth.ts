@@ -1,11 +1,11 @@
+import { cacheClean } from 'helpers/rxjs-operators/cache';
+import { logError } from 'helpers/rxjs-operators/logError';
 import IUserToken from 'interfaces/tokens/userToken';
 import * as Rx from 'rxjs';
+import { catchError, distinctUntilChanged, map, shareReplay, switchMap } from 'rxjs/operators';
 
 import apiService, { ApiService } from './api';
-import cacheService from './cache';
 import tokenService, { TokenService } from './token';
-import { catchError, shareReplay, distinctUntilChanged, switchMap, map, tap } from 'rxjs/operators';
-import { logError } from 'helpers/rxjs-operators/logError';
 
 export class AuthService {
   private user$: Rx.Observable<IUserToken>;
@@ -24,6 +24,7 @@ export class AuthService {
         if (!user) return null;
 
         user.fullName = `${user.firstName} ${user.lastName}`;
+        user.roles = user.roles || [];
         return user;
       }),
       catchError(() => Rx.of(null)),
@@ -33,7 +34,7 @@ export class AuthService {
     this.getUser()
       .pipe(
         distinctUntilChanged((a, b) => (a || ({} as IUserToken)).id !== (b || ({} as IUserToken)).id),
-        switchMap(() => cacheService.clear()),
+        cacheClean(),
         logError()
       )
       .subscribe();
@@ -48,7 +49,10 @@ export class AuthService {
   }
 
   public login(email: string, password: string): Rx.Observable<void> {
-    return this.api.post('/auth/login', { email, password }).pipe(tap(() => this.openLogin$.next(false)));
+    return this.api.post('/login', { email, password }).pipe(
+      switchMap(accessToken => this.tokenService.setToken(accessToken.token ?? accessToken)),
+      map(() => this.openLogin$.next(false))
+    );
   }
 
   public logout(): Rx.Observable<void> {

@@ -6,7 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import React, { ComponentType, memo, MemoExoticComponent, useCallback } from 'react';
+import React, { ComponentType, forwardRef, memo, MemoExoticComponent, useCallback } from 'react';
 
 import AlertGlobalProvider, { showGlobalAlert } from './global';
 
@@ -88,8 +88,10 @@ Alert.confirm = (params: string | IAlertShowParams) => {
   return showGlobalAlert({ ...paramsData, confirmation: true });
 };
 
-function Transition(props: any) {
-  return <Slide direction='up' {...props} />;
-}
+const Transition = memo(
+  forwardRef((props: any, ref: any) => {
+    return <Slide direction='up' {...props} ref={ref} />;
+  })
+);
 
 export default Alert;

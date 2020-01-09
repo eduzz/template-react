@@ -3,7 +3,7 @@ import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import logoWhite from 'assets/images/logo-white.png';
 import { logError } from 'helpers/rxjs-operators/logError';
-import React, { memo, useCallback, useState } from 'react';
+import React, { forwardRef, memo, useCallback, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import { useObservable } from 'react-use-observable';
 import authService from 'services/auth';
@@ -36,7 +36,7 @@ const useStyle = makeStyles(theme => ({
   },
   logoImage: {
     maxWidth: '100%',
-    maxHeight: 120
+    maxHeight: 80
   },
   viewContainer: {
     boxSizing: 'border-box',
@@ -83,8 +83,10 @@ const LoginDialog = memo((props: {}) => {
   );
 });
 
-function Transition(props: any) {
-  return <Slide direction='up' {...props} />;
-}
+const Transition = memo(
+  forwardRef((props: any, ref: any) => {
+    return <Slide direction='up' {...props} ref={ref} />;
+  })
+);
 
 export default LoginDialog;

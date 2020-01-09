@@ -8,7 +8,7 @@ import React, { memo, useCallback, useMemo, useRef } from 'react';
 
 interface IProps {
   paginationParams: IPaginationParams;
-  onChange: (params: { term: string }) => void;
+  onChange: (params: { term: string; page: number }) => void;
 }
 
 const useStyle = makeStyles({
@@ -35,7 +35,7 @@ const SearchField = memo((props: IProps) => {
     };
   }, [classes.iconButton]);
 
-  const handleChange = useCallback((term: string) => onChange({ term }), [onChange]);
+  const handleChange = useCallback((term: string) => onChange({ term, page: 0 }), [onChange]);
 
   return (
     <FieldText

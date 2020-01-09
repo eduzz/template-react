@@ -43,8 +43,9 @@ const LoginDialogForm = memo((props: IProps) => {
             cleanModel();
           },
           err => {
-            Toast.error(err);
+            console.log('here');
             setLoading(false);
+            Toast.error(err);
           }
         ),
         logError()
