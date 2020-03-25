@@ -34,8 +34,8 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const Drawer = memo(
-  withRouter((props: IProps) => {
+const Drawer = withRouter(
+  memo((props: IProps) => {
     const classes = useStyle(props);
     const modalProps = useRef({ keepMounted: true }).current;
     const drawerClasses = useRef({ paper: classes.drawer }).current;

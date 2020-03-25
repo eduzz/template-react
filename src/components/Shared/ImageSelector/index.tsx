@@ -46,7 +46,7 @@ const ImageSelector = memo((props: IProps) => {
   const classes = useStyle(props);
   const cropper = useRef<any>();
 
-  const [resizeTimeout, setResizeTimeout] = useState();
+  const [resizeTimeout, setResizeTimeout] = useState<ReturnType<typeof setTimeout>>();
   const [image, setImage] = useState<IImageReaderResult>();
   const [saving, setSaving] = useState(false);
   const [dimentions, setDimentions] = useState<{ width: number; height: number }>();
@@ -110,6 +110,7 @@ const ImageSelector = memo((props: IProps) => {
         maxWidth={false}
         disableBackdropClick
         disableEscapeKeyDown
+        disableEnforceFocus
         onExited={onExited}
         TransitionComponent={Transition}
       >
@@ -148,7 +149,7 @@ const ImageSelector = memo((props: IProps) => {
           <Button disabled={saving} onClick={handleCancel}>
             Cancelar
           </Button>
-          <Button disabled={!image || saving} color='primary' onClick={handleSave}>
+          <Button disabled={!image || saving} color='secondary' onClick={handleSave}>
             {saving ? <CircularProgress size={20} /> : 'OK'}
           </Button>
         </DialogActions>

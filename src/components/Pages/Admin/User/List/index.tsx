@@ -26,7 +26,7 @@ import ListItem from './ListItem';
 
 const UserListPage = memo(() => {
   const [formOpened, setFormOpened] = useState(false);
-  const [current, setCurrent] = useState();
+  const [current, setCurrent] = useState<IUser>();
 
   const [params, mergeParams, loading, data, error, , refresh] = usePaginationObservable(
     params => userService.list(params),

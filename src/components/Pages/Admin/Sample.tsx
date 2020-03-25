@@ -39,7 +39,7 @@ const SamplePage = memo((props: {}) => {
     <Fragment>
       <ImageSelector opened={selectorOpened} width={500} height={500} onComplete={onSelectorComplete} />
 
-      <Toolbar title='Extra'></Toolbar>
+      <Toolbar title='Extra' />
       <ToolbarTabs>
         <Tabs value={0}>
           <Tab label='Image Cropper' />
