@@ -59,7 +59,7 @@ const UserListPage = memo(() => {
 
   return (
     <Fragment>
-      <Toolbar title='Membros' />
+      <Toolbar title='Usuários' />
 
       <Card>
         <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
