@@ -24,7 +24,7 @@ const TablePagination = memo((props: IProps) => {
   const handleChangePage = useCallback(
     (event: any, page: number) => {
       scrollTop && scrollTop();
-      onChange({ page: page + 1 });
+      onChange({ page });
     },
     [onChange, scrollTop]
   );
