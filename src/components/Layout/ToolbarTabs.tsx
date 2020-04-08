@@ -18,7 +18,7 @@ const useStyle = makeStyles(theme => ({
   appBar: {
     position: 'fixed',
     top: theme.variables.headerHeightUpSm,
-    backgroundColor: theme.palette.type === 'light' ? theme.palette.grey['900'] : null,
+    backgroundColor: theme.palette.grey['900'],
     color: 'white',
     boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.29)',
     width: '100%',
@@ -27,7 +27,7 @@ const useStyle = makeStyles(theme => ({
       duration: theme.transitions.duration.leavingScreen
     }),
     [theme.breakpoints.up('md')]: {
-      backgroundColor: theme.palette.type === 'light' ? 'white' : theme.palette.grey['900'],
+      backgroundColor: theme.palette.type === 'light' ? 'white' : null,
       color: theme.palette.type === 'light' ? theme.palette.text.primary : null,
       width: `calc(100% - ${theme.variables.drawerWidthFull}px)`
     }
