@@ -26,7 +26,6 @@ interface IProps {
   width: number;
   height: number;
   onComplete: (result: IImageSelectorResult) => void;
-  classes?: any;
 }
 
 const useStyle = makeStyles({
@@ -46,7 +45,7 @@ const ImageSelector = memo((props: IProps) => {
   const classes = useStyle(props);
   const cropper = useRef<any>();
 
-  const [resizeTimeout, setResizeTimeout] = useState<ReturnType<typeof setTimeout>>();
+  const [resizeTimeout, setResizeTimeout] = useState<any>();
   const [image, setImage] = useState<IImageReaderResult>();
   const [saving, setSaving] = useState(false);
   const [dimentions, setDimentions] = useState<{ width: number; height: number }>();
@@ -110,7 +109,6 @@ const ImageSelector = memo((props: IProps) => {
         maxWidth={false}
         disableBackdropClick
         disableEscapeKeyDown
-        disableEnforceFocus
         onExited={onExited}
         TransitionComponent={Transition}
       >
@@ -149,7 +147,7 @@ const ImageSelector = memo((props: IProps) => {
           <Button disabled={saving} onClick={handleCancel}>
             Cancelar
           </Button>
-          <Button disabled={!image || saving} color='secondary' onClick={handleSave}>
+          <Button disabled={!image || saving} color='primary' onClick={handleSave}>
             {saving ? <CircularProgress size={20} /> : 'OK'}
           </Button>
         </DialogActions>

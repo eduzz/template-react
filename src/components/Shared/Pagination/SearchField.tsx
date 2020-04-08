@@ -1,10 +1,10 @@
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import FieldText from '@react-form-fields/material-ui/components/Text';
+import TextField from '@material-ui/core/TextField';
 import { IPaginationParams } from 'interfaces/pagination';
 import MagnifyIcon from 'mdi-react/MagnifyIcon';
-import React, { memo, useCallback, useMemo, useRef } from 'react';
+import React, { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from 'react';
 
 interface IProps {
   paginationParams: IPaginationParams;
@@ -20,6 +20,7 @@ const useStyle = makeStyles({
 const SearchField = memo((props: IProps) => {
   const { paginationParams, onChange } = props;
 
+  const [searchTerm, setSearchTerm] = useState(paginationParams.term ?? '');
   const classes = useStyle(props);
 
   const inputLabelProps = useRef({ shrink: true }).current;
@@ -35,12 +36,27 @@ const SearchField = memo((props: IProps) => {
     };
   }, [classes.iconButton]);
 
-  const handleChange = useCallback((term: string) => onChange({ term, page: 0 }), [onChange]);
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value ?? '';
+      setSearchTerm(value);
+
+      if (value?.length > 2) {
+        onChange({ term: value, page: 0 });
+        return;
+      }
+
+      if (paginationParams.term) {
+        onChange({ term: null, page: 0 });
+      }
+    },
+    [onChange, paginationParams.term]
+  );
 
   return (
-    <FieldText
+    <TextField
       label='Pesquisar'
-      value={paginationParams.term}
+      value={searchTerm}
       onChange={handleChange}
       margin='none'
       placeholder='Digite ao menos 3 caracteres...'

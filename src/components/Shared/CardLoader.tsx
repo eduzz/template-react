@@ -10,7 +10,7 @@ const useStyle = makeStyles({
 
 const CardLoader = memo((props: { show: boolean }) => {
   const classes = useStyle(props);
-  return <div className={classes.container}>{props.show && <LinearProgress color='secondary' />}</div>;
+  return <div className={classes.container}>{props.show && <LinearProgress color='primary' />}</div>;
 });
 
 export default CardLoader;

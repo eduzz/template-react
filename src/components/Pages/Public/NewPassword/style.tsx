@@ -1,8 +1,10 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import splashImage from 'assets/images/splash.png';
 
-const useStyle = makeStyles(theme => ({
+const useStyle = makeStyles({
   root: {
-    background: theme.palette.primary.main,
+    background: `url(${splashImage}) no-repeat center`,
+    backgroundSize: 'cover',
     minHeight: '100vh',
     minWidth: '100vw',
     position: 'relative'
@@ -32,9 +34,12 @@ const useStyle = makeStyles(theme => ({
     padding: '0 10px',
     height: 310
   },
+  buttonsBack: {
+    justifyContent: 'flex-start'
+  },
   buttons: {
     justifyContent: 'flex-end'
   }
-}));
+});
 
 export default useStyle;

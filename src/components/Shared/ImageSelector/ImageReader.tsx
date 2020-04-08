@@ -127,7 +127,7 @@ const ImageReader = memo((props: IProps) => {
       onDragOver={onDragIn}
       onDragLeave={onDragOut}
     >
-      {loading && <CircularProgress color='secondary' size={50} className={classes.dropAreaProgress} />}
+      {loading && <CircularProgress color='primary' size={50} className={classes.dropAreaProgress} />}
 
       {!loading && (
         <Fragment>

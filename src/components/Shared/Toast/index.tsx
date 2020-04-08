@@ -14,7 +14,6 @@ interface IProps {
   timeout?: number;
   error?: Error;
   onClose: () => void;
-  classes?: any;
 }
 
 type ToastComponent = MemoExoticComponent<ComponentType<IProps>> & {

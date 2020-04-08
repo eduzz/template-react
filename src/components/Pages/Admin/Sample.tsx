@@ -41,7 +41,7 @@ const SamplePage = memo((props: {}) => {
 
       <Toolbar title='Extra' />
       <ToolbarTabs>
-        <Tabs value={0}>
+        <Tabs value={0} color='primary'>
           <Tab label='Image Cropper' />
           <Tab label='Nothing' />
         </Tabs>

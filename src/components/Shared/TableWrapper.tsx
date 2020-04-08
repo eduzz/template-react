@@ -3,7 +3,6 @@ import React, { memo, Props, useCallback, useEffect, useMemo, useRef, useState }
 
 interface IProps extends Props<{}> {
   minWidth?: number;
-  classes?: any;
 }
 
 const useStyle = makeStyles({

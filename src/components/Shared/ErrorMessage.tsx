@@ -28,6 +28,10 @@ const ErrorMessage = memo((props: IProps) => {
   const { error, tryAgain } = props;
   const classes = useStyle(props);
 
+  if (!error) {
+    return null;
+  }
+
   return (
     <div className={classes.root}>
       <AlertCircleIcon size={50} className={classes.icon} />

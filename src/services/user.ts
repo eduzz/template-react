@@ -13,11 +13,15 @@ export class UserService {
     return this.apiService.get('/user', params);
   }
 
+  public current(): Observable<IUser> {
+    return this.apiService.get('/user/current');
+  }
+
   public roles(refresh: boolean = false): Observable<IUserRole[]> {
     return this.apiService.get('/user/roles').pipe(cache('user-service-roles', { refresh }));
   }
 
-  public save(model: IUser): Observable<IUser> {
+  public save(model: Partial<IUser>): Observable<IUser> {
     return this.apiService.post('/user', model);
   }
 

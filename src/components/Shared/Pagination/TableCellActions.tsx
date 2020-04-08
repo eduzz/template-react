@@ -35,7 +35,7 @@ const TableCellActions = memo<IProps>(props => {
       {children}
       {loading && (
         <div className={classes.loader}>
-          <CircularProgress color='secondary' size={20} />
+          <CircularProgress color='primary' size={20} />
         </div>
       )}
       {!loading && error && <ErrorMessageIcon error={error} onDismiss={onDismissError} />}

@@ -27,6 +27,41 @@ const overrides: Overrides = {
     root: {
       display: 'block'
     }
+  },
+  MuiDialogContent: {
+    root: {
+      maxHeight: 'calc(100vh - 200px)'
+    }
+  },
+  MuiDrawer: {
+    paperAnchorDockedLeft: {
+      borderRight: 'none'
+    }
+  },
+  MuiFormControl: {
+    marginNormal: {
+      marginTop: 0,
+      marginBottom: 16
+    }
+  },
+  MuiFormHelperText: {
+    contained: {
+      marginLeft: 0,
+      marginRight: 0
+    }
+  },
+  MuiTypography: {
+    body1: {
+      lineHeight: 'normal'
+    },
+    gutterBottom: {
+      marginBottom: 16
+    }
+  },
+  MuiFormControlLabel: {
+    root: {
+      marginBottom: 8
+    }
   }
 };
 

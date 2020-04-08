@@ -4,92 +4,84 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import FieldText from '@react-form-fields/material-ui/components/Text';
-import Toast from 'components/Shared/Toast';
+import TextField from '@material-ui/core/TextField';
 import { logError } from 'helpers/rxjs-operators/logError';
-import useModel from 'hooks/useModel';
-import React, { memo, MouseEvent, useState } from 'react';
-import { useCallbackObservable } from 'react-use-observable';
-import { of } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { useFormikObservable } from 'hooks/useFormikObservable';
+import React, { memo, MouseEvent } from 'react';
 import authService from 'services/auth';
+import * as yup from 'yup';
 
 interface IProps {
   onRecoveryAccess: (e: MouseEvent<HTMLElement>) => void;
 }
 
-const useStyles = makeStyles({
+const validationSchema = yup.object().shape({
+  email: yup.string().required().email(),
+  password: yup.string().required()
+});
+
+const useStyles = makeStyles(theme => ({
   buttons: {
     justifyContent: 'space-between'
+  },
+  socialButtons: {
+    marginTop: theme.spacing(2)
   }
-});
+}));
 
 const LoginDialogForm = memo((props: IProps) => {
   const classes = useStyles(props);
 
-  const [model, setModelProp, , , cleanModel] = useModel<{ email: string; password: string }>();
-  const [loading, setLoading] = useState(false);
-
-  const [onSubmit] = useCallbackObservable(
-    (isValid: boolean) => {
-      return of(isValid).pipe(
-        filter(isValid => isValid),
-        tap(() => setLoading(true)),
-        switchMap(() => authService.login(model.email, model.password)),
-        tap(
-          () => {
-            setLoading(false);
-            cleanModel();
-          },
-          err => {
-            console.log('here');
-            setLoading(false);
-            Toast.error(err);
-          }
-        ),
-        logError()
-      );
-    },
-    [model]
-  );
+  const formik = useFormikObservable({
+    initialValues: { email: '', password: '' },
+    validationSchema,
+    onSubmit(model) {
+      return authService.login(model.email, model.password).pipe(logError(true));
+    }
+  });
 
   return (
-    <FormValidation onSubmit={onSubmit}>
+    <form noValidate onSubmit={formik.handleSubmit}>
       <Card>
         <CardContent>
-          <FieldText
+          <TextField
+            name='email'
             label='Email'
             type='email'
-            disabled={loading}
-            value={model.email}
-            validation='required|email'
-            onChange={setModelProp('email', (model, v) => (model.email = v))}
-            margin='dense'
+            disabled={formik.isSubmitting}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && !!formik.errors.email}
+            helperText={formik.touched.email && formik.errors.email}
+            fullWidth
           />
 
-          <FieldText
+          <TextField
             label='Senha'
+            name='password'
             type='password'
-            disabled={loading}
-            value={model.password}
-            validation='required'
-            onChange={setModelProp('password', (model, v) => (model.password = v))}
+            disabled={formik.isSubmitting}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && !!formik.errors.password}
+            helperText={formik.touched.password && formik.errors.password}
+            fullWidth
+            margin='none'
           />
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={loading} size='small' onClick={props.onRecoveryAccess}>
+          <Button disabled={formik.isSubmitting} size='small' onClick={props.onRecoveryAccess}>
             Recuperar Acesso
           </Button>
-          <Button disabled={loading} color='primary' type='submit'>
+          <Button disabled={formik.isSubmitting} color='primary' type='submit'>
             Entrar
           </Button>
         </CardActions>
 
-        {loading && <LinearProgress color='secondary' />}
+        {formik.isSubmitting && <LinearProgress color='primary' />}
       </Card>
-    </FormValidation>
+    </form>
   );
 });
 export default LoginDialogForm;

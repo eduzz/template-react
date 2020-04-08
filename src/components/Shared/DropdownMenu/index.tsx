@@ -12,6 +12,7 @@ export interface IOption {
   icon?: typeof DotsHorizontalIcon;
   handler: () => void;
 }
+
 const DropdownMenu = memo((props: Partial<MenuProps>) => {
   const [targetElem, setTargetElem] = useState<HTMLElement>();
 

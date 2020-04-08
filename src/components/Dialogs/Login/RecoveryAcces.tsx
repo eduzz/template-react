@@ -4,22 +4,24 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import FieldText from '@react-form-fields/material-ui/components/Text';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
-import useModel from 'hooks/useModel';
-import React, { memo, MouseEvent, useState } from 'react';
-import { useCallbackObservable } from 'react-use-observable';
-import { of } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { useFormikObservable } from 'hooks/useFormikObservable';
+import React, { memo, MouseEvent } from 'react';
+import { tap } from 'rxjs/operators';
 import authService from 'services/auth';
+import * as yup from 'yup';
 
 interface IProps {
   onCancel: (e: MouseEvent<HTMLElement>) => void;
   onComplete: () => void;
 }
+
+const validationSchema = yup.object().shape({
+  email: yup.string().required().email()
+});
 
 const useStyle = makeStyles({
   buttons: {
@@ -29,60 +31,54 @@ const useStyle = makeStyles({
 
 const LoginDialogRecoveryAccess = memo((props: IProps) => {
   const classes = useStyle(props);
-  const [model, setModelProp] = useModel<{ email: string }>();
-  const [loading, setLoading] = useState(false);
 
-  const [onSubmit] = useCallbackObservable(
-    (isValid: boolean) => {
-      return of(isValid).pipe(
-        filter(isValid => isValid),
-        tap(() => setLoading(true)),
-        switchMap(() => authService.sendResetPassword(model.email)),
-        tap(
-          () => {
-            setLoading(false);
-            Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
-            props.onComplete();
-          },
-          err => {
-            setLoading(false);
-            Toast.error(err);
-          }
-        ),
-        logError()
+  const formik = useFormikObservable({
+    initialValues: { email: '' },
+    validationSchema,
+    onSubmit(model) {
+      return authService.sendResetPassword(model.email).pipe(
+        tap(() => {
+          Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
+          props.onComplete();
+          formik.resetForm();
+        }),
+        logError(true)
       );
-    },
-    [props.onComplete, model]
-  );
+    }
+  });
 
   return (
-    <FormValidation onSubmit={onSubmit}>
+    <form noValidate onSubmit={formik.handleSubmit}>
       <Card>
         <CardContent>
-          <Typography>Iremos lhe enviar um email para recuperar seu acesso</Typography>
+          <Typography gutterBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
 
-          <FieldText
+          <TextField
             label='Email'
             type='email'
-            disabled={loading}
-            value={model.email}
-            validation='required|email'
-            onChange={setModelProp('email', (model, v) => (model.email = v))}
+            name='email'
+            disabled={formik.isSubmitting}
+            value={formik.values.email}
+            error={formik.touched.email && !!formik.errors.email}
+            helperText={formik.touched.email && formik.errors.email}
+            onChange={formik.handleChange}
+            fullWidth
+            margin='none'
           />
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={loading} size='small' onClick={props.onCancel}>
+          <Button disabled={formik.isSubmitting} size='small' onClick={props.onCancel}>
             Voltar
           </Button>
-          <Button disabled={loading} color='primary' type='submit'>
+          <Button disabled={formik.isSubmitting} color='primary' type='submit'>
             Enviar
           </Button>
         </CardActions>
 
-        {loading && <LinearProgress color='secondary' />}
+        {formik.isSubmitting && <LinearProgress color='primary' />}
       </Card>
-    </FormValidation>
+    </form>
   );
 });
 

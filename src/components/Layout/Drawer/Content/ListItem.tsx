@@ -7,16 +7,17 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Tooltip from '@material-ui/core/Tooltip';
 import PermissionHide from 'components/Shared/PermissionHide';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useContext, useState } from 'react';
 
 import { IMenu } from '..';
+import { DrawerContext } from '../context';
 
 interface IProps {
   data: IMenu;
   onClick: (menu: IMenu) => void;
-  classes?: any;
 }
 
 const useStyle = makeStyles(theme => ({
@@ -30,6 +31,8 @@ const useStyle = makeStyles(theme => ({
   },
   icon: {
     margin: '0',
+    minWidth: 34,
+    marginRight: 15,
     fill: theme.palette.primary.contrastText
   },
   text: {
@@ -65,6 +68,7 @@ const useStyle = makeStyles(theme => ({
 const DrawerListItem = memo((props: IProps) => {
   const classes = useStyle(props);
   const [expanded, setExpanded] = useState(false);
+  const context = useContext(DrawerContext);
 
   const handleClick = useCallback(() => props.onClick(props.data), [props]);
   const handleSubClick = useCallback((menu: IMenu) => props.onClick(menu), [props]);
@@ -75,9 +79,16 @@ const DrawerListItem = memo((props: IProps) => {
       <PermissionHide>
         <ListItem button disableGutters className={classes.item} onClick={handleClick}>
           {!!props.data.icon && (
-            <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
-              <props.data.icon />
-            </ListItemIcon>
+            <Tooltip
+              title={props.data.display}
+              placement='right'
+              arrow
+              disableHoverListener={context.isTemporary || context.isFull}
+            >
+              <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
+                <props.data.icon />
+              </ListItemIcon>
+            </Tooltip>
           )}
           <ListItemText primary={props.data.display} classes={{ primary: classes.text }} />
         </ListItem>

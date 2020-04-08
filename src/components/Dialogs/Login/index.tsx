@@ -2,6 +2,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import logoWhite from 'assets/images/logo-white.png';
+import splashImage from 'assets/images/splash.png';
 import { logError } from 'helpers/rxjs-operators/logError';
 import React, { forwardRef, memo, useCallback, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
@@ -11,12 +12,13 @@ import authService from 'services/auth';
 import LoginDialogForm from './Form';
 import LoginDialogRecoveryAccess from './RecoveryAcces';
 
-const useStyle = makeStyles(theme => ({
+const useStyle = makeStyles({
   root: {
-    background: theme.palette.primary.main,
     minHeight: '100vh',
     minWidth: '100vw',
-    position: 'relative'
+    position: 'relative',
+    background: `url(${splashImage}) no-repeat center`,
+    backgroundSize: 'cover'
   },
   container: {
     position: 'absolute',
@@ -26,7 +28,7 @@ const useStyle = makeStyles(theme => ({
     bottom: '0',
     margin: 'auto',
     width: 320,
-    height: 340,
+    height: 470,
     maxWidth: 'calc(100% - 30px)',
     color: 'white'
   },
@@ -35,15 +37,16 @@ const useStyle = makeStyles(theme => ({
     marginBottom: 20
   },
   logoImage: {
+    width: 220,
     maxWidth: '100%',
-    maxHeight: 80
+    maxHeight: 120
   },
   viewContainer: {
     boxSizing: 'border-box',
     padding: '0 10px',
-    height: 310
+    height: 325
   }
-}));
+});
 
 const LoginDialog = memo((props: {}) => {
   const classes = useStyle(props);

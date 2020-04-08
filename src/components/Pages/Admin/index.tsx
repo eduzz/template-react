@@ -1,7 +1,6 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Drawer from 'components/Layout/Drawer';
-import PermissionRoute from 'components/Shared/PermissionRoute';
-import { enRoles } from 'interfaces/models/user';
+import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import React, { memo, useCallback, useRef, useState } from 'react';
@@ -9,7 +8,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import DashboardIndexPage from './Dashboard';
 import SamplePage from './Sample';
-import UserIndexPage from './User';
+import UserIndexPage from './Users';
 
 export const ScrollTopContext = React.createContext<Function>(() => {});
 
@@ -38,6 +37,12 @@ const AdminPage = memo((props: {}) => {
   const mainContent = useRef<HTMLDivElement>();
   const [menu] = useState([
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
+    {
+      path: '/usuarios',
+      display: 'Usuários',
+      // role: enRoles.admin,
+      icon: AccountMultipleIcon
+    },
     { path: '/exemplos', display: 'Exemplos', icon: StarIcon }
   ]);
 
@@ -51,7 +56,7 @@ const AdminPage = memo((props: {}) => {
           <main ref={mainContent} className={classes.content}>
             <Switch>
               <Route path='/exemplos' component={SamplePage} />
-              <PermissionRoute path='/usuarios' role={enRoles.sysAdmin} component={UserIndexPage} />
+              <Route path='/usuarios' component={UserIndexPage} />
               <Route path='/' component={DashboardIndexPage} />
               <Route render={renderRedirect} />
             </Switch>

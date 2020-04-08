@@ -1,21 +1,36 @@
 import './assets/global.css';
+import './yupLocale';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-import FormFieldsContext from '@react-form-fields/material-ui/components/Context';
-import { theme } from 'assets/theme';
+import themes from 'assets/theme';
+import ThemeContext, { IThemeContext, ThemesTypes } from 'assets/theme/context';
 import Dialogs from 'components/Dialogs';
 import Pages from 'components/Pages';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
-import fieldConfig from 'fieldConfig';
-import React, { memo } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 
 const App = memo(() => {
+  const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
+    (localStorage.getItem('app-theme') ?? 'light') as ThemesTypes
+  );
+
+  const themeContext = useMemo<IThemeContext>(() => {
+    return {
+      currentTheme,
+      toogleTheme: () => {
+        const newTheme: ThemesTypes = currentTheme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('app-theme', newTheme);
+        setCurrentTheme(newTheme);
+      }
+    };
+  }, [currentTheme]);
+
   return (
-    <MuiThemeProvider theme={theme}>
-      <FormFieldsContext config={fieldConfig}>
+    <ThemeContext.Provider value={themeContext}>
+      <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
         <CssBaseline />
         <Dialogs />
 
@@ -25,8 +40,8 @@ const App = memo(() => {
         <Toast.Global />
 
         <Pages />
-      </FormFieldsContext>
-    </MuiThemeProvider>
+      </MuiThemeProvider>
+    </ThemeContext.Provider>
   );
 });
 

@@ -6,22 +6,24 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import FieldText from '@react-form-fields/material-ui/components/Text';
+import TextField from '@material-ui/core/TextField';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
-import useModel from 'hooks/useModel';
-import React, { forwardRef, memo, useCallback, useState } from 'react';
-import { useCallbackObservable, useObservable } from 'react-use-observable';
-import { of } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { useFormikObservable } from 'hooks/useFormikObservable';
+import React, { forwardRef, memo, useCallback } from 'react';
+import { useObservable } from 'react-use-observable';
+import { tap } from 'rxjs/operators';
 import authService from 'services/auth';
+import * as yup from 'yup';
 
-interface IModel {
-  currentPassword: string;
-  newPassword: string;
-  confirmPassword: string;
-}
+const validationSchema = yup.object().shape({
+  currentPassword: yup.string().required(),
+  newPassword: yup.string().required().min(5).max(25),
+  confirmPassword: yup
+    .string()
+    .required()
+    .oneOf([yup.ref('newPassword'), null], 'Não confere')
+});
 
 const useStyle = makeStyles({
   content: {
@@ -32,8 +34,6 @@ const useStyle = makeStyles({
 
 const ChangePasswordDialog = memo((props: {}) => {
   const classes = useStyle(props);
-  const [model, setModelProp, , , cleanModel] = useModel<IModel>();
-  const [loading, setLoading] = useState(false);
 
   const [opened] = useObservable(() => {
     return authService.shouldOpenChangePassword().pipe(logError());
@@ -41,81 +41,84 @@ const ChangePasswordDialog = memo((props: {}) => {
 
   const onCancel = useCallback(() => authService.closeChangePassword(), []);
 
-  const [onSubmit] = useCallbackObservable(
-    (isValid: boolean) => {
-      return of(isValid).pipe(
-        filter(isValid => isValid),
-        tap(() => setLoading(true)),
-        switchMap(() => authService.changePassword(model.currentPassword, model.newPassword)),
-        tap(
-          () => {
-            setLoading(false);
-            Toast.show('Senha alterada com sucesso!');
-            authService.closeChangePassword();
-          },
-          err => {
-            setLoading(false);
-            Toast.error(err);
-          }
-        ),
-        logError()
+  const formik = useFormikObservable({
+    initialValues: { currentPassword: '', newPassword: '', confirmPassword: '' },
+    validationSchema,
+    onSubmit(model) {
+      return authService.changePassword(model.currentPassword, model.newPassword).pipe(
+        tap(() => {
+          Toast.show('Senha alterada com sucesso!');
+          authService.closeChangePassword();
+        }),
+        logError(true)
       );
-    },
-    [model]
-  );
+    }
+  });
+
+  const handleExited = useCallback(() => {
+    formik.resetForm();
+  }, [formik]);
 
   return (
     <Dialog
       disableBackdropClick
       disableEscapeKeyDown
       open={opened || false}
-      onExited={cleanModel}
+      onExited={handleExited}
       TransitionComponent={Transition}
     >
-      {loading && <LinearProgress color='secondary' />}
+      {formik.isSubmitting && <LinearProgress color='primary' />}
 
-      <FormValidation onSubmit={onSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <DialogTitle>Trocar Senha</DialogTitle>
 
         <DialogContent className={classes.content}>
-          <FieldText
+          <TextField
             label='Senha Atual'
             type='password'
-            disabled={loading}
-            value={model.currentPassword}
-            validation='required'
-            onChange={setModelProp('currentPassword', (model, v) => (model.currentPassword = v))}
+            name='currentPassword'
+            disabled={formik.isSubmitting}
+            value={formik.values.currentPassword}
+            error={!!formik.errors.currentPassword}
+            helperText={formik.errors.currentPassword}
+            onChange={formik.handleChange}
+            fullWidth
           />
 
-          <FieldText
+          <TextField
             label='Nova senha'
             type='password'
-            disabled={loading}
-            value={model.newPassword}
-            validation='required|min:5'
-            onChange={setModelProp('newPassword', (model, v) => (model.newPassword = v))}
+            name='newPassword'
+            disabled={formik.isSubmitting}
+            value={formik.values.newPassword}
+            error={!!formik.errors.newPassword}
+            helperText={formik.errors.newPassword}
+            onChange={formik.handleChange}
+            fullWidth
           />
 
-          <FieldText
+          <TextField
             label='Repita a senha'
             type='password'
-            disabled={loading}
-            value={model.confirmPassword}
-            validation='required|same:nova senha'
-            validationContext={{ 'nova senha': model.newPassword }}
-            onChange={setModelProp('confirmPassword', (model, v) => (model.confirmPassword = v))}
+            name='confirmPassword'
+            disabled={formik.isSubmitting}
+            value={formik.values.confirmPassword}
+            error={!!formik.errors.confirmPassword}
+            helperText={formik.errors.confirmPassword}
+            onChange={formik.handleChange}
+            fullWidth
           />
         </DialogContent>
 
         <DialogActions>
-          <Button disabled={loading} onClick={onCancel}>
+          <Button disabled={formik.isSubmitting} onClick={onCancel}>
             Cancelar
           </Button>
-          <Button color='primary' type='submit' disabled={loading}>
+          <Button color='primary' type='submit' disabled={formik.isSubmitting}>
             Salvar
           </Button>
         </DialogActions>
-      </FormValidation>
+      </form>
     </Dialog>
   );
 });

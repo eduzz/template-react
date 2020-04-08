@@ -1,4 +1,6 @@
 {
   "extends": "./tsconfig.dev.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "baseUrl": "./src"
+  }
 }

@@ -50,7 +50,7 @@ export class AuthService {
 
   public login(email: string, password: string): Rx.Observable<void> {
     return this.api.post('/login', { email, password }).pipe(
-      switchMap(accessToken => this.tokenService.setToken(accessToken.token ?? accessToken)),
+      switchMap(({ token }) => this.tokenService.setToken(token)),
       map(() => this.openLogin$.next(false))
     );
   }

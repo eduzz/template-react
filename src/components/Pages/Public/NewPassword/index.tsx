@@ -3,34 +3,56 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import FormValidation from '@react-form-fields/material-ui/components/FormValidation';
-import FieldText from '@react-form-fields/material-ui/components/Text';
 import logoWhite from 'assets/images/logo-white.png';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
-import useModel from 'hooks/useModel';
+import { useFormikObservable } from 'hooks/useFormikObservable';
 import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
+import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
 import queryString from 'query-string';
-import React, { memo, useEffect, useState } from 'react';
-import { Redirect, RouteComponentProps } from 'react-router-dom';
-import { useCallbackObservable } from 'react-use-observable';
-import { of } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { switchMap, tap } from 'rxjs/operators';
 import authService from 'services/auth';
 import tokenService from 'services/token';
+import * as yup from 'yup';
 
 import useStyles from './style';
 
 interface IProps extends RouteComponentProps<{ t: string }> {}
 
+const validationSchema = yup.object().shape({
+  password: yup.string().required().min(5).max(25),
+  confirmPassword: yup
+    .string()
+    .required()
+    .oneOf([yup.ref('password'), null], 'Não confere')
+});
+
 const NewPasswordPage = memo((props: IProps) => {
   const classes = useStyles(props);
+  const { history } = props;
 
-  const [model, setModelProp] = useModel<{ password: string; confirmPassword: string }>();
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string>();
   const [tokenData, setTokenData] = useState<IResetPasswordToken>();
+
+  const formik = useFormikObservable({
+    initialValues: { password: '', confirmPassword: '' },
+    validationSchema,
+    onSubmit(model) {
+      return authService.resetPassword(token, model.password).pipe(
+        switchMap(() => authService.login(tokenData.email, model.password)),
+        tap(() => {
+          Toast.show('Senha alterada com sucesso!');
+          props.history.push('/');
+        }),
+        logError(true)
+      );
+    }
+  });
 
   useEffect(() => {
     const token = queryString.parse(props.location.search).t as string;
@@ -41,32 +63,9 @@ const NewPasswordPage = memo((props: IProps) => {
     setLoading(false);
   }, [props.location.search]);
 
-  const [onSubmit] = useCallbackObservable(
-    (isValid: boolean) => {
-      return of(isValid).pipe(
-        filter(isValid => isValid),
-        tap(() => setLoading(true)),
-        switchMap(() => authService.resetPassword(token, model.password)),
-        switchMap(() => authService.login(tokenData.email, model.password)),
-        tap(
-          () => {
-            Toast.show('Senha alterada com sucesso!');
-            props.history.push('/');
-          },
-          err => {
-            Toast.error(err);
-            setLoading(false);
-          }
-        ),
-        logError()
-      );
-    },
-    [tokenData, model, props.history]
-  );
+  console.log({ tokenData });
 
-  if (!loading && !tokenData) {
-    return <Redirect to='/' />;
-  }
+  const handleBack = useCallback(() => history.push('/'), [history]);
 
   return (
     <div className={classes.root}>
@@ -75,40 +74,62 @@ const NewPasswordPage = memo((props: IProps) => {
           <img src={logoWhite} className={classes.logoImage} alt='logo' />
         </div>
 
-        <FormValidation onSubmit={onSubmit}>
+        {!loading && !tokenData && (
           <Card>
             <CardContent>
-              <Typography>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
-
-              <FieldText
-                label='Nova senha'
-                type='password'
-                disabled={loading}
-                value={model.password}
-                validation='required|min:5'
-                onChange={setModelProp('password', (model, v) => (model.password = v))}
-              />
-
-              <FieldText
-                label='Repita a senha'
-                type='password'
-                disabled={loading}
-                value={model.confirmPassword}
-                validation='required|same:nova senha'
-                validationContext={{ 'nova senha': model.password }}
-                onChange={setModelProp('confirmPassword', (model, v) => (model.confirmPassword = v))}
-              />
+              <Typography>Token Inválido</Typography>
             </CardContent>
 
-            <CardActions className={classes.buttons}>
-              <Button disabled={loading} color='primary' type='submit'>
-                Salvar
+            <CardActions className={classes.buttonsBack}>
+              <Button type='button' startIcon={<ChevronLeftIcon />} onClick={handleBack}>
+                Voltar para o Login
               </Button>
             </CardActions>
-
-            {loading && <LinearProgress color='secondary' />}
           </Card>
-        </FormValidation>
+        )}
+
+        {!loading && !!tokenData && (
+          <form noValidate onSubmit={formik.handleSubmit}>
+            <Card>
+              <CardContent>
+                <Typography gutterBottom>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
+
+                <TextField
+                  label='Nova senha'
+                  type='password'
+                  name='password'
+                  disabled={loading || formik.isSubmitting}
+                  value={formik.values.password}
+                  error={formik.touched.password && !!formik.errors.password}
+                  helperText={formik.touched.password && formik.errors.password}
+                  onChange={formik.handleChange}
+                  fullWidth
+                />
+
+                <TextField
+                  label='Repita a senha'
+                  type='password'
+                  name='confirmPassword'
+                  disabled={loading || formik.isSubmitting}
+                  value={formik.values.confirmPassword}
+                  error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
+                  helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                  onChange={formik.handleChange}
+                  fullWidth
+                  margin='none'
+                />
+              </CardContent>
+
+              <CardActions className={classes.buttons}>
+                <Button disabled={loading || formik.isSubmitting} color='primary' type='submit'>
+                  Salvar
+                </Button>
+              </CardActions>
+
+              {(loading || formik.isSubmitting) && <LinearProgress color='primary' />}
+            </Card>
+          </form>
+        )}
       </div>
     </div>
   );

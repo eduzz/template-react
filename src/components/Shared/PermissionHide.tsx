@@ -16,7 +16,7 @@ const PermissionHide = memo<IProps>(props => {
     return authService.canAccess(...roles).pipe(logError());
   }, [props.role]);
 
-  if (canAccess === undefined) {
+  if (canAccess === undefined || canAccess === null) {
     return null;
   }
 

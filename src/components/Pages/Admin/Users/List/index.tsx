@@ -21,7 +21,7 @@ import RefreshIcon from 'mdi-react/RefreshIcon';
 import React, { Fragment, memo, useCallback, useState } from 'react';
 import userService from 'services/user';
 
-import UserFormDialog from '../UserFormDialog';
+import FormDialog from '../FormDialog';
 import ListItem from './ListItem';
 
 const UserListPage = memo(() => {
@@ -59,10 +59,10 @@ const UserListPage = memo(() => {
 
   return (
     <Fragment>
-      <Toolbar title='Usuários' />
+      <Toolbar title='Membros' />
 
       <Card>
-        <UserFormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
+        <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
 
         <CardLoader show={loading} />
 

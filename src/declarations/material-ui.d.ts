@@ -3,7 +3,8 @@ import '@material-ui/core/styles/createMuiTheme';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface ThemeVariables {
-    drawerWidth: number;
+    drawerWidthFull: number;
+    drawerWidthMini: number;
     headerHeight: number;
     headerHeightUpSm: number;
     tabbarHeight: number;

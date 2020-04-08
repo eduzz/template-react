@@ -27,7 +27,6 @@ export default function usePaginationObservable<P extends IPaginationParams, T>(
   const [data, error, completed, retry] = useRetryableObservable(() => {
     return of(true).pipe(
       delay(500),
-      tap(() => console.log('here')),
       switchMap(() => observableGenerator(params)),
       tap(
         data => setLastResult(data),
