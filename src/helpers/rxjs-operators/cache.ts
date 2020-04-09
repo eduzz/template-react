@@ -1,10 +1,11 @@
 import { from, Observable, of, Operator, Subscriber, Subscription } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 
 import { tapSubscribe } from './tapSubscrible';
 
 let globalCacheService: ICacheService;
 let keysCreated: string[] = [];
+let peddingCache: { [key: string]: any } = {};
 
 export interface ICacheService {
   getItem<T>(key: string): T | Promise<T>;
@@ -57,14 +58,14 @@ class CacheOperator<T> implements Operator<T, T> {
     if (!this.options.refresh) {
       initalStream$ = from(Promise.resolve(globalCacheService.getItem<{ expireAt: string; data: T }>(this.key))).pipe(
         map(cache => {
-          if (!cache || new Date(cache.expireAt) > new Date()) return null;
+          if (!cache || new Date(cache.expireAt) < new Date()) return null;
           return cache.data;
         })
       );
     }
 
-    return initalStream$
-      .pipe(
+    if (!peddingCache[this.key]) {
+      peddingCache[this.key] = initalStream$.pipe(
         switchMap(cache => {
           if (cache) return of(cache);
 
@@ -87,9 +88,13 @@ class CacheOperator<T> implements Operator<T, T> {
               );
             })
           );
-        })
-      )
-      .subscribe(subscriber);
+        }),
+        tap(() => setTimeout(() => (peddingCache[this.key] = null), 500)),
+        shareReplay(1)
+      );
+    }
+
+    return peddingCache[this.key].subscribe(subscriber);
   }
 }
 
