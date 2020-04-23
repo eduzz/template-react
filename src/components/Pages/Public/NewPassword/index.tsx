@@ -3,9 +3,9 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import logoWhite from 'assets/images/logo-white.png';
+import TextField from 'components/Shared/Fields/Text';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
 import { useFormikObservable } from 'hooks/useFormikObservable';
@@ -94,28 +94,13 @@ const NewPasswordPage = memo((props: IProps) => {
               <CardContent>
                 <Typography gutterBottom>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
 
-                <TextField
-                  label='Nova senha'
-                  type='password'
-                  name='password'
-                  disabled={loading || formik.isSubmitting}
-                  value={formik.values.password}
-                  error={formik.touched.password && !!formik.errors.password}
-                  helperText={formik.touched.password && formik.errors.password}
-                  onChange={formik.handleChange}
-                  fullWidth
-                />
+                <TextField label='Nova senha' type='password' name='password' formik={formik} />
 
                 <TextField
                   label='Repita a senha'
                   type='password'
                   name='confirmPassword'
-                  disabled={loading || formik.isSubmitting}
-                  value={formik.values.confirmPassword}
-                  error={formik.touched.confirmPassword && !!formik.errors.confirmPassword}
-                  helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                  onChange={formik.handleChange}
-                  fullWidth
+                  formik={formik}
                   margin='none'
                 />
               </CardContent>

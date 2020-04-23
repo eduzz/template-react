@@ -4,7 +4,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from '@material-ui/core/TextField';
+import TextField from 'components/Shared/Fields/Text';
 import { logError } from 'helpers/rxjs-operators/logError';
 import { useFormikObservable } from 'hooks/useFormikObservable';
 import React, { memo, MouseEvent } from 'react';
@@ -44,30 +44,8 @@ const LoginDialogForm = memo((props: IProps) => {
     <form noValidate onSubmit={formik.handleSubmit}>
       <Card>
         <CardContent>
-          <TextField
-            name='email'
-            label='Email'
-            type='email'
-            disabled={formik.isSubmitting}
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && !!formik.errors.email}
-            helperText={formik.touched.email && formik.errors.email}
-            fullWidth
-          />
-
-          <TextField
-            label='Senha'
-            name='password'
-            type='password'
-            disabled={formik.isSubmitting}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.touched.password && !!formik.errors.password}
-            helperText={formik.touched.password && formik.errors.password}
-            fullWidth
-            margin='none'
-          />
+          <TextField name='email' label='Email' type='email' formik={formik} />
+          <TextField label='Senha' name='password' type='password' formik={formik} margin='none' />
         </CardContent>
 
         <CardActions className={classes.buttons}>

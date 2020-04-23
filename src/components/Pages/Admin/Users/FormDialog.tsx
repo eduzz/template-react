@@ -1,11 +1,9 @@
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -13,9 +11,9 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import ErrorMessage from 'components/Shared/ErrorMessage';
+import CheckboxField from 'components/Shared/Fields/Checkbox';
+import TextField from 'components/Shared/Fields/Text';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
 import { useFormikObservable } from 'hooks/useFormikObservable';
@@ -54,8 +52,8 @@ const useStyle = makeStyles({
 const FormDialog = memo((props: IProps) => {
   const classes = useStyle(props);
 
-  const formik = useFormikObservable({
-    initialValues: { id: 0, firstName: '', lastName: '', email: '', roles: [] },
+  const formik = useFormikObservable<IUser>({
+    initialValues: { roles: [] },
     validationSchema,
     onSubmit(model) {
       return userService.save(model).pipe(
@@ -100,42 +98,14 @@ const FormDialog = memo((props: IProps) => {
             <Fragment>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    label='Nome'
-                    name='firstName'
-                    disabled={formik.isSubmitting}
-                    value={formik.values.firstName}
-                    error={formik.touched.firstName && !!formik.errors.firstName}
-                    helperText={formik.touched.firstName && formik.errors.firstName}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  />
+                  <TextField label='Nome' name='firstName' formik={formik} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    label='Sobrenome'
-                    name='lastName'
-                    disabled={formik.isSubmitting}
-                    value={formik.values.lastName}
-                    error={formik.touched.lastName && !!formik.errors.lastName}
-                    helperText={formik.touched.lastName && formik.errors.lastName}
-                    onChange={formik.handleChange}
-                    fullWidth
-                  />
+                  <TextField label='Sobrenome' name='lastName' formik={formik} />
                 </Grid>
               </Grid>
 
-              <TextField
-                label='Email'
-                name='email'
-                type='email'
-                disabled={formik.isSubmitting}
-                value={formik.values.email}
-                error={formik.touched.email && !!formik.errors.email}
-                helperText={formik.touched.email && formik.errors.email}
-                onChange={formik.handleChange}
-                fullWidth
-              />
+              <TextField label='Email' name='email' type='email' formik={formik} />
 
               <FormControl component='fieldset' error={formik.touched.roles && !!formik.errors.roles}>
                 <FormLabel component='legend'>Acesso</FormLabel>
@@ -144,24 +114,14 @@ const FormDialog = memo((props: IProps) => {
                 )}
                 <FormGroup>
                   {roles?.map(role => (
-                    <FormControlLabel
+                    <CheckboxField
                       key={role.role}
-                      control={
-                        <Checkbox
-                          checked={formik.values.roles.includes(role.role)}
-                          name='roles'
-                          value={role.role}
-                          onChange={formik.handleCheckboxArrayChange}
-                        />
-                      }
-                      label={
-                        <Fragment>
-                          <Typography>
-                            {role.name}
-                            <br /> <Typography variant='caption'>{role.description}</Typography>
-                          </Typography>
-                        </Fragment>
-                      }
+                      name='roles'
+                      label={role.name}
+                      description={role.description}
+                      value={role.role}
+                      isMultiple
+                      formik={formik}
                     />
                   ))}
                 </FormGroup>

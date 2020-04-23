@@ -6,7 +6,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from '@material-ui/core/TextField';
+import TextField from 'components/Shared/Fields/Text';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
 import { useFormikObservable } from 'hooks/useFormikObservable';
@@ -73,41 +73,9 @@ const ChangePasswordDialog = memo((props: {}) => {
         <DialogTitle>Trocar Senha</DialogTitle>
 
         <DialogContent className={classes.content}>
-          <TextField
-            label='Senha Atual'
-            type='password'
-            name='currentPassword'
-            disabled={formik.isSubmitting}
-            value={formik.values.currentPassword}
-            error={!!formik.errors.currentPassword}
-            helperText={formik.errors.currentPassword}
-            onChange={formik.handleChange}
-            fullWidth
-          />
-
-          <TextField
-            label='Nova senha'
-            type='password'
-            name='newPassword'
-            disabled={formik.isSubmitting}
-            value={formik.values.newPassword}
-            error={!!formik.errors.newPassword}
-            helperText={formik.errors.newPassword}
-            onChange={formik.handleChange}
-            fullWidth
-          />
-
-          <TextField
-            label='Repita a senha'
-            type='password'
-            name='confirmPassword'
-            disabled={formik.isSubmitting}
-            value={formik.values.confirmPassword}
-            error={!!formik.errors.confirmPassword}
-            helperText={formik.errors.confirmPassword}
-            onChange={formik.handleChange}
-            fullWidth
-          />
+          <TextField label='Senha Atual' type='password' name='currentPassword' formik={formik} />
+          <TextField label='Nova senha' type='password' name='newPassword' formik={formik} />
+          <TextField label='Repita a senha' type='password' name='confirmPassword' formik={formik} />
         </DialogContent>
 
         <DialogActions>

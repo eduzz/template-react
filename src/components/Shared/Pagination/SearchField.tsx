@@ -1,7 +1,7 @@
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from '@material-ui/core/TextField';
+import TextField from 'components/Shared/Fields/Text';
 import { IPaginationParams } from 'interfaces/pagination';
 import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import React, { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from 'react';
@@ -56,9 +56,11 @@ const SearchField = memo((props: IProps) => {
   return (
     <TextField
       label='Pesquisar'
+      name='search'
       value={searchTerm}
       onChange={handleChange}
       margin='none'
+      fullWidth={false}
       placeholder='Digite ao menos 3 caracteres...'
       InputLabelProps={inputLabelProps}
       InputProps={inputProps}

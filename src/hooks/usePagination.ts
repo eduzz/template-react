@@ -1,15 +1,15 @@
-import { IPaginationParams } from 'interfaces/pagination';
+import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import { DependencyList, useCallback, useState } from 'react';
 import { useRetryableObservable } from 'react-use-observable';
 import { Observable, of } from 'rxjs';
 import { delay, switchMap, tap } from 'rxjs/operators';
 
 export default function usePaginationObservable<P extends IPaginationParams, T>(
-  observableGenerator: (params: P) => Observable<T>,
+  observableGenerator: (params: P) => Observable<IPaginationResponse<T>>,
   initialParams: Partial<P>,
   deps: DependencyList
 ) {
-  const [lastResult, setLastResult] = useState<T>(undefined);
+  const [lastResult, setLastResult] = useState<IPaginationResponse<T>>(undefined);
   const [params, setParams] = useState<P>({
     orderDirection: 'asc',
     pageSize: 10,
@@ -43,5 +43,13 @@ export default function usePaginationObservable<P extends IPaginationParams, T>(
     error,
     completed,
     retry
-  ] as [typeof params, typeof mergeParams, boolean, T | undefined, typeof error, typeof completed, typeof retry];
+  ] as [
+    typeof params,
+    typeof mergeParams,
+    boolean,
+    IPaginationResponse<T>,
+    typeof error,
+    typeof completed,
+    typeof retry
+  ];
 }

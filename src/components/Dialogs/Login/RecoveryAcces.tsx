@@ -4,8 +4,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import TextField from 'components/Shared/Fields/Text';
 import Toast from 'components/Shared/Toast';
 import { logError } from 'helpers/rxjs-operators/logError';
 import { useFormikObservable } from 'hooks/useFormikObservable';
@@ -53,18 +53,7 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
         <CardContent>
           <Typography gutterBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
 
-          <TextField
-            label='Email'
-            type='email'
-            name='email'
-            disabled={formik.isSubmitting}
-            value={formik.values.email}
-            error={formik.touched.email && !!formik.errors.email}
-            helperText={formik.touched.email && formik.errors.email}
-            onChange={formik.handleChange}
-            fullWidth
-            margin='none'
-          />
+          <TextField label='Email' type='email' name='email' formik={formik} margin='none' />
         </CardContent>
 
         <CardActions className={classes.buttons}>
