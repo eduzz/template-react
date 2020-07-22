@@ -36,7 +36,7 @@ const UserMenu = memo((props: {}) => {
     return authService.getUser().pipe(
       map(user => ({
         avatar: null,
-        avatarLetters: `${user.firstName?.substr(0, 1) ?? ''} ${user.lastName?.substr(0, 1) ?? ''}`.trim() || 'U'
+        avatarLetters: `${user?.firstName?.substr(0, 1) ?? ''} ${user?.lastName?.substr(0, 1) ?? ''}`.trim() || 'U'
       })),
       logError()
     );
