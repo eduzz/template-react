@@ -1,18 +1,23 @@
+import { memo, useCallback, useContext } from 'react';
+
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import ThemeContext from 'assets/theme/context';
-import DropdownMenu from 'components/Shared/DropdownMenu';
-import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
-import { logError } from 'helpers/rxjs-operators/logError';
+
+import { of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
+import useCallbackObservable from '@eduzz/houston-hooks/useCallbackObservable';
+import useObservable from '@eduzz/houston-hooks/useObservable';
+
 import DarkIcon from 'mdi-react/Brightness4Icon';
 import LightIcon from 'mdi-react/Brightness5Icon';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
-import React, { memo, useCallback, useContext } from 'react';
-import { useCallbackObservable, useObservable } from 'react-use-observable';
-import { of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+
+import ThemeContext from 'assets/theme/context';
+import DropdownMenu from 'components/Shared/DropdownMenu';
+import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import authService from 'services/auth';
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const UserMenu = memo((props: {}) => {
+const UserMenu = memo((props: Record<string, never>) => {
   const classes = useStyles(props);
   const themeContext = useContext(ThemeContext);
 
@@ -37,19 +42,12 @@ const UserMenu = memo((props: {}) => {
       map(user => ({
         avatar: null,
         avatarLetters: `${user.firstName?.substr(0, 1) ?? ''} ${user.lastName?.substr(0, 1) ?? ''}`.trim() || 'U'
-      })),
-      logError()
+      }))
     );
   }, []);
 
   const handleChangePassword = useCallback(() => authService.openChangePassword(), []);
-
-  const [handleLogout] = useCallbackObservable(() => {
-    return of(true).pipe(
-      switchMap(() => authService.logout()),
-      logError()
-    );
-  }, []);
+  const [handleLogout] = useCallbackObservable(() => of(true).pipe(switchMap(() => authService.logout())), []);
 
   if (!user) {
     return null;

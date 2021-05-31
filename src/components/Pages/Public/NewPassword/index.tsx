@@ -1,35 +1,32 @@
+import { memo, useCallback, useEffect, useState } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Typography from '@material-ui/core/Typography';
-import logoWhite from 'assets/images/logo-white.png';
-import TextField from 'components/Shared/Fields/Text';
-import Toast from 'components/Shared/Toast';
-import { logError } from 'helpers/rxjs-operators/logError';
-import { useFormikObservable } from 'hooks/useFormikObservable';
-import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
-import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
-import queryString from 'query-string';
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+
 import { switchMap, tap } from 'rxjs/operators';
+
+import useForm from '@eduzz/houston-forms/useForm';
+import Form from '@eduzz/houston-ui/Forms/Form';
+import TextField from '@eduzz/houston-ui/Forms/Text';
+
+import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
+
+import logoWhite from 'assets/images/logo-white.png';
+import Toast from 'components/Shared/Toast';
+import errorToast from 'helpers/rxjs-operators/errorToast';
+import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
+import queryString from 'query-string';
 import authService from 'services/auth';
 import tokenService from 'services/token';
-import * as yup from 'yup';
 
 import useStyles from './style';
 
 interface IProps extends RouteComponentProps<{ t: string }> {}
-
-const validationSchema = yup.object().shape({
-  password: yup.string().required().min(5).max(25),
-  confirmPassword: yup
-    .string()
-    .required()
-    .oneOf([yup.ref('password'), null], 'Não confere')
-});
 
 const NewPasswordPage = memo((props: IProps) => {
   const classes = useStyles(props);
@@ -39,9 +36,16 @@ const NewPasswordPage = memo((props: IProps) => {
   const [token, setToken] = useState<string>();
   const [tokenData, setTokenData] = useState<IResetPasswordToken>();
 
-  const formik = useFormikObservable({
+  const form = useForm({
     initialValues: { password: '', confirmPassword: '' },
-    validationSchema,
+    validationSchema: yup =>
+      yup.object().shape({
+        password: yup.string().required().min(5).max(25),
+        confirmPassword: yup
+          .string()
+          .required()
+          .oneOf([yup.ref('password'), null], 'Não confere')
+      }),
     onSubmit(model) {
       return authService.resetPassword(token, model.password).pipe(
         switchMap(() => authService.login(tokenData.email, model.password)),
@@ -49,7 +53,7 @@ const NewPasswordPage = memo((props: IProps) => {
           Toast.show('Senha alterada com sucesso!');
           props.history.push('/');
         }),
-        logError(true)
+        errorToast()
       );
     }
   });
@@ -89,31 +93,24 @@ const NewPasswordPage = memo((props: IProps) => {
         )}
 
         {!loading && !!tokenData && (
-          <form noValidate onSubmit={formik.handleSubmit}>
+          <Form context={form}>
             <Card>
               <CardContent>
                 <Typography gutterBottom>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
 
-                <TextField label='Nova senha' type='password' name='password' formik={formik} />
-
-                <TextField
-                  label='Repita a senha'
-                  type='password'
-                  name='confirmPassword'
-                  formik={formik}
-                  margin='none'
-                />
+                <TextField label='Nova senha' type='password' name='password' />
+                <TextField label='Repita a senha' type='password' name='confirmPassword' margin='none' />
               </CardContent>
 
               <CardActions className={classes.buttons}>
-                <Button disabled={loading || formik.isSubmitting} color='primary' type='submit'>
+                <Button disabled={loading || form.isSubmitting} color='primary' type='submit'>
                   Salvar
                 </Button>
               </CardActions>
 
-              {(loading || formik.isSubmitting) && <LinearProgress color='primary' />}
+              {(loading || form.isSubmitting) && <LinearProgress color='primary' />}
             </Card>
-          </form>
+          </Form>
         )}
       </div>
     </div>

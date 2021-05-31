@@ -1,16 +1,19 @@
+import { memo, useCallback, useRef, useState, createContext } from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Drawer from 'components/Layout/Drawer';
+
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
-import React, { memo, useCallback, useRef, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+
+import Drawer from 'components/Layout/Drawer';
 
 import DashboardIndexPage from './Dashboard';
 import SamplePage from './Sample';
 import UserIndexPage from './Users';
 
-export const ScrollTopContext = React.createContext<Function>(() => {});
+export const ScrollTopContext = createContext<() => void>(() => null);
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const AdminPage = memo((props: {}) => {
+const AdminPage = memo((props: Record<string, never>) => {
   const classes = useStyles(props);
 
   const mainContent = useRef<HTMLDivElement>();

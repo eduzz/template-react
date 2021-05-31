@@ -1,3 +1,5 @@
+import { Fragment, memo, useCallback, useState } from 'react';
+
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,6 +9,11 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
+import usePaginatedObservable from '@eduzz/houston-hooks/usePaginatedObservable';
+
+import RefreshIcon from 'mdi-react/RefreshIcon';
+
 import Toolbar from 'components/Layout/Toolbar';
 import CardLoader from 'components/Shared/CardLoader';
 import EmptyAndErrorMessages from 'components/Shared/Pagination/EmptyAndErrorMessages';
@@ -14,11 +21,7 @@ import SearchField from 'components/Shared/Pagination/SearchField';
 import TableCellActions from 'components/Shared/Pagination/TableCellActions';
 import TableCellSortable from 'components/Shared/Pagination/TableCellSortable';
 import TablePagination from 'components/Shared/Pagination/TablePagination';
-import TableWrapper from 'components/Shared/TableWrapper';
-import usePaginationObservable from 'hooks/usePagination';
 import IUser from 'interfaces/models/user';
-import RefreshIcon from 'mdi-react/RefreshIcon';
-import React, { Fragment, memo, useCallback, useState } from 'react';
 import userService from 'services/user';
 
 import FormDialog from '../FormDialog';
@@ -28,7 +31,7 @@ const UserListPage = memo(() => {
   const [formOpened, setFormOpened] = useState(false);
   const [current, setCurrent] = useState<IUser>();
 
-  const [params, mergeParams, loading, data, error, , refresh] = usePaginationObservable(
+  const { params, mergeParams, isLoading, total, result, error, retry } = usePaginatedObservable(
     params => userService.list(params),
     { orderBy: 'fullName', orderDirection: 'asc' },
     []
@@ -47,15 +50,13 @@ const UserListPage = memo(() => {
   const formCallback = useCallback(
     (user?: IUser) => {
       setFormOpened(false);
-      current ? refresh() : mergeParams({ term: user.email });
+      current ? retry() : mergeParams({ term: user.email });
     },
-    [current, mergeParams, refresh]
+    [current, mergeParams, retry]
   );
 
   const formCancel = useCallback(() => setFormOpened(false), []);
-  const handleRefresh = useCallback(() => refresh(), [refresh]);
-
-  const { total, results } = data || ({ total: 0, results: [] } as typeof data);
+  const handleRefresh = useCallback(() => retry(), [retry]);
 
   return (
     <Fragment>
@@ -64,7 +65,7 @@ const UserListPage = memo(() => {
       <Card>
         <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
 
-        <CardLoader show={loading} />
+        <CardLoader show={isLoading} />
 
         <CardContent>
           <Grid container justify='space-between' alignItems='center' spacing={2}>
@@ -80,44 +81,42 @@ const UserListPage = memo(() => {
           </Grid>
         </CardContent>
 
-        <TableWrapper minWidth={500}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCellSortable
-                  paginationParams={params}
-                  disabled={loading}
-                  onChange={mergeParams}
-                  column='fullName'
-                >
-                  Nome
-                </TableCellSortable>
-                <TableCellSortable paginationParams={params} disabled={loading} onChange={mergeParams} column='email'>
-                  Email
-                </TableCellSortable>
-                <TableCellActions>
-                  <IconButton disabled={loading} onClick={handleRefresh}>
-                    <RefreshIcon />
-                  </IconButton>
-                </TableCellActions>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <EmptyAndErrorMessages
-                colSpan={3}
-                error={error}
-                loading={loading}
-                hasData={results.length > 0}
-                onTryAgain={refresh}
-              />
-              {results.map(user => (
-                <ListItem key={user.id} user={user} onEdit={handleEdit} onDeleteComplete={refresh} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableWrapper>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCellSortable
+                paginationParams={params}
+                disabled={isLoading}
+                onChange={mergeParams}
+                column='fullName'
+              >
+                Nome
+              </TableCellSortable>
+              <TableCellSortable paginationParams={params} disabled={isLoading} onChange={mergeParams} column='email'>
+                Email
+              </TableCellSortable>
+              <TableCellActions>
+                <IconButton disabled={isLoading} onClick={handleRefresh}>
+                  <RefreshIcon />
+                </IconButton>
+              </TableCellActions>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <EmptyAndErrorMessages
+              colSpan={3}
+              error={error}
+              loading={isLoading}
+              hasData={result.length > 0}
+              onTryAgain={retry}
+            />
+            {result.map(user => (
+              <ListItem key={user.id} user={user} onEdit={handleEdit} onDeleteComplete={retry} />
+            ))}
+          </TableBody>
+        </Table>
 
-        <TablePagination total={total} disabled={loading} paginationParams={params} onChange={mergeParams} />
+        <TablePagination total={total} disabled={isLoading} paginationParams={params} onChange={mergeParams} />
       </Card>
     </Fragment>
   );

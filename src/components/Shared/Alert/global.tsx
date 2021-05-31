@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 import Alert, { IAlertShowParams } from '.';
 
@@ -41,7 +41,7 @@ export async function showGlobalAlert(params: IAlertShowParams): Promise<boolean
 
   //prevent an alert to overhide another
   return (lastPromise = lastPromise.then(async () => {
-    await new Promise(resolve => setTimeout(() => resolve(), 300));
+    await new Promise<void>(resolve => setTimeout(() => resolve(), 300));
     return globalAlert(params);
   }));
 }

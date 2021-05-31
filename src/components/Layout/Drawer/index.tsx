@@ -1,11 +1,14 @@
+import { Fragment, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { RouteComponentProps, withRouter } from 'react-router';
+
 import CoreDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withWidth, { WithWidth } from '@material-ui/core/withWidth';
-import clsx from 'clsx';
+
 import MoreIcon from 'mdi-react/MoreIcon';
-import React, { Fragment, memo, Props, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
+
+import clsx from 'clsx';
 
 import Content from './Content';
 import { DrawerContext } from './context';
@@ -18,8 +21,9 @@ export interface IMenu {
   submenu?: IMenu[];
 }
 
-interface IProps extends RouteComponentProps<{}>, Props<{}>, WithWidth {
+interface IProps extends RouteComponentProps<Record<string, never>>, WithWidth {
   menu: IMenu[];
+  children: ReactNode;
 }
 
 const useStyle = makeStyles(theme => ({

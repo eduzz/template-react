@@ -1,7 +1,9 @@
+import { memo, useContext, ReactNode } from 'react';
+
 import AppBar from '@material-ui/core/AppBar';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
 import clsx from 'clsx';
-import React, { memo, Props, useContext } from 'react';
 
 import { DrawerContext } from './Drawer/context';
 
@@ -37,7 +39,7 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const ToolbarTabs = memo((props: Props<{}>) => {
+const ToolbarTabs = memo((props: { children: ReactNode }) => {
   const context = useContext(DrawerContext);
   const classes = useStyle(props);
 

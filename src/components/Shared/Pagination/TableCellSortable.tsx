@@ -1,7 +1,9 @@
+import { memo, useCallback, useMemo } from 'react';
+
 import TableCell, { TableCellProps } from '@material-ui/core/TableCell';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import { IPaginationParams } from 'interfaces/pagination';
-import React, { memo, useCallback, useMemo } from 'react';
+
+import { IPaginationParams } from '@eduzz/houston-hooks/usePaginatedObservable';
 
 interface IProps extends Omit<TableCellProps, 'onChange'> {
   disabled?: boolean;

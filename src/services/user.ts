@@ -1,8 +1,8 @@
-import cache from 'helpers/rxjs-operators/cache';
-import IUser from 'interfaces/models/user';
-import IUserRole from 'interfaces/models/userRole';
-import { IPaginationParams, IPaginationResponse } from 'interfaces/pagination';
 import { Observable } from 'rxjs';
+
+import { IPaginationResponse, IPaginationParams } from '@eduzz/houston-hooks/usePaginatedObservable';
+
+import IUser from 'interfaces/models/user';
 
 import apiService, { ApiService } from './api';
 
@@ -15,10 +15,6 @@ export class UserService {
 
   public current(): Observable<IUser> {
     return this.apiService.get('/user/current');
-  }
-
-  public roles(refresh: boolean = false): Observable<IUserRole[]> {
-    return this.apiService.get('/user/roles').pipe(cache('user-service-roles', { refresh }));
   }
 
   public save(model: Partial<IUser>): Observable<IUser> {

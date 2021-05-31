@@ -1,17 +1,21 @@
+import { memo, useCallback, useMemo, useState } from 'react';
+
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+
+import { from } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
+
+import useCallbackObservable from '@eduzz/houston-hooks/useCallbackObservable';
+
+import DeleteIcon from 'mdi-react/DeleteIcon';
+import EditIcon from 'mdi-react/EditIcon';
+
 import Alert from 'components/Shared/Alert';
 import { IOption } from 'components/Shared/DropdownMenu';
 import TableCellActions from 'components/Shared/Pagination/TableCellActions';
 import Toast from 'components/Shared/Toast';
-import { logError } from 'helpers/rxjs-operators/logError';
 import IUser from 'interfaces/models/user';
-import DeleteIcon from 'mdi-react/DeleteIcon';
-import EditIcon from 'mdi-react/EditIcon';
-import React, { memo, useCallback, useMemo, useState } from 'react';
-import { useCallbackObservable } from 'react-use-observable';
-import { from } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
 import userService from 'services/user';
 
 interface IProps {
@@ -38,21 +42,20 @@ const ListItem = memo((props: IProps) => {
       filter(ok => ok),
       tap(() => setLoading(true)),
       switchMap(() => userService.delete(user.id)),
-      logError(),
-      tap(
-        () => {
+      tap({
+        next: () => {
           Toast.show(`${user.firstName} foi removido`);
           setLoading(true);
           setDeleted(true);
           onDeleteComplete();
         },
-        error => {
+        error: error => {
           setLoading(false);
           setError(error);
         }
-      )
+      })
     );
-  }, []);
+  }, [onDeleteComplete, user.firstName, user.id]);
 
   const options = useMemo<IOption[]>(() => {
     return [

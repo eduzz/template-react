@@ -13,6 +13,6 @@ export function dateParse(value: any, format: string = null): Date {
   return date;
 }
 
-export function dateFormat(date: Date, format: string = 'dd/MM/yyyy'): string {
+export function dateFormat(date: Date, format = 'dd/MM/yyyy'): string {
   return dateFnsFormat(date, format, { locale });
 }

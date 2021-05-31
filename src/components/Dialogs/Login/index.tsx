@@ -1,12 +1,14 @@
+import { forwardRef, memo, useCallback, useState } from 'react';
+import SwipeableViews from 'react-swipeable-views';
+
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import useObservable from '@eduzz/houston-hooks/useObservable';
+
 import logoWhite from 'assets/images/logo-white.png';
 import splashImage from 'assets/images/splash.png';
-import { logError } from 'helpers/rxjs-operators/logError';
-import React, { forwardRef, memo, useCallback, useState } from 'react';
-import SwipeableViews from 'react-swipeable-views';
-import { useObservable } from 'react-use-observable';
 import authService from 'services/auth';
 
 import LoginDialogForm from './Form';
@@ -48,13 +50,11 @@ const useStyle = makeStyles({
   }
 });
 
-const LoginDialog = memo((props: {}) => {
+const LoginDialog = memo((props: Record<string, never>) => {
   const classes = useStyle(props);
   const [currentView, setCurrentView] = useState(0);
 
-  const [opened] = useObservable(() => {
-    return authService.shouldOpenLogin().pipe(logError());
-  }, []);
+  const [opened] = useObservable(() => authService.shouldOpenLogin(), []);
 
   const handleChangeView = useCallback((view: number) => () => setCurrentView(view), []);
 

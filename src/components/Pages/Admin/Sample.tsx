@@ -1,3 +1,5 @@
+import { Fragment, memo, useCallback, useState } from 'react';
+
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -6,10 +8,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
+
 import Toolbar from 'components/Layout/Toolbar';
 import ToolbarTabs from 'components/Layout/ToolbarTabs';
 import ImageSelector, { IImageSelectorResult } from 'components/Shared/ImageSelector';
-import React, { Fragment, memo, useCallback, useState } from 'react';
 
 const useStyle = makeStyles(theme => ({
   img: {
@@ -24,7 +26,7 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const SamplePage = memo((props: {}) => {
+const SamplePage = memo((props: Record<string, never>) => {
   const classes = useStyle(props);
   const [selectorOpened, setSelectorOpened] = useState(false);
   const [image, setImage] = useState('');

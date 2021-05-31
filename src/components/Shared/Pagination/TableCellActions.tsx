@@ -1,7 +1,8 @@
+import { memo, Props } from 'react';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TableCell from '@material-ui/core/TableCell';
-import React, { memo, Props } from 'react';
 
 import DropdownMenu, { IOption } from '../DropdownMenu';
 import OptionItem from '../DropdownMenu/OptionItem';

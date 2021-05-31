@@ -1,7 +1,17 @@
-import React from 'react';
+import '@eduzz/houston-forms/yupLocale';
+import './assets/global.css';
+
 import * as ReactDOM from 'react-dom';
 
+import setHoustonHooksConfig from '@eduzz/houston-hooks/config';
+
+import logService from 'services/log';
+
 import App from './App';
+
+setHoustonHooksConfig({
+  onUnhandledError: err => logService.handleError(err)
+});
 
 ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
 

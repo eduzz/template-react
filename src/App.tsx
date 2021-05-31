@@ -1,8 +1,10 @@
-import './assets/global.css';
-import './yupLocale';
+import { memo, useMemo, useState } from 'react';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+
+import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
+
 import themes from 'assets/theme';
 import ThemeContext, { IThemeContext, ThemesTypes } from 'assets/theme/context';
 import Dialogs from 'components/Dialogs';
@@ -10,7 +12,6 @@ import Pages from 'components/Pages';
 import Alert from 'components/Shared/Alert';
 import Loader from 'components/Shared/Loader';
 import Toast from 'components/Shared/Toast';
-import React, { memo, useMemo, useState } from 'react';
 
 const App = memo(() => {
   const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
@@ -29,19 +30,21 @@ const App = memo(() => {
   }, [currentTheme]);
 
   return (
-    <ThemeContext.Provider value={themeContext}>
-      <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
-        <CssBaseline />
-        <Dialogs />
+    <ThemeProvider>
+      <ThemeContext.Provider value={themeContext}>
+        <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
+          <CssBaseline />
+          <Dialogs />
 
-        <Loader />
+          <Loader />
 
-        <Alert.Global />
-        <Toast.Global />
+          <Alert.Global />
+          <Toast.Global />
 
-        <Pages />
-      </MuiThemeProvider>
-    </ThemeContext.Provider>
+          <Pages />
+        </MuiThemeProvider>
+      </ThemeContext.Provider>
+    </ThemeProvider>
   );
 });
 

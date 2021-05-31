@@ -1,7 +1,10 @@
+import { memo, useCallback, useContext } from 'react';
+
 import TablePaginationCore, { LabelDisplayedRowsArgs, TablePaginationProps } from '@material-ui/core/TablePagination';
+
+import { IPaginationParams } from '@eduzz/houston-hooks/usePaginatedObservable';
+
 import { ScrollTopContext } from 'components/Pages/Admin';
-import { IPaginationParams } from 'interfaces/pagination';
-import React, { memo, useCallback, useContext } from 'react';
 
 type IProps = Partial<Omit<TablePaginationProps, 'onChange'>> & {
   disabled?: boolean;

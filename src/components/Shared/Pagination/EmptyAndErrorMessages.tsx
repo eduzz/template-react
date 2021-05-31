@@ -1,7 +1,9 @@
+import { Fragment, memo } from 'react';
+
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+
 import AlertCircleOutlineIcon from 'mdi-react/AlertCircleOutlineIcon';
-import React, { Fragment, memo } from 'react';
 
 import ErrorMessage from '../ErrorMessage';
 import IconMessage from '../IconMessage';

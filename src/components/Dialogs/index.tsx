@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from 'react';
+import { Fragment, memo } from 'react';
 
 import ChangePasswordDialog from './ChangePassword';
 import LoginDialog from './Login';

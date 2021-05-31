@@ -1,9 +1,11 @@
+import { memo, SyntheticEvent, useCallback, useContext } from 'react';
+
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
-import React, { memo, SyntheticEvent, useCallback, useContext } from 'react';
 
 import DropdownMenuContext from './context';
 

@@ -1,8 +1,7 @@
 import { Observable, ReplaySubject } from 'rxjs';
+import { distinctUntilChanged, tap, map } from 'rxjs/operators';
 
 import storageService, { StorageService } from './storage';
-import { logError } from 'helpers/rxjs-operators/logError';
-import { distinctUntilChanged, tap, map } from 'rxjs/operators';
 
 export class TokenService {
   private token$: ReplaySubject<string>;
@@ -10,10 +9,7 @@ export class TokenService {
   constructor(private storageService: StorageService) {
     this.token$ = new ReplaySubject(1);
 
-    this.storageService
-      .get('authToken')
-      .pipe(logError())
-      .subscribe(token => this.token$.next(token));
+    this.storageService.get('authToken').subscribe(token => this.token$.next(token));
   }
 
   public getToken(): Observable<string> {

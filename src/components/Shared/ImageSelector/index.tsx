@@ -1,3 +1,6 @@
+import { forwardRef, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Cropper } from 'react-image-cropper';
+
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,10 +11,9 @@ import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Typography from '@material-ui/core/Typography';
+
 import transparency from 'assets/images/transparency.png';
 import imageCompress from 'helpers/imagerCompress';
-import React, { forwardRef, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Cropper } from 'react-image-cropper';
 
 import { calculateRegion } from './helpers';
 import ImageReader, { IImageReaderResult } from './ImageReader';

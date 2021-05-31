@@ -32,5 +32,5 @@ export default function imageCompress(imageBase64: string, width: number, height
 }
 
 async function freeRender() {
-  await new Promise(resolve => setTimeout(() => resolve(), 300));
+  await new Promise<void>(resolve => setTimeout(() => resolve(), 300));
 }

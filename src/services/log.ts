@@ -30,7 +30,7 @@ export class LogService {
     });
   }
 
-  public breadcrumb(message: string, category: string = 'manual', data: any = {}): void {
+  public breadcrumb(message: string, category = 'manual', data: any = {}): void {
     data = data || {};
     delete data.type;
 

@@ -1,10 +1,12 @@
+import { forwardRef, memo, useMemo } from 'react';
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { logError } from 'helpers/rxjs-operators/logError';
-import React, { forwardRef, memo, useMemo } from 'react';
-import { useObservable } from 'react-use-observable';
+
+import useObservable from '@eduzz/houston-hooks/useObservable';
+
 import loaderService from 'services/loader';
 
 const useStyle = makeStyles(theme => ({
@@ -20,9 +22,9 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const Loader = memo((props: {}) => {
+const Loader = memo((props: Record<string, never>) => {
   const classes = useStyle(props);
-  const [visible] = useObservable(() => loaderService.shouldShow().pipe(logError()), []);
+  const [visible] = useObservable(() => loaderService.shouldShow(), []);
 
   const paperProps = useMemo(() => ({ className: classes.paper }), [classes.paper]);
 

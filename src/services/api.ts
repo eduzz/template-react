@@ -1,6 +1,3 @@
-import axios, { AxiosError, AxiosResponse, Method } from 'axios';
-import ApiError from 'errors/api';
-import { apiRequestFormatter } from 'formatters/apiRequest';
 import * as Rx from 'rxjs';
 import {
   catchError,
@@ -14,6 +11,10 @@ import {
   switchMap,
   tap
 } from 'rxjs/operators';
+
+import axios, { AxiosError, AxiosResponse, Method } from 'axios';
+import ApiError from 'errors/api';
+import { apiRequestFormatter } from 'formatters/apiRequest';
 
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
@@ -59,7 +60,7 @@ export class ApiService {
     method: Method,
     url: string,
     data: any = null,
-    retry: boolean = true
+    retry = true
   ): Rx.Observable<{ response: T; progress: number }> {
     const progress$ = new Rx.BehaviorSubject(0);
 

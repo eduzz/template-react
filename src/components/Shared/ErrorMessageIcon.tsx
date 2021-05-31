@@ -1,13 +1,16 @@
+import { memo, useCallback } from 'react';
+
 import IconButton from '@material-ui/core/IconButton';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
+
 import Alert from 'components/Shared/Alert';
 import { errorMessageFormatter } from 'formatters/errorMessage';
-import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
-import React, { memo, useCallback } from 'react';
 
 interface IProps {
   error: any;
-  onDismiss?: Function;
+  onDismiss?: () => void;
 }
 
 const useStyle = makeStyles(theme => ({

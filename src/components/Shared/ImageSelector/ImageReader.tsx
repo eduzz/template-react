@@ -1,10 +1,13 @@
+import { DragEvent, Fragment, memo, useCallback, useRef, useState } from 'react';
+
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import IconMessage from 'components/Shared/IconMessage';
+
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
-import React, { DragEvent, Fragment, memo, useCallback, useRef, useState } from 'react';
+
+import IconMessage from 'components/Shared/IconMessage';
 
 import Toast from '../Toast';
 import { loadFile } from './helpers';

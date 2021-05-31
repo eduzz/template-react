@@ -1,7 +1,7 @@
 import * as Rx from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { apiResponseFormatter } from '../formatters/apiResponse';
-import { catchError, map } from 'rxjs/operators';
 
 export class StorageService {
   public get<T = any>(key: string): Rx.Observable<T> {

@@ -1,54 +1,32 @@
-import { Observable, Subscriber, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { delay } from 'rxjs/operators';
+
 import loaderService from 'services/loader';
 
+let counter = 0;
+
 export function loader<T>() {
-  return (source: Observable<T>) => source.lift<T>(new LoaderOperator());
-}
+  return (source: Observable<T>) => {
+    return new Observable<T>(subscriber => {
+      const ref = `loader-operator-${++counter}-${Date.now()}`;
+      loaderService.show(ref);
 
-class LoaderOperator {
-  constructor() {}
+      const subscription = source.pipe(delay(500)).subscribe({
+        next: value => {
+          loaderService.hide(ref);
+          subscriber.next(value);
+        },
+        error: err => {
+          loaderService.hide(ref);
+          subscriber.error(err);
+        },
+        complete: () => {
+          loaderService.hide(ref);
+          subscriber.complete();
+        }
+      });
 
-  public call(subscriber: Subscriber<any>, source: Observable<any>): Subscription {
-    return source.pipe(delay(500)).subscribe(new LoaderSubscriber(subscriber));
-  }
-}
-
-class LoaderSubscriber extends Subscriber<any> {
-  private ref: string;
-
-  constructor(protected destination: Subscriber<any>) {
-    super(destination);
-
-    this.ref = Date.now().toString();
-    this.show();
-  }
-
-  public _next(value: any): void {
-    this.hide();
-    this.destination.next(value);
-  }
-
-  public _complete(): void {
-    this.hide();
-    this.destination.complete();
-  }
-
-  public _error(err: any): void {
-    this.hide();
-    this.destination.error(err);
-  }
-
-  public _unsubscribe(): void {
-    this.hide();
-    this.destination.unsubscribe();
-  }
-
-  private show(): void {
-    loaderService.show(this.ref);
-  }
-
-  private hide(): void {
-    loaderService.hide(this.ref);
-  }
+      return () => subscription.unsubscribe();
+    });
+  };
 }

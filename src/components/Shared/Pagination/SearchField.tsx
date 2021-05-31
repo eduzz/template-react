@@ -1,40 +1,17 @@
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import TextField from 'components/Shared/Fields/Text';
-import { IPaginationParams } from 'interfaces/pagination';
-import MagnifyIcon from 'mdi-react/MagnifyIcon';
-import React, { ChangeEvent, memo, useCallback, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, memo, useCallback, useState } from 'react';
+
+import { IPaginationParams } from '@eduzz/houston-hooks/usePaginatedObservable';
+import TextField from '@eduzz/houston-ui/Forms/Text';
 
 interface IProps {
   paginationParams: IPaginationParams;
   onChange: (params: { term: string; page: number }) => void;
 }
 
-const useStyle = makeStyles({
-  iconButton: {
-    marginRight: -15
-  }
-});
-
 const SearchField = memo((props: IProps) => {
   const { paginationParams, onChange } = props;
 
   const [searchTerm, setSearchTerm] = useState(paginationParams.term ?? '');
-  const classes = useStyle(props);
-
-  const inputLabelProps = useRef({ shrink: true }).current;
-  const inputProps = useMemo(() => {
-    return {
-      endAdornment: (
-        <InputAdornment position='end'>
-          <IconButton disabled={true} className={classes.iconButton}>
-            <MagnifyIcon />
-          </IconButton>
-        </InputAdornment>
-      )
-    };
-  }, [classes.iconButton]);
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,8 +39,6 @@ const SearchField = memo((props: IProps) => {
       margin='none'
       fullWidth={false}
       placeholder='Digite ao menos 3 caracteres...'
-      InputLabelProps={inputLabelProps}
-      InputProps={inputProps}
     />
   );
 });

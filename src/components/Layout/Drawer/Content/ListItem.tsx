@@ -1,3 +1,5 @@
+import { memo, useCallback, useContext, useState } from 'react';
+
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -8,11 +10,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import PermissionHide from 'components/Shared/PermissionHide';
+
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
-import React, { memo, useCallback, useContext, useState } from 'react';
+
+import PermissionHide from 'components/Shared/PermissionHide';
 
 import { IMenu } from '..';
+
 import { DrawerContext } from '../context';
 
 interface IProps {
@@ -22,8 +26,8 @@ interface IProps {
 
 const useStyle = makeStyles(theme => ({
   item: {
-    'paddingLeft': 14,
-    'opacity': 0.8,
+    paddingLeft: 14,
+    opacity: 0.8,
     '&.active': {
       opacity: 1,
       background: darken(theme.palette.primary.main, 0.3)
@@ -39,11 +43,11 @@ const useStyle = makeStyles(theme => ({
     color: 'inherit'
   },
   expandablePanel: {
-    'background': theme.palette.primary.main,
-    'color': theme.palette.primary.contrastText,
-    'marginLeft': -10,
-    'boxShadow': 'none',
-    'margin': 0,
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+    marginLeft: -10,
+    boxShadow: 'none',
+    margin: 0,
     '&.active': {
       background: darken(theme.palette.primary.main, 0.1)
     }
@@ -57,8 +61,8 @@ const useStyle = makeStyles(theme => ({
     padding: 0
   },
   innerList: {
-    'padding': 0,
-    'width': '100%',
+    padding: 0,
+    width: '100%',
     '& > div': {
       paddingLeft: 40
     }

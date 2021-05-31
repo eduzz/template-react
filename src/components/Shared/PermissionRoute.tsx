@@ -1,9 +1,10 @@
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
-import { logError } from 'helpers/rxjs-operators/logError';
-import { enRoles } from 'interfaces/models/user';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Route, RouteProps } from 'react-router-dom';
+
 import { tap } from 'rxjs/operators';
+
+import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
+import { enRoles } from 'interfaces/models/user';
 import authService from 'services/auth';
 
 import PermissionHide from './PermissionHide';
@@ -14,7 +15,7 @@ interface IProps extends RouteProps {
 
 export default class PermissionRoute extends Route<IProps> {
   constructor(props: IProps) {
-    super(props);
+    super(props as any);
     this.state = { ...(this.state || {}) };
   }
 
@@ -24,7 +25,6 @@ export default class PermissionRoute extends Route<IProps> {
     authService
       .isAuthenticated()
       .pipe(
-        logError(),
         bindComponent(this),
         tap(isAuthenticated => {
           if (isAuthenticated) return;

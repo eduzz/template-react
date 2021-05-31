@@ -1,35 +1,25 @@
-import { Observable, Operator, Subscriber, Subscription, TeardownLogic } from 'rxjs';
-import { Component } from 'react';
+import { Observable, Subscription } from 'rxjs';
 
-interface IBindableComponent {
-  bindComponentSubscriptions?: Subscription[];
-  componentWillUnmount?(): void;
-}
+export function bindComponent<T>(component: any) {
+  return (source: Observable<T>) => {
+    return new Observable(subscriber => {
+      const subscription = source.subscribe(subscriber);
 
-export function bindComponent<T>(component: Component) {
-  return (source: Observable<T>) => source.lift<T>(new BindComponentOperator(component));
-}
+      if (!component.bindComponentSubscriptions) {
+        component.bindComponentSubscriptions = [];
 
-class BindComponentOperator<T> implements Operator<T, T> {
-  constructor(private component: IBindableComponent) {}
+        const originalWillUnmount = component.componentWillUnmount;
+        component.componentWillUnmount = () => {
+          component.bindComponentSubscriptions.forEach((s: Subscription) => {
+            s.unsubscribe();
+          });
 
-  public call(subscriber: Subscriber<any>, source: Observable<any>): TeardownLogic {
-    const subscription = source.subscribe(subscriber);
+          originalWillUnmount && originalWillUnmount();
+        };
+      }
 
-    if (!this.component.bindComponentSubscriptions) {
-      this.component.bindComponentSubscriptions = [];
-
-      const originalWillUnmount = this.component.componentWillUnmount;
-      this.component.componentWillUnmount = () => {
-        this.component.bindComponentSubscriptions.forEach((s: Subscription) => {
-          s.unsubscribe();
-        });
-
-        originalWillUnmount && originalWillUnmount();
-      };
-    }
-
-    this.component.bindComponentSubscriptions.push(subscription);
-    return subscription;
-  }
+      component.bindComponentSubscriptions.push(subscription);
+      return subscription;
+    });
+  };
 }

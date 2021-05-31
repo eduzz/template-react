@@ -1,18 +1,22 @@
+import { memo, useCallback, useContext, ReactNode } from 'react';
+
 import AppBar from '@material-ui/core/AppBar';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CoreToolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import clsx from 'clsx';
+
 import MenuIcon from 'mdi-react/MenuIcon';
-import React, { memo, Props, useCallback, useContext } from 'react';
+
+import clsx from 'clsx';
 
 import { DrawerContext } from './Drawer/context';
 import UserMenu from './UserMenu';
 
-interface IProps extends Props<{}> {
+interface IProps {
   title?: string;
+  children?: ReactNode;
 }
 
 const useStyle = makeStyles(theme => ({
