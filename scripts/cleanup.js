@@ -55,6 +55,10 @@ async function cleanup(params) {
     {
       from: '%SENTRY-DSN%',
       to: params.sentryDsn
+    },
+    {
+      from: `"start": "node ./init.js"`,
+      to: `"start": "react-scripts start"`
     }
   ];
 

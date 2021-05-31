@@ -9,7 +9,7 @@
     "seed": "git@github.com:eduzz/react-admin-seed.git"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node ./init.js",
     "lint": "yarn eslint \"./src/**/*.ts\" \"./src/**/*.tsx\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

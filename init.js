@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+const childProcess = require('child_process');
 const ora = require('ora');
 const rimraf = require('rimraf');
-const childProcess = require('child_process');
-const cleanup = require('./scripts/cleanup');
+
 const askParams = require('./scripts/ask-params');
+const cleanup = require('./scripts/cleanup');
 
 async function init() {
   await awaitWarning();
