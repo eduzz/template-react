@@ -1,7 +1,8 @@
 import { memo } from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
+
+import Typography from '@eduzz/houston-ui/Typography';
 
 import MoreIcon from 'mdi-react/MoreIcon';
 
@@ -29,7 +30,7 @@ const IconMessage = memo((props: IProps) => {
   return (
     <div className={classes.root}>
       <props.icon size={50} className={classes.icon} />
-      <Typography variant='body1'>{props.message}</Typography>
+      <Typography>{props.message}</Typography>
     </div>
   );
 });

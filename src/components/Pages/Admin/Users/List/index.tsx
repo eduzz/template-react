@@ -1,6 +1,5 @@
 import { Fragment, memo, useCallback, useState } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
@@ -11,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import usePaginatedObservable from '@eduzz/houston-hooks/usePaginatedObservable';
+import Button from '@eduzz/houston-ui/Button';
 
 import RefreshIcon from 'mdi-react/RefreshIcon';
 
@@ -74,7 +74,7 @@ const UserListPage = memo(() => {
             </Grid>
 
             <Grid item xs={12} sm={'auto'}>
-              <Button fullWidth variant='contained' color='primary' onClick={handleCreate}>
+              <Button fullWidth variant='contained' onClick={handleCreate}>
                 Adicionar
               </Button>
             </Grid>

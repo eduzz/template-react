@@ -1,18 +1,18 @@
 import { memo, MouseEvent } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
 
 import { tap } from 'rxjs/operators';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
+import Typography from '@eduzz/houston-ui/Typography';
 
 import Toast from 'components/Shared/Toast';
 import errorToast from 'helpers/rxjs-operators/errorToast';
@@ -54,16 +54,16 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
     <Form context={form}>
       <Card>
         <CardContent>
-          <Typography gutterBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
+          <Typography marginBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
 
           <TextField label='Email' type='email' name='email' margin='none' />
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={form.isSubmitting} size='small' onClick={props.onCancel}>
+          <Button disabled={form.isSubmitting} variant='text' onClick={props.onCancel}>
             Voltar
           </Button>
-          <Button disabled={form.isSubmitting} color='primary' type='submit'>
+          <Button disabled={form.isSubmitting} type='submit'>
             Enviar
           </Button>
         </CardActions>

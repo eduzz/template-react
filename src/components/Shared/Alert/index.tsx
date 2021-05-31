@@ -1,6 +1,5 @@
 import { ComponentType, forwardRef, memo, MemoExoticComponent, useCallback } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -8,6 +7,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import Button from '@eduzz/houston-ui/Button';
 
 import AlertGlobalProvider, { showGlobalAlert } from './global';
 
@@ -65,13 +66,11 @@ const Alert: AlertComponent = memo((props: IProps) => {
       </DialogContent>
       <DialogActions>
         {props.confirmation && (
-          <Button onClick={handleCancel} autoFocus>
+          <Button onClick={handleCancel} variant='text'>
             Cancelar
           </Button>
         )}
-        <Button autoFocus={!props.confirmation} onClick={handleOk} color='primary'>
-          OK
-        </Button>
+        <Button onClick={handleOk}>OK</Button>
       </DialogActions>
     </Dialog>
   );

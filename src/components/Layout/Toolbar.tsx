@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CoreToolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+
+import Typography from '@eduzz/houston-ui/Typography';
 
 import MenuIcon from 'mdi-react/MenuIcon';
 
@@ -74,7 +75,7 @@ const Toolbar = memo((props: IProps) => {
           {!props.children && (
             <Grid container alignItems='center'>
               <Grid item xs={true}>
-                <Typography variant='h6' color='inherit' noWrap>
+                <Typography size='medium' fontWeight='semibold'>
                   {props.title || 'App'}
                 </Typography>
               </Grid>

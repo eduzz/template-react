@@ -1,18 +1,18 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Typography from '@material-ui/core/Typography';
 
 import { switchMap, tap } from 'rxjs/operators';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
+import Typography from '@eduzz/houston-ui/Typography';
 
 import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
 
@@ -96,14 +96,14 @@ const NewPasswordPage = memo((props: IProps) => {
           <Form context={form}>
             <Card>
               <CardContent>
-                <Typography gutterBottom>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
+                <Typography marginBottom>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
 
                 <TextField label='Nova senha' type='password' name='password' />
                 <TextField label='Repita a senha' type='password' name='confirmPassword' margin='none' />
               </CardContent>
 
               <CardActions className={classes.buttons}>
-                <Button disabled={loading || form.isSubmitting} color='primary' type='submit'>
+                <Button disabled={loading || form.isSubmitting} type='submit'>
                   Salvar
                 </Button>
               </CardActions>

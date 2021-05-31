@@ -1,6 +1,5 @@
 import { forwardRef, memo, useCallback } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -13,6 +12,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { tap } from 'rxjs/operators';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 
@@ -95,8 +95,10 @@ const FormDialog = memo((props: IProps) => {
           <TextField label='Email' name='email' type='email' />
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onCancel}>Cancelar</Button>
-          <Button color='primary' variant='contained' type='submit' disabled={form.isSubmitting}>
+          <Button variant='text' onClick={props.onCancel}>
+            Cancelar
+          </Button>
+          <Button type='submit' disabled={form.isSubmitting}>
             Salvar
           </Button>
         </DialogActions>

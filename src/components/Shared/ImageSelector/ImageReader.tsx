@@ -1,8 +1,9 @@
 import { DragEvent, Fragment, memo, useCallback, useRef, useState } from 'react';
 
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+
+import Button from '@eduzz/houston-ui/Button';
 
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
@@ -112,7 +113,7 @@ const ImageReader = memo((props: IProps) => {
         accept={`.${extensions.join(',.')}`}
       />
 
-      <Button color='primary' disabled={loading} onClick={handleSelectImage}>
+      <Button disabled={loading} onClick={handleSelectImage}>
         {loading ? <CircularProgress className={classes.progress} size={20} /> : <FolderOpenIcon />}
         &nbsp;{loading ? 'Carregando' : 'Selecionar'}
       </Button>

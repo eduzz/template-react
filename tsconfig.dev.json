@@ -4,6 +4,7 @@
     "module": "esnext",
     "target": "es5",
     "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
     "lib": [
       "es2017",
       "dom"

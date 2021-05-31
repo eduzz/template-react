@@ -1,6 +1,5 @@
 import { memo, useCallback } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -12,6 +11,7 @@ import { tap } from 'rxjs/operators';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import useObservable from '@eduzz/houston-hooks/useObservable';
+import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 
@@ -72,10 +72,10 @@ const ChangePasswordDialog = memo((props: any) => {
         </DialogContent>
 
         <DialogActions>
-          <Button disabled={form.isSubmitting} onClick={onCancel}>
+          <Button disabled={form.isSubmitting} variant='text' onClick={onCancel}>
             Cancelar
           </Button>
-          <Button color='primary' type='submit' disabled={form.isSubmitting}>
+          <Button type='submit' disabled={form.isSubmitting}>
             Salvar
           </Button>
         </DialogActions>

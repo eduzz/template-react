@@ -1,6 +1,5 @@
 import { memo, MouseEvent } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,6 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 
@@ -51,10 +51,10 @@ const LoginDialogForm = memo((props: IProps) => {
         </CardContent>
 
         <CardActions className={classes.buttons}>
-          <Button disabled={form.isSubmitting} size='small' onClick={props.onRecoveryAccess}>
+          <Button disabled={form.isSubmitting} variant='text' onClick={props.onRecoveryAccess}>
             Recuperar Acesso
           </Button>
-          <Button disabled={form.isSubmitting} color='primary' type='submit'>
+          <Button disabled={form.isSubmitting} type='submit'>
             Entrar
           </Button>
         </CardActions>

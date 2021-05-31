@@ -1,7 +1,6 @@
 import { forwardRef, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Cropper } from 'react-image-cropper';
 
-import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -10,7 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
+
+import Button from '@eduzz/houston-ui/Button';
+import Typography from '@eduzz/houston-ui/Typography';
 
 import transparency from 'assets/images/transparency.png';
 import imageCompress from 'helpers/imagerCompress';
@@ -118,7 +119,7 @@ const ImageSelector = memo((props: IProps) => {
           <Grid container spacing={3} alignContent='center'>
             <Grid item xs={true}>
               Selecionar Imagem
-              <Typography variant='body1'>
+              <Typography>
                 <strong>Tamanho sugerido:</strong> {props.height}px de altura {props.width}px de largura
               </Typography>
             </Grid>
@@ -146,10 +147,10 @@ const ImageSelector = memo((props: IProps) => {
           )}
         </DialogContent>
         <DialogActions>
-          <Button disabled={saving} onClick={handleCancel}>
+          <Button disabled={saving} onClick={handleCancel} variant='text'>
             Cancelar
           </Button>
-          <Button disabled={!image || saving} color='primary' onClick={handleSave}>
+          <Button disabled={!image || saving} onClick={handleSave}>
             {saving ? <CircularProgress size={20} /> : 'OK'}
           </Button>
         </DialogActions>

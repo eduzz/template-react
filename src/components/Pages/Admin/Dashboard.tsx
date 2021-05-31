@@ -4,7 +4,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Typography from '@material-ui/core/Typography';
+
+import Typography from '@eduzz/houston-ui/Typography';
 
 import Toolbar from 'components/Layout/Toolbar';
 import {
@@ -56,7 +57,7 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
         <Grid item xs={12} md={4} lg={6}>
           <Card>
             <CardContent>
-              <Typography gutterBottom variant='subtitle1'>
+              <Typography marginBottom size='medium' fontWeight='semibold'>
                 Bar Chart
               </Typography>
 
@@ -74,7 +75,7 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
-              <Typography gutterBottom variant='subtitle1'>
+              <Typography marginBottom size='medium' fontWeight='semibold'>
                 Pie Chart
               </Typography>
 
@@ -95,7 +96,7 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
         <Grid item xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
-              <Typography gutterBottom variant='subtitle1'>
+              <Typography marginBottom size='medium' fontWeight='semibold'>
                 Area Chart
               </Typography>
 
@@ -111,7 +112,7 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
 
       <Card>
         <CardContent>
-          <Typography gutterBottom variant='h5'>
+          <Typography marginBottom size='medium' fontWeight='semibold'>
             Line Chart
           </Typography>
 
