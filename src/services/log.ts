@@ -5,29 +5,16 @@ import { ENV, IS_DEVELOPMENT, SENTRY_KEY } from '../settings';
 
 export class LogService {
   constructor(sentryKey: string) {
-    Sentry.init({
-      dsn: sentryKey,
-      environment: ENV
-    });
+    Sentry.init({ dsn: sentryKey, environment: ENV });
   }
 
   public setUser(user: IUserToken): void {
     if (!user) {
-      Sentry.setUser({
-        id: null,
-        email: null,
-        username: null,
-        extra: {}
-      });
+      Sentry.setUser(null);
       return;
     }
 
-    Sentry.setUser({
-      id: user.id.toString(),
-      email: user.email,
-      username: user.email,
-      extra: { ...user }
-    });
+    Sentry.setUser({ id: user.id.toString(), email: user.email, username: user.email, extra: { ...user } });
   }
 
   public breadcrumb(message: string, category = 'manual', data: any = {}): void {

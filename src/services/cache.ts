@@ -1,9 +1,7 @@
-import { Observable, Subject, concat, of } from 'rxjs';
-import { debounceTime, filter, map, tap } from 'rxjs/operators';
-
 import dateFnsAddMinutes from 'date-fns/addMinutes';
 import dateFnsIsBefore from 'date-fns/isBefore';
-import { apiResponseFormatter } from 'formatters/apiResponse';
+
+import storageService, { StorageService } from './storage';
 
 export interface ICache<T = any> {
   data: T;
@@ -11,87 +9,70 @@ export interface ICache<T = any> {
   expirationDate: Date;
 }
 
+export interface ICacheWatcher<T> {
+  (value: ICache<T>): void;
+}
+
 export class CacheService {
-  private change$ = new Subject<{ key: string; value: ICache }>();
   private memory: { [key: string]: ICache };
+  private watchers: { [key: string]: ICacheWatcher<any>[] };
 
-  constructor() {
+  constructor(private storageService: StorageService) {
     this.memory = {};
+    this.watchers = {};
   }
 
-  public getData<T = any>(key: string): Observable<ICache<T>> {
-    if (this.memory[key]) return of(this.memory[key]);
-    return of(localStorage.getItem('app-cache-' + key)).pipe(
-      map(data => (data ? apiResponseFormatter(JSON.parse(data)) : null))
-    );
+  public async get<T = any>(key: string): Promise<ICache<T>> {
+    if (this.memory[key]) return this.memory[key];
+    return this.storageService.get(`app-cache-${key}`);
   }
 
-  public watchData<T>(key: string): Observable<ICache<T>> {
-    return concat(
-      this.getData<T>(key),
-      this.change$.pipe(
-        filter(data => data.key === key),
-        map(data => data.value)
-      )
-    ).pipe(debounceTime(100));
+  public watchData<T>(key: string, callback: ICacheWatcher<T>): () => void {
+    this.get<T>('key').then(value => callback(value));
+    this.watchers[key] = [...(this.watchers[key] ?? []), callback];
+
+    return () => {
+      this.watchers[key] = this.watchers[key].filter(w => w !== callback);
+    };
   }
 
-  public removeData(key: string) {
-    return of(true).pipe(
-      tap(() => {
-        localStorage.removeItem('app-cache-' + key);
-        this.memory[key] = null;
-        this.change$.next({ key, value: null });
-      })
-    );
+  public remove(key: string) {
+    this.memory[key] = null;
+    this.storageService.remove(`app-cache-${key}`);
+    this.sendWatchData(key, null);
   }
 
-  public saveData<T>(
+  public async saveData<T>(
     key: string,
     data: T,
     options?: { persist: boolean; expirationMinutes: number }
-  ): Observable<ICache<T>> {
+  ): Promise<ICache<T>> {
     const cache: ICache<T> = {
       createdAt: new Date(),
       expirationDate: dateFnsAddMinutes(new Date(), options?.expirationMinutes ?? 5),
       data
     };
 
-    if (options?.persist) {
-      return of(cache).pipe(
-        tap(() => {
-          localStorage.setItem('app-cache-' + key, JSON.stringify(cache));
-          this.change$.next({ key, value: cache });
-        })
-      );
-    }
+    options?.persist ? this.storageService.set(`app-cache-${key}`, cache) : (this.memory[key] = cache);
 
-    return of(true).pipe(
-      map(() => {
-        this.memory[key] = cache;
-        this.change$.next({ key, value: cache });
-        return cache;
-      })
-    );
+    this.sendWatchData(key, cache);
+    return cache;
   }
 
   public isExpirated(cache: ICache): boolean {
     return dateFnsIsBefore(cache.expirationDate, new Date());
   }
 
-  public clear(): Observable<void> {
-    return of(true).pipe(
-      tap(() => {
-        this.memory = {};
+  public async clear(): Promise<void> {
+    this.memory = {};
+    this.storageService.clear(key => key.startsWith('app-cache'));
+  }
 
-        Object.keys(localStorage)
-          .filter(key => key.startsWith('app-cache'))
-          .forEach(key => localStorage.removeItem(key));
-      }),
-      map(() => null)
-    );
+  private sendWatchData(key: string, data: any) {
+    if (!this.watchers[key]?.length) return;
+    this.watchers[key].forEach(watcher => watcher(data));
   }
 }
 
-const cacheService = new CacheService();
+const cacheService = new CacheService(storageService);
 export default cacheService;

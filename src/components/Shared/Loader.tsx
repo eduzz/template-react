@@ -1,13 +1,11 @@
-import { forwardRef, memo, useMemo } from 'react';
+import { memo, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
-import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import useObservable from '@eduzz/houston-hooks/useObservable';
-
-import loaderService from 'services/loader';
+import DefaultDialogTransition from './DefaultDialogTransition';
 
 const useStyle = makeStyles(theme => ({
   loader: {
@@ -22,23 +20,51 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const Loader = memo((props: Record<string, never>) => {
+let promiseIncremeter = 0;
+let callbackChange: (show: boolean) => void;
+
+type LoaderComponent = ReturnType<typeof memo> & {
+  show?: (ref: string) => void;
+  hide?: (ref: string) => void;
+  promise?: <T>(promise: Promise<T>) => Promise<T>;
+};
+
+const Loader: LoaderComponent = memo((props: Record<string, never>) => {
   const classes = useStyle(props);
-  const [visible] = useObservable(() => loaderService.shouldShow(), []);
+  const [visible, setVisible] = useState(false);
 
   const paperProps = useMemo(() => ({ className: classes.paper }), [classes.paper]);
 
+  useEffect(() => {
+    callbackChange = show => setVisible(show);
+    return () => (callbackChange = null);
+  }, []);
+
   return (
-    <Dialog open={visible || false} TransitionComponent={Transition} PaperProps={paperProps}>
+    <Dialog open={visible || false} TransitionComponent={DefaultDialogTransition} PaperProps={paperProps}>
       <CircularProgress className={classes.loader} size='large' color='inherit' />
     </Dialog>
   );
 });
 
-const Transition = memo(
-  forwardRef((props: any, ref: any) => {
-    return <Slide direction='up' {...props} ref={ref} />;
-  })
-);
+const refs: Set<string> = new Set();
+
+Loader.show = ref => {
+  refs.add(ref);
+  callbackChange && callbackChange(refs.size > 0);
+};
+
+Loader.hide = ref => {
+  refs.delete(ref);
+  callbackChange && callbackChange(refs.size > 0);
+};
+
+Loader.promise = promise => {
+  const key = `promise-${++promiseIncremeter}`;
+  Loader.show(key);
+
+  promise.finally(() => Loader.hide(key));
+  return promise;
+};
 
 export default Loader;
