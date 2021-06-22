@@ -6,11 +6,11 @@ import storageService, { StorageService } from './storage';
 export interface ICache<T = any> {
   data: T;
   createdAt: Date;
-  expirationDate: Date;
+  expirationDate?: Date;
 }
 
 export interface ICacheWatcher<T> {
-  (value: ICache<T>): void;
+  (value: T): void;
 }
 
 export class CacheService {
@@ -22,13 +22,26 @@ export class CacheService {
     this.watchers = {};
   }
 
-  public async get<T = any>(key: string): Promise<ICache<T>> {
-    if (this.memory[key]) return this.memory[key];
-    return this.storageService.get(`app-cache-${key}`);
+  public async get<T = any>(key: string): Promise<T> {
+    let cache = this.memory[key] ?? this.storageService.get(`app-cache-${key}`);
+
+    if (this.isExpirated(cache)) {
+      cache = null;
+    }
+
+    return cache?.data;
+  }
+
+  public async fromPromise<T>(key: string, promise: () => Promise<T>): Promise<T> {
+    const cache = this.get<T>(key);
+    if (cache) return cache;
+
+    const data = await promise();
+    return this.save<T>(key, data);
   }
 
   public watchData<T>(key: string, callback: ICacheWatcher<T>): () => void {
-    this.get<T>('key').then(value => callback(value));
+    this.get<T>('key').then(cache => callback(cache));
     this.watchers[key] = [...(this.watchers[key] ?? []), callback];
 
     return () => {
@@ -42,24 +55,21 @@ export class CacheService {
     this.sendWatchData(key, null);
   }
 
-  public async saveData<T>(
-    key: string,
-    data: T,
-    options?: { persist: boolean; expirationMinutes: number }
-  ): Promise<ICache<T>> {
+  public async save<T>(key: string, data: T, options?: { persist?: boolean; expirationMinutes?: number }): Promise<T> {
     const cache: ICache<T> = {
       createdAt: new Date(),
-      expirationDate: dateFnsAddMinutes(new Date(), options?.expirationMinutes ?? 5),
+      expirationDate: options.expirationMinutes ? dateFnsAddMinutes(new Date(), options?.expirationMinutes ?? 5) : null,
       data
     };
 
     options?.persist ? this.storageService.set(`app-cache-${key}`, cache) : (this.memory[key] = cache);
 
     this.sendWatchData(key, cache);
-    return cache;
+    return cache.data;
   }
 
   public isExpirated(cache: ICache): boolean {
+    if (!cache.expirationDate) return false;
     return dateFnsIsBefore(cache.expirationDate, new Date());
   }
 

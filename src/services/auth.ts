@@ -1,111 +1,81 @@
-import * as Rx from 'rxjs';
-import { catchError, distinctUntilChanged, map, shareReplay, switchMap } from 'rxjs/operators';
-
-import { cacheCleanAll } from 'helpers/rxjs-operators/cache';
 import IUserToken from 'interfaces/tokens/userToken';
 
 import apiService, { ApiService } from './api';
-import tokenService, { TokenService } from './token';
+import cacheService, { CacheService } from './cache';
+import storageService, { StorageService } from './storage';
 
 export class AuthService {
-  private user$: Rx.Observable<IUserToken>;
-  private openLogin$: Rx.BehaviorSubject<boolean>;
-  private openChangePassword$: Rx.BehaviorSubject<boolean>;
+  private token: string;
+  private user: IUserToken;
 
-  constructor(private api: ApiService, private tokenService: TokenService) {
-    this.openLogin$ = new Rx.BehaviorSubject(false);
-    this.openChangePassword$ = new Rx.BehaviorSubject(false);
-
-    this.user$ = this.tokenService.getToken().pipe(
-      map(token => {
-        if (!token) return null;
-
-        const user = this.tokenService.decode<IUserToken>(token);
-        if (!user) return null;
-
-        user.fullName = `${user.firstName} ${user.lastName}`;
-        user.roles = user.roles || [];
-        return user;
-      }),
-      catchError(() => Rx.of(null)),
-      shareReplay(1)
-    );
-
-    this.getUser()
-      .pipe(
-        distinctUntilChanged((a, b) => (a || ({} as IUserToken)).id !== (b || ({} as IUserToken)).id),
-        cacheCleanAll()
-      )
-      .subscribe();
+  constructor(private api: ApiService, private storageService: StorageService, private cacheService: CacheService) {
+    this.setToken(this.storageService.get<string>('auth-token'));
   }
 
-  public openLogin(): void {
-    this.openLogin$.next(true);
+  public getTokenUser(): IUserToken {
+    return this.user;
   }
 
-  public shouldOpenLogin(): Rx.Observable<boolean> {
-    return this.openLogin$.asObservable();
+  public isAuthenticated(): boolean {
+    return !!this.token;
   }
 
-  public login(email: string, password: string): Rx.Observable<void> {
-    return this.api.post('/login', { email, password }).pipe(
-      switchMap(({ token }) => this.tokenService.setToken(token)),
-      map(() => this.openLogin$.next(false))
-    );
+  public async login(email: string, password: string): Promise<void> {
+    const { token } = await this.api.post('/login', { email, password });
+    this.setToken(token);
   }
 
-  public logout(): Rx.Observable<void> {
-    return this.tokenService.clearToken();
+  public async logout(): Promise<void> {
+    this.setToken(null);
+    await this.cacheService.clear();
   }
 
-  public sendResetPassword(email: string): Rx.Observable<void> {
+  public async sendResetPassword(email: string): Promise<void> {
     return this.api.post('/auth/send-reset', { email });
   }
 
-  public resetPassword(token: string, password: string): Rx.Observable<void> {
+  public async resetPassword(token: string, password: string): Promise<void> {
     return this.api.post('/auth/reset-password', { token, password });
   }
 
-  public openChangePassword(): void {
-    this.openChangePassword$.next(true);
+  public async changePassword(currentPassword: string, newPassword: string): Promise<void> {
+    await this.api.post('/auth/change-password', { currentPassword, newPassword });
   }
 
-  public closeChangePassword(): void {
-    this.openChangePassword$.next(false);
+  public canAccess(...roles: string[]): boolean {
+    if (!this.user) return false;
+
+    if (!roles || roles.length === 0) return true;
+    if (this.user.roles.includes('sysAdmin') || this.user.roles.includes('admin')) return true;
+
+    return roles.some(r => this.user.roles.includes(r));
   }
 
-  public shouldOpenChangePassword(): Rx.Observable<boolean> {
-    return this.openChangePassword$.asObservable();
+  private setToken(token: string) {
+    this.token = token;
+    this.api.setBearerToken(token);
+
+    if (token) {
+      this.user = this.decodeToken(token);
+      this.storageService.set('auth-token', token);
+      return;
+    }
+
+    this.user = null;
+    this.storageService.remove('auth-token');
   }
 
-  public changePassword(currentPassword: string, newPassword: string): Rx.Observable<void> {
-    return this.api.post('/auth/change-password', {
-      currentPassword,
-      newPassword
-    });
-  }
+  private decodeToken(token: string): IUserToken {
+    try {
+      const data = JSON.parse(atob(token.split('.')[1]));
+      const currentTime = Date.now() / 1000;
 
-  public getUser(): Rx.Observable<IUserToken> {
-    return this.user$;
-  }
-
-  public canAccess(...roles: string[]): Rx.Observable<boolean> {
-    return this.getUser().pipe(
-      map(user => {
-        if (!user) return false;
-
-        if (!roles || roles.length === 0) return true;
-        if (user.roles.includes('sysAdmin') || user.roles.includes('admin')) return true;
-
-        return roles.some(r => user.roles.includes(r));
-      })
-    );
-  }
-
-  public isAuthenticated(): Rx.Observable<boolean> {
-    return this.getUser().pipe(map(user => !!user));
+      return currentTime > data.exp ? null : data;
+    } catch (err) {
+      return null;
+    }
   }
 }
 
-const authService = new AuthService(apiService, tokenService);
+const authService = new AuthService(apiService, storageService, cacheService);
 export default authService;
