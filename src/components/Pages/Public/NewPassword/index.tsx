@@ -6,8 +6,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import { switchMap, tap } from 'rxjs/operators';
-
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
@@ -17,12 +15,10 @@ import Typography from '@eduzz/houston-ui/Typography';
 import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
 
 import logoWhite from 'assets/images/logo-white.png';
-import Toast from 'components/Shared/Toast';
-import errorToast from 'helpers/rxjs-operators/errorToast';
+import decodeJWTToken from 'helpers/jwt';
 import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
 import queryString from 'query-string';
 import authService from 'services/auth';
-import tokenService from 'services/token';
 
 import useStyles from './style';
 
@@ -46,21 +42,15 @@ const NewPasswordPage = memo((props: IProps) => {
           .required()
           .oneOf([yup.ref('password'), null], 'Não confere')
       }),
-    onSubmit(model) {
-      return authService.resetPassword(token, model.password).pipe(
-        switchMap(() => authService.login(tokenData.email, model.password)),
-        tap(() => {
-          Toast.show('Senha alterada com sucesso!');
-          props.history.push('/');
-        }),
-        errorToast()
-      );
+    async onSubmit(model) {
+      await authService.resetPassword(token, model.password);
+      await authService.login(tokenData.email, model.password);
     }
   });
 
   useEffect(() => {
     const token = queryString.parse(props.location.search).t as string;
-    const tokenData = tokenService.decode<IResetPasswordToken>(token);
+    const tokenData = decodeJWTToken<IResetPasswordToken>(token);
 
     setToken(token);
     setTokenData(tokenData);

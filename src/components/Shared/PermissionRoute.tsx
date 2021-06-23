@@ -1,9 +1,6 @@
 import { Fragment } from 'react';
-import { Route, RouteProps } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import { tap } from 'rxjs/operators';
-
-import { bindComponent } from 'helpers/rxjs-operators/bindComponent';
 import { enRoles } from 'interfaces/models/user';
 import authService from 'services/auth';
 
@@ -14,33 +11,34 @@ interface IProps extends RouteProps {
 }
 
 export default class PermissionRoute extends Route<IProps> {
+  private watcher: ReturnType<typeof authService.watchIsAuthenticated>;
+
   constructor(props: IProps) {
     super(props as any);
-    this.state = { ...(this.state || {}) };
+    this.state = { ...(this.state ?? {}) };
   }
 
   componentDidMount() {
     super.componentDidMount && super.componentDidMount();
 
-    authService
-      .isAuthenticated()
-      .pipe(
-        bindComponent(this),
-        tap(isAuthenticated => {
-          if (isAuthenticated) return;
-          authService.openLogin();
-        })
-      )
-      .subscribe(isAuthenticated => {
-        this.setState({ isAuthenticated });
-      });
+    this.watcher = authService.watchIsAuthenticated(isAuthenticated => {
+      this.setState({ isAuthenticated });
+    });
+  }
+
+  componentWillUnmount() {
+    this.watcher && this.watcher();
   }
 
   render() {
     const { isAuthenticated } = this.state;
 
-    if (!isAuthenticated) {
+    if (isAuthenticated === undefined) {
       return null;
+    }
+
+    if (!isAuthenticated) {
+      return <Redirect to='/login' />;
     }
 
     return (

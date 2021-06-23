@@ -1,18 +1,13 @@
-import { forwardRef, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
 
-import Dialog from '@material-ui/core/Dialog';
-import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
-import useObservable from '@eduzz/houston-hooks/useObservable';
 
 import logoWhite from 'assets/images/logo-white.png';
 import splashImage from 'assets/images/splash.png';
-import authService from 'services/auth';
 
-import LoginDialogForm from './Form';
-import LoginDialogRecoveryAccess from './RecoveryAcces';
+import LoginForm from './Form';
+import LoginRecoveryAccess from './RecoveryAcces';
 
 const useStyle = makeStyles({
   root: {
@@ -50,46 +45,30 @@ const useStyle = makeStyles({
   }
 });
 
-const LoginDialog = memo((props: Record<string, never>) => {
+const LoginPage = memo((props: Record<string, never>) => {
   const classes = useStyle(props);
   const [currentView, setCurrentView] = useState(0);
-
-  const [opened] = useObservable(() => authService.shouldOpenLogin(), []);
 
   const handleChangeView = useCallback((view: number) => () => setCurrentView(view), []);
 
   return (
-    <Dialog
-      fullScreen
-      disableBackdropClick
-      disableEscapeKeyDown
-      open={opened || false}
-      TransitionComponent={Transition}
-    >
-      <div className={classes.root}>
-        <div className={classes.container}>
-          <div className={classes.logo}>
-            <img src={logoWhite} className={classes.logoImage} alt='logo' />
-          </div>
-
-          <SwipeableViews index={currentView}>
-            <div className={classes.viewContainer}>
-              <LoginDialogForm onRecoveryAccess={handleChangeView(1)} />
-            </div>
-            <div className={classes.viewContainer}>
-              <LoginDialogRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
-            </div>
-          </SwipeableViews>
+    <div className={classes.root}>
+      <div className={classes.container}>
+        <div className={classes.logo}>
+          <img src={logoWhite} className={classes.logoImage} alt='logo' />
         </div>
+
+        <SwipeableViews index={currentView}>
+          <div className={classes.viewContainer}>
+            <LoginForm onRecoveryAccess={handleChangeView(1)} />
+          </div>
+          <div className={classes.viewContainer}>
+            <LoginRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
+          </div>
+        </SwipeableViews>
       </div>
-    </Dialog>
+    </div>
   );
 });
 
-const Transition = memo(
-  forwardRef((props: any, ref: any) => {
-    return <Slide direction='up' {...props} ref={ref} />;
-  })
-);
-
-export default LoginDialog;
+export default LoginPage;

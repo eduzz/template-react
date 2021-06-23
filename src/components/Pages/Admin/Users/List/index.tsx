@@ -3,24 +3,12 @@ import { Fragment, memo, useCallback, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 
-import usePaginatedObservable from '@eduzz/houston-hooks/usePaginatedObservable';
+import usePromisePaginated from '@eduzz/houston-hooks/usePromisePaginated';
 import Button from '@eduzz/houston-ui/Button';
-
-import RefreshIcon from 'mdi-react/RefreshIcon';
+import Table from '@eduzz/houston-ui/Table';
 
 import Toolbar from 'components/Layout/Toolbar';
-import CardLoader from 'components/Shared/CardLoader';
-import EmptyAndErrorMessages from 'components/Shared/Pagination/EmptyAndErrorMessages';
-import SearchField from 'components/Shared/Pagination/SearchField';
-import TableCellActions from 'components/Shared/Pagination/TableCellActions';
-import TableCellSortable from 'components/Shared/Pagination/TableCellSortable';
-import TablePagination from 'components/Shared/Pagination/TablePagination';
 import IUser from 'interfaces/models/user';
 import userService from 'services/user';
 
@@ -31,9 +19,27 @@ const UserListPage = memo(() => {
   const [formOpened, setFormOpened] = useState(false);
   const [current, setCurrent] = useState<IUser>();
 
-  const { params, mergeParams, isLoading, total, result, error, retry } = usePaginatedObservable(
-    params => userService.list(params),
-    { orderBy: 'fullName', orderDirection: 'asc' },
+  const {
+    params,
+    mergeParams,
+    isLoading,
+    total,
+    result,
+    error,
+    retry,
+    handleSort,
+    handleChangePage,
+    handleChangePerPage
+  } = usePromisePaginated(
+    {
+      initialParams: {
+        term: '',
+        page: 1,
+        perPage: 10,
+        sort: { field: 'fullName', direction: 'asc' }
+      },
+      onChangeParams: params => userService.list(params)
+    },
     []
   );
 
@@ -56,7 +62,6 @@ const UserListPage = memo(() => {
   );
 
   const formCancel = useCallback(() => setFormOpened(false), []);
-  const handleRefresh = useCallback(() => retry(), [retry]);
 
   return (
     <Fragment>
@@ -65,12 +70,10 @@ const UserListPage = memo(() => {
       <Card>
         <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
 
-        <CardLoader show={isLoading} />
-
         <CardContent>
           <Grid container justify='space-between' alignItems='center' spacing={2}>
             <Grid item xs={12} sm={6} lg={4}>
-              <SearchField paginationParams={params} onChange={mergeParams} />
+              {/* <SearchField paginationParams={params} onChange={mergeParams} /> */}
             </Grid>
 
             <Grid item xs={12} sm={'auto'}>
@@ -81,42 +84,26 @@ const UserListPage = memo(() => {
           </Grid>
         </CardContent>
 
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCellSortable
-                paginationParams={params}
-                disabled={isLoading}
-                onChange={mergeParams}
-                column='fullName'
-              >
-                Nome
-              </TableCellSortable>
-              <TableCellSortable paginationParams={params} disabled={isLoading} onChange={mergeParams} column='email'>
-                Email
-              </TableCellSortable>
-              <TableCellActions>
-                <IconButton disabled={isLoading} onClick={handleRefresh}>
-                  <RefreshIcon />
-                </IconButton>
-              </TableCellActions>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <EmptyAndErrorMessages
-              colSpan={3}
-              error={error}
-              loading={isLoading}
-              hasData={result.length > 0}
-              onTryAgain={retry}
-            />
-            {result.map(user => (
-              <ListItem key={user.id} user={user} onEdit={handleEdit} onDeleteComplete={retry} />
+        <Table loading={isLoading} sort={params.sort} onSort={handleSort}>
+          <Table.Header>
+            <Table.Column sortableField='fullName'>Nome</Table.Column>
+            <Table.Column sortableField='email'>Email</Table.Column>
+          </Table.Header>
+          <Table.Body>
+            <Table.Empty count={total} />
+            <Table.Error error={error} />
+            {result.map((user, index) => (
+              <ListItem key={user.id} user={user} index={index} onEdit={handleEdit} onDeleteComplete={retry} />
             ))}
-          </TableBody>
+          </Table.Body>
+          <Table.Pagination
+            total={total}
+            page={params.page}
+            perPage={params.perPage}
+            onChangePage={handleChangePage}
+            onChangePerPage={handleChangePerPage}
+          />
         </Table>
-
-        <TablePagination total={total} disabled={isLoading} paginationParams={params} onChange={mergeParams} />
       </Card>
     </Fragment>
   );

@@ -4,13 +4,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Button from '@eduzz/houston-ui/Button';
+import Toast from '@eduzz/houston-ui/Toast';
 
 import FolderDownloadIcon from 'mdi-react/FolderDownloadIcon';
 import FolderOpenIcon from 'mdi-react/FolderOpenIcon';
 
 import IconMessage from 'components/Shared/IconMessage';
 
-import Toast from '../Toast';
 import { loadFile } from './helpers';
 
 export interface IImageReaderResult {
@@ -68,7 +68,7 @@ const ImageReader = memo((props: IProps) => {
         const result = await loadFile(file, extensions);
         setTimeout(() => props.onLoad(result), 1000);
       } catch (err) {
-        Toast.show(
+        Toast.error(
           err === 'invalid-extension' ? `Apenas imagens: ${extensions.join(', ')}` : 'Não conseguimos carregar a imagem'
         );
       }

@@ -1,4 +1,5 @@
 import { memo, useCallback, useContext, useState } from 'react';
+import { SyntheticEvent } from 'react';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -76,7 +77,7 @@ const DrawerListItem = memo((props: IProps) => {
 
   const handleClick = useCallback(() => props.onClick(props.data), [props]);
   const handleSubClick = useCallback((menu: IMenu) => props.onClick(menu), [props]);
-  const handleExandedClick = useCallback((event: any, expanded: boolean) => setExpanded(expanded), []);
+  const handleExandedClick = useCallback((event: SyntheticEvent, expanded: boolean) => setExpanded(expanded), []);
 
   if (!props.data.submenu || !props.data.submenu.length) {
     return (

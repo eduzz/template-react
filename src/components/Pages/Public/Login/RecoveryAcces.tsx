@@ -6,16 +6,13 @@ import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { tap } from 'rxjs/operators';
-
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
+import Toast from '@eduzz/houston-ui/Toast';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import Toast from 'components/Shared/Toast';
-import errorToast from 'helpers/rxjs-operators/errorToast';
 import authService from 'services/auth';
 
 interface IProps {
@@ -29,7 +26,7 @@ const useStyle = makeStyles({
   }
 });
 
-const LoginDialogRecoveryAccess = memo((props: IProps) => {
+const LoginRecoveryAccess = memo((props: IProps) => {
   const classes = useStyle(props);
 
   const form = useForm({
@@ -38,15 +35,12 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
       yup.object().shape({
         email: yup.string().required().email()
       }),
-    onSubmit(model) {
-      return authService.sendResetPassword(model.email).pipe(
-        tap(() => {
-          Toast.show('Foi enviado um link para seu email para podermos recuperar seu acesso.');
-          props.onComplete();
-          form.reset();
-        }),
-        errorToast()
-      );
+    async onSubmit(model) {
+      await authService.sendResetPassword(model.email);
+
+      Toast.info('Foi enviado um link para seu email para podermos recuperar seu acesso.');
+      props.onComplete();
+      form.reset();
     }
   });
 
@@ -74,4 +68,4 @@ const LoginDialogRecoveryAccess = memo((props: IProps) => {
   );
 });
 
-export default LoginDialogRecoveryAccess;
+export default LoginRecoveryAccess;

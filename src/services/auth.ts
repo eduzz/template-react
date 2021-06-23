@@ -1,3 +1,4 @@
+import decodeJWTToken from 'helpers/jwt';
 import IUserToken from 'interfaces/tokens/userToken';
 
 import apiService, { ApiService } from './api';
@@ -7,6 +8,7 @@ import storageService, { StorageService } from './storage';
 export class AuthService {
   private token: string;
   private user: IUserToken;
+  private watchers: Set<(isAuthenticated: boolean) => void> = new Set();
 
   constructor(private api: ApiService, private storageService: StorageService, private cacheService: CacheService) {
     this.setToken(this.storageService.get<string>('auth-token'));
@@ -18,6 +20,14 @@ export class AuthService {
 
   public isAuthenticated(): boolean {
     return !!this.token;
+  }
+
+  public watchIsAuthenticated(callback: (isAuthenticated: boolean) => void) {
+    callback(this.isAuthenticated());
+    this.watchers.add(callback);
+    return () => {
+      this.watchers.delete(callback);
+    };
   }
 
   public async login(email: string, password: string): Promise<void> {
@@ -55,25 +65,16 @@ export class AuthService {
     this.token = token;
     this.api.setBearerToken(token);
 
+    this.watchers.forEach(callback => callback(!!token));
+
     if (token) {
-      this.user = this.decodeToken(token);
+      this.user = decodeJWTToken<IUserToken>(token);
       this.storageService.set('auth-token', token);
       return;
     }
 
     this.user = null;
     this.storageService.remove('auth-token');
-  }
-
-  private decodeToken(token: string): IUserToken {
-    try {
-      const data = JSON.parse(atob(token.split('.')[1]));
-      const currentTime = Date.now() / 1000;
-
-      return currentTime > data.exp ? null : data;
-    } catch (err) {
-      return null;
-    }
   }
 }
 

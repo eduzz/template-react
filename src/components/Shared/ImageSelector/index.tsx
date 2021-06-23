@@ -1,4 +1,4 @@
-import { forwardRef, Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Cropper } from 'react-image-cropper';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -7,7 +7,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
-import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Button from '@eduzz/houston-ui/Button';
@@ -16,6 +15,7 @@ import Typography from '@eduzz/houston-ui/Typography';
 import transparency from 'assets/images/transparency.png';
 import imageCompress from 'helpers/imagerCompress';
 
+import DefaultDialogTransition from '../DefaultDialogTransition';
 import { calculateRegion } from './helpers';
 import ImageReader, { IImageReaderResult } from './ImageReader';
 
@@ -108,12 +108,12 @@ const ImageSelector = memo((props: IProps) => {
   return (
     <Fragment>
       <Dialog
-        open={props.opened || false}
+        open={props.opened ?? false}
         maxWidth={false}
         disableBackdropClick
         disableEscapeKeyDown
         onExited={onExited}
-        TransitionComponent={Transition}
+        TransitionComponent={DefaultDialogTransition}
       >
         <DialogTitle>
           <Grid container spacing={3} alignContent='center'>
@@ -158,11 +158,5 @@ const ImageSelector = memo((props: IProps) => {
     </Fragment>
   );
 });
-
-const Transition = memo(
-  forwardRef((props: any, ref: any) => {
-    return <Slide direction='up' {...props} ref={ref} />;
-  })
-);
 
 export default ImageSelector;

@@ -11,7 +11,6 @@ import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 
-import errorToast from 'helpers/rxjs-operators/errorToast';
 import authService from 'services/auth';
 
 interface IProps {
@@ -27,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const LoginDialogForm = memo((props: IProps) => {
+const LoginForm = memo((props: IProps) => {
   const classes = useStyles(props);
 
   const form = useForm({
@@ -37,8 +36,8 @@ const LoginDialogForm = memo((props: IProps) => {
         email: yup.string().required().email(),
         password: yup.string().required()
       }),
-    onSubmit(model) {
-      return authService.login(model.email, model.password).pipe(errorToast());
+    async onSubmit(model) {
+      await authService.login(model.email, model.password);
     }
   });
 
@@ -64,4 +63,4 @@ const LoginDialogForm = memo((props: IProps) => {
     </Form>
   );
 });
-export default LoginDialogForm;
+export default LoginForm;

@@ -7,11 +7,9 @@ import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
 
 import themes from 'assets/theme';
 import ThemeContext, { IThemeContext, ThemesTypes } from 'assets/theme/context';
-import Dialogs from 'components/Dialogs';
+import Alert from 'components/Globals/Alert';
+import Loader from 'components/Globals/Loader';
 import Pages from 'components/Pages';
-import Alert from 'components/Shared/Alert';
-import Loader from 'components/Shared/Loader';
-import Toast from 'components/Shared/Toast';
 
 const App = memo(() => {
   const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
@@ -34,12 +32,9 @@ const App = memo(() => {
       <ThemeContext.Provider value={themeContext}>
         <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
           <CssBaseline />
-          <Dialogs />
 
           <Loader />
-
-          <Alert.Global />
-          <Toast.Global />
+          <Alert />
 
           <Pages />
         </MuiThemeProvider>

@@ -1,4 +1,4 @@
-import { forwardRef, memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import Slide from '@material-ui/core/Slide';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { tap } from 'rxjs/operators';
@@ -16,6 +15,7 @@ import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 
+import DefaultDialogTransition from 'components/Shared/DefaultDialogTransition';
 import Toast from 'components/Shared/Toast';
 import errorToast from 'helpers/rxjs-operators/errorToast';
 import IUser from 'interfaces/models/user';
@@ -76,7 +76,7 @@ const FormDialog = memo((props: IProps) => {
       disableEscapeKeyDown
       onEnter={handleEnter}
       onExited={handleExit}
-      TransitionComponent={Transition}
+      TransitionComponent={DefaultDialogTransition}
     >
       {form.isSubmitting && <LinearProgress color='primary' />}
 
@@ -106,11 +106,5 @@ const FormDialog = memo((props: IProps) => {
     </Dialog>
   );
 });
-
-const Transition = memo(
-  forwardRef((props: any, ref: any) => {
-    return <Slide direction='up' {...props} ref={ref} />;
-  })
-);
 
 export default FormDialog;
