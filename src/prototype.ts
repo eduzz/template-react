@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import Loader from 'components/Shared/Loader';
+import Loader from 'components/Globals/Loader';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

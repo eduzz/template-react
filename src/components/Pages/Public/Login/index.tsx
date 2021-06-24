@@ -1,10 +1,13 @@
 import { memo, useCallback, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import logoWhite from 'assets/images/logo-white.png';
 import splashImage from 'assets/images/splash.png';
+import useWatcher from 'hooks/useWatcher';
+import authService from 'services/auth';
 
 import LoginForm from './Form';
 import LoginRecoveryAccess from './RecoveryAcces';
@@ -49,6 +52,7 @@ const LoginPage = memo((props: Record<string, never>) => {
   const classes = useStyle(props);
   const [currentView, setCurrentView] = useState(0);
 
+  const isAuthenticated = useWatcher(callback => authService.watchIsAuthenticated(callback), []);
   const handleChangeView = useCallback((view: number) => () => setCurrentView(view), []);
 
   return (
@@ -58,14 +62,18 @@ const LoginPage = memo((props: Record<string, never>) => {
           <img src={logoWhite} className={classes.logoImage} alt='logo' />
         </div>
 
-        <SwipeableViews index={currentView}>
-          <div className={classes.viewContainer}>
-            <LoginForm onRecoveryAccess={handleChangeView(1)} />
-          </div>
-          <div className={classes.viewContainer}>
-            <LoginRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
-          </div>
-        </SwipeableViews>
+        {!isAuthenticated ? (
+          <SwipeableViews index={currentView}>
+            <div className={classes.viewContainer}>
+              <LoginForm onRecoveryAccess={handleChangeView(1)} />
+            </div>
+            <div className={classes.viewContainer}>
+              <LoginRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
+            </div>
+          </SwipeableViews>
+        ) : (
+          <Redirect to='/' />
+        )}
       </div>
     </div>
   );

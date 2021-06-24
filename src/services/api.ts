@@ -3,6 +3,7 @@ import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
 
 import { API_ENDPOINT } from '../settings';
+import mock from './_mock';
 import { apiResponseFormatter } from './../formatters/apiResponse';
 
 export class ApiService {
@@ -43,20 +44,22 @@ export class ApiService {
     try {
       onProgress && onProgress(0);
 
-      const response = await axios.request({
-        baseURL: this.apiEndpoint,
-        url,
-        method,
-        headers: {
-          Authorization: this.bearerToken,
-          'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
-        },
-        params: method === 'GET' ? apiRequestFormatter(data) : null,
-        data: method === 'POST' || method === 'PUT' ? apiRequestFormatter(data) : null,
-        onUploadProgress: (progress: ProgressEvent) => {
-          onProgress && onProgress((progress.loaded / progress.total) * 100);
-        }
-      });
+      const response = this.apiEndpoint
+        ? await axios.request({
+            baseURL: this.apiEndpoint,
+            url,
+            method,
+            headers: {
+              Authorization: this.bearerToken,
+              'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
+            },
+            params: method === 'GET' ? apiRequestFormatter(data) : null,
+            data: method === 'POST' || method === 'PUT' ? apiRequestFormatter(data) : null,
+            onUploadProgress: (progress: ProgressEvent) => {
+              onProgress && onProgress((progress.loaded / progress.total) * 100);
+            }
+          })
+        : { data: mock[method][url] };
 
       onProgress && onProgress(100);
       return apiResponseFormatter<T>(response.data || {});

@@ -3,7 +3,7 @@ export const ENV = (process.env.REACT_APP_ENV || 'production').trim();
 export const API_ENDPOINT = (process.env.REACT_APP_API_ENDPOINT || '').trim();
 export const CDN_ENDPOINT = (process.env.REACT_APP_CDN_ENDPOINT || '').trim();
 
-if (!API_ENDPOINT) throw new Error('Please provide an API_ENDPOINT');
+if (!API_ENDPOINT) console.log('API IN MOCK MODE');
 
 export const SENTRY_KEY = (process.env.REACT_APP_SENTRY_KEY || '').trim();
 

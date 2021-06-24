@@ -5,7 +5,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
 
-import Alert from 'components/Shared/Alert';
+import Alert from 'components/Globals/Alert';
 import { errorMessageFormatter } from 'formatters/errorMessage';
 
 interface IProps {

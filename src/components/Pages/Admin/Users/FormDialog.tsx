@@ -8,16 +8,13 @@ import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { tap } from 'rxjs/operators';
-
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
+import Toast from '@eduzz/houston-ui/Toast';
 
 import DefaultDialogTransition from 'components/Shared/DefaultDialogTransition';
-import Toast from 'components/Shared/Toast';
-import errorToast from 'helpers/rxjs-operators/errorToast';
 import IUser from 'interfaces/models/user';
 import userService from 'services/user';
 
@@ -50,14 +47,10 @@ const FormDialog = memo((props: IProps) => {
         email: yup.string().required().email().max(150),
         roles: yup.array().required().min(1)
       }),
-    onSubmit(model) {
-      return userService.save(model).pipe(
-        tap(user => {
-          Toast.show(`${user.firstName} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
-          props.onComplete(user);
-        }),
-        errorToast()
-      );
+    async onSubmit(model) {
+      const user = await userService.save(model);
+      Toast.success(`${user.firstName} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
+      props.onComplete(user);
     }
   });
 
