@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react';
+import { memo } from 'react';
 
 import { enRoles } from 'interfaces/models/user';
 import { Redirect, RouteProps, Route } from 'react-router-dom';
@@ -14,7 +14,7 @@ interface IProps extends RouteProps {
 const PermissionRoute = memo<IProps>(({ role, ...props }) => {
   const isAuthenticated = useRecoilValue(selectorIsAuthenticated);
 
-  if (isAuthenticated === null) {
+  if (isAuthenticated === undefined) {
     return null;
   }
 
@@ -23,7 +23,7 @@ const PermissionRoute = memo<IProps>(({ role, ...props }) => {
   }
 
   return (
-    <Fragment>
+    <>
       <PermissionHide role={role}>
         <Route {...props} />
       </PermissionHide>
@@ -31,7 +31,7 @@ const PermissionRoute = memo<IProps>(({ role, ...props }) => {
       <PermissionHide inverse role={role}>
         <p>Não encontrado</p>
       </PermissionHide>
-    </Fragment>
+    </>
   );
 });
 

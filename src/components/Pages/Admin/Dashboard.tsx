@@ -1,4 +1,4 @@
-import { Fragment, memo, useState } from 'react';
+import { memo, useState } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -49,7 +49,7 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
   const [colors] = useState(['#0088FE', '#00C49F', '#FFBB28', '#FF8042']);
 
   return (
-    <Fragment>
+    <>
       <Toolbar title='Dashboard' />
 
       <Grid container spacing={3} className={classes.marginBottom}>
@@ -123,7 +123,7 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
           </ResponsiveContainer>
         </CardContent>
       </Card>
-    </Fragment>
+    </>
   );
 });
 

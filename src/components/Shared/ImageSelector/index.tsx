@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
@@ -105,11 +105,10 @@ const ImageSelector = memo((props: IProps) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <Dialog
         open={props.opened ?? false}
         maxWidth={false}
-        disableBackdropClick
         disableEscapeKeyDown
         onExited={onExited}
         TransitionComponent={DefaultDialogTransition}
@@ -154,7 +153,7 @@ const ImageSelector = memo((props: IProps) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Fragment>
+    </>
   );
 });
 

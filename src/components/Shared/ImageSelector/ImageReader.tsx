@@ -1,4 +1,4 @@
-import { DragEvent, Fragment, memo, useCallback, useRef, useState } from 'react';
+import { DragEvent, memo, useCallback, useRef, useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -102,7 +102,7 @@ const ImageReader = memo((props: IProps) => {
   const onDragOut = useCallback((event: DragEvent<any>) => onDragInOut(false, event), [onDragInOut]);
 
   const uploadButton = (
-    <Fragment>
+    <>
       <input
         type='file'
         ref={inputRef}
@@ -115,7 +115,7 @@ const ImageReader = memo((props: IProps) => {
         {loading ? <CircularProgress className={classes.progress} size={20} /> : <FolderOpenIcon />}
         &nbsp;{loading ? 'Carregando' : 'Selecionar'}
       </Button>
-    </Fragment>
+    </>
   );
 
   if (!props.droppable) {
@@ -132,13 +132,13 @@ const ImageReader = memo((props: IProps) => {
       {loading && <CircularProgress color='primary' size={50} className={classes.dropAreaProgress} />}
 
       {!loading && (
-        <Fragment>
+        <>
           <div className={classes.dropAreaDraggingChildren}>
             <IconMessage icon={FolderDownloadIcon} message='Arraste e solte a imagem aqui ou' />
           </div>
 
           <div className={draggingOver ? classes.dropAreaDraggingChildren : null}>{uploadButton}</div>
-        </Fragment>
+        </>
       )}
     </div>
   );

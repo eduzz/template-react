@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext } from 'react';
+import { memo, useCallback, useContext, useMemo } from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
@@ -10,10 +10,11 @@ import DarkIcon from 'mdi-react/Brightness4Icon';
 import LightIcon from 'mdi-react/Brightness5Icon';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
+import { useRecoilValue } from 'recoil';
 import authService from 'services/auth';
+import { selectorUser } from 'store/selectors';
 
 import useBoolean from '@eduzz/houston-hooks/useBoolean';
-import usePromise from '@eduzz/houston-hooks/usePromise';
 
 import ChangePasswordDialog from './ChangePassword';
 
@@ -35,14 +36,11 @@ const UserMenu = memo((props: Record<string, never>) => {
   const themeContext = useContext(ThemeContext);
   const [changePassword, , showChangePassword, hideChangePassword] = useBoolean(false);
 
-  const [user] = usePromise(async () => {
-    const user = authService.getTokenUser();
-
-    return {
-      avatar: null,
-      avatarLetters: `${user.firstName?.substr(0, 1) ?? ''} ${user.lastName?.substr(0, 1) ?? ''}`.trim() || 'U'
-    };
-  }, []);
+  const user = useRecoilValue(selectorUser);
+  const avatarLetters = useMemo(
+    () => `${user?.firstName?.substr(0, 1) ?? ''} ${user?.lastName?.substr(0, 1) ?? ''}`.trim() || 'U',
+    [user]
+  );
 
   const handleLogout = useCallback(() => authService.logout(), []);
 
@@ -56,7 +54,7 @@ const UserMenu = memo((props: Record<string, never>) => {
 
       <DropdownMenu anchorOrigin={{ vertical: 35, horizontal: 'right' }}>
         <IconButton color='inherit' className={classes.button}>
-          <Avatar className={classes.avatar}>{user.avatarLetters}</Avatar>
+          <Avatar className={classes.avatar}>{avatarLetters}</Avatar>
         </IconButton>
         <OptionItem
           text={themeContext.currentTheme === 'light' ? 'Tema Escuro' : 'Tema Claro'}

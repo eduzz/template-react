@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -38,7 +38,7 @@ const SamplePage = memo((props: Record<string, never>) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       <ImageSelector opened={selectorOpened} width={500} height={500} onComplete={onSelectorComplete} />
 
       <Toolbar title='Extra' />
@@ -60,7 +60,7 @@ const SamplePage = memo((props: Record<string, never>) => {
           <Button onClick={openSelector}>Selecionar</Button>
         </CardActions>
       </Card>
-    </Fragment>
+    </>
   );
 });
 export default SamplePage;

@@ -64,7 +64,6 @@ const FormDialog = memo((props: IProps) => {
   return (
     <Dialog
       open={props.opened}
-      disableBackdropClick
       disableEscapeKeyDown
       onEnter={handleEnter}
       onExited={handleExit}

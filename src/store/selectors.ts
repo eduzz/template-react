@@ -10,7 +10,7 @@ export const selectorIsAuthenticated = selector({
   get: ({ get }) => {
     const authToken = get(atomAuthToken);
 
-    if (authToken === null) return null;
+    if (authToken === undefined) return undefined;
     return !!authToken;
   }
 });

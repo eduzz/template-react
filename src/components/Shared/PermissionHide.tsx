@@ -1,4 +1,4 @@
-import { memo, Fragment, useMemo, ReactNode } from 'react';
+import { memo, useMemo, ReactNode } from 'react';
 
 import { enRoles } from 'interfaces/models/user';
 import { useRecoilValue } from 'recoil';
@@ -14,11 +14,9 @@ const PermissionHide = memo<IProps>(({ role, inverse, children }) => {
   const roles = useMemo(() => (Array.isArray(role) ? role : role ? [role] : []), [role]);
   const canAccess = useRecoilValue(selectorCanAccess(roles));
 
-  if (!canAccess || inverse) {
-    return null;
-  }
+  const shouldRender = inverse ? !canAccess : canAccess;
 
-  return <Fragment>{children}</Fragment>;
+  return <>{shouldRender && children}</>;
 });
 
 export default PermissionHide;

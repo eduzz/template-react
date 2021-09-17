@@ -56,7 +56,7 @@ const ChangePasswordDialog = memo(({ opened, onComplete }: IProps) => {
   }, [form]);
 
   return (
-    <Dialog disableBackdropClick disableEscapeKeyDown open={opened} onExited={handleExited}>
+    <Dialog open={opened} onExited={handleExited}>
       {form.isSubmitting && <LinearProgress color='primary' />}
 
       <Form context={form}>

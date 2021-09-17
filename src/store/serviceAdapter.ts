@@ -10,41 +10,54 @@ export class AtomServiceAdapter<T> {
   private effectParam: Promise<AtomEffectParam<T>>;
   private effectParamResolve: (value: AtomEffectParam<T>) => void;
 
-  constructor(onInit?: (param: AtomEffectParam<T>) => void) {
+  constructor(private onInit?: (param: AtomEffectParam<T>) => void) {
     this.effectParam = new Promise(resolve => (this.effectParamResolve = resolve));
-    this.effectParam.then(param => onInit && onInit({ ...param, onSet: this.onSet }));
   }
 
-  public connect() {
+  connect = () => {
     return (param: AtomEffectParam<T>) => {
-      param.onSet((newValue, oldValue) => {
-        this.currentValue = newValue;
-        this.onSetters.forEach(onSet => onSet(newValue, oldValue));
-      });
+      param.onSet((newValue, oldValue) => this.sendNewValue(newValue, oldValue));
+
+      this.onInit && this.onInit({ ...param, setSelf: this.setSelf, onSet: this.onSet });
       this.effectParamResolve(param);
     };
-  }
+  };
 
-  public async value() {
+  value = async () => {
     await this.effectParam;
     return this.currentValue;
-  }
+  };
 
-  public async setSelf(value: Parameters<AtomEffectParam<T>['setSelf']>[0]) {
+  setSelf = async (value: T, ignoreOnSet = false) => {
     const param = await this.effectParam;
-    param.setSelf(value);
-  }
 
-  public async resetSelf() {
+    let oldValue: T | DefaultValue;
+    param.setSelf(getOldValue => {
+      oldValue = getOldValue;
+      return value;
+    });
+
+    if (ignoreOnSet) return;
+    this.sendNewValue(value, oldValue);
+  };
+
+  resetSelf = async () => {
     const param = await this.effectParam;
     param.resetSelf();
-  }
+  };
 
-  public async onSet(callback: (newValue: T, oldValue: T | DefaultValue) => void) {
+  onSet = (callback: (newValue: T, oldValue: T | DefaultValue) => void) => {
     this.onSetters.push(callback);
 
     return () => {
       this.onSetters = this.onSetters.filter(onSet => onSet !== callback);
     };
+  };
+
+  private sendNewValue(newValue: T, oldValue: T | DefaultValue) {
+    if (newValue === oldValue) return;
+
+    this.currentValue = newValue;
+    this.onSetters.forEach(onSet => onSet(newValue, oldValue));
   }
 }

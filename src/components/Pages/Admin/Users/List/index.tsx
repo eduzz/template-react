@@ -1,4 +1,4 @@
-import { Fragment, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -63,7 +63,7 @@ const UserListPage = memo(() => {
   const formCancel = useCallback(() => setFormOpened(false), []);
 
   return (
-    <Fragment>
+    <>
       <Toolbar title='Usuários' />
 
       <Card>
@@ -104,7 +104,7 @@ const UserListPage = memo(() => {
           />
         </Table>
       </Card>
-    </Fragment>
+    </>
   );
 });
 

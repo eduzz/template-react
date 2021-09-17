@@ -1,4 +1,4 @@
-import { Fragment, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import CoreDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
@@ -90,7 +90,7 @@ const Drawer = memo((props: IProps) => {
   const content = <Content menu={props.menu} navigate={navigate} close={contextValue.close} />;
 
   return (
-    <Fragment>
+    <>
       <DrawerContext.Provider value={contextValue}>
         <Hidden mdUp>
           <CoreDrawer
@@ -124,7 +124,7 @@ const Drawer = memo((props: IProps) => {
 
         {props.children}
       </DrawerContext.Provider>
-    </Fragment>
+    </>
   );
 });
 
