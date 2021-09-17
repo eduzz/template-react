@@ -1,14 +1,13 @@
 import { memo, useCallback, useState } from 'react';
 
-import Table from '@eduzz/houston-ui/Table';
-import Toast from '@eduzz/houston-ui/Toast';
-
-import DeleteIcon from 'mdi-react/DeleteIcon';
-import EditIcon from 'mdi-react/EditIcon';
-
 import Alert from 'components/Globals/Alert';
 import IUser from 'interfaces/models/user';
+import DeleteIcon from 'mdi-react/DeleteIcon';
+import EditIcon from 'mdi-react/EditIcon';
 import userService from 'services/user';
+
+import Table from '@eduzz/houston-ui/Table';
+import Toast from '@eduzz/houston-ui/Toast';
 
 interface IProps {
   user: IUser;

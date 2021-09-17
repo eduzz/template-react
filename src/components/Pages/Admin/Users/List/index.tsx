@@ -3,14 +3,13 @@ import { Fragment, memo, useCallback, useState } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import Toolbar from 'components/Layout/Toolbar';
+import IUser from 'interfaces/models/user';
+import userService from 'services/user';
 
 import usePromisePaginated from '@eduzz/houston-hooks/usePromisePaginated';
 import Button from '@eduzz/houston-ui/Button';
 import Table from '@eduzz/houston-ui/Table';
-
-import Toolbar from 'components/Layout/Toolbar';
-import IUser from 'interfaces/models/user';
-import userService from 'services/user';
 
 import FormDialog from '../FormDialog';
 import ListItem from './ListItem';

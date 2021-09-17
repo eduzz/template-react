@@ -1,40 +1,24 @@
-import { memo, ReactNode, useState } from 'react';
-import { useEffect } from 'react';
+import { memo, Fragment, useMemo, ReactNode } from 'react';
 
 import { enRoles } from 'interfaces/models/user';
-import authService from 'services/auth';
+import { useRecoilValue } from 'recoil';
+import { selectorCanAccess } from 'store/selectors';
 
 interface IProps {
-  passIfNull?: boolean;
   role?: enRoles | enRoles[];
   inverse?: boolean;
   children?: ReactNode;
 }
 
-const PermissionHide = memo<IProps>(props => {
-  const [canAccess, setCanAccess] = useState(null);
+const PermissionHide = memo<IProps>(({ role, inverse, children }) => {
+  const roles = useMemo(() => (Array.isArray(role) ? role : role ? [role] : []), [role]);
+  const canAccess = useRecoilValue(selectorCanAccess(roles));
 
-  useEffect(() => {
-    const roles = Array.isArray(props.role) ? props.role : props.role ? [props.role] : [];
-    const watcher = authService.watchIsAuthenticated(() => {
-      setCanAccess(authService.canAccess(...roles));
-    });
-    return () => watcher();
-  }, [props.role]);
-
-  if (canAccess === undefined || canAccess === null) {
+  if (!canAccess || inverse) {
     return null;
   }
 
-  if (props.inverse && !canAccess) {
-    return props.children as any;
-  }
-
-  if (props.inverse || !canAccess) {
-    return null;
-  }
-
-  return props.children as any;
+  return <Fragment>{children}</Fragment>;
 });
 
 export default PermissionHide;

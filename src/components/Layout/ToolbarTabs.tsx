@@ -2,7 +2,6 @@ import { memo, useContext, ReactNode } from 'react';
 
 import AppBar from '@material-ui/core/AppBar';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
 import clsx from 'clsx';
 
 import { DrawerContext } from './Drawer/context';

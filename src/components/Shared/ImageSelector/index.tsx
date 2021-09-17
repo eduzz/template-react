@@ -1,5 +1,4 @@
 import { Fragment, memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Cropper } from 'react-image-cropper';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
@@ -8,12 +7,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import transparency from 'assets/images/transparency.png';
+import imageCompress from 'helpers/imagerCompress';
+import { Cropper } from 'react-image-cropper';
 
 import Button from '@eduzz/houston-ui/Button';
 import Typography from '@eduzz/houston-ui/Typography';
-
-import transparency from 'assets/images/transparency.png';
-import imageCompress from 'helpers/imagerCompress';
 
 import DefaultDialogTransition from '../DefaultDialogTransition';
 import { calculateRegion } from './helpers';

@@ -1,12 +1,12 @@
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import createTheme from '@material-ui/core/styles/createTheme';
 
 import { ThemesTypes } from './context';
 import overrides from './overrides';
 import props from './props';
 import variables from './variables';
 
-const themes: { [key in ThemesTypes]: ReturnType<typeof createMuiTheme> } = {
-  light: createMuiTheme({
+const themes: { [key in ThemesTypes]: ReturnType<typeof createTheme> } = {
+  light: createTheme({
     palette: {
       type: 'light',
       primary: {
@@ -26,7 +26,7 @@ const themes: { [key in ThemesTypes]: ReturnType<typeof createMuiTheme> } = {
     variables,
     props
   }),
-  dark: createMuiTheme({
+  dark: createTheme({
     palette: {
       type: 'dark',
       primary: {

@@ -2,10 +2,9 @@ import '@eduzz/houston-forms/yupLocale';
 import './assets/global.css';
 
 import * as ReactDOM from 'react-dom';
+import logService from 'services/log';
 
 import setHoustonHooksConfig from '@eduzz/houston-hooks/config';
-
-import logService from 'services/log';
 
 import App from './App';
 

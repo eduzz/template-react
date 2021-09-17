@@ -4,9 +4,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
-import Typography from '@eduzz/houston-ui/Typography';
-
 import Toolbar from 'components/Layout/Toolbar';
 import {
   Area,
@@ -21,6 +18,8 @@ import {
   ResponsiveContainer,
   Tooltip
 } from 'recharts';
+
+import Typography from '@eduzz/houston-ui/Typography';
 
 const useStyles = makeStyles({
   marginBottom: {

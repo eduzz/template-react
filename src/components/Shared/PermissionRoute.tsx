@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
-import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { memo, Fragment } from 'react';
 
 import { enRoles } from 'interfaces/models/user';
-import authService from 'services/auth';
+import { Redirect, RouteProps, Route } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { selectorIsAuthenticated } from 'store/selectors';
 
 import PermissionHide from './PermissionHide';
 
@@ -10,45 +11,28 @@ interface IProps extends RouteProps {
   role?: enRoles;
 }
 
-export default class PermissionRoute extends Route<IProps> {
-  private watcher: ReturnType<typeof authService.watchIsAuthenticated>;
+const PermissionRoute = memo<IProps>(({ role, ...props }) => {
+  const isAuthenticated = useRecoilValue(selectorIsAuthenticated);
 
-  constructor(props: IProps) {
-    super(props as any);
-    this.state = { ...(this.state ?? {}) };
+  if (isAuthenticated === null) {
+    return null;
   }
 
-  componentDidMount() {
-    super.componentDidMount && super.componentDidMount();
-
-    this.watcher = authService.watchIsAuthenticated(isAuthenticated => {
-      this.setState({ isAuthenticated });
-    });
+  if (!isAuthenticated) {
+    return <Redirect to='/login' />;
   }
 
-  componentWillUnmount() {
-    this.watcher && this.watcher();
-  }
+  return (
+    <Fragment>
+      <PermissionHide role={role}>
+        <Route {...props} />
+      </PermissionHide>
 
-  render() {
-    const { isAuthenticated } = this.state;
+      <PermissionHide inverse role={role}>
+        <p>Não encontrado</p>
+      </PermissionHide>
+    </Fragment>
+  );
+});
 
-    if (isAuthenticated === undefined) {
-      return null;
-    }
-
-    if (!isAuthenticated) {
-      return <Redirect to='/login' />;
-    }
-
-    return (
-      <Fragment>
-        <PermissionHide role={this.props.role}>{super.render()}</PermissionHide>
-
-        <PermissionHide inverse role={this.props.role}>
-          <p>Não encontrado</p>
-        </PermissionHide>
-      </Fragment>
-    );
-  }
-}
+export default PermissionRoute;

@@ -1,6 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { DependencyList } from 'react';
+import { useState, useEffect, DependencyList } from 'react';
 
 interface IWatchFunction<T> {
   (callback: (result: T) => void): () => void;

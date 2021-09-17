@@ -1,4 +1,4 @@
-import { ThemeVariables } from '@material-ui/core/styles/createMuiTheme';
+import { ThemeVariables } from '@material-ui/core/styles/createTheme';
 
 const variables: ThemeVariables = {
   drawerWidthFull: 240,

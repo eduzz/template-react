@@ -1,24 +1,22 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import logoWhite from 'assets/images/logo-white.png';
+import decodeJWTToken from 'helpers/jwt';
+import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
+import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
+import queryString from 'query-string';
+import { RouteComponentProps } from 'react-router-dom';
+import authService from 'services/auth';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 import Typography from '@eduzz/houston-ui/Typography';
-
-import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
-
-import logoWhite from 'assets/images/logo-white.png';
-import decodeJWTToken from 'helpers/jwt';
-import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
-import queryString from 'query-string';
-import authService from 'services/auth';
 
 import useStyles from './style';
 

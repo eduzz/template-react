@@ -1,10 +1,9 @@
 import { memo } from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import MoreIcon from 'mdi-react/MoreIcon';
 
 import Typography from '@eduzz/houston-ui/Typography';
-
-import MoreIcon from 'mdi-react/MoreIcon';
 
 interface IProps {
   icon: typeof MoreIcon;

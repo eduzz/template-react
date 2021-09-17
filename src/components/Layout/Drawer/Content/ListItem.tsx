@@ -1,5 +1,4 @@
-import { memo, useCallback, useContext, useState } from 'react';
-import { SyntheticEvent } from 'react';
+import { memo, useCallback, useContext, useState, SyntheticEvent } from 'react';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -11,13 +10,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import PermissionHide from 'components/Shared/PermissionHide';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 
-import PermissionHide from 'components/Shared/PermissionHide';
-
 import { IMenu } from '..';
-
 import { DrawerContext } from '../context';
 
 interface IProps {

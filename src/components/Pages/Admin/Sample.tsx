@@ -6,13 +6,12 @@ import CardContent from '@material-ui/core/CardContent';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
-
-import Button from '@eduzz/houston-ui/Button';
-import Typography from '@eduzz/houston-ui/Typography';
-
 import Toolbar from 'components/Layout/Toolbar';
 import ToolbarTabs from 'components/Layout/ToolbarTabs';
 import ImageSelector, { IImageSelectorResult } from 'components/Shared/ImageSelector';
+
+import Button from '@eduzz/houston-ui/Button';
+import Typography from '@eduzz/houston-ui/Typography';
 
 const useStyle = makeStyles(theme => ({
   img: {

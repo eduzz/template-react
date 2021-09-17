@@ -1,6 +1,6 @@
-import { IPaginationParams, IPaginationResponse } from '@eduzz/houston-hooks/usePromisePaginated';
-
 import IUser from 'interfaces/models/user';
+
+import { IPaginationParams, IPaginationResponse } from '@eduzz/houston-hooks/usePromisePaginated';
 
 import apiService, { ApiService } from './api';
 

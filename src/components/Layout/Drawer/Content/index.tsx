@@ -2,11 +2,9 @@ import { memo, useCallback } from 'react';
 
 import List from '@material-ui/core/List';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
 import logoWhite from 'assets/images/logo-white.png';
 
 import { IMenu } from '..';
-
 import DrawerListItem from './ListItem';
 
 interface IProps {

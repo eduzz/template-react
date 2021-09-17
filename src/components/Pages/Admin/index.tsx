@@ -1,13 +1,11 @@
 import { memo, useCallback, useRef, useState, createContext } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
+import Drawer from 'components/Layout/Drawer';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
-
-import Drawer from 'components/Layout/Drawer';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import DashboardIndexPage from './Dashboard';
 import SamplePage from './Sample';

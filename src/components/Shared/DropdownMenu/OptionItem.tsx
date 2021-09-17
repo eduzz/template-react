@@ -4,7 +4,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 
 import DropdownMenuContext from './context';

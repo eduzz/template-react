@@ -5,12 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CoreToolbar from '@material-ui/core/Toolbar';
-
-import Typography from '@eduzz/houston-ui/Typography';
-
+import clsx from 'clsx';
 import MenuIcon from 'mdi-react/MenuIcon';
 
-import clsx from 'clsx';
+import Typography from '@eduzz/houston-ui/Typography';
 
 import { DrawerContext } from './Drawer/context';
 import UserMenu from './UserMenu';

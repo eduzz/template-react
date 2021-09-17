@@ -24,6 +24,7 @@ export function errorMessageFormatter(err: any): string {
       }
 
       if (err.status === 400) {
+        // eslint-disable-next-line sonarjs/no-nested-template-literals
         return `Dádos inválidos: ${err.data?.message ? `: ${err.data?.message}` : ''}`;
       }
 

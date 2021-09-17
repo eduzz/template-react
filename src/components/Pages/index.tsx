@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import PermissionRoute from 'components/Shared/PermissionRoute';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import AdminPage from './Admin';
 import LoginPage from './Public/Login';

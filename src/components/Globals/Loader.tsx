@@ -1,10 +1,8 @@
-import { memo, useEffect, useMemo } from 'react';
-import { useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-
 import DefaultDialogTransition from 'components/Shared/DefaultDialogTransition';
 
 const useStyle = makeStyles(theme => ({

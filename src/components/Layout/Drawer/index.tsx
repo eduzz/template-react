@@ -1,14 +1,12 @@
 import { Fragment, memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { RouteComponentProps, withRouter } from 'react-router';
 
 import CoreDrawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import withWidth, { WithWidth } from '@material-ui/core/withWidth';
-
-import MoreIcon from 'mdi-react/MoreIcon';
-
 import clsx from 'clsx';
+import MoreIcon from 'mdi-react/MoreIcon';
+import { RouteComponentProps, withRouter } from 'react-router';
 
 import Content from './Content';
 import { DrawerContext } from './context';

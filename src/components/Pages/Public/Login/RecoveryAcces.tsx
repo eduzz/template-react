@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import authService from 'services/auth';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
@@ -12,8 +13,6 @@ import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 import Toast from '@eduzz/houston-ui/Toast';
 import Typography from '@eduzz/houston-ui/Typography';
-
-import authService from 'services/auth';
 
 interface IProps {
   onCancel: (e: MouseEvent<HTMLElement>) => void;

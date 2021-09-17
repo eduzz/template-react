@@ -1,18 +1,17 @@
 import axios, { AxiosError, Method } from 'axios';
 import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
+import { AtomServiceAdapter } from 'store/serviceAdapter';
 
 import { API_ENDPOINT } from '../settings';
-import mock from './_mock';
 import { apiResponseFormatter } from './../formatters/apiResponse';
+import mock from './_mock';
 
 export class ApiService {
-  private bearerToken: string;
+  public atomAuthTokenAdapter: AtomServiceAdapter<string>;
 
-  constructor(private apiEndpoint: string) {}
-
-  public setBearerToken(token: string) {
-    this.bearerToken = token ? `Bearer ${token}` : null;
+  constructor(private apiEndpoint: string) {
+    this.atomAuthTokenAdapter = new AtomServiceAdapter();
   }
 
   public get<T = any>(url: string, params?: any): Promise<T> {
@@ -50,7 +49,7 @@ export class ApiService {
             url,
             method,
             headers: {
-              Authorization: this.bearerToken,
+              Authorization: await this.atomAuthTokenAdapter.value(),
               'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
             },
             params: method === 'GET' ? apiRequestFormatter(data) : null,

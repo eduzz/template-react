@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import '@material-ui/core/styles/createMuiTheme';
+import '@material-ui/core/styles/createTheme';
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@material-ui/core/styles/createTheme' {
   interface ThemeVariables {
     drawerWidthFull: number;
     drawerWidthMini: number;

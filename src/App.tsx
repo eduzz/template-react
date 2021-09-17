@@ -2,14 +2,14 @@ import { memo, useMemo, useState } from 'react';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { MuiThemeProvider } from '@material-ui/core/styles';
-
-import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
-
 import themes from 'assets/theme';
 import ThemeContext, { IThemeContext, ThemesTypes } from 'assets/theme/context';
 import Alert from 'components/Globals/Alert';
 import Loader from 'components/Globals/Loader';
 import Pages from 'components/Pages';
+import { RecoilRoot } from 'recoil';
+
+import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
 
 const App = memo(() => {
   const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
@@ -28,18 +28,20 @@ const App = memo(() => {
   }, [currentTheme]);
 
   return (
-    <ThemeProvider>
-      <ThemeContext.Provider value={themeContext}>
-        <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
-          <CssBaseline />
+    <RecoilRoot>
+      <ThemeProvider>
+        <ThemeContext.Provider value={themeContext}>
+          <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
+            <CssBaseline />
 
-          <Loader />
-          <Alert />
+            <Loader />
+            <Alert />
 
-          <Pages />
-        </MuiThemeProvider>
-      </ThemeContext.Provider>
-    </ThemeProvider>
+            <Pages />
+          </MuiThemeProvider>
+        </ThemeContext.Provider>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 });
 
