@@ -1,3 +1,4 @@
+import { store } from 'store';
 import { authTokenSlice } from 'store/slices/authToken';
 
 import apiService from './api';
@@ -6,11 +7,11 @@ import cacheService from './cache';
 export class AuthService {
   public async login(email: string, password: string): Promise<void> {
     const { token } = await apiService.post('/login', { email, password });
-    authTokenSlice.actions.set(token);
+    store.dispatch(authTokenSlice.actions.set(token));
   }
 
   public async logout(): Promise<void> {
-    authTokenSlice.actions.set(null);
+    store.dispatch(authTokenSlice.actions.clear());
     await cacheService.clear();
   }
 

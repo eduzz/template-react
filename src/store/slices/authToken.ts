@@ -6,8 +6,12 @@ export const authTokenSlice = createSlice({
   initialState: { value: storageService.get<string>('auth-token') },
   reducers: {
     set: (state, { payload: newToken }: PayloadAction<string>) => {
-      newToken ? storageService.set('auth-token', newToken) : storageService.remove('auth-token');
+      storageService.set('auth-token', newToken);
       state.value = newToken;
+    },
+    clear: state => {
+      storageService.remove('auth-token');
+      state.value = null;
     }
   }
 });
