@@ -1,17 +1,13 @@
 import axios, { AxiosError, Method } from 'axios';
 import ApiError from 'errors/api';
 import { apiRequestFormatter } from 'formatters/apiRequest';
-import { AtomServiceAdapter } from 'store/serviceAdapter';
+import { store } from 'store';
 
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
 import mock from './_mock';
 
 export class ApiService {
-  public atoms = {
-    authToken: new AtomServiceAdapter<string>()
-  };
-
   public get<T = any>(url: string, params?: any): Promise<T> {
     return this.request<T>('GET', url, params);
   }
@@ -47,7 +43,7 @@ export class ApiService {
             url,
             method,
             headers: {
-              Authorization: await this.atoms.authToken.get(),
+              Authorization: await store.getState().authToken.value,
               'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
             },
             params: method === 'GET' ? apiRequestFormatter(data) : null,

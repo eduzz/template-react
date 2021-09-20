@@ -1,7 +1,7 @@
 import { memo, useMemo, ReactNode } from 'react';
 
 import { enRoles } from 'interfaces/models/user';
-import { useRecoilValue } from 'recoil';
+import { useSelector } from 'react-redux';
 import { selectorCanAccess } from 'store/selectors';
 
 interface IProps {
@@ -12,7 +12,7 @@ interface IProps {
 
 const PermissionHide = memo<IProps>(({ role, inverse, children }) => {
   const roles = useMemo(() => (Array.isArray(role) ? role : role ? [role] : []), [role]);
-  const canAccess = useRecoilValue(selectorCanAccess(roles));
+  const canAccess = useSelector(state => selectorCanAccess(state, roles));
 
   const shouldRender = inverse ? !canAccess : canAccess;
 

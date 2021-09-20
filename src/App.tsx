@@ -7,9 +7,11 @@ import ThemeContext, { IThemeContext, ThemesTypes } from 'assets/theme/context';
 import Alert from 'components/Globals/Alert';
 import Loader from 'components/Globals/Loader';
 import Pages from 'components/Pages';
-import { RecoilRoot } from 'recoil';
+import { Provider } from 'react-redux';
 
 import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
+
+import { store } from './store';
 
 const App = memo(() => {
   const [currentTheme, setCurrentTheme] = useState<ThemesTypes>(
@@ -28,7 +30,7 @@ const App = memo(() => {
   }, [currentTheme]);
 
   return (
-    <RecoilRoot>
+    <Provider store={store}>
       <ThemeProvider>
         <ThemeContext.Provider value={themeContext}>
           <MuiThemeProvider theme={themes[themeContext.currentTheme]}>
@@ -41,7 +43,7 @@ const App = memo(() => {
           </MuiThemeProvider>
         </ThemeContext.Provider>
       </ThemeProvider>
-    </RecoilRoot>
+    </Provider>
   );
 });
 

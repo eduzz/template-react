@@ -10,7 +10,7 @@ import DarkIcon from 'mdi-react/Brightness4Icon';
 import LightIcon from 'mdi-react/Brightness5Icon';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
-import { useRecoilValue } from 'recoil';
+import { useSelector } from 'react-redux';
 import authService from 'services/auth';
 import { selectorUser } from 'store/selectors';
 
@@ -36,9 +36,9 @@ const UserMenu = memo((props: Record<string, never>) => {
   const themeContext = useContext(ThemeContext);
   const [changePassword, , showChangePassword, hideChangePassword] = useBoolean(false);
 
-  const user = useRecoilValue(selectorUser);
+  const user = useSelector(selectorUser);
   const avatarLetters = useMemo(
-    () => `${user?.firstName?.substr(0, 1) ?? ''} ${user?.lastName?.substr(0, 1) ?? ''}`.trim() || 'U',
+    () => `${user?.firstName?.substr(0, 1) ?? ''}${user?.lastName?.substr(0, 1) ?? ''}`.trim() || 'U',
     [user]
   );
 

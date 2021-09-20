@@ -1,8 +1,8 @@
 import { memo } from 'react';
 
 import { enRoles } from 'interfaces/models/user';
+import { useSelector } from 'react-redux';
 import { Redirect, RouteProps, Route } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import { selectorIsAuthenticated } from 'store/selectors';
 
 import PermissionHide from './PermissionHide';
@@ -12,7 +12,7 @@ interface IProps extends RouteProps {
 }
 
 const PermissionRoute = memo<IProps>(({ role, ...props }) => {
-  const isAuthenticated = useRecoilValue(selectorIsAuthenticated);
+  const isAuthenticated = useSelector(selectorIsAuthenticated);
 
   if (isAuthenticated === undefined) {
     return null;
