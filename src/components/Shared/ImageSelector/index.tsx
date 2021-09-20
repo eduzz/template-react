@@ -14,7 +14,6 @@ import { Cropper } from 'react-image-cropper';
 import Button from '@eduzz/houston-ui/Button';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import DefaultDialogTransition from '../DefaultDialogTransition';
 import { calculateRegion } from './helpers';
 import ImageReader, { IImageReaderResult } from './ImageReader';
 
@@ -78,16 +77,13 @@ const ImageSelector = memo((props: IProps) => {
     return () => window.removeEventListener('resize', reCalculateRegion);
   }, [reCalculateRegion]);
 
-  const onExited = useCallback(() => setImage(null), []);
+  const handleExited = useCallback(() => setImage(null), []);
 
   const handleSave = useCallback(async () => {
     setSaving(true);
 
     const result = await imageCompress(cropper.current.crop(), props.width, props.height);
-    props.onComplete({
-      filename: 'image.png',
-      base64: result
-    });
+    props.onComplete({ filename: 'image.png', base64: result });
 
     setSaving(false);
   }, [props]);
@@ -105,55 +101,52 @@ const ImageSelector = memo((props: IProps) => {
   }, []);
 
   return (
-    <>
-      <Dialog
-        open={props.opened ?? false}
-        maxWidth={false}
-        disableEscapeKeyDown
-        onExited={onExited}
-        TransitionComponent={DefaultDialogTransition}
-      >
-        <DialogTitle>
-          <Grid container spacing={3} alignContent='center'>
-            <Grid item xs={true}>
-              Selecionar Imagem
-              <Typography>
-                <strong>Tamanho sugerido:</strong> {props.height}px de altura {props.width}px de largura
-              </Typography>
-            </Grid>
-            {image && (
-              <Grid item xs={false}>
-                <ImageReader onLoad={handleSetImage} />
-              </Grid>
-            )}
+    <Dialog
+      open={props.opened ?? false}
+      maxWidth={false}
+      disableEscapeKeyDown
+      TransitionProps={{ onExited: handleExited }}
+    >
+      <DialogTitle>
+        <Grid container spacing={3} alignContent='center'>
+          <Grid item xs={true}>
+            Selecionar Imagem
+            <Typography>
+              <strong>Tamanho sugerido:</strong> {props.height}px de altura {props.width}px de largura
+            </Typography>
           </Grid>
-        </DialogTitle>
-        <DialogContent className={classes.content}>
-          {!image && <ImageReader onLoad={handleSetImage} droppable />}
-
           {image && (
-            <div className={classes.imageContainer} style={dimentions}>
-              <Cropper
-                src={image.url}
-                ratio={props.width / props.height}
-                width={props.width}
-                height={props.height}
-                allowNewSelection={false}
-                ref={cropper}
-              />
-            </div>
+            <Grid item xs={false}>
+              <ImageReader onLoad={handleSetImage} />
+            </Grid>
           )}
-        </DialogContent>
-        <DialogActions>
-          <Button disabled={saving} onClick={handleCancel} variant='text'>
-            Cancelar
-          </Button>
-          <Button disabled={!image || saving} onClick={handleSave}>
-            {saving ? <CircularProgress size={20} /> : 'OK'}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+        </Grid>
+      </DialogTitle>
+      <DialogContent className={classes.content}>
+        {!image && <ImageReader onLoad={handleSetImage} droppable />}
+
+        {image && (
+          <div className={classes.imageContainer} style={dimentions}>
+            <Cropper
+              src={image.url}
+              ratio={props.width / props.height}
+              width={props.width}
+              height={props.height}
+              allowNewSelection={false}
+              ref={cropper}
+            />
+          </div>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button disabled={saving} onClick={handleCancel} variant='text'>
+          Cancelar
+        </Button>
+        <Button disabled={!image || saving} onClick={handleSave}>
+          {saving ? <CircularProgress size={20} /> : 'OK'}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 });
 

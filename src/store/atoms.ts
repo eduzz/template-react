@@ -6,5 +6,5 @@ export type AtomEffectAdapter = Parameters<AtomEffect<any>>[0];
 export const atomAuthToken = atom<string>({
   key: 'authToken',
   default: undefined,
-  effects_UNSTABLE: [authService.atomAuthTokenAdapter.connect()]
+  effects_UNSTABLE: [authService.atoms.authToken.effect()]
 });

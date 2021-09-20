@@ -7,7 +7,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import DefaultDialogTransition from 'components/Shared/DefaultDialogTransition';
 import IUser from 'interfaces/models/user';
 import userService from 'services/user';
 
@@ -57,18 +56,12 @@ const FormDialog = memo((props: IProps) => {
     form.setValues(props.user ?? {}, false);
   }, [form, props.user]);
 
-  const handleExit = useCallback(() => {
+  const handleExited = useCallback(() => {
     form.reset();
   }, [form]);
 
   return (
-    <Dialog
-      open={props.opened}
-      disableEscapeKeyDown
-      onEnter={handleEnter}
-      onExited={handleExit}
-      TransitionComponent={DefaultDialogTransition}
-    >
+    <Dialog open={props.opened} disableEscapeKeyDown TransitionProps={{ onEnter: handleEnter, onExited: handleExited }}>
       {form.isSubmitting && <LinearProgress color='primary' />}
 
       <Form context={form}>

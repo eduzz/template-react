@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import DefaultDialogTransition from 'components/Shared/DefaultDialogTransition';
 
 import Button from '@eduzz/houston-ui/Button';
 
@@ -64,13 +63,7 @@ const Alert: AlertComponent = memo(() => {
   }, [onReceiveParams]);
 
   return (
-    <Dialog
-      open={opened}
-      keepMounted
-      TransitionComponent={DefaultDialogTransition}
-      onClose={params?.onCancel}
-      className={classes.root}
-    >
+    <Dialog open={opened} keepMounted onClose={params?.onCancel} className={classes.root}>
       <DialogTitle>{params?.title ?? (params?.confirmation ? 'Confirmação' : 'Atenção')}</DialogTitle>
       <DialogContent>
         <DialogContentText className={classes.content}>{params?.message}</DialogContentText>

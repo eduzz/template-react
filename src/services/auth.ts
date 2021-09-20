@@ -5,30 +5,29 @@ import cacheService, { CacheService } from './cache';
 import storageService, { StorageService } from './storage';
 
 export class AuthService {
-  public atomAuthTokenAdapter: AtomServiceAdapter<string>;
+  public atoms = {
+    authToken: new AtomServiceAdapter<string>()
+  };
 
   constructor(private api: ApiService, private storageService: StorageService, private cacheService: CacheService) {
-    this.atomAuthTokenAdapter = new AtomServiceAdapter(({ setSelf, onSet }) => {
-      setSelf(this.storageService.get<string>('auth-token'));
+    this.atoms.authToken.set(this.storageService.get<string>('auth-token'));
+    this.atoms.authToken.watch(newToken => {
+      if (newToken) {
+        this.storageService.set('auth-token', newToken);
+        return;
+      }
 
-      onSet(newToken => {
-        if (newToken) {
-          this.storageService.set('auth-token', newToken);
-          return;
-        }
-
-        this.storageService.remove('auth-token');
-      });
+      this.storageService.remove('auth-token');
     });
   }
 
   public async login(email: string, password: string): Promise<void> {
     const { token } = await this.api.post('/login', { email, password });
-    this.atomAuthTokenAdapter.setSelf(token);
+    this.atoms.authToken.set(token);
   }
 
   public async logout(): Promise<void> {
-    this.atomAuthTokenAdapter.setSelf(null);
+    this.atoms.authToken.set(null);
     await this.cacheService.clear();
   }
 

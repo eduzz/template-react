@@ -70,7 +70,7 @@ const UserListPage = memo(() => {
         <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
 
         <CardContent>
-          <Grid container justify='space-between' alignItems='center' spacing={2}>
+          <Grid container justifyContent='space-between' alignItems='center' spacing={2}>
             <Grid item xs={12} sm={6} lg={4}>
               {/* <SearchField paginationParams={params} onChange={mergeParams} /> */}
             </Grid>

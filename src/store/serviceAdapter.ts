@@ -4,7 +4,7 @@ type AtomEffectParam<T> = Parameters<AtomEffect<T>>[0];
 type AtomEffectOnSet<T> = (newValue: T, oldValue: T | DefaultValue) => void;
 
 export class AtomServiceAdapter<T> {
-  private onSetters: AtomEffectOnSet<T>[] = [];
+  private watchers: AtomEffectOnSet<T>[] = [];
 
   private currentValue: T;
   private effectParam: Promise<AtomEffectParam<T>>;
@@ -14,50 +14,46 @@ export class AtomServiceAdapter<T> {
     this.effectParam = new Promise(resolve => (this.effectParamResolve = resolve));
   }
 
-  connect = () => {
+  public effect = () => {
     return (param: AtomEffectParam<T>) => {
-      param.onSet((newValue, oldValue) => this.sendNewValue(newValue, oldValue));
+      param.onSet((newValue, oldValue) => this.onValueChange(newValue, oldValue));
 
-      this.onInit && this.onInit({ ...param, setSelf: this.setSelf, onSet: this.onSet });
+      this.onInit && this.onInit({ ...param, setSelf: this.set, onSet: this.watch });
       this.effectParamResolve(param);
     };
   };
 
-  value = async () => {
+  public get = async () => {
     await this.effectParam;
     return this.currentValue;
   };
 
-  setSelf = async (value: T, ignoreOnSet = false) => {
-    const param = await this.effectParam;
+  public set = async (value: T | ((oldValue: T | DefaultValue) => T)) => {
+    const { setSelf } = await this.effectParam;
 
-    let oldValue: T | DefaultValue;
-    param.setSelf(getOldValue => {
-      oldValue = getOldValue;
-      return value;
+    let newValue: T;
+    let previous: T | DefaultValue;
+    setSelf(current => {
+      previous = current;
+      newValue = typeof value === 'function' ? (value as any)(previous) : value;
+      return newValue;
     });
 
-    if (ignoreOnSet) return;
-    this.sendNewValue(value, oldValue);
+    this.onValueChange(newValue, previous);
   };
 
-  resetSelf = async () => {
-    const param = await this.effectParam;
-    param.resetSelf();
-  };
-
-  onSet = (callback: (newValue: T, oldValue: T | DefaultValue) => void) => {
-    this.onSetters.push(callback);
+  public watch = (callback: (newValue: T, oldValue: T | DefaultValue) => void) => {
+    this.watchers.push(callback);
 
     return () => {
-      this.onSetters = this.onSetters.filter(onSet => onSet !== callback);
+      this.watchers = this.watchers.filter(onSet => onSet !== callback);
     };
   };
 
-  private sendNewValue(newValue: T, oldValue: T | DefaultValue) {
+  private onValueChange(newValue: T, oldValue: T | DefaultValue) {
     if (newValue === oldValue) return;
 
     this.currentValue = newValue;
-    this.onSetters.forEach(onSet => onSet(newValue, oldValue));
+    this.watchers.forEach(onSet => onSet(newValue, oldValue));
   }
 }

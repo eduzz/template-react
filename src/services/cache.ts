@@ -40,7 +40,7 @@ export class CacheService {
     return this.save<T>(key, data);
   }
 
-  public watchData<T>(key: string, callback: ICacheWatcher<T>): () => void {
+  public watch<T>(key: string, callback: ICacheWatcher<T>): () => void {
     this.get<T>('key').then(cache => callback(cache));
     this.watchers[key] = [...(this.watchers[key] ?? []), callback];
 

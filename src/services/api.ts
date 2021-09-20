@@ -8,11 +8,9 @@ import { apiResponseFormatter } from './../formatters/apiResponse';
 import mock from './_mock';
 
 export class ApiService {
-  public atomAuthTokenAdapter: AtomServiceAdapter<string>;
-
-  constructor(private apiEndpoint: string) {
-    this.atomAuthTokenAdapter = new AtomServiceAdapter();
-  }
+  public atoms = {
+    authToken: new AtomServiceAdapter<string>()
+  };
 
   public get<T = any>(url: string, params?: any): Promise<T> {
     return this.request<T>('GET', url, params);
@@ -43,13 +41,13 @@ export class ApiService {
     try {
       onProgress && onProgress(0);
 
-      const response = this.apiEndpoint
+      const response = API_ENDPOINT
         ? await axios.request({
-            baseURL: this.apiEndpoint,
+            baseURL: API_ENDPOINT,
             url,
             method,
             headers: {
-              Authorization: await this.atomAuthTokenAdapter.value(),
+              Authorization: await this.atoms.authToken.get(),
               'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
             },
             params: method === 'GET' ? apiRequestFormatter(data) : null,
@@ -73,5 +71,5 @@ export class ApiService {
   }
 }
 
-const apiService = new ApiService(API_ENDPOINT);
+const apiService = new ApiService();
 export default apiService;
