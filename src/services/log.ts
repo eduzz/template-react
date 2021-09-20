@@ -4,8 +4,8 @@ import IUserToken from '../interfaces/tokens/userToken';
 import { ENV, IS_DEVELOPMENT, SENTRY_KEY } from '../settings';
 
 export class LogService {
-  constructor(sentryKey: string) {
-    Sentry.init({ dsn: sentryKey, environment: ENV });
+  constructor() {
+    Sentry.init({ dsn: SENTRY_KEY, environment: ENV });
   }
 
   public setUser(user: IUserToken): void {
@@ -42,5 +42,5 @@ export class LogService {
   }
 }
 
-const logService = new LogService(SENTRY_KEY);
+const logService = new LogService();
 export default logService;

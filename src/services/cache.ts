@@ -1,7 +1,7 @@
 import dateFnsAddMinutes from 'date-fns/addMinutes';
 import dateFnsIsBefore from 'date-fns/isBefore';
 
-import storageService, { StorageService } from './storage';
+import storageService from './storage';
 
 export interface ICache<T = any> {
   data: T;
@@ -17,13 +17,13 @@ export class CacheService {
   private memory: { [key: string]: ICache };
   private watchers: { [key: string]: ICacheWatcher<any>[] };
 
-  constructor(private storageService: StorageService) {
+  constructor() {
     this.memory = {};
     this.watchers = {};
   }
 
   public async get<T = any>(key: string): Promise<T> {
-    let cache = this.memory[key] ?? this.storageService.get(`app-cache-${key}`);
+    let cache = this.memory[key] ?? storageService.get(`app-cache-${key}`);
 
     if (this.isExpirated(cache)) {
       cache = null;
@@ -51,7 +51,7 @@ export class CacheService {
 
   public remove(key: string) {
     this.memory[key] = null;
-    this.storageService.remove(`app-cache-${key}`);
+    storageService.remove(`app-cache-${key}`);
     this.sendWatchData(key, null);
   }
 
@@ -62,7 +62,7 @@ export class CacheService {
       data
     };
 
-    options?.persist ? this.storageService.set(`app-cache-${key}`, cache) : (this.memory[key] = cache);
+    options?.persist ? storageService.set(`app-cache-${key}`, cache) : (this.memory[key] = cache);
 
     this.sendWatchData(key, cache);
     return cache.data;
@@ -75,7 +75,7 @@ export class CacheService {
 
   public async clear(): Promise<void> {
     this.memory = {};
-    this.storageService.clear(key => key.startsWith('app-cache'));
+    storageService.clear(key => key.startsWith('app-cache'));
   }
 
   private sendWatchData(key: string, data: any) {
@@ -84,5 +84,5 @@ export class CacheService {
   }
 }
 
-const cacheService = new CacheService(storageService);
+const cacheService = new CacheService();
 export default cacheService;
