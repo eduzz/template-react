@@ -1,13 +1,10 @@
-import { memo, useCallback, useContext, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import ThemeContext from 'assets/theme/context';
 import DropdownMenu from 'components/Shared/DropdownMenu';
 import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
-import DarkIcon from 'mdi-react/Brightness4Icon';
-import LightIcon from 'mdi-react/Brightness5Icon';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import { useSelector } from 'react-redux';
@@ -33,7 +30,6 @@ const useStyles = makeStyles(theme => ({
 
 const UserMenu = memo((props: Record<string, never>) => {
   const classes = useStyles(props);
-  const themeContext = useContext(ThemeContext);
   const [changePassword, , showChangePassword, hideChangePassword] = useBoolean(false);
 
   const user = useSelector(selectorUser);
@@ -56,11 +52,6 @@ const UserMenu = memo((props: Record<string, never>) => {
         <IconButton color='inherit' className={classes.button}>
           <Avatar className={classes.avatar}>{avatarLetters}</Avatar>
         </IconButton>
-        <OptionItem
-          text={themeContext.currentTheme === 'light' ? 'Tema Escuro' : 'Tema Claro'}
-          icon={themeContext.currentTheme === 'light' ? DarkIcon : LightIcon}
-          handler={themeContext.toogleTheme}
-        />
         <OptionItem text='Trocar senha' icon={KeyVariantIcon} handler={showChangePassword} />
         <OptionItem text='Sair' icon={ExitToAppIcon} handler={handleLogout} />
       </DropdownMenu>
