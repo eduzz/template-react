@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { CardContent, Divider } from '@mui/material';
 
@@ -10,9 +10,6 @@ import Results from './Results';
 import SearchField from './SearchField';
 
 const AutoComplete = () => {
-  const render = useRef(0);
-  render.current++;
-
   const [search, setSearch] = useState('');
   const [counter, setCounter] = useState(0);
   const [outsideCounter, setOutsideCounter] = useState(0);

@@ -3,8 +3,9 @@ import { Card } from '@mui/material';
 import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import ContextApi from './ContextApi';
+import ContextApiExample from './ContextApi';
 import ReduxExample from './Redux';
+import RxJsExample from './RxJs';
 
 const useStyles = createUseStyles(theme => ({
   container: {
@@ -31,7 +32,14 @@ const SamplesPage = () => {
         Context API
       </Typography>
       <Card className={styles.card}>
-        <ContextApi />
+        <ContextApiExample />
+      </Card>
+
+      <Typography size='large' marginBottom>
+        RxJs
+      </Typography>
+      <Card className={styles.card}>
+        <RxJsExample />
       </Card>
     </div>
   );
