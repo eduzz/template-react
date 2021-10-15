@@ -8,9 +8,9 @@ export default createTheme({
   palette: {
     type: 'light',
     primary: {
-      light: '#3a5885',
-      main: '#002f58',
-      dark: '#00042f',
+      light: '#ffff53',
+      main: '#ffcc09',
+      dark: '#c79c00',
       contrastText: '#fff'
     },
     secondary: {

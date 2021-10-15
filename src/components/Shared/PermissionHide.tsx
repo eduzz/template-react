@@ -1,8 +1,9 @@
 import { memo, useMemo, ReactNode } from 'react';
 
-import { enRoles } from 'interfaces/models/user';
 import { useSelector } from 'react-redux';
-import { selectorCanAccess } from 'store/selectors';
+
+import { enRoles } from '@/interfaces/models/user';
+import { selectorCanAccess } from '@/store/selectors';
 
 interface IProps {
   role?: enRoles | enRoles[];

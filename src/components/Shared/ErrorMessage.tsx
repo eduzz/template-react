@@ -1,11 +1,12 @@
 import { memo } from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { errorMessageFormatter } from 'formatters/errorMessage';
 import AlertCircleIcon from 'mdi-react/AlertCircleIcon';
 
 import Button from '@eduzz/houston-ui/Button';
 import Typography from '@eduzz/houston-ui/Typography';
+
+import { errorMessageFormatter } from '@/formatters/errorMessage';
 
 interface IProps {
   error: any;

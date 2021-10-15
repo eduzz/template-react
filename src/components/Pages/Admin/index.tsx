@@ -1,15 +1,15 @@
 import { memo, useCallback, useRef, useState, createContext } from 'react';
 
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Drawer from 'components/Layout/Drawer';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import DashboardIndexPage from './Dashboard';
-import SamplePage from './Sample';
 import UserIndexPage from './Users';
+
+import Drawer from '@/components/Layout/Drawer';
 
 export const ScrollTopContext = createContext<() => void>(() => null);
 
@@ -56,7 +56,6 @@ const AdminPage = memo((props: Record<string, never>) => {
         <Drawer menu={menu}>
           <main ref={mainContent} className={classes.content}>
             <Switch>
-              <Route path='/exemplos' component={SamplePage} />
               <Route path='/usuarios' component={UserIndexPage} />
               <Route path='/' component={DashboardIndexPage} />
               <Route render={renderRedirect} />

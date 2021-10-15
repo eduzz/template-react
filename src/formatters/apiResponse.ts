@@ -1,4 +1,4 @@
-import { dateParse } from 'formatters/date';
+import { dateParse } from '@/formatters/date';
 
 export function apiResponseFormatter<T extends { [key: string]: any }>(obj: T): T {
   if (!obj) return obj;

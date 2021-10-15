@@ -3,17 +3,18 @@ import { memo, useCallback, useMemo } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-import DropdownMenu from 'components/Shared/DropdownMenu';
-import OptionItem from 'components/Shared/DropdownMenu/OptionItem';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import { useSelector } from 'react-redux';
-import authService from 'services/auth';
-import { selectorUser } from 'store/selectors';
 
 import useBoolean from '@eduzz/houston-hooks/useBoolean';
 
 import ChangePasswordDialog from './ChangePassword';
+
+import DropdownMenu from '@/components/Shared/DropdownMenu';
+import OptionItem from '@/components/Shared/DropdownMenu/OptionItem';
+import authService from '@/services/auth';
+import { selectorUser } from '@/store/selectors';
 
 const useStyles = makeStyles(theme => ({
   button: {

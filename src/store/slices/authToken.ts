@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import storageService from 'services/storage';
+
+import storageService from '@/services/storage';
 
 export const authTokenSlice = createSlice({
   name: 'authToken',

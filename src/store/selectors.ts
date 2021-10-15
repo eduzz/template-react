@@ -1,8 +1,9 @@
-import decodeJWTToken from 'helpers/jwt';
-import { enRoles } from 'interfaces/models/user';
-import IUserToken from 'interfaces/tokens/userToken';
 import { createSelector } from 'reselect';
-import { RootState } from 'store';
+
+import decodeJWTToken from '@/helpers/jwt';
+import { enRoles } from '@/interfaces/models/user';
+import IUserToken from '@/interfaces/tokens/userToken';
+import { RootState } from '@/store';
 
 export const selectorIsAuthenticated = createSelector(
   (state: RootState) => state.authToken.value,

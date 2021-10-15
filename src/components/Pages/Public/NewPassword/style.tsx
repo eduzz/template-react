@@ -1,5 +1,6 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import splashImage from 'assets/images/splash.png';
+
+import splashImage from '@/assets/images/splash.png';
 
 const useStyle = makeStyles({
   root: {

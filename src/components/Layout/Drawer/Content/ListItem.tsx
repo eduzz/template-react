@@ -10,11 +10,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { darken } from '@material-ui/core/styles/colorManipulator';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import PermissionHide from 'components/Shared/PermissionHide';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 
 import { IMenu } from '..';
 import { DrawerContext } from '../context';
+
+import PermissionHide from '@/components/Shared/PermissionHide';
 
 interface IProps {
   data: IMenu;

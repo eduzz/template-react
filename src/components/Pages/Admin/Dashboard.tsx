@@ -4,7 +4,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Toolbar from 'components/Layout/Toolbar';
 import {
   Area,
   AreaChart,
@@ -20,6 +19,8 @@ import {
 } from 'recharts';
 
 import Typography from '@eduzz/houston-ui/Typography';
+
+import Toolbar from '@/components/Layout/Toolbar';
 
 const useStyles = makeStyles({
   marginBottom: {

@@ -2,11 +2,12 @@ import '@eduzz/houston-forms/yupLocale';
 import './assets/global.css';
 
 import * as ReactDOM from 'react-dom';
-import logService from 'services/log';
 
 import setHoustonHooksConfig from '@eduzz/houston-hooks/config';
 
 import App from './App';
+
+import logService from '@/services/log';
 
 setHoustonHooksConfig({
   onUnhandledError: err => logService.handleError(err)

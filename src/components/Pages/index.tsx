@@ -1,11 +1,12 @@
 import { memo, useCallback } from 'react';
 
-import PermissionRoute from 'components/Shared/PermissionRoute';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import AdminPage from './Admin';
 import LoginPage from './Public/Login';
 import NewPasswordPage from './Public/NewPassword';
+
+import PermissionRoute from '@/components/Shared/PermissionRoute';
 
 const Pages = memo(() => {
   const renderEmpty = useCallback(() => <div />, []);

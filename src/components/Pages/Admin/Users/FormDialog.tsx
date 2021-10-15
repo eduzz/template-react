@@ -7,14 +7,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import IUser from 'interfaces/models/user';
-import userService from 'services/user';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
 import Toast from '@eduzz/houston-ui/Toast';
+
+import IUser from '@/interfaces/models/user';
+import userService from '@/services/user';
 
 interface IProps {
   opened: boolean;

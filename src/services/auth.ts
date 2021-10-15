@@ -1,8 +1,8 @@
-import { store } from 'store';
-import { authTokenSlice } from 'store/slices/authToken';
-
 import apiService from './api';
 import cacheService from './cache';
+
+import { store } from '@/store';
+import { authTokenSlice } from '@/store/slices/authToken';
 
 export class AuthService {
   public async login(email: string, password: string): Promise<void> {

@@ -57,8 +57,8 @@ async function cleanup(params) {
       to: params.sentryDsn
     },
     {
-      from: `"start": "node ./init.js"`,
-      to: `"start": "react-scripts start"`
+      from: '"start": "node ./init.js"',
+      to: '"start": "vite"'
     }
   ];
 
@@ -89,7 +89,7 @@ async function replaceContent(file, replacers) {
     throw err;
   }
 
-  for (let replacer of replacers) {
+  for (const replacer of replacers) {
     content = content.replace(replacer.from, replacer.to);
   }
 

@@ -4,13 +4,9 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import logoWhite from 'assets/images/logo-white.png';
-import decodeJWTToken from 'helpers/jwt';
-import IResetPasswordToken from 'interfaces/tokens/resetPasswordToken';
 import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
 import queryString from 'query-string';
 import { RouteComponentProps } from 'react-router-dom';
-import authService from 'services/auth';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
@@ -19,6 +15,11 @@ import TextField from '@eduzz/houston-ui/Forms/Text';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import useStyles from './style';
+
+import logoWhite from '@/assets/images/logo-white.png';
+import decodeJWTToken from '@/helpers/jwt';
+import IResetPasswordToken from '@/interfaces/tokens/resetPasswordToken';
+import authService from '@/services/auth';
 
 interface IProps extends RouteComponentProps<{ t: string }> {}
 

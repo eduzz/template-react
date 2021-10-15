@@ -1,11 +1,12 @@
 import axios, { AxiosError, Method } from 'axios';
-import ApiError from 'errors/api';
-import { apiRequestFormatter } from 'formatters/apiRequest';
-import { store } from 'store';
 
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
 import mock from './_mock';
+
+import ApiError from '@/errors/api';
+import { apiRequestFormatter } from '@/formatters/apiRequest';
+import { store } from '@/store';
 
 export class ApiService {
   public get<T = any>(url: string, params?: any): Promise<T> {

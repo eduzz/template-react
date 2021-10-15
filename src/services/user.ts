@@ -1,8 +1,8 @@
-import IUser from 'interfaces/models/user';
-
 import { IPaginationParams, IPaginationResponse } from '@eduzz/houston-hooks/usePromisePaginated';
 
 import apiService from './api';
+
+import IUser from '@/interfaces/models/user';
 
 export class UserService {
   public list(params: IPaginationParams): Promise<IPaginationResponse<IUser>> {

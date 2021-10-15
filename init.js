@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const childProcess = require('child_process');
+
 const ora = require('ora');
 const rimraf = require('rimraf');
 
@@ -16,7 +17,7 @@ async function init() {
   ora.promise(promise, 'Renomeando projeto...');
   await promise;
 
-  promise = selfDestruction(params);
+  promise = selfDestruction();
   ora.promise(promise, 'Auto destruição...');
   await promise;
 
