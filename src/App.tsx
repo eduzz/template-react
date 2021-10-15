@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
 
-import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
+import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider/MuiV4Compat';
 
 import { store } from './store';
 

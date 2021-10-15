@@ -38,8 +38,8 @@ export class ApiService {
     try {
       onProgress && onProgress(0);
 
-      const response = API_ENDPOINT
-        ? await axios.request({
+      const request = API_ENDPOINT
+        ? axios.request({
             baseURL: API_ENDPOINT,
             url,
             method,
@@ -53,9 +53,13 @@ export class ApiService {
               onProgress && onProgress((progress.loaded / progress.total) * 100);
             }
           })
-        : { data: mock[method][url] };
+        : new Promise<{ data: any }>(resolve =>
+            setTimeout(() => resolve({ data: mock[method][url] }), 1000 + 2000 * Math.random())
+          );
 
+      const response = await request;
       onProgress && onProgress(100);
+
       return apiResponseFormatter<T>(response.data || {});
     } catch (err) {
       return this.handleError<T>(err);

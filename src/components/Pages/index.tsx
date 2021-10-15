@@ -5,6 +5,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import AdminPage from './Admin';
 import LoginPage from './Public/Login';
 import NewPasswordPage from './Public/NewPassword';
+import SamplesPage from './Public/Samples';
 
 import PermissionRoute from '@/components/Shared/PermissionRoute';
 
@@ -17,6 +18,7 @@ const Pages = memo(() => {
       <Switch>
         <Route path='/nova-senha' exact component={NewPasswordPage} />
         <Route path='/login' exact component={LoginPage} />
+        <Route path='/exemplos' exact component={SamplesPage} />
         <PermissionRoute role={null} path='/' component={AdminPage} />
 
         <Route path='/reload' exact render={renderEmpty} />
