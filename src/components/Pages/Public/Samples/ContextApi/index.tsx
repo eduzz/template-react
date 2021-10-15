@@ -9,27 +9,27 @@ import AutoCompleteRedux from './AutoCompleteRedux';
 
 const ContextApi = () => {
   return (
-    <div>
+    <Grid.Container>
       <AutoComplete />
 
       <Divider />
 
-      <CardContent>
-        <Typography size='medium' marginBottom>
-          Redux:
-        </Typography>
-      </CardContent>
+      <Grid.Row>
+        <Grid.Column xs={true}>
+          <Typography size='medium' marginBottom>
+            Redux:
+          </Typography>
+        </Grid.Column>
+      </Grid.Row>
 
-      <Grid.Container>
-        <Grid.Row>
-          <Grid.Column xs={true}>
-            <AutoCompleteRedux />
-          </Grid.Column>
-          {/* <Grid.Column xs={true}>
+      <Grid.Row>
+        <Grid.Column xs={true}>
+          <AutoCompleteRedux />
+        </Grid.Column>
+        {/* <Grid.Column xs={true}>
             <AutoCompleteRedux />
           </Grid.Column> */}
-        </Grid.Row>
-      </Grid.Container>
+      </Grid.Row>
 
       <Divider />
 
@@ -39,8 +39,15 @@ const ContextApi = () => {
         </Typography>
       </CardContent>
 
-      <AutoCompleteFixed />
-    </div>
+      <Grid.Row>
+        <Grid.Column xs={true}>
+          <AutoCompleteFixed />
+        </Grid.Column>
+        {/* <Grid.Column xs={true}>
+            <AutoCompleteFixed />
+          </Grid.Column> */}
+      </Grid.Row>
+    </Grid.Container>
   );
 };
 
