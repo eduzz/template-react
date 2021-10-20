@@ -1,10 +1,11 @@
 import { memo, SyntheticEvent, useCallback, useContext } from 'react';
 
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
+
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import DropdownMenuContext from './context';
 
@@ -14,7 +15,7 @@ interface IProps {
   handler: () => void;
 }
 
-const useStyle = makeStyles({
+const useStyle = createUseStyles({
   text: {
     paddingLeft: '0 !important'
   }

@@ -1,13 +1,13 @@
 import { memo, useCallback, useContext, ReactNode } from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import CoreToolbar from '@material-ui/core/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import CoreToolbar from '@mui/material/Toolbar';
 import clsx from 'clsx';
 import MenuIcon from 'mdi-react/MenuIcon';
 
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import { DrawerContext } from './Drawer/context';
@@ -18,7 +18,7 @@ interface IProps {
   children?: ReactNode;
 }
 
-const useStyle = makeStyles(theme => ({
+const useStyle = createUseStyles(theme => ({
   root: {
     height: theme.variables.headerHeight,
     marginTop: theme.variables.contentPadding * -1,
@@ -29,24 +29,17 @@ const useStyle = makeStyles(theme => ({
     }
   },
   appBar: {
-    backgroundColor: theme.palette.type === 'light' ? theme.palette.grey['900'] : null,
+    backgroundColor: theme.colors.grey['900'],
     color: 'white',
     width: '100%',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
     [theme.breakpoints.up('md')]: {
-      backgroundColor: theme.palette.type === 'light' ? 'white' : null,
-      color: theme.palette.type === 'light' ? theme.palette.text.primary : null,
+      backgroundColor: 'white',
+      color: theme.colors.text.primary,
       width: `calc(100% - ${theme.variables.drawerWidthFull}px)`
     }
   },
   appBarDrawerMini: {
     width: `calc(100% - ${theme.variables.drawerWidthMini}px)`
-  },
-  iconMenu: {
-    marginLeft: '-15px'
   }
 }));
 
@@ -66,7 +59,7 @@ const Toolbar = memo((props: IProps) => {
         color='default'
       >
         <CoreToolbar>
-          <IconButton color='inherit' onClick={openDrawer} className={classes.iconMenu}>
+          <IconButton color='inherit' onClick={openDrawer}>
             <MenuIcon />
           </IconButton>
           {props.children}

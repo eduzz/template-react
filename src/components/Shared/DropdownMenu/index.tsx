@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo, useState } from 'react';
 
-import IconButton from '@material-ui/core/IconButton';
-import Menu, { MenuProps } from '@material-ui/core/Menu';
+import IconButton from '@mui/material/IconButton';
+import Menu, { MenuProps } from '@mui/material/Menu';
 import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
 
 import PermissionHide from '../PermissionHide';

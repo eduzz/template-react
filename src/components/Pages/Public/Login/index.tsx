@@ -1,9 +1,10 @@
 import { memo, useCallback, useState } from 'react';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
+
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import LoginForm from './Form';
 import LoginRecoveryAccess from './RecoveryAcces';
@@ -12,7 +13,7 @@ import logoWhite from '@/assets/images/logo-white.png';
 import splashImage from '@/assets/images/splash.png';
 import { selectorIsAuthenticated } from '@/store/selectors';
 
-const useStyle = makeStyles({
+const useStyle = createUseStyles({
   root: {
     minHeight: '100vh',
     minWidth: '100vw',

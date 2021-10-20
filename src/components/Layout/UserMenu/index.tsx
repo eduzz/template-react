@@ -1,13 +1,13 @@
 import { memo, useCallback, useMemo } from 'react';
 
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/core/styles';
+import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
 import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
 import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import { useSelector } from 'react-redux';
 
 import useBoolean from '@eduzz/houston-hooks/useBoolean';
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import ChangePasswordDialog from './ChangePassword';
 
@@ -16,16 +16,15 @@ import OptionItem from '@/components/Shared/DropdownMenu/OptionItem';
 import authService from '@/services/auth';
 import { selectorUser } from '@/store/selectors';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = createUseStyles(theme => ({
   button: {
-    marginRight: -10,
     padding: 0
   },
   avatar: {
     width: 40,
     height: 40,
     fontSize: 16,
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.colors.secondary.main
   }
 }));
 

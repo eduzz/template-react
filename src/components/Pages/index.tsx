@@ -9,7 +9,6 @@ import NewPasswordPage from './Public/NewPassword';
 import PermissionRoute from '@/components/Shared/PermissionRoute';
 
 const Pages = memo(() => {
-  const renderEmpty = useCallback(() => <div />, []);
   const renderRedirect = useCallback(() => <Redirect to='/' />, []);
 
   return (
@@ -19,7 +18,6 @@ const Pages = memo(() => {
         <Route path='/login' exact component={LoginPage} />
         <PermissionRoute role={null} path='/' component={AdminPage} />
 
-        <Route path='/reload' exact render={renderEmpty} />
         <Route render={renderRedirect} />
       </Switch>
     </BrowserRouter>

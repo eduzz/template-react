@@ -1,16 +1,16 @@
 import { memo, useCallback, useContext, useState, SyntheticEvent } from 'react';
 
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { darken } from '@material-ui/core/styles/colorManipulator';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Tooltip from '@material-ui/core/Tooltip';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Tooltip from '@mui/material/Tooltip';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
+
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import { IMenu } from '..';
 import { DrawerContext } from '../context';
@@ -22,37 +22,37 @@ interface IProps {
   onClick: (menu: IMenu) => void;
 }
 
-const useStyle = makeStyles(theme => ({
+const useStyle = createUseStyles(theme => ({
   item: {
     paddingLeft: 14,
     opacity: 0.8,
     '&.active': {
-      opacity: 1,
-      background: darken(theme.palette.primary.main, 0.3)
+      opacity: 1
+      // background: darken(theme.colors.primary.main, 0.3)
     }
   },
   icon: {
     margin: '0',
     minWidth: 34,
     marginRight: 15,
-    fill: theme.palette.primary.contrastText
+    fill: theme.colors.primary.contrastText
   },
   text: {
     color: 'inherit'
   },
   expandablePanel: {
-    background: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    background: theme.colors.primary.main,
+    color: theme.colors.primary.contrastText,
     marginLeft: -10,
     boxShadow: 'none',
     margin: 0,
     '&.active': {
-      background: darken(theme.palette.primary.main, 0.1)
+      // background: darken(theme.colors.primary.main, 0.1)
     }
   },
   expandableTitle: {
     '&:hover': {
-      background: darken(theme.palette.primary.main, 0.1)
+      // background: darken(theme.colors.primary.main, 0.1)
     }
   },
   expandableDetails: {
@@ -100,30 +100,27 @@ const DrawerListItem = memo((props: IProps) => {
 
   return (
     <PermissionHide>
-      <ExpansionPanel
+      <Accordion
         expanded={expanded}
         onChange={handleExandedClick}
         className={`${classes.expandablePanel} ${expanded ? 'active' : ''}`}
       >
-        <ExpansionPanelSummary
-          className={classes.expandableTitle}
-          expandIcon={<ExpandMoreIcon className={classes.icon} />}
-        >
+        <AccordionSummary className={classes.expandableTitle} expandIcon={<ExpandMoreIcon className={classes.icon} />}>
           {!!props.data.icon && (
             <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
               <props.data.icon />
             </ListItemIcon>
           )}
           <ListItemText primary={props.data.display} classes={{ primary: classes.text }} />
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails className={classes.expandableDetails}>
+        </AccordionSummary>
+        <AccordionDetails className={classes.expandableDetails}>
           <List className={classes.innerList}>
             {props.data.submenu.map(sub => (
               <DrawerListItem key={sub.path} data={sub} onClick={handleSubClick} />
             ))}
           </List>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
+        </AccordionDetails>
+      </Accordion>
     </PermissionHide>
   );
 });

@@ -1,15 +1,17 @@
 import { memo, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import CoreDrawer from '@material-ui/core/Drawer';
-import Hidden from '@material-ui/core/Hidden';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import withWidth, { WithWidth } from '@material-ui/core/withWidth';
+import CoreDrawer from '@mui/material/Drawer';
+import Hidden from '@mui/material/Hidden';
 import clsx from 'clsx';
 import MoreIcon from 'mdi-react/MoreIcon';
 import { RouteComponentProps, withRouter } from 'react-router';
 
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+
 import Content from './Content';
 import { DrawerContext } from './context';
+
+import useBreakpoint from '@/hooks/useBreakpoint';
 
 export interface IMenu {
   path: string;
@@ -19,12 +21,12 @@ export interface IMenu {
   submenu?: IMenu[];
 }
 
-interface IProps extends RouteComponentProps<Record<string, never>>, WithWidth {
+interface IProps extends RouteComponentProps<Record<string, never>> {
   menu: IMenu[];
   children: ReactNode;
 }
 
-const useStyle = makeStyles(theme => ({
+const useStyle = createUseStyles(theme => ({
   drawer: {
     width: theme.variables.drawerWidthFull,
     borderRight: 'none !important',
@@ -36,17 +38,9 @@ const useStyle = makeStyles(theme => ({
     }
   },
   drawerFull: {
-    width: theme.variables.drawerWidthFull,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+    width: theme.variables.drawerWidthFull
   },
   drawerMini: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
     overflowX: 'hidden',
     width: theme.variables.drawerWidthMini
   }
@@ -56,6 +50,7 @@ const Drawer = memo((props: IProps) => {
   const classes = useStyle(props);
   const modalProps = useRef({ keepMounted: true }).current;
   const drawerClasses = useRef({ paper: classes.drawer }).current;
+  const currentBreakpoint = useBreakpoint();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [drawerFull, setDrawerFull] = useState(localStorage.getItem('app-drawer-full') !== 'N');
@@ -71,18 +66,20 @@ const Drawer = memo((props: IProps) => {
   const contextValue = useMemo(
     () => ({
       open: () => {
-        props.width === 'xs' || props.width === 'sm' ? setDrawerOpened(true) : setDrawerFull(true);
+        currentBreakpoint === 'xs' || currentBreakpoint === 'sm' ? setDrawerOpened(true) : setDrawerFull(true);
       },
       close: () => {
-        props.width === 'xs' || props.width === 'sm' ? setDrawerOpened(false) : setDrawerFull(false);
+        currentBreakpoint === 'xs' || currentBreakpoint === 'sm' ? setDrawerOpened(false) : setDrawerFull(false);
       },
       toogle: () => {
-        props.width === 'xs' || props.width === 'sm' ? setDrawerOpened(!drawerOpened) : setDrawerFull(!drawerFull);
+        currentBreakpoint === 'xs' || currentBreakpoint === 'sm'
+          ? setDrawerOpened(!drawerOpened)
+          : setDrawerFull(!drawerFull);
       },
       isFull: drawerFull,
-      isTemporary: props.width === 'xs' || props.width === 'sm'
+      isTemporary: currentBreakpoint === 'xs' || currentBreakpoint === 'sm'
     }),
-    [props.width, drawerOpened, drawerFull]
+    [currentBreakpoint, drawerOpened, drawerFull]
   );
 
   useEffect(() => localStorage.setItem('app-drawer-full', drawerFull ? 'Y' : 'N'), [drawerFull]);
@@ -92,7 +89,7 @@ const Drawer = memo((props: IProps) => {
   return (
     <>
       <DrawerContext.Provider value={contextValue}>
-        <Hidden mdUp>
+        <Hidden lgUp>
           <CoreDrawer
             variant='temporary'
             anchor='left'
@@ -104,7 +101,7 @@ const Drawer = memo((props: IProps) => {
             {content}
           </CoreDrawer>
         </Hidden>
-        <Hidden smDown>
+        <Hidden mdDown>
           <CoreDrawer
             variant='permanent'
             className={clsx(classes.drawer, {
@@ -128,4 +125,4 @@ const Drawer = memo((props: IProps) => {
   );
 });
 
-export default withRouter(withWidth()(Drawer));
+export default withRouter(Drawer);

@@ -1,8 +1,8 @@
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import splashImage from '@/assets/images/splash.png';
 
-const useStyle = makeStyles({
+const useStyle = createUseStyles({
   root: {
     background: `url(${splashImage}) no-repeat center`,
     backgroundSize: 'cover',

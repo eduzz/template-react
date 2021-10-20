@@ -1,6 +1,6 @@
 import { memo, forwardRef } from 'react';
 
-import Slide from '@material-ui/core/Slide';
+import Slide from '@mui/material/Slide';
 
 const DefaultDialogTransition = memo(
   forwardRef((props: any, ref: any) => {

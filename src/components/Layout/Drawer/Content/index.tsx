@@ -1,7 +1,8 @@
 import { memo, useCallback } from 'react';
 
-import List from '@material-ui/core/List';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import List from '@mui/material/List';
+
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
@@ -14,10 +15,10 @@ interface IProps {
   close: () => void;
 }
 
-const useStyle = makeStyles(theme => ({
+const useStyle = createUseStyles(theme => ({
   root: {
-    background: theme.palette.grey['900'],
-    color: theme.palette.primary.contrastText,
+    background: theme.colors.grey['900'],
+    color: theme.colors.primary.contrastText,
     height: '100vh'
   },
   header: {

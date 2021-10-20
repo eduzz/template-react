@@ -1,19 +1,20 @@
 import { memo, useCallback, useRef, useState, createContext } from 'react';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+
 import DashboardIndexPage from './Dashboard';
 import UserIndexPage from './Users';
 
-import Drawer from '@/components/Layout/Drawer';
+import Drawer, { IMenu } from '@/components/Layout/Drawer';
 
 export const ScrollTopContext = createContext<() => void>(() => null);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = createUseStyles(theme => ({
   root: {
     position: 'relative',
     display: 'flex',
@@ -21,7 +22,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh'
   },
   content: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.colors.background.default,
     width: '100vw',
     height: '100vh',
     overflow: 'auto',
@@ -36,7 +37,7 @@ const AdminPage = memo((props: Record<string, never>) => {
   const classes = useStyles(props);
 
   const mainContent = useRef<HTMLDivElement>();
-  const [menu] = useState([
+  const [menu] = useState<IMenu[]>(() => [
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
     {
       path: '/usuarios',

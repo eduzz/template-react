@@ -1,14 +1,15 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Dialog from '@material-ui/core/Dialog';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from '@mui/material/Dialog';
 
-const useStyle = makeStyles(theme => ({
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+
+const useStyle = createUseStyles(theme => ({
   loader: {
     width: 70,
     height: 70,
-    color: theme.palette.secondary.light
+    color: theme.colors.secondary.light
   },
   paper: {
     boxShadow: 'none',

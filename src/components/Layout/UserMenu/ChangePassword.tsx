@@ -1,21 +1,21 @@
 import { memo, useCallback } from 'react';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 import Toast from '@eduzz/houston-ui/Toast';
 
 import authService from '@/services/auth';
 
-const useStyle = makeStyles({
+const useStyle = createUseStyles({
   content: {
     width: 400,
     maxWidth: 'calc(95vw - 50px)'

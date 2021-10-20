@@ -1,15 +1,15 @@
 import { memo, MouseEvent } from 'react';
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 import Toast from '@eduzz/houston-ui/Toast';
 import Typography from '@eduzz/houston-ui/Typography';
 
@@ -20,7 +20,7 @@ interface IProps {
   onComplete: () => void;
 }
 
-const useStyle = makeStyles({
+const useStyle = createUseStyles({
   buttons: {
     justifyContent: 'space-between'
   }

@@ -53,9 +53,9 @@ export class ApiService {
               onProgress && onProgress((progress.loaded / progress.total) * 100);
             }
           })
-        : new Promise<{ data: any }>(resolve =>
-            setTimeout(() => resolve({ data: mock[method][url] }), 1000 + 2000 * Math.random())
-          );
+        : new Promise<{ data: any }>(resolve => {
+            setTimeout(() => resolve({ data: mock[method][url] }), 1000 + 2000 * Math.random());
+          });
 
       const response = await request;
       onProgress && onProgress(100);

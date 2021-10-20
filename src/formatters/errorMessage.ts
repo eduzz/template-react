@@ -1,4 +1,4 @@
-export function errorMessageFormatter(err: any): string {
+export function errorMessageFormat(err: any): string {
   if (typeof err === 'string') {
     return err;
   }

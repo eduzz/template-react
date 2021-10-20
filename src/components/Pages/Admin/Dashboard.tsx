@@ -1,9 +1,7 @@
 import { memo, useState } from 'react';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import {
   Area,
   AreaChart,
@@ -18,11 +16,13 @@ import {
   Tooltip
 } from 'recharts';
 
+import Grid from '@eduzz/houston-ui/Grid';
+import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import Toolbar from '@/components/Layout/Toolbar';
 
-const useStyles = makeStyles({
+const useStyles = createUseStyles({
   marginBottom: {
     marginBottom: 15
   }
@@ -53,8 +53,8 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
     <>
       <Toolbar title='Dashboard' />
 
-      <Grid container spacing={3} className={classes.marginBottom}>
-        <Grid item xs={12} md={4} lg={6}>
+      <Grid.Row className={classes.marginBottom}>
+        <Grid.Column xs={12} md={4} lg={6}>
           <Card>
             <CardContent>
               <Typography marginBottom size='medium' fontWeight='semibold'>
@@ -70,9 +70,9 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </Grid>
+        </Grid.Column>
 
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid.Column xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
               <Typography marginBottom size='medium' fontWeight='semibold'>
@@ -91,9 +91,9 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </Grid>
+        </Grid.Column>
 
-        <Grid item xs={12} sm={6} md={4} lg={3}>
+        <Grid.Column xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
               <Typography marginBottom size='medium' fontWeight='semibold'>
@@ -107,8 +107,8 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
               </ResponsiveContainer>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Grid.Column>
+      </Grid.Row>
 
       <Card>
         <CardContent>
