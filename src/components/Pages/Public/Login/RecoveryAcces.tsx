@@ -9,52 +9,40 @@ import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Toast from '@eduzz/houston-ui/Toast';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import authService from '@/services/auth';
 
-interface IProps {
+interface IProps extends IStyledProp {
   onCancel: (e: MouseEvent<HTMLElement>) => void;
   onComplete: () => void;
 }
 
-const useStyle = createUseStyles({
-  buttons: {
-    justifyContent: 'space-between'
-  }
-});
-
-const LoginRecoveryAccess = memo((props: IProps) => {
-  const classes = useStyle(props);
-
+const LoginRecoveryAccess: React.FC<IProps> = ({ onComplete, onCancel, className }) => {
   const form = useForm({
     initialValues: { email: '' },
-    validationSchema: yup =>
-      yup.object().shape({
-        email: yup.string().required().email()
-      }),
+    validationSchema: yup => yup.object().shape({ email: yup.string().required().email() }),
     async onSubmit(model) {
       await authService.sendResetPassword(model.email);
 
       Toast.info('Foi enviado um link para seu email para podermos recuperar seu acesso.');
-      props.onComplete();
+      onComplete();
       form.reset();
     }
   });
 
   return (
-    <Form context={form}>
+    <Form context={form} className={className}>
       <Card>
         <CardContent>
           <Typography marginBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
-
           <TextField label='Email' type='email' name='email' margin='none' />
         </CardContent>
 
-        <CardActions className={classes.buttons}>
-          <Button disabled={form.isSubmitting} variant='text' onClick={props.onCancel}>
+        <CardActions className='buttons'>
+          <Button disabled={form.isSubmitting} variant='text' onClick={onCancel}>
             Voltar
           </Button>
           <Button disabled={form.isSubmitting} type='submit'>
@@ -66,6 +54,10 @@ const LoginRecoveryAccess = memo((props: IProps) => {
       </Card>
     </Form>
   );
-});
+};
 
-export default LoginRecoveryAccess;
+export default styled(memo(LoginRecoveryAccess))`
+  & > .buttons {
+    justify-content: 'space-between';
+  }
+`;

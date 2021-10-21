@@ -1,4 +1,4 @@
-export default {
+const requests = {
   GET: {},
   POST: {
     '/login': {
@@ -10,3 +10,9 @@ export default {
     '/auth/change-password': null
   }
 };
+
+export default function getMockValue(method: string, url: string) {
+  return new Promise<{ data: any }>(resolve => {
+    setTimeout(() => resolve({ data: requests[method][url] }), 1000 + 2000 * Math.random());
+  });
+}

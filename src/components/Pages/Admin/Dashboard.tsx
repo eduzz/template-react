@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { useState } from 'react';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -17,19 +17,12 @@ import {
 } from 'recharts';
 
 import Grid from '@eduzz/houston-ui/Grid';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import Toolbar from '@/components/Layout/Toolbar';
 
-const useStyles = createUseStyles({
-  marginBottom: {
-    marginBottom: 15
-  }
-});
-
-const DashboardIndexPage = memo((props: Record<string, never>) => {
-  const classes = useStyles(props);
+const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
   const [data] = useState([
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
     { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
@@ -50,10 +43,10 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
   const [colors] = useState(['#0088FE', '#00C49F', '#FFBB28', '#FF8042']);
 
   return (
-    <>
+    <div className={className}>
       <Toolbar title='Dashboard' />
 
-      <Grid.Row className={classes.marginBottom}>
+      <Grid.Row className='grid'>
         <Grid.Column xs={12} md={4} lg={6}>
           <Card>
             <CardContent>
@@ -124,8 +117,12 @@ const DashboardIndexPage = memo((props: Record<string, never>) => {
           </ResponsiveContainer>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
-});
+};
 
-export default DashboardIndexPage;
+export default styled(DashboardIndexPage)`
+  & .grid {
+    margin-bottom: 15px;
+  }
+`;

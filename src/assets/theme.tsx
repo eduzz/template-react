@@ -17,9 +17,8 @@ const theme: HoustonThemeBuilder = {
 };
 
 declare module '@eduzz/houston-ui/styles/types' {
-  interface IHoustonTheme {
-    variables: typeof variables;
-  }
+  type Variables = typeof variables;
+  interface IHoustonThemeCustomVariables extends Variables {}
 }
 
 export default theme;

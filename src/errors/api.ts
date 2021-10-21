@@ -1,6 +1,6 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import ServiceError from './serviceError';
+import AppError from './appError';
 
 interface IApiErrorMeta {
   request: {
@@ -18,7 +18,7 @@ interface IApiErrorMeta {
   err: any;
 }
 
-export default class ApiError extends ServiceError<IApiErrorMeta> {
+export default class ApiError extends AppError<IApiErrorMeta> {
   public readonly status: number;
   public readonly data: any;
 

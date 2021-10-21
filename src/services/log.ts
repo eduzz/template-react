@@ -18,9 +18,6 @@ export class LogService {
   }
 
   public breadcrumb(message: string, category = 'manual', data: any = {}): void {
-    data = data || {};
-    delete data.type;
-
     Sentry.addBreadcrumb({ message, category, data });
   }
 
@@ -33,6 +30,10 @@ export class LogService {
 
     if (IS_DEVELOPMENT) {
       console.error(err);
+    }
+
+    if (err.ignoreLog) {
+      return;
     }
 
     Sentry.withScope(() => {

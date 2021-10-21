@@ -1,4 +1,4 @@
-import { memo, useCallback, useContext, useState, SyntheticEvent } from 'react';
+import { memo, useCallback, useState, SyntheticEvent } from 'react';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -9,6 +9,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
+import { useContextSelector } from 'use-context-selector';
 
 import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
@@ -69,8 +70,9 @@ const useStyle = createUseStyles(theme => ({
 
 const DrawerListItem = memo((props: IProps) => {
   const classes = useStyle(props);
+  const disableHoverListener = useContextSelector(DrawerContext, context => context.isTemporary || context.isFull);
+
   const [expanded, setExpanded] = useState(false);
-  const context = useContext(DrawerContext);
 
   const handleClick = useCallback(() => props.onClick(props.data), [props]);
   const handleSubClick = useCallback((menu: IMenu) => props.onClick(menu), [props]);
@@ -81,12 +83,7 @@ const DrawerListItem = memo((props: IProps) => {
       <PermissionHide>
         <ListItem button disableGutters className={classes.item} onClick={handleClick}>
           {!!props.data.icon && (
-            <Tooltip
-              title={props.data.display}
-              placement='right'
-              arrow
-              disableHoverListener={context.isTemporary || context.isFull}
-            >
+            <Tooltip title={props.data.display} placement='right' arrow disableHoverListener={disableHoverListener}>
               <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
                 <props.data.icon />
               </ListItemIcon>

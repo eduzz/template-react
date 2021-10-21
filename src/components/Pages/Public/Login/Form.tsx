@@ -9,26 +9,15 @@ import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 
 import authService from '@/services/auth';
 
-interface IProps {
+interface IProps extends IStyledProp {
   onRecoveryAccess: (e: MouseEvent<HTMLElement>) => void;
 }
 
-const useStyles = createUseStyles(theme => ({
-  buttons: {
-    justifyContent: 'space-between'
-  },
-  socialButtons: {
-    marginTop: theme.spacing(2)
-  }
-}));
-
-const LoginForm = memo((props: IProps) => {
-  const classes = useStyles(props);
-
+const LoginForm: React.FC<IProps> = ({ onRecoveryAccess, className }) => {
   const form = useForm({
     initialValues: { email: '', password: '' },
     validationSchema: yup =>
@@ -42,15 +31,15 @@ const LoginForm = memo((props: IProps) => {
   });
 
   return (
-    <Form context={form}>
+    <Form context={form} className={className}>
       <Card>
         <CardContent>
           <TextField name='email' label='Email' type='email' />
           <TextField label='Senha' name='password' type='password' margin='none' />
         </CardContent>
 
-        <CardActions className={classes.buttons}>
-          <Button disabled={form.isSubmitting} variant='text' onClick={props.onRecoveryAccess}>
+        <CardActions className='buttons'>
+          <Button disabled={form.isSubmitting} variant='text' onClick={onRecoveryAccess}>
             Recuperar Acesso
           </Button>
           <Button disabled={form.isSubmitting} type='submit'>
@@ -62,5 +51,10 @@ const LoginForm = memo((props: IProps) => {
       </Card>
     </Form>
   );
-});
-export default LoginForm;
+};
+
+export default styled(memo(LoginForm))`
+  & .buttons {
+    justify-content: space-between;
+  }
+`;

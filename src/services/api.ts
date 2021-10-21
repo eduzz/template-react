@@ -2,7 +2,7 @@ import axios, { AxiosError, Method } from 'axios';
 
 import { API_ENDPOINT } from '../settings';
 import { apiResponseFormatter } from './../formatters/apiResponse';
-import mock from './_mock';
+import getMockValue from './_mock';
 
 import ApiError from '@/errors/api';
 import { apiRequestFormatter } from '@/formatters/apiRequest';
@@ -37,6 +37,7 @@ export class ApiService {
   ): Promise<T> {
     try {
       onProgress && onProgress(0);
+      const authToken = store.getState().authToken.value;
 
       const request = API_ENDPOINT
         ? axios.request({
@@ -44,7 +45,7 @@ export class ApiService {
             url,
             method,
             headers: {
-              Authorization: await store.getState().authToken.value,
+              Authorization: authToken ? `Bearer ${authToken}` : null,
               'Content-Type': data instanceof FormData ? 'multipart/form-data' : 'application/json'
             },
             params: method === 'GET' ? apiRequestFormatter(data) : null,
@@ -53,9 +54,7 @@ export class ApiService {
               onProgress && onProgress((progress.loaded / progress.total) * 100);
             }
           })
-        : new Promise<{ data: any }>(resolve => {
-            setTimeout(() => resolve({ data: mock[method][url] }), 1000 + 2000 * Math.random());
-          });
+        : getMockValue(method, url);
 
       const response = await request;
       onProgress && onProgress(100);

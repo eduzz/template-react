@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext } from 'use-context-selector';
 
 export interface IDrawerContext {
   open(): void;
@@ -8,4 +8,4 @@ export interface IDrawerContext {
   isTemporary: boolean;
 }
 
-export const DrawerContext = React.createContext<IDrawerContext>(null);
+export const DrawerContext = createContext<IDrawerContext>(null);

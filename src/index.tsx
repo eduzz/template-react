@@ -1,5 +1,4 @@
 import '@eduzz/houston-forms/yupLocale';
-import './assets/global.css';
 
 import * as ReactDOM from 'react-dom';
 

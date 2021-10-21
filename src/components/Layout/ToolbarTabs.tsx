@@ -1,7 +1,8 @@
-import { memo, useContext, ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import clsx from 'clsx';
+import { useContextSelector } from 'use-context-selector';
 
 import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
@@ -24,10 +25,6 @@ const useStyle = createUseStyles(theme => ({
     color: 'white',
     boxShadow: '0px 2px 2px 0px rgba(0, 0, 0, 0.29)',
     width: '100%',
-    // transition: theme.transitions.create('width', {
-    //   easing: theme.transitions.easing.sharp,
-    //   duration: theme.transitions.duration.leavingScreen
-    // }),
     [theme.breakpoints.up('md')]: {
       backgroundColor: 'white',
       color: theme.colors.text.primary,
@@ -40,17 +37,13 @@ const useStyle = createUseStyles(theme => ({
 }));
 
 const ToolbarTabs = memo((props: { children: ReactNode }) => {
-  const context = useContext(DrawerContext);
+  const drawerMini = useContextSelector(DrawerContext, context => !context.isTemporary && !context.isFull);
+
   const classes = useStyle(props);
 
   return (
     <div className={classes.root}>
-      <AppBar
-        className={clsx({
-          [classes.appBar]: true,
-          [classes.appBarDrawerMini]: !context.isTemporary && !context.isFull
-        })}
-      >
+      <AppBar className={clsx({ [classes.appBar]: true, [classes.appBarDrawerMini]: drawerMini })}>
         {props.children}
       </AppBar>
     </div>

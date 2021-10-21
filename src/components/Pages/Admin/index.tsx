@@ -1,61 +1,36 @@
-import { memo, useCallback, useRef, useState, createContext } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
-import StarIcon from 'mdi-react/StarIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled from '@eduzz/houston-ui/styles/styled';
 
 import DashboardIndexPage from './Dashboard';
+import { ScrollTopContext } from './scrollTopContext';
 import UserIndexPage from './Users';
 
 import Drawer, { IMenu } from '@/components/Layout/Drawer';
 
-export const ScrollTopContext = createContext<() => void>(() => null);
+interface IProps {
+  className?: string;
+}
 
-const useStyles = createUseStyles(theme => ({
-  root: {
-    position: 'relative',
-    display: 'flex',
-    width: '100vw',
-    height: '100vh'
-  },
-  content: {
-    backgroundColor: theme.colors.background.default,
-    width: '100vw',
-    height: '100vh',
-    overflow: 'auto',
-    padding: theme.variables.contentPadding,
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.variables.contentPaddingUpSm
-    }
-  }
-}));
-
-const AdminPage = memo((props: Record<string, never>) => {
-  const classes = useStyles(props);
-
+const AdminPage: React.FC<IProps> = ({ className }) => {
   const mainContent = useRef<HTMLDivElement>();
   const [menu] = useState<IMenu[]>(() => [
     { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
-    {
-      path: '/usuarios',
-      display: 'Usuários',
-      // role: enRoles.admin,
-      icon: AccountMultipleIcon
-    },
-    { path: '/exemplos', display: 'Exemplos', icon: StarIcon }
+    { path: '/usuarios', display: 'Usuários', icon: AccountMultipleIcon }
   ]);
 
   const scrollTop = useCallback(() => setTimeout(() => mainContent.current.scrollTo(0, 0), 100), []);
   const renderRedirect = useCallback(() => <Redirect to='/' />, []);
 
   return (
-    <div className={classes.root}>
+    <div className={className}>
       <ScrollTopContext.Provider value={scrollTop}>
         <Drawer menu={menu}>
-          <main ref={mainContent} className={classes.content}>
+          <main ref={mainContent} className='main-content'>
             <Switch>
               <Route path='/usuarios' component={UserIndexPage} />
               <Route path='/' component={DashboardIndexPage} />
@@ -66,6 +41,24 @@ const AdminPage = memo((props: Record<string, never>) => {
       </ScrollTopContext.Provider>
     </div>
   );
-});
+};
 
-export default AdminPage;
+export default styled(AdminPage)(
+  ({ theme }) => `
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+  
+    & .main-content {
+      background-color: ${theme.colors.background.default};
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      padding: ${theme.variables.contentPadding}px;
+      ${theme.breakpoints.up('sm')} {
+        padding: ${theme.variables.contentPaddingUpSm}px
+      }
+    }
+  `
+);
