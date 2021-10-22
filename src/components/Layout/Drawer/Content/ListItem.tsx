@@ -11,85 +11,39 @@ import Tooltip from '@mui/material/Tooltip';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 import { useContextSelector } from 'use-context-selector';
 
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 
 import { IMenu } from '..';
 import { DrawerContext } from '../context';
 
 import PermissionHide from '@/components/Shared/PermissionHide';
 
-interface IProps {
+interface IProps extends IStyledProp {
   data: IMenu;
   onClick: (menu: IMenu) => void;
 }
 
-const useStyle = createUseStyles(theme => ({
-  item: {
-    paddingLeft: 14,
-    opacity: 0.8,
-    '&.active': {
-      opacity: 1
-      // background: darken(theme.colors.primary.main, 0.3)
-    }
-  },
-  icon: {
-    margin: '0',
-    minWidth: 34,
-    marginRight: 15,
-    fill: theme.colors.primary.contrastText
-  },
-  text: {
-    color: 'inherit'
-  },
-  expandablePanel: {
-    background: theme.colors.primary.main,
-    color: theme.colors.primary.contrastText,
-    marginLeft: -10,
-    boxShadow: 'none',
-    margin: 0,
-    '&.active': {
-      // background: darken(theme.colors.primary.main, 0.1)
-    }
-  },
-  expandableTitle: {
-    '&:hover': {
-      // background: darken(theme.colors.primary.main, 0.1)
-    }
-  },
-  expandableDetails: {
-    padding: 0
-  },
-  innerList: {
-    padding: 0,
-    width: '100%',
-    '& > div': {
-      paddingLeft: 40
-    }
-  }
-}));
-
-const DrawerListItem = memo((props: IProps) => {
-  const classes = useStyle(props);
+const DrawerListItem: React.FC<IProps> = ({ data, onClick, className }) => {
   const disableHoverListener = useContextSelector(DrawerContext, context => context.isTemporary || context.isFull);
 
   const [expanded, setExpanded] = useState(false);
 
-  const handleClick = useCallback(() => props.onClick(props.data), [props]);
-  const handleSubClick = useCallback((menu: IMenu) => props.onClick(menu), [props]);
+  const handleClick = useCallback(() => onClick(data), [data, onClick]);
+  const handleSubClick = useCallback((menu: IMenu) => onClick(menu), [onClick]);
   const handleExandedClick = useCallback((event: SyntheticEvent, expanded: boolean) => setExpanded(expanded), []);
 
-  if (!props.data.submenu || !props.data.submenu.length) {
+  if (!data.submenu || !data.submenu.length) {
     return (
       <PermissionHide>
-        <ListItem button disableGutters className={classes.item} onClick={handleClick}>
-          {!!props.data.icon && (
-            <Tooltip title={props.data.display} placement='right' arrow disableHoverListener={disableHoverListener}>
-              <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
-                <props.data.icon />
+        <ListItem button disableGutters className={`${className} item`} onClick={handleClick}>
+          {!!data.icon && (
+            <Tooltip title={data.display} placement='right' arrow disableHoverListener={disableHoverListener}>
+              <ListItemIcon className='icon' classes={{ root: 'text' }}>
+                <data.icon />
               </ListItemIcon>
             </Tooltip>
           )}
-          <ListItemText primary={props.data.display} classes={{ primary: classes.text }} />
+          <ListItemText primary={data.display} classes={{ primary: 'text' }} />
         </ListItem>
       </PermissionHide>
     );
@@ -100,19 +54,19 @@ const DrawerListItem = memo((props: IProps) => {
       <Accordion
         expanded={expanded}
         onChange={handleExandedClick}
-        className={`${classes.expandablePanel} ${expanded ? 'active' : ''}`}
+        className={`${className} expandablePanel ${expanded ? 'active' : ''}`}
       >
-        <AccordionSummary className={classes.expandableTitle} expandIcon={<ExpandMoreIcon className={classes.icon} />}>
-          {!!props.data.icon && (
-            <ListItemIcon className={classes.icon} classes={{ root: classes.text }}>
-              <props.data.icon />
+        <AccordionSummary className='expandableTitle' expandIcon={<ExpandMoreIcon className='icon' />}>
+          {!!data.icon && (
+            <ListItemIcon className='icon' classes={{ root: 'text' }}>
+              <data.icon />
             </ListItemIcon>
           )}
-          <ListItemText primary={props.data.display} classes={{ primary: classes.text }} />
+          <ListItemText primary={data.display} classes={{ primary: 'text' }} />
         </AccordionSummary>
-        <AccordionDetails className={classes.expandableDetails}>
-          <List className={classes.innerList}>
-            {props.data.submenu.map(sub => (
+        <AccordionDetails className='expandableDetails'>
+          <List className='innerList'>
+            {data.submenu.map(sub => (
               <DrawerListItem key={sub.path} data={sub} onClick={handleSubClick} />
             ))}
           </List>
@@ -120,6 +74,53 @@ const DrawerListItem = memo((props: IProps) => {
       </Accordion>
     </PermissionHide>
   );
-});
+};
 
-export default DrawerListItem;
+export default styled(memo(DrawerListItem))`
+  &.item {
+    padding-left: 14px;
+    opacity: 0.8;
+    &.active {
+      opacity: 1;
+      background: ${({ theme }) => theme.colors.primary.dark};
+    }
+  }
+
+  & .icon {
+    margin: 0;
+    min-width: 34px;
+    margin-right: 15px;
+    fill: ${({ theme }) => theme.colors.primary.contrastText};
+  }
+
+  & .text {
+    color: inherit;
+  }
+
+  &.expandablePanel {
+    background: ${({ theme }) => theme.colors.primary.main};
+    color: ${({ theme }) => theme.colors.primary.contrastText};
+    margin-left: -10px;
+    box-shadow: none;
+    margin: 0;
+    &.active {
+      background: ${({ theme }) => theme.colors.primary.dark};
+    }
+  }
+
+  & .expandableTitle:hover {
+    background: ${({ theme }) => theme.colors.primary.dark};
+  }
+
+  & .expandableDetails {
+    padding: 0;
+  }
+
+  & .innerList {
+    padding: 0;
+    width: 100%;
+    & > div {
+      padding-left: 40px;
+    }
+  }
+`;

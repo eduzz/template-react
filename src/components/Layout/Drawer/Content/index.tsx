@@ -2,67 +2,65 @@ import { memo, useCallback } from 'react';
 
 import List from '@mui/material/List';
 
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
 
 import logoWhite from '@/assets/images/logo-white.png';
 
-interface IProps {
+interface IProps extends IStyledProp {
   menu: IMenu[];
   navigate: (path: string) => void;
-  close: () => void;
 }
 
-const useStyle = createUseStyles(theme => ({
-  root: {
-    background: theme.colors.grey['900'],
-    color: theme.colors.primary.contrastText,
-    height: '100vh'
-  },
-  header: {
-    padding: '10px 0',
-    textAlign: 'center'
-  },
-  headerLogo: {
-    minHeight: theme.variables.headerHeight - 11
-  },
-  logo: {
-    maxWidth: 'calc(100% - 10px)',
-    width: 150,
-    maxHeight: 100
-  },
-  list: {
-    padding: 0
-  },
-  name: {
-    fontFamily: 'Montserrat, sans-serif',
-    fontWeight: 600,
-    color: 'white',
-    marginBottom: 15
-  }
-}));
-
-const Content = memo((props: IProps) => {
-  const classes = useStyle(props);
-  const navigate = useCallback((menu: IMenu) => props.navigate(menu.path), [props]);
+const Content: React.FC<IProps> = ({ menu, navigate: navigateProp, className }) => {
+  const navigate = useCallback((menu: IMenu) => navigateProp(menu.path), [navigateProp]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.header}>
-        <div className={classes.headerLogo}>
-          <img src={logoWhite} className={classes.logo} alt='logo' />
+    <div className={className}>
+      <div className='header'>
+        <div className='headerLogo'>
+          <img src={logoWhite} className='logo' alt='logo' />
         </div>
       </div>
 
-      <List className={classes.list}>
-        {props.menu.map(item => (
+      <List className='list'>
+        {menu.map(item => (
           <DrawerListItem key={item.path} data={item} onClick={navigate} />
         ))}
       </List>
     </div>
   );
-});
+};
 
-export default Content;
+export default styled(memo(Content))`
+  background: ${({ theme }) => theme.colors.grey['900']};
+  color: ${({ theme }) => theme.colors.primary.contrastText};
+  height: 100vh;
+
+  & .header {
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  & .headerLogo {
+    min-height: ${({ theme }) => theme.variables.headerHeight - 11}px;
+  }
+
+  & .logo {
+    max-width: calc(100% - 10px);
+    width: 150px;
+    max-height: 100px;
+  }
+
+  & .list {
+    padding: 0;
+  }
+
+  & .name {
+    font-weight: 600px;
+    color: white;
+    margin-bottom: 15px;
+  }
+`;

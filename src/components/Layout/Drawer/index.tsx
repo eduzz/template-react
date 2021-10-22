@@ -4,9 +4,9 @@ import CoreDrawer from '@mui/material/Drawer';
 import Hidden from '@mui/material/Hidden';
 import clsx from 'clsx';
 import MoreIcon from 'mdi-react/MoreIcon';
-import { RouteComponentProps, withRouter } from 'react-router';
+import { useHistory } from 'react-router';
 
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import styled, { IStyledProp, breakpoints } from '@eduzz/houston-ui/styles/styled';
 
 import Content from './Content';
 import { DrawerContext } from './context';
@@ -21,46 +21,27 @@ export interface IMenu {
   submenu?: IMenu[];
 }
 
-interface IProps extends RouteComponentProps<Record<string, never>> {
+interface IProps extends IStyledProp {
   menu: IMenu[];
   children: ReactNode;
 }
 
-const useStyle = createUseStyles(theme => ({
-  drawer: {
-    width: theme.variables.drawerWidthFull,
-    borderRight: 'none !important',
-    boxShadow: `${theme.variables.boxShadow} !important`,
-    [theme.breakpoints.up('md')]: {
-      width: theme.variables.drawerWidthFull,
-      position: 'relative',
-      height: '100vh'
-    }
-  },
-  drawerFull: {
-    width: theme.variables.drawerWidthFull
-  },
-  drawerMini: {
-    overflowX: 'hidden',
-    width: theme.variables.drawerWidthMini
-  }
-}));
-
-const Drawer = memo((props: IProps) => {
-  const classes = useStyle(props);
+const Drawer: React.FC<IProps> = ({ menu, children, className }) => {
   const modalProps = useRef({ keepMounted: true }).current;
-  const drawerClasses = useRef({ paper: classes.drawer }).current;
+  const drawerClasses = useRef({ paper: `${className} drawer` }).current;
   const currentBreakpoint = useBreakpoint();
+
+  const history = useHistory();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [drawerFull, setDrawerFull] = useState(localStorage.getItem('app-drawer-full') !== 'N');
 
   const navigate = useCallback(
     (url: string) => {
-      props.history.push(url);
+      history.push(url);
       setDrawerOpened(false);
     },
-    [props.history]
+    [history]
   );
 
   const contextValue = useMemo(
@@ -84,45 +65,57 @@ const Drawer = memo((props: IProps) => {
 
   useEffect(() => localStorage.setItem('app-drawer-full', drawerFull ? 'Y' : 'N'), [drawerFull]);
 
-  const content = <Content menu={props.menu} navigate={navigate} close={contextValue.close} />;
+  const content = <Content menu={menu} navigate={navigate} />;
+  console.log({ className });
 
   return (
-    <>
-      <DrawerContext.Provider value={contextValue}>
-        <Hidden lgUp>
-          <CoreDrawer
-            variant='temporary'
-            anchor='left'
-            open={drawerOpened}
-            classes={drawerClasses}
-            onClose={contextValue.close}
-            ModalProps={modalProps}
-          >
-            {content}
-          </CoreDrawer>
-        </Hidden>
-        <Hidden mdDown>
-          <CoreDrawer
-            variant='permanent'
-            className={clsx(classes.drawer, {
-              [classes.drawerFull]: drawerFull,
-              [classes.drawerMini]: !drawerFull
-            })}
-            classes={{
-              paper: clsx({
-                [classes.drawerFull]: drawerFull,
-                [classes.drawerMini]: !drawerFull
-              })
-            }}
-          >
-            {content}
-          </CoreDrawer>
-        </Hidden>
+    <DrawerContext.Provider value={contextValue}>
+      <Hidden lgUp>
+        <CoreDrawer
+          variant='temporary'
+          anchor='left'
+          open={drawerOpened}
+          classes={drawerClasses}
+          onClose={contextValue.close}
+          ModalProps={modalProps}
+        >
+          {content}
+        </CoreDrawer>
+      </Hidden>
+      <Hidden mdDown>
+        <CoreDrawer
+          variant='permanent'
+          className={clsx('drawer', className, { drawerFull: drawerFull, drawerMini: !drawerFull })}
+          classes={{ paper: clsx(className, { drawerFull: drawerFull, drawerMini: !drawerFull }) }}
+        >
+          {content}
+        </CoreDrawer>
+      </Hidden>
 
-        {props.children}
-      </DrawerContext.Provider>
-    </>
+      {children}
+    </DrawerContext.Provider>
   );
-});
+};
 
-export default withRouter(Drawer);
+export default styled(memo(Drawer))`
+  &.drawer {
+    width: ${({ theme }) => theme.variables.drawerWidthFull}px;
+    border-right: none !important;
+    box-shadow: ${({ theme }) => theme.variables.boxShadow} !important;
+
+    ${breakpoints.up('md')} {
+      width: ${({ theme }) => theme.variables.drawerWidthFull}px;
+      position: relative;
+      height: 100vh;
+    }
+  }
+
+  &.drawerFull {
+    width: ${({ theme }) => theme.variables.drawerWidthFull}px;
+  }
+
+  &.drawerMini {
+    overflow-x: hidden;
+    width: ${({ theme }) => theme.variables.drawerWidthMini}px;
+  }
+`;

@@ -4,7 +4,7 @@ import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import styled from '@eduzz/houston-ui/styles/styled';
+import styled, { breakpoints, IStyledProp } from '@eduzz/houston-ui/styles/styled';
 
 import DashboardIndexPage from './Dashboard';
 import { ScrollTopContext } from './scrollTopContext';
@@ -12,9 +12,7 @@ import UserIndexPage from './Users';
 
 import Drawer, { IMenu } from '@/components/Layout/Drawer';
 
-interface IProps {
-  className?: string;
-}
+interface IProps extends IStyledProp {}
 
 const AdminPage: React.FC<IProps> = ({ className }) => {
   const mainContent = useRef<HTMLDivElement>();
@@ -43,22 +41,21 @@ const AdminPage: React.FC<IProps> = ({ className }) => {
   );
 };
 
-export default styled(AdminPage)(
-  ({ theme }) => `
-    position: relative;
-    display: flex;
+export default styled(AdminPage)`
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  & .main-content {
+    background-color: ${({ theme }) => theme.colors.background.default};
     width: 100vw;
     height: 100vh;
-  
-    & .main-content {
-      background-color: ${theme.colors.background.default};
-      width: 100vw;
-      height: 100vh;
-      overflow: auto;
-      padding: ${theme.variables.contentPadding}px;
-      ${theme.breakpoints.up('sm')} {
-        padding: ${theme.variables.contentPaddingUpSm}px
-      }
+    overflow: auto;
+    padding: ${({ theme }) => theme.variables.contentPadding}px;
+
+    ${breakpoints.up('sm')} {
+      padding: ${({ theme }) => theme.variables.contentPaddingUpSm}px;
     }
-  `
-);
+  }
+`;

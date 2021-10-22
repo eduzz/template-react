@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import MenuIcon from 'mdi-react/MenuIcon';
 import { useContextSelector } from 'use-context-selector';
 
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { IStyledProp, breakpoints } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import { DrawerContext } from './Drawer/context';
@@ -49,25 +49,28 @@ const Toolbar: React.FC<IProps> = ({ title, children, className }) => {
   );
 };
 
-export default styled(memo(Toolbar))(({ theme }) => ({
-  height: theme.variables.headerHeight,
-  marginTop: theme.variables.contentPadding * -1,
-  marginBottom: theme.variables.contentPadding,
-  [theme.breakpoints.up('sm')]: {
-    marginTop: theme.variables.contentPaddingUpSm * -1,
-    marginBottom: theme.variables.contentPaddingUpSm
-  },
-  appBar: {
-    backgroundColor: theme.colors.grey['900'],
-    color: 'white',
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      backgroundColor: 'white',
-      color: theme.colors.text.primary,
-      width: `calc(100% - ${theme.variables.drawerWidthFull}px)`
-    }
-  },
-  appBarDrawerMini: {
-    width: `calc(100% - ${theme.variables.drawerWidthMini}px)`
+export default styled(memo(Toolbar))`
+  height: ${({ theme }) => theme.variables.headerHeight}px;
+  margin-top: ${({ theme }) => theme.variables.contentPadding * -1}px;
+  margin-bottom: ${({ theme }) => theme.variables.contentPadding}px;
+
+  ${breakpoints.up('sm')} {
+    margin-top: ${({ theme }) => theme.variables.contentPaddingUpSm * -1}px;
+    margin-bottom: ${({ theme }) => theme.variables.contentPaddingUpSm}px;
   }
-}));
+
+  & .appBar {
+    background-color: ${({ theme }) => theme.colors.grey['900']};
+    color: white;
+    width: 100%;
+    ${breakpoints.up('md')} {
+      background-color: white;
+      color: ${({ theme }) => theme.colors.text.primary};
+      width: ${({ theme }) => `calc(100% - ${theme.variables.drawerWidthFull}px)`};
+    }
+  }
+
+  & .appBarDrawerMini {
+    width: ${({ theme }) => `calc(100% - ${theme.variables.drawerWidthMini}px)`};
+  }
+`;
