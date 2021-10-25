@@ -4,79 +4,56 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { breakpoints, IStyledProp } from '@eduzz/houston-ui/styles/styled';
 
+import CreateForm from './Create';
 import LoginForm from './Form';
 import LoginRecoveryAccess from './RecoveryAcces';
 
-import logoWhite from '@/assets/images/logo-white.png';
-import splashImage from '@/assets/images/splash.png';
 import { selectorIsAuthenticated } from '@/store/selectors';
 
 const LoginPage: React.FC<IStyledProp> = ({ className }) => {
   const [currentView, setCurrentView] = useState(0);
 
   const isAuthenticated = useSelector(selectorIsAuthenticated);
-  const handleChangeView = useCallback((view: number) => () => setCurrentView(view), []);
+
+  const onLogin = useCallback(() => setCurrentView(0), []);
+  const onRecoveryAccess = useCallback(() => setCurrentView(2), []);
+  const onCreate = useCallback(() => setCurrentView(1), []);
+
+  if (isAuthenticated) return <Redirect to='/' />;
 
   return (
     <div className={className}>
-      <div className='container'>
-        <div className='logo'>
-          <img src={logoWhite} className='logoImage' alt='logo' />
+      <SwipeableViews index={currentView} height='100%'>
+        <div className='step'>
+          <LoginForm onRecoveryAccess={onRecoveryAccess} onCreate={onCreate} />
         </div>
-
-        {!isAuthenticated ? (
-          <SwipeableViews index={currentView}>
-            <div className='viewContainer'>
-              <LoginForm onRecoveryAccess={handleChangeView(1)} />
-            </div>
-            <div className='viewContainer'>
-              <LoginRecoveryAccess onCancel={handleChangeView(0)} onComplete={handleChangeView(0)} />
-            </div>
-          </SwipeableViews>
-        ) : (
-          <Redirect to='/' />
-        )}
-      </div>
+        <div className='step'>
+          <CreateForm onCancel={onLogin} />
+        </div>
+        <div className='step'>
+          <LoginRecoveryAccess onCancel={onLogin} onComplete={onLogin} />
+        </div>
+      </SwipeableViews>
     </div>
   );
 };
 
 export default styled(LoginPage)`
-  min-height: 100vh;
-  min-width: 100vw;
-  position: relative;
-  background: url(${splashImage}) no-repeat center;
-  background-size: cover;
+  margin: calc(${({ theme }) => theme.spacing(8)} * -1);
 
-  & .container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  ${breakpoints.down('sm')} {
+    margin: calc(${({ theme }) => theme.spacing(4)} * -1);
+  }
+
+  & .step {
+    padding: ${({ theme }) => theme.spacing(8)};
+    max-width: 450px;
     margin: auto;
-    width: 320px;
-    height: 470px;
-    max-width: calc(100% - 30px);
-    color: white;
-  }
 
-  & .logo {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  & .logoImage {
-    width: 220px;
-    max-width: 100%;
-    max-height: 120px;
-  }
-
-  & .viewContainer {
-    box-sizing: border-box;
-    padding: 0 10px;
-    height: 325px;
+    ${breakpoints.down('sm')} {
+      padding: ${({ theme }) => theme.spacing(4)};
+    }
   }
 `;

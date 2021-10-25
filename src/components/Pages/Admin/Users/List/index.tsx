@@ -65,11 +65,11 @@ const UserListPage = memo(() => {
 
   return (
     <>
+      <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
+
       <Toolbar title='Usuários' />
 
       <Card>
-        <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
-
         <CardContent>
           <Grid container justifyContent='space-between' alignItems='center' spacing={2}>
             <Grid item xs={12} sm={6} lg={4}>
@@ -90,7 +90,7 @@ const UserListPage = memo(() => {
             <Table.Column sortableField='email'>Email</Table.Column>
           </Table.Header>
           <Table.Body>
-            <Table.Empty count={total} />
+            {!error && <Table.Empty count={total} />}
             <Table.Error error={error} />
             {result.map((user, index) => (
               <ListItem key={user.id} user={user} index={index} onEdit={handleEdit} onDeleteComplete={retry} />

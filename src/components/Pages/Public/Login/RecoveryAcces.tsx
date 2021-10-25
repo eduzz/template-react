@@ -1,10 +1,5 @@
 import { memo, MouseEvent } from 'react';
 
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import LinearProgress from '@mui/material/LinearProgress';
-
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
@@ -35,29 +30,22 @@ const LoginRecoveryAccess: React.FC<IProps> = ({ onComplete, onCancel, className
 
   return (
     <Form context={form} className={className}>
-      <Card>
-        <CardContent>
-          <Typography marginBottom>Iremos lhe enviar um email para recuperar seu acesso</Typography>
-          <TextField label='Email' type='email' name='email' margin='none' />
-        </CardContent>
+      <Typography size='large' fontWeight='bold' className='title'>
+        Esqueci minha senha
+      </Typography>
+      <Typography className='subtitle'>Insira seu e-mail cadastrado para recuperar sua senha</Typography>
 
-        <CardActions className='buttons'>
-          <Button disabled={form.isSubmitting} variant='text' onClick={onCancel}>
-            Voltar
-          </Button>
-          <Button disabled={form.isSubmitting} type='submit'>
-            Enviar
-          </Button>
-        </CardActions>
+      <TextField label='Email' type='email' name='email' disabled={form.isSubmitting} />
 
-        {form.isSubmitting && <LinearProgress color='primary' />}
-      </Card>
+      <Button disabled={form.isSubmitting} loading={form.isSubmitting} type='submit' fullWidth>
+        Confirmar Email
+      </Button>
+
+      <Typography className='link' onClick={onCancel}>
+        Já possui uma conta? <span>Clique aqui</span>
+      </Typography>
     </Form>
   );
 };
 
-export default styled(memo(LoginRecoveryAccess))`
-  & > .buttons {
-    justify-content: 'space-between';
-  }
-`;
+export default styled(memo(LoginRecoveryAccess))``;

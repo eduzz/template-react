@@ -1,9 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import LinearProgress from '@mui/material/LinearProgress';
 import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
 import queryString from 'query-string';
 import { RouteComponentProps } from 'react-router-dom';
@@ -11,12 +7,10 @@ import { RouteComponentProps } from 'react-router-dom';
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
-import TextField from '@eduzz/houston-ui/Forms/Text';
+import PasswordField from '@eduzz/houston-ui/Forms/Password';
 import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import logoWhite from '@/assets/images/logo-white.png';
-import splashImage from '@/assets/images/splash.png';
 import decodeJWTToken from '@/helpers/jwt';
 import IResetPasswordToken from '@/interfaces/tokens/resetPasswordToken';
 import authService from '@/services/auth';
@@ -57,91 +51,40 @@ const NewPasswordPage: React.FC<IProps> = ({ history, location, className }) => 
 
   return (
     <div className={className}>
-      <div className='container'>
-        <div className='logo'>
-          <img src={logoWhite} className='logoImage' alt='logo' />
+      {!loading && !tokenData && (
+        <div>
+          <Typography className='invalid-token'>Token Inválido</Typography>
+
+          <Button type='button' fullWidth startIcon={<ChevronLeftIcon />} onClick={handleBack}>
+            Voltar para o Login
+          </Button>
         </div>
+      )}
 
-        {!loading && !tokenData && (
-          <Card>
-            <CardContent>
-              <Typography>Token Inválido</Typography>
-            </CardContent>
+      {!loading && !!tokenData && (
+        <Form context={form}>
+          <Typography size='large' fontWeight='bold' className='title'>
+            Nova Senha
+          </Typography>
+          <Typography className='subtitle'>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
 
-            <CardActions className='buttonsBack'>
-              <Button type='button' startIcon={<ChevronLeftIcon />} onClick={handleBack}>
-                Voltar para o Login
-              </Button>
-            </CardActions>
-          </Card>
-        )}
+          <PasswordField label='Senha' name='password' />
+          <PasswordField label='Repita a senha' name='confirmPassword' />
 
-        {!loading && !!tokenData && (
-          <Form context={form}>
-            <Card>
-              <CardContent>
-                <Typography marginBottom>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
-
-                <TextField label='Nova senha' type='password' name='password' />
-                <TextField label='Repita a senha' type='password' name='confirmPassword' margin='none' />
-              </CardContent>
-
-              <CardActions className='buttons'>
-                <Button disabled={loading || form.isSubmitting} type='submit'>
-                  Salvar
-                </Button>
-              </CardActions>
-
-              {(loading || form.isSubmitting) && <LinearProgress color='primary' />}
-            </Card>
-          </Form>
-        )}
-      </div>
+          <Button disabled={loading || form.isSubmitting} fullWidth loading={form.isSubmitting} type='submit'>
+            Salvar
+          </Button>
+        </Form>
+      )}
     </div>
   );
 };
 
 export default styled(NewPasswordPage)`
-  background: url(${splashImage}) no-repeat center;
-  background-size: cover;
-  min-height: 100vh;
-  min-width: 100vw;
-  position: relative;
+  max-width: 400px;
 
-  & .container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-    width: 320px;
-    height: 400px;
-    max-width: calc(100% - 30px);
-    color: white;
-  }
-
-  & .logo {
+  & .invalid-token {
+    margin-bottom: ${({ theme }) => theme.spacing(4)};
     text-align: center;
-    margin-bottom: 20px;
-  }
-
-  & .logoImage {
-    max-width: 100%;
-    max-height: 120px;
-  }
-
-  & .viewContainer {
-    box-sizing: border-box;
-    padding: 0 10px;
-    height: 310px;
-  }
-
-  & .buttonsBack {
-    justify-content: flex-start;
-  }
-
-  & .buttons {
-    justify-content: flex-end;
   }
 `;

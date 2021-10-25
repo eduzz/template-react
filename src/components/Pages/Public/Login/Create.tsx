@@ -1,4 +1,4 @@
-import { memo, MouseEvent } from 'react';
+import { memo } from 'react';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import Button from '@eduzz/houston-ui/Button';
@@ -8,19 +8,20 @@ import TextField from '@eduzz/houston-ui/Forms/Text';
 import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
+import textCounter from '@/helpers/textCounter';
 import authService from '@/services/auth';
 
 interface IProps extends IStyledProp {
-  onCreate: (e: MouseEvent<HTMLElement>) => void;
-  onRecoveryAccess: (e: MouseEvent<HTMLElement>) => void;
+  onCancel: () => void;
 }
 
-const LoginForm: React.FC<IProps> = ({ onRecoveryAccess, onCreate, className }) => {
+const LoginForm: React.FC<IProps> = ({ onCancel, className }) => {
   const form = useForm({
-    initialValues: { email: '', password: '' },
+    initialValues: { name: '', email: '', password: '' },
     validationSchema: yup =>
       yup.object().shape({
-        email: yup.string().required().email(),
+        name: yup.string().required(),
+        email: yup.string().required().email().length(250),
         password: yup.string().required()
       }),
     async onSubmit(model) {
@@ -31,23 +32,20 @@ const LoginForm: React.FC<IProps> = ({ onRecoveryAccess, onCreate, className }) 
   return (
     <Form context={form} className={className}>
       <Typography size='large' fontWeight='bold' className='title'>
-        Entrar
+        Criar conta
       </Typography>
-      <Typography className='subtitle'>Preencha seus dados para entrar</Typography>
+      <Typography className='subtitle'>Não possui uma conta? Cadastre-se agora</Typography>
 
-      <TextField name='email' label='Email' type='email' />
+      <TextField name='name' label='Nome' />
+      <TextField name='email' label='Email' type='email' helperText={textCounter(form.values.email, 250)} />
       <PasswordField label='Senha' name='password' />
 
-      <Typography className='resetButton' onClick={onRecoveryAccess}>
-        Esqueci minha senha
-      </Typography>
-
       <Button disabled={form.isSubmitting} type='submit' fullWidth>
-        Entrar
+        Cadastrar
       </Button>
 
-      <Typography className='link' onClick={onCreate}>
-        Ainda não tem uma conta? <span>Crie uma conta agora</span>
+      <Typography className='link' onClick={onCancel}>
+        Já possui uma conta? <span>Clique aqui</span>
       </Typography>
     </Form>
   );

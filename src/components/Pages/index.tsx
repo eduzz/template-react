@@ -3,8 +3,7 @@ import { memo, useCallback } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import AdminPage from './Admin';
-import LoginPage from './Public/Login';
-import NewPasswordPage from './Public/NewPassword';
+import PublicPage from './Public';
 
 import PermissionRoute from '@/components/Shared/PermissionRoute';
 
@@ -14,8 +13,8 @@ const Pages = memo(() => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/nova-senha' exact component={NewPasswordPage} />
-        <Route path='/login' exact component={LoginPage} />
+        <Route path='/nova-senha' exact component={PublicPage} />
+        <Route path='/login' exact component={PublicPage} />
         <PermissionRoute role={null} path='/' component={AdminPage} />
 
         <Route render={renderRedirect} />
