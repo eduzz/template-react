@@ -4,6 +4,4 @@ export default interface IUserToken {
   name: string;
   roles: string[];
   exp: number;
-
-  fullName: string;
 }

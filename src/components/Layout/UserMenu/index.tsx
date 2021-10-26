@@ -1,13 +1,15 @@
 import { memo, useCallback, useMemo } from 'react';
 
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import ExitToAppIcon from 'mdi-react/ExitToAppIcon';
-import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
+import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 
 import useBoolean from '@eduzz/houston-hooks/useBoolean';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import ChevronDown from '@eduzz/houston-icons/ChevronDown';
+import Exit from '@eduzz/houston-icons/Exit';
+import LockedSolid from '@eduzz/houston-icons/LockedSolid';
+import Avatar from '@eduzz/houston-ui/Avatar';
+import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import Typography from '@eduzz/houston-ui/Typography';
 
 import ChangePasswordDialog from './ChangePassword';
 
@@ -16,25 +18,11 @@ import OptionItem from '@/components/Shared/DropdownMenu/OptionItem';
 import authService from '@/services/auth';
 import { selectorUser } from '@/store/selectors';
 
-const useStyles = createUseStyles(theme => ({
-  button: {
-    padding: 0
-  },
-  avatar: {
-    width: 40,
-    height: 40,
-    fontSize: 16,
-    backgroundColor: theme.colors.secondary.main
-  }
-}));
-
-const UserMenu = memo((props: Record<string, never>) => {
-  const classes = useStyles(props);
+const UserMenu: React.FC<IStyledProp> = ({ className }) => {
   const [changePassword, , showChangePassword, hideChangePassword] = useBoolean(false);
 
   const user = useSelector(selectorUser);
   const avatarLetters = useMemo(() => `${user?.name?.substr(0, 1) ?? ''}`.trim() || 'U', [user]);
-
   const handleLogout = useCallback(() => authService.logout(), []);
 
   if (!user) {
@@ -42,18 +30,39 @@ const UserMenu = memo((props: Record<string, never>) => {
   }
 
   return (
-    <>
+    <div className={className}>
       <ChangePasswordDialog opened={changePassword} onComplete={hideChangePassword} />
 
       <DropdownMenu anchorOrigin={{ vertical: 35, horizontal: 'right' }}>
-        <IconButton color='inherit' className={classes.button}>
-          <Avatar className={classes.avatar}>{avatarLetters}</Avatar>
-        </IconButton>
-        <OptionItem text='Trocar senha' icon={KeyVariantIcon} handler={showChangePassword} />
-        <OptionItem text='Sair' icon={ExitToAppIcon} handler={handleLogout} />
+        <div className='wrapper'>
+          <Avatar size='small' filled>
+            {avatarLetters}
+          </Avatar>
+          <Button color='inherit' className='button'>
+            <Typography className='name'>{user.name}</Typography>
+            <ChevronDown />
+          </Button>
+        </div>
+        <OptionItem text='Trocar senha' icon={LockedSolid} handler={showChangePassword} />
+        <OptionItem text='Sair' icon={Exit} handler={handleLogout} />
       </DropdownMenu>
-    </>
+    </div>
   );
-});
+};
 
-export default UserMenu;
+export default styled(memo(UserMenu))`
+  .name {
+    margin: ${({ theme }) => `0 ${theme.spacing(2)}`};
+  }
+
+  .wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .button {
+    margin-left: ${({ theme }) => theme.spacing(1)};
+    padding-left: ${({ theme }) => theme.spacing(1)};
+    padding-right: ${({ theme }) => theme.spacing(2)};
+  }
+`;

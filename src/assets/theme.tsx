@@ -1,8 +1,6 @@
 import { HoustonThemeBuilder } from '@eduzz/houston-ui/styles/types';
 
 const variables = {
-  drawerWidthFull: 240,
-  drawerWidthMini: 55,
   headerHeight: 67,
   headerHeightUpSm: 64,
   tabbarHeight: 48,

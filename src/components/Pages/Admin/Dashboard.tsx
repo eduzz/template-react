@@ -44,7 +44,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
 
   return (
     <div className={className}>
-      <Toolbar title='Dashboard' />
+      <Toolbar />
 
       <Grid.Row className='grid'>
         <Grid.Column xs={12} md={4} lg={6}>

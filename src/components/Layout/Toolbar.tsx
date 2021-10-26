@@ -2,17 +2,14 @@ import { memo, ReactNode } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
 import CoreToolbar from '@mui/material/Toolbar';
-import clsx from 'clsx';
-import MenuIcon from 'mdi-react/MenuIcon';
-import { useContextSelector } from 'use-context-selector';
 
 import styled, { IStyledProp, breakpoints } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import { DrawerContext } from './Drawer/context';
 import UserMenu from './UserMenu';
+
+import logo from '@/assets/images/logo.svg';
 
 interface IProps extends IStyledProp {
   title?: string;
@@ -20,23 +17,21 @@ interface IProps extends IStyledProp {
 }
 
 const Toolbar: React.FC<IProps> = ({ title, children, className }) => {
-  const drawerMini = useContextSelector(DrawerContext, context => !context.isTemporary && !context.isFull);
-  const toogleDrawer = useContextSelector(DrawerContext, context => context.toogle);
-
   return (
     <div className={className}>
-      <AppBar className={clsx({ appBar: true, appBarDrawerMini: drawerMini })} color='default'>
+      <AppBar className='app-bar' color='default' elevation={1}>
         <CoreToolbar>
-          <IconButton color='inherit' onClick={toogleDrawer}>
-            <MenuIcon />
-          </IconButton>
           {children}
           {!children && (
             <Grid container alignItems='center'>
-              <Grid item xs={true}>
-                <Typography size='medium' fontWeight='semibold'>
-                  {title || 'App'}
-                </Typography>
+              <Grid item xs={true} className='left'>
+                <img src={logo} className='logo' />
+
+                {!!title && (
+                  <Typography size='medium' fontWeight='semibold'>
+                    {title}
+                  </Typography>
+                )}
               </Grid>
               <Grid item xs={false}>
                 <UserMenu />
@@ -59,18 +54,20 @@ export default styled(memo(Toolbar))`
     margin-bottom: ${({ theme }) => theme.variables.contentPaddingUpSm}px;
   }
 
-  & .appBar {
-    background-color: ${({ theme }) => theme.colors.grey['900']};
-    color: white;
+  & .app-bar {
+    background-color: white;
     width: 100%;
-    ${breakpoints.up('md')} {
-      background-color: white;
-      color: ${({ theme }) => theme.colors.text.primary};
-      width: ${({ theme }) => `calc(100% - ${theme.variables.drawerWidthFull}px)`};
-    }
   }
 
-  & .appBarDrawerMini {
-    width: ${({ theme }) => `calc(100% - ${theme.variables.drawerWidthMini}px)`};
+  & .left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  & .logo {
+    max-height: 35px;
+    float: left;
+    margin-right: ${({ theme }) => theme.spacing(4)};
   }
 `;
