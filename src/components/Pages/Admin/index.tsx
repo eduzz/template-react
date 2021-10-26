@@ -4,9 +4,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 
 import styled, { breakpoints, IStyledProp } from '@eduzz/houston-ui/styles/styled';
 
-import DashboardIndexPage from './Dashboard';
+import CampaignsPage from './Campaigns';
 import { ScrollTopContext } from './scrollTopContext';
-import UserIndexPage from './Users';
 
 interface IProps extends IStyledProp {}
 
@@ -21,8 +20,7 @@ const AdminPage: React.FC<IProps> = ({ className }) => {
       <ScrollTopContext.Provider value={scrollTop}>
         <main ref={mainContent} className='main-content'>
           <Switch>
-            <Route path='/usuarios' component={UserIndexPage} />
-            <Route path='/' component={DashboardIndexPage} />
+            <Route path='/' component={CampaignsPage} />
             <Route render={renderRedirect} />
           </Switch>
         </main>

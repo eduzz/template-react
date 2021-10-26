@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback } from 'react';
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -8,66 +8,34 @@ import usePromisePaginated from '@eduzz/houston-hooks/usePromisePaginated';
 import Button from '@eduzz/houston-ui/Button';
 import Table from '@eduzz/houston-ui/Table';
 
-import FormDialog from '../FormDialog';
 import ListItem from './ListItem';
 
 import Toolbar from '@/components/Layout/Toolbar';
 import IUser from '@/interfaces/models/user';
 import userService from '@/services/user';
 
-const UserListPage = memo(() => {
-  const [formOpened, setFormOpened] = useState(false);
-  const [current, setCurrent] = useState<IUser>();
-
-  const {
-    params,
-    mergeParams,
-    isLoading,
-    total,
-    result,
-    error,
-    retry,
-    handleSort,
-    handleChangePage,
-    handleChangePerPage
-  } = usePromisePaginated(
-    {
-      initialParams: {
-        term: '',
-        page: 1,
-        perPage: 10,
-        sort: { field: 'fullName', direction: 'asc' }
+const CampaignsPage: React.FC = () => {
+  const { params, isLoading, total, result, error, retry, handleSort, handleChangePage, handleChangePerPage } =
+    usePromisePaginated(
+      {
+        initialParams: {
+          term: '',
+          page: 1,
+          perPage: 10,
+          sort: { field: 'name', direction: 'asc' }
+        },
+        onChangeParams: params => userService.list(params)
       },
-      onChangeParams: params => userService.list(params)
-    },
-    []
-  );
+      []
+    );
 
-  const handleCreate = useCallback(() => {
-    setCurrent(null);
-    setFormOpened(true);
-  }, []);
-
-  const handleEdit = useCallback((current: IUser) => {
-    setCurrent(current);
-    setFormOpened(true);
-  }, []);
-
-  const formCallback = useCallback(
-    (user?: IUser) => {
-      setFormOpened(false);
-      current ? retry() : mergeParams({ term: user.email });
-    },
-    [current, mergeParams, retry]
-  );
-
-  const formCancel = useCallback(() => setFormOpened(false), []);
+  const handleCreate = useCallback(() => null, []);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleEdit = useCallback((current: IUser) => null, []);
 
   return (
     <>
-      <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
-
-      <Toolbar title='Usuários' />
+      <Toolbar />
 
       <Card>
         <CardContent>
@@ -107,6 +75,6 @@ const UserListPage = memo(() => {
       </Card>
     </>
   );
-});
+};
 
-export default UserListPage;
+export default memo(CampaignsPage);
