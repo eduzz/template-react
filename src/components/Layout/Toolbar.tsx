@@ -55,7 +55,7 @@ export default styled(memo(Toolbar))`
   }
 
   & .app-bar {
-    background-color: white;
+    background-color: red;
     width: 100%;
   }
 
