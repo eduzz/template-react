@@ -1,5 +1,5 @@
 export default interface IResetPasswordToken {
   id: number;
-  firstName: string;
+  name: string;
   email: string;
 }

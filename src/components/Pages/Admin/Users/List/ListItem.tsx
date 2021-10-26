@@ -27,7 +27,7 @@ const ListItem = memo((props: IProps) => {
   }, [onEdit, user]);
 
   const handleDelete = useCallback(async () => {
-    const confirm = await Alert.confirm(`Deseja excluir o usuário ${user.firstName}?`);
+    const confirm = await Alert.confirm(`Deseja excluir o usuário ${user.name}?`);
     if (!confirm) return;
 
     setDeleted(true);
@@ -36,10 +36,10 @@ const ListItem = memo((props: IProps) => {
       await userService.delete(user.id);
       onDeleteComplete();
     } catch (err) {
-      Toast.error(`Não foi possível excluir o usuário ${user.firstName}?`);
+      Toast.error(`Não foi possível excluir o usuário ${user.name}?`);
       setDeleted(false);
     }
-  }, [onDeleteComplete, user.firstName, user.id]);
+  }, [onDeleteComplete, user.name, user.id]);
 
   if (deleted) {
     return null;
@@ -47,7 +47,7 @@ const ListItem = memo((props: IProps) => {
 
   return (
     <Table.Row data={user} index={index}>
-      <Table.Cell>{user.fullName}</Table.Cell>
+      <Table.Cell>{user.name}</Table.Cell>
       <Table.Cell>{user.email}</Table.Cell>
       <Table.Action icon={<EditIcon />} onClick={handleEdit}>
         Editar

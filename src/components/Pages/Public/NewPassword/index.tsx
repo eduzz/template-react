@@ -66,7 +66,7 @@ const NewPasswordPage: React.FC<IProps> = ({ history, location, className }) => 
           <Typography size='large' fontWeight='bold' className='title'>
             Nova Senha
           </Typography>
-          <Typography className='subtitle'>Olá {tokenData?.firstName}, informe sua nova senha:</Typography>
+          <Typography className='subtitle'>Olá {tokenData?.name}, informe sua nova senha:</Typography>
 
           <PasswordField label='Senha' name='password' />
           <PasswordField label='Repita a senha' name='confirmPassword' />

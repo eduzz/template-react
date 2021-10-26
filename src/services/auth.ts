@@ -1,12 +1,18 @@
 import apiService from './api';
 import cacheService from './cache';
 
+import IUser from '@/interfaces/models/user';
 import { store } from '@/store';
 import { authTokenSlice } from '@/store/slices/authToken';
 
 export class AuthService {
+  public async create(user: IUser): Promise<void> {
+    const { token } = await apiService.post('/auth/create', user);
+    store.dispatch(authTokenSlice.actions.set(token));
+  }
+
   public async login(email: string, password: string): Promise<void> {
-    const { token } = await apiService.post('/login', { email, password });
+    const { token } = await apiService.post('/auth/login', { email, password });
     store.dispatch(authTokenSlice.actions.set(token));
   }
 

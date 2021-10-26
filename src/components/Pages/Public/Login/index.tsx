@@ -21,6 +21,8 @@ const LoginPage: React.FC<IStyledProp> = ({ className }) => {
   const onRecoveryAccess = useCallback(() => setCurrentView(2), []);
   const onCreate = useCallback(() => setCurrentView(1), []);
 
+  console.log({ isAuthenticated });
+
   if (isAuthenticated) return <Redirect to='/' />;
 
   return (

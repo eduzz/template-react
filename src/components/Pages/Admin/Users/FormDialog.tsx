@@ -4,7 +4,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Grid from '@mui/material/Grid';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import useForm from '@eduzz/houston-forms/useForm';
@@ -28,14 +27,13 @@ const FormDialog: React.FC<IProps> = ({ opened, user, onComplete, onCancel, clas
   const form = useForm<IUser>({
     validationSchema: yup =>
       yup.object().shape({
-        firstName: yup.string().required().min(3).max(50),
-        lastName: yup.string().required().min(3).max(50),
-        email: yup.string().required().email().max(150),
+        name: yup.string().required().min(3).max(250),
+        email: yup.string().required().email().max(250),
         roles: yup.array().required().min(1)
       }),
     async onSubmit(model) {
       const user = await userService.save(model);
-      Toast.success(`${user.firstName} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
+      Toast.success(`${user.name} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
       onComplete(user);
     }
   });
@@ -55,15 +53,7 @@ const FormDialog: React.FC<IProps> = ({ opened, user, onComplete, onCancel, clas
       <Form context={form} className={className}>
         <DialogTitle>{form.values.id ? 'Editar' : 'Novo'} Usuário</DialogTitle>
         <DialogContent className='content'>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField label='Nome' name='firstName' />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField label='Sobrenome' name='lastName' />
-            </Grid>
-          </Grid>
-
+          <TextField label='Nome' name='name' />
           <TextField label='Email' name='email' type='email' />
         </DialogContent>
         <DialogActions>

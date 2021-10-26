@@ -33,10 +33,7 @@ const UserMenu = memo((props: Record<string, never>) => {
   const [changePassword, , showChangePassword, hideChangePassword] = useBoolean(false);
 
   const user = useSelector(selectorUser);
-  const avatarLetters = useMemo(
-    () => `${user?.firstName?.substr(0, 1) ?? ''}${user?.lastName?.substr(0, 1) ?? ''}`.trim() || 'U',
-    [user]
-  );
+  const avatarLetters = useMemo(() => `${user?.name?.substr(0, 1) ?? ''}`.trim() || 'U', [user]);
 
   const handleLogout = useCallback(() => authService.logout(), []);
 
