@@ -1,12 +1,11 @@
 {
-  "name": "PROJECT-SLUG",
+  "name": "bootcamp-eduzz",
   "description": "Front Base for React Admin",
   "version": "0.0.1",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "%PROJECT-REPO%",
-    "seed": "git@github.com:eduzz/template-react.git"
+    "url": "git@github.com:eduzz/template-react.git"
   },
   "scripts": {
     "start": "vite",
