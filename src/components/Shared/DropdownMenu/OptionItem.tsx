@@ -3,15 +3,17 @@ import { memo, SyntheticEvent, useCallback, useContext } from 'react';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
-import DotsHorizontalIcon from 'mdi-react/DotsHorizontalIcon';
+// eslint-disable-next-line no-restricted-imports
+import { MdiReactIconComponentType } from 'mdi-react';
 
+import { IconWebBase } from '@eduzz/houston-icons/interfaces';
 import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 import DropdownMenuContext from './context';
 
 interface IProps {
   text: string;
-  icon?: typeof DotsHorizontalIcon;
+  icon?: MdiReactIconComponentType | React.NamedExoticComponent<IconWebBase>;
   handler: () => void;
 }
 

@@ -12,6 +12,7 @@ import splashImage from '@/assets/images/splash.png';
 const PublicPage: React.FC<IStyledProp> = ({ className }) => {
   return (
     <div className={className}>
+      <div className='splash' />
       <div className='container'>
         <img src={logo} className='logo' />
         <div className='content'>
@@ -34,10 +35,14 @@ export default styled(PublicPage)`
   min-height: 100vh;
   min-width: 100vw;
   position: relative;
-  background: url(${splashImage}) no-repeat center;
-  background-size: cover;
   display: flex;
   justify-content: flex-end;
+
+  & > .splash {
+    background: url(${splashImage}) no-repeat center;
+    background-size: cover;
+    flex: 1;
+  }
 
   & > .container {
     padding: ${({ theme }) => theme.spacing(8)};

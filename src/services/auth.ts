@@ -7,8 +7,8 @@ import { authTokenSlice } from '@/store/slices/authToken';
 
 export class AuthService {
   public async create(user: IUser): Promise<void> {
-    const { token } = await apiService.post('/auth/create', user);
-    store.dispatch(authTokenSlice.actions.set(token));
+    await apiService.post('/auth/create', user);
+    return this.login(user.email, user.password);
   }
 
   public async login(email: string, password: string): Promise<void> {
