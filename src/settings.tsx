@@ -1,8 +1,8 @@
-export const ENV = (import.meta.env.REACT_APP_ENV as string) || 'production';
+export const ENV = (process.env.REACT_APP_ENV as string) || 'production';
 
-export const API_ENDPOINT = (import.meta.env.REACT_APP_API_ENDPOINT as string) || '';
-export const CDN_ENDPOINT = (import.meta.env.REACT_APP_CDN_ENDPOINT as string) || '';
-export const SENTRY_KEY = (import.meta.env.REACT_APP_SENTRY_KEY as string) || '';
+export const API_ENDPOINT = (process.env.REACT_APP_API_ENDPOINT as string) || '';
+export const CDN_ENDPOINT = (process.env.REACT_APP_CDN_ENDPOINT as string) || '';
+export const SENTRY_KEY = (process.env.REACT_APP_SENTRY_KEY as string) || '';
 
 export const IS_DEVELOPMENT = ENV === 'development';
 

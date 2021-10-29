@@ -1,4 +1,4 @@
-const requests = {
+const requests: any = {
   GET: {},
   POST: {
     '/auth/login': {
