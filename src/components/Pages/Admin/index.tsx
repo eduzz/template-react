@@ -36,7 +36,7 @@ export default styled(AdminPage)`
   height: 100vh;
 
   & .main-content {
-    background-color: ${({ theme }) => theme.colors.background.default};
+    background-color: white;
     width: 100vw;
     height: 100vh;
     overflow: auto;

@@ -14,9 +14,9 @@
     "postinstall": "bash scripts/postinstall.sh"
   },
   "dependencies": {
-    "@eduzz/houston-forms": "0.36.10",
-    "@eduzz/houston-hooks": "0.36.10",
-    "@eduzz/houston-ui": "0.36.10",
+    "@eduzz/houston-forms": "0.40.2",
+    "@eduzz/houston-hooks": "0.40.2",
+    "@eduzz/houston-ui": "0.40.2",
     "@reduxjs/toolkit": "1.6.2",
     "@sentry/browser": "6.13.3",
     "axios": "0.24.0",
@@ -34,7 +34,7 @@
     "tslib": "2.3.1"
   },
   "devDependencies": {
-    "@eduzz/eslint-config-houston": "0.36.10",
+    "@eduzz/eslint-config-houston": "0.40.2",
     "@types/jest": "27.0.2",
     "@types/lodash": "4.14.176",
     "@types/node": "16.11.6",

@@ -1259,49 +1259,49 @@
   dependencies:
     "@date-io/core" "^2.11.0"
 
-"@eduzz/eslint-config-houston@0.36.10":
-  version "0.36.10"
-  resolved "https://registry.yarnpkg.com/@eduzz/eslint-config-houston/-/eslint-config-houston-0.36.10.tgz#7f395a1687fad927b9a4762f741ed38839db3c5f"
-  integrity sha512-IRk7Ud/aGjbazwBTPbfDLSr6YfFGAPloeS88Xfoil6+8vfb+pSJ5YHeJk4sHCWDeCxlr6leNVbwB+8Fr+OSlNg==
+"@eduzz/eslint-config-houston@0.40.2":
+  version "0.40.2"
+  resolved "https://registry.yarnpkg.com/@eduzz/eslint-config-houston/-/eslint-config-houston-0.40.2.tgz#7249fb245c973655d2c5561738a8958d1ae079cb"
+  integrity sha512-YLYTYufYJReWgsiDW0ar3Knpdqzvu5ofQ5ZLqCdBvgiHqH2wS0MahC0OTwIKLOF+SD+7+gpxotnk5xhylcEbzQ==
 
-"@eduzz/houston-core@0.36.10":
-  version "0.36.10"
-  resolved "https://registry.yarnpkg.com/@eduzz/houston-core/-/houston-core-0.36.10.tgz#6ca31617f3c906429b1479bcc2d75aa707f7e418"
-  integrity sha512-waR+D4niV7PVdu2y6dUywGcj91PlaJLbDNbfb2/sorhSzlr89SM5FDvPIJNnOvdxWIIAG96UkassvH1LFsalwg==
+"@eduzz/houston-core@0.40.2":
+  version "0.40.2"
+  resolved "https://registry.yarnpkg.com/@eduzz/houston-core/-/houston-core-0.40.2.tgz#2ebae9759e28c63aa4f586f098ae68aab7e77bc7"
+  integrity sha512-6excOOiLQV7wRgNURanzkEwbibnLnbi6UFoZX7vcvUJwK1Z8oxdEb/cvm4GIuEVBZU1eZnVQ9ihLiz2DpW6aAg==
 
-"@eduzz/houston-forms@0.36.10":
-  version "0.36.10"
-  resolved "https://registry.yarnpkg.com/@eduzz/houston-forms/-/houston-forms-0.36.10.tgz#04a0aee012ab1b3e2bfe68995100b7a5aa12c13a"
-  integrity sha512-RLlz6AUzEay/MZ+T4Myn1AayfjsGv+kknONhcaIbr6TxbNlWHmnglydDAIfOC+C5b+fFkGIjDi32SRqL+u1kaQ==
+"@eduzz/houston-forms@0.40.2":
+  version "0.40.2"
+  resolved "https://registry.yarnpkg.com/@eduzz/houston-forms/-/houston-forms-0.40.2.tgz#34ad4db32a1ae5fde4742856bb06acff033798c0"
+  integrity sha512-AY14o8OnVZ0Q+VfvfWkr+7SojsVZbQMaQ65jn6vy/6m5bNtHYohRMm9PFVKmSb4uElAQcARmY21lcH/4bytsaQ==
   dependencies:
-    "@eduzz/houston-core" "0.36.10"
-    "@eduzz/houston-hooks" "0.36.10"
+    "@eduzz/houston-core" "0.40.2"
+    "@eduzz/houston-hooks" "0.40.2"
     "@types/yup" "^0.29.13"
     formik "^2.2.9"
     rxjs "^7"
     yup "^0.32.9"
 
-"@eduzz/houston-hooks@0.36.10":
-  version "0.36.10"
-  resolved "https://registry.yarnpkg.com/@eduzz/houston-hooks/-/houston-hooks-0.36.10.tgz#0c741286860388cb5add4809a1597246b920e5f8"
-  integrity sha512-ZP0Fhcun39BzNGshnPAlWoWB2es0FIlxV6DT56hzEPPcCROEjQW44kTwQkxEFf44wtrnmYEJ4fEvPJklE7StAg==
+"@eduzz/houston-hooks@0.40.2":
+  version "0.40.2"
+  resolved "https://registry.yarnpkg.com/@eduzz/houston-hooks/-/houston-hooks-0.40.2.tgz#c5f6ea9d510af02a3f6c06add8f8e7738d08ea91"
+  integrity sha512-FArrGzsBxri406z8tEAj2MhPd35wIknJdOcBogjPsBrIeQBCwS+8bAjXiS7lJ3FeCqSAlqHLr/e9zuk5MNBrBg==
   dependencies:
-    "@eduzz/houston-core" "0.36.10"
+    "@eduzz/houston-core" "0.40.2"
     lodash "^4"
 
-"@eduzz/houston-icons@0.36.10":
-  version "0.36.10"
-  resolved "https://registry.yarnpkg.com/@eduzz/houston-icons/-/houston-icons-0.36.10.tgz#7fafa27abfc5e13a9caee5472046e9ace72de43a"
-  integrity sha512-VQk3/bME5xy9H/ZLx1Sb90XJcLh6l/4YxPY/b6/Of69I1icLm5OQNnN2VwDneuRDyI0QWoXqbbB19X4nNUtxEA==
+"@eduzz/houston-icons@0.40.2":
+  version "0.40.2"
+  resolved "https://registry.yarnpkg.com/@eduzz/houston-icons/-/houston-icons-0.40.2.tgz#984a0be51f94044336093556f080c3d8e7d1f96c"
+  integrity sha512-pJ4a+CEDqHD3N5ZxGqeAZfYcZ9MxSlAKgFERebfacK3ECMmLVtRn9HtFVP7F44G/DibkeWYwoYxuLg5MqsJBKw==
 
-"@eduzz/houston-ui@0.36.10":
-  version "0.36.10"
-  resolved "https://registry.yarnpkg.com/@eduzz/houston-ui/-/houston-ui-0.36.10.tgz#89b24f88a2c3bd8b69fee7f825f691ab151c4afe"
-  integrity sha512-OKZHMXU1F825m3wbQi40f6f1m8B8Twrf6JIi8buAc3gbMhBwvPTYXe6srG5Qc+qe4auJcRqP5kzwe9AmlKj8Sg==
+"@eduzz/houston-ui@0.40.2":
+  version "0.40.2"
+  resolved "https://registry.yarnpkg.com/@eduzz/houston-ui/-/houston-ui-0.40.2.tgz#e35d6448c9cd6295a7c84e704e036a239be6b913"
+  integrity sha512-26qaBtoWsig0+crWSG2Y7u75BPEGLLykU5h2GAId6ZasYt0LtLbh9MWkGekekRiYT6UsTfwlTy1xzM3CB/Rexg==
   dependencies:
-    "@eduzz/houston-core" "0.36.10"
-    "@eduzz/houston-hooks" "0.36.10"
-    "@eduzz/houston-icons" "0.36.10"
+    "@eduzz/houston-core" "0.40.2"
+    "@eduzz/houston-hooks" "0.40.2"
+    "@eduzz/houston-icons" "0.40.2"
     "@emotion/css" "^11.1.3"
     "@emotion/react" "^11.4.1"
     "@emotion/styled" "^11.3.0"

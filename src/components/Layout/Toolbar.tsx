@@ -57,6 +57,8 @@ export default styled(memo(Toolbar))`
   & .app-bar {
     background-color: white;
     width: 100%;
+    box-shadow: none;
+    border-bottom: ${({ theme }) => theme.colors.grey[300]} 1px solid;
   }
 
   & .left {

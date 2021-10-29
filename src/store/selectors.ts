@@ -17,7 +17,7 @@ export const selectorUser = createSelector(
 
 export const selectorCanAccess = createSelector(
   selectorUser,
-  (_: never, roles: enRoles[]) => roles,
+  (state: RootState, roles: enRoles[]) => roles,
   (user, roles) => {
     if (!user) return false;
 

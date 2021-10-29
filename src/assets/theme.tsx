@@ -11,6 +11,20 @@ const variables = {
 };
 
 const theme: HoustonThemeBuilder = {
+  colors: {
+    primary: {
+      light: '#ffb04d',
+      main: '#F18018',
+      dark: '#b85200',
+      contrastText: '#fff'
+    },
+    secondary: {
+      light: '#4e4588',
+      main: '#1F1E5A',
+      dark: '#000031',
+      contrastText: '#fff'
+    }
+  },
   variables
 };
 
