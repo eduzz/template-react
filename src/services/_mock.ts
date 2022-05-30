@@ -1,5 +1,22 @@
+import IUser from '@/interfaces/models/user';
+
+const data = new Array(10).fill('a').map(
+  (_, index) =>
+    ({
+      id: index + 1,
+      name: `User ${index}`,
+      email: `user-${1}@eduzz.com`,
+      roles: []
+    } as IUser)
+);
+
 const requests: any = {
-  GET: {},
+  GET: {
+    '/user': {
+      total: data.length,
+      result: data
+    }
+  },
   POST: {
     '/auth/login': {
       token:

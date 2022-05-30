@@ -3,13 +3,13 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Dialog from '@mui/material/Dialog';
 
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import createUseStyles from '@eduzz/houston-styles/createUseStyles';
 
-const useStyle = createUseStyles(theme => ({
+const useStyle = createUseStyles(() => ({
   loader: {
     width: 70,
     height: 70,
-    color: theme.colors.secondary.light
+    color: 'white'
   },
   paper: {
     boxShadow: 'none',

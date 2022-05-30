@@ -1,6 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
 
-import styled, { breakpoints, IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { breakpoints, IStyledProp } from '@eduzz/houston-styles';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import LoginPage from './Login';
@@ -24,7 +24,7 @@ const PublicPage: React.FC<IStyledProp> = ({ className }) => {
           </div>
         </div>
         <div className='footer'>
-          <Typography size='x-small'>Eduzz@{new Date().getFullYear()}</Typography>
+          <Typography size='xxxs'>Eduzz@{new Date().getFullYear()}</Typography>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@ export default styled(PublicPage)`
   }
 
   & > .container {
-    padding: ${({ theme }) => theme.spacing(8)};
+    padding: ${({ theme }) => theme.spacing.xs};
     height: 100vh;
     width: 500px;
     min-width: 50vw;
@@ -57,7 +57,7 @@ export default styled(PublicPage)`
     justify-content: space-between;
 
     ${breakpoints.down('sm')} {
-      padding: ${({ theme }) => theme.spacing(4)};
+      padding: ${({ theme }) => theme.spacing.xxxs};
     }
 
     & > .logo {
@@ -87,23 +87,23 @@ export default styled(PublicPage)`
       }
 
       .title {
-        margin-bottom: ${({ theme }) => theme.spacing(8)};
+        margin-bottom: ${({ theme }) => theme.spacing.xs};
 
         ${breakpoints.down('sm')} {
-          margin-bottom: ${({ theme }) => theme.spacing(4)};
+          margin-bottom: ${({ theme }) => theme.spacing.xxxs};
         }
       }
 
       .subtitle {
-        margin-bottom: ${({ theme }) => theme.spacing(4)};
+        margin-bottom: ${({ theme }) => theme.spacing.xxxs};
       }
 
       .link {
         cursor: pointer;
-        margin-top: ${({ theme }) => theme.spacing(6)};
+        margin-top: ${({ theme }) => theme.spacing.xxs};
 
         & > span {
-          color: ${({ theme }) => theme.colors.primary.main};
+          color: ${({ theme }) => theme.brandColor.primary.pure};
         }
       }
     }

@@ -11,7 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ExpandMoreIcon from 'mdi-react/ExpandMoreIcon';
 import { useContextSelector } from 'use-context-selector';
 
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 
 import { IMenu } from '..';
 import { DrawerContext } from '../context';
@@ -82,7 +82,7 @@ export default styled(memo(DrawerListItem))`
     opacity: 0.8;
     &.active {
       opacity: 1;
-      background: ${({ theme }) => theme.colors.primary.dark};
+      background: ${({ theme }) => theme.brandColor.primary.dark};
     }
   }
 
@@ -90,7 +90,7 @@ export default styled(memo(DrawerListItem))`
     margin: 0;
     min-width: 34px;
     margin-right: 15px;
-    fill: ${({ theme }) => theme.colors.primary.contrastText};
+    fill: white;
   }
 
   & .text {
@@ -98,18 +98,18 @@ export default styled(memo(DrawerListItem))`
   }
 
   &.expandablePanel {
-    background: ${({ theme }) => theme.colors.primary.main};
-    color: ${({ theme }) => theme.colors.primary.contrastText};
+    background: ${({ theme }) => theme.brandColor.primary.pure};
+    color: white;
     margin-left: -10px;
     box-shadow: none;
     margin: 0;
     &.active {
-      background: ${({ theme }) => theme.colors.primary.dark};
+      background: ${({ theme }) => theme.brandColor.primary.dark};
     }
   }
 
   & .expandableTitle:hover {
-    background: ${({ theme }) => theme.colors.primary.dark};
+    background: ${({ theme }) => theme.brandColor.primary.dark};
   }
 
   & .expandableDetails {

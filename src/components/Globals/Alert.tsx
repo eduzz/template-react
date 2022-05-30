@@ -6,8 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import createUseStyles from '@eduzz/houston-styles/createUseStyles';
 import Button from '@eduzz/houston-ui/Button';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
 
 export interface IAlertShowParams {
   message: React.ReactNode;

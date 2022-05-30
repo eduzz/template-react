@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import clsx from 'clsx';
 import { useContextSelector } from 'use-context-selector';
 
-import styled, { IStyledProp, breakpoints } from '@eduzz/houston-ui/styles/styled';
+import styled, { IStyledProp, breakpoints } from '@eduzz/houston-styles';
 
 import { DrawerContext } from './Drawer/context';
 
@@ -35,14 +35,14 @@ export default styled(memo(ToolbarTabs))`
   & .appBar {
     position: fixed;
     top: ${({ theme }) => theme.variables.headerHeightUpSm}px;
-    background-color: ${({ theme }) => theme.colors.grey['900']};
+    background-color: ${({ theme }) => theme.neutralColor.low.pure};
     color: white;
     box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.29);
     width: 100%;
 
     ${breakpoints.up('md')} {
       background-color: white;
-      color: ${({ theme }) => theme.colors.text.primary};
+      color: ${({ theme }) => theme.brandColor.primary.pure};
       width: ${({ theme }) => `calc(100% - ${theme.variables.drawerWidthFull}px)`};
     }
   }

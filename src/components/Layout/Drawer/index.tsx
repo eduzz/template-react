@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import MoreIcon from 'mdi-react/MoreIcon';
 import { useHistory } from 'react-router';
 
-import styled, { IStyledProp, breakpoints } from '@eduzz/houston-ui/styles/styled';
+import styled, { IStyledProp, breakpoints } from '@eduzz/houston-styles';
 
 import Content from './Content';
 import { DrawerContext } from './context';

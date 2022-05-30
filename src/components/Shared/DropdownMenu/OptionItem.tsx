@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { MdiReactIconComponentType } from 'mdi-react';
 
 import { IconWebBase } from '@eduzz/houston-icons/interfaces';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import createUseStyles from '@eduzz/houston-styles/createUseStyles';
 
 import DropdownMenuContext from './context';
 

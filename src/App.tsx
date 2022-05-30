@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { Provider } from 'react-redux';
 
-import ThemeProvider from '@eduzz/houston-ui/styles/ThemeProvider';
+import ThemeProvider from '@eduzz/houston-ui/ThemeProvider';
 
 import theme from './assets/theme';
 import { store } from './store';

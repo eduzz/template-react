@@ -5,10 +5,10 @@ import queryString from 'query-string';
 import { RouteComponentProps } from 'react-router-dom';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import PasswordField from '@eduzz/houston-ui/Forms/Password';
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import decodeJWTToken from '@/helpers/jwt';
@@ -63,7 +63,7 @@ const NewPasswordPage: React.FC<IProps> = ({ history, location, className }) => 
 
       {!loading && !!tokenData && (
         <Form context={form}>
-          <Typography size='large' fontWeight='bold' className='title'>
+          <Typography size='md' fontWeight='bold' className='title'>
             Nova Senha
           </Typography>
           <Typography className='subtitle'>Olá {tokenData?.name}, informe sua nova senha:</Typography>
@@ -84,7 +84,7 @@ export default styled(NewPasswordPage)`
   max-width: 400px;
 
   & .invalid-token {
-    margin-bottom: ${({ theme }) => theme.spacing(4)};
+    margin-bottom: ${({ theme }) => theme.spacing.xxxs};
     text-align: center;
   }
 `;

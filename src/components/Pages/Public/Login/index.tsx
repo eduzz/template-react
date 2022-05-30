@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
-import styled, { breakpoints, IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { breakpoints, IStyledProp } from '@eduzz/houston-styles';
 
 import CreateForm from './Create';
 import LoginForm from './Form';
@@ -43,19 +43,19 @@ const LoginPage: React.FC<IStyledProp> = ({ className }) => {
 };
 
 export default styled(LoginPage)`
-  margin: calc(${({ theme }) => theme.spacing(8)} * -1);
+  margin: calc(${({ theme }) => theme.spacing.xs} * -1);
 
   ${breakpoints.down('sm')} {
-    margin: calc(${({ theme }) => theme.spacing(4)} * -1);
+    margin: calc(${({ theme }) => theme.spacing.xxxs} * -1);
   }
 
   & .step {
-    padding: ${({ theme }) => theme.spacing(8)};
+    padding: ${({ theme }) => theme.spacing.xs};
     max-width: 450px;
     margin: auto;
 
     ${breakpoints.down('sm')} {
-      padding: ${({ theme }) => theme.spacing(4)};
+      padding: ${({ theme }) => theme.spacing.xxxs};
     }
   }
 `;

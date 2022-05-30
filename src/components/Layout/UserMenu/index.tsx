@@ -7,7 +7,7 @@ import KeyVariantIcon from 'mdi-react/KeyVariantIcon';
 import { useSelector } from 'react-redux';
 
 import useBoolean from '@eduzz/houston-hooks/useBoolean';
-import createUseStyles from '@eduzz/houston-ui/styles/createUseStyles';
+import createUseStyles from '@eduzz/houston-styles/createUseStyles';
 
 import ChangePasswordDialog from './ChangePassword';
 
@@ -24,7 +24,7 @@ const useStyles = createUseStyles(theme => ({
     width: 40,
     height: 40,
     fontSize: 16,
-    backgroundColor: theme.colors.secondary.main
+    backgroundColor: theme.brandColor.primary.pure
   }
 }));
 

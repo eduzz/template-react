@@ -1,10 +1,10 @@
 import { memo, MouseEvent } from 'react';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import TextField from '@eduzz/houston-ui/Forms/Text';
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Toast from '@eduzz/houston-ui/Toast';
 import Typography from '@eduzz/houston-ui/Typography';
 
@@ -30,7 +30,7 @@ const LoginRecoveryAccess: React.FC<IProps> = ({ onComplete, onCancel, className
 
   return (
     <Form context={form} className={className}>
-      <Typography size='large' fontWeight='bold' className='title'>
+      <Typography size='md' fontWeight='bold' className='title'>
         Esqueci minha senha
       </Typography>
       <Typography className='subtitle'>Insira seu e-mail cadastrado para recuperar sua senha</Typography>

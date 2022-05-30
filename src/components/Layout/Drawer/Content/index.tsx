@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 
 import List from '@mui/material/List';
 
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 
 import { IMenu } from '..';
 import DrawerListItem from './ListItem';
@@ -35,8 +35,8 @@ const Content: React.FC<IProps> = ({ menu, navigate: navigateProp, className }) 
 };
 
 export default styled(memo(Content))`
-  background: ${({ theme }) => theme.colors.grey['900']};
-  color: ${({ theme }) => theme.colors.primary.contrastText};
+  background: ${({ theme }) => theme.neutralColor.low.pure};
+  color: white;
   height: 100vh;
 
   & .header {

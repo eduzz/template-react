@@ -16,8 +16,8 @@ import {
   Tooltip
 } from 'recharts';
 
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 import Grid from '@eduzz/houston-ui/Grid';
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import Toolbar from '@/components/Layout/Toolbar';
@@ -50,7 +50,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
         <Grid.Column xs={12} md={4} lg={6}>
           <Card>
             <CardContent>
-              <Typography marginBottom size='medium' fontWeight='semibold'>
+              <Typography marginBottom size='sm' fontWeight='semibold'>
                 Bar Chart
               </Typography>
 
@@ -68,7 +68,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
         <Grid.Column xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
-              <Typography marginBottom size='medium' fontWeight='semibold'>
+              <Typography marginBottom size='sm' fontWeight='semibold'>
                 Pie Chart
               </Typography>
 
@@ -89,7 +89,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
         <Grid.Column xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
-              <Typography marginBottom size='medium' fontWeight='semibold'>
+              <Typography marginBottom size='sm' fontWeight='semibold'>
                 Area Chart
               </Typography>
 
@@ -105,7 +105,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
 
       <Card>
         <CardContent>
-          <Typography marginBottom size='medium' fontWeight='semibold'>
+          <Typography marginBottom size='sm' fontWeight='semibold'>
             Line Chart
           </Typography>
 

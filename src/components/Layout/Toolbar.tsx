@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import MenuIcon from 'mdi-react/MenuIcon';
 import { useContextSelector } from 'use-context-selector';
 
-import styled, { IStyledProp, breakpoints } from '@eduzz/houston-ui/styles/styled';
+import styled, { IStyledProp, breakpoints } from '@eduzz/houston-styles';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import { DrawerContext } from './Drawer/context';
@@ -34,7 +34,7 @@ const Toolbar: React.FC<IProps> = ({ title, children, className }) => {
           {!children && (
             <Grid container alignItems='center'>
               <Grid item xs={true}>
-                <Typography size='medium' fontWeight='semibold'>
+                <Typography size='sm' fontWeight='semibold'>
                   {title || 'App'}
                 </Typography>
               </Grid>
@@ -60,12 +60,12 @@ export default styled(memo(Toolbar))`
   }
 
   & .appBar {
-    background-color: ${({ theme }) => theme.colors.grey['900']};
+    background-color: ${({ theme }) => theme.neutralColor.low.pure};
     color: white;
     width: 100%;
     ${breakpoints.up('md')} {
       background-color: white;
-      color: ${({ theme }) => theme.colors.text.primary};
+      color: ${({ theme }) => theme.brandColor.primary.pure};
       width: ${({ theme }) => `calc(100% - ${theme.variables.drawerWidthFull}px)`};
     }
   }

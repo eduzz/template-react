@@ -26,7 +26,7 @@ const UserListPage = memo(() => {
     total,
     result,
     error,
-    retry,
+    refresh,
     handleSort,
     handleChangePage,
     handleChangePerPage
@@ -56,9 +56,9 @@ const UserListPage = memo(() => {
   const formCallback = useCallback(
     (user?: IUser) => {
       setFormOpened(false);
-      current ? retry() : mergeParams({ term: user.email });
+      current ? refresh() : mergeParams({ term: user.email });
     },
-    [current, mergeParams, retry]
+    [current, mergeParams, refresh]
   );
 
   const formCancel = useCallback(() => setFormOpened(false), []);
@@ -84,7 +84,7 @@ const UserListPage = memo(() => {
           </Grid>
         </CardContent>
 
-        <Table loading={isLoading} sort={params.sort} onSort={handleSort}>
+        <Table stripedRows loading={isLoading} sort={params.sort} onSort={handleSort}>
           <Table.Header>
             <Table.Column sortableField='fullName'>Nome</Table.Column>
             <Table.Column sortableField='email'>Email</Table.Column>
@@ -93,7 +93,7 @@ const UserListPage = memo(() => {
             {!error && <Table.Empty count={total} />}
             <Table.Error error={error} />
             {result.map((user, index) => (
-              <ListItem key={user.id} user={user} index={index} onEdit={handleEdit} onDeleteComplete={retry} />
+              <ListItem key={user.id} user={user} index={index} onEdit={handleEdit} onDeleteComplete={refresh} />
             ))}
           </Table.Body>
           <Table.Pagination

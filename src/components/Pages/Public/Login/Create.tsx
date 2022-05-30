@@ -1,11 +1,11 @@
 import { memo } from 'react';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
 import PasswordField from '@eduzz/houston-ui/Forms/Password';
 import TextField from '@eduzz/houston-ui/Forms/Text';
-import styled, { IStyledProp } from '@eduzz/houston-ui/styles/styled';
 import Typography from '@eduzz/houston-ui/Typography';
 
 import textCounter from '@/helpers/textCounter';
@@ -31,7 +31,7 @@ const LoginForm: React.FC<IProps> = ({ onCancel, className }) => {
 
   return (
     <Form context={form} className={className}>
-      <Typography size='large' fontWeight='bold' className='title'>
+      <Typography size='md' fontWeight='bold' className='title'>
         Criar conta
       </Typography>
       <Typography className='subtitle'>Não possui uma conta? Cadastre-se agora</Typography>
@@ -54,8 +54,8 @@ const LoginForm: React.FC<IProps> = ({ onCancel, className }) => {
 export default styled(memo(LoginForm))`
   & .resetButton {
     cursor: pointer;
-    margin-bottom: ${({ theme }) => theme.spacing(4)};
-    color: ${({ theme }) => theme.colors.primary.main};
+    margin-bottom: ${({ theme }) => theme.spacing.xxxs};
+    color: ${({ theme }) => theme.brandColor.primary.pure};
     float: right;
   }
 `;

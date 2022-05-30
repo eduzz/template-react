@@ -4,7 +4,7 @@ import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
-import styled, { breakpoints, IStyledProp } from '@eduzz/houston-ui/styles/styled';
+import styled, { breakpoints, IStyledProp } from '@eduzz/houston-styles';
 
 import DashboardIndexPage from './Dashboard';
 import { ScrollTopContext } from './scrollTopContext';
@@ -48,7 +48,7 @@ export default styled(AdminPage)`
   height: 100vh;
 
   & .main-content {
-    background-color: ${({ theme }) => theme.colors.background.default};
+    background-color: white;
     width: 100vw;
     height: 100vh;
     overflow: auto;
