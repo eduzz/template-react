@@ -1,7 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
-import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import EduzzAppsToolbar from '@eduzz/apps-toolbar-react';
@@ -14,16 +12,10 @@ import { TOOLBAR_HEIGHT } from '@eduzz/houston-ui/Layout/Sidebar/context';
 
 import { ScrollTopContext } from './scrollTopContext';
 
-import { IMenu } from '@/components/Layout/Drawer';
-
 interface IProps extends IStyledProp {}
 
 const AdminLayout: React.FC<IProps> = ({ className }) => {
   const mainContent = useRef<HTMLDivElement>();
-  const [menu] = useState<IMenu[]>(() => [
-    { path: '/', display: 'Dashboard', icon: ViewDashboardIcon },
-    { path: '/usuarios', display: 'Usuários', icon: AccountMultipleIcon }
-  ]);
 
   const [menuVisible, toggleMenu, , closeMenu] = useBoolean(false);
   const location = useLocation();
@@ -34,8 +26,6 @@ const AdminLayout: React.FC<IProps> = ({ className }) => {
     closeMenu();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
-
-  console.log({ menu });
 
   return (
     <div className={className}>
