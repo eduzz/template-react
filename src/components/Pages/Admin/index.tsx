@@ -1,10 +1,11 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import AccountMultipleIcon from 'mdi-react/AccountMultipleIcon';
 import ViewDashboardIcon from 'mdi-react/ViewDashboardIcon';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 
 import EduzzAppsToolbar from '@eduzz/apps-toolbar-react';
+import useBoolean from '@eduzz/houston-hooks/useBoolean';
 import AvatarOutline from '@eduzz/houston-icons/AvatarOutline';
 import DashboardRoundOutline from '@eduzz/houston-icons/DashboardRoundOutline';
 import styled, { breakpoints, IStyledProp } from '@eduzz/houston-styles';
@@ -24,10 +25,15 @@ const AdminLayout: React.FC<IProps> = ({ className }) => {
     { path: '/usuarios', display: 'Usuários', icon: AccountMultipleIcon }
   ]);
 
-  const [, setVisible] = useState(false);
+  const [menuVisible, toggleMenu, , closeMenu] = useBoolean(false);
+  const location = useLocation();
 
-  const toggleMenu = useCallback(() => setVisible(v => !v), []);
   const scrollTop = useCallback(() => setTimeout(() => mainContent.current.scrollTo(0, 0), 100), []);
+
+  useEffect(() => {
+    closeMenu();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   console.log({ menu });
 
@@ -41,7 +47,7 @@ const AdminLayout: React.FC<IProps> = ({ className }) => {
 
       <ScrollTopContext.Provider value={scrollTop}>
         <Layout>
-          <Layout.Sidebar>
+          <Layout.Sidebar mobileVisible={menuVisible}>
             <Layout.Sidebar.Menu>
               <Layout.Sidebar.MenuItem as={NavLink} to='/' icon={<DashboardRoundOutline />}>
                 Dashboard
