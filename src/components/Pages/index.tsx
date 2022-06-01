@@ -1,26 +1,42 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 
-import AdminPage from './Admin';
-import PublicPage from './Public';
-
-import PermissionRoute from '@/components/Shared/PermissionRoute';
+import PermissionRoute from '../Shared/PermissionRoute';
+import AdminLayout from './Admin';
+import DashboardPage from './Admin/Dashboard';
+import UserListPage from './Admin/Users/List';
+import PublicLayout from './Public';
+import LoginPage from './Public/Login';
+import NewPasswordPage from './Public/NewPassword';
 
 const Pages = memo(() => {
-  const renderRedirect = useCallback(() => <Redirect to='/' />, []);
+  const routes = useRoutes([
+    {
+      path: '/login',
+      element: <PublicLayout />,
+      children: [{ index: true, element: <LoginPage /> }]
+    },
+    {
+      path: '/nova-senha',
+      element: <PublicLayout />,
+      children: [{ index: true, element: <NewPasswordPage /> }]
+    },
+    {
+      path: '/',
+      element: (
+        <PermissionRoute>
+          <AdminLayout />
+        </PermissionRoute>
+      ),
+      children: [
+        { index: true, element: <DashboardPage /> },
+        { path: '/usuarios', element: <UserListPage /> }
+      ]
+    }
+  ]);
 
-  return (
-    <BrowserRouter>
-      <Switch>
-        <Route path='/nova-senha' exact component={PublicPage} />
-        <Route path='/login' exact component={PublicPage} />
-        <PermissionRoute role={null} path='/' component={AdminPage} />
-
-        <Route render={renderRedirect} />
-      </Switch>
-    </BrowserRouter>
-  );
+  return <>{routes}</>;
 });
 
 export default Pages;

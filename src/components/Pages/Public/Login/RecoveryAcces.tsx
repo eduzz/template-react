@@ -30,7 +30,7 @@ const LoginRecoveryAccess: React.FC<IProps> = ({ onComplete, onCancel, className
 
   return (
     <Form context={form} className={className}>
-      <Typography size='md' fontWeight='bold' className='title'>
+      <Typography size='md' weight='bold' className='title'>
         Esqueci minha senha
       </Typography>
       <Typography className='subtitle'>Insira seu e-mail cadastrado para recuperar sua senha</Typography>

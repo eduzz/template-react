@@ -11,7 +11,6 @@ import Table from '@eduzz/houston-ui/Table';
 import FormDialog from '../FormDialog';
 import ListItem from './ListItem';
 
-import Toolbar from '@/components/Layout/Toolbar';
 import IUser from '@/interfaces/models/user';
 import userService from '@/services/user';
 
@@ -66,8 +65,6 @@ const UserListPage = memo(() => {
   return (
     <>
       <FormDialog opened={formOpened} user={current} onComplete={formCallback} onCancel={formCancel} />
-
-      <Toolbar title='Usuários' />
 
       <Card>
         <CardContent>

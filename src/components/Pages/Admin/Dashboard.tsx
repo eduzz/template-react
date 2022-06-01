@@ -20,9 +20,7 @@ import styled, { IStyledProp } from '@eduzz/houston-styles';
 import Grid from '@eduzz/houston-ui/Grid';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import Toolbar from '@/components/Layout/Toolbar';
-
-const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
+const DashboardPage: React.FC<IStyledProp> = ({ className }) => {
   const [data] = useState([
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
     { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
@@ -44,13 +42,11 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
 
   return (
     <div className={className}>
-      <Toolbar title='Dashboard' />
-
       <Grid.Row className='grid'>
         <Grid.Column xs={12} md={4} lg={6}>
           <Card>
             <CardContent>
-              <Typography marginBottom size='sm' fontWeight='semibold'>
+              <Typography marginBottom size='sm' weight='semibold'>
                 Bar Chart
               </Typography>
 
@@ -68,7 +64,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
         <Grid.Column xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
-              <Typography marginBottom size='sm' fontWeight='semibold'>
+              <Typography marginBottom size='sm' weight='semibold'>
                 Pie Chart
               </Typography>
 
@@ -89,7 +85,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
         <Grid.Column xs={12} sm={6} md={4} lg={3}>
           <Card>
             <CardContent>
-              <Typography marginBottom size='sm' fontWeight='semibold'>
+              <Typography marginBottom size='sm' weight='semibold'>
                 Area Chart
               </Typography>
 
@@ -105,7 +101,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
 
       <Card>
         <CardContent>
-          <Typography marginBottom size='sm' fontWeight='semibold'>
+          <Typography marginBottom size='sm' weight='semibold'>
             Line Chart
           </Typography>
 
@@ -121,7 +117,7 @@ const DashboardIndexPage: React.FC<IStyledProp> = ({ className }) => {
   );
 };
 
-export default styled(DashboardIndexPage)`
+export default styled(DashboardPage)`
   & .grid {
     margin-bottom: 15px;
   }

@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 import ThemeProvider from '@eduzz/houston-ui/ThemeProvider';
 
@@ -18,7 +19,9 @@ const App = memo(() => {
         <Loader />
         <Alert />
 
-        <Pages />
+        <BrowserRouter>
+          <Pages />
+        </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );

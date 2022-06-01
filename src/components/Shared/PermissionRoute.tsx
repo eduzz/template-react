@@ -1,18 +1,19 @@
 import { memo } from 'react';
 
 import { useSelector } from 'react-redux';
-import { Redirect, RouteProps, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import PermissionHide from './PermissionHide';
 
 import { enRoles } from '@/interfaces/models/user';
 import { selectorIsAuthenticated } from '@/store/selectors';
 
-interface IProps extends RouteProps {
+interface IProps {
   role?: enRoles;
+  children: React.ReactNode;
 }
 
-const PermissionRoute = memo<IProps>(({ role, ...props }) => {
+const PermissionRoute = memo<IProps>(({ role, children }) => {
   const isAuthenticated = useSelector(selectorIsAuthenticated);
 
   if (isAuthenticated === undefined) {
@@ -20,14 +21,12 @@ const PermissionRoute = memo<IProps>(({ role, ...props }) => {
   }
 
   if (!isAuthenticated) {
-    return <Redirect to='/login' />;
+    return <Navigate replace to='/login' />;
   }
 
   return (
     <>
-      <PermissionHide role={role}>
-        <Route {...props} />
-      </PermissionHide>
+      <PermissionHide role={role}>{children}</PermissionHide>
 
       <PermissionHide inverse role={role}>
         <p>Não encontrado</p>

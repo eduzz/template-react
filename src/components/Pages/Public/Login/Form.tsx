@@ -30,7 +30,7 @@ const LoginForm: React.FC<IProps> = ({ onRecoveryAccess, onCreate, className }) 
 
   return (
     <Form context={form} className={className}>
-      <Typography size='md' fontWeight='bold' className='title'>
+      <Typography size='md' weight='bold' className='title'>
         Entrar
       </Typography>
       <Typography className='subtitle'>Preencha seus dados para entrar</Typography>

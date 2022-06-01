@@ -34,7 +34,7 @@ const Toolbar: React.FC<IProps> = ({ title, children, className }) => {
           {!children && (
             <Grid container alignItems='center'>
               <Grid item xs={true}>
-                <Typography size='sm' fontWeight='semibold'>
+                <Typography size='sm' weight='semibold'>
                   {title || 'App'}
                 </Typography>
               </Grid>

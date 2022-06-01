@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 
 import styled, { breakpoints, IStyledProp } from '@eduzz/houston-styles';
@@ -21,9 +21,7 @@ const LoginPage: React.FC<IStyledProp> = ({ className }) => {
   const onRecoveryAccess = useCallback(() => setCurrentView(2), []);
   const onCreate = useCallback(() => setCurrentView(1), []);
 
-  console.log({ isAuthenticated });
-
-  if (isAuthenticated) return <Redirect to='/' />;
+  if (isAuthenticated) return <Navigate replace to='/' />;
 
   return (
     <div className={className}>

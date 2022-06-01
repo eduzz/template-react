@@ -1,6 +1,6 @@
 import '@eduzz/houston-forms/yupLocale';
 
-import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 import setHoustonHooksConfig from '@eduzz/houston-hooks/config';
 
@@ -12,7 +12,8 @@ setHoustonHooksConfig({
   onUnhandledError: err => logService.handleError(err)
 });
 
-ReactDOM.render(<App />, document.getElementById('root') as HTMLElement);
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.ready.then(registration => {

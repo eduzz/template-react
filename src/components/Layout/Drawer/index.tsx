@@ -4,7 +4,7 @@ import CoreDrawer from '@mui/material/Drawer';
 import Hidden from '@mui/material/Hidden';
 import clsx from 'clsx';
 import MoreIcon from 'mdi-react/MoreIcon';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import styled, { IStyledProp, breakpoints } from '@eduzz/houston-styles';
 
@@ -31,17 +31,17 @@ const Drawer: React.FC<IProps> = ({ menu, children, className }) => {
   const drawerClasses = useRef({ paper: `${className} drawer` }).current;
   const currentBreakpoint = useBreakpoint();
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [drawerOpened, setDrawerOpened] = useState(false);
   const [drawerFull, setDrawerFull] = useState(localStorage.getItem('app-drawer-full') !== 'N');
 
-  const navigate = useCallback(
+  const handleNavigate = useCallback(
     (url: string) => {
-      history.push(url);
+      navigate(url);
       setDrawerOpened(false);
     },
-    [history]
+    [navigate]
   );
 
   const contextValue = useMemo(
@@ -65,8 +65,7 @@ const Drawer: React.FC<IProps> = ({ menu, children, className }) => {
 
   useEffect(() => localStorage.setItem('app-drawer-full', drawerFull ? 'Y' : 'N'), [drawerFull]);
 
-  const content = <Content menu={menu} navigate={navigate} />;
-  console.log({ className });
+  const content = <Content menu={menu} navigate={handleNavigate} />;
 
   return (
     <DrawerContext.Provider value={contextValue}>

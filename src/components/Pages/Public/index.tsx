@@ -1,15 +1,12 @@
-import { Route, Switch } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import styled, { breakpoints, IStyledProp } from '@eduzz/houston-styles';
 import Typography from '@eduzz/houston-ui/Typography';
 
-import LoginPage from './Login';
-import NewPasswordPage from './NewPassword';
-
 import logo from '@/assets/images/logo.svg';
 import splashImage from '@/assets/images/splash.png';
 
-const PublicPage: React.FC<IStyledProp> = ({ className }) => {
+const PublicLayout: React.FC<IStyledProp> = ({ className }) => {
   return (
     <div className={className}>
       <div className='splash' />
@@ -17,10 +14,7 @@ const PublicPage: React.FC<IStyledProp> = ({ className }) => {
         <img src={logo} className='logo' />
         <div className='content'>
           <div>
-            <Switch>
-              <Route path='/nova-senha' exact component={NewPasswordPage} />
-              <Route path='/login' exact component={LoginPage} />
-            </Switch>
+            <Outlet />
           </div>
         </div>
         <div className='footer'>
@@ -31,7 +25,7 @@ const PublicPage: React.FC<IStyledProp> = ({ className }) => {
   );
 };
 
-export default styled(PublicPage)`
+export default styled(PublicLayout)`
   min-height: 100vh;
   min-width: 100vw;
   position: relative;

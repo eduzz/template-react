@@ -31,7 +31,7 @@ const LoginForm: React.FC<IProps> = ({ onCancel, className }) => {
 
   return (
     <Form context={form} className={className}>
-      <Typography size='md' fontWeight='bold' className='title'>
+      <Typography size='md' weight='bold' className='title'>
         Criar conta
       </Typography>
       <Typography className='subtitle'>Não possui uma conta? Cadastre-se agora</Typography>

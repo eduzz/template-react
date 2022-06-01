@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import ChevronLeftIcon from 'mdi-react/ChevronLeftIcon';
 import queryString from 'query-string';
-import { RouteComponentProps } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import useForm from '@eduzz/houston-forms/useForm';
 import styled, { IStyledProp } from '@eduzz/houston-styles';
@@ -15,9 +15,12 @@ import decodeJWTToken from '@/helpers/jwt';
 import IResetPasswordToken from '@/interfaces/tokens/resetPasswordToken';
 import authService from '@/services/auth';
 
-interface IProps extends RouteComponentProps<{ t: string }>, IStyledProp {}
+interface IProps extends IStyledProp {}
 
-const NewPasswordPage: React.FC<IProps> = ({ history, location, className }) => {
+const NewPasswordPage: React.FC<IProps> = ({ className }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState<boolean>(true);
   const [token, setToken] = useState<string>();
   const [tokenData, setTokenData] = useState<IResetPasswordToken>();
@@ -47,7 +50,7 @@ const NewPasswordPage: React.FC<IProps> = ({ history, location, className }) => 
     setLoading(false);
   }, [location.search]);
 
-  const handleBack = useCallback(() => history.push('/'), [history]);
+  const handleBack = useCallback(() => navigate('/'), [navigate]);
 
   return (
     <div className={className}>
@@ -63,7 +66,7 @@ const NewPasswordPage: React.FC<IProps> = ({ history, location, className }) => 
 
       {!loading && !!tokenData && (
         <Form context={form}>
-          <Typography size='md' fontWeight='bold' className='title'>
+          <Typography size='md' weight='bold' className='title'>
             Nova Senha
           </Typography>
           <Typography className='subtitle'>Olá {tokenData?.name}, informe sua nova senha:</Typography>
