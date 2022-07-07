@@ -12,7 +12,7 @@ setHoustonHooksConfig({
   onUnhandledError: err => logService.handleError(err)
 });
 
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);
 
 if ('serviceWorker' in navigator) {

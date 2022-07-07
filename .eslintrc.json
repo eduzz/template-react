@@ -1,8 +1,21 @@
 {
   "extends": ["@eduzz/eslint-config-houston"],
   "rules": {
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-    "sonarjs/no-nested-template-literals": "off"
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"],
+        "leadingUnderscore": "allowSingleOrDouble"
+      },
+      { "selector": "parameter", "format": ["camelCase", "PascalCase"], "leadingUnderscore": "allow" },
+      {
+        "selector": "memberLike",
+        "modifiers": ["private"],
+        "format": ["camelCase"],
+        "leadingUnderscore": "allowSingleOrDouble"
+      },
+      { "selector": "typeLike", "format": ["camelCase","PascalCase"] }
+    ]
   }
 }

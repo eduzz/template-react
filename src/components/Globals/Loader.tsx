@@ -19,12 +19,12 @@ const useStyle = createUseStyles(() => ({
 }));
 
 let promiseIncremeter = 0;
-let callbackChange: (show: boolean) => void;
+let callbackChange: ((show: boolean) => void) | null;
 
 type LoaderComponent = ReturnType<typeof memo> & {
-  show?: (ref: string) => void;
-  hide?: (ref: string) => void;
-  promise?: <T>(promise: Promise<T>) => Promise<T>;
+  show: (ref: string) => void;
+  hide: (ref: string) => void;
+  promise: <T>(promise: Promise<T>) => Promise<T>;
 };
 
 const Loader: LoaderComponent = memo((props: Record<string, never>) => {
@@ -35,7 +35,9 @@ const Loader: LoaderComponent = memo((props: Record<string, never>) => {
 
   useEffect(() => {
     callbackChange = show => setVisible(show);
-    return () => (callbackChange = null);
+    return () => {
+      callbackChange = null;
+    };
   }, []);
 
   return (
@@ -43,7 +45,7 @@ const Loader: LoaderComponent = memo((props: Record<string, never>) => {
       <CircularProgress className={classes.loader} size='large' color='inherit' />
     </Dialog>
   );
-});
+}) as any;
 
 const refs: Set<string> = new Set();
 

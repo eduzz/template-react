@@ -1,20 +1,20 @@
-import { IPaginationParams, IPaginationResponse } from '@eduzz/houston-hooks/usePromisePaginated';
+import { IPaginationParams } from '@eduzz/houston-hooks/usePromisePaginated';
 
 import apiService from './api';
 
-import IUser from '@/interfaces/models/user';
+import { User, UserList, userListSchema, userSchema } from '@/schemas/user';
 
 export class UserService {
-  public list(params: IPaginationParams): Promise<IPaginationResponse<IUser>> {
-    return apiService.get('/user', params);
+  public list(params: IPaginationParams): Promise<UserList> {
+    return apiService.get('/user', params, userListSchema);
   }
 
-  public current(): Promise<IUser> {
-    return apiService.get('/user/current');
+  public current(): Promise<User> {
+    return apiService.get('/user/current', null, userSchema);
   }
 
-  public save(model: Partial<IUser>): Promise<IUser> {
-    return apiService.post('/user', model);
+  public save(model: Partial<User>): Promise<User> {
+    return apiService.post('/user', model, userSchema);
   }
 
   public delete(id: number): Promise<void> {

@@ -11,12 +11,12 @@ import Table from '@eduzz/houston-ui/Table';
 import FormDialog from '../FormDialog';
 import ListItem from './ListItem';
 
-import IUser from '@/interfaces/models/user';
+import { User } from '@/schemas/user';
 import userService from '@/services/user';
 
 const UserListPage = memo(() => {
   const [formOpened, setFormOpened] = useState(false);
-  const [current, setCurrent] = useState<IUser>();
+  const [current, setCurrent] = useState<User | null>(null);
 
   const {
     params,
@@ -47,15 +47,15 @@ const UserListPage = memo(() => {
     setFormOpened(true);
   }, []);
 
-  const handleEdit = useCallback((current: IUser) => {
+  const handleEdit = useCallback((current: User) => {
     setCurrent(current);
     setFormOpened(true);
   }, []);
 
   const formCallback = useCallback(
-    (user?: IUser) => {
+    (user?: User) => {
       setFormOpened(false);
-      current ? refresh() : mergeParams({ term: user.email });
+      current ? refresh() : mergeParams({ term: user?.email });
     },
     [current, mergeParams, refresh]
   );

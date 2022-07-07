@@ -1,38 +1,29 @@
 import { memo } from 'react';
 
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 
-import PermissionHide from './PermissionHide';
+import usePromiseEffect from '@eduzz/houston-hooks/usePromiseEffect';
 
-import { enRoles } from '@/interfaces/models/user';
+import authService from '@/services/auth';
 import { selectorIsAuthenticated } from '@/store/selectors';
 
 interface IProps {
-  role?: enRoles;
   children: React.ReactNode;
 }
 
-const PermissionRoute = memo<IProps>(({ role, children }) => {
+const PermissionRoute = memo<IProps>(({ children }) => {
   const isAuthenticated = useSelector(selectorIsAuthenticated);
 
-  if (isAuthenticated === undefined) {
+  usePromiseEffect(async () => {
+    if (isAuthenticated || isAuthenticated === undefined) return;
+    await authService.login();
+  }, [isAuthenticated]);
+
+  if (!isAuthenticated) {
     return null;
   }
 
-  if (!isAuthenticated) {
-    return <Navigate replace to='/login' />;
-  }
-
-  return (
-    <>
-      <PermissionHide role={role}>{children}</PermissionHide>
-
-      <PermissionHide inverse role={role}>
-        <p>Não encontrado</p>
-      </PermissionHide>
-    </>
-  );
+  return <>{children}</>;
 });
 
 export default PermissionRoute;

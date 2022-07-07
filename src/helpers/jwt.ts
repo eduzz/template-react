@@ -1,4 +1,4 @@
-export default function decodeJWTToken<T>(token: string): T {
+export default function decodeJWTToken<T>(token: string): T | null {
   try {
     const data = JSON.parse(window.atob(token.split('.')[1]));
     const currentTime = Date.now() / 1000;

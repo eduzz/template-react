@@ -3,7 +3,7 @@ import dateFnsIsValid from 'date-fns/isValid';
 import locale from 'date-fns/locale/pt-BR';
 import dateFnsParse from 'date-fns/parse';
 
-export function dateParse(value: any, format: string = null): Date {
+export function dateParse(value: any, format: string | null = null): Date {
   if (!value) return value;
   if (value instanceof Date) return value;
 

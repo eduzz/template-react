@@ -14,7 +14,7 @@ export interface ICacheWatcher<T> {
 }
 
 export class CacheService {
-  private memory: { [key: string]: ICache };
+  private memory: { [key: string]: ICache | undefined };
   private watchers: { [key: string]: ICacheWatcher<any>[] };
 
   constructor() {
@@ -26,7 +26,7 @@ export class CacheService {
     let cache = this.memory[key] ?? storageService.get(`app-cache-${key}`);
 
     if (this.isExpirated(cache)) {
-      cache = null;
+      cache = undefined;
     }
 
     return cache?.data;
@@ -50,7 +50,7 @@ export class CacheService {
   }
 
   public remove(key: string) {
-    this.memory[key] = null;
+    this.memory[key] = undefined;
     storageService.remove(`app-cache-${key}`);
     this.sendWatchData(key, null);
   }
@@ -58,7 +58,9 @@ export class CacheService {
   public async save<T>(key: string, data: T, options?: { persist?: boolean; expirationMinutes?: number }): Promise<T> {
     const cache: ICache<T> = {
       createdAt: new Date(),
-      expirationDate: options.expirationMinutes ? dateFnsAddMinutes(new Date(), options?.expirationMinutes ?? 5) : null,
+      expirationDate: options?.expirationMinutes
+        ? dateFnsAddMinutes(new Date(), options.expirationMinutes ?? 5)
+        : undefined,
       data
     };
 
@@ -68,8 +70,8 @@ export class CacheService {
     return cache.data;
   }
 
-  public isExpirated(cache: ICache): boolean {
-    if (!cache.expirationDate) return false;
+  public isExpirated(cache: ICache | null | undefined): boolean {
+    if (!cache?.expirationDate) return false;
     return dateFnsIsBefore(cache.expirationDate, new Date());
   }
 

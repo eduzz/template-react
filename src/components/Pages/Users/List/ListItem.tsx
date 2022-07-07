@@ -1,19 +1,18 @@
 import { memo, useCallback, useState } from 'react';
 
-import DeleteIcon from 'mdi-react/DeleteIcon';
-import EditIcon from 'mdi-react/EditIcon';
-
+import EditOutline from '@eduzz/houston-icons/EditOutline';
+import TrashOutline from '@eduzz/houston-icons/TrashOutline';
 import Table from '@eduzz/houston-ui/Table';
 import Toast from '@eduzz/houston-ui/Toast';
 
 import Alert from '@/components/Globals/Alert';
-import IUser from '@/interfaces/models/user';
+import { User } from '@/schemas/user';
 import userService from '@/services/user';
 
 interface IProps {
-  user: IUser;
+  user: User;
   index: number;
-  onEdit: (user: IUser) => void;
+  onEdit: (user: User) => void;
   onDeleteComplete: () => void;
 }
 
@@ -33,7 +32,7 @@ const ListItem = memo((props: IProps) => {
     setDeleted(true);
 
     try {
-      await userService.delete(user.id);
+      await userService.delete(user.id as number);
       onDeleteComplete();
     } catch (err) {
       Toast.error(`Não foi possível excluir o usuário ${user.name}?`);
@@ -49,10 +48,10 @@ const ListItem = memo((props: IProps) => {
     <Table.Row data={user} index={index}>
       <Table.Cell>{user.name}</Table.Cell>
       <Table.Cell>{user.email}</Table.Cell>
-      <Table.Action icon={<EditIcon />} onClick={handleEdit}>
+      <Table.Action icon={<EditOutline />} onClick={handleEdit}>
         Editar
       </Table.Action>
-      <Table.Action icon={<DeleteIcon />} onClick={handleDelete}>
+      <Table.Action icon={<TrashOutline />} onClick={handleDelete}>
         Excluir
       </Table.Action>
     </Table.Row>

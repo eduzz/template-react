@@ -1,6 +1,6 @@
 export default class AppError<T = any> extends Error {
   public readonly ignoreLog: boolean;
-  public readonly extraData: T;
+  protected readonly extraData: T | null;
 
   constructor(message: string, extraData?: T, ignoreLog = true) {
     super(message);

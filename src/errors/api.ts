@@ -1,12 +1,13 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ZodError } from 'zod';
 
-import AppError from './appError';
+import AppError from './app';
 
 interface IApiErrorMeta {
   request: {
-    baseURL: string;
-    url: string;
-    method: string;
+    baseURL?: string;
+    url?: string;
+    method?: string;
     params: any;
     data: any;
     headers: any;
@@ -22,10 +23,8 @@ export default class ApiError extends AppError<IApiErrorMeta> {
   public readonly status: number;
   public readonly data: any;
 
-  constructor(request: AxiosRequestConfig, axiosResponse: AxiosResponse, err: any) {
-    const response = !axiosResponse
-      ? { status: -1, data: '' }
-      : { status: axiosResponse.status, data: axiosResponse.data };
+  constructor(request: AxiosRequestConfig, axiosResponse: AxiosResponse | undefined, err: any) {
+    const response = { status: axiosResponse?.status ?? -1, data: axiosResponse?.data ?? null };
 
     delete err.request;
     delete err.response;
@@ -45,7 +44,7 @@ export default class ApiError extends AppError<IApiErrorMeta> {
         response,
         err
       },
-      response.status < 500
+      !(err instanceof ZodError)
     );
 
     this.status = response.status;

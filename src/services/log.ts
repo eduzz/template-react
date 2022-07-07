@@ -1,14 +1,15 @@
 import * as Sentry from '@sentry/browser';
 
-import IUserToken from '../interfaces/tokens/userToken';
 import { ENV, IS_DEVELOPMENT, SENTRY_KEY } from '../settings';
+
+import { AccessTokenDecoded } from '@/schemas/accessToken';
 
 export class LogService {
   constructor() {
     Sentry.init({ dsn: SENTRY_KEY, environment: ENV });
   }
 
-  public setUser(user: IUserToken): void {
+  public setUser(user: AccessTokenDecoded): void {
     if (!user) {
       Sentry.setUser(null);
       return;

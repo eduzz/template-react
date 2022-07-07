@@ -7,39 +7,36 @@ import DialogTitle from '@mui/material/DialogTitle';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import useForm from '@eduzz/houston-forms/useForm';
+import usePromiseCallback from '@eduzz/houston-hooks/usePromiseCallback';
+import styled, { IStyledProp } from '@eduzz/houston-styles';
 import Button from '@eduzz/houston-ui/Button';
 import Form from '@eduzz/houston-ui/Forms/Form';
-import TextField from '@eduzz/houston-ui/Forms/Text';
-import styled, { IStyledProp } from '@eduzz/houston-styles';
+import Input from '@eduzz/houston-ui/Forms/Input';
 import Toast from '@eduzz/houston-ui/Toast';
 
-import IUser from '@/interfaces/models/user';
+import { User, userSchema } from '@/schemas/user';
 import userService from '@/services/user';
 
 interface IProps extends IStyledProp {
   opened: boolean;
-  user?: IUser;
-  onComplete: (user: IUser) => void;
+  user: User | null;
+  onComplete: (user: User) => void;
   onCancel: () => void;
 }
 
 const FormDialog: React.FC<IProps> = ({ opened, user, onComplete, onCancel, className }) => {
-  const form = useForm<IUser>({
-    validationSchema: yup =>
-      yup.object().shape({
-        name: yup.string().required().min(3).max(250),
-        email: yup.string().required().email().max(250),
-        roles: yup.array().required().min(1)
-      }),
-    async onSubmit(model) {
-      const user = await userService.save(model);
-      Toast.success(`${user.name} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
-      onComplete(user);
-    }
+  const form = useForm<User>({
+    validationSchema: userSchema
   });
 
+  const handleSubmit = usePromiseCallback(async (isSubscribed, model: User) => {
+    const user = await userService.save(model);
+    Toast.success(`${user.name} foi salvo${model.id ? '' : ', um email foi enviado com a senha'}`);
+    isSubscribed() && onComplete(user);
+  }, []);
+
   const handleEnter = useCallback(() => {
-    form.setValues(user ?? {}, false);
+    form.reset(user ?? {});
   }, [form, user]);
 
   const handleExited = useCallback(() => {
@@ -48,19 +45,19 @@ const FormDialog: React.FC<IProps> = ({ opened, user, onComplete, onCancel, clas
 
   return (
     <Dialog open={opened} disableEscapeKeyDown TransitionProps={{ onEnter: handleEnter, onExited: handleExited }}>
-      {form.isSubmitting && <LinearProgress color='primary' />}
+      {form.formState.isSubmitting && <LinearProgress color='primary' />}
 
-      <Form context={form} className={className}>
-        <DialogTitle>{form.values.id ? 'Editar' : 'Novo'} Usuário</DialogTitle>
+      <Form context={form} onSubmit={handleSubmit} className={className}>
+        <DialogTitle>Usuário</DialogTitle>
         <DialogContent className='content'>
-          <TextField label='Nome' name='name' />
-          <TextField label='Email' name='email' type='email' />
+          <Input label='Nome' name='name' />
+          <Input label='Email' name='email' type='email' />
         </DialogContent>
         <DialogActions>
           <Button variant='text' onClick={onCancel}>
             Cancelar
           </Button>
-          <Button type='submit' disabled={form.isSubmitting}>
+          <Button type='submit' disabled={form.formState.isSubmitting}>
             Salvar
           </Button>
         </DialogActions>

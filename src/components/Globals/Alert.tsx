@@ -21,15 +21,15 @@ interface IAlertShowParamsState extends IAlertShowParams {
 }
 
 type AlertComponent = ReturnType<typeof memo> & {
-  show?(params: string): Promise<boolean>;
-  show?(params: IAlertShowParams): Promise<boolean>;
+  show(params: string): Promise<boolean>;
+  show(params: IAlertShowParams): Promise<boolean>;
 
-  confirm?(params: string): Promise<boolean>;
-  confirm?(params: IAlertShowParams): Promise<boolean>;
+  confirm(params: string): Promise<boolean>;
+  confirm(params: IAlertShowParams): Promise<boolean>;
 };
 
 let lastPromise = Promise.resolve(false);
-let componentCallback: (params: IAlertShowParams) => Promise<boolean>;
+let componentCallback: null | ((params: IAlertShowParams) => Promise<boolean>);
 
 const useStyle = createUseStyles({
   root: { zIndex: 1600 },
@@ -46,7 +46,7 @@ const Alert: AlertComponent = memo(() => {
       setOpened(true);
       setParams({
         confirmation: false,
-        title: null,
+        title: undefined,
         ...params,
         onConfirm: () => resolve(true),
         onCancel: () => resolve(false)
@@ -59,7 +59,9 @@ const Alert: AlertComponent = memo(() => {
 
   useEffect(() => {
     componentCallback = onReceiveParams;
-    return () => (componentCallback = null);
+    return () => {
+      componentCallback = null;
+    };
   }, [onReceiveParams]);
 
   return (
@@ -78,14 +80,13 @@ const Alert: AlertComponent = memo(() => {
       </DialogActions>
     </Dialog>
   );
-});
+}) as any;
 
 function callComponent(params: IAlertShowParams): Promise<boolean> {
-  if (!componentCallback) throw new Error('Please, initialize an Alert before');
-
   //prevent an alert to overhide another
   return (lastPromise = lastPromise.then(async () => {
     await new Promise<void>(resolve => setTimeout(() => resolve(), 300));
+    if (!componentCallback) throw new Error('Please, initialize an Alert before');
     return componentCallback(params);
   }));
 }
