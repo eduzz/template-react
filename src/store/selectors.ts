@@ -11,5 +11,5 @@ export const selectorIsAuthenticated = createSelector(
 
 export const selectorUser = createSelector(
   (state: RootState) => state.authToken.value,
-  token => (token ? accessTokenDecodedSchema.parse(decodeJWTToken(token)) : null)
+  token => (token ? accessTokenDecodedSchema.parse(decodeJWTToken(token)) : undefined)
 );

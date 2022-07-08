@@ -9,6 +9,7 @@ export type AccessToken = z.infer<typeof accessTokenSchema>;
 
 export const accessTokenDecodedSchema = z.object({
   id: z.number(),
+  name: z.string(),
   email: z.string().email(),
   supportId: z.number().optional(),
   isClubeBlack: z.boolean()

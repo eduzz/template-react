@@ -1,5 +1,3 @@
-import '@eduzz/houston-forms/yupLocale';
-
 import { createRoot } from 'react-dom/client';
 
 import setHoustonHooksConfig from '@eduzz/houston-hooks/config';
