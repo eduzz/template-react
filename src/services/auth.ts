@@ -1,10 +1,8 @@
-import apiService from './api';
-import cacheService from './cache';
-
-import { accessTokenSchema as accessTokenSchema } from '@/schemas/accessToken';
 import { ACCOUNTS_ENV, ACCOUNTS_PARTNER_ID } from '@/settings';
 import { store } from '@/store';
 import { authTokenSlice } from '@/store/slices/authToken';
+
+import apiService from './api';
 
 declare global {
   interface Window {
@@ -27,12 +25,13 @@ export class AuthService {
 
     this.cleanAccountsUrl();
 
-    const { token } = await apiService.post('/auth/validate', { token: accountsToken }, accessTokenSchema);
+    const request = await apiService.post<{ token: string }>('/auth/validate', { token: accountsToken });
+
+    const { token } = request.data;
     store.dispatch(authTokenSlice.actions.set(token));
   }
   public async logout(): Promise<void> {
     store.dispatch(authTokenSlice.actions.clear());
-    await cacheService.clear();
   }
 
   private cleanAccountsUrl() {

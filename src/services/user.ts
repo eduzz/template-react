@@ -1,26 +1,26 @@
-import { IPaginationParams } from '@eduzz/houston-hooks/usePromisePaginated';
+import Pagination from '@/interfaces/pagination';
+import { User } from '@/interfaces/user';
 
 import apiService from './api';
 
-import { User, UserList, userListSchema, userSchema } from '@/schemas/user';
-
-export class UserService {
-  public list(params: IPaginationParams): Promise<UserList> {
-    return apiService.get('/user', params, userListSchema);
+class userService {
+  public list(params: Pagination) {
+    return apiService.get<User[]>('/user', params);
   }
 
-  public current(): Promise<User> {
-    return apiService.get('/user/current', null, userSchema);
+  public current() {
+    return apiService.get<User>('/user');
   }
 
-  public save(model: Partial<User>): Promise<User> {
-    return apiService.post('/user', model, userSchema);
+  public save(model: Partial<User>) {
+    return apiService.post('/user', model);
   }
 
-  public delete(id: number): Promise<void> {
+  public delete(id: number) {
     return apiService.delete(`/user/${id}`);
   }
 }
 
-const userService = new UserService();
-export default userService;
+const UserService = new userService();
+
+export default UserService;

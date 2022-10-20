@@ -1,25 +1,17 @@
 import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-
-import usePromiseEffect from '@eduzz/houston-hooks/usePromiseEffect';
-
-import authService from '@/services/auth';
-import { selectorIsAuthenticated } from '@/store/selectors';
-
-interface IProps {
+interface Props {
   children: React.ReactNode;
 }
 
-const PermissionRoute = memo<IProps>(({ children }) => {
-  const isAuthenticated = useSelector(selectorIsAuthenticated);
+const PermissionRoute = memo<Props>(({ children }) => {
+  const navigate = useNavigate();
 
-  usePromiseEffect(async () => {
-    if (isAuthenticated || isAuthenticated === undefined) return;
-    await authService.login();
-  }, [isAuthenticated]);
+  const isAuthenticated = true;
 
   if (!isAuthenticated) {
+    navigate('/login');
     return null;
   }
 

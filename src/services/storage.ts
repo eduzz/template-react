@@ -1,13 +1,9 @@
-import { apiResponseFormatter } from '../formatters/apiResponse';
-import logService from './log';
-
 export class StorageService {
   public get<T = any>(key: string): T | null {
     try {
       const data = localStorage.getItem(key);
-      return data ? apiResponseFormatter(JSON.parse(data)) : null;
+      return data ? JSON.parse(data) : null;
     } catch (err) {
-      logService.handleError(err);
       return null;
     }
   }

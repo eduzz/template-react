@@ -1,30 +1,37 @@
-import { memo } from 'react';
+import '@eduzz/houston-ui/ThemeProvider/theme.css';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import ThemeProvider from '@eduzz/houston-ui/ThemeProvider';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from '@sentry/tracing';
 
-import theme from './assets/theme';
-import { store } from './store';
+import ThemeProvider, { createTheme } from '@eduzz/houston-ui/ThemeProvider';
 
-import Alert from '@/components/Globals/Alert';
-import Loader from '@/components/Globals/Loader';
 import Pages from '@/components/Pages';
 
-const App = memo(() => {
+import { ENV, IS_DEVELOPMENT, SENTRY_KEY } from './settings';
+import { store } from './store';
+
+Sentry.init({
+  dsn: IS_DEVELOPMENT ? undefined : SENTRY_KEY,
+  environment: ENV,
+  integrations: [new BrowserTracing()],
+  tracesSampleRate: 0.2
+});
+
+const theme = createTheme('eduzz');
+
+const App = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Loader />
-        <Alert />
-
         <BrowserRouter>
           <Pages />
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
   );
-});
+};
 
 export default App;
