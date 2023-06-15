@@ -1,7 +1,7 @@
 import { hotjar } from 'react-hotjar';
 
-import { GOOGLE_TAG_MANAGER, HOTJAR_ID, HOTJAR_SNIPPET_VERSION } from './envs';
-import { CurrentUser } from './stores/auth';
+import { GOOGLE_TAG_MANAGER, HOTJAR_ID, HOTJAR_SNIPPET_VERSION } from '@/envs';
+import { CurrentUser } from '@/stores/auth';
 
 declare global {
   interface Window {

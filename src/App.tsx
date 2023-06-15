@@ -1,5 +1,3 @@
-import './analytics';
-
 import { BrowserRouter } from 'react-router-dom';
 
 import { App as AntdApp } from 'antd';
@@ -14,6 +12,7 @@ import ThemeProvider from '@eduzz/houston-ui/ThemeProvider';
 import Pages from '@/pages';
 
 import theme from './assets/theme';
+import Analytics from './components/Globals/Analytics';
 import { logError, logErrorWithToast } from './log';
 
 export let message: MessageInstance;
@@ -43,6 +42,8 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <AntdApp>
         <AppBinder />
+        <Analytics />
+
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <Pages />

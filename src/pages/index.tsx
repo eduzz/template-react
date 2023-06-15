@@ -4,6 +4,7 @@ import AvatarOutline from '@eduzz/houston-icons/AvatarOutline';
 import DashboardRoundOutline from '@eduzz/houston-icons/DashboardRoundOutline';
 import Layout from '@eduzz/houston-ui/Layout';
 
+import AuthRequired from '@/components/Globals/AuthRequired';
 import useAuthStore from '@/stores/auth';
 
 import Dashboard from './Dashboard';
@@ -32,10 +33,12 @@ const Index = () => {
       </Sidebar>
 
       <Content>
-        <Routes>
-          <Route path='/' element={<Dashboard />} />
-          <Route path='*' element={<NotFound />} />
-        </Routes>
+        <AuthRequired>
+          <Routes>
+            <Route path='/' element={<Dashboard />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </AuthRequired>
       </Content>
     </Layout>
   );
