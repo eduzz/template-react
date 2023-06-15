@@ -1,18 +1,11 @@
-import dateFnsFormat from 'date-fns/format';
-import dateFnsIsValid from 'date-fns/isValid';
-import locale from 'date-fns/locale/pt-BR';
-import dateFnsParse from 'date-fns/parse';
+import dateFormat from 'date-fns/format';
 
-export function dateParse(value: any, format: string | null = null): Date {
-  if (!value) return value;
-  if (value instanceof Date) return value;
-
-  const date = !format ? new Date(value) : dateFnsParse(value, format, new Date(), { locale });
-  if (!dateFnsIsValid(date)) return value;
-
-  return date;
+export function formatDate(date: Date | null | undefined) {
+  if (!date) return '';
+  return dateFormat(date, 'dd/MM/yyyy');
 }
 
-export function dateFormat(date: Date, format = 'dd/MM/yyyy'): string {
-  return dateFnsFormat(date, format, { locale });
+export function formatDateTime(date: Date | null | undefined) {
+  if (!date) return '';
+  return dateFormat(date, 'dd/MM/yyyy HH:mm');
 }

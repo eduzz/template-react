@@ -1,0 +1,187 @@
+html,
+body {
+  background-color: white;
+}
+
+
+
+@keyframes rootLoaderFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes rootLoaderFadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.root-app-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2147483002;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: none;
+  animation: rootLoaderFadeOut ease-in-out 0.5s forwards;
+}
+
+.root-app-logo {
+  max-width: 80%;
+  margin-bottom: 30px;
+}
+
+.root-app-loader.--show {
+  pointer-events: all;
+  animation: rootLoaderFadeIn ease-in-out 0.5s forwards;
+}
+
+.root-app-loader.--error> div {
+  width: 95vw;
+}
+
+.root-app-loader>div {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: -200vh;
+  transition: 0.5s, width 0s;
+}
+
+.root-app-loader.--show > div {
+  margin-top: 0;
+}
+
+.root-app-loader>div>svg {
+  margin-bottom: 20px;
+  width: 130px;
+}
+
+.root-app-error-message {
+  text-align: center;
+  font-size: 18px;
+}
+
+.root-app-error-message small {
+  display: block;
+  margin-top: 8px;
+  font-size: 80%;
+  opacity: 0.7;
+}
+
+.root-app-error-button {
+  background-color: transparent;
+  border: 1px solid #d9d9d9;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: 0.3s;
+  cursor: pointer;
+  height: 42px;
+  color: inherit;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.root-app-error-button:hover {
+  color: #0D2772;
+  border-color: #0D2772;
+}
+
+@keyframes rootLoaderIndeterminateAnimation {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes rootLoaderIndeterminateShortAnimation {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
+
+.root-app-loader-line {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  height: 4px;
+  background-color: rgba(13, 39, 113, 0.25);
+}
+
+.root-app-loader-line>div {
+  background-color: #0D2772;
+}
+
+.root-app-loader-line>div:before,
+.root-app-loader-line>div:after {
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.root-app-loader-line>div:before {
+  animation: rootLoaderIndeterminateAnimation 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.root-app-loader-line>div:after {
+  animation: rootLoaderIndeterminateShortAnimation 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: 1.15s;
+}
+
+/* dark-theme */
+html.--vertical-theme-mode-dark,
+body.--vertical-theme-mode-dark {
+  background-color: black;
+  color: white;
+}
+
+body.--vertical-theme-mode-dark .root-app-loader {
+  background-color: rgba(0, 0, 0, 0.32);
+}
+
+body.--vertical-theme-mode-dark .root-app-loader svg path[fill="#212121"] {
+  fill: white
+}

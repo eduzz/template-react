@@ -1,0 +1,8 @@
+export function formatPhone(value: string | null | undefined) {
+  if (!value) return '';
+
+  const regexp = value.length > 10 ? /^(\d{0,2})(\d{0,5})(\d{0,4}).*/ : /^(\d{0,2})(\d{0,4})(\d{0,4}).*/;
+  const result = value.length > 2 ? '($1) $2-$3' : '($1$2$3';
+
+  return value.replace(regexp, result).replace(/-$/, '');
+}

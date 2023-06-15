@@ -1,10 +1,7 @@
-export default function decodeJWTToken<T>(token: string): T | null {
+export default function decodeJWTToken<T>(token: string): T | undefined {
   try {
-    const data = JSON.parse(window.atob(token.split('.')[1]));
-    const currentTime = Date.now() / 1000;
-
-    return currentTime > data.exp ? null : data;
+    return JSON.parse(window.atob(token.split('.')[1]));
   } catch (err) {
-    return null;
+    return undefined;
   }
 }
