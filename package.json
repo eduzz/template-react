@@ -1,12 +1,8 @@
 {
-  "name": "PROJECT-SLUG",
+  "name": "template-react",
   "description": "Front Base for React Admin",
   "version": "0.0.1",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "%PROJECT-REPO%"
-  },
   "scripts": {
     "start": "vite",
     "build:front": "NODE_OPTIONS=\"--max_old_space_size=8192\" vite build",
