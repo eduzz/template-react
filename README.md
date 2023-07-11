@@ -9,6 +9,6 @@ Utilize o VSCode, já está configurado com sugestão de extensões.
 * React/Hooks
 * Typescript
 * React Router
-* Eduzz Houston
+* Eduzz UI Libs
 * React Query
 * Zustand

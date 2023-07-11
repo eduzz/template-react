@@ -1,7 +1,7 @@
 export const ENV = import.meta.env.VITE_ENV || 'production';
 
 export const ACCOUNTS_PARTNER_ID = import.meta.env.VITE_ACCOUNTS_PARTNER_ID;
-export const ACCOUNTS_ENV = ENV === 'development' ? 'homolog' : 'production';
+export const ACCOUNTS_ENV = ENV === 'development' ? 'qa' : 'production';
 
 export const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 export const CDN_ENDPOINT = import.meta.env.VITE_CDN_ENDPOINT;

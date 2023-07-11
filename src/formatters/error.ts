@@ -9,7 +9,6 @@ export default function errorFormatter(err: any): string {
       return 'Sem conexão com a internet';
     case 'api-error':
       if (err.status === 400) {
-        // eslint-disable-next-line sonarjs/no-nested-template-literals
         return err.data?.message ?? 'Dados inválidos';
       }
 

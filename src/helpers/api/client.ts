@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, Method } from 'axios';
 
 import useAuthStore from '@/stores/auth';
 
+import getMockValue from './_mock';
 import ApiError from './error';
 import { responseFormatter } from './formatter';
 import decodeJWTToken from '../jwt';
@@ -34,7 +35,7 @@ export class ApiClient {
         }
       };
 
-      const response = await axios.request(config);
+      const response = this.endpoint ? await axios.request(config) : await getMockValue(method, url);
       onProgress && onProgress(100);
 
       return responseFormatter<T>(response?.data || {});

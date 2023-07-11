@@ -2,9 +2,10 @@ import { hotjar } from 'react-hotjar';
 
 import * as Sentry from '@sentry/react';
 
+import { notification } from '@eduzz/ui-antd-theme';
+
 import { IS_DEV } from '@/envs';
 
-import { notification } from './App';
 import errorFormatter from './formatters/error';
 import useAuthStore from './stores/auth';
 
@@ -20,7 +21,7 @@ export class AppLoggerError extends Error {
 export function event(eventName: string, metadata?: Record<string, string | number>) {
   window.dataLayer = window.dataLayer ?? [];
   window.dataLayer.push({ event: eventName, metadata });
-  hotjar.event(eventName);
+  hotjar.initialized() && hotjar.event(eventName);
 }
 
 export function logErrorWithToast(error: any, tags: Record<string, string> = {}) {

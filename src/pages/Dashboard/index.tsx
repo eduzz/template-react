@@ -16,9 +16,7 @@ import {
   Tooltip
 } from 'recharts';
 
-import { styled, StyledProp } from '@eduzz/houston-ui/styled';
-
-const DashboardPage = ({ className }: StyledProp) => {
+const DashboardPage = () => {
   const [data] = useState([
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
     { name: 'Page B', uv: 3000, pv: 1398, amt: 2210 },
@@ -39,60 +37,56 @@ const DashboardPage = ({ className }: StyledProp) => {
   const [colors] = useState(['#0088FE', '#00C49F', '#FFBB28', '#FF8042']);
 
   return (
-    <div className={className}>
-      <Row className='grid'>
-        <Col xs={12} md={4} lg={6}>
-          <Card title='Bar Chart'>
-            <ResponsiveContainer width='100%' height={150}>
-              <BarChart data={data}>
+    <Row gutter={[16, 16]}>
+      <Col xs={24} md={8}>
+        <Card title='Bar Chart'>
+          <ResponsiveContainer width='100%' height={150}>
+            <BarChart data={data}>
+              <Tooltip />
+              <Bar dataKey='uv' fill={colors[0]} />
+              <Bar dataKey='pv' fill={colors[1]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
+      </Col>
+
+      <Col xs={24} sm={12} md={8}>
+        <Card title='PieChart'>
+          <ResponsiveContainer width='100%' height={150}>
+            <PieChart>
+              <Pie dataKey={'value'} data={dataPie}>
                 <Tooltip />
-                <Bar dataKey='uv' fill={colors[0]} />
-                <Bar dataKey='pv' fill={colors[1]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
-        </Col>
+                {data.map((entry, index) => (
+                  <Cell key={entry.name} fill={colors[index % colors.length]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </Card>
+      </Col>
 
-        <Col xs={12} sm={6} md={4} lg={3}>
-          <Card title='PieChart'>
-            <ResponsiveContainer width='100%' height={150}>
-              <PieChart>
-                <Pie dataKey={'value'} data={dataPie}>
-                  <Tooltip />
-                  {data.map((entry, index) => (
-                    <Cell key={entry.name} fill={colors[index % colors.length]} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-          </Card>
-        </Col>
+      <Col xs={24} sm={12} md={8}>
+        <Card title='Area Chart'>
+          <ResponsiveContainer width='100%' height={150}>
+            <AreaChart data={data}>
+              <Area type='monotone' dataKey='uv' stroke='#FF8042' fill='#FF8042' />
+            </AreaChart>
+          </ResponsiveContainer>
+        </Card>
+      </Col>
 
-        <Col xs={12} sm={6} md={4} lg={3}>
-          <Card title='Area Chart'>
-            <ResponsiveContainer width='100%' height={150}>
-              <AreaChart data={data}>
-                <Area type='monotone' dataKey='uv' stroke='#FF8042' fill='#FF8042' />
-              </AreaChart>
-            </ResponsiveContainer>
-          </Card>
-        </Col>
-      </Row>
-
-      <Card title='Line Chart'>
-        <ResponsiveContainer width='100%' height={200}>
-          <LineChart data={data}>
-            <Tooltip />
-            <Line type='monotone' dataKey='pv' stroke='#8884d8' strokeWidth={2} />
-          </LineChart>
-        </ResponsiveContainer>
-      </Card>
-    </div>
+      <Col xs={24}>
+        <Card title='Line Chart'>
+          <ResponsiveContainer width='100%' height={200}>
+            <LineChart data={data}>
+              <Tooltip />
+              <Line type='monotone' dataKey='pv' stroke='#8884d8' strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
-export default styled(DashboardPage)`
-  & .grid {
-    margin-bottom: 15px;
-  }
-`;
+export default DashboardPage;

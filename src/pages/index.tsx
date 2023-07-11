@@ -1,8 +1,6 @@
 import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
 
-import AvatarOutline from '@eduzz/houston-icons/AvatarOutline';
-import DashboardRoundOutline from '@eduzz/houston-icons/DashboardRoundOutline';
-import Layout from '@eduzz/houston-ui/Layout';
+import Layout from '@eduzz/ui-layout';
 
 import AuthRequired from '@/components/Globals/AuthRequired';
 import useAuthStore from '@/stores/auth';
@@ -23,10 +21,10 @@ const Index = () => {
       </Topbar>
       <Sidebar currentLocation={location.pathname}>
         <Sidebar.Group>
-          <Sidebar.Item as={NavLink} to='/' icon={<DashboardRoundOutline />}>
+          <Sidebar.Item as={NavLink} to='/'>
             Dashboard
           </Sidebar.Item>
-          <Sidebar.Item as={NavLink} to='/usuarios' icon={<AvatarOutline />}>
+          <Sidebar.Item as={NavLink} to='/usuarios'>
             Usuários
           </Sidebar.Item>
         </Sidebar.Group>

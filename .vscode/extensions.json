@@ -2,6 +2,7 @@
   "recommendations": [
     "christian-kohler.npm-intellisense",
     "christian-kohler.path-intellisense",
-    "dbaeumer.vscode-eslint"
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss"
   ]
 }

@@ -1,5 +1,3 @@
-/* eslint-disable sonarjs/no-nested-template-literals */
-
 export interface AddressFormatter {
   state?: string | null;
   city?: string | null;

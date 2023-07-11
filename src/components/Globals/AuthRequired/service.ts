@@ -11,7 +11,7 @@ declare global {
 
 const accountsLoader = loadAccounts();
 
-export async function initAccounts(theme: 'dark' | 'light') {
+export async function initAccounts(theme: 'dark' | 'light' = 'light') {
   const token = await getAccountsToken(undefined, theme);
   cleanUrl();
 
