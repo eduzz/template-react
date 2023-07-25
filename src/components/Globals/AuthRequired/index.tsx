@@ -1,11 +1,11 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 
+import { useAppLoader } from '@eduzz/ui-app-loader';
 import { usePromiseRefresh } from '@eduzz/ui-hooks-promises';
 
 import useAuthStore from '@/stores/auth';
 
 import { initAccounts } from './service';
-import AppLoaderContext from '../AppLoader/context';
 
 interface IProps {
   children: React.ReactNode;
@@ -13,8 +13,7 @@ interface IProps {
 
 const AuthRequired: React.FC<IProps> = ({ children }) => {
   const isAutheticated = useAuthStore(state => state.isAuthenticated());
-
-  const appLoaderContext = useContext(AppLoaderContext);
+  const appLoader = useAppLoader();
 
   const [, error, , refresh] = usePromiseRefresh(async () => {
     if (isAutheticated) return;
@@ -25,17 +24,17 @@ const AuthRequired: React.FC<IProps> = ({ children }) => {
 
   useEffect(() => {
     if (isAutheticated) {
-      appLoaderContext.hide();
+      appLoader.hide();
       return;
     }
 
-    appLoaderContext.show();
+    appLoader.show();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAutheticated]);
 
   useEffect(() => {
     if (!error) return;
-    appLoaderContext.error(error, refresh);
+    appLoader.error(error, refresh);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error, refresh]);
 

@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { lazy } from 'react';
 
 import * as Sentry from '@sentry/react';
 import { createRoot } from 'react-dom/client';
 
+import AppLoader from '@eduzz/ui-app-loader';
+
 import AppError from '@/components/Globals/AppError';
 import { IS_DEV, SENTRY_DSN, ENV } from '@/envs';
-
-import AppLoader from './components/Globals/AppLoader';
 
 Sentry.init({
   dsn: IS_DEV ? undefined : SENTRY_DSN,
@@ -15,10 +15,14 @@ Sentry.init({
   tracesSampleRate: 0.2
 });
 
+const App = lazy(() => import('./App'));
+
 createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <Sentry.ErrorBoundary fallback={<AppError />}>
-      <AppLoader />
+      <AppLoader>
+        <App />
+      </AppLoader>
     </Sentry.ErrorBoundary>
   </React.StrictMode>
 );
