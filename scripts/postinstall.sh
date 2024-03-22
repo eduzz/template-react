@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-yarn husky install
+yarn husky

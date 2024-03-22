@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client';
 
 import AppLoader from '@eduzz/ui-app-loader';
 
-import AppError from '@/components/Globals/AppError';
+import AppError from '@/configs/AppError';
 import { IS_DEV, SENTRY_DSN, ENV } from '@/envs';
 
 Sentry.init({

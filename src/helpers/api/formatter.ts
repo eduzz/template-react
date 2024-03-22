@@ -1,5 +1,5 @@
-import dateIsValid from 'date-fns/isValid';
-import dateFnsParse from 'date-fns/parse';
+import { isValid } from 'date-fns/isValid';
+import { parse } from 'date-fns/parse';
 
 export function responseFormatter<T>(obj: T): T {
   if (!obj) return obj;
@@ -30,8 +30,8 @@ export function dateParse(value: any, format: string | null = null): Date {
   if (!value) return value;
   if (value instanceof Date) return value;
 
-  const date = !format ? new Date(value) : dateFnsParse(value, format, new Date());
-  if (!dateIsValid(date)) return value;
+  const date = !format ? new Date(value) : parse(value, format, new Date());
+  if (!isValid(date)) return value;
 
   return date;
 }

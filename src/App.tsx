@@ -4,22 +4,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ThemeProvider } from '@eduzz/ui-antd-theme';
 
+import Analytics from '@/configs/Analytics';
 import Pages from '@/pages';
 
-import Analytics from './components/Globals/Analytics';
-import { logError, logErrorWithToast } from './log';
+import { logErrorWithToast } from './log';
 
 import './index.css';
 
 export const queryClient = new QueryClient({
-  logger: { log: () => null, warn: () => null, error: () => null },
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: false,
-      onError(error) {
-        logError(error);
-      }
+      retry: false
     },
     mutations: {
       onError(error) {

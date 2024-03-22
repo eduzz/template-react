@@ -2,7 +2,7 @@ import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
 
 import Layout from '@eduzz/ui-layout';
 
-import AuthRequired from '@/components/Globals/AuthRequired';
+import AuthRequired from '@/configs/AuthRequired';
 import useAuthStore from '@/stores/auth';
 
 import Dashboard from './Dashboard';

@@ -23,8 +23,8 @@ export default defineConfig({
     react(),
     process.env.SENTRY_AUTHTOKEN
       ? sentryVitePlugin({
-          org: 'tracers',
-          project: 'tracers-front',
+          org: 'eduzz',
+          project: 'eduzz-front',
           authToken: process.env.SENTRY_AUTHTOKEN
         })
       : null,
