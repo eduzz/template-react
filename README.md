@@ -5,7 +5,7 @@ Utilize o VSCode, já está configurado com sugestão de extensões.
 
 ### Tecnologias
 
-* Vite
+* RSPack
 * React/Hooks
 * Typescript
 * React Router
