@@ -21,7 +21,7 @@ export class AppLoggerError extends Error {
 export function event(eventName: string, metadata?: Record<string, string | number>) {
   window.dataLayer = window.dataLayer ?? [];
   window.dataLayer.push({ event: eventName, metadata });
-  hotjar.initialized() && hotjar.event(eventName);
+  if (hotjar.initialized()) hotjar.event(eventName);
 }
 
 export function logErrorWithToast(error: any, tags: Record<string, string> = {}) {

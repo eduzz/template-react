@@ -51,5 +51,5 @@ function setHotjarUser({ id, ...user }: { id: number; email: string; name: strin
 }
 
 if (HOTJAR_ID) {
-  hotjar.initialize(HOTJAR_ID, HOTJAR_SNIPPET_VERSION);
+  hotjar.initialize({ id: HOTJAR_ID, sv: HOTJAR_SNIPPET_VERSION });
 }

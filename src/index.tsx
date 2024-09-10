@@ -11,7 +11,6 @@ import { IS_DEV, SENTRY_DSN, ENV } from '@/envs';
 Sentry.init({
   dsn: IS_DEV ? undefined : SENTRY_DSN,
   environment: ENV,
-  integrations: [new Sentry.BrowserTracing()],
   tracesSampleRate: 0.2
 });
 

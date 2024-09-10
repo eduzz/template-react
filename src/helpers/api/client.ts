@@ -22,7 +22,7 @@ export class ApiClient {
 
   public async request<T = any>({ method, url, data, onProgress, skipToken }: ApiClientRequestOptions): Promise<T> {
     try {
-      onProgress && onProgress(0);
+      if (onProgress) onProgress(0);
       const config: AxiosRequestConfig = {
         baseURL: url.startsWith('http') ? undefined : this.endpoint,
         url,
@@ -31,12 +31,12 @@ export class ApiClient {
         params: method === 'GET' ? data : null,
         data: method === 'POST' || method === 'PUT' ? data : null,
         onUploadProgress: progress => {
-          onProgress && onProgress((progress.loaded / (progress.total ?? 0)) * 100);
+          if (onProgress) onProgress((progress.loaded / (progress.total ?? 0)) * 100);
         }
       };
 
       const response = this.endpoint ? await axios.request(config) : await getMockValue(method, url);
-      onProgress && onProgress(100);
+      if (onProgress) onProgress(100);
 
       return responseFormatter<T>(response?.data || {});
     } catch (err: any) {
@@ -118,7 +118,7 @@ export class ApiClient {
       if (isExpired) return undefined;
 
       return token;
-    } catch (err) {
+    } catch (_err) {
       return undefined;
     }
   }
