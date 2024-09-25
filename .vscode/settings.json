@@ -8,9 +8,6 @@
   },
   "files.exclude": {
     "build": true,
-    "**/*.css": {
-      "when": "$(basename).scss"
-    },
     "**/*.js": {
       "when": "$(basename).ts"
     },

@@ -57,7 +57,7 @@ node {
 
       stage('Deploy App') {
         eksDeploy([
-          'service': "project-collector-front",
+          'service': "project-front",
           'namespace': NAMESPACE,
           'cluster': CLUSTER,
           'values': [
