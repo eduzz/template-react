@@ -5,59 +5,85 @@ if (buildNumber > 1) milestone(buildNumber - 1)
 milestone(buildNumber)
 
 node {
-  def dockerImageApi
-  def dockerImageFront
-  def finishBackBuild = false;
-  def finishFrontBuild = false;
-
-  def APLICATION_NAME = ''
-  def DEPLOY_BRANCHES = /(homolog|master)/
-  def BUILD_INFO = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
-
-
-  def ROLE_ACCOUNT = env.ACCOUNT_STAGING;
-  def ROLE_NAME = env.ROLE_STAGING;
-  def S3_BUCKET = '' // criar bucket
-  def ENVIRONMENT = 'qa'
-
-// if (env.BRANCH_NAME ==~ /^(master)$/) {
-//   ROLE_ACCOUNT = env.ACCOUNT_NEWPROD;
-//   ROLE_NAME = env.ROLE_NEWPROD;
-//   S3_BUCKET = ''
-//   ENVIRONMENT = 'prod'
-// }
+  def NAMESPACE = 'project'
+  def IMAGE_API = 'project-front'
+  def ENVIRONMENT = 'dev'
+  def CLUSTER = "eduzz-dev"
+  def DEPLOY_BRANCHES = /(develop.*|release.*|master)/
 
   stage ('Clone Repository') {
     checkout scm
   }
 
-  stage ('Sonar') {
-    def nodePath = tool name: 'NodeJS 16', type: 'nodejs'
-    def scannerHome = tool 'SonarScanner 4.6.0';
-    withSonarQubeEnv {
-      withEnv(["PATH+NODE=${nodePath}/bin"]) {
-        sh "${scannerHome}/bin/sonar-scanner"
+  def COMMIT_MESSAGE = sh (returnStdout: true, script: "git log --format=format:%s -1")
+  def COMMIT_EMAIL = sh (returnStdout: true, script: "git --no-pager show -s --format=%ae")
+  def COMMIT_ID = sh(returnStdout: true, script: 'git rev-parse HEAD')
+  def BUILD_NUMBER = (env.BUILD_NUMBER as int)
+
+  try {
+    stage ('Configure Env') {
+      if (env.BRANCH_NAME ==~ /(release.*)/) {
+        ENVIRONMENT = 'qa'
+        CLUSTER = "eduzz-qa"
+      }
+
+      if (env.BRANCH_NAME ==~ /(master)/) {
+        ENVIRONMENT = 'prod'
+        CLUSTER = "eduzz-prod"
+      }
+    }
+
+    stage ('Set Env') {
+      if (env.BRANCH_NAME =~ /(release|hotfix|feature)/) {
+          sh "sh ./scripts/set-env-homolog.sh ${env.BRANCH_NAME} ${env.BUILD_NUMBER}"
+      }
+
+      if (env.BRANCH_NAME =~ /(master)/) {
+        sh "sh ./scripts/set-env.sh '${env.BRANCH_NAME}' ${env.BUILD_NUMBER}"
+      }
+    }
+
+    stage("Build App") {
+        dockerImage = docker.build("${IMAGE_API}:${env.BRANCH_NAME}-${env.BUILD_NUMBER}", "-f docker/prod/Dockerfile .")
+    }
+
+    if (env.BRANCH_NAME ==~ DEPLOY_BRANCHES) {
+      stage("Push Images") {
+        docker.withRegistry("https://${env.ECR_URL}") {
+          dockerImage.push("${env.BRANCH_NAME}")
+          dockerImage.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")
+        }
+      }
+
+      stage('Deploy App') {
+        eksDeploy([
+          'service': "project-collector-front",
+          'namespace': NAMESPACE,
+          'cluster': CLUSTER,
+          'values': [
+            "base.yaml",
+            "${ENVIRONMENT}.yaml"
+          ],
+          'images': [
+            "appTag": "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+          ]
+        ])
       }
     }
   }
-
-  stage ('Build') {
-    docker.build("${APLICATION_NAME}:${BUILD_INFO}", "-f ./Dockerfile --build-arg env=${ENVIRONMENT} .")
+  catch(err) {
+    discordSend(
+      title: env.JOB_NAME,
+      description: ":x: FAILED / Deu ruim :(",
+      footer: "#${BUILD_NUMBER} - ${COMMIT_ID.take(10)} - ${COMMIT_MESSAGE}",
+      link: env.BUILD_URL,
+      successful: false,
+      webhookURL: env.project_DISCORD_WEBHOOK_URL
+    )
+    throw err
   }
 
-  if (env.BRANCH_NAME ==~ DEPLOY_BRANCHES) {
-    stage ('Publish Front') {
-      sh "rm -rf dist"
-      sh "docker cp \$(docker create ${APLICATION_NAME}:${BUILD_INFO}):/app/dist dist"
-
-      withAWS(roleAccount:ROLE_ACCOUNT, role:ROLE_NAME) {
-        sh "aws s3 cp dist s3://${S3_BUCKET} --acl public-read --cache-control \"public, max-age=2592000, stale-while-revalidate=60\" --recursive --exclude=\"*.txt\" --exclude=\"*.html\" --exclude=\"remoteEntry.js\" --exclude=\"**/remoteEntry.js\" --exclude=\"remoteEntry.js.map\" --exclude=\"**/remoteEntry.js.map\" --exclude=\"**/root.d.ts\""
-        sh "aws s3 cp dist s3://${S3_BUCKET} --acl public-read --cache-control \"public, max-age=60, stale-while-revalidate=10\" --recursive --exclude=\"*\" --include=\"*.html\" --include=\"remoteEntry.js\" --include=\"**/remoteEntry.js\" --include=\"remoteEntry.js.map\" --include=\"**/remoteEntry.js.map\""
-      }
-    }
-  }
-
-  stage('Clean') {
+  finally {
     cleanWs()
   }
 }

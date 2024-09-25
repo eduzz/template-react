@@ -1,14 +1,20 @@
-FROM node:lts-alpine
+FROM node:22-alpine
 
-WORKDIR /src
+WORKDIR /app
+COPY package.json yarn.lock /app/
+RUN yarn install
+COPY ./ /app/
 
-COPY . /src/
+RUN yarn build
 
-RUN yarn install --force && yarn cache clean && yarn build
-
-# Criar o container final mais leve com nginx com apenas projeto compilado
 FROM nginx:alpine
 
-COPY --from=0 /src/build /usr/share/nginx/html
+COPY --from=0 /app/dist /usr/share/nginx/build
+COPY --from=0 /app/dist /usr/share/nginx/html
 
-COPY --from=0 /src/docker/prod/nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/prod/nginx.conf /root/
+
+COPY docker/prod/start.sh /root/
+RUN set -x && chmod +x /root/start.sh
+
+CMD /root/start.sh
